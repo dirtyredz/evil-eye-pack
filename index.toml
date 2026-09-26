@@ -5,6 +5,10 @@ file = ".structure-review-optout"
 hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
 [[files]]
+file = "README.md"
+hash = "92d59de739dff183d254caedb1472444a1d9d9cec68a5eae9236bcd806eae36f"
+
+[[files]]
 file = "config/Advancedperipherals/general.toml"
 hash = "78bc066a3400a0676828e159da326fb5cf41869e393f935c13641ec7a078ee2f"
 
@@ -3610,8 +3614,8 @@ hash = "88396b3f04853c2cab8b7932757a3020aa8b1d266e7ee69a2b208908d3a44ada"
 metafile = true
 
 [[files]]
-file = "mods/inventory-sorter.pw.toml"
-hash = "537f95eb95c08a7510b7151d2960904d2fae3ccd515a5f369063c11f707584fb"
+file = "mods/inventory-profiles-next.pw.toml"
+hash = "e87e55d35c6a335f35329b1356c8c40589f6b955b4933614f03d6c8b747f1476"
 metafile = true
 
 [[files]]
@@ -3630,6 +3634,11 @@ hash = "a2277a000bcab08a8e0939dae7c8ef3b1db5327e2fa7bd37919e4e2f1b3c174d"
 metafile = true
 
 [[files]]
+file = "mods/kotlin-for-forge.pw.toml"
+hash = "70a4ecd9d0c04ad20aeb976c1ee28933ce48a0a1f43df42deafaeb2ad7235297"
+metafile = true
+
+[[files]]
 file = "mods/large-ore-deposits.pw.toml"
 hash = "c22ce9510fde0135109e883ffea62c74540c8fb3b9cd3a9aea74f8599c8c5e2c"
 metafile = true
@@ -3642,6 +3651,11 @@ metafile = true
 [[files]]
 file = "mods/let-me-despawn.pw.toml"
 hash = "644607a28024fbb4115884962a09cb4621217f652aacd363f7a2df52ddb69862"
+metafile = true
+
+[[files]]
+file = "mods/libipn.pw.toml"
+hash = "5a98133891a72e041e37bc235e86d495e488387f1628fc1377e6b5169dfbb8bd"
 metafile = true
 
 [[files]]
