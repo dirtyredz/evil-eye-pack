@@ -1,0 +1,13 @@
+name = "Evil Eye"
+author = "DirtyRedz"
+version = "1.0.0"
+pack-format = "packwiz:1.1.0"
+
+[index]
+file = "index.toml"
+hash-format = "sha256"
+hash = "8d3f13c450648df6acebaad11ba21bdeabd24510faeeaf847adf400bc029ee25"
+
+[versions]
+forge = "47.4.10"
+minecraft = "1.20.1"

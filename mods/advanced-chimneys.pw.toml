@@ -1,0 +1,13 @@
+name = "Advanced Chimneys"
+filename = "AdChimneys-1.20.1-10.1.0.0-build.0142.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "f96cc5f6c84807cd175356b32ecdd0dd5ee39621"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 4592997
+project-id = 244830

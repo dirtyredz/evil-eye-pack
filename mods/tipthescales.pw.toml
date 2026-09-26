@@ -1,0 +1,13 @@
+name = "TipTheScales"
+filename = "TipTheScales-forge-1.20.1-9.0.0.1.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/FIxDGxJl/versions/2MJKlWJV/TipTheScales-forge-1.20.1-9.0.0.1.jar"
+hash-format = "sha512"
+hash = "c79dd29032e22c89a915fb891da25c2e0f3be6a8a289ec214bb84412ae0fa17c2c45f56dd988388ab3d4234fc26f5cfb478175daf675b8942cd641953a48a79d"
+
+[update]
+[update.modrinth]
+mod-id = "FIxDGxJl"
+version = "2MJKlWJV"

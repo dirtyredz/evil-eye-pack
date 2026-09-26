@@ -1,0 +1,13 @@
+name = "HammerMicroblocks"
+filename = "HammerMicroblocks-1.20.1-20.1.13.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "0e08ed3191bb84100abf221aacb46f647309589a"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 5549331
+project-id = 267263

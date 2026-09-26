@@ -1,0 +1,13 @@
+name = "Everlasting Abilities"
+filename = "EverlastingAbilities-1.20.1-2.3.1.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/xDwJf4pi/versions/ErUalKqL/EverlastingAbilities-1.20.1-2.3.1.jar"
+hash-format = "sha512"
+hash = "f81fa2b64b6f19f2e5bf8a14488201e94c9f34c794033a8d0a6a02b2ebe038afe2ef1aaf6228a4364313370d07f6adeed041f79e74cdc6e80f923d1b9ab6e1fd"
+
+[update]
+[update.modrinth]
+mod-id = "xDwJf4pi"
+version = "ErUalKqL"

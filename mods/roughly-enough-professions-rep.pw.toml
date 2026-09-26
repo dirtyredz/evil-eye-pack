@@ -1,0 +1,13 @@
+name = "Roughly Enough Professions (REP)"
+filename = "RoughlyEnoughProfessions-forge-1.20.1-2.0.2.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/V8XJ8f5f/versions/qdLND0lY/RoughlyEnoughProfessions-forge-1.20.1-2.0.2.jar"
+hash-format = "sha512"
+hash = "447ae8d96a75898ef4eef902bbe7d652d8ed0adcf323ea85a6965b2f1baec38ab0594d3c9858958173864d72bbed40c695cec974d16bcf25ff1c7663e66f64ec"
+
+[update]
+[update.modrinth]
+mod-id = "V8XJ8f5f"
+version = "qdLND0lY"

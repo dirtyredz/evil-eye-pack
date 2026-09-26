@@ -1,0 +1,11 @@
+{
+    "version": 1,
+    "tags": {"minecraft:item": {"forge:tools/saw": {
+        "hammermicroblocks:netherite_saw": true,
+        "hammermicroblocks:granite_saw": true,
+        "hammermicroblocks:gold_saw": true,
+        "hammermicroblocks:iron_saw": true,
+        "hammermicroblocks:diamond_saw": true
+    }}},
+    "unregistered": {}
+}

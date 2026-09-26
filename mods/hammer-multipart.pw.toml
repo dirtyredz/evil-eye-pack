@@ -1,0 +1,13 @@
+name = "HammerMultipart"
+filename = "HammerMultipart-1.20.1-20.1.19.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "b21e371ca4472aff1f4f27c4e4a2bafa96267f72"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 5309222
+project-id = 884010

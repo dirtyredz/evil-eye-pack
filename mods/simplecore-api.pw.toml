@@ -1,0 +1,13 @@
+name = "SimpleCore API"
+filename = "SimpleCoreLib-1.20.1-6.0.1.2.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "1a97a3f1bce416d27c2879e1f497a4852862da54"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 4717319
+project-id = 226136

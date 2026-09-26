@@ -1,0 +1,13 @@
+name = "Cyclops Core"
+filename = "CyclopsCore-1.20.1-1.22.3.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/Z9DM0LJ4/versions/IUMQKt4M/CyclopsCore-1.20.1-1.22.3.jar"
+hash-format = "sha512"
+hash = "eac4cbff3308bfae3a59f45eaefc6a8510a5b64729f91da48c8da27d248cb011abbfdb6c2805e937b6936a1584251b15131e6f195db59ae893f1f6e298e195a0"
+
+[update]
+[update.modrinth]
+mod-id = "Z9DM0LJ4"
+version = "IUMQKt4M"
