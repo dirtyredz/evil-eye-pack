@@ -2421,6 +2421,10 @@ file = "config/integratedtunnels-common.toml"
 hash = "b8b90ec6519787b8955247f202d2ece4ca5059f68311f4bee67d9250e3513410"
 
 [[files]]
+file = "config/inventoryprofilesnext/inventoryprofiles.json"
+hash = "d774390bc09059233dbf1b16ad05aa1cf93d8b6581556ba468880cf7fe9cc8d8"
+
+[[files]]
 file = "config/inventorysorter-client.toml"
 hash = "92de49a9405703845f2da9cde2b77dfa75c0088217c0c7a94d4e9ea200cf0549"
 
