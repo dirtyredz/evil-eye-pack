@@ -11,7 +11,7 @@
     },
     "GuiSettings": {
         "continuous_crafting_saved_value": false,
-        "enable_inventory_buttons": false,
+        "enable_inventory_buttons": true,
         "enable_inventory_editor_button": false,
         "enable_inventory_settings_button": false,
         "enable_profiles_ui": false,
@@ -21,7 +21,7 @@
         "show_regular_sort_button": false,
         "show_sort_in_columns_button": false,
         "show_sort_in_rows_button": false,
-        "show_move_all_button": false,
+        "show_move_all_button": true,
         "show_button_tooltips": false
     },
     "AutoRefillSettings": {
@@ -31,5 +31,12 @@
         "audio_replace_failed_notification": false,
         "visual_durability_notification": false,
         "audio_durability_notification": false
+    },
+    "Hotkeys": {
+        "sort_inventory": {
+            "main": {
+                "keys": "BUTTON_3"
+            }
+        }
     }
 }
