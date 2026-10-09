@@ -35,3 +35,7 @@ the "Evil Eye Dev1" MultiMC instance. This repo holds mod/shaderpack metadata an
 - `config/fancymenu/` is intentionally excluded — that mod was removed from the pack.
 - One config file (`resourceful-config-web.json`) was excluded because it contained a web-config
   password; Resourceful Config's web server is left disabled by default anyway.
+- Curios 5.x draws its slot panel inside the vanilla inventory screen, so the
+  `curios:curios_container` entry in Stylish Effects' `menu_blacklist` does not prevent overlap.
+  Keep `screen_side = "RIGHT"` under `[renderers.inventory_renderer]` in
+  `config/stylisheffects-client.toml`.

@@ -2986,7 +2986,7 @@ hash = "c7658504c6afe771cc710c50d1ad0f83ed8cb1607658cbf8f31f3df12b966c04"
 
 [[files]]
 file = "config/stylisheffects-client.toml"
-hash = "94fa4fa6642ad03c05543ee083f586579a695783ebe081468cce5c2ba94e4f83"
+hash = "45f715cf421a021992356c6bcca7b313865af727d49cb4520d790cc2b0a07aec"
 
 [[files]]
 file = "config/supplementaries-client.toml"
