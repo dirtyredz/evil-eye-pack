@@ -39,3 +39,4 @@ the "Evil Eye Dev1" MultiMC instance. This repo holds mod/shaderpack metadata an
   `curios:curios_container` entry in Stylish Effects' `menu_blacklist` does not prevent overlap.
   Keep `screen_side = "RIGHT"` under `[renderers.inventory_renderer]` in
   `config/stylisheffects-client.toml`.
+- Wither bones are unified onto Ice and Fire's: `config/almostunified/unify.json` adds `iceandfire:witherbone` to `forge:wither_bones` (the tag BHC's red heart canister recipe uses) and makes `iceandfire` the preferred mod for that tag.

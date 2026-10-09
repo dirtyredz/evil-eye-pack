@@ -1086,7 +1086,7 @@ hash = "ad711622f9b8c5cc8115f52396f5d82587b809fb20cbf9d94c7744aeebcaf4d5"
 
 [[files]]
 file = "config/almostunified/unify.json"
-hash = "9dd105eb404830a866f936672179caba237f174c21bdc31c7756442339241131"
+hash = "3cb553190f94ccf1962998abcf6a27d98149161e6e314a8c7059d537ee86b421"
 
 [[files]]
 file = "config/angelring-common.toml"
