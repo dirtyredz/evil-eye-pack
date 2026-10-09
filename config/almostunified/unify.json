@@ -4,6 +4,7 @@
     "kubejs",
     "crafttweaker",
     "create",
+    "alltheores",
     "thermal",
     "immersiveengineering",
     "mekanism"
@@ -29,7 +30,8 @@
     "forge:wires/{material}",
     "forge:storage_blocks/{material}",
     "forge:storage_blocks/raw_{material}",
-    "forge:wither_bones"
+    "forge:wither_bones",
+    "forge:silicon"
   ],
   "materials": [
     "aeternium",
@@ -81,6 +83,7 @@
     "zinc"
   ],
   "priorityOverrides": {
+    "forge:silicon": "ae2",
     "forge:wither_bones": "iceandfire"
   },
   "customTags": {

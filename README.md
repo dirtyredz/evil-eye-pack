@@ -40,3 +40,4 @@ the "Evil Eye Dev1" MultiMC instance. This repo holds mod/shaderpack metadata an
   Keep `screen_side = "RIGHT"` under `[renderers.inventory_renderer]` in
   `config/stylisheffects-client.toml`.
 - Wither bones are unified onto Ice and Fire's: `config/almostunified/unify.json` adds `iceandfire:witherbone` to `forge:wither_bones` (the tag BHC's red heart canister recipe uses) and makes `iceandfire` the preferred mod for that tag.
+- Unification owners (Almost Unified): `alltheores` for metals (steel, bronze, silver, sapphire, electrum, rods), `ae2` for silicon, `iceandfire` for wither bones; BHC wither bone drops are disabled (`boneDropRate = 0.0` in `config/bhc-common.toml`).

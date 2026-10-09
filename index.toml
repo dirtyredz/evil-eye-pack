@@ -6,7 +6,7 @@ hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
 [[files]]
 file = "README.md"
-hash = "92d59de739dff183d254caedb1472444a1d9d9cec68a5eae9236bcd806eae36f"
+hash = "97a36aae5a07fc4f6411783605f34d0577e70c519231906997189ee9cbf53c74"
 
 [[files]]
 file = "config/Advancedperipherals/general.toml"
@@ -1086,7 +1086,7 @@ hash = "ad711622f9b8c5cc8115f52396f5d82587b809fb20cbf9d94c7744aeebcaf4d5"
 
 [[files]]
 file = "config/almostunified/unify.json"
-hash = "3cb553190f94ccf1962998abcf6a27d98149161e6e314a8c7059d537ee86b421"
+hash = "317e39213a2ebf790ca7b5af0afcb27846afcf3da78b280c80a2e05bb80fc3ea"
 
 [[files]]
 file = "config/angelring-common.toml"
@@ -1602,7 +1602,7 @@ hash = "b8dba78fb4ad03763dc55537fcc2079227521f968107bfd02f0d629e1b3d40e6"
 
 [[files]]
 file = "config/bhc-common.toml"
-hash = "b17fc925b4deff62dca0162867fcdbb5afcef798db3a65f05b9fd30444c7cc56"
+hash = "d36328e31db0720e432804bbdce58c6bfacb795a4c872fe08e1ad00bcce24137"
 
 [[files]]
 file = "config/bhc/drops.json"
