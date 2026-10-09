@@ -1602,7 +1602,7 @@ hash = "b8dba78fb4ad03763dc55537fcc2079227521f968107bfd02f0d629e1b3d40e6"
 
 [[files]]
 file = "config/bhc-common.toml"
-hash = "d36328e31db0720e432804bbdce58c6bfacb795a4c872fe08e1ad00bcce24137"
+hash = "c19ef2ea00373877dd47653d891c2f6729843eb3e60427390eb8fc6cfd5ae2ef"
 
 [[files]]
 file = "config/bhc/drops.json"
