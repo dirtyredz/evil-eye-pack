@@ -1,0 +1,35 @@
+# Pack defaults; existing worlds use serverconfig/ftbessentials.snbt.
+{
+    teleportation: {
+        home: {
+            enabled: true
+            max: 3
+            cooldown: 60
+        }
+        back: {
+            enabled: true
+            cooldown: 60
+        }
+        spawn: {
+            enabled: true
+            cooldown: 60
+        }
+        tpa: {
+            enabled: true
+            cooldown: 60
+        }
+        rtp: {
+            enabled: false
+        }
+    }
+    # These commands require operator permission level 2 in FTB Essentials 2001.2.2.
+    # Retain operator access; non-operators cannot use them.
+    admin: {
+        fly: { enabled: true }
+        god: { enabled: true }
+        heal: { enabled: true }
+        feed: { enabled: true }
+        extinguish: { enabled: true }
+        speed: { enabled: true }
+    }
+}

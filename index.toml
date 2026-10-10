@@ -6,7 +6,7 @@ hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
 [[files]]
 file = "README.md"
-hash = "1216d7a7a033d013ab64c727c1b46464e414dc20e86c2e611c48725c1528fa3e"
+hash = "bea8451c75f6baf719e0e366f0437dd63c13eb238c0adb598790c9e8f0fb67f3"
 
 [[files]]
 file = "config/Advancedperipherals/general.toml"
@@ -662,7 +662,7 @@ hash = "a1a025996c8e64ac5e98fbde4540e88f60688be0e48176a1e3988d0eebb29313"
 
 [[files]]
 file = "config/ae2/client.json"
-hash = "e3a0bcd693d66ed7f52a71a8bdb3b53d5ee08d04ca4a312530f8802dc208c103"
+hash = "b619879a13708f8c538f48daf422e3da01e9ed5ba267bea3e2e2129108ca3cda"
 
 [[files]]
 file = "config/ae2/common.json"
@@ -1222,7 +1222,7 @@ hash = "f85c85191bf0fc66c2d4f58c239c0440c27a3554dd023f8b7653fe3286255a03"
 
 [[files]]
 file = "config/ars_nouveau-client.toml"
-hash = "e4cceca7aefdc88e2c2b1f4417ac045fcb5b40c875e73e10a3c09164f25bddd5"
+hash = "49fca67e5ae2e3658c5ff7f5c63f0f3482aae56f86c7f0ef0194523d135762d7"
 
 [[files]]
 file = "config/ars_nouveau-common.toml"
@@ -1742,7 +1742,7 @@ hash = "bbcc81de697b22295d1fb327a0fd0b1deebe86a33daba4713c341e15ecf89316"
 
 [[files]]
 file = "config/craftingtweaks-common.toml"
-hash = "b34cbfcac023285f80ed9d4efbf96a78aa94897016ebb957566b486f0dbbed61"
+hash = "93f36d2398364f18a25a222c7ad3d7bae8f3724be72d776ad7858496f0336ad4"
 
 [[files]]
 file = "config/create-client.toml"
@@ -2806,7 +2806,7 @@ hash = "a59667baa54738c1b294393a9b3652bcf7d392cdb8cba1c08a8006885b18e919"
 
 [[files]]
 file = "config/roughlyenoughitems/config.json5"
-hash = "20fe3cd45ed1e7f24cc85ce3d72b822fd79e4eaf085cc614064d397141c485d0"
+hash = "ef3ad8f5fb6b4ab23b8421705a0df85c7589152564ed12dac6f85ae0c356a371"
 
 [[files]]
 file = "config/roughlyenoughitems/favorites.json5"
@@ -3171,6 +3171,10 @@ hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 [[files]]
 file = "config/xnet-client.toml"
 hash = "83697e940c40810ce9408dbc6fa60400d84516d7871daf22bd94edf9faa4ae96"
+
+[[files]]
+file = "defaultconfigs/ftbessentials-server.snbt"
+hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
 file = "mods/additional-enchanted-miner.pw.toml"
