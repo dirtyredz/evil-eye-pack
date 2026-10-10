@@ -44,9 +44,9 @@
 	[Dragons.Griefing]
 		#Dragon griefing - 2 is no griefing, 1 is breaking weak blocks, 0 is default. This value is also affected by minecrafts mob griefing rule.
 		#Range: 0 ~ 2
-		"Dragon Griefing" = 0
+		"Dragon Griefing" = 2
 		#True if tamed dragons can follow the griefing rules.
-		"Tamed Dragon Griefing" = true
+		"Tamed Dragon Griefing" = false
 		#The percentage chance for a block to drop as an item when a dragon breaks it.
 		#Range: 0.0 ~ 1.0
 		"Dragon Block Breaking Drop Chance" = 0.10000000149011612
@@ -96,7 +96,7 @@
 		#True if tamed dragons go to sleep at night.
 		"Tamed Dragons Sleep" = true
 		#True if dragons can break blocks if they get stuck. Turn this off if your dragons randomly explode.
-		"Dragons Dig When Stuck" = true
+		"Dragons Dig When Stuck" = false
 		#True if dragons can drop their skull on death.
 		"Dragons Drop Skull" = true
 		#True if dragons can drop their heart on death.
@@ -156,7 +156,7 @@
 		#Range: 1.0 ~ 10000.0
 		"Cyclops Bite Strength" = 40.0
 		#Whether or not cyclops can break logs or leaves in their way
-		"Cyclops Griefing" = true
+		"Cyclops Griefing" = false
 
 	[Mobs.Sirens]
 		#Maximum siren health
@@ -253,10 +253,10 @@
 		"Myrmex Hatch Length" = 35000
 		#One out of this number chance per chunk to generate a myrmex hive.
 		#Range: 1 ~ 10000
-		"Myrmex Colony Gen Chance" = 150
+		"Myrmex Colony Gen Chance" = 450
 		#How many maximum individuals a myrmex colony can have.
 		#Range: 10 ~ 10000
-		"Myrmex Colony Max Size" = 80
+		"Myrmex Colony Max Size" = 30
 		#Base Myrmex(worker) attack strength
 		#Range: 1.0 ~ 10000.0
 		"Myrmex Base Attack Strength" = 3.0
@@ -293,7 +293,7 @@
 		#Range: 1 ~ 10000
 		"Spawn Sea Serpent Chance" = 250
 		#Whether or not sea serpents can break weak blocks in their way
-		"Sea Serpent Griefing" = true
+		"Sea Serpent Griefing" = false
 		#Default sea serpent health, this is scaled to the sea serpent's particular size
 		#Range: 1.0 ~ 10000.0
 		"Sea Serpent Base Health" = 20.0

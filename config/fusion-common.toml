@@ -1,7 +1,7 @@
 
 [General]
 	#Allow Fusion loot to be added to chests?
-	AddChestLoot = true
+	AddChestLoot = false
 	#Enable Fusion aesthetic blocks?
 	EnableAestheticsBlocks = true
 

@@ -31,7 +31,9 @@
     "forge:storage_blocks/{material}",
     "forge:storage_blocks/raw_{material}",
     "forge:wither_bones",
-    "forge:silicon"
+    "forge:silicon",
+    "forge:dusts/ender_pearl",
+    "forge:dusts/ender"
   ],
   "materials": [
     "aeternium",
@@ -84,11 +86,19 @@
   ],
   "priorityOverrides": {
     "forge:silicon": "ae2",
-    "forge:wither_bones": "iceandfire"
+    "forge:wither_bones": "iceandfire",
+    "forge:dusts/ender_pearl": "ae2",
+    "forge:dusts/ender": "ae2"
   },
   "customTags": {
     "forge:wither_bones": [
       "iceandfire:witherbone"
+    ],
+    "forge:dusts/ender_pearl": [
+      "enderio:powdered_ender_pearl"
+    ],
+    "forge:dusts/ender": [
+      "ae2:ender_dust"
     ]
   },
   "tagOwnerships": {},
