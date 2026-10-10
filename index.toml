@@ -6,7 +6,7 @@ hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
 [[files]]
 file = "README.md"
-hash = "bea8451c75f6baf719e0e366f0437dd63c13eb238c0adb598790c9e8f0fb67f3"
+hash = "701a9ec79ba17c4c48a7c14a6932654e69f67cd6e7918c085e05b3604a36ef1b"
 
 [[files]]
 file = "config/Advancedperipherals/general.toml"
@@ -367,14 +367,6 @@ hash = "d15ef71420ee757e42220d4b9e6c79ccb7f0c64901ede41f788146d01dc70998"
 [[files]]
 file = "config/adchimneys/Emitters/quark$deepslate_furnace.cfg"
 hash = "cf4a0960c722d7891ecf486c834a46f1912bbff968939cd2c514209c8d64a89f"
-
-[[files]]
-file = "config/adchimneys/Emitters/rftoolspower$blazing_generator.cfg"
-hash = "d151eb73219b65f148834c656a83fb5322e53c867557e8ef7666c951915b1656"
-
-[[files]]
-file = "config/adchimneys/Emitters/rftoolspower$coal_generator.cfg"
-hash = "c7efd2d545a9c0bb4f648cdfc88ff3feb3eebfc1bd2ca66d1ea761fe088b90f1"
 
 [[files]]
 file = "config/adchimneys/Emitters/silents_mechanisms$coal_generator.cfg"
@@ -2749,14 +2741,6 @@ file = "config/productivebees-client.toml"
 hash = "1606620842afcf1d1cf6520ab6deb31ac61c35764680751b945755acc477e407"
 
 [[files]]
-file = "config/quarryplus-client.toml"
-hash = "ff8eef07f2b4f9b77889af9e93413235d838791402fde048c5230ebc9efc338b"
-
-[[files]]
-file = "config/quarryplus-common.toml"
-hash = "916698650c3b19ea435070bd738c31625d8f10042f03b8500fe6fbae4cfea890"
-
-[[files]]
 file = "config/railways-client.toml"
 hash = "3d25f3cde951bffc9575f18e90bdff6b4ce64ec4aed9acc5878f65391257e97f"
 
@@ -2779,10 +2763,6 @@ hash = "88df54645d123f2e7f8f902af25432659f00ada56ca8bd48c4ccbfa84e5df5a3"
 [[files]]
 file = "config/rftoolsdim-common.toml"
 hash = "b6d49c80930619aae0e9b89dfc0e2b83ba572e00cb111eeecf157b544f3ca9cf"
-
-[[files]]
-file = "config/rftoolsstorage-client.toml"
-hash = "1cca8a747b11b98e2ffcf95a654aa1a7aa16f495dee288c458ff1727dc682b72"
 
 [[files]]
 file = "config/rftoolsutility-client.toml"
@@ -2931,14 +2911,6 @@ hash = "8f8498a68e7e705c071f903999a9a122561bd40d6359f5abd7775d9f070c017b"
 [[files]]
 file = "config/sophisticatedstorage-client.toml"
 hash = "a2f53f0a46a448a684ff024bcc0ea910a9adca68bf9b2ff09e0bacba046f31a2"
-
-[[files]]
-file = "config/soulshards/soulshards.json"
-hash = "010ce2e46bf4ac184abd47e7d76d2415ed92773cac81e993801a6d4cd9058198"
-
-[[files]]
-file = "config/soulshards/tiers.json"
-hash = "78a235af4b73abe82f8b31f009be6bc83d6dc434385676e9dd78f5e335ee728e"
 
 [[files]]
 file = "config/spark/config.json"
@@ -3175,11 +3147,6 @@ hash = "83697e940c40810ce9408dbc6fa60400d84516d7871daf22bd94edf9faa4ae96"
 [[files]]
 file = "defaultconfigs/ftbessentials-server.snbt"
 hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
-
-[[files]]
-file = "mods/additional-enchanted-miner.pw.toml"
-hash = "d125e3d3b566fca232382434c69964c3595af0a20c6947a930198177a429de19"
-metafile = true
 
 [[files]]
 file = "mods/additional-lanterns.pw.toml"
@@ -3429,11 +3396,6 @@ metafile = true
 [[files]]
 file = "mods/createaddition.pw.toml"
 hash = "5bf5d5fd3ee61dae57ec321ef60921c159ab1afea32db67b097fd42cbddee3cc"
-metafile = true
-
-[[files]]
-file = "mods/creeperhost-presents-soul-shards.pw.toml"
-hash = "46ab71e0d7d7300ec015bc9d44becf9ac3c232e481315d5f541f8956e9ec075c"
 metafile = true
 
 [[files]]
@@ -3767,11 +3729,6 @@ hash = "045d582e2c534c5bb96d7336b4ae2cd12692c6de29b19ae5f1dbfd8759c03b03"
 metafile = true
 
 [[files]]
-file = "mods/polylib.pw.toml"
-hash = "947d5f3b9213360b68e9b65a8d2d5111939e82e248cf61eb02137f119c6eaeb6"
-metafile = true
-
-[[files]]
 file = "mods/polymorph.pw.toml"
 hash = "d9986c3798db028db0e1ab30851f7fab87ce12094448685ef7c4ba64374cbfa0"
 metafile = true
@@ -3832,16 +3789,6 @@ hash = "1766e7bc57bc09d8cea252d499fab2a0e15f1cff21779e527dc20a13b4d34977"
 metafile = true
 
 [[files]]
-file = "mods/rftools-power.pw.toml"
-hash = "27f77ebb741ffcb5d490c91b5bd55d0de49d0cf701523a006744757ee4fd0fe6"
-metafile = true
-
-[[files]]
-file = "mods/rftools-storage.pw.toml"
-hash = "17611d1ee4dd9f6be698f611607f2f8e72f51bad6ac31e6b7fa86e42478facfb"
-metafile = true
-
-[[files]]
 file = "mods/rftools-utility.pw.toml"
 hash = "1b09c6e3c956052fac45229894f612722c9fd5efe045671e99f0e02335c22da8"
 metafile = true
@@ -3859,11 +3806,6 @@ metafile = true
 [[files]]
 file = "mods/roughly-enough-professions-rep.pw.toml"
 hash = "2a15af7632f794782a547e672354f41068c8af62f20dfa5fafd7e3cfc74e1c81"
-metafile = true
-
-[[files]]
-file = "mods/scalable-cats-force.pw.toml"
-hash = "145a7657b3680acd292c597f60fc1d7907d351783b3f75ce13f0c9a714e1b12b"
 metafile = true
 
 [[files]]

@@ -6,7 +6,7 @@ the "Evil Eye Dev1" MultiMC instance. This repo holds mod/shaderpack metadata an
 
 ## What's in it
 
-- 160 mods (metafiles pointing at CurseForge or Modrinth, matched by hash to the exact versions used
+- 157 mods (metafiles pointing at CurseForge or Modrinth, matched by hash to the exact versions used
   in the source instance — no upgrades)
 - `config/` — the instance's mod configs, indexed as plain files by packwiz
 - `shaderpacks/` — Complementary Unbound, Complementary Reimagined, and MakeUp UltraFast, plus their
@@ -48,3 +48,5 @@ the "Evil Eye Dev1" MultiMC instance. This repo holds mod/shaderpack metadata an
 - FTB Essentials defaults ship in `defaultconfigs/ftbessentials-server.snbt`: three homes; 60-second cooldowns for home/back/spawn/tpa; RTP disabled. Fly/god/heal/feed/extinguish/speed remain operator-only (level 2), enforced by the installed mod. For an existing world, merge these settings into `<world>/serverconfig/ftbessentials.snbt` while stopped; the default filename and world filename differ.
 - AE2's native REI plugin honors both facade viewer switches, so no facade filter is needed. Jade supplies inventory mod-name tooltips; REI's append switch is disabled. Crafting Tweaks and Ars Nouveau hide their recipe-book buttons.
 - REI manual filters hide 20 confirmed creative-only item IDs and 654 AllTheCompressed 4x-9x items using serialized item stacks. Lower compression tiers and ordinary building variants remain visible; recipes and item availability are unchanged.
+- RFTools Storage, Additional Enchanted Miner (QuarryPlus), RFTools Power and Soul Shards are removed after checking required dependencies in every installed jar (including nested mod jars). Their now-unused PolyLib and Scalable Cat's Force libraries are also removed; the Scala loader was used only by QuarryPlus. RFTools Builder, Base and the other RFTools modules remain.
+- Before updating an existing world, back it up and migrate storage contents, machines, power connections and stored souls from the removed mods. Their blocks/items and associated contents will disappear when the world is loaded without them. Stop the game/server before updating configs and restart afterward.
