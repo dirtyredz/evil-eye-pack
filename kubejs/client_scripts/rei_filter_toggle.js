@@ -59,17 +59,35 @@ function reiRestoreFilters() {
   reiRefresh()
 }
 
+// Log a failure with the Java stack trace when there is one. Nothing we do may throw
+// into Forge's event bus: an exception there crashes the whole client.
+function reiLogError(where, err) {
+  try {
+    console.error('REI toggle (' + where + '): ' + err)
+    let je = err.javaException || err.rhinoException
+    if (je) {
+      let sw = new (Java.loadClass('java.io.StringWriter'))()
+      je.printStackTrace(new (Java.loadClass('java.io.PrintWriter'))(sw))
+      console.error(String(sw.toString()))
+    }
+  } catch (ignored) {}
+}
+
 // Screen hook. ForgeEvents is startup-only, so register on the Forge bus directly.
 // Forge listeners survive /kubejs reload: register once, and have the listener call
 // a function kept in global so reloaded code is still picked up.
 global.reiOnScreenInit = e => {
-  if (!(e.getScreen() instanceof ReiContainerScreen)) return
-  let label = global.reiFilterOff ? 'REI: ALL' : 'REI: CLEAN'
-  let b = ReiButton.builder(ReiComponent.literal(label), btn => {
-    if (global.reiFilterOff) reiRestoreFilters(); else reiDisableFilters()
-    btn.setMessage(ReiComponent.literal(global.reiFilterOff ? 'REI: ALL' : 'REI: CLEAN'))
-  }).bounds(2, 2, 70, 14).build()
-  e.addListener(b)
+  try {
+    if (!(e.getScreen() instanceof ReiContainerScreen)) return
+    let label = global.reiFilterOff ? 'REI: ALL' : 'REI: CLEAN'
+    let b = ReiButton.builder(ReiComponent.literal(label), btn => {
+      try {
+        if (global.reiFilterOff) reiRestoreFilters(); else reiDisableFilters()
+        btn.setMessage(ReiComponent.literal(global.reiFilterOff ? 'REI: ALL' : 'REI: CLEAN'))
+      } catch (err) { reiLogError('press', err) }
+    }).bounds(2, 2, 70, 14).build()
+    e.addListener(b)
+  } catch (err) { reiLogError('screen init', err) }
 }
 
 if (!global.reiListenerRegistered) {
@@ -77,8 +95,12 @@ if (!global.reiListenerRegistered) {
   Java.loadClass('net.minecraftforge.common.MinecraftForge').EVENT_BUS.addListener(
     Java.loadClass('net.minecraftforge.eventbus.api.EventPriority').NORMAL, false,
     Java.loadClass('net.minecraftforge.client.event.ScreenEvent$Init$Post'),
-    e => global.reiOnScreenInit(e))
+    e => {
+      try { global.reiOnScreenInit(e) } catch (err) { console.error('REI toggle (listener): ' + err) }
+    })
 }
 
 // Restore on logout so a stray REI config save can't persist the emptied state.
-ClientEvents.loggedOut(() => reiRestoreFilters())
+ClientEvents.loggedOut(() => {
+  try { reiRestoreFilters() } catch (err) { reiLogError('logout', err) }
+})
