@@ -6,6 +6,8 @@ const ReiConfigManager = Java.loadClass('me.shedaniel.rei.api.client.config.Conf
 const ReiEntryRegistry = Java.loadClass('me.shedaniel.rei.api.client.registry.entry.EntryRegistry')
 const ReiRuntime = Java.loadClass('me.shedaniel.rei.api.client.REIRuntime')
 const ReiSearchRule = Java.loadClass('me.shedaniel.rei.impl.client.entry.filtering.rules.SearchFilteringRule')
+const ReiScreenRegistry = Java.loadClass('me.shedaniel.rei.api.client.registry.screen.ScreenRegistry')
+const Minecraft = Java.loadClass('net.minecraft.client.Minecraft')
 const ReiButton = Java.loadClass('net.minecraft.client.gui.components.Button')
 const ReiComponent = Java.loadClass('net.minecraft.network.chat.Component')
 const ReiContainerScreen = Java.loadClass('net.minecraft.client.gui.screens.inventory.AbstractContainerScreen')
@@ -15,6 +17,14 @@ if (global.reiStash === undefined) global.reiStash = null
 
 function reiFiltering() {
   return ReiConfigManager.getInstance().getConfig().advanced.filtering
+}
+
+// Copy a Java list into a plain JS array. Array.from / for...of don't work on Java
+// collections in this Rhino, so use index loops everywhere.
+function reiToArray(list) {
+  let out = []
+  for (let i = 0; i < list.size(); i++) out.push(list.get(i))
+  return out
 }
 
 function reiRefresh() {
@@ -28,16 +38,17 @@ function reiDisableFilters() {
   if (global.reiFilterOff) return
   let f = reiFiltering()
   let rules = []
-  for (let r of Array.from(f.filteringRules)) {
-    if (r instanceof ReiSearchRule) rules.push(r)
+  let all = reiToArray(f.filteringRules)
+  for (let i = 0; i < all.length; i++) {
+    if (all[i] instanceof ReiSearchRule) rules.push(all[i])
   }
   global.reiStash = {
-    stacks: Array.from(f.filteredStacks),
+    stacks: reiToArray(f.filteredStacks),
     rules: rules,
     displays: f.shouldFilterDisplays
   }
   f.filteredStacks.clear()
-  for (let r of rules) f.filteringRules.remove(r)
+  for (let i = 0; i < rules.length; i++) f.filteringRules.remove(rules[i])
   f.shouldFilterDisplays = false
   global.reiFilterOff = true
   reiRefresh()
@@ -50,8 +61,8 @@ function reiRestoreFilters() {
   let s = global.reiStash
   if (s) {
     f.filteredStacks.clear()
-    f.filteredStacks.addAll(s.stacks)
-    for (let r of s.rules) f.filteringRules.add(r)
+    for (let i = 0; i < s.stacks.length; i++) f.filteredStacks.add(s.stacks[i])
+    for (let i = 0; i < s.rules.length; i++) f.filteringRules.add(s.rules[i])
     f.shouldFilterDisplays = s.displays
   }
   global.reiStash = null
@@ -79,13 +90,20 @@ function reiLogError(where, err) {
 global.reiOnScreenInit = e => {
   try {
     if (!(e.getScreen() instanceof ReiContainerScreen)) return
+    // Sit just left of REI's bottom-centre search field. Mirrors ScreenOverlayImpl
+    // .getCenterSearchFieldArea (REI 12.1.785): x = screen bounds x, y = guiScaledHeight - 22,
+    // height 18; its craftable/config buttons sit to the right, so left is free.
+    let w = 64
+    let sb = ReiScreenRegistry.getInstance().getScreenBounds(e.getScreen())
+    let x = sb.x - w - 2
+    let y = Minecraft.getInstance().getWindow().getGuiScaledHeight() - 22
     let label = global.reiFilterOff ? 'REI: ALL' : 'REI: CLEAN'
     let b = ReiButton.builder(ReiComponent.literal(label), btn => {
       try {
         if (global.reiFilterOff) reiRestoreFilters(); else reiDisableFilters()
         btn.setMessage(ReiComponent.literal(global.reiFilterOff ? 'REI: ALL' : 'REI: CLEAN'))
       } catch (err) { reiLogError('press', err) }
-    }).bounds(2, 2, 70, 14).build()
+    }).bounds(x, y, w, 18).build()
     e.addListener(b)
   } catch (err) { reiLogError('screen init', err) }
 }
