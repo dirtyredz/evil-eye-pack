@@ -6,7 +6,7 @@ hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
 [[files]]
 file = "README.md"
-hash = "ea1dea1b4a00cbe0a93624082259b876ce102af08fb44dc904bc4113ebb99294"
+hash = "9a66f96f735092990f198a37a20f4e7a036152e2bd5560ab9d4d00fc52a3b54c"
 
 [[files]]
 file = "config/MouseTweaks.cfg"
@@ -2214,7 +2214,7 @@ hash = "a59667baa54738c1b294393a9b3652bcf7d392cdb8cba1c08a8006885b18e919"
 
 [[files]]
 file = "config/roughlyenoughitems/config.json5"
-hash = "8ae834e0145df3e8dd3534e083568b9b2c0ee87a8db446471dd041eae3a2f181"
+hash = "6ee9008fbf2af90cc2450306c8a96b213adbf6be63a98dda12097960deb37930"
 
 [[files]]
 file = "config/roughlyenoughitems/favorites.json5"
