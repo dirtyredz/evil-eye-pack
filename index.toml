@@ -6,7 +6,7 @@ hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
 [[files]]
 file = "README.md"
-hash = "9a66f96f735092990f198a37a20f4e7a036152e2bd5560ab9d4d00fc52a3b54c"
+hash = "8ca1f0240dd61133c5aa24e028290a97db78a2fb87e36ad66e0aa8cebb52d9c4"
 
 [[files]]
 file = "config/MouseTweaks.cfg"
@@ -2381,6 +2381,10 @@ file = "defaultconfigs/ftbessentials-server.snbt"
 hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
+file = "kubejs/client_scripts/rei_filter_toggle.js"
+hash = "7a3e9808db10f8cd7cffb944878f170dcc15eb1b06056f2c98fd045ea880f25b"
+
+[[files]]
 file = "mods/additional-lanterns.pw.toml"
 hash = "ff4f060c7a85b71315a860c7732f68546c1e9a1bd5353070bcd711bea5e3bb9d"
 metafile = true
@@ -2841,6 +2845,11 @@ hash = "70a4ecd9d0c04ad20aeb976c1ee28933ce48a0a1f43df42deafaeb2ad7235297"
 metafile = true
 
 [[files]]
+file = "mods/kubejs.pw.toml"
+hash = "9ec37ad87c0c174bdafe7d52fc98f96b83aaef0ad42ae59e196655d3d784f31f"
+metafile = true
+
+[[files]]
 file = "mods/large-ore-deposits.pw.toml"
 hash = "c22ce9510fde0135109e883ffea62c74540c8fb3b9cd3a9aea74f8599c8c5e2c"
 metafile = true
@@ -3023,6 +3032,11 @@ metafile = true
 [[files]]
 file = "mods/rftools-utility.pw.toml"
 hash = "1b09c6e3c956052fac45229894f612722c9fd5efe045671e99f0e02335c22da8"
+metafile = true
+
+[[files]]
+file = "mods/rhino.pw.toml"
+hash = "5b92406160d9ea8a61ddf111caaecb7f6283678e2c40b08b72dce3eeaf20dc96"
 metafile = true
 
 [[files]]
