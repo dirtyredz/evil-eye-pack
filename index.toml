@@ -2214,7 +2214,7 @@ hash = "a59667baa54738c1b294393a9b3652bcf7d392cdb8cba1c08a8006885b18e919"
 
 [[files]]
 file = "config/roughlyenoughitems/config.json5"
-hash = "e7655565b924a7fc15941e08658bf3af9dc5e49316c3cf5fc4aedc0086ebba45"
+hash = "3fcd0dfd2c15c26750b6b3349fc0c43640b92f1e70854a2b690539ace599e4e0"
 
 [[files]]
 file = "config/roughlyenoughitems/favorites.json5"
