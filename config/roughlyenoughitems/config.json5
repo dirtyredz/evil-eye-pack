@@ -1703,10 +1703,10 @@
 				"{id:\"roughlyenoughitems:manual\",rule:{}}",
 				"{id:\"roughlyenoughitems:basic\",rule:{}}",
 				"{id:\"roughlyenoughitems:hidden_from_recipe_viewers\",rule:{}}",
-				"{id:\"roughlyenoughitems:search\",rule:{filter:\"*filled_soul_vial\",show:0b}}",
-				"{id:\"roughlyenoughitems:search\",rule:{filter:\"*broken_spawner\",show:0b}}",
 				"{id:\"roughlyenoughitems:search\",rule:{filter:\"*filled_soul_vial #zombie -#villager -#horse\",show:1b}}",
-				"{id:\"roughlyenoughitems:search\",rule:{filter:\"*broken_spawner #zombie -#villager -#horse\",show:1b}}"
+				"{id:\"roughlyenoughitems:search\",rule:{filter:\"*broken_spawner #zombie -#villager -#horse\",show:1b}}",
+				"{id:\"roughlyenoughitems:search\",rule:{filter:\"*filled_soul_vial\",show:0b}}",
+				"{id:\"roughlyenoughitems:search\",rule:{filter:\"*broken_spawner\",show:0b}}"
 			]
 		}
 	}
