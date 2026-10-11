@@ -1,0 +1,6 @@
+# Unshipped repository tooling and documentation: never indexed or installed by packwiz.
+# packwiz also skips .git, .gitattributes, .gitignore and this file by itself.
+tools/
+docs/
+/STRUCTURE.md
+/CLAUDE.md

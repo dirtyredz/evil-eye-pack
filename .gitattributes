@@ -1,0 +1,14 @@
+# Pack files are hashed over the LF bytes git stores (core.autocrlf=input) and GitHub
+# serves; keep pack text formats and scripts LF on every checkout.
+*.toml text eol=lf
+*.json text eol=lf
+*.json5 text eol=lf
+*.js text eol=lf
+*.cjs text eol=lf
+*.css text eol=lf
+*.cfg text eol=lf
+*.txt text eol=lf
+*.properties text eol=lf
+*.snbt text eol=lf
+*.md text eol=lf
+*.dat binary

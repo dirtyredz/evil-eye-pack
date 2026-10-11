@@ -1,0 +1,104 @@
+/** EMI Config */
+/** Evil Eye EMI trial - only the settings mapped from the previous REI setup are listed. */
+/** EMI fills in every other value with its default and rewrites this file on launch. */
+
+#general {
+	/**
+	 * Whether EMI is enabled and visible.
+	 */
+	enabled: true;
+
+	/**
+	 * Cheating stays off, including in creative mode (REI cheating was false).
+	 */
+	cheat-mode: false;
+
+	/**
+	 * Index every registered item plus creative-tab variants (the REI entry list did the
+	 * same). The EMI curation display filter relies on this.
+	 */
+	index-source: creative-plus-registered;
+
+	/**
+	 * The centred search bar searches the right (index) sidebar.
+	 */
+	search-sidebar: right;
+
+	/**
+	 * REI tooltipSearch ALWAYS.
+	 */
+	search-tooltip-by-default: true;
+
+	/**
+	 * REI modSearch and tagSearch were PREFIX, so use @mod and #tag in the search bar.
+	 */
+	search-mod-name-by-default: false;
+
+	search-tags-by-default: false;
+}
+
+#ui {
+	/**
+	 * REI appendModNames.
+	 */
+	append-mod-id: true;
+
+	append-item-mod-id: true;
+
+	/**
+	 * REI searchFieldLocation CENTER.
+	 */
+	center-search-bar: true;
+
+	/**
+	 * REI maxRecipesPageHeight 300.
+	 */
+	maximum-recipe-screen-height: 300;
+
+	/**
+	 * Favorites on the left, as before.
+	 */
+	left-sidebar-pages: favorites;
+
+	/**
+	 * Index on the right with an always-visible header to switch to CRAFTABLES
+	 * (replaces the REI craftable-only button, with no dependency on the vanilla recipe book).
+	 */
+	right-sidebar-pages: index, craftables;
+
+	right-sidebar-header: visible;
+}
+
+#binds {
+	/**
+	 * REI hide keybind Ctrl+O.
+	 */
+	toggle-visibility: "ctrl key.keyboard.o";
+
+	/**
+	 * REI recipe keybind R.
+	 */
+	view-recipes: "key.keyboard.r";
+	view-recipes: "key.mouse.left";
+
+	/**
+	 * REI usage keybind U.
+	 */
+	view-uses: "key.keyboard.u";
+	view-uses: "key.mouse.right";
+
+	/**
+	 * REI favorite keybind A.
+	 */
+	favorite: "key.keyboard.a";
+
+	/**
+	 * REI previous screen keybind Backspace.
+	 */
+	back: "key.keyboard.backspace";
+
+	/**
+	 * REI copy recipe identifier on middle click.
+	 */
+	copy-recipe-id: "key.mouse.middle";
+}
