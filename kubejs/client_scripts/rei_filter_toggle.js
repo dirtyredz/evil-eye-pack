@@ -59,7 +59,10 @@ function reiRestoreFilters() {
   reiRefresh()
 }
 
-ForgeEvents.onEvent('net.minecraftforge.client.event.ScreenEvent$Init$Post', e => {
+// Screen hook. ForgeEvents is startup-only, so register on the Forge bus directly.
+// Forge listeners survive /kubejs reload: register once, and have the listener call
+// a function kept in global so reloaded code is still picked up.
+global.reiOnScreenInit = e => {
   if (!(e.getScreen() instanceof ReiContainerScreen)) return
   let label = global.reiFilterOff ? 'REI: ALL' : 'REI: CLEAN'
   let b = ReiButton.builder(ReiComponent.literal(label), btn => {
@@ -67,7 +70,15 @@ ForgeEvents.onEvent('net.minecraftforge.client.event.ScreenEvent$Init$Post', e =
     btn.setMessage(ReiComponent.literal(global.reiFilterOff ? 'REI: ALL' : 'REI: CLEAN'))
   }).bounds(2, 2, 70, 14).build()
   e.addListener(b)
-})
+}
+
+if (!global.reiListenerRegistered) {
+  global.reiListenerRegistered = true
+  Java.loadClass('net.minecraftforge.common.MinecraftForge').EVENT_BUS.addListener(
+    Java.loadClass('net.minecraftforge.eventbus.api.EventPriority').NORMAL, false,
+    Java.loadClass('net.minecraftforge.client.event.ScreenEvent$Init$Post'),
+    e => global.reiOnScreenInit(e))
+}
 
 // Restore on logout so a stray REI config save can't persist the emptied state.
 ClientEvents.loggedOut(() => reiRestoreFilters())

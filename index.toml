@@ -2382,7 +2382,7 @@ hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
 file = "kubejs/client_scripts/rei_filter_toggle.js"
-hash = "7a3e9808db10f8cd7cffb944878f170dcc15eb1b06056f2c98fd045ea880f25b"
+hash = "075712d22fd53d007bd13f8ad85e178536075be9b16f9cf6f466fe87bcc1ade7"
 
 [[files]]
 file = "mods/additional-lanterns.pw.toml"
