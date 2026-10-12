@@ -60,8 +60,8 @@ recipe-book suppression and Stylish Effects' right-side placement.
 
 ```
 node tools/emi_curation/migrate_rei.cjs --check
-node --test tools/emi_curation/tests/migration.test.cjs tools/emi_curation/tests/policy.test.cjs tools/emi_curation/tests/session.test.cjs tools/emi_curation/tests/emi_config.test.cjs tools/emi_curation/tests/class_filter.test.cjs
-node --test tools/packwiz/tests/verify_hashes.test.cjs
+node --test tools/emi_curation/tests/*.cjs
+node --test tools/packwiz/tests/*.cjs
 node tools/packwiz/verify_hashes.cjs
 node tools/packwiz/verify_hashes.cjs --jars <dir with the downloaded jars>
 for f in kubejs/client_scripts/emi_curation/*.js; do node --check "$f"; done
