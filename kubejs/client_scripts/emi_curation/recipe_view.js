@@ -18,7 +18,9 @@
   // EMI bakes a sorted manager on a worker thread after reload; wait for it.
   function isBusy() { return recipes().activeWorker != null }
 
-  function installRef(manager) {
+  // Installs a manager (EMI's own or our wrapper object) and returns the Java object
+  // EMI now holds (Rhino proxies a JS wrapper).
+  function install(manager) {
     recipes().manager = manager
     return recipes().manager
   }
@@ -42,7 +44,6 @@
     var checked = Collections.synchronizedMap(I.newIdentityMap())
     var hidden = Collections.synchronizedMap(I.newIdentityMap())
     var lists = Collections.synchronizedMap(I.newIdentityMap())
-    var P = ns.policy
 
     function recipeHidden(recipe) {
       if (recipe == null) return false
@@ -65,8 +66,8 @@
       if (cached != null) return cached
       var out = I.newList()
       var src = I.copy(list)
-      for (var i = 0; i < P.len(src); i++) {
-        var r = P.at(src, i)
+      for (var i = 0; i < I.len(src); i++) {
+        var r = I.at(src, i)
         if (!recipeHidden(r)) out.add(r)
       }
       var view = I.freeze(out)
@@ -92,18 +93,11 @@
     }
   }
 
-  // Installs a wrapper object and returns the Java proxy EMI now holds.
-  function installWrapper(wrapper) {
-    recipes().manager = wrapper
-    return recipes().manager
-  }
-
   ns.recipeView = {
     current: current,
     isBusy: isBusy,
-    installRef: installRef,
+    install: install,
     isRecipeHidden: isRecipeHidden,
-    createWrapper: createWrapper,
-    installWrapper: installWrapper
+    createWrapper: createWrapper
   }
 })(global.emiCuration || (global.emiCuration = {}))

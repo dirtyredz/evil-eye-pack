@@ -9,7 +9,8 @@
   var ID_RE = /^[a-z0-9_.-]+:[a-z0-9_.\/-]+$/
   var CURATION_DIR = 'config/emi-curation/'
 
-  // Length / element access that works for JS arrays and Java lists alike.
+  // Private len/at for isDisplayHidden (arrays and Java lists); the shared copies live in
+  // java_interop.js so this file stays free of Java.
   function len(list) {
     if (list === null || list === undefined) return 0
     return typeof list.size === 'function' ? list.size() : list.length
@@ -160,8 +161,6 @@
 
   ns.policy = {
     SCHEMA: SCHEMA,
-    len: len,
-    at: at,
     compile: compile,
     load: load,
     classifyId: classifyId,

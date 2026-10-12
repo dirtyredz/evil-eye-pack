@@ -20,7 +20,7 @@
       error: null,
       reapply: true,
       failed: { index: null, recipe: null },
-      index: { master: null, baseline: null, clean: null, installed: null, keySet: null },
+      index: { master: null, baseline: null, clean: null, installed: null },
       recipe: { baseline: null, wrapper: null, wrapperLoad: null, installed: null, known: null }
     }
   }
@@ -48,41 +48,9 @@
     return policy
   }
 
-  // Classification per registry key (Item/Fluid object), so the id string is built once
-  // per key rather than once per stack; only the two NBT-exception ids look at NBT.
-  var keyClass = null
-
-  function isPolicyHidden(stack) {
-    if (keyClass == null) keyClass = ns.interop.newIdentityMap()
-    var key = stack.getKey()
-    var c = keyClass.get(key)
-    if (c == null) {
-      var desc = ns.interop.describe(stack)
-      c = ns.policy.classifyId(policy, desc.id, desc.isItem)
-      keyClass.put(key, c)
-      if (c === 'nbt') return ns.policy.isStackHidden(policy, desc)
-      return c === 'hide'
-    }
-    c = String(c)
-    if (c === 'nbt') return ns.policy.isStackHidden(policy, ns.interop.describe(stack))
-    return c === 'hide'
-  }
-
-  // "Hidden" for REI-style display filtering: hidden by this pack, hidden by the user in
-  // EMI, or removed from EMI's index entirely (tag/plugin/data exclusions).
-  function isDisplayStackHidden(stack) {
-    if (stack.isEmpty()) return false
-    if (isPolicyHidden(stack)) return true
-    var EmiHidden = ns.interop.cls('dev.emi.emi.runtime.EmiHidden')
-    if (EmiHidden.isHidden(stack)) return true
-    var Item = ns.interop.cls('net.minecraft.world.item.Item')
-    var key = stack.getKey()
-    if (key instanceof Item) {
-      if (st.index.keySet == null) st.index.keySet = ns.indexView.buildKeySet(st.index.master)
-      return !st.index.keySet.contains(key)
-    }
-    return false
-  }
+  // Decisions live in hiding.js; these bind them to the loaded policy and current state.
+  function isPolicyHidden(stack) { return ns.hiding.isPolicyHidden(policy, stack) }
+  function isDisplayStackHidden(stack) { return ns.hiding.isDisplayHidden(policy, st.index.master, stack) }
 
   function emiReady() {
     var EmiReloadManager = ns.interop.cls('dev.emi.emi.runtime.EmiReloadManager')
@@ -111,7 +79,6 @@
     var master = ns.indexView.currentMaster()
     if (!ns.interop.sameRef(master, st.index.master)) {
       st.index.master = master
-      st.index.keySet = null
     }
     st.index.baseline = cur
     st.index.clean = null
@@ -128,16 +95,16 @@
   function applyRecipes() {
     if (st.mode === CLEAN && policy.displayFiltering) {
       if (st.recipe.wrapper == null || st.recipe.wrapperLoad !== loadToken) {
-        var ref = ns.recipeView.installWrapper(ns.recipeView.createWrapper(st.recipe.baseline, isDisplayStackHidden))
+        var ref = ns.recipeView.install(ns.recipeView.createWrapper(st.recipe.baseline, isDisplayStackHidden))
         knownWrappers().put(ref, st.recipe.baseline)
         st.recipe.wrapper = ref
         st.recipe.wrapperLoad = loadToken
       } else {
-        ns.recipeView.installRef(st.recipe.wrapper)
+        ns.recipeView.install(st.recipe.wrapper)
       }
       st.recipe.installed = st.recipe.wrapper
     } else {
-      st.recipe.installed = ns.recipeView.installRef(st.recipe.baseline)
+      st.recipe.installed = ns.recipeView.install(st.recipe.baseline)
     }
   }
 
@@ -174,7 +141,7 @@
   // Puts back the last complete view after a failure.
   function restore(indexRef, recipeRef) {
     try { if (indexRef != null) { ns.indexView.install(indexRef); st.index.installed = indexRef } } catch (e1) { ns.diag.logError('restore index', e1) }
-    try { if (recipeRef != null) { ns.recipeView.installRef(recipeRef); st.recipe.installed = recipeRef } } catch (e2) { ns.diag.logError('restore recipes', e2) }
+    try { if (recipeRef != null) { ns.recipeView.install(recipeRef); st.recipe.installed = recipeRef } } catch (e2) { ns.diag.logError('restore recipes', e2) }
     try { ns.indexView.refresh() } catch (e3) { ns.diag.logError('restore refresh', e3) }
   }
 
@@ -259,7 +226,7 @@
       }
       if (st.recipe.installed != null && st.recipe.baseline != null &&
           ns.interop.sameRef(ns.recipeView.current(), st.recipe.installed)) {
-        ns.recipeView.installRef(st.recipe.baseline)
+        ns.recipeView.install(st.recipe.baseline)
       }
     } catch (err) {
       ns.diag.logError('logout restore', err)

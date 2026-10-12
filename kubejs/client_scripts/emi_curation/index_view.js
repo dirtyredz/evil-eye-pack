@@ -21,10 +21,10 @@
   // Immutable copy of `baseline` without the stacks `isHidden` rejects, in EMI order.
   function buildClean(baseline, isHidden) {
     var out = ns.interop.newList()
-    var P = ns.policy
+    var I = ns.interop
     var src = ns.interop.copy(baseline)
-    for (var i = 0; i < P.len(src); i++) {
-      var stack = P.at(src, i)
+    for (var i = 0; i < I.len(src); i++) {
+      var stack = I.at(src, i)
       if (!isHidden(stack)) out.add(stack)
     }
     return ns.interop.freeze(out)
@@ -36,9 +36,9 @@
   function buildKeySet(master) {
     var HashSet = ns.interop.cls('java.util.HashSet')
     var keys = new HashSet()
-    var P = ns.policy
+    var I = ns.interop
     var src = ns.interop.copy(master)
-    for (var i = 0; i < P.len(src); i++) keys.add(P.at(src, i).getKey())
+    for (var i = 0; i < I.len(src); i++) keys.add(I.at(src, i).getKey())
     return keys
   }
 

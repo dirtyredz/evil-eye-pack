@@ -31,6 +31,12 @@ curation and the CLEAN/ALL button.
 - The button sits beside the centred search bar on container and inventory screens. It moves aside for EMI's sidebars and buttons. It disappears with Ctrl+O and is inactive (`EMI: ...`) while EMI loads.
 - `EMI: ERROR` means applying a view failed and the last complete view was kept. Click it to retry. `EMI: N/A` means the curation files could not be read. Check `logs/kubejs/client.log` for `EMI curation`.
 
+### How the scripts apply a view
+
+`session.js` runs on every client tick. Once EMI has finished its reload and recipe worker and a player exists, it **syncs** (compares EMI's current index list and recipe manager with the objects it installed last; anything different is a new EMI generation and becomes the new baseline) and then **applies** the view for the current mode: CLEAN installs the filtered index copy and the display-filtering recipe wrapper, ALL reinstalls the baselines, followed by a search and sidebar refresh. Nothing is applied when nothing changed. `hiding.js` supplies the hide decisions and the views build the objects.
+
+**Restore on failure:** before applying, the session remembers the objects currently installed. If any step throws, it puts those back (each step guarded), keeps the last complete view, sets `EMI: ERROR`, and does not retry until EMI replaces its lists or the owner clicks the button. A failed toggle also returns to the previous mode. On logout the session reinstalls EMI's own objects, but only if ours are still the installed ones, and resets to CLEAN.
+
 ### Settings mapping (REI → EMI)
 
 | REI | EMI (`config/emi.css`) |
