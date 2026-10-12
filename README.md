@@ -1,8 +1,9 @@
 # Evil Eye
 
 A [packwiz](https://packwiz.infra.link/) modpack for Minecraft 1.20.1 (Forge 47.4.10), built from
-the "Evil Eye Dev1" MultiMC instance. This repo holds mod/shaderpack metadata and config files only
-(no jars are committed) — packwiz downloads the actual mod files from CurseForge/Modrinth on demand.
+the owner's Evil Eye MultiMC instance (now **Evil Eye (Stable)**, folder `Evil Eye Stable`). This repo
+holds mod/shaderpack metadata and config files only (no jars are committed) — packwiz downloads the
+actual mod files from CurseForge/Modrinth on demand.
 
 > **Branch `emi-trial` is an EMI trial.** It swaps REI for EMI + JEI + Just Enough Professions and
 > applies the same item curation as in-memory EMI views. Install it only into a copied test instance; the

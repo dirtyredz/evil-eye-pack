@@ -5,27 +5,33 @@ keeps the pack's item curation and the CLEAN/ALL button. `main` and the normal M
 instance stay on REI. Promoting EMI to `main` is a separate owner decision.
 
 - Baseline: `main` at `1278114` ("Fix REI toggle press and move it beside the search bar").
-- Normal instance: MultiMC folder `Evil Eye Dev1`, display name "Evil Eye". Its pre-launch command:
+- Worktree: `C:/Users/dirty/projects/worktrees/evil-eye-pack/emi-trial` (moved there with `git worktree move` on 2026-10-11; it was `C:/Users/dirty/projects/evil-eye-pack-emi`).
+- Normal instance: MultiMC folder `Evil Eye Stable` (formerly `Evil Eye Dev1`), display name "Evil Eye (Stable)". It installs published `main`:
   `"$INST_JAVA" -jar "C:/Users/dirty/MultiMC/packwiz/packwiz-installer-bootstrap.jar" https://raw.githubusercontent.com/dirtyredz/evil-eye-pack/main/pack.toml`
+- Instance, feed and port layout for every checkout: `docs/development.md` on `main`.
 - Coverage evidence and the in-game results table: [emi-coverage.md](emi-coverage.md).
 
-## 1. Make the trial instance (owner, once)
+## 1. The trial instance
 
-1. Stop Minecraft.
-2. In MultiMC, right-click **Evil Eye** and choose **Copy Instance**. Name it `Evil Eye EMI Trial`. Leave saves out, or delete `.minecraft/saves` and `.minecraft/backups` from the copy afterwards.
-3. Check that the copy has its own real directories, with no junctions, symlinks or shared saves. In PowerShell:
-   `Get-ChildItem "C:\Users\dirty\MultiMC\instances\Evil Eye EMI Trial" -Recurse -Attributes ReparsePoint` should print nothing.
-4. Keep the copied `.minecraft/packwiz.json`. It is the installer's record of the files it manages, and it is how the REI jars and REI config files get removed on the first trial launch.
-5. In the copy, open **Edit Instance → Settings → Custom commands**. Keep the bootstrap location and change only the URL:
-   - Before the branch is pushed, test the worktree locally. Run `node tools/packwiz/serve.cjs` in `C:\Users\dirty\projects\evil-eye-pack-emi` and use this pre-launch command:
-     `"$INST_JAVA" -jar "C:/Users/dirty/MultiMC/packwiz/packwiz-installer-bootstrap.jar" http://127.0.0.1:8080/pack.toml`
-   - After the approved branch push, use this one instead:
-     `"$INST_JAVA" -jar "C:/Users/dirty/MultiMC/packwiz/packwiz-installer-bootstrap.jar" https://raw.githubusercontent.com/dirtyredz/evil-eye-pack/emi-trial/pack.toml`
-6. Launch once so packwiz installs the trial files. Then check `.minecraft/mods`:
+The instance already exists: MultiMC folder `Evil Eye EMI Trial`, copied from the normal instance
+without saves, with no junctions or symlinks, and with its copied `.minecraft/packwiz.json`. That
+file is the installer's record of the files it manages, and it is how the REI jars and REI config
+files get removed on the first trial sync. Keep it. **That first EMI sync has not happened yet.**
+
+Its pre-launch command installs this worktree straight from its file path on every launch, with no
+server to start:
+`"$INST_JAVA" -jar "C:/Users/dirty/MultiMC/packwiz/packwiz-installer-bootstrap.jar" C:/Users/dirty/projects/worktrees/evil-eye-pack/emi-trial/pack.toml`
+
+1. Stop Minecraft. In the worktree, run `node tools/packwiz/rehash.cjs` and `node tools/packwiz/verify_hashes.cjs`.
+2. Nothing else to start: the installer reads the worktree directly.
+3. To install the pushed branch instead, swap the path for `https://raw.githubusercontent.com/dirtyredz/evil-eye-pack/emi-trial/pack.toml`.
+4. If the instance is ever recreated: copy the normal instance without `.minecraft/saves` and `.minecraft/backups`, keep `packwiz.json`, and check
+   `Get-ChildItem "C:\Users\dirty\MultiMC\instances\Evil Eye EMI Trial" -Recurse -Attributes ReparsePoint` prints nothing.
+5. Click Launch once so packwiz installs the trial files. Then check `.minecraft/mods`:
    - These three must be present: `emi-1.1.24+1.20.1+forge.jar`, `jei-1.20.1-forge-15.20.0.102.jar` and `JustEnoughProfessions-forge-1.20.1-3.0.1.jar`.
    - These three must be gone: `RoughlyEnoughItems-*`, `REIPluginCompatibilities-*` and `RoughlyEnoughProfessions-*`.
    - `kubejs/client_scripts/rei_filter_toggle.js` must also be gone.
-7. Create a **new disposable world**. Never open a real save in the trial.
+6. Create a **new disposable world**. Never open a real save in the trial.
 
 Rollback is simple. Stop using the copy, or delete it. The normal instance and `main` are
 never touched.
