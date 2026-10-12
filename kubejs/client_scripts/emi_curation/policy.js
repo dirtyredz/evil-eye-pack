@@ -9,15 +9,8 @@
   var ID_RE = /^[a-z0-9_.-]+:[a-z0-9_.\/-]+$/
   var CURATION_DIR = 'config/emi-curation/'
 
-  // Private len/at for isDisplayHidden (arrays and Java lists); the shared copies live in
-  // java_interop.js so this file stays free of Java.
-  function len(list) {
-    if (list === null || list === undefined) return 0
-    return typeof list.size === 'function' ? list.size() : list.length
-  }
-  function at(list, i) {
-    return typeof list.get === 'function' ? list.get(i) : list[i]
-  }
+  var len = ns.collections.len
+  var at = ns.collections.at
 
   function fail(msg) { throw new Error('emi-curation: ' + msg) }
 

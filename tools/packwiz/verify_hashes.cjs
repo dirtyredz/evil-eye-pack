@@ -53,8 +53,7 @@ function verify(root, opts) {
   }
 
   let publishable = 0;
-  for (const rel of P.listRepoFiles(root)) {
-    if (P.isIgnored(ignore, rel)) continue;
+  for (const rel of P.publishableFiles(root)) {
     publishable++;
     if (!seen.has(rel)) problems.push(rel + ': not ignored but not indexed');
   }

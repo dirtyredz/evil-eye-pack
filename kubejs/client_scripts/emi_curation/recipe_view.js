@@ -66,8 +66,8 @@
       if (cached != null) return cached
       var out = I.newList()
       var src = I.copy(list)
-      for (var i = 0; i < I.len(src); i++) {
-        var r = I.at(src, i)
+      for (var i = 0; i < ns.collections.len(src); i++) {
+        var r = ns.collections.at(src, i)
         if (!recipeHidden(r)) out.add(r)
       }
       var view = I.freeze(out)

@@ -40,6 +40,7 @@
     if (policy || policyError) return policy
     try {
       policy = ns.policy.load(function (p) { return JsonIO.readString(p) })
+      ns.hiding.configure({ policy: policy, getMaster: function () { return st.index.master } })
       ns.diag.info('loaded curation (' + policy.itemIdCount + ' explicit ids)')
     } catch (err) {
       policyError = err
@@ -47,10 +48,6 @@
     }
     return policy
   }
-
-  // Decisions live in hiding.js; these bind them to the loaded policy and current state.
-  function isPolicyHidden(stack) { return ns.hiding.isPolicyHidden(policy, stack) }
-  function isDisplayStackHidden(stack) { return ns.hiding.isDisplayHidden(policy, st.index.master, stack) }
 
   function emiReady() {
     var EmiReloadManager = ns.interop.cls('dev.emi.emi.runtime.EmiReloadManager')
@@ -65,7 +62,7 @@
   function applyIndex() {
     var target = st.index.baseline
     if (st.mode === CLEAN) {
-      if (st.index.clean == null) st.index.clean = ns.indexView.buildClean(st.index.baseline, isPolicyHidden)
+      if (st.index.clean == null) st.index.clean = ns.indexView.buildClean(st.index.baseline, ns.hiding.isPolicyHidden)
       target = st.index.clean
     }
     ns.indexView.install(target)
@@ -95,7 +92,7 @@
   function applyRecipes() {
     if (st.mode === CLEAN && policy.displayFiltering) {
       if (st.recipe.wrapper == null || st.recipe.wrapperLoad !== loadToken) {
-        var ref = ns.recipeView.install(ns.recipeView.createWrapper(st.recipe.baseline, isDisplayStackHidden))
+        var ref = ns.recipeView.install(ns.recipeView.createWrapper(st.recipe.baseline, ns.hiding.isDisplayHidden))
         knownWrappers().put(ref, st.recipe.baseline)
         st.recipe.wrapper = ref
         st.recipe.wrapperLoad = loadToken

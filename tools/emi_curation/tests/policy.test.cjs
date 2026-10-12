@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const { loadScripts, readRepoText } = require('./harness.cjs');
 
 const env = { global: {}, logs: [] };
-loadScripts(env, ['diagnostics', 'policy']);
+loadScripts(env, ['diagnostics', 'collections', 'policy']);
 const P = env.global.emiCuration.policy;
 const policy = P.load(readRepoText);
 

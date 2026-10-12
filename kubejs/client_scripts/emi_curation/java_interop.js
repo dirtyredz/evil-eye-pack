@@ -86,20 +86,8 @@
     }
   }
 
-  // Length / element access that works for JS arrays and Java lists alike.
-  function len(list) {
-    if (list === null || list === undefined) return 0
-    return typeof list.size === 'function' ? list.size() : list.length
-  }
-
-  function at(list, i) {
-    return typeof list.get === 'function' ? list.get(i) : list[i]
-  }
-
   ns.interop = {
     cls: cls,
-    len: len,
-    at: at,
     sameRef: sameRef,
     newIdentityMap: newIdentityMap,
     newList: newList,

@@ -180,6 +180,12 @@ function listRepoFiles(root) {
   return out.toString('utf8').split('\0').filter((p) => p !== '' && fs.existsSync(path.join(root, p)));
 }
 
+/** Publishable files: git-visible, not excluded by .packwizignore, in index (byte) order. */
+function publishableFiles(root) {
+  const ignore = loadIgnore(root);
+  return listRepoFiles(root).filter((rel) => !isIgnored(ignore, rel)).sort(comparePaths);
+}
+
 /** Byte-order path sort, matching the existing index.toml ordering. */
 function comparePaths(a, b) {
   return a < b ? -1 : a > b ? 1 : 0;
@@ -187,5 +193,5 @@ function comparePaths(a, b) {
 
 module.exports = {
   BUILTIN_IGNORES, sha256, isTextPath, textProblems, globToRegExp, parseIgnore, loadIgnore, isIgnored,
-  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, listRepoFiles, comparePaths,
+  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, listRepoFiles, publishableFiles, comparePaths,
 };

@@ -2381,32 +2381,36 @@ file = "kubejs/client_scripts/emi_curation/button.js"
 hash = "47a3279f8d625b6c93c8b8e2b98b4485b1be2997ddfa031111b9455143eaff48"
 
 [[files]]
+file = "kubejs/client_scripts/emi_curation/collections.js"
+hash = "e2bdc46033ba8cc4ca773e940377e119fe4945d026cb811d9090d60acc564777"
+
+[[files]]
 file = "kubejs/client_scripts/emi_curation/diagnostics.js"
 hash = "bcb0e60fbbe4115f0f0c274648f988ae8b3843c6bf686da79ae6db94a43ae8f4"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/hiding.js"
-hash = "000e6a339a8b799e5b9598d328edf5477134bebdfd8eb73a418b7a522cb9a99a"
+hash = "80c50522834f122adb63747fe25422a36d9d4a07a9d73e95dadd674ac01de686"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/index_view.js"
-hash = "9ea2700a24c2a9a97d2384642a0a1a9bc75fe4c8ecae14247673b09b1dae169d"
+hash = "5e509656eea54ebb39d1601aae4f24d1c55c488395ef975f1eeae2d39d3c68d2"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/java_interop.js"
-hash = "65e9eac2ea2c4b85fc5b001fe7c0cdd1234b2a1e3f3ea170d34d9c3546179196"
+hash = "33d8f3ebaedd1ea8a4782a41d2ea65c473d85fd0a17da89aff57db3dcdea257e"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/policy.js"
-hash = "6f245c680b13f0d2f14059ffb6ca07ccae96c0998333fc796d253ad0d6f065fd"
+hash = "6a448a73fac8870c17a8e1cfc5cdf9c977f929b126d53edcbfca2318b543c567"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/recipe_view.js"
-hash = "8c9449f98d70b0980ccde9b2ca8c8f6bf62428f0d86dffcf953673fa07f39ac8"
+hash = "64d54b5e783d49cf588e021afa988a88cd80a4a73ae892ed211adef1a03963cb"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/session.js"
-hash = "3168e715cede3b3432583e70603e1977d9153234beb49a55205df56e64171b4a"
+hash = "2aae04d72a41cc50721d6aeda0ca84e85eaa09c06b6b41dc339c987261894186"
 
 [[files]]
 file = "mods/additional-lanterns.pw.toml"

@@ -15,29 +15,35 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `config/emi-curation/` — EMI curation data: `rules.json` plus five explicit item lists
 - `defaultconfigs/` — Forge default (per-world) configs
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views and the CLEAN/ALL button
-- `tools/emi_curation/` — unshipped: REI-to-EMI migration check, its frozen REI fixture, Node tests for the curation scripts
+- `tools/emi_curation/` — unshipped: REI-to-EMI migration check, Node tests for the curation scripts
+- `tools/emi_curation/fixtures/` — frozen REI config the migration check compares against
+- `tools/emi_curation/tests/`, `tools/packwiz/tests/` — Node test suites (`node --test tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
 - `tools/packwiz/` — unshipped: hash-chain verifier, index rebuild, localhost pack server, tests
 - `docs/` — unshipped living docs (development workflow, decisions, gotchas, EMI guide and integration coverage)
+- `docs/items/`, `docket.json` — Docket work-item store (use `dk`); `AGENTS.md` — agent instructions. All unshipped.
 
 ## Components
 
 | Component | Responsibility |
 |---|---|
-| `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format, `.packwizignore`, byte hashing, publishable-file listing |
+| `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format, `.packwizignore`, byte hashing, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
 | `tools/packwiz/rehash.cjs` | rebuild `index.toml` membership and hashes, then `pack.toml`'s index hash |
 | `tools/packwiz/verify_hashes.cjs` | check the hash chain, index membership and optionally jar hashes |
 | `tools/packwiz/serve.cjs` | serve the containing checkout on `127.0.0.1` over HTTP (not used by MultiMC: local instances install from the file path) |
 | `emi_curation/diagnostics.js` (priority 100) | guarded logging; nothing may throw into Forge or EMI |
+| `emi_curation/collections.js` (95) | pure `len`/`at` accessors for JS arrays and Java lists; the one copy used by policy, views and hiding |
 | `emi_curation/policy.js` (90) | parse and validate the curation JSON. Stack, NBT and REI display-rule predicates. Pure: no Java, no EMI mutation. |
-| `emi_curation/java_interop.js` (85) | class lookup, Java reference identity, Java lists and `len`/`at` accessors, `EmiStack` → policy descriptor (NBT walk) |
-| `emi_curation/index_view.js` (80) | swap `EmiStackList.filteredStacks` between EMI's list and the CLEAN copy, then refresh search and sidebars |
+| `emi_curation/java_interop.js` (85) | class lookup, Java reference identity, Java list copy/freeze, `EmiStack` → policy descriptor (NBT walk) |
+| `emi_curation/index_view.js` (80) | swap `EmiStackList.filteredStacks` between EMI's list and the CLEAN copy, then refresh search and sidebars. No hide decisions. |
 | `emi_curation/recipe_view.js` (70) | JS `EmiRecipeManager` wrapper over the baseline manager, filtering displays |
-| `emi_curation/hiding.js` (65) | the "what is hidden" decision: pack policy per stack (cached per registry key) and REI-style display hiding (adds EMI's user-hidden set and index key set) |
-| `emi_curation/session.js` (60) | CLEAN/ALL state in `global`, EMI generation tracking, tick → sync → apply with restore on failure, reload/logout handling, event registration |
+| `emi_curation/hiding.js` (65) | the single home of hide decisions: `configure({ policy, getMaster })` (called once by `session.js`), then pack policy per stack (cached per registry key) and REI-style display hiding (adds EMI's user-hidden set and the master-index key set, built and cached here) |
+| `emi_curation/session.js` (60) | CLEAN/ALL state in `global`, loads the policy and configures `hiding.js`, EMI generation tracking, tick → sync → apply with restore on failure, reload/logout handling, event registration |
 | `emi_curation/button.js` (50) | button placement from EMI's search bounds. Forge screen listeners, registered once. |
 | `tools/emi_curation/migrate_rei.cjs` | one-shot REI → EMI data migration and its `--check` against the frozen fixture in `tools/emi_curation/fixtures/` |
-| `tools/emi_curation/tests/harness.cjs`, `fake_emi.cjs` | Node harness that loads the production scripts into a `vm` context in KubeJS priority order, and a fake EMI/Java world to drive them |
+| `tools/emi_curation/tests/harness.cjs`, `fake_emi.cjs` | Node harness that loads the production scripts into a `vm` context in KubeJS priority order (plus the shared `fixture()`/`boot()`), and a fake EMI/Java world to drive them |
+| `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `interop.test.cjs` | session lifecycle and views; button placement and listeners; Java list-copy handling |
+| `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs`, `migration.test.cjs` | policy rules, class filter, EMI config, migration check |
 | `tools/emi_coverage/scan_jars.cjs`, `zip_reader.cjs` | read-only scan of mod jars for viewer plugin coverage; `zip_reader` is its dependency-free jar reader |
 
 `docs/emi.md` is the architecture doc for the EMI subsystem (there is no separate `ARCHITECTURE.md`).
@@ -55,7 +61,14 @@ handlers.
 
 ## Structural debt
 
-- The EMI views rely on public-but-internal EMI fields. A custom mod would avoid that but would need building and hosting. Rejected for now; see `docs/DECISIONS.md`.
-- No baseline structure review has been run (the repo opts out with `.structure-review-optout`).
+Baseline review 2026-10-12. Remaining debt is filed in Docket (`docs/items/`, `dk list`):
 
-Last full review: never
+- Recipe-wrapper lifecycle still lives in `session.js`; it belongs with `recipe_view` (dk-b787a93f).
+- `interop.filterToList` is missing; list filtering is repeated in the views (dk-b9ec6a98).
+- Classification is cached in more than one place; one cache is wanted (dk-8a0232a6).
+- `migrate_rei.cjs` is one-shot tooling: retire or split it (dk-eaeaf6eb).
+- Repeated table reads need a `readTable` helper (dk-0eb48f8f).
+- `tools/emi_curation/fixtures/` holds a single file: flatten it (dk-232fd37d).
+- The EMI views rely on public-but-internal EMI fields. A custom mod would avoid that but would need building and hosting. Rejected for now; see `docs/DECISIONS.md`.
+
+Last full review: 2026-10-12

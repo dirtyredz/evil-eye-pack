@@ -6,7 +6,7 @@
 //   node tools/packwiz/rehash.cjs [--root <dir>] [--dry-run]
 //
 // - Publishable files (git-visible, not excluded by .packwizignore) are indexed;
-//   `mods/*.pw.toml` and `shaderpacks/*.pw.toml` are marked `metafile = true`.
+//   `mods/`, `shaderpacks/` and `resourcepacks/` `*.pw.toml` files are marked `metafile = true`.
 // - Entries for deleted or newly ignored files are dropped.
 // - Hashes are sha256 of the files' actual bytes. A text file with CR or a BOM is
 //   refused rather than normalized: fix the file (save as UTF-8 LF) and run again.
@@ -21,9 +21,8 @@ function isMetafile(rel) {
 
 function rehash(root, opts) {
   const options = opts || {};
-  const ignore = P.loadIgnore(root);
   const problems = [];
-  const files = P.listRepoFiles(root).filter((rel) => !P.isIgnored(ignore, rel)).sort(P.comparePaths);
+  const files = P.publishableFiles(root);
   const entries = [];
   for (const rel of files) {
     const bytes = fs.readFileSync(path.join(root, rel));

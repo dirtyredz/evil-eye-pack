@@ -21,25 +21,13 @@
   // Immutable copy of `baseline` without the stacks `isHidden` rejects, in EMI order.
   function buildClean(baseline, isHidden) {
     var out = ns.interop.newList()
-    var I = ns.interop
+    var C = ns.collections
     var src = ns.interop.copy(baseline)
-    for (var i = 0; i < I.len(src); i++) {
-      var stack = I.at(src, i)
+    for (var i = 0; i < C.len(src); i++) {
+      var stack = C.at(src, i)
       if (!isHidden(stack)) out.add(stack)
     }
     return ns.interop.freeze(out)
-  }
-
-  // Item keys present anywhere in the master index. An item whose key is absent was
-  // removed by EMI itself (c:hidden_from_recipe_viewers, plugin/data removals), which
-  // REI's display filter also treated as hidden.
-  function buildKeySet(master) {
-    var HashSet = ns.interop.cls('java.util.HashSet')
-    var keys = new HashSet()
-    var I = ns.interop
-    var src = ns.interop.copy(master)
-    for (var i = 0; i < I.len(src); i++) keys.add(I.at(src, i).getKey())
-    return keys
   }
 
   function install(list) {
@@ -57,7 +45,6 @@
     currentFiltered: currentFiltered,
     currentMaster: currentMaster,
     buildClean: buildClean,
-    buildKeySet: buildKeySet,
     install: install,
     refresh: refresh
   }
