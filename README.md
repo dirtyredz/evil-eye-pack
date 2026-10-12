@@ -1,8 +1,12 @@
 # Evil Eye
 
 A [packwiz](https://packwiz.infra.link/) modpack for Minecraft 1.20.1 (Forge 47.4.10), built from
-the "Evil Eye Dev1" MultiMC instance. This repo holds mod/shaderpack metadata and config files only
-(no jars are committed) — packwiz downloads the actual mod files from CurseForge/Modrinth on demand.
+the owner's Evil Eye MultiMC instance (now **Evil Eye (Stable)**, folder `Evil Eye Stable`). This repo
+holds mod/shaderpack metadata and config files only (no jars are committed) — packwiz downloads the
+actual mod files from CurseForge/Modrinth on demand.
+
+Working on the pack (local test instances, worktrees, hashing): see
+[docs/development.md](docs/development.md).
 
 ## What's in it
 
@@ -24,8 +28,8 @@ the "Evil Eye Dev1" MultiMC instance. This repo holds mod/shaderpack metadata an
    $INST_JAVA -jar "/path/to/packwiz-installer-bootstrap.jar" https://raw.githubusercontent.com/dirtyredz/evil-eye-pack/main/pack.toml
    ```
 
-   (Swap in wherever `packwiz-installer-bootstrap.jar` actually lives, and point the URL at this
-   repo's raw `pack.toml` once it's pushed — or a locally-served copy for testing.)
+   (Swap in wherever `packwiz-installer-bootstrap.jar` actually lives. To test unpushed changes, use a
+   separate instance pointed at a locally-served copy; see [docs/development.md](docs/development.md).)
 4. Launch the instance. The bootstrapper downloads/updates every mod, config file, and shaderpack
    to match this repo before Minecraft starts. Re-launching after a `git pull` + push updates the
    instance to match.
