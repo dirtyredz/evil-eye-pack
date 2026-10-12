@@ -8,11 +8,11 @@ and how to test a change in the game before it is pushed.
 | Path (under `C:/Users/dirty/`) | Responsibility |
 |---|---|
 | `projects/evil-eye-pack/` | Main checkout (`main`). Pack files keep their layout. |
-| `projects/worktrees/evil-eye-pack/<name>/` | Linked worktrees for experiments (today: `emi-trial/`). |
+| `projects/worktrees/evil-eye-pack/<name>/` | Linked worktrees for experiments (none kept after the EMI adoption). |
 | `projects/artifacts/evil-eye-pack/jobs/<date-task>/` | Dispatch prompts, plans, reports and their `.events.jsonl` / `.job.json` / `.stderr.log` sidecars. |
 | `MultiMC/instances/Evil Eye Stable/` | Display name **Evil Eye (Stable)**. The owner's real worlds. Installs published `main`. |
 | `MultiMC/instances/Evil Eye Local/` | Disposable copy of Stable (no saves). Installs the main checkout from localhost. |
-| `MultiMC/instances/Evil Eye EMI Trial/` | Disposable trial instance. Installs the `emi-trial` worktree from localhost. |
+| `MultiMC/instances/Evil Eye EMI Trial/` | Disposable trial instance, now unused. Its pre-launch command pointed at the `emi-trial` worktree. |
 | `MultiMC/packwiz/packwiz-installer-bootstrap.jar` | Shared installer bootstrap used by every instance. |
 | `MultiMC/backups/evil-eye/<instance>/<timestamp>/` | Instance backups (`instance/`, `launcher/`, `SHA256SUMS.txt`). Older `MultiMC/backups/Evil Eye 2026-10-11/` is kept as is. |
 
@@ -92,5 +92,5 @@ Every dispatch gets its own `projects/artifacts/evil-eye-pack/jobs/<YYYY-MM-DD-t
 - [ ] Testing in Local or the trial leaves `Evil Eye Stable` unchanged.
 - [ ] With the checkout's `pack.toml` unreadable or a hash wrong, the test instance's launch fails visibly; abort rather than continue.
 - [ ] After the rename, Stable shows one entry, Minecraft 1.20.1, Forge 47.4.10, and its worlds, settings, waypoints and `packwiz.json` are intact.
-- [ ] The EMI trial sync installs EMI/JEI/JEP and removes the REI jars and `rei_filter_toggle.js` (see the trial branch's `docs/emi-trial.md`).
+- [ ] The EMI trial sync installs EMI/JEI/JEP and removes the REI jars and `rei_filter_toggle.js` (see `docs/emi.md`).
 - [ ] Restoring an instance backup and the reverse worktree move both recover the recorded baseline.

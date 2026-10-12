@@ -6,7 +6,7 @@ hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
 [[files]]
 file = "README.md"
-hash = "e6053934ee027a0247651b576d9ff2aac97b527307760f9df6386d545056fee4"
+hash = "6c2ba45fdfbb878207be892b40baf3a245c7aa17e8c80becc76b29a6f84ff69b"
 
 [[files]]
 file = "config/MouseTweaks.cfg"
@@ -1685,6 +1685,34 @@ file = "config/embeddium-options.json"
 hash = "92ee8562944e4913b27064124b1daf843f4ec61d14d099337dad5300bea978dd"
 
 [[files]]
+file = "config/emi-curation/colours.json"
+hash = "7f24c23660df62deb15a473cb07689bc3471f75ec9ef933ac8933a7421033ed2"
+
+[[files]]
+file = "config/emi-curation/compressed.json"
+hash = "0623da8d2574330ce447c4bba7e93c2800af5e03149e9b0965d98431d5c0f3de"
+
+[[files]]
+file = "config/emi-curation/creative.json"
+hash = "4f71ecce73d6acda9d390bc2369796a360842f02208f4a28d943c5667c4b1815"
+
+[[files]]
+file = "config/emi-curation/enderio-glass.json"
+hash = "a271188e84b47f8c6f324d42dcadc3c5d49cb8b5958ec03c44e91984e79842c7"
+
+[[files]]
+file = "config/emi-curation/minecolonies-eggs.json"
+hash = "f4389ca4bd9e12f0fbb6ba8c271c35f77b32885e39962b5f53cfc75ac53cbe90"
+
+[[files]]
+file = "config/emi-curation/rules.json"
+hash = "0030c3ce4e1e0568d9b8156a5581f54c36508e09c20913f693742f07b3856594"
+
+[[files]]
+file = "config/emi.css"
+hash = "b949dd47d254d6f6721be9c59af63899d82390a8b019e83918b9ee9489acebac"
+
+[[files]]
 file = "config/enchdesc.json"
 hash = "69e1df6089b71c3c2fe2c7cf6760937094fd22434111f527229a9fcea3f90bc5"
 
@@ -2209,34 +2237,6 @@ file = "config/rftoolsutility-client.toml"
 hash = "478dc80d8689ce55146db25e43bd842d32363c0eca00a83ff1f7007e43e46b64"
 
 [[files]]
-file = "config/roughlyenoughitems/changelog.txt"
-hash = "8d3828692497be68d54e98820db28df65ef79b28f16ec4ebeef0e0916588dd8e"
-
-[[files]]
-file = "config/roughlyenoughitems/collapsible.json5"
-hash = "a59667baa54738c1b294393a9b3652bcf7d392cdb8cba1c08a8006885b18e919"
-
-[[files]]
-file = "config/roughlyenoughitems/config.json5"
-hash = "6ee9008fbf2af90cc2450306c8a96b213adbf6be63a98dda12097960deb37930"
-
-[[files]]
-file = "config/roughlyenoughitems/favorites.json5"
-hash = "f0c61ad6596e04df63214d4dd019bba18230f919d9f58bce2988fe4b8c0a51bf"
-
-[[files]]
-file = "config/roughlyenoughitems/hints.json"
-hash = "821d3e0e3da43f3271c920247316f99332e43b864ef5602e997a1fef50124621"
-
-[[files]]
-file = "config/roughlyenoughitems/pinyin.properties"
-hash = "5612d98bc55c30386164b7a1eab34bd4e1b57a208d7b2e97701494413ce73168"
-
-[[files]]
-file = "config/roughlyenoughitems/pinyin_double.properties"
-hash = "bd5efc2fe1cae1e19f33285ee17bba740f1c040c0dd57770179029659467a842"
-
-[[files]]
 file = "config/shetiphiancore-client.toml"
 hash = "f078f6987c3712446ca08971ed1d18c2fcf954a402f12e7d39a858b874c5fad3"
 
@@ -2385,8 +2385,32 @@ file = "defaultconfigs/ftbessentials-server.snbt"
 hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
-file = "kubejs/client_scripts/rei_filter_toggle.js"
-hash = "ab44199660850d2d07ac7793704f96d1b6fb11882f99c72f44b718d7851e2a69"
+file = "kubejs/client_scripts/emi_curation/button.js"
+hash = "47a3279f8d625b6c93c8b8e2b98b4485b1be2997ddfa031111b9455143eaff48"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/diagnostics.js"
+hash = "bcb0e60fbbe4115f0f0c274648f988ae8b3843c6bf686da79ae6db94a43ae8f4"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/index_view.js"
+hash = "4a25f87042a47b995da272e3e82f693c0820d9d280828474efd09d652d7a99a5"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/java_interop.js"
+hash = "33d8f3ebaedd1ea8a4782a41d2ea65c473d85fd0a17da89aff57db3dcdea257e"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/policy.js"
+hash = "f12260e6df9841b594356f62c595c6fdce5fc830ce2afffa942cf067effe4207"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/recipe_view.js"
+hash = "9bfa65ce84c1ab4bc2d2adc94efb92daaa33ae1508a009135fbb78f36e18d1eb"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/session.js"
+hash = "6ad8674ba8ac07830238444ed240cf57b734f09307170142e626e2ae48c8c2fb"
 
 [[files]]
 file = "mods/additional-lanterns.pw.toml"
@@ -2694,6 +2718,11 @@ hash = "a1575677daaaf6ea6dac12e5a10073e34025e5ca2c35b6d36ad4a5a0edbc0e82"
 metafile = true
 
 [[files]]
+file = "mods/emi.pw.toml"
+hash = "724ef5d1976e623bccf155159410708893b16fb1f35911ab7911ef6f047552ad"
+metafile = true
+
+[[files]]
 file = "mods/enchantment-descriptions.pw.toml"
 hash = "e4c69a3551a4343fc76fb135266aecac0042863693f04d2c58a26c71b6e988d9"
 metafile = true
@@ -2841,6 +2870,16 @@ metafile = true
 [[files]]
 file = "mods/jade.pw.toml"
 hash = "a2277a000bcab08a8e0939dae7c8ef3b1db5327e2fa7bd37919e4e2f1b3c174d"
+metafile = true
+
+[[files]]
+file = "mods/jei.pw.toml"
+hash = "fcdb28f2879759167d5caba28d2bdc3b7ed61ee6f49c5ed0c134632415d52dcb"
+metafile = true
+
+[[files]]
+file = "mods/just-enough-professions-jep.pw.toml"
+hash = "051e68cdc04c210afa273cda7e109bea1f08380451593be022db86e6301dff36"
 metafile = true
 
 [[files]]
@@ -3046,21 +3085,6 @@ metafile = true
 [[files]]
 file = "mods/rhino.pw.toml"
 hash = "5b92406160d9ea8a61ddf111caaecb7f6283678e2c40b08b72dce3eeaf20dc96"
-metafile = true
-
-[[files]]
-file = "mods/roughly-enough-items-hacks.pw.toml"
-hash = "7a39d6d8faddf9ac5f10aa1b3c271b8dc27b1f79531bdbeefb8d268b68e9eef5"
-metafile = true
-
-[[files]]
-file = "mods/roughly-enough-items.pw.toml"
-hash = "e38945b50b973d994c16480820661aada73212ed7e60fafdbf17b0e7f6740378"
-metafile = true
-
-[[files]]
-file = "mods/roughly-enough-professions-rep.pw.toml"
-hash = "2a15af7632f794782a547e672354f41068c8af62f20dfa5fafd7e3cfc74e1c81"
 metafile = true
 
 [[files]]

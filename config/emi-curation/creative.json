@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "group": "creative",
+  "description": "Creative-only items hidden from the CLEAN index.",
+  "items": [
+    "ae2:creative_energy_cell",
+    "ae2:creative_fluid_cell",
+    "ae2:creative_item_cell",
+    "ars_nouveau:creative_source_jar",
+    "ars_nouveau:creative_spell_book",
+    "arseng:creative_source_cell",
+    "bigreactors:basic_turbinecreativesteamgenerator",
+    "bigreactors:reinforced_reactorcreativewatergenerator",
+    "bigreactors:reinforced_turbinecreativesteamgenerator",
+    "buildinggadgets2:construction_paste_container_creative",
+    "create:creative_blaze_cake",
+    "create:creative_crate",
+    "create:creative_fluid_tank",
+    "create:creative_motor",
+    "createaddition:creative_energy",
+    "enderio:creative_power",
+    "iceandfire:creative_dragon_meal",
+    "rftoolsutility:creative_screen",
+    "storagedrawers:creative_storage_upgrade",
+    "storagedrawers:creative_vending_upgrade"
+  ]
+}

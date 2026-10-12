@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "group": "minecolonies-eggs",
+  "description": "MineColonies raider/pirate/pharaoh eggs (their IDs lack spawn_egg).",
+  "items": [
+    "minecolonies:amazonchiefegg",
+    "minecolonies:amazonegg",
+    "minecolonies:amazonspearmanegg",
+    "minecolonies:barbarcheregg",
+    "minecolonies:barbarianegg",
+    "minecolonies:barbchiefegg",
+    "minecolonies:mercegg",
+    "minecolonies:mummyarcheregg",
+    "minecolonies:mummyegg",
+    "minecolonies:norsemenarcheregg",
+    "minecolonies:norsemenchiefegg",
+    "minecolonies:pharaoegg",
+    "minecolonies:piratearcheregg",
+    "minecolonies:piratecaptainegg",
+    "minecolonies:pirateegg",
+    "minecolonies:shieldmaidenegg"
+  ]
+}
