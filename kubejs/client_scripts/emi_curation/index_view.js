@@ -22,8 +22,9 @@
   function buildClean(baseline, isHidden) {
     var out = ns.interop.newList()
     var P = ns.policy
-    for (var i = 0; i < P.len(baseline); i++) {
-      var stack = P.at(baseline, i)
+    var src = ns.interop.copy(baseline)
+    for (var i = 0; i < P.len(src); i++) {
+      var stack = P.at(src, i)
       if (!isHidden(stack)) out.add(stack)
     }
     return ns.interop.freeze(out)
@@ -36,7 +37,8 @@
     var HashSet = ns.interop.cls('java.util.HashSet')
     var keys = new HashSet()
     var P = ns.policy
-    for (var i = 0; i < P.len(master); i++) keys.add(P.at(master, i).getKey())
+    var src = ns.interop.copy(master)
+    for (var i = 0; i < P.len(src); i++) keys.add(P.at(src, i).getKey())
     return keys
   }
 

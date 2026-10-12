@@ -274,6 +274,44 @@ test('one Forge listener pair and one button per screen after repeated script re
   assert.equal(b.visible, false, 'hidden with the EMI overlay');
 });
 
+test('first placement equals post-press placement: EMI lays the search bar out after Init.Post', () => {
+  const c = boot();
+  c.tick();
+  const search = c.world.EmiScreenManager.search;
+  // EMI 1.1.24: the static search widget is built at (0, 0) and only moved by
+  // addWidgets, which runs at the RETURN of Screen.init (after Forge's Init.Post).
+  Object.assign(search, { x: 0, y: 0, w: 160, h: 18 });
+  const added = [];
+  const screen = new F.AbstractContainerScreen(427, 240, 125, 37, 176, 166);
+  c.world.fireEvent('ScreenEvent$Init$Post', { getScreen: () => screen, addListener: (b) => added.push(b) });
+  const b = added[0];
+  assert.equal(b.visible, false, 'hidden, not parked at the top, while the search bar is unplaced');
+  // EMI's addWidgets runs now.
+  Object.assign(search, { x: 133, y: 219, w: 160, h: 18 });
+  // The event may hand over a different wrapper of the same screen: placement must not depend on identity.
+  c.world.fireEvent('ScreenEvent$Render$Pre', { getScreen: () => Object.assign(Object.create(screen), {}) });
+  assert.equal(b.visible, true);
+  const first = { x: b.x, y: b.y, w: b.w };
+  assert.deepEqual(first, { x: 65, y: 219, w: 66 });
+  b.press();
+  c.world.fireEvent('ScreenEvent$Render$Pre', { getScreen: () => screen });
+  assert.deepEqual({ x: b.x, y: b.y, w: b.w }, first, 'press does not move it');
+  // A different GUI scale / window size is followed from the search bar, not hardcoded.
+  Object.assign(search, { x: 220, y: 399, w: 160, h: 18 });
+  const big = new F.AbstractContainerScreen(600, 420, 212, 100, 176, 166);
+  c.world.fireEvent('ScreenEvent$Render$Pre', { getScreen: () => big });
+  assert.deepEqual({ x: b.x, y: b.y }, { x: 152, y: 399 });
+});
+
+test('searchPlaced rejects the unplaced (0, 0) search widget and off-screen bars', () => {
+  const B = boot().ns().button;
+  const scr = { w: 427, h: 240 };
+  assert.equal(B.searchPlaced({ x: 0, y: 0, w: 160, h: 18 }, scr), false);
+  assert.equal(B.searchPlaced({ x: 133, y: 219, w: 0, h: 18 }, scr), false);
+  assert.equal(B.searchPlaced({ x: 300, y: 219, w: 160, h: 18 }, scr), false);
+  assert.equal(B.searchPlaced({ x: 133, y: 219, w: 160, h: 18 }, scr), true);
+});
+
 test('the creative inventory tab rows are kept clear', () => {
   const c = boot();
   c.tick();
@@ -315,4 +353,52 @@ test('placement avoids the container, EMI buttons and sidebar panels', () => {
   // Narrow screen: everything blocked -> clamped on screen.
   const narrow = B.chooseRect({ screen: { w: 170, h: 100 }, search: { x: 5, y: 80, w: 160, h: 18 }, avoid: [{ x: 0, y: 0, w: 170, h: 100 }] });
   assert.ok(narrow.x >= 0 && narrow.x + narrow.w <= 170);
+});
+
+test('JDK-internal immutable lists from EMI are copied, never reflected on', () => {
+  F.opaque.on = true;
+  try {
+    const c = boot();
+    c.tick();
+    assert.equal(c.ns().session.label(), 'EMI: CLEAN');
+    assert.ok(!c.logs.some((l) => l[0] === 'error'), 'no errors logged');
+    const clean = c.world.EmiStackList.filteredStacks;
+    assert.ok(!c.ids(clean).includes('minecraft:zombie_spawn_egg'));
+    assert.ok(c.ids(clean).includes('minecraft:stone'));
+    const hidden = c.world.EmiRecipes.manager.getRecipes().toArray().map((r) => r.id);
+    assert.ok(!hidden.includes('r:hidden_out'));
+    assert.ok(hidden.includes('r:visible'));
+    c.ns().session.toggle();
+    assert.equal(c.ns().session.label(), 'EMI: ALL');
+  } finally {
+    F.opaque.on = false;
+  }
+});
+
+test('a failing apply is reported once and not retried every tick until EMI changes or the owner retries', () => {
+  const c = boot();
+  c.world.failFreeze = true;
+  c.tick();
+  const recalcs = c.world.counters.recalcs;
+  for (let i = 0; i < 50; i++) c.tick();
+  assert.equal(c.ns().session.label(), 'EMI: ERROR');
+  assert.equal(c.logs.filter((l) => l[0] === 'error' && l[1].includes('apply views')).length, 1, 'one failure logged');
+  assert.equal(c.world.counters.recalcs, recalcs, 'no refresh churn while failing');
+  c.world.failFreeze = false;
+  for (let i = 0; i < 5; i++) c.tick();
+  assert.equal(c.ns().session.label(), 'EMI: ERROR', 'still waiting for a retry');
+  c.ns().session.toggle(); // owner retry
+  c.tick();
+  assert.equal(c.ns().session.label(), 'EMI: CLEAN');
+});
+
+test('a failed apply retries automatically when EMI replaces its lists', () => {
+  const c = boot();
+  c.world.failFreeze = true;
+  c.tick(); c.tick();
+  assert.equal(c.ns().session.label(), 'EMI: ERROR');
+  c.world.failFreeze = false;
+  c.world.reload(); c.world.finishWorker();
+  c.tick();
+  assert.equal(c.ns().session.label(), 'EMI: CLEAN');
 });

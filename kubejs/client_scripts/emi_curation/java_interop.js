@@ -35,6 +35,17 @@
     return new ArrayList()
   }
 
+  // Plain java.util.ArrayList snapshot of any Java collection. EMI and the JDK hand
+  // back JDK-internal immutable lists (List.of, toList(), ...) whose concrete class
+  // (ImmutableCollections$ListN) is not exported, so Rhino's reflective size()/get()
+  // on them throws IllegalAccessException. The ArrayList constructor copies through
+  // the Collection interface in Java, so the script only ever touches a public class.
+  function copy(list) {
+    if (list === null || list === undefined) return list
+    var ArrayList = cls('java.util.ArrayList')
+    return new ArrayList(list)
+  }
+
   function freeze(list) {
     return cls('java.util.Collections').unmodifiableList(list)
   }
@@ -80,6 +91,7 @@
     sameRef: sameRef,
     newIdentityMap: newIdentityMap,
     newList: newList,
+    copy: copy,
     freeze: freeze,
     toPlainNbt: toPlainNbt,
     describe: describe

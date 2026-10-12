@@ -25,9 +25,10 @@
 
   // REI rule over a recipe's inputs and outputs (never its catalysts).
   function isRecipeHidden(recipe, isStackHidden) {
+    var copy = ns.interop.copy
     return ns.policy.isDisplayHidden(
-      [recipe.getInputs(), recipe.getOutputs()],
-      function (ingredient) { return ingredient.getEmiStacks() },
+      [copy(recipe.getInputs()), copy(recipe.getOutputs())],
+      function (ingredient) { return copy(ingredient.getEmiStacks()) },
       function (ingredient) { return ingredient.isEmpty() },
       isStackHidden)
   }
@@ -63,8 +64,9 @@
       var cached = lists.get(list)
       if (cached != null) return cached
       var out = I.newList()
-      for (var i = 0; i < P.len(list); i++) {
-        var r = P.at(list, i)
+      var src = I.copy(list)
+      for (var i = 0; i < P.len(src); i++) {
+        var r = P.at(src, i)
         if (!recipeHidden(r)) out.add(r)
       }
       var view = I.freeze(out)

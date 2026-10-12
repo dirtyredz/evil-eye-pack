@@ -19,6 +19,7 @@
       status: 'waiting',
       error: null,
       reapply: true,
+      failed: { index: null, recipe: null },
       index: { master: null, baseline: null, clean: null, installed: null, keySet: null },
       recipe: { baseline: null, wrapper: null, wrapperLoad: null, installed: null, known: null }
     }
@@ -183,12 +184,32 @@
     ns.diag.logError(where, err)
   }
 
+  // The lists EMI held when the last apply failed (after restore).
+  function rememberFailure() {
+    try {
+      st.failed.index = ns.indexView.currentFiltered()
+      st.failed.recipe = ns.recipeView.current()
+    } catch (err) {
+      ns.diag.logError('remember failure', err)
+    }
+  }
+
+  function unchangedSinceFailure() {
+    var f = st.failed
+    if (f.index == null || f.recipe == null) return false
+    return ns.interop.sameRef(ns.indexView.currentFiltered(), f.index) &&
+           ns.interop.sameRef(ns.recipeView.current(), f.recipe)
+  }
+
   function tick() {
     if (!loadPolicy()) { st.status = 'unavailable'; return }
     if (!emiReady()) {
       if (st.status === 'ready') st.status = 'waiting'
       return
     }
+    // A failed apply is not retried every tick: wait until EMI replaces its lists or
+    // the owner presses the button (which sets reapply).
+    if (st.status === 'error' && !st.reapply && unchangedSinceFailure()) return
     try {
       var indexChanged = syncIndex()
       var recipeChanged = syncRecipes()
@@ -204,6 +225,7 @@
     } catch (err) {
       st.reapply = false
       fail('apply views', err)
+      rememberFailure()
     }
   }
 

@@ -4,7 +4,7 @@
 // master/filtered lists, bakeFiltered() a new filtered list, reload() a new manager.
 
 class JList {
-  constructor(arr) { this.a = arr ? arr.slice() : []; }
+  constructor(src) { this.a = !src ? [] : Array.isArray(src) ? src.slice() : src.toArray(); }
   size() { return this.a.length; }
   get(i) { return this.a[i]; }
   add(x) { this.a.push(x); return true; }
@@ -14,6 +14,21 @@ class JList {
 class FrozenList extends JList {
   add() { throw new Error('UnsupportedOperationException'); }
 }
+// Models java.util.ImmutableCollections$ListN: Rhino cannot reflect on the concrete
+// class, so every direct member call fails. The ArrayList constructor (toArray) works.
+const opaque = { on: false };
+class OpaqueList extends JList {
+  size() { return deny('size'); }
+  get() { return deny('get'); }
+  contains() { return deny('contains'); }
+  add() { return deny('add'); }
+  iterator() { return deny('iterator'); }
+}
+function deny(m) {
+  throw new Error('java.lang.IllegalAccessException: cannot access a member of class java.util.ImmutableCollections$ListN (' + m + ')');
+}
+const mk = (arr) => (opaque.on ? new OpaqueList(arr) : new JList(arr));
+
 class IdentityHashMap {
   constructor() { this.m = new Map(); }
   put(k, v) { this.m.set(k, v); return null; }
@@ -50,19 +65,19 @@ class EmiStack {
   getKey() { return this.key; }
   getNbt() { return this.nbt === null ? null : tag(this.nbt); }
   isEmpty() { return false; }
-  getEmiStacks() { return new JList([this]); }
+  getEmiStacks() { return mk([this]); }
   toString() { return this.key.id; }
 }
 const EMPTY_STACK = { isEmpty: () => true, getEmiStacks: () => new JList([]), getKey: () => null };
 
 function ingredient(...stacks) {
-  return { isEmpty: () => stacks.length === 0, getEmiStacks: () => new JList(stacks) };
+  return { isEmpty: () => stacks.length === 0, getEmiStacks: () => mk(stacks) };
 }
 
 class Recipe {
   constructor(id, category, inputs, outputs, catalysts) {
     this.id = id; this.category = category;
-    this.inputs = new JList(inputs); this.outputs = new JList(outputs); this.catalysts = new JList(catalysts || []);
+    this.inputs = mk(inputs); this.outputs = mk(outputs); this.catalysts = new JList(catalysts || []);
   }
   getId() { return this.id; }
   getCategory() { return this.category; }
@@ -74,8 +89,8 @@ class Recipe {
 // Baseline manager: returns the same list object for the same key, like EMI's Manager.
 class Manager {
   constructor(categories, recipes) {
-    this.categories = new JList(categories);
-    this.all = new JList(recipes);
+    this.categories = mk(categories);
+    this.all = mk(recipes);
     this.byCat = new Map(); this.byIn = new Map(); this.byOut = new Map(); this.byId = new Map();
     const push = (map, k, r) => { if (!map.has(k)) map.set(k, new JList()); if (!map.get(k).contains(r)) map.get(k).add(r); };
     for (const r of recipes) {
@@ -84,6 +99,7 @@ class Manager {
       for (const list of [r.inputs, r.catalysts]) for (const ing of list.a) for (const s of ing.getEmiStacks().a) push(this.byIn, s.key.id, r);
       for (const s of r.outputs.a) push(this.byOut, s.key.id, r);
     }
+    if (opaque.on) for (const map of [this.byCat, this.byIn, this.byOut]) for (const [k, v] of map) map.set(k, mk(v.a));
     this.empty = new JList();
   }
   getCategories() { return this.categories; }
@@ -136,11 +152,12 @@ function createWorld(spec) {
   const EmiStackList = {
     stacks: null, filteredStacks: null,
     bake(items) {
-      this.stacks = new FrozenList(items);
+      this.stacks = opaque.on ? new OpaqueList(items) : new FrozenList(items);
       this.bakeFiltered();
     },
     bakeFiltered() {
-      this.filteredStacks = new FrozenList(this.stacks.a.filter((s) => !userHidden.has(s)));
+      const kept = this.stacks.a.filter((s) => !userHidden.has(s));
+      this.filteredStacks = opaque.on ? new OpaqueList(kept) : new FrozenList(kept);
     },
   };
   const EmiRecipes = { manager: null, activeWorker: null };
@@ -240,6 +257,6 @@ function clientEvents() {
 }
 
 module.exports = {
-  JList, Item, Fluid, EmiStack, EMPTY_STACK, ingredient, Recipe, Manager,
+  JList, OpaqueList, opaque, Item, Fluid, EmiStack, EMPTY_STACK, ingredient, Recipe, Manager,
   Screen, AbstractContainerScreen, CreativeModeInventoryScreen, createWorld, clientEvents,
 };

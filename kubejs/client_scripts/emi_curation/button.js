@@ -4,7 +4,15 @@
 // Placed from EMI's real search-bar bounds (EmiScreenManager.search) and re-placed every
 // frame, so resizes and layout changes are followed. It avoids the container, EMI's
 // bottom-left config/tree buttons and every visible EMI sidebar panel. Hidden when the
-// EMI overlay is hidden; inactive while EMI is loading.
+// EMI overlay is hidden, and until EMI has laid the search bar out; inactive while EMI
+// is loading.
+//
+// Why "until EMI has laid the search bar out": EmiScreenManager.search is a static field
+// built at (0, 0), and EMI only positions it in addWidgets, which its Screen.init mixin
+// runs at the RETURN of init, i.e. after Forge's ScreenEvent.Init.Post (our hook). So the
+// placement made at Init.Post reads a stale rectangle (the top of the screen the first
+// time). The per-frame placement is what puts it right, and it must not depend on
+// matching the event's screen to the one stored at init.
 //
 // Forge listeners survive /kubejs reload, so they are registered once and dispatch
 // through global.emiCuration.handlers, which every reload replaces.
@@ -20,6 +28,14 @@
 
   function overlaps(a, b) {
     return a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h
+  }
+
+  // True once EMI has positioned its search bar for this screen. The widget is created
+  // at (0, 0) and only moved by EmiScreenManager.addWidgets, so a bar at y <= 0, one with
+  // no size, or one that does not fit the screen has not been laid out yet.
+  function searchPlaced(search, screen) {
+    return search.w > 0 && search.h > 0 && search.x >= 0 && search.y > 0 &&
+      search.x + search.w <= screen.w && search.y + search.h <= screen.h
   }
 
   // Pure placement. ctx: { screen:{w,h}, search:{x,y,w,h}, avoid:[rect], isPanelAt(x,y) }
@@ -79,7 +95,7 @@
   function update(button, screen) {
     var ctx = layoutContext(screen)
     var EmiConfig = ns.interop.cls('dev.emi.emi.config.EmiConfig')
-    if (ctx == null || !EmiConfig.enabled || !ctx.searchVisible) {
+    if (ctx == null || !EmiConfig.enabled || !ctx.searchVisible || !searchPlaced(ctx.search, ctx.screen)) {
       button.visible = false
       return
     }
@@ -122,8 +138,15 @@
 
   function onScreenRender(e) {
     var u = ui()
-    if (u.button == null || !ns.interop.sameRef(e.getScreen(), u.screen)) return
-    update(u.button, u.screen)
+    if (u.button == null) return
+    // Use the event's own screen: Init.Post always precedes the first render of a screen
+    // and replaces u.button, so no identity match with the stored screen is needed (and
+    // none is trusted: a mismatch here would leave the button where Init.Post put it).
+    var screen = e.getScreen()
+    var Container = ns.interop.cls('net.minecraft.client.gui.screens.inventory.AbstractContainerScreen')
+    if (!(screen instanceof Container)) return
+    u.screen = screen
+    update(u.button, screen)
   }
 
   function refresh(btn) {
@@ -131,7 +154,7 @@
     if (u.screen != null) update(btn, u.screen)
   }
 
-  ns.button = { WIDTH: WIDTH, chooseRect: chooseRect, emiButtonRects: emiButtonRects }
+  ns.button = { WIDTH: WIDTH, chooseRect: chooseRect, emiButtonRects: emiButtonRects, searchPlaced: searchPlaced }
   ns.handlers = {
     screenInit: function (e) { ns.diag.guard('screen init', function () { onScreenInit(e) }) },
     screenRender: function (e) { ns.diag.guard('screen render', function () { onScreenRender(e) }) },
