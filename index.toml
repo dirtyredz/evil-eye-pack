@@ -2193,6 +2193,10 @@ file = "config/repurposed_structures-forge/modded_loot.toml"
 hash = "c21921f03014bdd061fc83803277218093d6b7c0a6175dd931d2d46045701a5f"
 
 [[files]]
+file = "config/resourcepackoverrides.json"
+hash = "97f03afa961c7361668315c6432e7ded0431f8bea29e6df020b975776b896049"
+
+[[files]]
 file = "config/rftoolsbuilder-client.toml"
 hash = "88df54645d123f2e7f8f902af25432659f00ada56ca8bd48c4ccbfa84e5df5a3"
 
@@ -3010,6 +3014,11 @@ hash = "f4f8689cf079b6372bfbb380b9d0ae325163704c5a4655c80a43a8a56d3f32bc"
 metafile = true
 
 [[files]]
+file = "mods/resource-pack-overrides.pw.toml"
+hash = "fcb95ac9e305c0ac7d78f4fb66901da4fd73cd1f80f48ebeb08d0aea466da3ef"
+metafile = true
+
+[[files]]
 file = "mods/rftools-base.pw.toml"
 hash = "066a8f7a272e6287dd862cbf075d6d0605bb910b398cefa2a3e72520b5fbd22c"
 metafile = true
@@ -3177,6 +3186,11 @@ metafile = true
 [[files]]
 file = "mods/zerocore.pw.toml"
 hash = "ebf991e3897283ce84876112583e18d11eca4125778e619a6738b9fceed76378"
+metafile = true
+
+[[files]]
+file = "resourcepacks/eat-quiet.pw.toml"
+hash = "7d733354ee6af6f31004d76aea76ded8ba00dd9545254136fdc432ea9474d540"
 metafile = true
 
 [[files]]

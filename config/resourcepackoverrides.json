@@ -1,0 +1,8 @@
+{
+  "schema_version": 2,
+  "pack_overrides": {
+    "file/Eat-Quiet-1.0.0_1.20-1.21.zip": {
+      "required": true
+    }
+  }
+}

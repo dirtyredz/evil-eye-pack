@@ -1,0 +1,13 @@
+name = "Eat Quiet!"
+filename = "Eat-Quiet-1.0.0_1.20-1.21.zip"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/gtIfbZbr/versions/qqhrwDd4/Eat%20Quiet%201.0.0_1.20-1.21.zip"
+hash-format = "sha512"
+hash = "087cbfe4929daf3df40a6de5c49adeb9538e61f6f3ea8eb74642e1551b6b0b206dd945a50dced6358e7bf39dad6ba7d078e0fbb679b7b53e3c523291c4063d0d"
+
+[update]
+[update.modrinth]
+mod-id = "gtIfbZbr"
+version = "qqhrwDd4"
