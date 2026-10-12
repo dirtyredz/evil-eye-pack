@@ -1,6 +1,6 @@
 # EMI trial
 
-The `emi-trial` branch replaces REI with **EMI 1.1.24 + JEI 15.20.0.102 + JEP 3.0.1**. It
+The `emi-trial` branch replaces REI with **EMI 1.1.24 + JEI 15.62.0.219 + JEP 3.0.1**. It
 keeps the pack's item curation and the CLEAN/ALL button. `main` and the normal MultiMC
 instance stay on REI. Promoting EMI to `main` is a separate owner decision.
 
@@ -28,7 +28,7 @@ server to start:
 4. If the instance is ever recreated: copy the normal instance without `.minecraft/saves` and `.minecraft/backups`, keep `packwiz.json`, and check
    `Get-ChildItem "C:\Users\dirty\MultiMC\instances\Evil Eye EMI Trial" -Recurse -Attributes ReparsePoint` prints nothing.
 5. Click Launch once so packwiz installs the trial files. Then check `.minecraft/mods`:
-   - These three must be present: `emi-1.1.24+1.20.1+forge.jar`, `jei-1.20.1-forge-15.20.0.102.jar` and `JustEnoughProfessions-forge-1.20.1-3.0.1.jar`.
+   - These three must be present: `emi-1.1.24+1.20.1+forge.jar`, `jei-1.20.1-forge-15.62.0.219.jar` and `JustEnoughProfessions-forge-1.20.1-3.0.1.jar`.
    - These three must be gone: `RoughlyEnoughItems-*`, `REIPluginCompatibilities-*` and `RoughlyEnoughProfessions-*`.
    - `kubejs/client_scripts/rei_filter_toggle.js` must also be gone.
 6. Create a **new disposable world**. Never open a real save in the trial.

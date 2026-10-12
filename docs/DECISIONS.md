@@ -5,13 +5,13 @@ Newest first.
 ## 2026-10-11 — EMI trial: EMI + JEI + JEP on a separate branch and instance
 
 **Decision.** Trial EMI 1.1.24+1.20.1+forge on `emi-trial`, in a copied MultiMC instance,
-alongside JEI 15.20.0.102 and Just Enough Professions 3.0.1. REI, REI Plugin
+alongside JEI 15.62.0.219 and Just Enough Professions 3.0.1. REI, REI Plugin
 Compatibilities and Roughly Enough Professions are removed on that branch only. `main`
 stays on REI until the owner decides.
 
 **Why.**
 - EMI only runs JEI plugins through its JEMI bridge when JEI itself is installed. Most of this pack's integrations are JEI plugins (see `emi-coverage.md`).
-- JEI `15.20.0.102` is the JEI API version EMI 1.1.24 builds against, so it is the compatibility baseline. Change it only for a demonstrated dependency or API need, and record why.
+- JEI `15.62.0.219` (was `15.20.0.102`, bumped 2026-10-12): Polymorph 0.49.11 declares `jei [15.57.0.207,)` even though the dependency is optional, and Forge enforces the range, so 15.20.0.102 aborted mod loading. 15.62.0.219 is the newest 1.20.1 Forge JEI; EMI (`[15.20.0.0,)`), JEP (`[15.0.0.12,)`), AE2 (`[15.0.0,16.0.0)`), Create Crafts & Additions (`[15.0.0.0,)`) and Almost Unified (`[15.1.0.18,)`) all accept it. Change it only for a demonstrated dependency or API need, and record why.
 - REP is REI-only. JEP gives the same profession and workstation displays through JEI.
 - REI Plugin Compatibilities also declares mod id `jei`, so it cannot coexist with real JEI.
 

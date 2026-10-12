@@ -23,12 +23,10 @@ discover plugins on Forge. It also reports viewer dependencies declared in `mods
 | Mod | File | Source | Hash (as in the metafile) | Size |
 |---|---|---|---|---|
 | EMI 1.1.24+1.20.1+forge | `emi-1.1.24+1.20.1+forge.jar` | Modrinth `fRiHVvU7` / `Axuu9I9R` | sha512 `02743be3…a43229c8b` (sha1 `ea320200…3671520a`) | 1,121,750 |
-| JEI 15.20.0.102 | `jei-1.20.1-forge-15.20.0.102.jar` | CurseForge `238222` / file `5781188` | sha1 `543a832c1c09bd78e41732f5a94eec3383b223bb` | 1,406,026 |
+| JEI 15.62.0.219 | `jei-1.20.1-forge-15.62.0.219.jar` | CurseForge `238222` / file `9058038` | sha1 `e514cd6bc50b816487d9c25cd457de5e0bd5b07f` | 2,232,177 |
 | JEP 3.0.1 | `JustEnoughProfessions-forge-1.20.1-3.0.1.jar` | Modrinth `kB56GtWA` / `ANKVJC3T` | sha512 `b1637b0c…e88a94d80e` (sha1 `dd8b3252…cf0bd06f`) | 24,607 |
 
-- The JEI CurseForge file size (1,406,026) and sha1 match Modrinth's copy of the same
-  release (`MybRLD9h`). The jar bytes downloaded from `mediafilez.forgecdn.net` hash to
-  that sha1.
+- The JEI jar bytes downloaded from Modrinth (`uyTkeINn`) hash to that sha1 and match the CurseForge file size (2,232,177). It bundles `mezz_config` 0.6.3 by jar-in-jar. JEI was bumped from 15.20.0.102 because Polymorph requires `jei [15.57.0.207,)`.
 - Compatibility, from each jar's `mods.toml`:
   - EMI declares `loaderVersion [40,)`. Its JEI dependency is optional: `jei [15.20.0.0,)`, ordering BEFORE, client side.
   - JEI requires `forge [47.0,)` and `minecraft [1.20.1, 1.20.2)`.
