@@ -1,14 +1,6 @@
 hash-format = "sha256"
 
 [[files]]
-file = ".structure-review-optout"
-hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-
-[[files]]
-file = "README.md"
-hash = "6c2ba45fdfbb878207be892b40baf3a245c7aa17e8c80becc76b29a6f84ff69b"
-
-[[files]]
 file = "config/MouseTweaks.cfg"
 hash = "4069ce1a439d8c37453c1b1e9f2037e0942674c7e48723a39b37eab245792ad4"
 
