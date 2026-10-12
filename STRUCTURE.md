@@ -36,7 +36,6 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 | `emi_curation/hiding.js` (65) | the "what is hidden" decision: pack policy per stack (cached per registry key) and REI-style display hiding (adds EMI's user-hidden set and index key set) |
 | `emi_curation/session.js` (60) | CLEAN/ALL state in `global`, EMI generation tracking, tick → sync → apply with restore on failure, reload/logout handling, event registration |
 | `emi_curation/button.js` (50) | button placement from EMI's search bounds. Forge screen listeners, registered once. |
-
 | `tools/emi_curation/migrate_rei.cjs` | one-shot REI → EMI data migration and its `--check` against the frozen fixture in `tools/emi_curation/fixtures/` |
 | `tools/emi_curation/tests/harness.cjs`, `fake_emi.cjs` | Node harness that loads the production scripts into a `vm` context in KubeJS priority order, and a fake EMI/Java world to drive them |
 | `tools/emi_coverage/scan_jars.cjs`, `zip_reader.cjs` | read-only scan of mod jars for viewer plugin coverage; `zip_reader` is its dependency-free jar reader |
