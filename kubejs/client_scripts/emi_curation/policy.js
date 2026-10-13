@@ -36,6 +36,7 @@
       idContains: requireStringArray(rules.idContains || [], 'idContains').slice(),
       namespaces: {},
       nbtExceptions: {},
+      nbtHideKeys: {},
       displayFiltering: !!(rules.displayFiltering && rules.displayFiltering.clean === true),
       idCache: {}
     }
@@ -66,6 +67,17 @@
         policy.nbtExceptions[ids[k]] = keep
       }
     }
+    var hk = rules.hideWhenNbtHasKey || []
+    if (!Array.isArray(hk)) fail('hideWhenNbtHasKey must be an array')
+    for (var h = 0; h < hk.length; h++) {
+      var keys = requireStringArray(hk[h].keys, 'hideWhenNbtHasKey[' + h + '].keys')
+      var hids = requireStringArray(hk[h].ids, 'hideWhenNbtHasKey[' + h + '].ids')
+      for (var q = 0; q < hids.length; q++) {
+        requireId(hids[q], 'hideWhenNbtHasKey')
+        if (policy.nbtHideKeys[hids[q]] || policy.nbtExceptions[hids[q]]) fail('duplicate nbt rule id ' + hids[q])
+        policy.nbtHideKeys[hids[q]] = keys
+      }
+    }
     return policy
   }
 
@@ -80,7 +92,8 @@
     return compile(rules, lists)
   }
 
-  // 'hide' | 'show' | 'nbt' (hidden unless the stack's NBT equals the exception).
+  // 'hide' | 'show' | 'nbt' (decided per stack from its NBT: hidden unless it equals an
+  // nbtExceptions entry, or hidden when it carries a hideWhenNbtHasKey key).
   function classifyId(policy, id, isItem) {
     var key = (isItem ? 'i|' : 'o|') + id
     var cached = policy.idCache[key]
@@ -94,7 +107,7 @@
       for (var i = 0; i < policy.idContains.length; i++) {
         if (id.indexOf(policy.idContains[i]) !== -1) { result = 'hide'; break }
       }
-      if (result === 'show' && isItem && policy.nbtExceptions[id]) result = 'nbt'
+      if (result === 'show' && isItem && (policy.nbtExceptions[id] || policy.nbtHideKeys[id])) result = 'nbt'
     }
     policy.idCache[key] = result
     return result
@@ -126,6 +139,14 @@
     var c = classifyId(policy, desc.id, desc.isItem)
     if (c !== 'nbt') return c === 'hide'
     var nbt = desc.nbt ? desc.nbt() : null
+    var hideKeys = policy.nbtHideKeys[desc.id]
+    if (hideKeys) {
+      if (nbt === null || typeof nbt !== 'object') return false
+      for (var k = 0; k < hideKeys.length; k++) {
+        if (Object.prototype.hasOwnProperty.call(nbt, hideKeys[k])) return true
+      }
+      return false
+    }
     return !nbtEquals(nbt, policy.nbtExceptions[desc.id])
   }
 

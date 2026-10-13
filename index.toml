@@ -1698,7 +1698,7 @@ hash = "f4389ca4bd9e12f0fbb6ba8c271c35f77b32885e39962b5f53cfc75ac53cbe90"
 
 [[files]]
 file = "config/emi-curation/rules.json"
-hash = "0030c3ce4e1e0568d9b8156a5581f54c36508e09c20913f693742f07b3856594"
+hash = "29b6dcfb00559e78bde98e16d4ffce4e7160db03a20bd594acb93a7b6e80c4a1"
 
 [[files]]
 file = "config/emi.css"
@@ -2402,7 +2402,7 @@ hash = "33d8f3ebaedd1ea8a4782a41d2ea65c473d85fd0a17da89aff57db3dcdea257e"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/policy.js"
-hash = "6a448a73fac8870c17a8e1cfc5cdf9c977f929b126d53edcbfca2318b543c567"
+hash = "62a2ed97e771d6832b8e54a665c4182c23e91af1a7e5989e8ffeed8b80ca20d9"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/recipe_view.js"
@@ -2938,8 +2938,33 @@ hash = "754a03e5f088d19287fe2f25b7b3165dd4e44e294838c679b218fcac54a11b5b"
 metafile = true
 
 [[files]]
+file = "mods/macaws-furniture.pw.toml"
+hash = "6b54fd7d4678b48385c9d93e08e3f3ac26d59c66e99db0a3422cb202a168d1cf"
+metafile = true
+
+[[files]]
 file = "mods/macaws-paintings.pw.toml"
 hash = "17711f089f8088e654f7bb3bdfd27f350a541e7f62626db38873c01f64163c37"
+metafile = true
+
+[[files]]
+file = "mods/macaws-paths-and-pavings.pw.toml"
+hash = "d10c2f01c7561c90597c773b5487e5c50aa1aa951e0f14725c14755d6a1d0ae3"
+metafile = true
+
+[[files]]
+file = "mods/macaws-roofs.pw.toml"
+hash = "6536ea29402edd089c88723aa13755f9aa609c5d8d505f878a2d803a401a6c69"
+metafile = true
+
+[[files]]
+file = "mods/macaws-stairs.pw.toml"
+hash = "4eab1592a678a42bd8acf1a1230ec8a19a32db193176254b96b6ad2549c468d3"
+metafile = true
+
+[[files]]
+file = "mods/macaws-trapdoors.pw.toml"
+hash = "50f2430d9f622edc06bb8262f4c8532fca67fa34bfb287b6a3e478abd1d3a33d"
 metafile = true
 
 [[files]]

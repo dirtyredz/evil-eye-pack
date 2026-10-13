@@ -25,7 +25,8 @@ curation and the CLEAN/ALL button.
   - 1,759 explicit item IDs: 20 creative-only, 654 compressed, 708 Ender IO glass, 361 colour variants and 16 MineColonies eggs;
   - every ID containing `spawn_egg`;
   - the whole `dramaticdoors` namespace;
-  - every Filled Soul Vial and Broken Spawner, except exactly one canonical Zombie stack of each.
+  - every Filled Soul Vial and Broken Spawner, except exactly one canonical Zombie stack of each;
+  - every RFTools Utility syringe carrying a `mobId` tag (one per mob); the plain syringe stays (`hideWhenNbtHasKey` in `rules.json`).
 - CLEAN also hides recipe displays the way REI's "filter displays" option did. A display is hidden when some input or output has *all* of its alternatives hidden. Catalysts and empty slots never hide a display.
 - **EMI: ALL** restores EMI's ordinary index and its complete recipe set without an EMI reload. Recipes, items and EMI's own hidden-stack settings, favorites and config are never written.
 - The button sits beside the centred search bar on container and inventory screens. It moves aside for EMI's sidebars and buttons. It disappears with Ctrl+O and is inactive (`EMI: ...`) while EMI loads.
@@ -88,7 +89,8 @@ Record the results in [emi-coverage.md](emi-coverage.md).
    - lower compression tiers;
    - plain, `_e` and `_d` Ender IO glass;
    - Empty Soul Vial and Powered Spawner;
-   - **exactly two** Zombie examples (one vial, one broken spawner).
+   - **exactly two** Zombie examples (one vial, one broken spawner);
+   - the plain RFTools syringe is the only syringe.
 3. Toggle repeatedly, both with an empty search and with a search typed. ALL must bring back the hidden items and their recipe displays. CLEAN must hide them again. There should be no "EMI reloading" step.
 4. Check the display rule in CLEAN. A recipe whose only input or output is hidden disappears. A recipe where a hidden item is only one alternative, or only a catalyst, stays. ALL shows everything.
 5. Check every row of the coverage table. Pay most attention to:

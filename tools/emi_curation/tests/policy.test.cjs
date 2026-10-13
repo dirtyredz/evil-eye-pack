@@ -80,6 +80,15 @@ test('exactly one canonical Zombie Filled Soul Vial and Broken Spawner stay visi
   }
 });
 
+test('RFTools syringes: plain stays visible, every mob-filled variant is hidden', () => {
+  const id = 'rftoolsutility:syringe';
+  assert.equal(hidden(id), false);
+  assert.equal(hidden(id, {}), false);
+  assert.equal(hidden(id, { mobId: 'minecraft:zombie' }), true);
+  assert.equal(hidden(id, { mobId: 'minecraft:creeper', level: { $nbt: 'int', value: 3 } }), true);
+  assert.equal(hidden('rftoolsutility:other_item', { mobId: 'minecraft:zombie' }), false);
+});
+
 test('nbtEquals is structural and order-independent', () => {
   assert.equal(P.nbtEquals({ a: 'x', b: { c: 'y' } }, { b: { c: 'y' }, a: 'x' }), true);
   assert.equal(P.nbtEquals({ a: 'x' }, { a: 'x', b: 'y' }), false);
