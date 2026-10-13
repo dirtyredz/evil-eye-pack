@@ -27,6 +27,7 @@ curation and the CLEAN/ALL button.
   - the whole `dramaticdoors` namespace;
   - every Filled Soul Vial and Broken Spawner, except exactly one canonical Zombie stack of each;
   - every RFTools Utility syringe carrying a `mobId` tag (one per mob); the plain syringe stays (`hideWhenNbtHasKey` in `rules.json`).
+- NBT rules in `rules.json`: `nbtExceptions` hides every stack of an ID except those whose NBT equals `keepWhenNbtEquals`; `hideWhenNbtHasKey` hides a stack of an ID when its NBT has *any* listed key (the value is never inspected). An ID may appear in only one NBT rule across both types; a repeat fails compile with `duplicate nbt rule id`.
 - CLEAN also hides recipe displays the way REI's "filter displays" option did. A display is hidden when some input or output has *all* of its alternatives hidden. Catalysts and empty slots never hide a display.
 - **EMI: ALL** restores EMI's ordinary index and its complete recipe set without an EMI reload. Recipes, items and EMI's own hidden-stack settings, favorites and config are never written.
 - The button sits beside the centred search bar on container and inventory screens. It moves aside for EMI's sidebars and buttons. It disappears with Ctrl+O and is inactive (`EMI: ...`) while EMI loads.
