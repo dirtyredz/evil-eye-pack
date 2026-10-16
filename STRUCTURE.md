@@ -41,7 +41,7 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 | `emi_curation/session.js` (60) | CLEAN/ALL state in `global`, loads the policy and configures `hiding.js`, EMI generation tracking, tick → sync → apply with restore on failure, reload/logout handling, event registration |
 | `emi_curation/placement.js` (55) | shared button placement from EMI's search bounds: pure `chooseRect`, `searchPlaced`, live `layoutContext`/`usableLayout` |
 | `emi_curation/button.js` (50) | the CLEAN/ALL button. Forge screen listeners, registered once. |
-| `emi_curation/mods_menu.js` (45) | the Mods dropdown: `mods.json` parsing/filtering, menu layout, search-text toggle, own Forge listeners (init, render, render-post draw, mouse, key), registered once; the dropdown rows are drawn, not widgets |
+| `emi_curation/mods_menu.js` (45) | the Mods dropdown: `mods.json` parsing/filtering, menu layout, search-text toggle, own Forge listeners (init, render, render-post draw, tooltip, mouse, key), registered once; the dropdown rows are drawn, not widgets |
 | `tools/emi_curation/migrate_rei.cjs` | one-shot REI → EMI data migration and its `--check` against the frozen fixture in `tools/emi_curation/fixtures/` |
 | `tools/emi_curation/tests/harness.cjs`, `fake_emi.cjs` | Node harness that loads the production scripts into a `vm` context in KubeJS priority order (plus the shared `fixture()`/`boot()`), and a fake EMI/Java world to drive them |
 | `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `mods_menu.test.cjs`, `interop.test.cjs` | session lifecycle and views; button placement and listeners; Mods menu behaviour and pure logic; Java list-copy handling |

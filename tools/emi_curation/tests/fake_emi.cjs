@@ -147,6 +147,14 @@ class AbstractContainerScreen extends Screen {
 
 class CreativeModeInventoryScreen extends AbstractContainerScreen {}
 
+/** Font.width is ambiguous by argument type under KubeJS; only the explicit signature works. */
+function fakeFont() {
+  return {
+    width() { throw new Error('InternalError: The choice of Java method Font.m_92895_ is ambiguous'); },
+    'width(java.lang.String)': (s) => s.length * 6 - 1,
+  };
+}
+
 /** Records what the Mods menu draws in Render$Post. */
 function fakeGraphics() {
   const g = { fills: [], strings: [], flushes: 0, z: 0, stack: 0, seq: 0 };
@@ -154,10 +162,14 @@ function fakeGraphics() {
     pushPose() { g.stack++; }, popPose() { g.stack--; }, translate(x, y, z) { g.z += z; },
   });
   g.fill = (x1, y1, x2, y2, c) => g.fills.push({ x1, y1, x2, y2, c, z: g.z, seq: g.seq++ });
-  // Only the Component overload is accepted: a raw JS string can resolve to the wrong Java overload.
-  g.drawString = (font, s, x, y, c) => {
-    if (typeof s !== 'object' || typeof s.getString !== 'function') throw new Error('drawString needs a Component');
-    g.strings.push({ s: s.getString(), x, y, c, z: g.z, seq: g.seq++ });
+  // KubeJS's type wrappers make String/Component/FormattedCharSequence interchangeable, so a
+  // plain drawString call is ambiguous and throws (client.log: "The choice of Java method
+  // GuiGraphics.m_280488_ ... is ambiguous"). Only the explicit-signature form works.
+  const ambiguous = () => { throw new Error('InternalError: The choice of Java method GuiGraphics.m_280488_ matching JavaScript argument types is ambiguous'); };
+  g.drawString = ambiguous;
+  g['drawString(net.minecraft.client.gui.Font,java.lang.String,int,int,int)'] = function (font, s, x, y, c) {
+    if (typeof s !== 'string') throw new Error('the String overload needs a string');
+    g.strings.push({ s, x, y, c, z: g.z, seq: g.seq++ });
   };
   g.flush = () => { g.flushes++; };
   return g;
@@ -212,7 +224,7 @@ function createWorld(spec) {
   const EmiPersistentData = { save() { counters.persistentSaves++; } };
   const EmiConfig = { enabled: true, writeConfig() { counters.configWrites++; } };
   const player = {};
-  const Minecraft = { getInstance: () => ({ player: world.inWorld ? player : null, font: { width: (c) => c.getString().length * 6 - 1 } }) };
+  const Minecraft = { getInstance: () => ({ player: world.inWorld ? player : null, font: fakeFont() }) };
 
   const classes = {
     'java.util.IdentityHashMap': IdentityHashMap,
@@ -242,6 +254,7 @@ function createWorld(spec) {
     'net.minecraftforge.eventbus.api.EventPriority': { NORMAL: 'NORMAL' },
     'net.minecraftforge.client.event.ScreenEvent$Init$Post': 'ScreenEvent$Init$Post',
     'net.minecraftforge.client.event.ScreenEvent$Render$Pre': 'ScreenEvent$Render$Pre',
+    'net.minecraftforge.client.event.RenderTooltipEvent$Pre': 'RenderTooltipEvent$Pre',
     'net.minecraftforge.client.event.ScreenEvent$Render$Post': 'ScreenEvent$Render$Post',
     'net.minecraftforge.client.event.ScreenEvent$MouseButtonPressed$Pre': 'ScreenEvent$MouseButtonPressed$Pre',
     'net.minecraftforge.client.event.ScreenEvent$KeyPressed$Pre': 'ScreenEvent$KeyPressed$Pre',

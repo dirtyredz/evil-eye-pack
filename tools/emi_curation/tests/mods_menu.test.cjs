@@ -15,7 +15,7 @@ function setup(size) {
   c.world.EmiScreenManager.search.y = H - 21;
   c.world.EmiScreenManager.search.x = Math.floor((W - 160) / 2);
   c.world.fireEvent('ScreenEvent$Init$Post', { getScreen: () => screen, addListener: (b) => added.push(b) });
-  const render = () => c.world.fireEvent('ScreenEvent$Render$Pre', { getScreen: () => screen });
+  const render = () => c.world.fireEvent('ScreenEvent$Render$Pre', { getScreen: () => screen, getMouseX: () => 0, getMouseY: () => 0 });
   render();
   const mouse = (x, y, button) => {
     const e = { getMouseX: () => x, getMouseY: () => y, getButton: () => button || 0, canceled: false, setCanceled(v) { this.canceled = v; } };
@@ -27,15 +27,21 @@ function setup(size) {
     c.world.fireEvent('ScreenEvent$KeyPressed$Pre', e);
     return e;
   };
+  const tooltip = () => {
+    const e = { canceled: false, setCanceled(v) { this.canceled = v; } };
+    c.world.fireEvent('RenderTooltipEvent$Pre', e);
+    return e;
+  };
   const post = (x, y) => {
     const g = F.fakeGraphics();
     c.world.fireEvent('ScreenEvent$Render$Post', { getScreen: () => screen, getGuiGraphics: () => g, getMouseX: () => x || 0, getMouseY: () => y || 0 });
     return g;
   };
+  const hoverAt = (x, y) => c.world.fireEvent('ScreenEvent$Render$Pre', { getScreen: () => screen, getMouseX: () => x, getMouseY: () => y });
   const rects = () => Array.from(c.ns().modsUi.rects);
   const center = (r) => [r.x + 1, r.y + 1];
   // added: [CLEAN, Mods]; the dropdown rows are drawn, not widgets
-  return { c, screen, added, clean: added[0], mods: added[1], render, mouse, key, post, rects, center, search: c.world.EmiScreenManager.search, W, H };
+  return { c, screen, added, clean: added[0], mods: added[1], render, mouse, key, post, tooltip, hoverAt, rects, center, search: c.world.EmiScreenManager.search, W, H };
 }
 
 const LABELS = ['Clear', 'Applied Energistics 2', 'Ender IO', 'Create'];
@@ -51,6 +57,31 @@ test('the Mods button sits beside CLEAN/ALL, not on top of it', () => {
   // CLEAN is left of the search bar; the EMI buttons block the left of CLEAN and the search
   // bar blocks its right, so Mods lands just right of the search bar.
   assert.equal(b.x, t.search.x + t.search.w + 2);
+});
+
+test('regression: plain drawString/font.width are ambiguous under KubeJS; the menu uses the explicit signatures', () => {
+  const g = F.fakeGraphics();
+  assert.throws(() => g.drawString({}, 'x', 0, 0, -1), /ambiguous/);
+  assert.throws(() => g.drawString({}, { getString: () => 'x' }, 0, 0, -1), /ambiguous/);
+  const t = setup();
+  t.mods.press();
+  t.post(); // would throw through the guard (and leave nothing drawn) with a plain call
+  assert.ok(t.post().strings.length > 0);
+  assert.equal(t.c.logs.filter((l) => l[0] === 'error').length, 0, 'no errors logged while drawing and measuring');
+  const widths = Array.from(t.rects(), (r) => r.w);
+  assert.ok(Math.max(...widths) < 160, 'widths come from the font, not the fallback: ' + widths);
+});
+
+test('item and EMI tooltips under the open menu are cancelled; elsewhere they are not', () => {
+  const t = setup();
+  t.hoverAt(5, 5);
+  assert.equal(t.tooltip().canceled, false, 'menu closed');
+  t.mods.press();
+  const r = t.rects()[1];
+  t.hoverAt(r.x + 2, r.y + 2);
+  assert.equal(t.tooltip().canceled, true, 'mouse over a row');
+  t.hoverAt(5, 5);
+  assert.equal(t.tooltip().canceled, false, 'mouse elsewhere');
 });
 
 test('only loaded mods are listed, drawn on top; Clear comes first', () => {

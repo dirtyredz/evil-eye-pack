@@ -104,7 +104,7 @@
   // ---- state ----
 
   // u.items: [{label, modid}] (modid null = Clear); u.rects: their screen rects while open.
-  function ui() { return ns.modsUi || (ns.modsUi = { screen: null, button: null, items: [], rects: [], open: false }) }
+  function ui() { return ns.modsUi || (ns.modsUi = { screen: null, button: null, items: [], rects: [], open: false, mouse: null }) }
 
   var listCache = null
   function loadList() {
@@ -139,12 +139,12 @@
   // with the "> " marker included so the row never changes width when it becomes active.
   function measureRows(u) {
     var font = null
-    try { font = ns.interop.cls('net.minecraft.client.Minecraft').getInstance().font } catch (ignored) {}
+    try { font = ns.interop.cls('net.minecraft.client.Minecraft').getInstance().font } catch (err) { ns.diag.logError('mods font', err) }
     var widths = []
     for (var i = 0; i < u.items.length; i++) {
       var text = '> ' + u.items[i].label
       var w = 0
-      try { w = font ? Number(font.width(literal(text))) : 0 } catch (ignored2) { w = 0 }
+      try { w = font ? textWidth(font, text) : 0 } catch (err) { ns.diag.logError('mods width', err); w = 0 }
       if (!(w > 0)) w = text.length * 6
       widths.push(w + 2 * PAD)
     }
@@ -211,6 +211,28 @@
     if (u.open) layoutItems(u)
   }
 
+  // ---- Java overload escapes ----
+  // KubeJS's type wrappers make String, Component and FormattedCharSequence
+  // interchangeable, so GuiGraphics.drawString and Font.width are "ambiguous" by argument
+  // type and throw InternalError (seen in client.log: "The choice of Java method
+  // GuiGraphics.m_280488_ ... is ambiguous"). Rhino's explicit-signature lookup
+  // (JavaMembers.getExplicitFunction, keyed by the same remapped name as a plain call)
+  // picks exactly one overload.
+  var DRAW_STRING = 'drawString(net.minecraft.client.gui.Font,java.lang.String,int,int,int)'
+  var FONT_WIDTH = 'width(java.lang.String)'
+
+  function drawText(g, font, text, x, y, color) {
+    var fn = g[DRAW_STRING]
+    if (!fn) throw new Error('GuiGraphics has no ' + DRAW_STRING)
+    fn.call(g, font, String(text), x, y, color)
+  }
+
+  function textWidth(font, text) {
+    var fn = font[FONT_WIDTH]
+    if (!fn) throw new Error('Font has no ' + FONT_WIDTH)
+    return Number(fn.call(font, String(text)))
+  }
+
   // ---- drawing ----
   // The dropdown is drawn by this script in Render$Post, after the screen, EMI's panels
   // and tooltips, so nothing can cover it (Button widgets added at Init.Post are drawn
@@ -242,13 +264,12 @@
       g.fill(rr.x, rr.y, rr.x + rr.w, rr.y + rr.h, j === hover ? COLOR_HOVER : (active ? COLOR_ACTIVE : COLOR_BACK))
     }
     g.flush()
-    // Text goes in as a Component (an unambiguous drawString overload: a JS concatenated
-    // string is a ConsString that Rhino can resolve to the wrong overload) with an opaque
-    // ARGB colour, above the fills.
+    // Text: the String overload via an explicit signature (see drawText), an opaque ARGB
+    // colour, above the fills.
     g.pose().translate(0, 0, 50)
     for (var k = 0; k < u.rects.length; k++) {
       var rk = u.rects[k]
-      g.drawString(font, literal(rowText(u.items[k], cur)), rk.x + PAD, rk.y + 2, COLOR_TEXT)
+      drawText(g, font, rowText(u.items[k], cur), rk.x + PAD, rk.y + 2, COLOR_TEXT)
     }
     g.flush()
     g.pose().popPose()
@@ -290,6 +311,7 @@
     var screen = e.getScreen()
     if (!isContainer(screen)) return
     u.screen = screen
+    u.mouse = { x: e.getMouseX(), y: e.getMouseY() }
     update(u, screen)
   }
 
@@ -298,6 +320,16 @@
     if (!u.open || u.rects.length === 0) return
     if (!isContainer(e.getScreen())) return
     drawMenu(e.getGuiGraphics(), u, e.getMouseX(), e.getMouseY())
+  }
+
+  // While the menu is open and the mouse is over it, the screen and EMI underneath still
+  // think they are hovered. Both the container's and EMI's tooltips go through
+  // GuiGraphics.renderTooltipInternal (EMI's DrawContextAccessor.drawTooltip invokes it),
+  // where Forge posts RenderTooltipEvent.Pre; cancelling that event drops the tooltip.
+  function onTooltip(e) {
+    var u = ui()
+    if (!u.open || !u.mouse || rowAt(u, u.mouse.x, u.mouse.y) < 0) return
+    e.setCanceled(true)
   }
 
   // While open: a left click on a row chooses it; a click on the Mods button is left to the
@@ -333,6 +365,7 @@
     screenInit: function (e) { ns.diag.guard('mods init', function () { onScreenInit(e) }) },
     screenRender: function (e) { ns.diag.guard('mods render', function () { onScreenRender(e) }) },
     screenPost: function (e) { ns.diag.guard('mods post', function () { onScreenPost(e) }) },
+    tooltip: function (e) { ns.diag.guard('mods tooltip', function () { onTooltip(e) }) },
     mousePressed: function (e) { ns.diag.guard('mods mouse', function () { onMousePressed(e) }) },
     keyPressed: function (e) { ns.diag.guard('mods key', function () { onKeyPressed(e) }) },
     toggle: function () { ns.diag.guard('mods toggle', toggle) },
@@ -352,6 +385,7 @@
     hook('net.minecraftforge.client.event.ScreenEvent$Init$Post', 'screenInit')
     hook('net.minecraftforge.client.event.ScreenEvent$Render$Pre', 'screenRender')
     hook('net.minecraftforge.client.event.ScreenEvent$Render$Post', 'screenPost')
+    hook('net.minecraftforge.client.event.RenderTooltipEvent$Pre', 'tooltip')
     hook('net.minecraftforge.client.event.ScreenEvent$MouseButtonPressed$Pre', 'mousePressed')
     hook('net.minecraftforge.client.event.ScreenEvent$KeyPressed$Pre', 'keyPressed')
   }
