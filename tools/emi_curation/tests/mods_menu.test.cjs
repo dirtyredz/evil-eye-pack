@@ -6,9 +6,10 @@ const path = require('node:path');
 const { boot, ROOT } = require('./harness.cjs');
 const F = require('./fake_emi.cjs');
 
-function setup(size) {
+function setup(size, opts) {
   const [W, H] = size || [427, 240];
   const c = boot();
+  c.world.dev = !!(opts && opts.dev);
   c.tick();
   const added = [];
   const screen = new F.AbstractContainerScreen(W, H, Math.floor((W - 176) / 2), Math.floor((H - 166) / 2), 176, 166);
@@ -33,7 +34,7 @@ function setup(size) {
     return e;
   };
   const post = (x, y) => {
-    const g = F.fakeGraphics();
+    const g = F.fakeGraphics({ dev: c.world.dev });
     c.world.fireEvent('ScreenEvent$Render$Post', { getScreen: () => screen, getGuiGraphics: () => g, getMouseX: () => x || 0, getMouseY: () => y || 0 });
     return g;
   };
@@ -59,17 +60,43 @@ test('the Mods button sits beside CLEAN/ALL, not on top of it', () => {
   assert.equal(b.x, t.search.x + t.search.w + 2);
 });
 
-test('regression: plain drawString/font.width are ambiguous under KubeJS; the menu uses the explicit signatures', () => {
+test('regression: at runtime only SRG names resolve; the menu draws and measures through them', () => {
   const g = F.fakeGraphics();
-  assert.throws(() => g.drawString({}, 'x', 0, 0, -1), /ambiguous/);
-  assert.throws(() => g.drawString({}, { getString: () => 'x' }, 0, 0, -1), /ambiguous/);
+  assert.throws(() => g.drawString({}, 'x', 0, 0, -1), /ambiguous/, 'plain drawString is ambiguous');
+  assert.equal(g['drawString(net.minecraft.client.gui.Font,java.lang.String,int,int,int)'], undefined, 'readable explicit signature does not resolve');
+  assert.equal(typeof g.m_280488_, 'function', 'm_280488_ = drawString(Font, String, int, int, int)');
   const t = setup();
   t.mods.press();
-  t.post(); // would throw through the guard (and leave nothing drawn) with a plain call
-  assert.ok(t.post().strings.length > 0);
+  assert.ok(t.post().strings.length > 0, 'labels drawn');
   assert.equal(t.c.logs.filter((l) => l[0] === 'error').length, 0, 'no errors logged while drawing and measuring');
   const widths = Array.from(t.rects(), (r) => r.w);
   assert.ok(Math.max(...widths) < 160, 'widths come from the font, not the fallback: ' + widths);
+});
+
+test('a deobfuscated dev environment (readable explicit signatures) still draws', () => {
+  const t = setup(undefined, { dev: true });
+  t.mods.press();
+  const g = t.post();
+  assert.equal(g.strings.length, t.rects().length);
+  assert.ok(Math.max(...Array.from(t.rects(), (r) => r.w)) < 160);
+  assert.equal(t.c.logs.filter((l) => l[0] === 'error').length, 0);
+});
+
+test('a draw failure is logged once, not every frame, and the menu closes', () => {
+  const t = setup();
+  t.mods.press();
+  const broken = () => {
+    const g = F.fakeGraphics();
+    delete g.m_280488_;
+    t.c.world.fireEvent('ScreenEvent$Render$Post', { getScreen: () => t.screen, getGuiGraphics: () => g, getMouseX: () => 0, getMouseY: () => 0 });
+    return g;
+  };
+  const before = t.c.logs.filter((l) => l[0] === 'error').length;
+  const g1 = broken();
+  assert.equal(g1.stack, 0, 'pose stack balanced after a failed draw');
+  for (let i = 0; i < 20; i++) { t.mods.press(); broken(); }
+  const logged = t.c.logs.filter((l) => l[0] === 'error').slice(before).filter((l) => /mods draw/.test(l[1]));
+  assert.equal(logged.length, 1, 'logged once');
 });
 
 test('item and EMI tooltips under the open menu are cancelled; elsewhere they are not', () => {

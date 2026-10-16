@@ -139,12 +139,12 @@
   // with the "> " marker included so the row never changes width when it becomes active.
   function measureRows(u) {
     var font = null
-    try { font = ns.interop.cls('net.minecraft.client.Minecraft').getInstance().font } catch (err) { ns.diag.logError('mods font', err) }
+    try { font = ns.interop.cls('net.minecraft.client.Minecraft').getInstance().font } catch (err) { logOnce('mods font', err) }
     var widths = []
     for (var i = 0; i < u.items.length; i++) {
       var text = '> ' + u.items[i].label
       var w = 0
-      try { w = font ? textWidth(font, text) : 0 } catch (err) { ns.diag.logError('mods width', err); w = 0 }
+      try { w = font ? textWidth(font, text) : 0 } catch (err) { logOnce('mods width', err); w = 0 }
       if (!(w > 0)) w = text.length * 6
       widths.push(w + 2 * PAD)
     }
@@ -213,24 +213,44 @@
 
   // ---- Java overload escapes ----
   // KubeJS's type wrappers make String, Component and FormattedCharSequence
-  // interchangeable, so GuiGraphics.drawString and Font.width are "ambiguous" by argument
-  // type and throw InternalError (seen in client.log: "The choice of Java method
-  // GuiGraphics.m_280488_ ... is ambiguous"). Rhino's explicit-signature lookup
-  // (JavaMembers.getExplicitFunction, keyed by the same remapped name as a plain call)
-  // picks exactly one overload.
-  var DRAW_STRING = 'drawString(net.minecraft.client.gui.Font,java.lang.String,int,int,int)'
-  var FONT_WIDTH = 'width(java.lang.String)'
+  // interchangeable, so a plain GuiGraphics.drawString / Font.width call is "ambiguous" by
+  // argument type and throws InternalError. At runtime Rhino's member table is keyed by the
+  // real (SRG) names, and the String overloads have their own: from the Forge 1.20.1
+  // client jar, GuiGraphics.m_280488_(Font, String, int, int, int) is drawString(String)
+  // (m_280430_ is the Component one) and Font.m_92895_(String) is width(String). Each name
+  // names one method, so a call by SRG name is unambiguous. Candidates, in order: the SRG
+  // name, the SRG name with an explicit signature, then the readable name with an
+  // explicit signature (a deobfuscated dev environment).
+  var DRAW_STRING = [
+    'm_280488_',
+    'm_280488_(net.minecraft.client.gui.Font,java.lang.String,int,int,int)',
+    'drawString(net.minecraft.client.gui.Font,java.lang.String,int,int,int)'
+  ]
+  var FONT_WIDTH = ['m_92895_', 'm_92895_(java.lang.String)', 'width(java.lang.String)']
+
+  function resolveMethod(obj, keys, what) {
+    for (var i = 0; i < keys.length; i++) {
+      var fn = null
+      try { fn = obj[keys[i]] } catch (ignored) { fn = null }
+      if (fn) return fn
+    }
+    throw new Error(what + ' not found as any of ' + keys.join(' | '))
+  }
 
   function drawText(g, font, text, x, y, color) {
-    var fn = g[DRAW_STRING]
-    if (!fn) throw new Error('GuiGraphics has no ' + DRAW_STRING)
-    fn.call(g, font, String(text), x, y, color)
+    resolveMethod(g, DRAW_STRING, 'GuiGraphics.drawString(String)').call(g, font, String(text), x, y, color)
   }
 
   function textWidth(font, text) {
-    var fn = font[FONT_WIDTH]
-    if (!fn) throw new Error('Font has no ' + FONT_WIDTH)
-    return Number(fn.call(font, String(text)))
+    return Number(resolveMethod(font, FONT_WIDTH, 'Font.width(String)').call(font, String(text)))
+  }
+
+  // Logs each failure site once per script load, never per frame.
+  var reported = {}
+  function logOnce(where, err) {
+    if (reported[where]) return
+    reported[where] = true
+    ns.diag.logError(where, err)
   }
 
   // ---- drawing ----
@@ -256,23 +276,26 @@
       bounds.x2 = Math.max(bounds.x2, r.x + r.w); bounds.y2 = Math.max(bounds.y2, r.y + r.h)
     }
     g.pose().pushPose()
-    g.pose().translate(0, 0, DRAW_Z)
-    g.fill(bounds.x1 - 1, bounds.y1 - 1, bounds.x2 + 1, bounds.y2 + 1, COLOR_BORDER)
-    for (var j = 0; j < u.rects.length; j++) {
-      var rr = u.rects[j]
-      var active = u.items[j].modid !== null && isActive(cur, u.items[j].modid)
-      g.fill(rr.x, rr.y, rr.x + rr.w, rr.y + rr.h, j === hover ? COLOR_HOVER : (active ? COLOR_ACTIVE : COLOR_BACK))
+    try {
+      g.pose().translate(0, 0, DRAW_Z)
+      g.fill(bounds.x1 - 1, bounds.y1 - 1, bounds.x2 + 1, bounds.y2 + 1, COLOR_BORDER)
+      for (var j = 0; j < u.rects.length; j++) {
+        var rr = u.rects[j]
+        var active = u.items[j].modid !== null && isActive(cur, u.items[j].modid)
+        g.fill(rr.x, rr.y, rr.x + rr.w, rr.y + rr.h, j === hover ? COLOR_HOVER : (active ? COLOR_ACTIVE : COLOR_BACK))
+      }
+      g.flush()
+      // Text: the String overload by SRG name (see drawText), an opaque ARGB
+      // colour, above the fills.
+      g.pose().translate(0, 0, 50)
+      for (var k = 0; k < u.rects.length; k++) {
+        var rk = u.rects[k]
+        drawText(g, font, rowText(u.items[k], cur), rk.x + PAD, rk.y + 2, COLOR_TEXT)
+      }
+      g.flush()
+    } finally {
+      g.pose().popPose()
     }
-    g.flush()
-    // Text: the String overload via an explicit signature (see drawText), an opaque ARGB
-    // colour, above the fills.
-    g.pose().translate(0, 0, 50)
-    for (var k = 0; k < u.rects.length; k++) {
-      var rk = u.rects[k]
-      drawText(g, font, rowText(u.items[k], cur), rk.x + PAD, rk.y + 2, COLOR_TEXT)
-    }
-    g.flush()
-    g.pose().popPose()
   }
 
   // ---- Forge event handlers ----
@@ -315,11 +338,22 @@
     update(u, screen)
   }
 
+  var drawBroken = false
+
   function onScreenPost(e) {
     var u = ui()
     if (!u.open || u.rects.length === 0) return
     if (!isContainer(e.getScreen())) return
-    drawMenu(e.getGuiGraphics(), u, e.getMouseX(), e.getMouseY())
+    if (drawBroken) return
+    try {
+      drawMenu(e.getGuiGraphics(), u, e.getMouseX(), e.getMouseY())
+    } catch (err) {
+      // A failed draw is not retried every frame; /kubejs reload resets this.
+      drawBroken = true
+      u.rects = []
+      u.open = false
+      logOnce('mods draw', err)
+    }
   }
 
   // While the menu is open and the mouse is over it, the screen and EMI underneath still

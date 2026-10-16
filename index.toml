@@ -2406,7 +2406,7 @@ hash = "33d8f3ebaedd1ea8a4782a41d2ea65c473d85fd0a17da89aff57db3dcdea257e"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/mods_menu.js"
-hash = "579df9aced8915b3429cd328986a21ab62b19e0c930a4e262b3d36b232e6be91"
+hash = "fc2e7f1417570cecda2522ba3b3f3863a6090d0f985c4b71e33bf3320b527e81"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/placement.js"
