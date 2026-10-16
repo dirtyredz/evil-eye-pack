@@ -6,8 +6,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
-const path = require('node:path');
-const { SCRIPT_DIR } = require('./harness.cjs');
+const { scriptFiles } = require('./harness.cjs');
 
 const RULES = [
   ['deny', 'java.lang'], ['allow', 'java.lang.Number'], ['allow', 'java.lang.String'], ['allow', 'java.lang.Object'],
@@ -35,8 +34,8 @@ function allowed(name) {
 
 test('every class loaded by the curation scripts passes the KubeJS class filter', () => {
   const names = new Set();
-  for (const f of fs.readdirSync(SCRIPT_DIR)) {
-    const text = fs.readFileSync(path.join(SCRIPT_DIR, f), 'utf8');
+  for (const f of scriptFiles()) {
+    const text = fs.readFileSync(f, 'utf8');
     for (const m of text.matchAll(/(?:cls|loadClass)\('([\w.$]+)'\)/g)) names.add(m[1]);
     for (const m of text.matchAll(/var \w+ = '((?:dev|net|java)\.[\w.$]+)'/g)) names.add(m[1]);
   }

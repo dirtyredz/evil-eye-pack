@@ -2,6 +2,22 @@
 
 Newest first.
 
+## 2026-10-16 — How the EMI Mods menu is drawn, filters and measures text
+
+**Decision.**
+- **Drawn in `ScreenEvent.Render.Post`, not as widgets.** Only the Mods button is a widget. The dropdown is painted by the script after the screen, EMI's sidebar panels and tooltips, at a high z, and hit-tested from the `MouseButtonPressed.Pre` hook. Tooltips under it are cancelled in `RenderTooltipEvent.Pre`.
+- **Filtering calls `EmiScreenManager.search.setValue("@<modid>")`.** `EditBox.setValue` runs the widget's responder, which is the path typing takes, so EMI refilters with no EMI-internal calls and no config writes.
+- **Text uses `GuiGraphics.drawWordWrap` and estimated widths.** `drawString` and `Font.width` are never called.
+
+**Why.**
+- Widgets added at `Init.Post` are drawn with the screen, and EMI's panels paint over them.
+- `setValue` is the one supported entry point that makes EMI refilter.
+- In KubeJS 2001.6.5 the `drawString`/`Font.width` overloads are "ambiguous" (`InternalError: The choice of Java method GuiGraphics.m_280488_ ... is ambiguous`), and SRG names and explicit signatures both fail with "not found as any of ..." (`logs/kubejs/client.log`, commits 0360f9f and 25fcb0f). `drawWordWrap(Font, FormattedText, int, int, int, int)` has a single overload in 1.20.1, and the client.log member listing confirmed `drawWordWrap` is exposed. Widths come from vanilla's default-font advances (6 px upper bound), so rows are never narrower than their text. Verified working in game at 295f12a.
+
+**Rejected.** Widgets at `Init.Post` (covered by EMI panels); `Font.width`/`drawString` via SRG or explicit signatures (do not resolve); a "stop drawing after one failure" switch (makes the UI unusable); calling EMI's search internals directly.
+
+**Layout of the scripts.** The UI scripts moved to `emi_curation/ui/` (button, placement, mods_menu, mods_list, mods_text, forge_hooks) to keep the folder under the 12-file cap. KubeJS 2001.6.5 loads `client_scripts` recursively into one pack and sorts the whole pack by `// priority:`, so priorities hold across folders (`KubeJS.loadScripts` uses `Files.walk`; `ScriptManager` sorts once).
+
 ## 2026-10-12 — EMI adopted as the pack's recipe viewer
 
 **Decision.** `emi-trial` was merged into `main`. The pack now ships EMI 1.1.24, JEI 15.62.0.219 and Just Enough Professions 3.0.1 (with the KubeJS curation scripts and `config/emi-curation/`) instead of REI, REI Plugin Compatibilities and Roughly Enough Professions. The trial entries below remain the rationale.

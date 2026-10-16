@@ -2381,10 +2381,6 @@ file = "defaultconfigs/ftbessentials-server.snbt"
 hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
-file = "kubejs/client_scripts/emi_curation/button.js"
-hash = "1f0c78795d3f4dca301d4bcc7920353c9e4970f9696a7cea3ca24f10b7525024"
-
-[[files]]
 file = "kubejs/client_scripts/emi_curation/collections.js"
 hash = "e2bdc46033ba8cc4ca773e940377e119fe4945d026cb811d9090d60acc564777"
 
@@ -2402,15 +2398,7 @@ hash = "5e509656eea54ebb39d1601aae4f24d1c55c488395ef975f1eeae2d39d3c68d2"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/java_interop.js"
-hash = "33d8f3ebaedd1ea8a4782a41d2ea65c473d85fd0a17da89aff57db3dcdea257e"
-
-[[files]]
-file = "kubejs/client_scripts/emi_curation/mods_menu.js"
-hash = "25b078d10c26e69223046229fba34859867ae8ec626b397d51d043b47645d8df"
-
-[[files]]
-file = "kubejs/client_scripts/emi_curation/placement.js"
-hash = "65707bd292886a4aa963164688980069bdc90b6f9dcb0ad00282b655031d5a5c"
+hash = "1fb9c5103241187ba303d98a9dc5e91e9000e3e48c04a80b40236d746bfacb6b"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/policy.js"
@@ -2423,6 +2411,30 @@ hash = "64d54b5e783d49cf588e021afa988a88cd80a4a73ae892ed211adef1a03963cb"
 [[files]]
 file = "kubejs/client_scripts/emi_curation/session.js"
 hash = "2aae04d72a41cc50721d6aeda0ca84e85eaa09c06b6b41dc339c987261894186"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/ui/button.js"
+hash = "5758051be408d6e8df33df1e6dba5d5d3a5f68456864f14a77a259cd6c8a90f7"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/ui/forge_hooks.js"
+hash = "f4f4a10d1feb9fdca15ab896205875f812a2c1eb515147cdcdef335977fd70bf"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/ui/mods_list.js"
+hash = "1a3e113ee86c0769d468e1cc9c5c9d1eac3d80ecea79aac4420beaf88e64ee31"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/ui/mods_menu.js"
+hash = "3b9c1a5e2188045d9130366e2612e992827370b909c63cb95d1876464dc6ded0"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/ui/mods_text.js"
+hash = "a1b5b75b2e89da5a93b65e26e925b0c5259186cc642a90d0d6b678159686a8d1"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/ui/placement.js"
+hash = "ac6d23ab2f6c75d9c0e137fef45b2d28f560670324df70efcf5aeb2eb971c960"
 
 [[files]]
 file = "mods/additional-lanterns.pw.toml"

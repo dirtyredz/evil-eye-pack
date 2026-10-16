@@ -12,9 +12,19 @@ const ROOT = path.resolve(__dirname, '..', '..', '..');
 const SCRIPT_DIR = path.join(ROOT, 'kubejs', 'client_scripts', 'emi_curation');
 
 // KubeJS order: `// priority: N` header, higher first.
+// Scripts live in emi_curation/ and its subfolders; KubeJS sorts them all in one pack, so
+// the order is global across folders. Names are paths relative to SCRIPT_DIR.
+function scriptFiles(dir) {
+  dir = dir || SCRIPT_DIR;
+  return fs.readdirSync(dir, { withFileTypes: true }).flatMap((d) => {
+    const p = path.join(dir, d.name);
+    return d.isDirectory() ? scriptFiles(p) : d.name.endsWith('.js') ? [p] : [];
+  });
+}
+
 function scriptOrder() {
-  return fs.readdirSync(SCRIPT_DIR)
-    .filter((f) => f.endsWith('.js'))
+  return scriptFiles()
+    .map((p) => path.relative(SCRIPT_DIR, p).split(path.sep).join('/'))
     .map((f) => {
       const head = fs.readFileSync(path.join(SCRIPT_DIR, f), 'utf8').split('\n', 1)[0];
       const m = /^\/\/ priority: (-?\d+)/.exec(head);
@@ -124,4 +134,4 @@ function boot(opts) {
   return ctx;
 }
 
-module.exports = { ROOT, SCRIPT_DIR, scriptOrder, readRepoText, loadScripts, fixture, boot };
+module.exports = { ROOT, SCRIPT_DIR, scriptFiles, scriptOrder, readRepoText, loadScripts, fixture, boot };

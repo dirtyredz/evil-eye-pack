@@ -14,92 +14,13 @@
 // through global.emiCuration.modsMenuHandlers, which every reload replaces.
 
 (function (ns) {
+  var L = ns.modsList
   var LIST_PATH = 'config/emi-curation/mods.json'
   var BUTTON_W = 56
   var BUTTON_LABEL = 'Mods ▾'
-  var ROW_H = 12
   var PAD = 4
   var CLEAR_LABEL = 'Clear'
   var ESC = 256
-
-  // ---- pure logic ----
-
-  // Parses mods.json text into [{label, modid}], dropping malformed and duplicate entries.
-  function parseList(text) {
-    var raw = JSON.parse(String(text))
-    var out = []
-    var seen = {}
-    if (!Array.isArray(raw)) throw new Error('mods.json must be an array')
-    for (var i = 0; i < raw.length; i++) {
-      var e = raw[i]
-      if (!e || typeof e.label !== 'string' || typeof e.modid !== 'string') continue
-      var label = e.label.trim()
-      var modid = e.modid.trim()
-      if (label === '' || !/^[a-z0-9_]+$/.test(modid) || seen[modid]) continue
-      seen[modid] = true
-      out.push({ label: label, modid: modid })
-    }
-    return out
-  }
-
-  function visibleEntries(list, isLoaded) {
-    var out = []
-    for (var i = 0; i < list.length; i++) if (isLoaded(list[i].modid)) out.push(list[i])
-    return out
-  }
-
-  function searchText(modid) { return '@' + modid }
-
-  function isActive(current, modid) {
-    return String(current).trim().toLowerCase() === searchText(modid)
-  }
-
-  // The search text to set when `modid` is chosen: the active mod toggles back to empty.
-  function nextSearch(current, modid) {
-    return isActive(current, modid) ? '' : searchText(modid)
-  }
-
-  // Pure menu layout. anchor: the Mods button rect; widths: each row's width. Returns
-  // { rects:[{x,y,w,h}] }, one per row. Rows stack in one column opened upward when the
-  // anchor is in the lower half of the screen (downward otherwise); extra columns are
-  // used only when the height runs out. Each column is as wide as its own longest row,
-  // and the whole menu is clamped to the screen.
-  function layoutMenu(anchor, widths, screen) {
-    var count = widths.length
-    var up = anchor.y + anchor.h / 2 > screen.h / 2
-    var room = up ? anchor.y : screen.h - (anchor.y + anchor.h)
-    var maxRows = Math.max(1, Math.floor(room / ROW_H))
-    var columns = Math.max(1, Math.ceil(count / maxRows))
-    var rows = Math.max(1, Math.ceil(count / columns))
-    var colW = []
-    var total = 0
-    for (var c = 0; c < columns; c++) {
-      var w = 1
-      for (var i = c * rows; i < Math.min(count, (c + 1) * rows); i++) w = Math.max(w, widths[i])
-      colW.push(w)
-      total += w
-    }
-    if (total > screen.w) {
-      // Too wide even so: squeeze the columns evenly.
-      for (var s = 0; s < columns; s++) colW[s] = Math.max(1, Math.floor(screen.w / columns))
-      total = colW[0] * columns
-    }
-    var x0 = Math.max(0, Math.min(anchor.x, screen.w - total))
-    var rects = []
-    for (var n = 0; n < count; n++) {
-      var col = Math.floor(n / rows)
-      var row = n % rows
-      var cx = x0
-      for (var k = 0; k < col; k++) cx += colW[k]
-      var y = up ? anchor.y - (rows - row) * ROW_H : anchor.y + anchor.h + row * ROW_H
-      rects.push({ x: cx, y: Math.max(0, Math.min(y, screen.h - ROW_H)), w: colW[col], h: ROW_H })
-    }
-    return { rects: rects }
-  }
-
-  function inside(rect, x, y) {
-    return x >= rect.x && x < rect.x + rect.w && y >= rect.y && y < rect.y + rect.h
-  }
 
   // ---- state ----
 
@@ -111,7 +32,7 @@
     if (listCache) return listCache
     var list = []
     try {
-      list = visibleEntries(parseList(JsonIO.readString(LIST_PATH)), function (id) { return Platform.isLoaded(id) })
+      list = L.visibleEntries(L.parseList(JsonIO.readString(LIST_PATH)), function (id) { return Platform.isLoaded(id) })
     } catch (err) {
       ns.diag.logError('load mods.json', err)
     }
@@ -126,26 +47,24 @@
     return w == null ? '' : String(w.getValue())
   }
 
-  function literal(s) { return ns.interop.cls('net.minecraft.network.chat.Component').literal(s) }
-
   function rectOf(w) { return { x: w.getX(), y: w.getY(), w: w.getWidth(), h: w.getHeight() } }
 
   // Row text as drawn (the active mod is marked with a leading "> ").
   function rowText(item, cur) {
-    return (item.modid !== null && isActive(cur, item.modid) ? '> ' : '') + item.label
+    return (item.modid !== null && L.isActive(cur, item.modid) ? '> ' : '') + item.label
   }
 
   // Pixel width of each row, measured with the "> " marker included so a row never changes
   // width when it becomes active.
   function measureRows(u) {
     var widths = []
-    for (var i = 0; i < u.items.length; i++) widths.push(textWidth('> ' + u.items[i].label) + 2 * PAD)
+    for (var i = 0; i < u.items.length; i++) widths.push(ns.modsText.width('> ' + u.items[i].label) + 2 * PAD)
     return widths
   }
 
   function layoutItems(u) {
     if (!u.widths || u.widths.length !== u.items.length) u.widths = measureRows(u)
-    u.rects = layoutMenu(rectOf(u.button), u.widths,
+    u.rects = L.layoutMenu(rectOf(u.button), u.widths,
       { w: u.screen.width, h: u.screen.height }).rects
   }
 
@@ -159,7 +78,7 @@
   function choose(modid) {
     var u = ui()
     var w = searchWidget()
-    if (w != null) w.setValue(modid === null ? '' : nextSearch(String(w.getValue()), modid))
+    if (w != null) w.setValue(modid === null ? '' : L.nextSearch(String(w.getValue()), modid))
     setOpen(u, false)
   }
 
@@ -169,7 +88,7 @@
   }
 
   function rowAt(u, x, y) {
-    for (var i = 0; i < u.rects.length; i++) if (inside(u.rects[i], x, y)) return i
+    for (var i = 0; i < u.rects.length; i++) if (L.inside(u.rects[i], x, y)) return i
     return -1
   }
 
@@ -203,54 +122,12 @@
     if (u.open) layoutItems(u)
   }
 
-  // ---- Text without ambiguous overloads ----
-  // In KubeJS 2001.6.5 the String/Component/FormattedCharSequence overloads of
-  // GuiGraphics.drawString and Font.width are "ambiguous" (InternalError), and neither SRG
-  // names nor explicit signatures resolve on these objects (client.log, 25fcb0f). So the
-  // menu avoids them: labels are drawn with GuiGraphics.drawWordWrap(Font, FormattedText,
-  // int, int, int, int), the only drawWordWrap overload in 1.20.1 (javap, Forge 47.2.20
-  // client jar: one method, m_280554_), and widths are estimated from vanilla's default
-  // font metrics instead of calling Font.width.
-  var WRAP_WIDTH = 1000 // wider than any label, so drawWordWrap never wraps
-
-  function drawText(g, font, text, x, y, color) {
-    g.drawWordWrap(font, literal(String(text)), x, y, WRAP_WIDTH, color)
-  }
-
-  // Advance widths (glyph + 1 px spacing) of the narrow glyphs of Minecraft's default font;
-  // every other ASCII glyph is 6 px or less, so 6 is a safe upper bound.
-  var NARROW = { ' ': 4, '!': 2, "'": 2, ',': 2, '.': 2, ':': 2, ';': 2, 'i': 2, '|': 2, 'l': 3, 'I': 4, 't': 4, 'f': 5, 'k': 5, '>': 5, '<': 5, '(': 5, ')': 5, '[': 4, ']': 4 }
-
-  function textWidth(text) {
-    var w = 0
-    for (var i = 0; i < text.length; i++) {
-      var n = NARROW[text.charAt(i)]
-      w += n === undefined ? 6 : n
-    }
-    return w
-  }
-
   // Logs each failure site once per script load, never per frame.
   var reported = {}
   function logOnce(where, err) {
     if (reported[where]) return
     reported[where] = true
     ns.diag.logError(where, err)
-  }
-
-  // One-time evidence for the next launch: which draw-ish members the GuiGraphics object
-  // exposes to this script.
-  var diagLogged = false
-  function logDrawMembers(g) {
-    if (diagLogged) return
-    diagLogged = true
-    try {
-      var names = []
-      for (var key in g) if (String(key).toLowerCase().indexOf('draw') >= 0) names.push(String(key))
-      ns.diag.info('GuiGraphics members containing "draw": ' + names.join(', '))
-    } catch (err) {
-      ns.diag.info('GuiGraphics member listing failed: ' + err)
-    }
   }
 
   // ---- drawing ----
@@ -266,7 +143,6 @@
   var DRAW_Z = 600
 
   function drawMenu(g, u, mouseX, mouseY) {
-    logDrawMembers(g)
     var font = ns.interop.cls('net.minecraft.client.Minecraft').getInstance().font
     var cur = currentSearch()
     var hover = rowAt(u, mouseX, mouseY)
@@ -282,16 +158,15 @@
       g.fill(bounds.x1 - 1, bounds.y1 - 1, bounds.x2 + 1, bounds.y2 + 1, COLOR_BORDER)
       for (var j = 0; j < u.rects.length; j++) {
         var rr = u.rects[j]
-        var active = u.items[j].modid !== null && isActive(cur, u.items[j].modid)
+        var active = u.items[j].modid !== null && L.isActive(cur, u.items[j].modid)
         g.fill(rr.x, rr.y, rr.x + rr.w, rr.y + rr.h, j === hover ? COLOR_HOVER : (active ? COLOR_ACTIVE : COLOR_BACK))
       }
       g.flush()
-      // Text via drawWordWrap (see drawText), an opaque ARGB
-      // colour, above the fills.
+      // Text via ns.modsText (drawWordWrap, opaque ARGB colour), above the fills.
       g.pose().translate(0, 0, 50)
       for (var k = 0; k < u.rects.length; k++) {
         var rk = u.rects[k]
-        drawText(g, font, rowText(u.items[k], cur), rk.x + PAD, rk.y + 2, COLOR_TEXT)
+        ns.modsText.draw(g, font, rowText(u.items[k], cur), rk.x + PAD, rk.y + 2, COLOR_TEXT)
       }
       g.flush()
     } finally {
@@ -301,16 +176,12 @@
 
   // ---- Forge event handlers ----
 
-  function isContainer(screen) {
-    return screen instanceof ns.interop.cls('net.minecraft.client.gui.screens.inventory.AbstractContainerScreen')
-  }
-
   function onScreenInit(e) {
     var screen = e.getScreen()
-    if (!isContainer(screen)) return
+    if (!ns.interop.isContainerScreen(screen)) return
     var Button = ns.interop.cls('net.minecraft.client.gui.components.Button')
     var u = ui()
-    var button = Button.builder(literal(BUTTON_LABEL), function () {
+    var button = Button.builder(ns.interop.literal(BUTTON_LABEL), function () {
       try { global.emiCuration.modsMenuHandlers.toggle() } catch (err) {
         try { global.emiCuration.diag.logError('mods press', err) } catch (ignored) {}
       }
@@ -333,7 +204,7 @@
     if (u.button == null) return
     // Use the event's own screen (see button.js: no identity match is trusted).
     var screen = e.getScreen()
-    if (!isContainer(screen)) return
+    if (!ns.interop.isContainerScreen(screen)) return
     u.screen = screen
     u.mouse = { x: e.getMouseX(), y: e.getMouseY() }
     update(u, screen)
@@ -342,7 +213,7 @@
   function onScreenPost(e) {
     var u = ui()
     if (!u.open || u.rects.length === 0) return
-    if (!isContainer(e.getScreen())) return
+    if (!ns.interop.isContainerScreen(e.getScreen())) return
     try {
       drawMenu(e.getGuiGraphics(), u, e.getMouseX(), e.getMouseY())
     } catch (err) {
@@ -374,7 +245,7 @@
       if (e.getButton() === 0) choose(u.items[row].modid)
       return
     }
-    if (inside(rectOf(u.button), x, y)) return
+    if (L.inside(rectOf(u.button), x, y)) return
     setOpen(u, false)
   }
 
@@ -386,10 +257,6 @@
     e.setCanceled(true)
   }
 
-  ns.modsMenu = {
-    parseList: parseList, visibleEntries: visibleEntries, searchText: searchText,
-    isActive: isActive, nextSearch: nextSearch, layoutMenu: layoutMenu, BUTTON_W: BUTTON_W
-  }
   ns.modsMenuHandlers = {
     screenInit: function (e) { ns.diag.guard('mods init', function () { onScreenInit(e) }) },
     screenRender: function (e) { ns.diag.guard('mods render', function () { onScreenRender(e) }) },
@@ -402,20 +269,13 @@
   }
 
   // ForgeEvents is startup-only: register on the Forge bus directly, exactly once.
-  if (!global.emiCurationModsListeners) {
-    global.emiCurationModsListeners = true
-    var bus = Java.loadClass('net.minecraftforge.common.MinecraftForge').EVENT_BUS
-    var NORMAL = Java.loadClass('net.minecraftforge.eventbus.api.EventPriority').NORMAL
-    var hook = function (className, name) {
-      bus.addListener(NORMAL, false, Java.loadClass(className), function (e) {
-        try { global.emiCuration.modsMenuHandlers[name](e) } catch (err) { console.error('EMI curation (mods ' + name + ' listener): ' + err) }
-      })
-    }
-    hook('net.minecraftforge.client.event.ScreenEvent$Init$Post', 'screenInit')
-    hook('net.minecraftforge.client.event.ScreenEvent$Render$Pre', 'screenRender')
-    hook('net.minecraftforge.client.event.ScreenEvent$Render$Post', 'screenPost')
-    hook('net.minecraftforge.client.event.RenderTooltipEvent$Pre', 'tooltip')
-    hook('net.minecraftforge.client.event.ScreenEvent$MouseButtonPressed$Pre', 'mousePressed')
-    hook('net.minecraftforge.client.event.ScreenEvent$KeyPressed$Pre', 'keyPressed')
-  }
+  var EV = 'net.minecraftforge.client.event.'
+  ns.forgeHooks.registerOnce('emiCurationModsListeners', 'modsMenuHandlers', [
+    { event: EV + 'ScreenEvent$Init$Post', handler: 'screenInit', label: 'mods screenInit' },
+    { event: EV + 'ScreenEvent$Render$Pre', handler: 'screenRender', label: 'mods screenRender' },
+    { event: EV + 'ScreenEvent$Render$Post', handler: 'screenPost', label: 'mods screenPost' },
+    { event: EV + 'RenderTooltipEvent$Pre', handler: 'tooltip', label: 'mods tooltip' },
+    { event: EV + 'ScreenEvent$MouseButtonPressed$Pre', handler: 'mousePressed', label: 'mods mousePressed' },
+    { event: EV + 'ScreenEvent$KeyPressed$Pre', handler: 'keyPressed', label: 'mods keyPressed' }
+  ])
 })(global.emiCuration || (global.emiCuration = {}))

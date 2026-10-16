@@ -56,7 +56,7 @@ test('first placement equals post-press placement: EMI lays the search bar out a
 });
 
 test('searchPlaced rejects the unplaced (0, 0) search widget and off-screen bars', () => {
-  const B = boot().ns().button;
+  const B = boot().ns().placement;
   const scr = { w: 427, h: 240 };
   assert.equal(B.searchPlaced({ x: 0, y: 0, w: 160, h: 18 }, scr), false);
   assert.equal(B.searchPlaced({ x: 133, y: 219, w: 0, h: 18 }, scr), false);
@@ -105,4 +105,31 @@ test('placement avoids the container, EMI buttons and sidebar panels', () => {
   // Narrow screen: everything blocked -> clamped on screen.
   const narrow = B.chooseRect({ screen: { w: 170, h: 100 }, search: { x: 5, y: 80, w: 160, h: 18 }, avoid: [{ x: 0, y: 0, w: 170, h: 100 }] });
   assert.ok(narrow.x >= 0 && narrow.x + narrow.w <= 170);
+});
+
+test('forgeHooks.registerOnce: one listener per hook, dispatch through the reloadable table, throws are logged', () => {
+  const c = boot();
+  c.world.classes.EvA = 'EvA'; c.world.classes.EvB = 'EvB';
+  const before = c.world.counters.listeners.length;
+  const calls = [];
+  const H = () => c.ns().forgeHooks;
+  const hooks = [{ event: 'EvA', handler: 'a', label: 'a' }, { event: 'EvB', handler: 'b', label: 'b' }];
+  c.ns().testTable = { a: (e) => calls.push(['old', e]), b: () => { throw new Error('boom'); } };
+  H().registerOnce('testFlag', 'testTable', hooks);
+  H().registerOnce('testFlag', 'testTable', hooks);
+  assert.equal(c.world.counters.listeners.length, before + 2, 'second call registers nothing');
+  c.ns().testTable = { a: (e) => calls.push(['new', e]), b: () => { throw new Error('boom'); } };
+  c.world.fireEvent('EvA', 1);
+  assert.deepEqual(calls, [['new', 1]], 'the replaced handler runs');
+  const errs = c.logs.length;
+  c.world.fireEvent('EvB', 2);
+  assert.ok(c.logs.slice(errs).some((l) => l[0] === 'error' && /EMI curation \(b listener\): .*boom/.test(l[1])));
+});
+
+test('interop.isContainerScreen and literal', () => {
+  const c = boot();
+  const I = c.ns().interop;
+  assert.equal(I.isContainerScreen(new F.AbstractContainerScreen(427, 240, 0, 0, 1, 1)), true);
+  assert.equal(I.isContainerScreen(new F.Screen(427, 240)), false);
+  assert.equal(I.literal('x').getString(), 'x');
 });

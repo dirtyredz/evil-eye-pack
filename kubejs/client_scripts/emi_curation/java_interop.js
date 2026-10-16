@@ -1,6 +1,6 @@
 // priority: 85
 // Java interop shared by the EMI view adapters: class lookup, reference identity,
-// Java list construction, and EmiStack -> policy descriptor conversion (including a
+// Java list construction, screen/Component helpers, and EmiStack -> policy descriptor conversion (including a
 // structural NBT -> plain-value walk). Rhino rules: index loops only over Java
 // collections, `instanceof` against Java.loadClass classes, never `.class`.
 
@@ -23,6 +23,17 @@
     var m = new IdentityHashMap()
     m.put(a, true)
     return m.containsKey(b)
+  }
+
+  // True for AbstractContainerScreen (container and inventory screens), the only screens
+  // that get the EMI buttons.
+  function isContainerScreen(screen) {
+    return screen instanceof cls('net.minecraft.client.gui.screens.inventory.AbstractContainerScreen')
+  }
+
+  // A literal text Component.
+  function literal(text) {
+    return cls('net.minecraft.network.chat.Component').literal(text)
   }
 
   function newIdentityMap() {
@@ -88,6 +99,8 @@
 
   ns.interop = {
     cls: cls,
+    isContainerScreen: isContainerScreen,
+    literal: literal,
     sameRef: sameRef,
     newIdentityMap: newIdentityMap,
     newList: newList,

@@ -80,15 +80,6 @@ test('text width estimate never undershoots vanilla advances for ASCII and is co
   assert.ok(w[1] <= 23 * 6 + 8 && w[1] >= 23 * 3);
 });
 
-test('the first draw logs the GuiGraphics draw members once', () => {
-  const t = setup();
-  t.mods.press();
-  for (let i = 0; i < 5; i++) t.post();
-  const infos = t.c.logs.filter((l) => l[0] === 'info' && /GuiGraphics members containing "draw"/.test(l[1]));
-  assert.equal(infos.length, 1);
-  assert.match(infos[0][1], /drawWordWrap/);
-});
-
 test('a draw failure is logged once but never disables the menu', () => {
   const t = setup();
   t.mods.press();
@@ -231,7 +222,7 @@ test('hidden until EMI has laid the search bar out', () => {
 });
 
 test('pure logic: parseList, visibleEntries, nextSearch', () => {
-  const M = boot().ns().modsMenu;
+  const M = boot().ns().modsList;
   const list = M.parseList(JSON.stringify([
     { label: 'A', modid: 'a' }, { label: 'dup', modid: 'a' }, { label: '', modid: 'b' },
     { label: 'Bad', modid: 'Bad Id' }, { label: 'C', modid: 'c_1' }, null, { label: 3, modid: 'd' },
@@ -247,7 +238,7 @@ test('pure logic: parseList, visibleEntries, nextSearch', () => {
 });
 
 test('menu layout is compact, opens upward, stays on screen and wraps only when height runs out', () => {
-  const M = boot().ns().modsMenu;
+  const M = boot().ns().modsList;
   const arr = (n, w) => Array.from({ length: n }, () => w);
   const anchor = { x: 65, y: 219, w: 56, h: 18 };
   const one = M.layoutMenu(anchor, arr(5, 90), { w: 427, h: 240 });
@@ -270,7 +261,7 @@ test('menu layout is compact, opens upward, stays on screen and wraps only when 
 });
 
 test('mods.json parses with no entry dropped as malformed or duplicate', () => {
-  const M = boot().ns().modsMenu;
+  const M = boot().ns().modsList;
   const text = fs.readFileSync(path.join(ROOT, 'config', 'emi-curation', 'mods.json'), 'utf8');
   assert.equal(M.parseList(text).length, JSON.parse(text).length);
   assert.ok(JSON.parse(text).length >= 20);

@@ -31,18 +31,15 @@
     button.active = ns.session.canPress()
     var label = ns.session.label()
     if (String(button.getMessage().getString()) !== label) {
-      button.setMessage(ns.interop.cls('net.minecraft.network.chat.Component').literal(label))
+      button.setMessage(ns.interop.literal(label))
     }
   }
 
   function onScreenInit(e) {
-    var I = ns.interop
     var screen = e.getScreen()
-    var Container = I.cls('net.minecraft.client.gui.screens.inventory.AbstractContainerScreen')
-    if (!(screen instanceof Container)) return
-    var Component = I.cls('net.minecraft.network.chat.Component')
-    var Button = I.cls('net.minecraft.client.gui.components.Button')
-    var button = Button.builder(Component.literal(ns.session.label()), function (btn) {
+    if (!ns.interop.isContainerScreen(screen)) return
+    var Button = ns.interop.cls('net.minecraft.client.gui.components.Button')
+    var button = Button.builder(ns.interop.literal(ns.session.label()), function (btn) {
       // Resolve through global at press time so reloaded code is used.
       try {
         var cur = global.emiCuration
@@ -67,8 +64,7 @@
     // and replaces u.button, so no identity match with the stored screen is needed (and
     // none is trusted: a mismatch here would leave the button where Init.Post put it).
     var screen = e.getScreen()
-    var Container = ns.interop.cls('net.minecraft.client.gui.screens.inventory.AbstractContainerScreen')
-    if (!(screen instanceof Container)) return
+    if (!ns.interop.isContainerScreen(screen)) return
     u.screen = screen
     update(u.button, screen)
   }
@@ -78,7 +74,7 @@
     if (u.screen != null) update(btn, u.screen)
   }
 
-  ns.button = { WIDTH: WIDTH, chooseRect: chooseRect, emiButtonRects: ns.placement.emiButtonRects, searchPlaced: ns.placement.searchPlaced }
+  ns.button = { WIDTH: WIDTH, chooseRect: chooseRect }
   ns.handlers = {
     screenInit: function (e) { ns.diag.guard('screen init', function () { onScreenInit(e) }) },
     screenRender: function (e) { ns.diag.guard('screen render', function () { onScreenRender(e) }) },
@@ -86,15 +82,9 @@
   }
 
   // ForgeEvents is startup-only: register on the Forge bus directly, exactly once.
-  if (!global.emiCurationForgeListeners) {
-    global.emiCurationForgeListeners = true
-    var bus = Java.loadClass('net.minecraftforge.common.MinecraftForge').EVENT_BUS
-    var NORMAL = Java.loadClass('net.minecraftforge.eventbus.api.EventPriority').NORMAL
-    bus.addListener(NORMAL, false, Java.loadClass('net.minecraftforge.client.event.ScreenEvent$Init$Post'), function (e) {
-      try { global.emiCuration.handlers.screenInit(e) } catch (err) { console.error('EMI curation (init listener): ' + err) }
-    })
-    bus.addListener(NORMAL, false, Java.loadClass('net.minecraftforge.client.event.ScreenEvent$Render$Pre'), function (e) {
-      try { global.emiCuration.handlers.screenRender(e) } catch (err) { console.error('EMI curation (render listener): ' + err) }
-    })
-  }
+  var EV = 'net.minecraftforge.client.event.'
+  ns.forgeHooks.registerOnce('emiCurationForgeListeners', 'handlers', [
+    { event: EV + 'ScreenEvent$Init$Post', handler: 'screenInit', label: 'init' },
+    { event: EV + 'ScreenEvent$Render$Pre', handler: 'screenRender', label: 'render' }
+  ])
 })(global.emiCuration || (global.emiCuration = {}))

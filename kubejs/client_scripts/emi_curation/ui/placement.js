@@ -69,8 +69,7 @@
     var avoid = emiButtonRects(screen.height)
     // The search bar itself: a button "beside" another button must not land on it.
     avoid.push({ x: search.getX(), y: search.getY(), w: search.getWidth(), h: search.getHeight() })
-    var Container = I.cls('net.minecraft.client.gui.screens.inventory.AbstractContainerScreen')
-    if (screen instanceof Container) {
+    if (I.isContainerScreen(screen)) {
       // The creative inventory draws its tab rows outside the container image.
       var Creative = I.cls('net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen')
       var tabs = screen instanceof Creative ? 32 : 0
