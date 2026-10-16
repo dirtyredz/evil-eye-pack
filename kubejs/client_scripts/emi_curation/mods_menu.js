@@ -5,8 +5,8 @@
 // anything. The mod list is config/emi-curation/mods.json ([{label, modid}]); entries
 // whose mod is not loaded are dropped.
 //
-// The menu is a set of pre-built Button widgets (one per entry) that this script shows,
-// lays out and hides, so no Java interface has to be implemented from JS. The search is
+// Only the Mods button is a widget. The dropdown is drawn by this script in Render$Post
+// (above EMI's panels) and hit-tested from the mouse-press hook. The search is
 // set with EmiScreenManager.search.setValue(...): EditBox.setValue runs the widget's
 // responder, which is what makes EMI refilter (the same path as typing).
 //
@@ -67,13 +67,14 @@
     var maxRows = Math.max(1, Math.floor(room / ROW_H))
     var columns = Math.max(1, Math.ceil(count / maxRows))
     var rows = Math.max(1, Math.ceil(count / columns))
+    width = Math.max(1, Math.min(width, Math.floor(screen.w / columns)))
     var x0 = Math.max(0, Math.min(anchor.x, screen.w - columns * width))
     var rects = []
     for (var i = 0; i < count; i++) {
       var col = Math.floor(i / rows)
       var row = i % rows
       var y = up ? anchor.y - (rows - row) * ROW_H : anchor.y + anchor.h + row * ROW_H
-      rects.push({ x: x0 + col * width, y: Math.max(0, y), w: width, h: ROW_H })
+      rects.push({ x: x0 + col * width, y: Math.max(0, Math.min(y, screen.h - ROW_H)), w: width, h: ROW_H })
     }
     return { rects: rects }
   }
@@ -84,7 +85,8 @@
 
   // ---- state ----
 
-  function ui() { return ns.modsUi || (ns.modsUi = { screen: null, button: null, items: [], open: false }) }
+  // u.items: [{label, modid}] (modid null = Clear); u.rects: their screen rects while open.
+  function ui() { return ns.modsUi || (ns.modsUi = { screen: null, button: null, items: [], rects: [], open: false }) }
 
   var listCache = null
   function loadList() {
@@ -110,40 +112,23 @@
 
   function rectOf(w) { return { x: w.getX(), y: w.getY(), w: w.getWidth(), h: w.getHeight() } }
 
-  // ---- widgets ----
+  function menuWidth(u) {
+    var longest = 0
+    for (var i = 0; i < u.items.length; i++) longest = Math.max(longest, u.items[i].label.length + 2)
+    return Math.max(BUTTON_W, longest * 6 + 12)
+  }
+
+  // ---- open / close / choose ----
+
+  function layoutItems(u) {
+    u.rects = layoutMenu(rectOf(u.button), u.items.length,
+      { w: u.screen.width, h: u.screen.height }, menuWidth(u)).rects
+  }
 
   function setOpen(u, open) {
     u.open = open
-    for (var i = 0; i < u.items.length; i++) u.items[i].btn.visible = false
-    if (open) { refreshLabels(u); layoutItems(u) }
-  }
-
-  // The active mod is marked with a leading "> ".
-  function refreshLabels(u) {
-    var cur = currentSearch()
-    for (var i = 0; i < u.items.length; i++) {
-      var it = u.items[i]
-      var text = it.modid !== null && isActive(cur, it.modid) ? '> ' + it.label : it.label
-      if (String(it.btn.getMessage().getString()) !== text) it.btn.setMessage(literal(text))
-    }
-  }
-
-  function menuWidth(u) {
-    var longest = 0
-    for (var i = 0; i < u.items.length; i++) longest = Math.max(longest, u.items[i].label.length)
-    return Math.max(BUTTON_W, longest * 6 + 16)
-  }
-
-  function layoutItems(u) {
-    var lay = layoutMenu(rectOf(u.button), u.items.length,
-      { w: u.screen.width, h: u.screen.height }, menuWidth(u))
-    for (var i = 0; i < u.items.length; i++) {
-      var b = u.items[i].btn
-      b.setX(lay.rects[i].x)
-      b.setY(lay.rects[i].y)
-      b.setWidth(lay.rects[i].w)
-      b.visible = true
-    }
+    u.rects = []
+    if (open) layoutItems(u)
   }
 
   function choose(modid) {
@@ -158,15 +143,9 @@
     if (u.button != null) setOpen(u, !u.open)
   }
 
-  function makeItem(Button, label, modid) {
-    var btn = Button.builder(literal(label), function () {
-      // Resolve through global at press time so reloaded code is used.
-      try { global.emiCuration.modsMenuHandlers.choose(modid) } catch (err) {
-        try { global.emiCuration.diag.logError('mods choose', err) } catch (ignored) {}
-      }
-    }).bounds(0, 0, BUTTON_W, ROW_H).build()
-    btn.visible = false
-    return { btn: btn, label: label, modid: modid }
+  function rowAt(u, x, y) {
+    for (var i = 0; i < u.rects.length; i++) if (inside(u.rects[i], x, y)) return i
+    return -1
   }
 
   // Where the Mods button goes first: beside the CLEAN/ALL button, on the side away from
@@ -196,7 +175,47 @@
     u.button.visible = true
     u.button.active = ns.session.canPress()
     if (!u.button.active && u.open) setOpen(u, false)
-    if (u.open) { refreshLabels(u); layoutItems(u) }
+    if (u.open) layoutItems(u)
+  }
+
+  // ---- drawing ----
+  // The dropdown is drawn by this script in Render$Post, after the screen, EMI's panels
+  // and tooltips, so nothing can cover it (Button widgets added at Init.Post are drawn
+  // with the screen and EMI's sidebar panels paint over them).
+
+  var COLOR_BACK = 0xF0101018 | 0
+  var COLOR_HOVER = 0xFF3A3A5C | 0
+  var COLOR_ACTIVE = 0xFF2E4A2E | 0
+  var COLOR_TEXT = 0xFFFFFFFF | 0
+  var COLOR_BORDER = 0xFF8080A0 | 0
+  var DRAW_Z = 600
+
+  function drawMenu(g, u, mouseX, mouseY) {
+    var font = ns.interop.cls('net.minecraft.client.Minecraft').getInstance().font
+    var cur = currentSearch()
+    var hover = rowAt(u, mouseX, mouseY)
+    var bounds = { x1: 1e9, y1: 1e9, x2: -1e9, y2: -1e9 }
+    for (var i = 0; i < u.rects.length; i++) {
+      var r = u.rects[i]
+      bounds.x1 = Math.min(bounds.x1, r.x); bounds.y1 = Math.min(bounds.y1, r.y)
+      bounds.x2 = Math.max(bounds.x2, r.x + r.w); bounds.y2 = Math.max(bounds.y2, r.y + r.h)
+    }
+    g.pose().pushPose()
+    g.pose().translate(0, 0, DRAW_Z)
+    g.fill(bounds.x1 - 1, bounds.y1 - 1, bounds.x2 + 1, bounds.y2 + 1, COLOR_BORDER)
+    for (var j = 0; j < u.rects.length; j++) {
+      var rr = u.rects[j]
+      var active = u.items[j].modid !== null && isActive(cur, u.items[j].modid)
+      g.fill(rr.x, rr.y, rr.x + rr.w, rr.y + rr.h, j === hover ? COLOR_HOVER : (active ? COLOR_ACTIVE : COLOR_BACK))
+    }
+    g.flush()
+    for (var k = 0; k < u.rects.length; k++) {
+      var rk = u.rects[k]
+      var act = u.items[k].modid !== null && isActive(cur, u.items[k].modid)
+      g.drawString(font, (act ? '> ' : '') + u.items[k].label, rk.x + 4, rk.y + 4, COLOR_TEXT)
+    }
+    g.flush()
+    g.pose().popPose()
   }
 
   // ---- Forge event handlers ----
@@ -216,15 +235,15 @@
       }
     }).bounds(0, 0, BUTTON_W, 18).build()
     button.visible = false
-    var items = [makeItem(Button, CLEAR_LABEL, null)]
+    var items = [{ label: CLEAR_LABEL, modid: null }]
     var list = loadList()
-    for (var i = 0; i < list.length; i++) items.push(makeItem(Button, list[i].label, list[i].modid))
+    for (var i = 0; i < list.length; i++) items.push({ label: list[i].label, modid: list[i].modid })
     u.screen = screen
     u.button = button
     u.items = items
+    u.rects = []
     u.open = false
     e.addListener(button)
-    for (var j = 0; j < items.length; j++) e.addListener(items[j].btn)
     update(u, screen)
   }
 
@@ -238,14 +257,27 @@
     update(u, screen)
   }
 
-  // A click outside the menu and its button closes it; the click itself is not consumed.
+  function onScreenPost(e) {
+    var u = ui()
+    if (!u.open || u.rects.length === 0) return
+    if (!isContainer(e.getScreen())) return
+    drawMenu(e.getGuiGraphics(), u, e.getMouseX(), e.getMouseY())
+  }
+
+  // While open: a left click on a row chooses it; a click on the Mods button is left to the
+  // button (it toggles); any other click closes the menu and passes through unconsumed.
   function onMousePressed(e) {
     var u = ui()
     if (!u.open) return
     var x = e.getMouseX()
     var y = e.getMouseY()
+    var row = rowAt(u, x, y)
+    if (row >= 0) {
+      e.setCanceled(true)
+      if (e.getButton() === 0) choose(u.items[row].modid)
+      return
+    }
     if (inside(rectOf(u.button), x, y)) return
-    for (var i = 0; i < u.items.length; i++) if (inside(rectOf(u.items[i].btn), x, y)) return
     setOpen(u, false)
   }
 
@@ -264,6 +296,7 @@
   ns.modsMenuHandlers = {
     screenInit: function (e) { ns.diag.guard('mods init', function () { onScreenInit(e) }) },
     screenRender: function (e) { ns.diag.guard('mods render', function () { onScreenRender(e) }) },
+    screenPost: function (e) { ns.diag.guard('mods post', function () { onScreenPost(e) }) },
     mousePressed: function (e) { ns.diag.guard('mods mouse', function () { onMousePressed(e) }) },
     keyPressed: function (e) { ns.diag.guard('mods key', function () { onKeyPressed(e) }) },
     toggle: function () { ns.diag.guard('mods toggle', toggle) },
@@ -282,6 +315,7 @@
     }
     hook('net.minecraftforge.client.event.ScreenEvent$Init$Post', 'screenInit')
     hook('net.minecraftforge.client.event.ScreenEvent$Render$Pre', 'screenRender')
+    hook('net.minecraftforge.client.event.ScreenEvent$Render$Post', 'screenPost')
     hook('net.minecraftforge.client.event.ScreenEvent$MouseButtonPressed$Pre', 'mousePressed')
     hook('net.minecraftforge.client.event.ScreenEvent$KeyPressed$Pre', 'keyPressed')
   }

@@ -147,6 +147,18 @@ class AbstractContainerScreen extends Screen {
 
 class CreativeModeInventoryScreen extends AbstractContainerScreen {}
 
+/** Records what the Mods menu draws in Render$Post. */
+function fakeGraphics() {
+  const g = { fills: [], strings: [], flushes: 0, z: 0, stack: 0 };
+  g.pose = () => ({
+    pushPose() { g.stack++; }, popPose() { g.stack--; }, translate(x, y, z) { g.z += z; },
+  });
+  g.fill = (x1, y1, x2, y2, c) => g.fills.push({ x1, y1, x2, y2, c, z: g.z });
+  g.drawString = (font, s, x, y, c) => g.strings.push({ s, x, y, c, z: g.z });
+  g.flush = () => { g.flushes++; };
+  return g;
+}
+
 /** Builds a complete fake world. `spec` = { items: [EmiStack], recipes: [Recipe] }. */
 function createWorld(spec) {
   const counters = { reloads: 0, searchUpdates: 0, recalcs: 0, persistentSaves: 0, configWrites: 0, listeners: [] };
@@ -196,7 +208,7 @@ function createWorld(spec) {
   const EmiPersistentData = { save() { counters.persistentSaves++; } };
   const EmiConfig = { enabled: true, writeConfig() { counters.configWrites++; } };
   const player = {};
-  const Minecraft = { getInstance: () => ({ player: world.inWorld ? player : null }) };
+  const Minecraft = { getInstance: () => ({ player: world.inWorld ? player : null, font: { fake: 'font' } }) };
 
   const classes = {
     'java.util.IdentityHashMap': IdentityHashMap,
@@ -226,6 +238,7 @@ function createWorld(spec) {
     'net.minecraftforge.eventbus.api.EventPriority': { NORMAL: 'NORMAL' },
     'net.minecraftforge.client.event.ScreenEvent$Init$Post': 'ScreenEvent$Init$Post',
     'net.minecraftforge.client.event.ScreenEvent$Render$Pre': 'ScreenEvent$Render$Pre',
+    'net.minecraftforge.client.event.ScreenEvent$Render$Post': 'ScreenEvent$Render$Post',
     'net.minecraftforge.client.event.ScreenEvent$MouseButtonPressed$Pre': 'ScreenEvent$MouseButtonPressed$Pre',
     'net.minecraftforge.client.event.ScreenEvent$KeyPressed$Pre': 'ScreenEvent$KeyPressed$Pre',
   };
@@ -267,6 +280,7 @@ function clientEvents() {
 }
 
 module.exports = {
+  fakeGraphics,
   JList, OpaqueList, opaque, Item, Fluid, EmiStack, EMPTY_STACK, ingredient, Recipe, Manager,
   Screen, AbstractContainerScreen, CreativeModeInventoryScreen, createWorld, clientEvents,
 };
