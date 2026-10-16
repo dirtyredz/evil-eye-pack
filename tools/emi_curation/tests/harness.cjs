@@ -48,6 +48,7 @@ function loadScripts(env, names) {
     Java: env.Java,
     ClientEvents: env.ClientEvents,
     JsonIO: env.JsonIO || { readString: readRepoText },
+    Platform: env.Platform || { isLoaded: () => false },
     console: makeConsole(env.logs || []),
   };
   const context = vm.createContext(sandbox);
@@ -106,10 +107,13 @@ function boot(opts) {
   const fx = fixture();
   const world = F.createWorld(fx.spec);
   const g = {};
-  const ctx = { world, fx, g, events: null, logs: [] };
+  const ctx = { world, fx, g, events: null, logs: [], loadedMods: new Set(['ae2', 'create', 'enderio']) };
   ctx.load = (jsonIO) => {
     ctx.events = F.clientEvents();
-    loadScripts({ global: g, Java: world.Java, ClientEvents: ctx.events.api, JsonIO: jsonIO, logs: ctx.logs });
+    loadScripts({
+      global: g, Java: world.Java, ClientEvents: ctx.events.api, JsonIO: jsonIO, logs: ctx.logs,
+      Platform: { isLoaded: (id) => ctx.loadedMods.has(id) },
+    });
   };
   ctx.tick = () => { for (const h of ctx.events.handlers.tick) h(); };
   ctx.logout = () => { for (const h of ctx.events.handlers.loggedOut) h(); };

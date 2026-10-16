@@ -123,6 +123,10 @@ class FakeButton {
   setX(x) { this.x = x; }
   setY(y) { this.y = y; }
   setWidth(w) { this.w = w; }
+  getX() { return this.x; }
+  getY() { return this.y; }
+  getWidth() { return this.w; }
+  getHeight() { return this.h; }
   getMessage() { return this.msg; }
   setMessage(m) { this.msg = m; }
   press() { this.onPress(this); }
@@ -166,6 +170,10 @@ function createWorld(spec) {
     x: 133, y: 219, w: 160, h: 18, visible: true,
     getX() { return this.x; }, getY() { return this.y; }, getWidth() { return this.w; },
     getHeight() { return this.h; }, isVisible() { return this.visible; },
+    value: '', sets: [],
+    getValue() { return this.value; },
+    // EditBox.setValue runs EMI's responder, which refilters.
+    setValue(v) { this.value = v; this.sets.push(v); counters.searchUpdates++; },
   };
   const panels = [];
   const EmiScreenManager = {
@@ -218,6 +226,8 @@ function createWorld(spec) {
     'net.minecraftforge.eventbus.api.EventPriority': { NORMAL: 'NORMAL' },
     'net.minecraftforge.client.event.ScreenEvent$Init$Post': 'ScreenEvent$Init$Post',
     'net.minecraftforge.client.event.ScreenEvent$Render$Pre': 'ScreenEvent$Render$Pre',
+    'net.minecraftforge.client.event.ScreenEvent$MouseButtonPressed$Pre': 'ScreenEvent$MouseButtonPressed$Pre',
+    'net.minecraftforge.client.event.ScreenEvent$KeyPressed$Pre': 'ScreenEvent$KeyPressed$Pre',
   };
 
   const world = {

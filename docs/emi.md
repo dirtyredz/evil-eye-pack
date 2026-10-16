@@ -33,6 +33,12 @@ curation and the CLEAN/ALL button.
 - The button sits beside the centred search bar on container and inventory screens. It moves aside for EMI's sidebars and buttons. It disappears with Ctrl+O and is inactive (`EMI: ...`) while EMI loads.
 - `EMI: ERROR` means applying a view failed and the last complete view was kept. Click it to retry. `EMI: N/A` means the curation files could not be read. Check `logs/kubejs/client.log` for `EMI curation`.
 
+### The Mods menu
+
+A **Mods ▾** button (`mods_menu.js`) sits beside the search bar, next to the CLEAN/ALL button (left of CLEAN when there is room, otherwise just right of the search bar). It opens a dropdown of major mods by display name. Choosing one sets EMI's search text to `@<modid>`, exactly as typing it would; choosing the active mod again (marked `>`) or **Clear** empties the search. A click outside the menu or Esc closes it without changing the search (Esc is consumed while the menu is open). The button uses the same placement rules as the CLEAN button (`placement.js`: re-placed every frame, hidden with the EMI overlay or before EMI has laid out, inactive while EMI loads). The search is set with `EmiScreenManager.search.setValue(...)`, whose responder makes EMI refilter.
+
+**Editing the list:** `config/emi-curation/mods.json` is an array of `{ "label": "Create", "modid": "create" }`, in menu order. The modid is the Forge mod id (the `modId` in the jar's `META-INF/mods.toml`, not the packwiz slug). Entries whose mod is not loaded (`Platform.isLoaded`) are skipped, and malformed or duplicate entries are dropped, so the list may name mods the pack does not always carry. Edit it, rehash, then `/kubejs reload client_scripts` (or relaunch) to see the change. Many entries wrap into extra columns.
+
 ### How the scripts apply a view
 
 `session.js` runs on every client tick. Once EMI has finished its reload and recipe worker and a player exists, it **syncs** (compares EMI's current index list and recipe manager with the objects it installed last; anything different is a new EMI generation and becomes the new baseline) and then **applies** the view for the current mode: CLEAN installs the filtered index copy and the display-filtering recipe wrapper, ALL reinstalls the baselines, followed by a search and sidebar refresh. Nothing is applied when nothing changed. `hiding.js` supplies the hide decisions and the views build the objects.
@@ -100,6 +106,7 @@ Record the results in [emi-coverage.md](emi-coverage.md).
    - Ars, HammerMicroblocks, RFTools and JEP workstations.
 6. Test recipe transfer (the `+` fill button), Polymorph recipe selection, clickable recipe arrows, favorites, fluids and NBT ingredients.
 7. Test these screens and situations: inventory, chest, crafting table, an AE2 terminal, Curios, GUI scale 2/3/auto, window resize, the CRAFTABLES page, and Ctrl+O. The button must never cover a control.
+8a. Mods menu: click **Mods ▾** and pick Applied Energistics 2. The search bar must read `@ae2` and the index must show only AE2 items. Pick it again: the search empties. Pick another mod, then **Clear**. Open the menu and click elsewhere, then open it and press Esc: the search is unchanged and Esc does not close the inventory. Check the button hides with Ctrl+O and never covers a control, and that every listed mod is installed.
 8. Test `/kubejs reload client_scripts`, F3+T, logout/rejoin and restart:
    - reloads keep the current CLEAN/ALL choice;
    - logout and restart go back to CLEAN;

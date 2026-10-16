@@ -1697,6 +1697,10 @@ file = "config/emi-curation/minecolonies-eggs.json"
 hash = "f4389ca4bd9e12f0fbb6ba8c271c35f77b32885e39962b5f53cfc75ac53cbe90"
 
 [[files]]
+file = "config/emi-curation/mods.json"
+hash = "845dda8d6f982a24c068f237eea6dc2cbece34c21435b507dff1df2e81154a57"
+
+[[files]]
 file = "config/emi-curation/rules.json"
 hash = "29b6dcfb00559e78bde98e16d4ffce4e7160db03a20bd594acb93a7b6e80c4a1"
 
@@ -2378,7 +2382,7 @@ hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/button.js"
-hash = "47a3279f8d625b6c93c8b8e2b98b4485b1be2997ddfa031111b9455143eaff48"
+hash = "1f0c78795d3f4dca301d4bcc7920353c9e4970f9696a7cea3ca24f10b7525024"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/collections.js"
@@ -2399,6 +2403,14 @@ hash = "5e509656eea54ebb39d1601aae4f24d1c55c488395ef975f1eeae2d39d3c68d2"
 [[files]]
 file = "kubejs/client_scripts/emi_curation/java_interop.js"
 hash = "33d8f3ebaedd1ea8a4782a41d2ea65c473d85fd0a17da89aff57db3dcdea257e"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/mods_menu.js"
+hash = "e174894212849a3e1c2a47472f0918b776e69e789b6be86c732a08b8efb7ad59"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/placement.js"
+hash = "65707bd292886a4aa963164688980069bdc90b6f9dcb0ad00282b655031d5a5c"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/policy.js"
