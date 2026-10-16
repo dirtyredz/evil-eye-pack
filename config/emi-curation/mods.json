@@ -26,5 +26,6 @@
   { "label": "L_Ender's Cataclysm", "modid": "cataclysm" },
   { "label": "MrCrayfish's Furniture", "modid": "cfm" },
   { "label": "Macaw's Furniture", "modid": "mcwfurnitures" },
-  { "label": "Domum Ornamentum", "modid": "domum_ornamentum" }
+  { "label": "Domum Ornamentum", "modid": "domum_ornamentum" },
+  { "label": "Dank Storage", "modid": "dankstorage" }
 ]

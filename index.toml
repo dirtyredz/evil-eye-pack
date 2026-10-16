@@ -1698,7 +1698,7 @@ hash = "f4389ca4bd9e12f0fbb6ba8c271c35f77b32885e39962b5f53cfc75ac53cbe90"
 
 [[files]]
 file = "config/emi-curation/mods.json"
-hash = "845dda8d6f982a24c068f237eea6dc2cbece34c21435b507dff1df2e81154a57"
+hash = "c7b9991d05212f1f57903ae0f944e6a2ded4c224997c525ab7b32636fa725a3e"
 
 [[files]]
 file = "config/emi-curation/rules.json"
@@ -2697,6 +2697,11 @@ metafile = true
 [[files]]
 file = "mods/cyclops-core.pw.toml"
 hash = "ce751efd1e64565620d6cc96a43dcdada09bcc3eab608206f08343e95b0d6c56"
+metafile = true
+
+[[files]]
+file = "mods/dank-storage.pw.toml"
+hash = "23a3b030c2dce29501f22bd94204aed9e2daa63ac786dc57232fc2ac076a05d8"
 metafile = true
 
 [[files]]
