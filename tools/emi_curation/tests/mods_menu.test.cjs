@@ -6,10 +6,9 @@ const path = require('node:path');
 const { boot, ROOT } = require('./harness.cjs');
 const F = require('./fake_emi.cjs');
 
-function setup(size, opts) {
+function setup(size) {
   const [W, H] = size || [427, 240];
   const c = boot();
-  c.world.dev = !!(opts && opts.dev);
   c.tick();
   const added = [];
   const screen = new F.AbstractContainerScreen(W, H, Math.floor((W - 176) / 2), Math.floor((H - 166) / 2), 176, 166);
@@ -34,7 +33,7 @@ function setup(size, opts) {
     return e;
   };
   const post = (x, y) => {
-    const g = F.fakeGraphics({ dev: c.world.dev });
+    const g = F.fakeGraphics();
     c.world.fireEvent('ScreenEvent$Render$Post', { getScreen: () => screen, getGuiGraphics: () => g, getMouseX: () => x || 0, getMouseY: () => y || 0 });
     return g;
   };
@@ -60,43 +59,56 @@ test('the Mods button sits beside CLEAN/ALL, not on top of it', () => {
   assert.equal(b.x, t.search.x + t.search.w + 2);
 });
 
-test('regression: at runtime only SRG names resolve; the menu draws and measures through them', () => {
+test('regression: runtime has no usable drawString/width; the menu uses drawWordWrap and estimated widths', () => {
   const g = F.fakeGraphics();
   assert.throws(() => g.drawString({}, 'x', 0, 0, -1), /ambiguous/, 'plain drawString is ambiguous');
-  assert.equal(g['drawString(net.minecraft.client.gui.Font,java.lang.String,int,int,int)'], undefined, 'readable explicit signature does not resolve');
-  assert.equal(typeof g.m_280488_, 'function', 'm_280488_ = drawString(Font, String, int, int, int)');
+  for (const k of ['m_280488_', 'drawString(net.minecraft.client.gui.Font,java.lang.String,int,int,int)']) assert.equal(g[k], undefined);
   const t = setup();
+  assert.throws(() => t.c.world.Java.loadClass('net.minecraft.client.Minecraft').getInstance().font.width('x'), /ambiguous/);
   t.mods.press();
   assert.ok(t.post().strings.length > 0, 'labels drawn');
   assert.equal(t.c.logs.filter((l) => l[0] === 'error').length, 0, 'no errors logged while drawing and measuring');
   const widths = Array.from(t.rects(), (r) => r.w);
-  assert.ok(Math.max(...widths) < 160, 'widths come from the font, not the fallback: ' + widths);
+  assert.ok(Math.max(...widths) < 160 && Math.min(...widths) > 20, 'estimated widths: ' + widths);
 });
 
-test('a deobfuscated dev environment (readable explicit signatures) still draws', () => {
-  const t = setup(undefined, { dev: true });
+test('text width estimate never undershoots vanilla advances for ASCII and is compact', () => {
+  const t = setup();
   t.mods.press();
-  const g = t.post();
-  assert.equal(g.strings.length, t.rects().length);
-  assert.ok(Math.max(...Array.from(t.rects(), (r) => r.w)) < 160);
-  assert.equal(t.c.logs.filter((l) => l[0] === 'error').length, 0);
+  const w = Array.from(t.rects(), (r) => r.w);
+  // "> Applied Energistics 2" is 23 chars: at most 6 px each plus padding, at least 3 px each.
+  assert.ok(w[1] <= 23 * 6 + 8 && w[1] >= 23 * 3);
 });
 
-test('a draw failure is logged once, not every frame, and the menu closes', () => {
+test('the first draw logs the GuiGraphics draw members once', () => {
+  const t = setup();
+  t.mods.press();
+  for (let i = 0; i < 5; i++) t.post();
+  const infos = t.c.logs.filter((l) => l[0] === 'info' && /GuiGraphics members containing "draw"/.test(l[1]));
+  assert.equal(infos.length, 1);
+  assert.match(infos[0][1], /drawWordWrap/);
+});
+
+test('a draw failure is logged once but never disables the menu', () => {
   const t = setup();
   t.mods.press();
   const broken = () => {
     const g = F.fakeGraphics();
-    delete g.m_280488_;
+    g.drawWordWrap = () => { throw new Error('boom'); };
     t.c.world.fireEvent('ScreenEvent$Render$Post', { getScreen: () => t.screen, getGuiGraphics: () => g, getMouseX: () => 0, getMouseY: () => 0 });
     return g;
   };
   const before = t.c.logs.filter((l) => l[0] === 'error').length;
-  const g1 = broken();
-  assert.equal(g1.stack, 0, 'pose stack balanced after a failed draw');
-  for (let i = 0; i < 20; i++) { t.mods.press(); broken(); }
+  assert.equal(broken().stack, 0, 'pose stack balanced after a failed draw');
+  for (let i = 0; i < 20; i++) broken();
   const logged = t.c.logs.filter((l) => l[0] === 'error').slice(before).filter((l) => /mods draw/.test(l[1]));
   assert.equal(logged.length, 1, 'logged once');
+  assert.ok(t.rects().length > 0, 'menu is still open after failures');
+  t.mouse(...t.center(t.rects()[1]));
+  assert.equal(t.search.value, '@ae2', 'and still works');
+  t.mods.press();
+  assert.ok(t.rects().length > 0, 'and reopens');
+  assert.ok(t.post().strings.length > 0, 'a later healthy frame draws normally');
 });
 
 test('item and EMI tooltips under the open menu are cancelled; elsewhere they are not', () => {

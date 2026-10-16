@@ -135,19 +135,11 @@
     return (item.modid !== null && isActive(cur, item.modid) ? '> ' : '') + item.label
   }
 
-  // Pixel width of each row, from the real font (fallback: 6 px per character). Measured
-  // with the "> " marker included so the row never changes width when it becomes active.
+  // Pixel width of each row, measured with the "> " marker included so a row never changes
+  // width when it becomes active.
   function measureRows(u) {
-    var font = null
-    try { font = ns.interop.cls('net.minecraft.client.Minecraft').getInstance().font } catch (err) { logOnce('mods font', err) }
     var widths = []
-    for (var i = 0; i < u.items.length; i++) {
-      var text = '> ' + u.items[i].label
-      var w = 0
-      try { w = font ? textWidth(font, text) : 0 } catch (err) { logOnce('mods width', err); w = 0 }
-      if (!(w > 0)) w = text.length * 6
-      widths.push(w + 2 * PAD)
-    }
+    for (var i = 0; i < u.items.length; i++) widths.push(textWidth('> ' + u.items[i].label) + 2 * PAD)
     return widths
   }
 
@@ -211,38 +203,31 @@
     if (u.open) layoutItems(u)
   }
 
-  // ---- Java overload escapes ----
-  // KubeJS's type wrappers make String, Component and FormattedCharSequence
-  // interchangeable, so a plain GuiGraphics.drawString / Font.width call is "ambiguous" by
-  // argument type and throws InternalError. At runtime Rhino's member table is keyed by the
-  // real (SRG) names, and the String overloads have their own: from the Forge 1.20.1
-  // client jar, GuiGraphics.m_280488_(Font, String, int, int, int) is drawString(String)
-  // (m_280430_ is the Component one) and Font.m_92895_(String) is width(String). Each name
-  // names one method, so a call by SRG name is unambiguous. Candidates, in order: the SRG
-  // name, the SRG name with an explicit signature, then the readable name with an
-  // explicit signature (a deobfuscated dev environment).
-  var DRAW_STRING = [
-    'm_280488_',
-    'm_280488_(net.minecraft.client.gui.Font,java.lang.String,int,int,int)',
-    'drawString(net.minecraft.client.gui.Font,java.lang.String,int,int,int)'
-  ]
-  var FONT_WIDTH = ['m_92895_', 'm_92895_(java.lang.String)', 'width(java.lang.String)']
-
-  function resolveMethod(obj, keys, what) {
-    for (var i = 0; i < keys.length; i++) {
-      var fn = null
-      try { fn = obj[keys[i]] } catch (ignored) { fn = null }
-      if (fn) return fn
-    }
-    throw new Error(what + ' not found as any of ' + keys.join(' | '))
-  }
+  // ---- Text without ambiguous overloads ----
+  // In KubeJS 2001.6.5 the String/Component/FormattedCharSequence overloads of
+  // GuiGraphics.drawString and Font.width are "ambiguous" (InternalError), and neither SRG
+  // names nor explicit signatures resolve on these objects (client.log, 25fcb0f). So the
+  // menu avoids them: labels are drawn with GuiGraphics.drawWordWrap(Font, FormattedText,
+  // int, int, int, int), the only drawWordWrap overload in 1.20.1 (javap, Forge 47.2.20
+  // client jar: one method, m_280554_), and widths are estimated from vanilla's default
+  // font metrics instead of calling Font.width.
+  var WRAP_WIDTH = 1000 // wider than any label, so drawWordWrap never wraps
 
   function drawText(g, font, text, x, y, color) {
-    resolveMethod(g, DRAW_STRING, 'GuiGraphics.drawString(String)').call(g, font, String(text), x, y, color)
+    g.drawWordWrap(font, literal(String(text)), x, y, WRAP_WIDTH, color)
   }
 
-  function textWidth(font, text) {
-    return Number(resolveMethod(font, FONT_WIDTH, 'Font.width(String)').call(font, String(text)))
+  // Advance widths (glyph + 1 px spacing) of the narrow glyphs of Minecraft's default font;
+  // every other ASCII glyph is 6 px or less, so 6 is a safe upper bound.
+  var NARROW = { ' ': 4, '!': 2, "'": 2, ',': 2, '.': 2, ':': 2, ';': 2, 'i': 2, '|': 2, 'l': 3, 'I': 4, 't': 4, 'f': 5, 'k': 5, '>': 5, '<': 5, '(': 5, ')': 5, '[': 4, ']': 4 }
+
+  function textWidth(text) {
+    var w = 0
+    for (var i = 0; i < text.length; i++) {
+      var n = NARROW[text.charAt(i)]
+      w += n === undefined ? 6 : n
+    }
+    return w
   }
 
   // Logs each failure site once per script load, never per frame.
@@ -251,6 +236,21 @@
     if (reported[where]) return
     reported[where] = true
     ns.diag.logError(where, err)
+  }
+
+  // One-time evidence for the next launch: which draw-ish members the GuiGraphics object
+  // exposes to this script.
+  var diagLogged = false
+  function logDrawMembers(g) {
+    if (diagLogged) return
+    diagLogged = true
+    try {
+      var names = []
+      for (var key in g) if (String(key).toLowerCase().indexOf('draw') >= 0) names.push(String(key))
+      ns.diag.info('GuiGraphics members containing "draw": ' + names.join(', '))
+    } catch (err) {
+      ns.diag.info('GuiGraphics member listing failed: ' + err)
+    }
   }
 
   // ---- drawing ----
@@ -266,6 +266,7 @@
   var DRAW_Z = 600
 
   function drawMenu(g, u, mouseX, mouseY) {
+    logDrawMembers(g)
     var font = ns.interop.cls('net.minecraft.client.Minecraft').getInstance().font
     var cur = currentSearch()
     var hover = rowAt(u, mouseX, mouseY)
@@ -285,7 +286,7 @@
         g.fill(rr.x, rr.y, rr.x + rr.w, rr.y + rr.h, j === hover ? COLOR_HOVER : (active ? COLOR_ACTIVE : COLOR_BACK))
       }
       g.flush()
-      // Text: the String overload by SRG name (see drawText), an opaque ARGB
+      // Text via drawWordWrap (see drawText), an opaque ARGB
       // colour, above the fills.
       g.pose().translate(0, 0, 50)
       for (var k = 0; k < u.rects.length; k++) {
@@ -338,20 +339,14 @@
     update(u, screen)
   }
 
-  var drawBroken = false
-
   function onScreenPost(e) {
     var u = ui()
     if (!u.open || u.rects.length === 0) return
     if (!isContainer(e.getScreen())) return
-    if (drawBroken) return
     try {
       drawMenu(e.getGuiGraphics(), u, e.getMouseX(), e.getMouseY())
     } catch (err) {
-      // A failed draw is not retried every frame; /kubejs reload resets this.
-      drawBroken = true
-      u.rects = []
-      u.open = false
+      // Logged once; the menu stays open and drawing is retried next frame.
       logOnce('mods draw', err)
     }
   }

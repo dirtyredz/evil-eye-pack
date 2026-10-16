@@ -147,40 +147,32 @@ class AbstractContainerScreen extends Screen {
 
 class CreativeModeInventoryScreen extends AbstractContainerScreen {}
 
-const AMBIGUOUS_WIDTH = 'InternalError: The choice of Java method Font.m_92895_ ... is ambiguous';
 /**
- * Mirrors the runtime member table (verified in game, client.log): it is keyed by the real SRG
- * names, so the readable names are ambiguous (type wrappers make String/Component alike) and
- * readable explicit signatures do NOT resolve. A dev (deobfuscated) environment is the reverse.
- * opts.dev: expose only the readable explicit signatures.
+ * Mirrors the runtime in KubeJS 2001.6.5 (verified in game, client.log): the plain name of an
+ * overloaded method is ambiguous by argument type (String/Component/FormattedCharSequence are
+ * interchangeable), and neither SRG names nor explicit signatures resolve (they read undefined).
  */
-function fakeFont(opts) {
-  const font = { width() { throw new Error(AMBIGUOUS_WIDTH); } };
-  if (opts && opts.dev) font['width(java.lang.String)'] = (s) => s.length * 6 - 1;
-  else font.m_92895_ = (s) => s.length * 6 - 1; // Font.width(String)
-  return font;
+function fakeFont() {
+  return { width() { throw new Error('InternalError: The choice of Java method Font.m_92895_ is ambiguous'); } };
 }
 
 /** Records what the Mods menu draws in Render$Post. */
-function fakeGraphics(opts) {
+function fakeGraphics() {
   const g = { fills: [], strings: [], flushes: 0, z: 0, stack: 0, seq: 0 };
   g.pose = () => ({
     pushPose() { g.stack++; }, popPose() { g.stack--; }, translate(x, y, z) { g.z += z; },
   });
   g.fill = (x1, y1, x2, y2, c) => g.fills.push({ x1, y1, x2, y2, c, z: g.z, seq: g.seq++ });
-  // Same member-table reality as fakeFont: plain drawString is ambiguous; m_280488_ is the
-  // String overload (m_280430_ the Component one); readable explicit signatures only resolve
-  // in a dev environment (opts.dev).
+  // Same member-table reality as fakeFont: plain drawString is ambiguous, SRG names and explicit
+  // signatures do not exist. drawWordWrap(Font, FormattedText, x, y, maxWidth, color) has one
+  // overload, so it resolves.
   const ambiguous = () => { throw new Error('InternalError: The choice of Java method GuiGraphics.m_280488_ matching JavaScript argument types is ambiguous'); };
-  const drawStringOverload = function (font, s, x, y, c) {
-    if (typeof s !== 'string') throw new Error('the String overload needs a string');
-    g.strings.push({ s, x, y, c, z: g.z, seq: g.seq++ });
-    return 0;
-  };
   g.drawString = ambiguous;
-  g.m_280430_ = ambiguous; // drawString(Component), not what the menu calls
-  if (opts && opts.dev) g['drawString(net.minecraft.client.gui.Font,java.lang.String,int,int,int)'] = drawStringOverload;
-  else g.m_280488_ = drawStringOverload;
+  g.drawWordWrap = function (font, text, x, y, maxWidth, color) {
+    if (typeof text !== 'object' || typeof text.getString !== 'function') throw new Error('drawWordWrap needs a FormattedText');
+    if (!(maxWidth > 0)) throw new Error('maxWidth must be positive');
+    g.strings.push({ s: text.getString(), x, y, c: color, z: g.z, seq: g.seq++ });
+  };
   g.flush = () => { g.flushes++; };
   return g;
 }
@@ -234,7 +226,7 @@ function createWorld(spec) {
   const EmiPersistentData = { save() { counters.persistentSaves++; } };
   const EmiConfig = { enabled: true, writeConfig() { counters.configWrites++; } };
   const player = {};
-  const Minecraft = { getInstance: () => ({ player: world.inWorld ? player : null, font: fakeFont(world.dev ? { dev: true } : null) }) };
+  const Minecraft = { getInstance: () => ({ player: world.inWorld ? player : null, font: fakeFont() }) };
 
   const classes = {
     'java.util.IdentityHashMap': IdentityHashMap,
@@ -271,7 +263,6 @@ function createWorld(spec) {
   };
 
   const world = {
-    dev: false,
     counters, userHidden, favorites, panels, inWorld: true, failFreeze: false,
     classes, EmiStackList, EmiRecipes, EmiReloadManager, EmiHidden, EmiConfig, EmiScreenManager,
     Java: { loadClass: (name) => { if (!(name in classes)) throw new Error('ClassNotFound ' + name); return classes[name]; } },
