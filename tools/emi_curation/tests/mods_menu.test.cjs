@@ -60,6 +60,15 @@ test('only loaded mods are listed, drawn on top; Clear comes first', () => {
   const g = t.post();
   assert.equal(JSON.stringify(g.strings.map((s) => s.s)), JSON.stringify(LABELS));
   assert.ok(g.fills.length >= LABELS.length && g.fills.every((f) => f.z >= 500), 'drawn at a high z, above EMI');
+  // Regression: the labels were invisible in game. The text must be opaque (alpha != 0 in
+  // the signed ARGB int), drawn after every fill, and above them.
+  for (const s of g.strings) {
+    assert.notEqual((s.c >>> 24) & 0xff, 0, 'text colour has a non-zero alpha');
+    assert.equal(s.c | 0, s.c, 'text colour is a signed 32-bit int');
+    assert.ok(s.seq > Math.max(...g.fills.map((f) => f.seq)), 'text is drawn after the fills');
+    assert.ok(s.z > Math.max(...g.fills.map((f) => f.z)), 'text is above the fills');
+  }
+  for (const f of g.fills) assert.notEqual((f.c >>> 24) & 0xff, 0);
   assert.equal(g.stack, 0, 'pose stack balanced');
   assert.ok(g.flushes >= 2, 'fills are flushed before the text');
 });
@@ -120,7 +129,7 @@ test('the menu hides with the EMI overlay and is inactive while EMI loads', () =
   assert.equal(t.mods.active, false, 'inactive while EMI is loading');
 });
 
-test('regression: the open dropdown is fully on screen at every window size and with a long list', () => {
+test('regression: the open dropdown is fully on screen and compact at every window size and with a long list', () => {
   for (const size of [[427, 240], [854, 480], [320, 240], [1920, 1080], [250, 120]]) {
     for (const many of [false, true]) {
       const t = setup(size);
@@ -136,6 +145,7 @@ test('regression: the open dropdown is fully on screen at every window size and 
       }
       const g = t.post();
       assert.equal(g.strings.length, rs.length, 'every row is drawn');
+      if (!many && size[1] >= 240) assert.ok(Math.max(...rs.map((r) => r.w)) < 200 && new Set(rs.map((r) => r.x)).size === 1, 'the real list is one narrow column');
     }
   }
 });
@@ -166,19 +176,26 @@ test('pure logic: parseList, visibleEntries, nextSearch', () => {
   assert.equal(M.nextSearch('@ae2x', 'ae2'), '@ae2');
 });
 
-test('menu layout opens upward, stays on screen and wraps into columns', () => {
+test('menu layout is compact, opens upward, stays on screen and wraps only when height runs out', () => {
   const M = boot().ns().modsMenu;
+  const arr = (n, w) => Array.from({ length: n }, () => w);
   const anchor = { x: 65, y: 219, w: 56, h: 18 };
-  const one = M.layoutMenu(anchor, 5, { w: 427, h: 240 }, 100);
+  const one = M.layoutMenu(anchor, arr(5, 90), { w: 427, h: 240 });
   assert.equal(one.rects.length, 5);
   assert.equal(one.rects[4].y + one.rects[4].h, 219, 'last row ends at the button');
-  assert.ok(one.rects.every((r) => r.x === 65 && r.y >= 0));
-  const many = M.layoutMenu(anchor, 40, { w: 427, h: 240 }, 100);
+  assert.ok(one.rects.every((r) => r.x === 65 && r.w === 90 && r.h === 12), 'one compact column, 12 px rows');
+  const fits = M.layoutMenu(anchor, arr(17, 90), { w: 427, h: 240 });
+  assert.equal(new Set(fits.rects.map((r) => r.x)).size, 1, 'still one column when the height fits');
+  const many = M.layoutMenu(anchor, arr(40, 100), { w: 427, h: 240 });
   assert.ok(many.rects.every((r) => r.y >= 0 && r.y + r.h <= 219 && r.x >= 0 && r.x + r.w <= 427));
   assert.ok(new Set(many.rects.map((r) => r.x)).size > 1, 'wrapped into columns');
-  const edge = M.layoutMenu({ x: 400, y: 219, w: 56, h: 18 }, 3, { w: 427, h: 240 }, 100);
+  const mixed = M.layoutMenu({ x: 0, y: 219, w: 56, h: 18 }, [50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 200, 40], { w: 427, h: 240 });
+  const widthsByX = {};
+  for (const r of mixed.rects) widthsByX[r.x] = r.w;
+  assert.deepEqual(Object.values(widthsByX).map(Number).sort((x, y) => x - y), [50, 200], 'each column is as wide as its own longest row');
+  const edge = M.layoutMenu({ x: 400, y: 219, w: 56, h: 18 }, arr(3, 100), { w: 427, h: 240 });
   assert.ok(edge.rects.every((r) => r.x + r.w <= 427));
-  const down = M.layoutMenu({ x: 10, y: 5, w: 56, h: 18 }, 3, { w: 427, h: 240 }, 100);
+  const down = M.layoutMenu({ x: 10, y: 5, w: 56, h: 18 }, arr(3, 100), { w: 427, h: 240 });
   assert.equal(down.rects[0].y, 23, 'opens downward from a top anchor');
 });
 

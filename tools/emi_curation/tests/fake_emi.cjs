@@ -149,12 +149,16 @@ class CreativeModeInventoryScreen extends AbstractContainerScreen {}
 
 /** Records what the Mods menu draws in Render$Post. */
 function fakeGraphics() {
-  const g = { fills: [], strings: [], flushes: 0, z: 0, stack: 0 };
+  const g = { fills: [], strings: [], flushes: 0, z: 0, stack: 0, seq: 0 };
   g.pose = () => ({
     pushPose() { g.stack++; }, popPose() { g.stack--; }, translate(x, y, z) { g.z += z; },
   });
-  g.fill = (x1, y1, x2, y2, c) => g.fills.push({ x1, y1, x2, y2, c, z: g.z });
-  g.drawString = (font, s, x, y, c) => g.strings.push({ s, x, y, c, z: g.z });
+  g.fill = (x1, y1, x2, y2, c) => g.fills.push({ x1, y1, x2, y2, c, z: g.z, seq: g.seq++ });
+  // Only the Component overload is accepted: a raw JS string can resolve to the wrong Java overload.
+  g.drawString = (font, s, x, y, c) => {
+    if (typeof s !== 'object' || typeof s.getString !== 'function') throw new Error('drawString needs a Component');
+    g.strings.push({ s: s.getString(), x, y, c, z: g.z, seq: g.seq++ });
+  };
   g.flush = () => { g.flushes++; };
   return g;
 }
@@ -208,7 +212,7 @@ function createWorld(spec) {
   const EmiPersistentData = { save() { counters.persistentSaves++; } };
   const EmiConfig = { enabled: true, writeConfig() { counters.configWrites++; } };
   const player = {};
-  const Minecraft = { getInstance: () => ({ player: world.inWorld ? player : null, font: { fake: 'font' } }) };
+  const Minecraft = { getInstance: () => ({ player: world.inWorld ? player : null, font: { width: (c) => c.getString().length * 6 - 1 } }) };
 
   const classes = {
     'java.util.IdentityHashMap': IdentityHashMap,
