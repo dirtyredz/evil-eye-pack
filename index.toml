@@ -1686,7 +1686,7 @@ hash = "f4389ca4bd9e12f0fbb6ba8c271c35f77b32885e39962b5f53cfc75ac53cbe90"
 
 [[files]]
 file = "config/emi-curation/mods.json"
-hash = "14fd69ad2815071584b05e7b7e4a49f750578a493c8e79294c5a2874896b2bfd"
+hash = "377d6bb327ffc71a566cd50795411b280575ea8d16ffe274f683ab1ac366dcc6"
 
 [[files]]
 file = "config/emi-curation/rules.json"
