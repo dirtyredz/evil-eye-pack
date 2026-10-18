@@ -1537,10 +1537,6 @@ file = "config/buildinggadgets2-common.toml"
 hash = "cd34bf34ff49c47333b435be7523979037df203f9572bfd0ea5b5f961c86445f"
 
 [[files]]
-file = "config/bwncr-common.toml"
-hash = "584d98239b467824f653c4413426955f68ebaefe219765d06b4453ae8d780629"
-
-[[files]]
 file = "config/cataclysm.toml"
 hash = "2af4733145e698130f1dfa862015d053141c392e17bfdcadcf014afe59373793"
 
@@ -1555,14 +1551,6 @@ hash = "5ecbc98e651aaafa8cb33efc7e10ac778d7f67692df7fb4510ddbcab00be08d1"
 [[files]]
 file = "config/cataclysm/deepling_spawns.json"
 hash = "5ecbc98e651aaafa8cb33efc7e10ac778d7f67692df7fb4510ddbcab00be08d1"
-
-[[files]]
-file = "config/cfm-client.toml"
-hash = "a43e7e083c330d9d59b3d1d0f1336b98060f5e4693e11e37d30055b42422e26f"
-
-[[files]]
-file = "config/cfm-common.toml"
-hash = "ece3561a9b9daf33eb3a4a4213c79fadc502ee9352138bba5783156243318668"
 
 [[files]]
 file = "config/chimes-client.toml"
@@ -1698,7 +1686,7 @@ hash = "f4389ca4bd9e12f0fbb6ba8c271c35f77b32885e39962b5f53cfc75ac53cbe90"
 
 [[files]]
 file = "config/emi-curation/mods.json"
-hash = "c7b9991d05212f1f57903ae0f944e6a2ded4c224997c525ab7b32636fa725a3e"
+hash = "d72606022a7ec6d02593c0be834518a2d2c6a4fd8f553db130c2adc8a4f065a9"
 
 [[files]]
 file = "config/emi-curation/rules.json"
@@ -1763,10 +1751,6 @@ hash = "6cf0d1a23dd955982538b923cf6ed25c6f4a9f19fcae7302ca504ea44f419b72"
 [[files]]
 file = "config/extremereactors/common.toml"
 hash = "c1efe05ffd6b00b157b7655abf0ae1a3e4c178e2080c22431580e8aefda10155"
-
-[[files]]
-file = "config/fallingtree.json"
-hash = "922a0a06c316eb1f0aba285f5bc59f4421b51b6f861661f3cdab38bbd44e4927"
 
 [[files]]
 file = "config/fastbench.cfg"
@@ -1851,22 +1835,6 @@ hash = "adbb4e046e58852d29ffb3827e80b66dd47903e0b9012f51b45e9a2775c2adab"
 [[files]]
 file = "config/forgeendertech/Biomes/minecraft$the_void.cfg"
 hash = "9631a6d85b00fa2097cb0a685e7fb81b7ddb930daa9787b9abd51f6bc51fe1b2"
-
-[[files]]
-file = "config/forgeendertech/Biomes/terralith$frozen_cliffs.cfg"
-hash = "bded78fcb63d2bbf720ce1fd74d4b321cf675106f8fd0f540662c81dde4f0952"
-
-[[files]]
-file = "config/forgeendertech/Biomes/terralith$red_oasis.cfg"
-hash = "3c5d017b6085a971c81d8925ba161fe66c63a211a6727437de51c3ca6e567caf"
-
-[[files]]
-file = "config/forgeendertech/Biomes/terralith$stony_spires.cfg"
-hash = "2a4f9d5cbc33343821d2714911e6980d34b1d91a90e5da8947304eefc796808a"
-
-[[files]]
-file = "config/forgeendertech/Biomes/terralith$warped_mesa.cfg"
-hash = "b5d01ee91ca8e84e4e3c518c03f99dc9979c0a43ff51216cded6aededb5898ed"
 
 [[files]]
 file = "config/forgeendertech/Biomes/tropicraft$rainforest.cfg"
@@ -2542,11 +2510,6 @@ hash = "828d571a91296e2ee3be1ec509619ea01f6a61a03958461fbe543bd377daa194"
 metafile = true
 
 [[files]]
-file = "mods/bad-wither-no-cookie-reloaded.pw.toml"
-hash = "7b82c00d58b304aa7e5c94426610b7a7b6247baa1122dbaa480bd7c7eabb6a6e"
-metafile = true
-
-[[files]]
 file = "mods/balm.pw.toml"
 hash = "92eef137f9ea740673053ec3604ddf3ed197f22fdf5e5da35c8364f88ad31650"
 metafile = true
@@ -2654,11 +2617,6 @@ metafile = true
 [[files]]
 file = "mods/cosmetic-armor-reworked.pw.toml"
 hash = "cfa8aa9c0437721dab2057c932c9cf8ec3d3a11f672040601305238d13df85e8"
-metafile = true
-
-[[files]]
-file = "mods/craft-shack.pw.toml"
-hash = "126fc50a9d1c468f821268c9060d9451b175cc574d6e571b1a9c675aeb184f7f"
 metafile = true
 
 [[files]]
@@ -3052,11 +3010,6 @@ hash = "12790e4a5fbfd30d4fb57954901adba37564c1924875edd975d6ed30b82471a8"
 metafile = true
 
 [[files]]
-file = "mods/mob-despawn-timers.pw.toml"
-hash = "8194c7ed927d413b2a0edb06a0e6cdf8fa7826ed313dfc4147fe9c4fd05a65f5"
-metafile = true
-
-[[files]]
 file = "mods/model-gap-fix.pw.toml"
 hash = "cd3140db1982e4e1b17c60b71e436fc92c22b1a6ce189e6b8197d1275487679c"
 metafile = true
@@ -3069,11 +3022,6 @@ metafile = true
 [[files]]
 file = "mods/mouse-tweaks.pw.toml"
 hash = "e72f73611904e14d915418f0e3c6cb483cdc600e211375c2eceb393fec5b80f1"
-metafile = true
-
-[[files]]
-file = "mods/mrcrayfish-furniture-mod.pw.toml"
-hash = "e855300be1354899595f3e37e3f080647ae0ae0ac84df292441608c3f8327e21"
 metafile = true
 
 [[files]]
@@ -3244,11 +3192,6 @@ metafile = true
 [[files]]
 file = "mods/terrablender.pw.toml"
 hash = "14117b94c456598c9acece143c7a0da3cf56d13182d035a74a2da8a52dd19cbd"
-metafile = true
-
-[[files]]
-file = "mods/terralith.pw.toml"
-hash = "b0978cb7ae7b79c5be89b323ca1bd038f693ff6d11c43dfcbd63953964149af2"
 metafile = true
 
 [[files]]
