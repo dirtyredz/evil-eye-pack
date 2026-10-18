@@ -19,6 +19,7 @@
   { "label": "Supplementaries", "modid": "supplementaries" },
   { "label": "Building Gadgets 2", "modid": "buildinggadgets2" },
   { "label": "Biomes O' Plenty", "modid": "biomesoplenty" },
+  { "label": "Terralith", "modid": "terralith" },
   { "label": "Alex's Caves", "modid": "alexscaves" },
   { "label": "Alex's Mobs", "modid": "alexsmobs" },
   { "label": "Ice and Fire", "modid": "iceandfire" },

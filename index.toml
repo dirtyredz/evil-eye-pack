@@ -1686,7 +1686,7 @@ hash = "f4389ca4bd9e12f0fbb6ba8c271c35f77b32885e39962b5f53cfc75ac53cbe90"
 
 [[files]]
 file = "config/emi-curation/mods.json"
-hash = "d72606022a7ec6d02593c0be834518a2d2c6a4fd8f553db130c2adc8a4f065a9"
+hash = "e60d23d0dc4900c53d7174bd6320d5232a050e8429efff0f9eda7a032ee571a0"
 
 [[files]]
 file = "config/emi-curation/rules.json"
@@ -1835,6 +1835,22 @@ hash = "adbb4e046e58852d29ffb3827e80b66dd47903e0b9012f51b45e9a2775c2adab"
 [[files]]
 file = "config/forgeendertech/Biomes/minecraft$the_void.cfg"
 hash = "9631a6d85b00fa2097cb0a685e7fb81b7ddb930daa9787b9abd51f6bc51fe1b2"
+
+[[files]]
+file = "config/forgeendertech/Biomes/terralith$frozen_cliffs.cfg"
+hash = "bded78fcb63d2bbf720ce1fd74d4b321cf675106f8fd0f540662c81dde4f0952"
+
+[[files]]
+file = "config/forgeendertech/Biomes/terralith$red_oasis.cfg"
+hash = "3c5d017b6085a971c81d8925ba161fe66c63a211a6727437de51c3ca6e567caf"
+
+[[files]]
+file = "config/forgeendertech/Biomes/terralith$stony_spires.cfg"
+hash = "2a4f9d5cbc33343821d2714911e6980d34b1d91a90e5da8947304eefc796808a"
+
+[[files]]
+file = "config/forgeendertech/Biomes/terralith$warped_mesa.cfg"
+hash = "b5d01ee91ca8e84e4e3c518c03f99dc9979c0a43ff51216cded6aededb5898ed"
 
 [[files]]
 file = "config/forgeendertech/Biomes/tropicraft$rainforest.cfg"
@@ -3192,6 +3208,11 @@ metafile = true
 [[files]]
 file = "mods/terrablender.pw.toml"
 hash = "14117b94c456598c9acece143c7a0da3cf56d13182d035a74a2da8a52dd19cbd"
+metafile = true
+
+[[files]]
+file = "mods/terralith.pw.toml"
+hash = "b0978cb7ae7b79c5be89b323ca1bd038f693ff6d11c43dfcbd63953964149af2"
 metafile = true
 
 [[files]]
