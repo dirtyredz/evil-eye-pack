@@ -2,6 +2,21 @@
 
 Newest first.
 
+## 2026-10-18 — Create 6.0.8 and its add-ons; five mods removed (branch `create6`)
+
+**Decision.**
+- Create 0.5.1.j → 6.0.8 (bundles Flywheel 1.0.5, Ponder 1.0.91, Registrate). Crafts & Additions 1.3.3, Steam 'n' Rails 1.7.3 (Create 6 release build), Enchantment Industry 2.5.4b with its required Create: Dragons Plus 1.11.9, Ars Creo 4.3.0. New: Create Deco 2.0.3, Connected 1.2.3, New Age 1.2.0 (bundles ESL), Interiors 0.6.0, Jetpack 4.4.6, Ore Excavation 1.6.6, Hypertubes 0.6.0. All are Modrinth direct-URL metafiles.
+- Supplementaries 2.5.21 → 3.1.44 and Moonlight 2.7.2 → 2.16.37. 2.5.21's Create compat references `com.simibubi.create.content.logistics.filter.ItemAttribute`, which Create 6 moved; its deferred setup threw `NoClassDefFoundError`, left mod loading broken and crashed the client. 3.1.44 declares `create [6.0.0,]`.
+- The Create, Steam 'n' Rails, Ars Creo and Supplementaries configs are the files the new versions wrote back (Forge/Moonlight config correction): every surviving key keeps its value; removed keys are features that moved to other mods (Supplementaries' wall lanterns, hanging signs, cake/skull/bell tweaks now live in Amendments, which is not added).
+- Removed at the owner's request: Bad Wither No Cookie - Reloaded, MrCrayfish's Furniture (Legacy), Terralith, Mob Despawn Timers and Craft Shack. **Craft Shack's metafile installs `FallingTree-1.20.1-4.3.4.jar`**, so tree felling goes too. None declared a library dependency, so no library was orphaned. Their configs, ForgeEndertech's per-biome Terralith files and their Mods menu entries were dropped. Terralith biome IDs left in Alex's Mobs and Ice and Fire spawn lists are inert and were kept (they are those mods' defaults).
+
+**How it was checked.** Every installed jar's class constants were scanned for `com/simibubi/create/` references missing from Create 6 and its bundled jars (only Supplementaries 2.5.21 failed), and every mandatory `mods.toml` dependency was resolved against the installed set (scripts in `artifacts/evil-eye-pack/jobs/2026-10-18-create6/tools/`).
+
+**Consequences for existing worlds.**
+- **A world created with Terralith does not open without it** ("Overworld settings missing"): `level.dat` stores the overworld's multi-noise biome list inline, ~880 of its entries are `terralith:` biomes. The Stable world's `level.dat` has 890 Terralith references. Detaching the biome list (GOTCHAS) was verified on a copy of the trial world, which then opened and the player joined; the owner must choose between that migration and keeping Terralith before this reaches Stable.
+- Enchantment Industry 2.x is a rewrite: the Disenchanter, hyper experience and ink entries are gone and are not remapped. MrCrayfish furniture (about 900 registry entries) and Falling Tree's behaviour disappear.
+- Supplementaries' `falling_lantern` (moved to Amendments) disappears.
+
 ## 2026-10-16 — How the EMI Mods menu is drawn, filters and measures text
 
 **Decision.**

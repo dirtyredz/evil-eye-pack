@@ -17,6 +17,12 @@
 - Local instances install straight from the checkout's files (no server) and never rehash. Rehash and verify before every local install, and do not edit files while an install is reading them.
 - MultiMC's instance ID is the **folder name**; the display name is `name=` in `instance.cfg`. Renaming the display name does not rename the folder. Rename folders only with MultiMC closed, and update `SelectedInstance` in `multimc.cfg`.
 
+## Mod updates and removals
+
+- **Forge hits a missing class only when the code runs.** A mod compiled against an older API loads, then throws `NoClassDefFoundError` from its compat setup (a deferred task), which leaves mod loading "broken" and crashes the client later with an unrelated-looking NPE. Before a big API bump (Create 0.5 → 6), scan every installed jar's class constants for references the new jar no longer has (`jobs/2026-10-18-create6/tools/createrefs.mjs`).
+- **Worldgen mods can be baked into `level.dat`.** Terralith worlds store the overworld's whole multi-noise biome list inline (`Data.WorldGenSettings.dimensions."minecraft:overworld".generator.biome_source.biomes`). Without the mod the world refuses to open ("Overworld settings missing"). Replacing that `biome_source` with `{type: "minecraft:multi_noise", preset: "minecraft:overworld"}` detaches it (`jobs/2026-10-18-create6/tools/detach_terralith.cjs`, on a backed-up copy only); already-generated Terralith chunks keep their blocks but their biomes fall back.
+- **The "Unidentified mapping" list in `latest.log` is the content a world loses** after a removal or rewrite: every registry ID the world knew that no longer exists. Read it before shipping a removal.
+
 ## Worktrees
 
 - Move a linked worktree only with `git worktree move`. An Explorer move breaks the `.git` file link and the main repo's `worktrees/` record; `git worktree prune` would then delete the record.
