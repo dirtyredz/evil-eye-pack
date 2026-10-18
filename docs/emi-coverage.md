@@ -96,6 +96,7 @@ parts, and others.
 | Steam 'n' Rails 1.7.3 | | `RailwaysJeiPlugin` | | Bridge | |
 | Stylish Effects 8.0.4 | | `StylishEffectsJeiPlugin` | `ForgeStylishEffectsReiPlugin` | JEI path. Verify the screen exclusions. | |
 | Supplementaries 3.1.44 | `EMICompat` | `JEICompat` | `REICompat` | Native EMI (since 3.x; 2.5.21 used the JEI path) | |
+| Amendments 2.2.6 | | | | Declares no EMI/JEI/REI plugin; adds no recipe-viewer category (unverified in game) | |
 | ZeroCore 2.1.45 | | `ZeroCoreJeiPlugin` | | Bridge | |
 | JEP 3.0.1 (new) | | `ForgeProfessionPlugin` | | Bridge. Replaces REP. | |
 

@@ -1686,7 +1686,7 @@ hash = "f4389ca4bd9e12f0fbb6ba8c271c35f77b32885e39962b5f53cfc75ac53cbe90"
 
 [[files]]
 file = "config/emi-curation/mods.json"
-hash = "e60d23d0dc4900c53d7174bd6320d5232a050e8429efff0f9eda7a032ee571a0"
+hash = "14fd69ad2815071584b05e7b7e4a49f750578a493c8e79294c5a2874896b2bfd"
 
 [[files]]
 file = "config/emi-curation/rules.json"
@@ -2473,6 +2473,11 @@ metafile = true
 [[files]]
 file = "mods/almostunified.pw.toml"
 hash = "8e9376087852491eb52037279506fefc45e174303530630e8b8afa571b1bd697"
+metafile = true
+
+[[files]]
+file = "mods/amendments.pw.toml"
+hash = "5922845f6c9bb57548eca500857ebd2268bffe3799373b7306c2bdfb706d5f95"
 metafile = true
 
 [[files]]
