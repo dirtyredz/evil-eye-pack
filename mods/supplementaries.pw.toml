@@ -1,13 +1,13 @@
 name = "Supplementaries"
-filename = "supplementaries-1.20-2.5.21.jar"
+filename = "supplementaries-1.20-3.1.44-forge.jar"
 side = "both"
 
 [download]
-hash-format = "sha1"
-hash = "8f07be519dcaebde156eceadba27875c1b18f23d"
-mode = "metadata:curseforge"
+url = "https://cdn.modrinth.com/data/fFEIiSDQ/versions/foXRPXFH/supplementaries-1.20-3.1.44-forge.jar"
+hash-format = "sha512"
+hash = "c8307fb766723b4a91fe1237de79894c162ecd26575d56690249876f186f3285b16a2ad2b1ef6c1356d843514b57734a15e3420bb5dcf7c4bd78770a0d51fa7e"
 
 [update]
-[update.curseforge]
-file-id = 4654103
-project-id = 412082
+[update.modrinth]
+mod-id = "fFEIiSDQ"
+version = "foXRPXFH"
