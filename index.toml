@@ -2508,7 +2508,7 @@ metafile = true
 
 [[files]]
 file = "mods/ars-creo.pw.toml"
-hash = "3c947528b3412d6b5e308b587c63bc357bf731a290c8843febcaa8879e0c4086"
+hash = "37674bd20bdb8a375ecd0fdcefd50b7c4b10134aeb0f6a5413293841e39af8f3"
 metafile = true
 
 [[files]]
@@ -2667,23 +2667,53 @@ hash = "71b6267e2c7f91e6dae89aaea6fefdb36e8fcc15db9ee180d10b5d706d4a657b"
 metafile = true
 
 [[files]]
+file = "mods/create-connected.pw.toml"
+hash = "878bea7ee908c8eb9eda3035ed5a8ed53fa3d26328756777945aaa5527765c54"
+metafile = true
+
+[[files]]
+file = "mods/create-deco.pw.toml"
+hash = "87be52b8aaa9864eab1ec2df8c862cd01a084989b07c4cdbfaa21c57a9a778a6"
+metafile = true
+
+[[files]]
+file = "mods/create-dragons-plus.pw.toml"
+hash = "00f734d137e718d42297cc556042b80be84d08740273fb28bbe93b91959cc300"
+metafile = true
+
+[[files]]
 file = "mods/create-enchantment-industry.pw.toml"
-hash = "de9a6d80b48e8d99fb561a94a0d28941327c91620a6c1f76af29af370df0925a"
+hash = "76422dff09360cb077eec56dd0340b664991191f78cfcf6da3d01bf344ee9f1a"
+metafile = true
+
+[[files]]
+file = "mods/create-jetpack.pw.toml"
+hash = "0a0533fddd34d04fd6551f5c352081b711662d12f2f2051fe7232a53172edf0e"
+metafile = true
+
+[[files]]
+file = "mods/create-new-age.pw.toml"
+hash = "ecbf9855b5d321b4feb6a5c57d281a0b9b3ba339afb6939d88a68f13a0b3f506"
+metafile = true
+
+[[files]]
+file = "mods/create-ore-excavation.pw.toml"
+hash = "98e4fd2632a9c9f80ead78c8c2b2dc3d9e88d12683bc67ae8bffded33d289e65"
 metafile = true
 
 [[files]]
 file = "mods/create-steam-n-rails.pw.toml"
-hash = "c7f311fa403756713bd293d4c3eae874f8053765790efd9e76a4aa16447583c0"
+hash = "c13a9000148ee786906c815c6218fad32497e9b71853614d78a8ebff5077af76"
 metafile = true
 
 [[files]]
 file = "mods/create.pw.toml"
-hash = "8782d120f8b3e8439595af87a84d8e955ecdcf2e7abcf1a2ce85c413f085daa3"
+hash = "fb5c251cf4997fa65ca043bab7c9ecbd02e108031584a3e26276b77d212de23c"
 metafile = true
 
 [[files]]
 file = "mods/createaddition.pw.toml"
-hash = "5bf5d5fd3ee61dae57ec321ef60921c159ab1afea32db67b097fd42cbddee3cc"
+hash = "e6d1f36e9e0193fe410d136e0cda8a7f6dbbc809c0644f06a601bddf5b38a395"
 metafile = true
 
 [[files]]
@@ -2872,6 +2902,11 @@ hash = "977c23ae70f89df064fed42478893e0087bc0d5cb1a08b1dbb76c6edbe717c73"
 metafile = true
 
 [[files]]
+file = "mods/hypertube.pw.toml"
+hash = "2a268d04b1054beebc07926e930cbccf79506a84c54a542835f450f5de53f193"
+metafile = true
+
+[[files]]
 file = "mods/ice-and-fire-dragons.pw.toml"
 hash = "94c7c45a70d0cea86695ecd467f8e5c22510442c53c44291a570986e234428e5"
 metafile = true
@@ -2879,6 +2914,11 @@ metafile = true
 [[files]]
 file = "mods/immediatelyfast.pw.toml"
 hash = "88396b3f04853c2cab8b7932757a3020aa8b1d266e7ee69a2b208908d3a44ada"
+metafile = true
+
+[[files]]
+file = "mods/interiors.pw.toml"
+hash = "7ca55cd661721ca944979439aac5160009e07ce2568fbf8aee53e019f3e55fba"
 metafile = true
 
 [[files]]
