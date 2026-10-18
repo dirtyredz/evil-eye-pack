@@ -63,9 +63,13 @@ parts, and others.
 | AllTheCompressed 3.0.2 | | `JEICompat` | | Bridge | |
 | Ars Elemental 0.6.4.1 | | `JeiArsExtraPlugin` | | Bridge | |
 | Ars Nouveau 4.9.0 | | `JEIArsNouveauPlugin` | | Bridge | |
-| Create 0.5.1.j | | `CreateJEI` | | Bridge | |
-| Create Crafts & Additions 1.2.5 | | `CreateAdditionJEI` | | Bridge | |
-| Create Enchantment Industry 1.2.9.d | | `CeiJEIPlugin` | | Bridge | |
+| Create 6.0.8 | | `CreateJEI` | | Bridge | |
+| Create Crafts & Additions 1.3.3 | | `CreateAdditionJEI` | | Bridge | |
+| Create Enchantment Industry 2.5.4b | | `CEIJeiPlugin` | | Bridge | |
+| Create: Connected 1.2.3 (2026-10-18) | | `CreateConnectedJEI` | | Bridge | |
+| Create: Dragons Plus 1.11.9 (2026-10-18) | | `CDPJeiPlugin` | | Bridge | |
+| Create: New Age 1.2.0 (2026-10-18) | | `CNAJeiPlugin` | | Bridge | |
+| Create Ore Excavation 1.6.6 (2026-10-18) | | `JEIHandler` | | Bridge | |
 | Curios 5.14.1 | | `CuriosJeiPlugin` | | Bridge. Check the UI. | |
 | Domum Ornamentum 1.0.154 | | `JEIPlugin` | | Bridge | |
 | Ender IO 6.0.23 | | `EnderIOJEI`, `MachinesJEI` | | Bridge. Check machines and NBT variants. | |
@@ -91,7 +95,7 @@ parts, and others.
 | RFTools Utility 6.0.7 | | `RFToolsUtilityJeiPlugin` | | Bridge | |
 | Steam 'n' Rails 1.7.3 | | `RailwaysJeiPlugin` | | Bridge | |
 | Stylish Effects 8.0.4 | | `StylishEffectsJeiPlugin` | `ForgeStylishEffectsReiPlugin` | JEI path. Verify the screen exclusions. | |
-| Supplementaries 2.5.21 | | `JEICompat` | `REICompat` | JEI path | |
+| Supplementaries 3.1.44 | `EMICompat` | `JEICompat` | `REICompat` | Native EMI (since 3.x; 2.5.21 used the JEI path) | |
 | ZeroCore 2.1.45 | | `ZeroCoreJeiPlugin` | | Bridge | |
 | JEP 3.0.1 (new) | | `ForgeProfessionPlugin` | | Bridge. Replaces REP. | |
 

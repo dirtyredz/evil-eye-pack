@@ -42,7 +42,7 @@
 
 	[blocks.wind_vane]
 		#Wind vane animation swings according to this equation: 
-		#angle(time) = max_angle_1*sin(2pi*time*pow/period_1) + <max_angle_2>*sin(2pi*time*pow/<period_2>)
+		#pitch(time) = max_angle_1*sin(2pi*time*pow/period_1) + <max_angle_2>*sin(2pi*time*pow/<period_2>)
 		#where:
 		# - pow = max(1,redstone_power*<power_scaling>)
 		# - time = time in ticks
@@ -51,7 +51,7 @@
 		#increase to have more distinct indication when weather changes
 		#Range: 1.0 ~ 100.0
 		power_scaling = 3.0
-		#Amplitude (maximum angle) of first sine wave
+		#Amplitude (maximum pitch) of first sine wave
 		#Range: 0.0 ~ 360.0
 		max_angle_1 = 30.0
 		#Range: 0.0 ~ 360.0
@@ -88,34 +88,6 @@
 		#A list of mobs that can be ticked on client side when inside jars. Mainly used for stuff that has particles. Can cause issues and side effects so use with care
 		tickable_inside_jars = ["iceandfire:pixie", "druidcraft:dreadfish", "druidcraft:lunar_moth", "alexsmobs:hummingbird"]
 
-	[blocks.wall_lantern]
-		#Makes wall lantern use a simple block model instead of the animated tile entity renderer. This will make them render much faster but will also remove the animationNote that this option only affect lanterns close by as the one far away render as fast by default
-		fast_lanterns = false
-
-		[blocks.wall_lantern.swing_physics]
-			min_angle = 0.79999995
-			collision_force = 15.0
-			damping = 0.525
-			collision_inertia = 1.0
-			collision_considers_entity_hitbox = true
-			frequency = 0.6
-			max_angle = 60.0
-
-	[blocks.enhanced_hanging_sign]
-		#Modifies vanilla hanging signs to make them like old Supplementaries ones
-		enabled = true
-		#Makes supplementaries hanging signs use a simple block model instead of the animated tile entity renderer. This will make them render much faster but will also remove the animationNote that this option only affect lanterns close by as the one far away render as fast by default
-		fast_signs = false
-
-		[blocks.enhanced_hanging_sign.swing_physics]
-			min_angle = 0.79999995
-			collision_force = 15.0
-			damping = 0.525
-			collision_inertia = 1.0
-			collision_considers_entity_hitbox = true
-			frequency = 0.6
-			max_angle = 60.0
-
 	[blocks.turn_table]
 		#Display visual particles when a block is rotated
 		turn_particles = true
@@ -131,6 +103,21 @@
 		#Period of rope wobbling effect
 		#Range: 0.01 ~ 200.0
 		wobbling_period = 12.0
+
+	[blocks.bunting]
+		#Makes buntings use normal block models with no animation for faster performance. When off this is only active when viewed from a distance
+		fast_buntings = false
+
+	[blocks.hat_stand]
+
+		[blocks.hat_stand.swing_physics]
+			min_angle = 0.0
+			collision_force = 15.0
+			damping = 1.625
+			collision_inertia = 1.5
+			collision_considers_entity_hitbox = true
+			frequency = 1.5
+			max_angle = 54.999996
 
 #Particle parameters
 [particles]
@@ -161,22 +148,27 @@
 	#ignore this
 	#Range: -10.0 ~ 10.0
 	test3 = 0.0
+	#Disables Optifine warn screen
+	no_optifine_warn_screen = false
+	#Disables Amendments suggestion screen
+	no_amendments_screen = false
+	#Disable incompatible mods warning screen
+	no_incompatible_mods_screen = false
+	#Config button Y offset
+	#Range: -10000 ~ 10000
+	config_button_y_offset = 0
+	#I am very boring
+	unfunny = false
 
 #Game tweaks
 [tweaks]
-	#Colors the brewing stand potion texture depending on the potions it's brewing.
-	#If using a resource pack add tint index from 0 to 3 to the 3 potion layers
-	brewing_stand_colors = true
-	#Makes tipped arrows show their colors when loaded with a crossbow
-	crossbows_colors = true
 	#Allow to right click with a clock to display current time in numerical form
 	clock_right_click = true
 	#Allow to right click with a compass to display current coordinates in numerical form
 	compass_right_click = false
-	#Renders an enchantment glint on placeable enchanted books
+	#Renders an enchantment glint on placeable enchanted booksNote that turning this on will make book piles use tile renderer instead of baked models making them slower to render
 	placeable_books_glint = false
 	#Placeable books random colors
-	#This is a list. Add more entries with syntax [[...]]
 	placeable_books_random_colors = ["brown", "orange", "yellow", "red", "green", "lime", "cyan", "blue", "purple"]
 	#Enables banner pattern tooltip image preview
 	banner_pattern_tooltip = true
@@ -191,14 +183,25 @@
 	mob_head_shaders = true
 	#Sends your current chat when you die while typing
 	send_chat_on_death = true
-	#A scalar multiplier that will be applied to sign text making it brighter, supposedly more legible
-	#Range: 0.0 ~ 5.0
-	sign_text_color_multiplier = 1.2000000476837158
+	#Show a slime overlay when you hit an entity with a slimeball
+	overlay = true
+	#Adds an overlay to projectile weapons in gui displaying currently selected ammo
+	projectile_weapon_overlay = true
+	#Makes enderman heads use vanilla texture. Enable for texture pack support
+	enderman_head_texture_pack_support = true
+
+	[tweaks.colored_maps]
+		#Needs the server config with same name on. If on here it will ignore the server one and keep vanilla colors
+		tinted_blocks_on_maps = true
+		#Colors tall grass same color as grass
+		tall_grass_color = true
+		#Makes colored maps a bit more accurate. Might affect performance
+		accurate_colors = false
 
 [items]
 
 	[items.slingshot]
-		#Adds an overlay to slingshots in gui displaying currently selected block
+		#Adds an overlay to slingshots in gui displaying currently selected ammo
 		overlay = true
 		#Render the block outline for distant blocks that are reachable with a slingshot enchanted with Stasis
 		stasis_block_outline = true
@@ -236,4 +239,22 @@
 	[items.flute]
 		#Display visual particles when a playing a flute
 		note_particles = true
+
+	[items.lunch_basket]
+		#Adds an overlay to lunch boxes in gui displaying currently selected food
+		overlay = true
+
+	[items.altimeter]
+		#Click action for depth meter which displays current depth
+		click_action = true
+		#Allows depth meter to have unique textures per each dimension. Add more dimensions IDs and a matching texture in the correct path replacing ':' with '_'
+		#This is a list. Add more entries with syntax [[...]]
+		extra_dimension_textures = ["minecraft:the_nether", "minecraft:the_end"]
+		#Increasing this to be more than 1 will result in delth meter display image to be shown in float amounts instead of pixel perfect ones
+		#Range: 1 ~ 10
+		texture_precision_multiplier = 1
+
+	[items.cannonball]
+		#Render cannonballs as 3D models
+		3d_model = true
 
