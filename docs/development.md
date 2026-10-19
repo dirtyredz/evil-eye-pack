@@ -58,6 +58,10 @@ git worktree list --porcelain
 
 Tooling needs Node 22. There is no packwiz CLI and no build step.
 
+## Server compatibility smoke (agents)
+
+`node tools/server_smoke/smoke.cjs [--pack <pack.toml>] [--out <dir>] [--drop oculus]` boots the checkout headless on a Forge 47.4.10 dedicated server (`-s server` install, nogui, hidden, localhost:25599, offline, fresh world; ~4 to 8 min) and prints PASS/FAIL, time to `Done (`, crash causes and error groups (known noise vs new). Agents use this to check pack compatibility; the owner verifies in game. It never opens a window or touches MultiMC. Cache and runs live under `projects/artifacts/evil-eye-pack/server-smoke/` (pass `--out` to put a run in a job folder). `--drop` deletes installed jars from the throwaway server only, to find the next offender; `--analyze <run dir>` re-reports a finished run.
+
 ## Job artifacts (agent dispatches)
 
 Every dispatch gets its own `projects/artifacts/evil-eye-pack/jobs/<YYYY-MM-DD-task>/`.

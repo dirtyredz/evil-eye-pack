@@ -1,0 +1,8 @@
+[
+  { "pattern": "TagLoader.*missing following references", "why": "datapack tags (alltheores, totw_modded, L_Enders_Cataclysm) list items/biomes from mods the pack does not ship" },
+  { "pattern": "RecipeManager.*Parsing error loading recipe", "why": "datapack recipes (alltheores, allthecompressed, dramaticdoors, productivebees) use mods/recipe types the pack does not ship, e.g. mekanism:*" },
+  { "pattern": "AdvancementManager.*Parsing error loading custom advancement|AdvancementList.*Couldn't load advancement", "why": "advancements referencing items from mods the pack does not ship" },
+  { "pattern": "RuntimeDistCleaner.*ClientLevel", "why": "Radium class analysis probes Minecolonies BlockHutTownHall on the server; logged, not fatal" },
+  { "pattern": "structurize.*---", "why": "Structurize complains about ModernFix's LazyDataFixer; harmless on boot" },
+  { "pattern": "HammerLib.*RegisterRecipesEvent", "why": "HammerLib's built-in test recipe extension fails to register; harmless" }
+]

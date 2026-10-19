@@ -24,6 +24,12 @@
 - **Worldgen mods can be baked into `level.dat`.** Terralith worlds store the overworld's whole multi-noise biome list inline (`Data.WorldGenSettings.dimensions."minecraft:overworld".generator.biome_source.biomes`). Terralith is therefore kept in the pack and cannot be removed from an existing world. Without the mod the world refuses to open ("Overworld settings missing"). Replacing that `biome_source` with `{type: "minecraft:multi_noise", preset: "minecraft:overworld"}` detaches it (`jobs/2026-10-18-create6/tools/detach_terralith.cjs`, on a backed-up copy only); already-generated Terralith chunks keep their blocks but their biomes fall back.
 - **The "Unidentified mapping" list in `latest.log` is the content a world loses** after a removal or rewrite: every registry ID the world knew that no longer exists. Read it before shipping a removal.
 
+## Server smoke (`tools/server_smoke/`)
+
+- **A mod marked `side = "both"` can still be client-only.** packwiz `-s server` installs every `both` mod, and Forge aborts server boot at the first one that touches client classes. Oculus 1.8.0 (`side = "both"`) crashes the server: `Attempted to load class net/minecraft/client/gui/screens/Screen for invalid dist DEDICATED_SERVER`. Forge reports only the first failing mod and leaves the JVM alive after "Crash report saved", so the smoke stops on that line. Use `--drop <name>` to find the next offender, then fix the metafile's `side`.
+- **Known server boot noise** (observed 2026-10-18 on a successful boot, listed in `tools/server_smoke/known_noise.json`): datapack tags, recipes and advancements from alltheores, allthecompressed, dramaticdoors, productivebees and totw_modded that reference mods the pack does not ship (Mekanism and others); Radium probing Minecolonies `BlockHutTownHall` (`RuntimeDistCleaner ... ClientLevel`); Structurize's ModernFix `LazyDataFixer` banner; HammerLib's test recipe extension. Mixin "Error loading class ... ClassNotFoundException" lines are WARN, not errors.
+- A boot takes ~3 minutes to `Done (` on this machine (about 200 s server-reported); the JVM exits within a minute of `stop`.
+
 ## Worktrees
 
 - Move a linked worktree only with `git worktree move`. An Explorer move breaks the `.git` file link and the main repo's `worktrees/` record; `git worktree prune` would then delete the record.
