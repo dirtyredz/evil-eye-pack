@@ -1722,11 +1722,11 @@ hash = "4a895e3f8ca027c6e8644412402cd1a5518685ed107ee0f9b8812becd11ebc49"
 
 [[files]]
 file = "config/enderio/machines-client.toml"
-hash = "160f1070d4ba2b575458eccabcce27a66d8d8942e66326e089436eedd95f6f63"
+hash = "bdbcf67bdb785fdbcc1bb43ac4b84985da3f629f6bfcef147d8306f5e119e6f8"
 
 [[files]]
 file = "config/enderio/machines-common.toml"
-hash = "8abe6a45cbe34c09c31c8d8bbf6475e4e1d1e174330f27440051e69aff27cc1c"
+hash = "d4a794284e962dd3d940fb930ab39de9f2e7b0106ca92ce462277abf60c8081b"
 
 [[files]]
 file = "config/endertanks-client.toml"
