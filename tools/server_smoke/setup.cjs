@@ -4,10 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { run } = require('./procs.cjs');
 
-const FORGE = '1.20.1-47.4.10';
-const FORGE_URL = `https://maven.minecraftforge.net/net/minecraftforge/forge/${FORGE}/forge-${FORGE}-installer.jar`;
-const BOOTSTRAP = 'C:/Users/dirty/MultiMC/packwiz/packwiz-installer-bootstrap.jar';
-const INSTALLER_JAR_SOURCES = ['C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/packwiz-installer.jar'];
+const { FORGE, FORGE_URL, BOOTSTRAP, INSTALLER_JAR_SOURCES } = require('./env.cjs');
 
 async function download(url, dest) {
   const res = await fetch(url);
@@ -59,4 +56,14 @@ async function installPack(runDir, packToml, java, cache, log) {
   if (r.code !== 0) throw new Error(`packwiz install exited ${r.code} (see ${path.join(runDir, 'packwiz-install.log')})`);
 }
 
-module.exports = { FORGE, ensureForgeBase, prepareRunDir, installPack };
+// Deletes installed jars whose name contains a term, from the throwaway server only (to find the next offender).
+function dropMods(runDir, terms, log) {
+  const modsDir = path.join(runDir, 'mods');
+  for (const term of terms) {
+    for (const f of fs.readdirSync(modsDir)) {
+      if (f.toLowerCase().includes(term.toLowerCase())) { fs.rmSync(path.join(modsDir, f)); log(`dropped ${f}`); }
+    }
+  }
+}
+
+module.exports = { ensureForgeBase, prepareRunDir, installPack, dropMods };

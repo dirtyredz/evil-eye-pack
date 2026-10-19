@@ -47,4 +47,4 @@ function analyze(logText, knownNoise) {
   return { doneSeconds: done ? Number(done[1]) : null, loadingFailed, known, fresh };
 }
 
-module.exports = { analyze, normalize };
+module.exports = { analyze, normalize, DONE_RE };

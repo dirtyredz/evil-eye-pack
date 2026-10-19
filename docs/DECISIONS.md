@@ -2,6 +2,15 @@
 
 Newest first.
 
+## 2026-10-18 — Server compatibility smoke is the agent's check; Oculus is client-only
+
+**Decision.**
+- `tools/server_smoke/smoke.cjs` (headless Forge 47.4.10 dedicated server, `-s server` install) is how agents verify pack compatibility. The owner verifies the client by hand.
+- `tools/server_smoke/known_noise.json` is an allowlist of observed, harmless boot errors. Any error group not in it fails the run, so a new mod's breakage cannot hide as noise; add an entry (with the reason) only after reading the log.
+- Oculus is `side = client`: it loads client classes at construction and crashed the dedicated server (`Attempted to load class ...Screen for invalid dist DEDICATED_SERVER`). The smoke passes with it excluded from the server install.
+
+**Why.** A client launch is slow and manual; the server boot catches mod-loading and dist errors in minutes, headless.
+
 ## 2026-10-18 — Create 6.0.8 and its add-ons; five mods removed (branch `create6`)
 
 **Decision.**

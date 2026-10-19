@@ -18,10 +18,9 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
 - `tools/emi_curation/` — unshipped: REI-to-EMI migration check, Node tests for the curation scripts
 - `tools/emi_curation/fixtures/` — frozen REI config the migration check compares against
-- `tools/emi_curation/tests/`, `tools/packwiz/tests/` — Node test suites (`node --test tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs`)
+- `tools/emi_curation/tests/`, `tools/packwiz/tests/`, `tools/server_smoke/tests/` — Node test suites (`node --test tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
-- `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its setup, process and log-analysis modules, and known boot noise
-- `tools/server_smoke/tests/` — Node tests for the log analysis (`node --test tools/server_smoke/tests/*.cjs`)
+- `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its environment, setup, boot, process, verdict and log-analysis modules, and known boot noise
 - `tools/packwiz/` — unshipped: hash-chain verifier, index rebuild, localhost pack server, tests
 - `docs/` — unshipped living docs (development workflow, decisions, gotchas, EMI guide and integration coverage)
 - `docs/items/`, `docket.json` — Docket work-item store (use `dk`); `AGENTS.md` — agent instructions. All unshipped.
@@ -52,9 +51,12 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 | `tools/emi_curation/tests/harness.cjs`, `fake_emi.cjs` | Node harness that loads the production scripts (all subfolders) into a `vm` context in KubeJS priority order (plus the shared `fixture()`/`boot()`), and a fake EMI/Java world to drive them |
 | `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `mods_menu.test.cjs`, `interop.test.cjs` | session lifecycle and views; button placement and listeners; Mods menu behaviour and pure logic; Java list-copy handling |
 | `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs`, `migration.test.cjs` | policy rules, class filter, EMI config, migration check |
-| `tools/server_smoke/smoke.cjs` | CLI: build a throwaway server dir, boot it hidden, wait for `Done (`, send `stop` (kill the tree on timeout), print the verdict |
-| `tools/server_smoke/setup.cjs`, `procs.cjs` | cached Forge 47.4.10 server install and `packwiz-installer -s server` install; hidden child processes and tree kill |
-| `tools/server_smoke/log_report.cjs`, `known_noise.json` | pure log grouping: errors and exceptions by signature, known boot noise vs new |
+| `tools/server_smoke/smoke.cjs` | CLI: argument parsing, orchestration (setup, `--drop`, boot, or `--analyze` of a finished run) and printing the verdict |
+| `tools/server_smoke/env.cjs` | the machine environment: java, packwiz bootstrap and installer jars, artifacts root, Forge version and URL; each overridable by a `SMOKE_*` env var |
+| `tools/server_smoke/setup.cjs`, `procs.cjs` | cached Forge server install, `packwiz-installer -s server` install, `dropMods`; hidden child processes (`start`, `run`) and tree kill |
+| `tools/server_smoke/boot.cjs` | boot supervisor: spawn hidden, tee the console, wait for `Done (` or a crash report, send `stop`, kill the tree on timeout |
+| `tools/server_smoke/verdict.cjs` | pure PASS/FAIL decision and crash-report parsing (mod name and failure message) |
+| `tools/server_smoke/log_report.cjs`, `known_noise.json` | pure log grouping: errors and exceptions by signature, known boot noise vs new; the `DONE_RE` regex |
 | `tools/emi_coverage/scan_jars.cjs`, `zip_reader.cjs` | read-only scan of mod jars for viewer plugin coverage; `zip_reader` is its dependency-free jar reader |
 
 `docs/emi.md` is the architecture doc for the EMI subsystem (there is no separate `ARCHITECTURE.md`).
