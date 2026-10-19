@@ -1,13 +1,13 @@
 name = "Ender IO"
-filename = "EnderIO-1.20.1-6.0.23-alpha.jar"
+filename = "EnderIO-1.20.1-6.2.18-beta-all.jar"
 side = "both"
 
 [download]
-hash-format = "sha1"
-hash = "6339a0f9ff791ccdc2d2237cb0f5130adafb5b6c"
-mode = "metadata:curseforge"
+url = "https://cdn.modrinth.com/data/49ZofO4f/versions/nJnmg29v/EnderIO-1.20.1-6.2.18-beta-all.jar"
+hash-format = "sha512"
+hash = "343b5b06a5dd2d8c0d08743229a153d75d19f6587f6a6b4d3a26873cf754d24c2f9e8a113e168f4b1258a10f132d9f820feb6a030bd111ab5377916a64dcb9dc"
 
 [update]
-[update.curseforge]
-file-id = 4920828
-project-id = 64578
+[update.modrinth]
+mod-id = "49ZofO4f"
+version = "nJnmg29v"

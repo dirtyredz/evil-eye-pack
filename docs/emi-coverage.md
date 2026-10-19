@@ -72,7 +72,7 @@ parts, and others.
 | Create Ore Excavation 1.6.6 (2026-10-18) | | `JEIHandler` | | Bridge | |
 | Curios 5.14.1 | | `CuriosJeiPlugin` | | Bridge. Check the UI. | |
 | Domum Ornamentum 1.0.154 | | `JEIPlugin` | | Bridge | |
-| Ender IO 6.0.23 | | `EnderIOJEI`, `MachinesJEI` | | Bridge. Check machines and NBT variants. | |
+| Ender IO 6.2.18 | | `EnderIOJEI`, `MachinesJEI` | | Bridge. Check machines and NBT variants. | |
 | Extreme Reactors 2.0.84 | | `ExtremeReactorsJeiPlugin` | | Bridge | |
 | FTB Library 2001.1.5 | | `JEIIntegration` | `REIForgePluginStub` | Bridge. The REI favorites integration is gone (see below). | |
 | Fusion 6.0.0.3 | | `JEIFusionPlugin` | | Bridge | |
