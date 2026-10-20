@@ -2,7 +2,7 @@
 id: dk-6dc6fb94
 type: task
 created: 2026-10-20
-status: wip
+status: done
 since: 2026-10-20
 area: server-smoke
 priority: P2
