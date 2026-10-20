@@ -73,6 +73,34 @@ test('a placeholder download hash is detected', () => {
   assert.ok(problems(root).some((x) => x.includes('not a concrete sha1')));
 });
 
+test('isMetafile matches only top-level .pw.toml files under mods, shaderpacks, resourcepacks', () => {
+  assert.equal(P.isMetafile('mods/a.pw.toml'), true);
+  assert.equal(P.isMetafile('shaderpacks/a.pw.toml'), true);
+  assert.equal(P.isMetafile('resourcepacks/a.pw.toml'), true);
+  assert.equal(P.isMetafile('mods/sub/a.pw.toml'), false);
+  assert.equal(P.isMetafile('config/a.pw.toml'), false);
+  assert.equal(P.isMetafile('mods/a.toml'), false);
+});
+
+
+test('a wrong index metafile flag is detected in both directions', () => {
+  const { root } = makePack();
+  const indexPath = path.join(root, 'index.toml');
+  const packPath = path.join(root, 'pack.toml');
+  const flip = (file) => {
+    const index = P.parseIndex(fs.readFileSync(indexPath, 'utf8'));
+    const entry = index.files.find((f) => f.file === file);
+    entry.metafile = !entry.metafile;
+    fs.writeFileSync(indexPath, P.formatIndex(index));
+    fs.writeFileSync(packPath, P.setPackIndexHash(fs.readFileSync(packPath, 'utf8'), P.sha256(fs.readFileSync(indexPath))));
+  };
+  flip('mods/thing.pw.toml');
+  assert.ok(problems(root).some((x) => x.startsWith('mods/thing.pw.toml: index metafile flag is false')));
+  flip('mods/thing.pw.toml');
+  flip('config/a.json');
+  assert.ok(problems(root).some((x) => x.startsWith('config/a.json: index metafile flag is true')));
+});
+
 test('a stale pack.toml index hash is detected', () => {
   const { root, edit } = makePack();
   edit('index.toml', (t) => t + '\n');

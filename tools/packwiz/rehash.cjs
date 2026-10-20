@@ -15,10 +15,6 @@ const fs = require('node:fs');
 const path = require('node:path');
 const P = require('./pack_index.cjs');
 
-function isMetafile(rel) {
-  return /^(mods|shaderpacks|resourcepacks)\/[^/]+\.pw\.toml$/.test(rel);
-}
-
 function rehash(root, opts) {
   const options = opts || {};
   const problems = [];
@@ -27,7 +23,7 @@ function rehash(root, opts) {
   for (const rel of files) {
     const bytes = fs.readFileSync(path.join(root, rel));
     problems.push(...P.textProblems(rel, bytes));
-    entries.push({ file: rel, hash: P.sha256(bytes), metafile: isMetafile(rel), hashFormat: null });
+    entries.push({ file: rel, hash: P.sha256(bytes), metafile: P.isMetafile(rel), hashFormat: null });
   }
   if (problems.length) return { problems, written: false };
 
@@ -67,4 +63,4 @@ function main(argv) {
 
 if (require.main === module) process.exitCode = main(process.argv.slice(2));
 
-module.exports = { rehash, isMetafile };
+module.exports = { rehash };

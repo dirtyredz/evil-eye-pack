@@ -2,8 +2,8 @@
 id: dk-03fadc35
 type: task
 created: 2026-10-12
-status: todo
-since: 2026-10-12
+status: done
+since: 2026-10-20
 area: packwiz
 priority: P2
 rank: zn

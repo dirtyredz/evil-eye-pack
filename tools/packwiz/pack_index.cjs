@@ -174,6 +174,11 @@ function readMetafileDownload(text) {
   return out;
 }
 
+/** Whether a repo-relative path is a packwiz metafile (flagged `metafile = true` in the index). */
+function isMetafile(rel) {
+  return /^(mods|shaderpacks|resourcepacks)\/[^/]+\.pw\.toml$/.test(rel);
+}
+
 /** Files git would publish: tracked plus untracked-but-not-gitignored. */
 function listRepoFiles(root) {
   const out = execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard', '-z'], { cwd: root });
@@ -193,5 +198,5 @@ function comparePaths(a, b) {
 
 module.exports = {
   BUILTIN_IGNORES, sha256, isTextPath, textProblems, globToRegExp, parseIgnore, loadIgnore, isIgnored,
-  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, listRepoFiles, publishableFiles, comparePaths,
+  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, isMetafile, listRepoFiles, publishableFiles, comparePaths,
 };

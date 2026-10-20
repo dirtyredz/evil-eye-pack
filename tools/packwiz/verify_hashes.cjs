@@ -10,6 +10,7 @@
 //   - no indexed path is excluded by .packwizignore (tooling, fixtures, docs);
 //   - every publishable file that is not ignored is indexed;
 //   - indexed text files carry no BOM and no CR;
+//   - each entry's `metafile` flag agrees with the path (P.isMetafile);
 //   - every metafile has a concrete [download] hash, hash-format and source;
 //   - with --jars: each jar named by a metafile's `filename` hashes to its download hash.
 
@@ -49,6 +50,9 @@ function verify(root, opts) {
     const actual = P.sha256(bytes);
     if (actual !== entry.hash) problems.push(entry.file + ': hash ' + entry.hash + ' != actual ' + actual);
     problems.push(...P.textProblems(entry.file, bytes));
+    if (entry.metafile !== P.isMetafile(entry.file)) {
+      problems.push(entry.file + ': index metafile flag is ' + entry.metafile + ' but the path ' + (P.isMetafile(entry.file) ? 'is' : 'is not') + ' a metafile');
+    }
     if (entry.metafile) metafiles.push({ file: entry.file, text: bytes.toString('utf8') });
   }
 
