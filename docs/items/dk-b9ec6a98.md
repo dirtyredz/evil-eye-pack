@@ -5,8 +5,8 @@ created: 2026-10-12
 status: todo
 since: 2026-10-12
 area: emi-curation
-priority: P2
-rank: t
+priority: P3
+rank: zw
 parent:
 fixes: []
 blocked_by: []

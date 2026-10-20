@@ -5,8 +5,8 @@ created: 2026-10-16
 status: todo
 since: 2026-10-16
 area:
-priority: P2
-rank: zw
+priority: P3
+rank: zz
 parent:
 fixes: []
 blocked_by: []
