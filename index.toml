@@ -2097,6 +2097,10 @@ file = "config/immediatelyfast.json"
 hash = "f2b7f219198f0a911d04b09f545f2c1256e8d114951443924878dc10963e16aa"
 
 [[files]]
+file = "config/inventoryprofilesnext/integrationHints/dankstorage.json"
+hash = "9a6aea1be12c71bce2df36d26fd7f29c0da0ac80bef34fbb7b668d337b74615d"
+
+[[files]]
 file = "config/inventoryprofilesnext/inventoryprofiles.json"
 hash = "c27c1715562be5e5c38ebaa2eb716e857c4d7c8d2325eeac061d4e3737c2b79e"
 
