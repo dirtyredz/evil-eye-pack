@@ -8,7 +8,7 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 
 - `pack.toml` — pack definition; its `[index]` hash is sha256 of `index.toml`
 - `index.toml` — every installed file with its sha256 (rebuild with `tools/packwiz/rehash.cjs`)
-- `mods/` — packwiz metafiles (`*.pw.toml`), one per mod jar (CurseForge or Modrinth)
+- `mods/` — packwiz metafiles (`*.pw.toml`), one per mod jar (CurseForge, Modrinth, or a direct URL such as the owner's GitHub-released Dank Recipe Transfer)
 - `shaderpacks/` — shaderpack metafiles and saved shader options
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
 - `config/` — mod configs installed as plain files

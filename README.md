@@ -15,7 +15,7 @@ mention REI describe how those lists were first built and were migrated to EMI u
 
 ## What's in it
 
-- 157 mods (metafiles pointing at CurseForge or Modrinth, matched by hash to the exact versions used
+- 157 mods (metafiles pointing at CurseForge, Modrinth or a GitHub release, matched by hash to the exact versions used
   in the source instance — no upgrades)
 - `config/` — the instance's mod configs, indexed as plain files by packwiz
 - `shaderpacks/` — Complementary Unbound, Complementary Reimagined, and MakeUp UltraFast, plus their

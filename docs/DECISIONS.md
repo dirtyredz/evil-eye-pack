@@ -2,6 +2,14 @@
 
 Newest first.
 
+## 2026-10-20 — Dank Recipe Transfer: owner's standalone mod, hosted as a GitHub release
+
+**Decision.**
+- Moving recipe ingredients out of Dank Storage into a crafting grid (JEI/EMI "+" button) is a custom mod, **Dank Recipe Transfer 0.1.0**, not a fork or patch of Sophisticated JEI Index. It is a standalone mod so it follows Dank Storage and the viewers independently and can be rebuilt without touching a third-party jar.
+- Custom mods live in the `minecraft-mods` workspace (`C:/Users/dirty/projects/minecraft-mods/mods/DankRecipeTransfer`, repo `dirtyredz/dank-recipe-transfer`) and are published as GitHub releases. The pack installs the release jar through `mods/dank-recipe-transfer.pw.toml`, a direct-URL metafile with a sha256 hash (no `[update]` section), `side = "both"`.
+
+**Why.** The jar must be reachable by the packwiz installer from a public URL; a release asset with a pinned hash is the same trust model as the Modrinth direct-URL metafiles already in the pack.
+
 ## 2026-10-18 — Server compatibility smoke is the agent's check; Oculus is client-only
 
 **Decision.**
