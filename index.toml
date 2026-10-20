@@ -1753,6 +1753,10 @@ file = "config/extremereactors/common.toml"
 hash = "c1efe05ffd6b00b157b7655abf0ae1a3e4c178e2080c22431580e8aefda10155"
 
 [[files]]
+file = "config/fallingtree.json"
+hash = "922a0a06c316eb1f0aba285f5bc59f4421b51b6f861661f3cdab38bbd44e4927"
+
+[[files]]
 file = "config/fastbench.cfg"
 hash = "8133f67a8d39f7a9cc0737636ffde75326b602201354de5dd3bd716491713219"
 
@@ -2798,6 +2802,11 @@ metafile = true
 [[files]]
 file = "mods/extreme-reactors.pw.toml"
 hash = "b7825fe05dea64f240e41f0d0cbb48c043605ac0ecabcf1847eb4732fd1b9df0"
+metafile = true
+
+[[files]]
+file = "mods/fallingtree.pw.toml"
+hash = "c3855a5011cc263726532999f35c8691db9fa60b9d470758dd826d25c29ed4cb"
 metafile = true
 
 [[files]]
