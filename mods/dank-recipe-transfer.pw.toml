@@ -1,0 +1,8 @@
+name = "Dank Recipe Transfer"
+filename = "dank_recipe_transfer-1.20.1-0.1.0.jar"
+side = "both"
+
+[download]
+url = "https://github.com/dirtyredz/dank-recipe-transfer/releases/download/v0.1.0/dank_recipe_transfer-1.20.1-0.1.0.jar"
+hash-format = "sha256"
+hash = "e7f2c33dcd4a009146fa91a16d5948045b34db005c63aacf6417730b9f93c073"
