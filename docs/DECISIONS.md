@@ -116,6 +116,6 @@ apply it as in-memory views:
 ## 2026-10-11 — Exact source set for curation; Node-only tooling
 
 **Decision.**
-- The five item lists are split from the frozen REI config (`tools/emi_curation/fixtures/rei-config.json5`). `migrate_rei.cjs --check` enforces exact set equality, 1,759 IDs. The lists are not regenerated from naming patterns.
+- The five item lists were split once from the frozen REI 12.1.785 config (1,759 IDs; not regenerated from naming patterns). `tools/emi_curation/migrate_rei.cjs`, its `fixtures/rei-config.json5` and `migration.test.cjs` were retired 2026-10-20 (dk-eaeaf6eb, dk-232fd37d): the import was done, `--check` pinned live hand-curated counts so any normal edit broke it, and it re-declared validation that `policy.compile` owns. Ongoing list integrity (schema, id format, duplicates) is `policy.compile`, exercised against the real config by `policy.test.cjs`. The fixture and script are recoverable from git at commit a61035d.
 - The README's old "377 colour variants" figure was 361 colour variants plus 16 MineColonies eggs.
 - Tooling is Node-only: migration check, tests, hash verifier, index rebuild and localhost server. The planned `py -3.11` scripts were ported because this machine has no `py` launcher or system Python, and Node is needed for the KubeJS tests anyway.

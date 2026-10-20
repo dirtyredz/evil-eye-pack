@@ -67,7 +67,6 @@ recipe-book suppression and Stylish Effects' right-side placement.
 ## 2. Checks to run from the checkout
 
 ```
-node tools/emi_curation/migrate_rei.cjs --check
 node --test tools/emi_curation/tests/*.cjs
 node --test tools/packwiz/tests/*.cjs
 node tools/packwiz/verify_hashes.cjs

@@ -16,8 +16,7 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `defaultconfigs/` — Forge default (per-world) configs
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
 - `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
-- `tools/emi_curation/` — unshipped: REI-to-EMI migration check, Node tests for the curation scripts
-- `tools/emi_curation/fixtures/` — frozen REI config the migration check compares against
+- `tools/emi_curation/` — unshipped: Node tests for the curation scripts
 - `tools/emi_curation/tests/`, `tools/packwiz/tests/`, `tools/server_smoke/tests/` — Node test suites (`node --test tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
 - `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its environment, setup, boot, process, verdict and log-analysis modules, and known boot noise
@@ -47,10 +46,9 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 | `emi_curation/ui/mods_list.js` (47) | pure Mods menu logic, no Java: `parseList`, `visibleEntries`, `nextSearch`, `layoutMenu`, `inside` |
 | `emi_curation/ui/mods_text.js` (46) | the text layer: `draw(g, font, text, x, y, color)` via `drawWordWrap` and `width(text)` estimated from font metrics; never `drawString`/`Font.width` (see GOTCHAS) |
 | `emi_curation/ui/mods_menu.js` (45) | the Mods dropdown: state, handlers and wiring. Reads `mods.json` (through `mods_list`), places the button beside CLEAN/ALL (`ns.ui.button`, `placement`), draws the rows in `Render.Post`, sets EMI's search text. Registered through `forge_hooks`. |
-| `tools/emi_curation/migrate_rei.cjs` | one-shot REI → EMI data migration and its `--check` against the frozen fixture in `tools/emi_curation/fixtures/` |
-| `tools/emi_curation/tests/harness.cjs`, `fake_emi.cjs` | Node harness that loads the production scripts (all subfolders) into a `vm` context in KubeJS priority order (plus the shared `fixture()`/`boot()`), and a fake EMI/Java world to drive them |
+| `tools/emi_curation/tests/harness.cjs`, `fake_emi.cjs`, `fixture.cjs` | Node harness that loads the production scripts (all subfolders) into a `vm` context in KubeJS priority order (plus `boot()`), a fake EMI/Java world to drive them, and the shared test world data (`fixture()`: named stacks and recipes) |
 | `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `mods_menu.test.cjs`, `interop.test.cjs` | session lifecycle and views; button placement and listeners; Mods menu behaviour and pure logic; Java list-copy handling |
-| `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs`, `migration.test.cjs` | policy rules, class filter, EMI config, migration check |
+| `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs` | policy rules (including the real curation lists), class filter, EMI config |
 | `tools/server_smoke/smoke.cjs` | CLI: argument parsing, orchestration (setup, `--drop`, boot, or `--analyze` of a finished run) and printing the verdict |
 | `tools/server_smoke/env.cjs` | the machine environment: java, packwiz bootstrap and installer jars, artifacts root, Forge version and URL; each overridable by a `SMOKE_*` env var |
 | `tools/server_smoke/setup.cjs`, `procs.cjs` | cached Forge server install, `packwiz-installer -s server` install, `dropMods`; hidden child processes (`start`, `run`) and tree kill |
@@ -79,9 +77,7 @@ Baseline review 2026-10-12. Remaining debt is filed in Docket (`docs/items/`, `d
 - Recipe-wrapper lifecycle still lives in `session.js`; it belongs with `recipe_view` (dk-b787a93f).
 - `interop.filterToList` is missing; list filtering is repeated in the views (dk-b9ec6a98).
 - Classification is cached in more than one place; one cache is wanted (dk-8a0232a6).
-- `migrate_rei.cjs` is one-shot tooling: retire or split it (dk-eaeaf6eb).
 - Repeated table reads need a `readTable` helper (dk-0eb48f8f).
-- `tools/emi_curation/fixtures/` holds a single file: flatten it (dk-232fd37d).
 - The EMI views rely on public-but-internal EMI fields. A custom mod would avoid that but would need building and hosting. Rejected for now; see `docs/DECISIONS.md`.
 
 Last full review: 2026-10-12

@@ -2,8 +2,8 @@
 id: dk-eaeaf6eb
 type: task
 created: 2026-10-12
-status: todo
-since: 2026-10-12
+status: done
+since: 2026-10-20
 area: tools
 priority: P2
 rank: y
