@@ -127,23 +127,47 @@ function formatIndex(index) {
   return out;
 }
 
-// Lines of pack.toml's [index] table: [start, end) line numbers.
-function indexTableRange(lines) {
-  const start = lines.indexOf('[index]');
-  if (start === -1) throw new Error('pack.toml has no [index] table');
+// Lines of the table under `header` (e.g. '[index]'): [start, end) line numbers, or null.
+function tableRange(lines, header) {
+  const start = lines.indexOf(header);
+  if (start === -1) return null;
   let end = start + 1;
   while (end < lines.length && !lines[end].startsWith('[')) end++;
   return [start + 1, end];
 }
 
-function readPackIndexRef(packText) {
-  const lines = packText.split('\n');
-  const [start, end] = indexTableRange(lines);
-  const ref = { file: null, hashFormat: null, hash: null };
-  for (let i = start; i < end; i++) {
-    const m = /^(file|hash-format|hash) = "([^"]*)"$/.exec(lines[i]);
-    if (m) ref[m[1] === 'hash-format' ? 'hashFormat' : m[1]] = m[2];
+function indexTableRange(lines) {
+  const range = tableRange(lines, '[index]');
+  if (range === null) throw new Error('pack.toml has no [index] table');
+  return range;
+}
+
+/**
+ * The one reader for `key = "value"` lines of a TOML table. Returns an object with an entry per
+ * requested key (`hash-format` becomes `hashFormat`; absent keys are null), or null when the
+ * table is missing. Only plain basic strings without escapes are read, as in packwiz's output.
+ */
+function readTable(text, header, keys) {
+  const lines = text.split('\n');
+  const range = tableRange(lines, header);
+  if (range === null) return null;
+  const out = {};
+  for (const k of keys) out[camelKey(k)] = null;
+  const re = new RegExp('^(' + keys.join('|') + ') = "([^"]*)"$');
+  for (let i = range[0]; i < range[1]; i++) {
+    const m = re.exec(lines[i]);
+    if (m) out[camelKey(m[1])] = m[2];
   }
+  return out;
+}
+
+function camelKey(key) {
+  return key === 'hash-format' ? 'hashFormat' : key;
+}
+
+function readPackIndexRef(packText) {
+  const ref = readTable(packText, '[index]', ['file', 'hash-format', 'hash']);
+  if (ref === null) throw new Error('pack.toml has no [index] table');
   return ref;
 }
 
@@ -159,19 +183,11 @@ function setPackIndexHash(packText, hash) {
   throw new Error('pack.toml [index] table has no hash');
 }
 
-/** Reads the [download] table of a packwiz metafile (.pw.toml). */
+/** Reads the [download] table of a packwiz metafile (.pw.toml); `filename` is a top-level key. */
 function readMetafileDownload(text) {
-  const lines = text.split('\n');
-  const start = lines.indexOf('[download]');
-  const out = { filename: null, url: null, hashFormat: null, hash: null, mode: null };
+  const table = readTable(text, '[download]', ['url', 'hash-format', 'hash', 'mode']);
   const fm = /^filename = "([^"]*)"$/m.exec(text);
-  if (fm) out.filename = fm[1];
-  if (start === -1) return out;
-  for (let i = start + 1; i < lines.length && !lines[i].startsWith('['); i++) {
-    const m = /^(url|hash-format|hash|mode) = "([^"]*)"$/.exec(lines[i]);
-    if (m) out[m[1] === 'hash-format' ? 'hashFormat' : m[1]] = m[2];
-  }
-  return out;
+  return { filename: fm ? fm[1] : null, url: null, hashFormat: null, hash: null, mode: null, ...table };
 }
 
 /** Whether a repo-relative path is a packwiz metafile (flagged `metafile = true` in the index). */
@@ -198,5 +214,5 @@ function comparePaths(a, b) {
 
 module.exports = {
   BUILTIN_IGNORES, sha256, isTextPath, textProblems, globToRegExp, parseIgnore, loadIgnore, isIgnored,
-  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, isMetafile, listRepoFiles, publishableFiles, comparePaths,
+  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, readTable, isMetafile, listRepoFiles, publishableFiles, comparePaths,
 };

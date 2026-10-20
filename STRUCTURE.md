@@ -28,7 +28,7 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 
 | Component | Responsibility |
 |---|---|
-| `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format, `.packwizignore`, byte hashing, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
+| `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (`readTable` is the one `key = "value"` table reader), `isMetafile`, `.packwizignore`, byte hashing, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
 | `tools/packwiz/rehash.cjs` | rebuild `index.toml` membership and hashes, then `pack.toml`'s index hash |
 | `tools/packwiz/verify_hashes.cjs` | check the hash chain, index membership and optionally jar hashes |
 | `tools/packwiz/serve.cjs` | serve the containing checkout on `127.0.0.1` over HTTP (not used by MultiMC: local instances install from the file path) |

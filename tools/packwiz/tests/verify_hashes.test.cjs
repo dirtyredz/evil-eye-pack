@@ -101,6 +101,16 @@ test('a wrong index metafile flag is detected in both directions', () => {
   assert.ok(problems(root).some((x) => x.startsWith('config/a.json: index metafile flag is true')));
 });
 
+test('readTable reads quoted keys of one table, maps hash-format, and returns null for a missing table', () => {
+  const text = 'filename = "top.jar"\n\n[download]\nurl = "https://x/y"\nhash-format = "sha1"\nhash = "abc"\nignored = "z"\n\n[update]\nhash = "other"\n';
+  assert.deepEqual(P.readTable(text, '[download]', ['url', 'hash-format', 'hash', 'mode']),
+    { url: 'https://x/y', hashFormat: 'sha1', hash: 'abc', mode: null });
+  assert.equal(P.readTable(text, '[nope]', ['hash']), null);
+  assert.deepEqual(P.readMetafileDownload(text), { filename: 'top.jar', url: 'https://x/y', hashFormat: 'sha1', hash: 'abc', mode: null });
+  assert.deepEqual(P.readMetafileDownload('filename = "a.jar"\n'), { filename: 'a.jar', url: null, hashFormat: null, hash: null, mode: null });
+  assert.throws(() => P.readPackIndexRef('name = "x"\n'), /no \[index\] table/);
+});
+
 test('a stale pack.toml index hash is detected', () => {
   const { root, edit } = makePack();
   edit('index.toml', (t) => t + '\n');
