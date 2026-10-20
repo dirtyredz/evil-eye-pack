@@ -22,12 +22,9 @@ test('readRunSeed returns the run level-seed, or null without one', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'smoke-seed-'));
   try {
     assert.strictEqual(readRunSeed(root), null);
-    fs.writeFileSync(path.join(root, 'server.properties'), 'motd=x
-level-seed=777
-');
+    fs.writeFileSync(path.join(root, 'server.properties'), 'motd=x\nlevel-seed=777\n');
     assert.strictEqual(readRunSeed(root), '777');
-    fs.writeFileSync(path.join(root, 'server.properties'), 'motd=x
-');
+    fs.writeFileSync(path.join(root, 'server.properties'), 'motd=x\n');
     assert.strictEqual(readRunSeed(root), null);
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
