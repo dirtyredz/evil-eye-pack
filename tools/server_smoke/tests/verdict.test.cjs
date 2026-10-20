@@ -57,3 +57,26 @@ test('a timeout with new errors, a crash, or before spawn prep is not a stall', 
   assert.strictEqual(early.stall, false);
   assert.match(early.doneText, /\(seed 42\)$/);
 });
+
+const timedOutBoot = (cpu, wall) => ({ crashed: false, timedOut: true, earlyExit: null, cpuSeconds: cpu, totalWallSeconds: wall, stopReason: 'silent' });
+
+test('a silent timeout with almost no JVM CPU is HOST STARVED, not STALL or a pack FAIL', () => {
+  const rep = { ...noDone, spawnPercent: 26 };
+  const v = decide({ rep, crashCount: 0, boot: timedOutBoot(12, 900), timeout: 1800, seed: '1' });
+  assert.strictEqual(v.starved, true);
+  assert.strictEqual(v.stall, false);
+  assert.strictEqual(v.pass, false);
+  assert.match(v.doneText, /HOST STARVED: JVM used 12\.0 CPU s in 900 s wall/);
+});
+
+test('a timeout with healthy JVM CPU in spawn prep stays a worldgen STALL', () => {
+  const v = decide({ rep: { ...noDone, spawnPercent: 26 }, crashCount: 0, boot: timedOutBoot(2000, 900), timeout: 1800, seed: '1' });
+  assert.strictEqual(v.starved, false);
+  assert.strictEqual(v.stall, true);
+});
+
+test('starvation never masks a crash or new errors', () => {
+  const bad = decide({ rep: { ...noDone, fresh: [{ signature: 'x', count: 1 }] }, crashCount: 0, boot: timedOutBoot(1, 900), timeout: 1800 });
+  assert.strictEqual(bad.starved, false);
+  assert.match(bad.doneText, /log silent and JVM CPU flat/);
+});

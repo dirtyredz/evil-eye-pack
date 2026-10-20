@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 'use strict';
 // Headless server compatibility smoke: boots the pack on a Forge 1.20.1 dedicated server.
-// Usage: node tools/server_smoke/smoke.cjs [--pack pack.toml] [--timeout 600] [--port 25599]
+// Usage: node tools/server_smoke/smoke.cjs [--pack pack.toml] [--timeout 1800]  hard cap, seconds
+//        [--silent 180]  stop when the log is silent AND JVM CPU is flat this many seconds
+//        [--priority AboveNormal]  JVM priority class (Idle|BelowNormal|Normal|AboveNormal|High|none)
+//        [--sample 10] [--starved 0.25]  CPU sample interval s; HOST STARVED below this many cores per wall second
+//        [--port 25599]
 //        [--seed 20261020]  level-seed of the fresh world (pinned default; a random seed made boots non-repeatable)
 //        [--heap 4G] [--out <dir>] [--cache <dir>]
 //        [--analyze <run dir>]  re-report an existing run without booting
@@ -17,13 +21,13 @@ const { crashReports, crashCauses, decide } = require('./verdict.cjs');
 
 function parseArgs(argv) {
   const o = {
-    pack: path.resolve(__dirname, '../../pack.toml'), timeout: 600, port: 25599, heap: '4G', seed: '20261020',
+    pack: path.resolve(__dirname, '../../pack.toml'), timeout: 1800, silent: 180, sample: 10, priority: 'AboveNormal', starved: 0.25, port: 25599, heap: '4G', seed: '20261020',
     cache: `${ARTIFACTS}/server-smoke/cache`, drop: '', analyze: '', out: `${ARTIFACTS}/server-smoke/runs`
   };
   for (let i = 0; i < argv.length; i++) {
     const k = argv[i].replace(/^--/, '');
     if (!(k in o)) throw new Error(`unknown option ${argv[i]}`);
-    o[k] = k === 'timeout' || k === 'port' ? Number(argv[++i]) : argv[++i];
+    o[k] = ['timeout', 'silent', 'sample', 'starved', 'port'].includes(k) ? Number(argv[++i]) : argv[++i];
   }
   o.pack = path.resolve(o.pack);
   return o;
@@ -70,9 +74,10 @@ function report(o, runDir, result) {
     const m = fs.existsSync(props) && /^level-seed=(.*)$/m.exec(fs.readFileSync(props, 'utf8'));
     if (m) o.seed = m[1];
   }
-  const { pass, stall, doneText } = decide({ rep, crashCount: crashes.length, boot: result, timeout: o.timeout, seed: o.seed });
+  const { pass, stall, starved, doneText } = decide({ rep, crashCount: crashes.length, boot: result, timeout: o.timeout, seed: o.seed, starvedCores: o.starved });
 
-  console.log(`\n${pass ? 'PASS' : stall ? 'STALL' : 'FAIL'}  pack=${o.pack}  seed=${o.seed}`);
+  console.log(`\n${pass ? 'PASS' : starved ? 'HOST STARVED' : stall ? 'STALL' : 'FAIL'}  pack=${o.pack}  seed=${o.seed}`);
+  if (result) console.log(`JVM CPU: ${result.cpuSeconds === null ? 'unknown' : `${result.cpuSeconds.toFixed(1)} s`}   wall: ${Math.round(result.totalWallSeconds)} s   priority: ${o.priority}`);
   console.log(`Done: ${doneText}`);
   console.log(`crash reports: ${crashes.length}   mod loading failed: ${rep.loadingFailed}`);
   for (const c of crashes) {
@@ -82,7 +87,7 @@ function report(o, runDir, result) {
   printGroups('known boot noise', rep.known);
   printGroups('NEW errors', rep.fresh);
   console.log(`logs: ${latest}\n      ${path.join(runDir, 'console.log')}\n      ${path.join(runDir, 'packwiz-install.log')}`);
-  process.exitCode = pass ? 0 : stall ? 3 : 1;
+  process.exitCode = pass ? 0 : stall ? 3 : starved ? 4 : 1;
 }
 
 main().catch((e) => { console.error(e); process.exitCode = 2; });
