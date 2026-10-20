@@ -51,10 +51,10 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 | `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs` | policy rules (including the real curation lists), class filter, EMI config |
 | `tools/server_smoke/smoke.cjs` | CLI: argument parsing, orchestration (setup, `--drop`, boot, or `--analyze` of a finished run) and printing the verdict |
 | `tools/server_smoke/env.cjs` | the machine environment: java, packwiz bootstrap and installer jars, artifacts root, Forge version and URL; each overridable by a `SMOKE_*` env var |
-| `tools/server_smoke/setup.cjs`, `procs.cjs` | cached Forge server install, `packwiz-installer -s server` install, `dropMods`; hidden child processes (`start`, `run`) and tree kill |
-| `tools/server_smoke/boot.cjs` | boot supervisor: spawn hidden, tee the console, wait for `Done (` or a crash report, send `stop`, kill the tree on timeout |
-| `tools/server_smoke/verdict.cjs` | pure PASS/FAIL decision and crash-report parsing (mod name and failure message) |
-| `tools/server_smoke/log_report.cjs`, `known_noise.json` | pure log grouping: errors and exceptions by signature, known boot noise vs new; the `DONE_RE` regex |
+| `tools/server_smoke/setup.cjs`, `procs.cjs` | cached Forge server install, `packwiz-installer -s server` install, `level-seed` (`--seed`), `dropMods`; hidden child processes (`start`, `run`) and tree kill |
+| `tools/server_smoke/boot.cjs` | boot supervisor: spawn hidden, tee the console, wait for `Done (` or a crash report, send `stop`, jcmd thread dump then kill the tree on timeout |
+| `tools/server_smoke/verdict.cjs` | pure PASS/STALL/FAIL decision (worldgen-stall classification) and crash-report parsing (mod name and failure message) |
+| `tools/server_smoke/log_report.cjs`, `known_noise.json` | pure log grouping: errors and exceptions by signature, known boot noise vs new; the `DONE_RE` and `SPAWN_RE` regexes |
 | `tools/emi_coverage/scan_jars.cjs`, `zip_reader.cjs` | read-only scan of mod jars for viewer plugin coverage; `zip_reader` is its dependency-free jar reader |
 
 `docs/emi.md` is the architecture doc for the EMI subsystem (there is no separate `ARCHITECTURE.md`).

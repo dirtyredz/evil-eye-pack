@@ -3,10 +3,17 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const procs = require('./procs.cjs');
-const { JAVA, FORGE } = require('./env.cjs');
+const { JAVA, JCMD, FORGE } = require('./env.cjs');
 const { DONE_RE } = require('./log_report.cjs');
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// Before the timeout kill, save a jcmd thread dump so a stall can be pinned to the stuck thread.
+async function threadDump(pid, runDir, log) {
+  const r = await procs.run(JCMD, [String(pid), 'Thread.print'], { cwd: runDir });
+  fs.writeFileSync(path.join(runDir, 'stall-threads.txt'), r.out);
+  log(`stall: thread dump saved to ${path.join(runDir, 'stall-threads.txt')} (jcmd exit ${r.code})`);
+}
 
 async function boot(runDir, o, log) {
   const argsFile = `libraries/net/minecraftforge/forge/${FORGE}/win_args.txt`;
@@ -39,6 +46,7 @@ async function boot(runDir, o, log) {
   }
   if (exited === null) {
     log(timedOut ? 'timeout; killing process tree' : crashedAt ? 'crash report written; killing process tree' : 'stop did not finish; killing process tree');
+    if (timedOut) await threadDump(p.pid, runDir, log);
     procs.killTree(p.pid);
     await sleep(1500);
   }

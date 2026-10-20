@@ -28,3 +28,9 @@ test('groups repeated errors by normalized signature and splits known noise', ()
   assert.strictEqual(r.loadingFailed, true);
   assert.strictEqual(r.doneSeconds, null);
 });
+
+test('reports the last Preparing spawn area percentage, null when never seen', () => {
+  const log = '[10:00:00] [Server thread/INFO] [mc/]: Preparing spawn area: 0%\n[10:00:05] [Server thread/INFO] [mc/]: Preparing spawn area: 26%\n';
+  assert.strictEqual(analyze(log, []).spawnPercent, 26);
+  assert.strictEqual(analyze('nothing\n', []).spawnPercent, null);
+});

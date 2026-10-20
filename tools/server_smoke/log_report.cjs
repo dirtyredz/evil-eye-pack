@@ -4,6 +4,7 @@
 // separates known boot noise (known_noise.json) from new findings.
 
 const DONE_RE = /Done \(([\d.]+)s\)!/;
+const SPAWN_RE = /Preparing spawn area: (\d+)%/;
 const LEVEL_RE = /^\[[^\]]*\] \[[^\]]*\/(ERROR|FATAL)\]/;
 const EXCEPTION_RE = /^(?:Caused by: )?[\w.$]+(?:Exception|Error)\b/;
 const LOADING_FAILED_RE = /Mod loading has failed|Failed to load mod|LoadingFailedException|ModLoadingException|Missing or unsupported mandatory dependencies|Mod File .* needs to be/i;
@@ -23,8 +24,11 @@ function analyze(logText, knownNoise) {
   const lines = logText.split(/\r?\n/);
   const done = lines.map((l) => DONE_RE.exec(l)).find(Boolean);
   const groups = new Map();
+  let spawnPercent = null; // last "Preparing spawn area" progress seen
   let loadingFailed = false;
   for (const line of lines) {
+    const sp = SPAWN_RE.exec(line);
+    if (sp) spawnPercent = Number(sp[1]);
     if (LOADING_FAILED_RE.test(line)) loadingFailed = true;
     const isErr = LEVEL_RE.test(line);
     const isExc = !isErr && EXCEPTION_RE.test(line);
@@ -44,7 +48,7 @@ function analyze(logText, knownNoise) {
   const byCount = (a, b) => b.count - a.count;
   known.sort(byCount);
   fresh.sort(byCount);
-  return { doneSeconds: done ? Number(done[1]) : null, loadingFailed, known, fresh };
+  return { doneSeconds: done ? Number(done[1]) : null, spawnPercent, loadingFailed, known, fresh };
 }
 
-module.exports = { analyze, normalize, DONE_RE };
+module.exports = { analyze, normalize, DONE_RE, SPAWN_RE };

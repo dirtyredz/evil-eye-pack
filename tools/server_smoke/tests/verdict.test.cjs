@@ -39,3 +39,21 @@ test('early server exit reports its code', () => {
   const v = decide({ rep: noDone, crashCount: 0, boot: { crashed: false, timedOut: false, earlyExit: 3 }, timeout: 600 });
   assert.strictEqual(v.doneText, 'not reached (server exited 3)');
 });
+
+test('a timeout inside Preparing spawn area with no errors is a worldgen stall, naming the seed', () => {
+  const rep = { ...noDone, spawnPercent: 26 };
+  const v = decide({ rep, crashCount: 0, boot: { crashed: false, timedOut: true, earlyExit: null }, timeout: 600, seed: '42' });
+  assert.strictEqual(v.pass, false);
+  assert.strictEqual(v.stall, true);
+  assert.match(v.doneText, /WORLDGEN STALL at "Preparing spawn area" 26%, seed 42/);
+});
+
+test('a timeout with new errors, a crash, or before spawn prep is not a stall', () => {
+  const t = { crashed: false, timedOut: true, earlyExit: null };
+  const err = { ...noDone, spawnPercent: 26, fresh: [{ signature: 'x', count: 1 }] };
+  assert.strictEqual(decide({ rep: err, crashCount: 0, boot: t, timeout: 600, seed: '42' }).stall, false);
+  assert.strictEqual(decide({ rep: { ...noDone, spawnPercent: 26 }, crashCount: 1, boot: t, timeout: 600, seed: '42' }).stall, false);
+  const early = decide({ rep: { ...noDone, spawnPercent: null }, crashCount: 0, boot: t, timeout: 600, seed: '42' });
+  assert.strictEqual(early.stall, false);
+  assert.match(early.doneText, /\(seed 42\)$/);
+});

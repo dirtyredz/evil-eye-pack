@@ -27,7 +27,7 @@ async function ensureForgeBase(cache, java, log) {
   return base;
 }
 
-function prepareRunDir(base, runDir, port, heap) {
+function prepareRunDir(base, runDir, port, heap, seed) {
   fs.mkdirSync(runDir, { recursive: true });
   fs.cpSync(path.join(base, 'libraries'), path.join(runDir, 'libraries'), { recursive: true });
   for (const f of fs.readdirSync(base)) {
@@ -35,7 +35,7 @@ function prepareRunDir(base, runDir, port, heap) {
   }
   fs.writeFileSync(path.join(runDir, 'eula.txt'), 'eula=true\n'); // owner-approved for this local test server
   fs.writeFileSync(path.join(runDir, 'server.properties'), [
-    'online-mode=false', 'server-ip=127.0.0.1', `server-port=${port}`, 'level-name=smoke-world',
+    `level-seed=${seed}`, 'online-mode=false', 'server-ip=127.0.0.1', `server-port=${port}`, 'level-name=smoke-world',
     'enable-rcon=false', 'enable-query=false', 'max-tick-time=-1', 'motd=server-smoke', ''
   ].join('\n'));
   fs.writeFileSync(path.join(runDir, 'user_jvm_args.txt'), `-Xmx${heap}\n-Xms1G\n`);

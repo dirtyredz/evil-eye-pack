@@ -25,8 +25,8 @@ function parseCrashCauses(text) {
 const crashCauses = (file) => parseCrashCauses(fs.readFileSync(file, 'utf8'));
 
 // rep: log_report.analyze result; crashCount: crash reports on disk;
-// boot: result of boot(), or null when re-analysing a finished run.
-function decide({ rep, crashCount, boot, timeout }) {
+// boot: result of boot(), or null when re-analysing a finished run. seed: the run's level-seed.
+function decide({ rep, crashCount, boot, timeout, seed }) {
   const pass = rep.doneSeconds !== null && !crashCount && !rep.loadingFailed && !rep.fresh.length;
   let doneText = 'not reached';
   if (rep.doneSeconds !== null) {
@@ -34,7 +34,12 @@ function decide({ rep, crashCount, boot, timeout }) {
   } else if (boot && boot.crashed) doneText = 'not reached (crash report written; JVM was still alive)';
   else if (boot && boot.timedOut) doneText = `not reached (timeout ${timeout}s)`;
   else if (boot && boot.earlyExit !== null) doneText = `not reached (server exited ${boot.earlyExit})`;
-  return { pass, doneText };
+  // A timeout inside "Preparing spawn area" with no crash and no new errors is worldgen, not the pack.
+  const stall = !pass && rep.doneSeconds === null && rep.spawnPercent != null && !crashCount
+    && !rep.loadingFailed && !rep.fresh.length && !!boot && boot.timedOut;
+  if (stall) doneText += ` WORLDGEN STALL at "Preparing spawn area" ${rep.spawnPercent}%, seed ${seed}; not a pack failure, retry with another --seed`;
+  else if (!pass && seed !== undefined) doneText += ` (seed ${seed})`;
+  return { pass, stall, doneText };
 }
 
 module.exports = { crashReports, crashCauses, parseCrashCauses, decide };
