@@ -1,0 +1,13 @@
+name = "Friendly Furnishings"
+filename = "friendly_furnishings-1.0.0-forge-1.20.1.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/aDcZtiDN/versions/L9vcwlHv/friendly_furnishings-1.0.0-forge-1.20.1.jar"
+hash-format = "sha1"
+hash = "2fc27d787b945f75ecfae90ce1301871ca792815"
+
+[update]
+[update.modrinth]
+mod-id = "aDcZtiDN"
+version = "L9vcwlHv"
