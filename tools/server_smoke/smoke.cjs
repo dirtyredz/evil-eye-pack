@@ -14,14 +14,15 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { ARTIFACTS, JAVA } = require('./env.cjs');
-const { ensureForgeBase, prepareRunDir, installPack, dropMods } = require('./setup.cjs');
+const { ensureForgeBase, prepareRunDir, readRunSeed, installPack, dropMods } = require('./setup.cjs');
 const { analyze } = require('./log_report.cjs');
 const { boot } = require('./boot.cjs');
-const { crashReports, crashCauses, decide } = require('./verdict.cjs');
+const { DEFAULT_STARVED_CORES } = require('./watchdog.cjs');
+const { crashReports, crashCauses, decide, EXIT_CODES } = require('./verdict.cjs');
 
 function parseArgs(argv) {
   const o = {
-    pack: path.resolve(__dirname, '../../pack.toml'), timeout: 1800, silent: 180, sample: 10, priority: 'AboveNormal', starved: 0.25, port: 25599, heap: '4G', seed: '20261020',
+    pack: path.resolve(__dirname, '../../pack.toml'), timeout: 1800, silent: 180, sample: 10, priority: 'AboveNormal', starved: DEFAULT_STARVED_CORES, port: 25599, heap: '4G', seed: '20261020',
     cache: `${ARTIFACTS}/server-smoke/cache`, drop: '', analyze: '', out: `${ARTIFACTS}/server-smoke/runs`
   };
   for (let i = 0; i < argv.length; i++) {
@@ -69,14 +70,10 @@ function report(o, runDir, result) {
   const knownNoise = JSON.parse(fs.readFileSync(path.join(__dirname, 'known_noise.json'), 'utf8'));
   const rep = analyze(text, knownNoise);
   const crashes = crashReports(runDir);
-  if (!result) { // --analyze: the seed is whatever the run was started with
-    const props = path.join(runDir, 'server.properties');
-    const m = fs.existsSync(props) && /^level-seed=(.*)$/m.exec(fs.readFileSync(props, 'utf8'));
-    if (m) o.seed = m[1];
-  }
-  const { pass, stall, starved, doneText } = decide({ rep, crashCount: crashes.length, boot: result, timeout: o.timeout, seed: o.seed, starvedCores: o.starved });
+  if (!result) o.seed = readRunSeed(runDir) ?? o.seed; // --analyze: the seed is whatever the run was started with
+  const { kind, doneText } = decide({ rep, crashCount: crashes.length, boot: result, timeout: o.timeout, seed: o.seed, starvedCores: o.starved });
 
-  console.log(`\n${pass ? 'PASS' : starved ? 'HOST STARVED' : stall ? 'STALL' : 'FAIL'}  pack=${o.pack}  seed=${o.seed}`);
+  console.log(`\n${kind}  pack=${o.pack}  seed=${o.seed}`);
   if (result) console.log(`JVM CPU: ${result.cpuSeconds === null ? 'unknown' : `${result.cpuSeconds.toFixed(1)} s`}   wall: ${Math.round(result.totalWallSeconds)} s   priority: ${o.priority}`);
   console.log(`Done: ${doneText}`);
   console.log(`crash reports: ${crashes.length}   mod loading failed: ${rep.loadingFailed}`);
@@ -87,7 +84,7 @@ function report(o, runDir, result) {
   printGroups('known boot noise', rep.known);
   printGroups('NEW errors', rep.fresh);
   console.log(`logs: ${latest}\n      ${path.join(runDir, 'console.log')}\n      ${path.join(runDir, 'packwiz-install.log')}`);
-  process.exitCode = pass ? 0 : stall ? 3 : starved ? 4 : 1;
+  process.exitCode = EXIT_CODES[kind];
 }
 
 main().catch((e) => { console.error(e); process.exitCode = 2; });

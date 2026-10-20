@@ -41,6 +41,13 @@ function prepareRunDir(base, runDir, port, heap, seed) {
   fs.writeFileSync(path.join(runDir, 'user_jvm_args.txt'), `-Xmx${heap}\n-Xms1G\n`);
 }
 
+// The level-seed a run was started with, or null when the run has no server.properties or no seed line.
+function readRunSeed(runDir) {
+  const props = path.join(runDir, 'server.properties');
+  const m = fs.existsSync(props) && /^level-seed=(.*)$/m.exec(fs.readFileSync(props, 'utf8'));
+  return m ? m[1] : null;
+}
+
 async function installPack(runDir, packToml, java, cache, log) {
   const cachedInstaller = path.join(cache, 'packwiz-installer.jar');
   if (!fs.existsSync(cachedInstaller)) {
@@ -66,4 +73,4 @@ function dropMods(runDir, terms, log) {
   }
 }
 
-module.exports = { ensureForgeBase, prepareRunDir, installPack, dropMods };
+module.exports = { ensureForgeBase, prepareRunDir, readRunSeed, installPack, dropMods };

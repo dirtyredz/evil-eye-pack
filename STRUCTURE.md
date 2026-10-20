@@ -16,10 +16,10 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `defaultconfigs/` — Forge default (per-world) configs
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
 - `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
-- `tools/emi_curation/` — unshipped: Node tests for the curation scripts
-- `tools/emi_curation/tests/`, `tools/packwiz/tests/`, `tools/server_smoke/tests/` — Node test suites (`node --test tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs`)
+- `tools/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
+- `tools/packwiz/tests/`, `tools/server_smoke/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
-- `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its environment, setup, boot, process, verdict and log-analysis modules, and known boot noise
+- `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its environment, setup, boot, process, watchdog, verdict and log-analysis modules, and known boot noise
 - `tools/packwiz/` — unshipped: hash-chain verifier, index rebuild, localhost pack server, tests
 - `docs/` — unshipped living docs (development workflow, decisions, gotchas, EMI guide and integration coverage)
 - `docs/items/`, `docket.json` — Docket work-item store (use `dk`); `AGENTS.md` — agent instructions. All unshipped.
@@ -51,7 +51,7 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 | `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs` | policy rules (including the real curation lists), class filter, EMI config |
 | `tools/server_smoke/smoke.cjs` | CLI: argument parsing, orchestration (setup, `--drop`, boot, or `--analyze` of a finished run) and printing the verdict |
 | `tools/server_smoke/env.cjs` | the machine environment: java, packwiz bootstrap and installer jars, artifacts root, Forge version and URL; each overridable by a `SMOKE_*` env var |
-| `tools/server_smoke/setup.cjs`, `procs.cjs` | cached Forge server install, `packwiz-installer -s server` install, `level-seed` (`--seed`), `dropMods`; hidden child processes (`start`, `run`), tree kill, JVM priority and CPU-time sampling (`setPriority`, `cpuSeconds`) |
+| `tools/server_smoke/setup.cjs`, `procs.cjs` | cached Forge server install, `packwiz-installer -s server` install, `level-seed` (`--seed`, `readRunSeed`), `dropMods`; hidden child processes (`start`, `run`), tree kill, JVM priority and CPU-time sampling (`setPriority`, `cpuSeconds`) |
 | `tools/server_smoke/boot.cjs` | boot supervisor: spawn hidden, tee the console, raise JVM priority, wait for `Done (` or a crash report under the progress watchdog, send `stop`, jcmd thread dump then kill the tree on stop |
 | `tools/server_smoke/watchdog.cjs` | pure watchdog decision (log silent AND CPU flat, hard cap) and CPU-per-wall starvation test |
 | `tools/server_smoke/verdict.cjs` | pure PASS/STALL/HOST STARVED/FAIL decision (worldgen-stall classification) and crash-report parsing (mod name and failure message) |
@@ -78,7 +78,6 @@ Baseline review 2026-10-12. Remaining debt is filed in Docket (`docs/items/`, `d
 - Recipe-wrapper lifecycle still lives in `session.js`; it belongs with `recipe_view` (dk-b787a93f).
 - `interop.filterToList` is missing; list filtering is repeated in the views (dk-b9ec6a98).
 - Classification is cached in more than one place; one cache is wanted (dk-8a0232a6).
-- Repeated table reads need a `readTable` helper (dk-0eb48f8f).
 - The EMI views rely on public-but-internal EMI fields. A custom mod would avoid that but would need building and hosting. Rejected for now; see `docs/DECISIONS.md`.
 
 Last full review: 2026-10-12

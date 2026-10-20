@@ -16,10 +16,12 @@ const cpuGrew = (prev, cur, minDelta = 0.5) => prev === null || (cur !== null &&
 const cpuPerWall = (cpuSeconds, wallSeconds) =>
   cpuSeconds === null || cpuSeconds === undefined || !(wallSeconds > 0) ? null : cpuSeconds / wallSeconds;
 
+const DEFAULT_STARVED_CORES = 0.25;
+
 // Starved: the JVM got well under starvedCores of CPU per wall second across a run that did not finish.
-const isStarved = (cpuSeconds, wallSeconds, starvedCores = 0.25) => {
+const isStarved = (cpuSeconds, wallSeconds, starvedCores = DEFAULT_STARVED_CORES) => {
   const r = cpuPerWall(cpuSeconds, wallSeconds);
   return r !== null && r < starvedCores;
 };
 
-module.exports = { watchdog, cpuGrew, cpuPerWall, isStarved };
+module.exports = { watchdog, cpuGrew, cpuPerWall, isStarved, DEFAULT_STARVED_CORES };
