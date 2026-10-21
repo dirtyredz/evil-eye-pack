@@ -180,7 +180,7 @@ test('a failed toggle restores the last complete view and shows ERROR; pressing 
   c.tick(); // CLEAN installed
   c.ns().session.toggle(); // ALL (clean views are cached)
   const allList = c.world.EmiStackList.filteredStacks;
-  c.ns().state.index.clean = null; // force a rebuild on the next CLEAN
+  c.ns().state.index.views = {}; // force a rebuild on the next CLEAN
   c.world.failFreeze = true;
   c.ns().session.toggle();
   assert.equal(c.ns().session.label(), 'EMI: ERROR');

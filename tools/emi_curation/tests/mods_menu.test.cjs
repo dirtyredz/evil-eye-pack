@@ -4,11 +4,23 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const { boot, ROOT } = require('./harness.cjs');
+const { fixture } = require('./fixture.cjs');
 const F = require('./fake_emi.cjs');
 
-function setup(size) {
+// Adds `n` loaded mods, each owning one item, named 'A long mod display name <i>'.
+function crowded(n) {
+  const fx = fixture();
+  for (let i = 0; i < n; i++) fx.spec.items.push(new F.EmiStack(new F.Item('m' + i + ':thing')));
+  return fx;
+}
+
+function setup(size, many) {
   const [W, H] = size || [427, 240];
-  const c = boot();
+  const c = boot(many ? { fixture: crowded(many) } : undefined);
+  for (let i = 0; i < (many || 0); i++) {
+    c.loadedMods.add('m' + i);
+    c.modNames['m' + i] = 'A long mod display name ' + String(i).padStart(2, '0');
+  }
   c.tick();
   const added = [];
   const screen = new F.AbstractContainerScreen(W, H, Math.floor((W - 176) / 2), Math.floor((H - 166) / 2), 176, 166);
@@ -40,17 +52,18 @@ function setup(size) {
   const hoverAt = (x, y) => c.world.fireEvent('ScreenEvent$Render$Pre', { getScreen: () => screen, getMouseX: () => x, getMouseY: () => y });
   const rects = () => Array.from(c.ns().modsUi.rects);
   const center = (r) => [r.x + 1, r.y + 1];
-  // added: [CLEAN, Mods]; the dropdown rows are drawn, not widgets
-  return { c, screen, added, clean: added[0], mods: added[1], render, mouse, key, post, tooltip, hoverAt, rects, center, search: c.world.EmiScreenManager.search, W, H };
+  // added: [CLEAN, Mods, DECOR]; the dropdown rows are drawn, not widgets
+  return { c, screen, added, clean: added[0], mods: added[1], decor: added[2], render, mouse, key, post, tooltip, hoverAt, rects, center, search: c.world.EmiScreenManager.search, W, H };
 }
 
-const LABELS = ['Clear', 'Applied Energistics 2', 'Ender IO', 'Create'];
+// CLEAN index: stone, vials and compressed stacks. ae2 and dramaticdoors only own hidden items there.
+const LABELS = ['Clear', 'AllTheCompressed', 'Ender IO', 'Minecraft'];
 
 test('the Mods button sits beside CLEAN/ALL, not on top of it', () => {
   const t = setup();
   assert.equal(t.mods.visible, true);
   assert.equal(t.mods.msg.getString(), 'Mods ▾');
-  assert.equal(t.added.length, 2, 'the rows are not widgets');
+  assert.equal(t.added.length, 3, 'CLEAN, Mods and DECOR are widgets; the rows are not');
   const a = t.clean, b = t.mods;
   assert.equal(a.x < b.x + b.w && b.x < a.x + a.w && a.y < b.y + b.h && b.y < a.y + a.h, false);
   assert.equal(b.y, t.search.y);
@@ -96,7 +109,7 @@ test('a draw failure is logged once but never disables the menu', () => {
   assert.equal(logged.length, 1, 'logged once');
   assert.ok(t.rects().length > 0, 'menu is still open after failures');
   t.mouse(...t.center(t.rects()[1]));
-  assert.equal(t.search.value, '@ae2', 'and still works');
+  assert.equal(t.search.value, '@allthecompressed', 'and still works');
   t.mods.press();
   assert.ok(t.rects().length > 0, 'and reopens');
   assert.ok(t.post().strings.length > 0, 'a later healthy frame draws normally');
@@ -139,10 +152,10 @@ test('choosing a mod sets @modid; choosing it again, or Clear, empties the searc
   t.mods.press();
   const click = (i) => { const e = t.mouse(...t.center(t.rects()[i])); return e; };
   assert.equal(click(1).canceled, true, 'the click on a row is consumed');
-  assert.equal(t.search.value, '@ae2');
+  assert.equal(t.search.value, '@allthecompressed');
   assert.equal(t.rects().length, 0, 'menu closed after choosing');
   t.mods.press();
-  assert.equal(t.post().strings[1].s, '> Applied Energistics 2', 'active mod is marked');
+  assert.equal(t.post().strings[1].s, '> AllTheCompressed', 'active mod is marked');
   click(1);
   assert.equal(t.search.value, '');
   t.mods.press();
@@ -151,7 +164,7 @@ test('choosing a mod sets @modid; choosing it again, or Clear, empties the searc
   t.mods.press();
   click(0);
   assert.equal(t.search.value, '');
-  assert.equal(JSON.stringify(t.search.sets), JSON.stringify(['@ae2', '', '@enderio', '']));
+  assert.equal(JSON.stringify(t.search.sets), JSON.stringify(['@allthecompressed', '', '@enderio', '']));
 });
 
 test('a click outside or Esc closes the menu without touching the search', () => {
@@ -190,46 +203,107 @@ test('the menu hides with the EMI overlay and is inactive while EMI loads', () =
   assert.equal(t.mods.active, false, 'inactive while EMI is loading');
 });
 
-test('regression: the open dropdown is fully on screen and compact at every window size and with a long list', () => {
+test('regression: the open dropdown is fully on screen at every window size, even with a long list, and never covers a control', () => {
   for (const size of [[427, 240], [854, 480], [320, 240], [1920, 1080], [250, 120]]) {
-    for (const many of [false, true]) {
-      const t = setup(size);
-      if (many) {
-        const mods = Array.from({ length: 60 }, (_, i) => ({ label: 'A long mod display name ' + i, modid: 'm' + i }));
-        t.c.ns().modsUi.items = [{ label: 'Clear', modid: null }].concat(mods);
-      }
+    for (const many of [0, 120]) {
+      const t = setup(size, many);
       t.mods.press();
       const rs = t.rects();
-      assert.equal(rs.length, t.c.ns().modsUi.items.length);
       for (const r of rs) {
         assert.ok(r.x >= 0 && r.y >= 0 && r.x + r.w <= t.W && r.y + r.h <= t.H, size + ' ' + JSON.stringify(r) + ' is on screen');
+        for (const b of [t.clean, t.mods, t.decor]) {
+          if (!b.visible) continue;
+          const over = r.x < b.x + b.w && b.x < r.x + r.w && r.y < b.y + b.h && b.y < r.y + r.h;
+          assert.equal(over, false, size + ' a row covers a button');
+        }
       }
       const g = t.post();
-      assert.equal(g.strings.length, rs.length, 'every row is drawn');
-      if (!many && size[1] >= 240) assert.ok(Math.max(...rs.map((r) => r.w)) < 200 && new Set(rs.map((r) => r.x)).size === 1, 'the real list is one narrow column');
+      assert.equal(g.strings.length, rs.length, 'every visible row is drawn');
+      if (!many && size[1] >= 240) assert.ok(Math.max(...rs.map((r) => r.w)) < 200 && new Set(rs.map((r) => r.x)).size === 1, 'the small list is one narrow column');
     }
   }
 });
 
-test('hidden until EMI has laid the search bar out', () => {
-  const c = boot();
-  c.tick();
-  Object.assign(c.world.EmiScreenManager.search, { x: 0, y: 0 });
-  const added = [];
-  const screen = new F.AbstractContainerScreen(427, 240, 125, 37, 176, 166);
-  c.world.fireEvent('ScreenEvent$Init$Post', { getScreen: () => screen, addListener: (b) => added.push(b) });
-  assert.equal(added[1].visible, false);
+test('a long list is paged: Next and Prev wrap, every mod is reachable once, Esc and click-away still close', () => {
+  const t = setup([427, 240], 120);
+  t.mods.press();
+  const ui = () => t.c.ns().modsUi;
+  assert.ok(ui().pageCount > 1, 'needs several pages: ' + ui().pageCount);
+  const labels = () => t.post().strings.map((s) => s.s);
+  assert.equal(labels().filter((s) => s === '< Prev').length, 1);
+  assert.match(labels().find((s) => s.startsWith('Next >')), /^Next > 1\/\d+$/);
+  const seen = new Set();
+  for (let p = 0; p < ui().pageCount; p++) {
+    for (const s of labels()) if (/^(> )?A long mod display name/.test(s)) seen.add(s);
+    const next = ui().rows.find((r) => r.kind === 'next').rect;
+    const e = t.mouse(...t.center(next));
+    assert.equal(e.canceled, true, 'the pager click is consumed');
+    assert.equal(ui().open, true, 'the menu stays open while paging');
+  }
+  assert.equal(ui().page, 0, 'Next wraps to the first page');
+  assert.equal(seen.size, 120, 'all 120 mods appear across the pages');
+  const prev = ui().rows.find((r) => r.kind === 'prev').rect;
+  t.mouse(...t.center(prev));
+  assert.equal(ui().page, ui().pageCount - 1, 'Prev wraps to the last page');
+  assert.equal(t.search.sets.length, 0, 'paging never touches the search');
+  // choosing a row on a later page works
+  const row = ui().rows.find((r) => r.kind === 'item');
+  t.mouse(...t.center(row.rect));
+  assert.match(t.search.value, /^@m\d+$/);
+  t.mods.press();
+  assert.equal(t.key(256).canceled, true);
+  assert.equal(t.rects().length, 0);
+  t.mods.press();
+  assert.equal(t.mouse(5, 5).canceled, false);
+  assert.equal(t.rects().length, 0);
 });
 
-test('pure logic: parseList, visibleEntries, nextSearch', () => {
+test('the list is built automatically: loaded mods with indexed items, A-Z by display name, following CLEAN', () => {
+  const t = setup();
+  const drawn = () => { t.mods.press(); const s = t.post().strings.map((x) => x.s); t.mouse(5, 5); return s; };
+  assert.equal(JSON.stringify(drawn()), JSON.stringify(LABELS));
+  t.c.ns().session.toggle(); // ALL: ae2 and dramaticdoors own items again
+  assert.equal(JSON.stringify(drawn()), JSON.stringify(['Clear', 'AllTheCompressed', 'Applied Energistics 2', 'Dramatic Doors', 'Ender IO', 'Minecraft']));
+});
+
+test('a new mod appears with no config edit; a namespace that is not a loaded mod does not', () => {
+  const fx = fixture();
+  fx.spec.items.push(new F.EmiStack(new F.Item('brandnew:gizmo')), new F.EmiStack(new F.Item('datapack_only:thing')));
+  const c = boot({ fixture: fx });
+  c.loadedMods.add('brandnew');
+  c.modNames.brandnew = 'Brand New Mod';
+  c.tick();
+  const screen = new F.AbstractContainerScreen(427, 240, 125, 37, 176, 166);
+  c.world.EmiScreenManager.search.y = 219;
+  const added = [];
+  c.world.fireEvent('ScreenEvent$Init$Post', { getScreen: () => screen, addListener: (b) => added.push(b) });
+  c.world.fireEvent('ScreenEvent$Render$Pre', { getScreen: () => screen, getMouseX: () => 0, getMouseY: () => 0 });
+  added[1].press();
+  const g = F.fakeGraphics();
+  c.world.fireEvent('ScreenEvent$Render$Post', { getScreen: () => screen, getGuiGraphics: () => g, getMouseX: () => 0, getMouseY: () => 0 });
+  const labels = g.strings.map((s) => s.s);
+  assert.ok(labels.includes('Brand New Mod'));
+  assert.ok(!labels.some((l) => /datapack/.test(l)));
+});
+
+test('pure logic: overrides parsing, buildEntries (rename, hide, pin, sort, unloaded) and nextSearch', () => {
   const M = boot().ns().modsList;
-  const list = M.parseList(JSON.stringify([
-    { label: 'A', modid: 'a' }, { label: 'dup', modid: 'a' }, { label: '', modid: 'b' },
-    { label: 'Bad', modid: 'Bad Id' }, { label: 'C', modid: 'c_1' }, null, { label: 3, modid: 'd' },
-  ]));
-  assert.equal(JSON.stringify(list), JSON.stringify([{ label: 'A', modid: 'a' }, { label: 'C', modid: 'c_1' }]));
-  assert.equal(JSON.stringify(M.visibleEntries(list, (id) => id === 'c_1')), JSON.stringify([{ label: 'C', modid: 'c_1' }]));
-  assert.throws(() => M.parseList('{}'));
+  const ov = M.parseOverrides(JSON.stringify({
+    rename: { create: 'Create Mod', 'Bad Id': 'x', ae2: '   ', enderio: 3 },
+    hide: ['kubejs', 'Bad Id', 7],
+    pin: ['create'],
+  }));
+  assert.equal(JSON.stringify(ov), JSON.stringify({ rename: { create: 'Create Mod' }, hide: ['kubejs'], pin: ['create'] }));
+  assert.equal(JSON.stringify(M.parseOverrides('{}')), JSON.stringify(M.emptyOverrides()));
+  assert.throws(() => M.parseOverrides('[]'));
+  assert.throws(() => M.parseOverrides('{"hide":"x"}'));
+  const names = { zeta: 'Zeta', alpha: 'alpha', beta: 'Beta', create: 'Create', kubejs: 'KubeJS', noname: '' };
+  const build = (owned, overrides, loaded) => M.buildEntries(owned, (id) => (loaded || Object.keys(names)).includes(id), (id) => names[id], overrides);
+  const labels = (list) => list.map((e) => e.label);
+  assert.equal(JSON.stringify(labels(build(['zeta', 'alpha', 'beta', 'create', 'beta', 'noname']))), JSON.stringify(['alpha', 'Beta', 'Create', 'noname', 'Zeta']), 'A-Z ignoring case, duplicates once, empty name falls back to the id');
+  assert.equal(JSON.stringify(labels(build(['zeta', 'alpha', 'create', 'kubejs'], ov))), JSON.stringify(['Create Mod', 'alpha', 'Zeta']), 'pinned first, renamed, hidden dropped');
+  assert.equal(JSON.stringify(labels(build(['zeta', 'ghost'], undefined))), JSON.stringify(['Zeta']), 'unloaded mods drop out');
+  assert.equal(JSON.stringify(labels(build(['zeta', 'alpha'], { rename: {}, hide: [], pin: ['zeta', 'nope', 'zeta'] }))), JSON.stringify(['Zeta', 'alpha']));
   assert.equal(M.nextSearch('', 'ae2'), '@ae2');
   assert.equal(M.nextSearch('iron', 'ae2'), '@ae2');
   assert.equal(M.nextSearch('@ae2', 'ae2'), '');
@@ -238,7 +312,7 @@ test('pure logic: parseList, visibleEntries, nextSearch', () => {
 });
 
 test('menu layout is compact, opens upward, stays on screen and wraps only when height runs out', () => {
-  const M = boot().ns().modsList;
+  const M = boot().ns().modsLayout;
   const arr = (n, w) => Array.from({ length: n }, () => w);
   const anchor = { x: 65, y: 219, w: 56, h: 18 };
   const one = M.layoutMenu(anchor, arr(5, 90), { w: 427, h: 240 });
@@ -260,9 +334,49 @@ test('menu layout is compact, opens upward, stays on screen and wraps only when 
   assert.equal(down.rects[0].y, 23, 'opens downward from a top anchor');
 });
 
-test('mods.json parses with no entry dropped as malformed or duplicate', () => {
+test('paged layout: pages fit the screen, the pager sits next to the anchor, indexes are covered once', () => {
+  const M = boot().ns().modsLayout;
+  const screen = { w: 427, h: 240 };
+  for (const anchor of [{ x: 65, y: 219, w: 56, h: 18 }, { x: 300, y: 4, w: 56, h: 18 }]) {
+    const widths = Array.from({ length: 150 }, (_, i) => 60 + (i % 7) * 15);
+    const first = M.layoutPaged(anchor, widths, screen, 0);
+    assert.ok(first.pageCount > 1 && first.pager);
+    const seen = [];
+    for (let p = 0; p < first.pageCount; p++) {
+      const lay = M.layoutPaged(anchor, widths, screen, p);
+      assert.equal(lay.page, p);
+      for (const r of lay.rows.map((x) => x.rect).concat([lay.pager.prev, lay.pager.next])) {
+        assert.ok(r.x >= 0 && r.y >= 0 && r.x + r.w <= screen.w && r.y + r.h <= screen.h, JSON.stringify(r));
+        assert.equal(r.x < anchor.x + anchor.w && anchor.x < r.x + r.w && r.y < anchor.y + anchor.h && anchor.y < r.y + r.h, false, 'never covers the anchor');
+      }
+      const up = anchor.y > 100;
+      assert.equal(lay.pager.prev.y, up ? anchor.y - 12 : anchor.y + anchor.h, 'pager strip is the row next to the button');
+      for (const x of lay.rows) seen.push(x.index);
+    }
+    assert.equal(JSON.stringify(seen), JSON.stringify(widths.map((_, i) => i)), 'every entry exactly once, in order');
+  }
+  assert.equal(M.layoutPaged({ x: 65, y: 219, w: 56, h: 18 }, [50, 60], screen, 3).pager, null, 'no pager when it fits');
+  assert.equal(M.layoutPaged({ x: 65, y: 219, w: 56, h: 18 }, Array(150).fill(80), screen, 99).page > 0, true, 'page index is clamped');
+});
+
+test('mods.json (the override file) parses and is empty-safe', () => {
   const M = boot().ns().modsList;
   const text = fs.readFileSync(path.join(ROOT, 'config', 'emi-curation', 'mods.json'), 'utf8');
-  assert.equal(M.parseList(text).length, JSON.parse(text).length);
-  assert.ok(JSON.parse(text).length >= 20);
+  const raw = JSON.parse(text);
+  const ov = M.parseOverrides(text);
+  assert.equal(raw.schema, 1);
+  assert.equal(Object.keys(ov.rename).length, Object.keys(raw.rename).length, 'no rename dropped as malformed');
+  assert.equal(ov.hide.length, raw.hide.length);
+  assert.equal(ov.pin.length, raw.pin.length);
+});
+
+test('hidden until EMI has laid the search bar out', () => {
+  const c = boot();
+  c.tick();
+  Object.assign(c.world.EmiScreenManager.search, { x: 0, y: 0 });
+  const added = [];
+  const screen = new F.AbstractContainerScreen(427, 240, 125, 37, 176, 166);
+  c.world.fireEvent('ScreenEvent$Init$Post', { getScreen: () => screen, addListener: (b) => added.push(b) });
+  assert.equal(added[1].visible, false);
+  assert.equal(added[2].visible, false);
 });

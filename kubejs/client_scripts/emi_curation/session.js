@@ -1,8 +1,10 @@
 // priority: 60
-// CLEAN/ALL session state for the EMI curation views.
+// CLEAN/ALL and DECOR shown/hidden session state for the EMI curation views.
 //
 // - State lives in global.emiCuration.state so /kubejs reload keeps the selection.
-// - A fresh launch and every logout reset to CLEAN.
+// - A fresh launch and every logout reset to CLEAN and to decor.json's default DECOR mode.
+// - DECOR is an independent second axis: decor stacks are removed from the index in CLEAN and in
+//   ALL alike, and never from recipe displays.
 // - Views are installed only once EMI's reload and recipe worker have finished, and are
 //   re-applied whenever EMI replaces its index list or recipe manager (new generation).
 // - A /kubejs reload re-applies the views with the reloaded code and curation files.
@@ -12,15 +14,18 @@
 (function (ns) {
   var CLEAN = 'CLEAN'
   var ALL = 'ALL'
+  var SHOWN = 'SHOWN'
+  var HIDDEN = 'HIDDEN'
 
   function freshState() {
     return {
       mode: CLEAN,
+      decor: null, // null = decor.json's default; else SHOWN | HIDDEN
       status: 'waiting',
       error: null,
       reapply: true,
       failed: { index: null, recipe: null },
-      index: { master: null, baseline: null, clean: null, installed: null },
+      index: { master: null, baseline: null, views: {}, installed: null },
       recipe: { baseline: null, wrapper: null, wrapperLoad: null, installed: null, known: null }
     }
   }
@@ -35,18 +40,30 @@
 
   var policy = null
   var policyError = null
+  var decorPolicy = null
 
   function loadPolicy() {
     if (policy || policyError) return policy
     try {
       policy = ns.policy.load(function (p) { return JsonIO.readString(p) })
-      ns.hiding.configure({ policy: policy, getMaster: function () { return st.index.master } })
-      ns.diag.info('loaded curation (' + policy.itemIdCount + ' explicit ids)')
+      decorPolicy = loadDecorPolicy()
+      ns.hiding.configure({ policy: policy, decor: decorPolicy, getMaster: function () { return st.index.master } })
+      ns.diag.info('loaded curation (' + policy.itemIdCount + ' explicit ids' + (decorPolicy ? ', decor rules' : ', no decor rules') + ')')
     } catch (err) {
       policyError = err
       ns.diag.logError('load curation', err)
     }
     return policy
+  }
+
+  // decor.json is optional for CLEAN: a bad file disables the DECOR button, nothing else.
+  function loadDecorPolicy() {
+    try {
+      return ns.decorPolicy.load(function (p) { return JsonIO.readString(p) })
+    } catch (err) {
+      ns.diag.logError('load decor.json', err)
+      return null
+    }
   }
 
   function emiReady() {
@@ -59,11 +76,26 @@
 
   // ---- index ----
 
+  function decorMode() {
+    if (decorPolicy == null) return SHOWN
+    if (st.decor != null) return st.decor
+    return decorPolicy.defaultHidden ? HIDDEN : SHOWN
+  }
+
+  // The index to install for the current CLEAN/ALL x DECOR combination; built views are
+  // kept per combination until EMI replaces its list.
   function applyIndex() {
+    var clean = st.mode === CLEAN
+    var decor = decorMode() === HIDDEN
     var target = st.index.baseline
-    if (st.mode === CLEAN) {
-      if (st.index.clean == null) st.index.clean = ns.indexView.buildClean(st.index.baseline, ns.hiding.isPolicyHidden)
-      target = st.index.clean
+    if (clean || decor) {
+      var key = (clean ? 'c' : '') + (decor ? 'd' : '')
+      if (st.index.views[key] == null) {
+        st.index.views[key] = ns.indexView.buildClean(st.index.baseline, function (stack) {
+          return (clean && ns.hiding.isPolicyHidden(stack)) || (decor && ns.hiding.isDecorHidden(stack))
+        })
+      }
+      target = st.index.views[key]
     }
     ns.indexView.install(target)
     st.index.installed = target
@@ -78,7 +110,8 @@
       st.index.master = master
     }
     st.index.baseline = cur
-    st.index.clean = null
+    st.index.views = {}
+    ns.hiding.resetDecor()
     return true
   }
 
@@ -182,7 +215,7 @@
       // starts a new generation.
       if (st.status === 'error' && !indexChanged && !recipeChanged && !retry) return
       if (indexChanged || recipeChanged || retry || st.status !== 'ready') {
-        if (retry) { st.index.clean = null; st.recipe.wrapper = null }
+        if (retry) { st.index.views = {}; ns.hiding.resetDecor(); st.recipe.wrapper = null }
         st.reapply = false
         applyAll(indexChanged)
       }
@@ -209,6 +242,21 @@
     } catch (err) {
       st.mode = prevMode
       fail('toggle', err)
+      return false
+    }
+  }
+
+  // DECOR button press. Returns true when the mode changed.
+  function toggleDecor() {
+    if (st.status !== 'ready' || decorPolicy == null) return false
+    var prev = st.decor
+    st.decor = decorMode() === HIDDEN ? SHOWN : HIDDEN
+    try {
+      applyAll(false)
+      return true
+    } catch (err) {
+      st.decor = prev
+      fail('toggle decor', err)
       return false
     }
   }
@@ -240,7 +288,18 @@
 
   function canPress() { return st.status === 'ready' || st.status === 'error' }
 
-  ns.session = { tick: tick, toggle: toggle, logout: logout, label: label, canPress: canPress, CLEAN: CLEAN, ALL: ALL }
+  function decorLabel() {
+    if (decorPolicy == null) return 'DECOR: N/A'
+    return 'DECOR: ' + decorMode()
+  }
+
+  // Pressable when the index is ready and decor.json loaded.
+  function canPressDecor() { return st.status === 'ready' && decorPolicy != null }
+
+  ns.session = {
+    tick: tick, toggle: toggle, toggleDecor: toggleDecor, logout: logout, label: label,
+    decorLabel: decorLabel, canPress: canPress, canPressDecor: canPressDecor, CLEAN: CLEAN, ALL: ALL
+  }
 
   // KubeJS replaces these handlers on every script reload, so they never duplicate.
   ClientEvents.tick(function () { ns.diag.guard('tick', function () { ns.session.tick() }) })

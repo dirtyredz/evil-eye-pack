@@ -12,10 +12,11 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `shaderpacks/` — shaderpack metafiles and saved shader options
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
 - `config/` — mod configs installed as plain files
-- `config/emi-curation/` — EMI curation data: `rules.json`, five explicit item lists, and `mods.json` (the Mods menu entries)
+- `config/emi-curation/` — EMI curation data: `rules.json`, five explicit item lists, `decor.json` (the DECOR toggle's rules) and `mods.json` (Mods menu overrides: rename, hide, pin)
 - `defaultconfigs/` — Forge default (per-world) configs
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
-- `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
+- `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy and the Java tag adapter
+- `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
 - `tools/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
 - `tools/packwiz/tests/`, `tools/server_smoke/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
@@ -38,16 +39,21 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 | `emi_curation/java_interop.js` (85) | class lookup, `isContainerScreen`/`literal` (shared by both buttons), Java reference identity, Java list copy/freeze, `EmiStack` → policy descriptor (NBT walk) |
 | `emi_curation/index_view.js` (80) | swap `EmiStackList.filteredStacks` between EMI's list and the CLEAN copy, then refresh search and sidebars. No hide decisions. |
 | `emi_curation/recipe_view.js` (70) | JS `EmiRecipeManager` wrapper over the baseline manager, filtering displays |
-| `emi_curation/hiding.js` (65) | the single home of hide decisions: `configure({ policy, getMaster })` (called once by `session.js`), then pack policy per stack (cached per registry key) and REI-style display hiding (adds EMI's user-hidden set and the master-index key set, built and cached here) |
-| `emi_curation/session.js` (60) | CLEAN/ALL state in `global`, loads the policy and configures `hiding.js`, EMI generation tracking, tick → sync → apply with restore on failure, reload/logout handling, event registration |
+| `emi_curation/hiding.js` (65) | the single home of hide decisions: `configure({ policy, decor, getMaster })` (called once by `session.js`), then pack policy and decor classification per stack (each cached per registry key; decor never feeds display hiding) and REI-style display hiding (adds EMI's user-hidden set and the master-index key set, built and cached here) |
+| `emi_curation/session.js` (60) | CLEAN/ALL and DECOR state in `global`, loads the policy and decor rules and configures `hiding.js`, EMI generation tracking, tick → sync → apply with restore on failure, reload/logout handling, event registration |
 | `emi_curation/ui/forge_hooks.js` (58) | `registerOnce(flag, table, hooks)`: add Forge listeners once per launch, dispatching through a reloadable `global.emiCuration[table]` handler table; handler errors are logged, never rethrown. Used by `button.js` and `mods_menu.js`; `session.js` uses `ClientEvents`, not Forge listeners. |
 | `emi_curation/ui/placement.js` (55) | shared button placement from EMI's search bounds: pure `chooseRect`, `searchPlaced`, live `layoutContext`/`usableLayout` |
 | `emi_curation/ui/button.js` (50) | the CLEAN/ALL button; screen handlers registered through `forge_hooks`. **The Mods menu depends on this button's rect and on load order:** `mods_menu.js` reads `ns.ui.button` to sit beside it, so `button.js` must stay at a higher priority than `mods_menu.js`. |
-| `emi_curation/ui/mods_list.js` (47) | pure Mods menu logic, no Java: `parseList`, `visibleEntries`, `nextSearch`, `layoutMenu`, `inside` |
+| `emi_curation/decor/decor_policy.js` (89) | pure DECOR rules: parse/validate `decor.json`, `classify(policy, id, inTags)` over the manual-exception, whole-mod and tag layers. No Java. |
+| `emi_curation/decor/decor_tags.js` (84) | Java side of the tag layer: item and block tags from the live registries into one cached `HashSet` of Items; `reset()` per EMI generation |
+| `emi_curation/ui/mods_layout.js` (48) | pure dropdown geometry, no Java: `layoutMenu`, `paginate`/`layoutPaged` (pages plus the Prev/Next strip), `shiftClear`, `inside` |
+| `emi_curation/ui/mods_source.js` (49) | the Mods menu's entries: namespaces owning a stack of the current index, `Platform` names, overrides from `mods.json`; cached per index list |
+| `emi_curation/ui/mods_list.js` (47) | pure Mods menu data logic, no Java: `parseOverrides`, `buildEntries` (A-Z, rename, hide, pin), `nextSearch` |
+| `emi_curation/ui/decor_button.js` (44) | the DECOR: SHOWN/HIDDEN button; loads after `button.js` and `mods_menu.js` so it settles beside them in one pass (Forge calls listeners in registration order) |
 | `emi_curation/ui/mods_text.js` (46) | the text layer: `draw(g, font, text, x, y, color)` via `drawWordWrap` and `width(text)` estimated from font metrics; never `drawString`/`Font.width` (see GOTCHAS) |
-| `emi_curation/ui/mods_menu.js` (45) | the Mods dropdown: state, handlers and wiring. Reads `mods.json` (through `mods_list`), places the button beside CLEAN/ALL (`ns.ui.button`, `placement`), draws the rows in `Render.Post`, sets EMI's search text. Registered through `forge_hooks`. |
+| `emi_curation/ui/mods_menu.js` (45) | the Mods dropdown: state, handlers and wiring. Builds its rows from `mods_source`, pages them with `mods_layout`, places the button beside CLEAN/ALL (`ns.ui.button`, `placement`), draws the rows in `Render.Post`, sets EMI's search text. Registered through `forge_hooks`. |
 | `tools/emi_curation/tests/harness.cjs`, `fake_emi.cjs`, `fixture.cjs` | Node harness that loads the production scripts (all subfolders) into a `vm` context in KubeJS priority order (plus `boot()`), a fake EMI/Java world to drive them, and the shared test world data (`fixture()`: named stacks and recipes) |
-| `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `mods_menu.test.cjs`, `interop.test.cjs` | session lifecycle and views; button placement and listeners; Mods menu behaviour and pure logic; Java list-copy handling |
+| `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `mods_menu.test.cjs`, `decor.test.cjs`, `interop.test.cjs` | session lifecycle and views; button placement and listeners; Mods menu behaviour, auto list, paging and pure logic; DECOR rules, toggle, persistence and button; Java list-copy handling |
 | `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs` | policy rules (including the real curation lists), class filter, EMI config |
 | `tools/server_smoke/smoke.cjs` | CLI: argument parsing, orchestration (setup, `--drop`, boot, or `--analyze` of a finished run) and printing the verdict |
 | `tools/server_smoke/env.cjs` | the machine environment: java, packwiz bootstrap and installer jars, artifacts root, Forge version and URL; each overridable by a `SMOKE_*` env var |

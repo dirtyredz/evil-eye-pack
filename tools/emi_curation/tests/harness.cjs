@@ -59,7 +59,7 @@ function loadScripts(env, names) {
     Java: env.Java,
     ClientEvents: env.ClientEvents,
     JsonIO: env.JsonIO || { readString: readRepoText },
-    Platform: env.Platform || { isLoaded: () => false },
+    Platform: env.Platform || { isLoaded: () => false, getInfo: () => null },
     console: makeConsole(env.logs || []),
   };
   const context = vm.createContext(sandbox);
@@ -70,17 +70,24 @@ function loadScripts(env, names) {
   return sandbox;
 }
 
-/** Boots the production scripts against a fresh fake world; `opts`: { noReload, jsonIO }. */
+/**
+ * Boots the production scripts against a fresh fake world;
+ * `opts`: { noReload, jsonIO, fixture (a fixture()-shaped world to use instead of the default) }.
+ */
 function boot(opts) {
-  const fx = fixture();
+  const fx = (opts && opts.fixture) || fixture();
   const world = F.createWorld(fx.spec);
   const g = {};
-  const ctx = { world, fx, g, events: null, logs: [], loadedMods: new Set(['ae2', 'create', 'enderio']) };
+  const ctx = { world, fx, g, events: null, logs: [], loadedMods: new Set(['minecraft', 'ae2', 'create', 'enderio', 'allthecompressed', 'dramaticdoors']),
+    modNames: { minecraft: 'Minecraft', ae2: 'Applied Energistics 2', enderio: 'Ender IO', allthecompressed: 'AllTheCompressed', dramaticdoors: 'Dramatic Doors' } };
   ctx.load = (jsonIO) => {
     ctx.events = F.clientEvents();
     loadScripts({
       global: g, Java: world.Java, ClientEvents: ctx.events.api, JsonIO: jsonIO, logs: ctx.logs,
-      Platform: { isLoaded: (id) => ctx.loadedMods.has(id) },
+      Platform: {
+        isLoaded: (id) => ctx.loadedMods.has(id),
+        getInfo: (id) => (ctx.loadedMods.has(id) ? { getName: () => ctx.modNames[id] || id } : null),
+      },
     });
   };
   ctx.tick = () => { for (const h of ctx.events.handlers.tick) h(); };
