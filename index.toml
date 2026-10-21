@@ -3379,11 +3379,6 @@ hash = "539a4acb37215792f298f3706462116630f200bc4fe7ae17f8c4a8b51dab8a26"
 metafile = true
 
 [[files]]
-file = "mods/tipthescales.pw.toml"
-hash = "5e38896bef914cf05ae45212046c3d58de94a5af176c8130224d5701f843d44c"
-metafile = true
-
-[[files]]
 file = "mods/tool-belt.pw.toml"
 hash = "fc609c2c8e3d9ce340a79e7cc1c81da7168e982f1c5a37705bbe4fcf89d06d47"
 metafile = true
@@ -3435,13 +3430,29 @@ metafile = true
 
 [[files]]
 file = "resourcepacks/cozyui-plus.pw.toml"
-hash = "817d84eeb39cb133686b66225331c560ddc803839a7b13f0cba72fe4cf980a61"
+hash = "859d71ed7c0455add9a031d18c6ead95a7ab3fe5a4c9bb44ad892d3ee377fef7"
 metafile = true
 
 [[files]]
 file = "resourcepacks/eat-quiet.pw.toml"
 hash = "7d733354ee6af6f31004d76aea76ded8ba00dd9545254136fdc432ea9474d540"
 metafile = true
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/cosmeticarmorreworked/textures/gui/cosarmorinventory.png"
+hash = "9da0e04009c8a52cdd362827c9c562d236eb2dbc0fbd7d4fcfbc3019058ec7af"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/curios/textures/gui/inventory.png"
+hash = "703027e03f6c3c85c751fefda57a543819c201105e038add10b1f0ed5490b1fc"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/curios/textures/gui/inventory_revamp.png"
+hash = "e7fa5937f6be374c9c7ec91f44ce1efcf4d9c06e23992917af31ceb70f146630"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/pack.mcmeta"
+hash = "1961a0a255a347c5089e1b409aff8bdd7636795145163e3e674a7898da1414b3"
 
 [[files]]
 file = "resourcepacks/fancy-crops.pw.toml"
