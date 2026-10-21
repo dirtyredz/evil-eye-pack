@@ -10,6 +10,14 @@ Newest first.
 
 **Why.** Connected Glass (and Ender IO glass) need the `fusion:model` loader; the old jar logged 425 "Model loader 'fusion:model' not found" errors. Nothing in the pack (recipes, KubeJS, configs, other jars) referenced the alloy add-on; its only trace was a chest-loot toggle added to suppress its duplicate bronze/steel. Consequence: items such as `fusion:bronze_*`/`steel_*` in existing worlds become unidentified.
 
+## 2026-10-21 — Local decor marks, set in game
+
+**Decision.** A rebindable key (default D, "EMI Curation" controls category, GUI conflict context) cycles the hovered item's local override automatic -> decor -> not decor; Shift does the same for its mod. Marks persist in `config/emi-curation/decor-local.json`, which is not in the pack index and layers above `decor.json` (item marks, then mod marks, then the shipped layers). A malformed file is ignored and never overwritten.
+
+**Why.** Curating decor from a config file means leaving the game and guessing ids; the owner sees the item in front of them. Keeping the marks out of the pack means a packwiz update cannot erase them; folding them into `decor.json` later is an explicit ask.
+
+**Rejected.** Writing to `decor.json` directly (the index would change and the next sync would overwrite it); EMI's own hidden-stack store (that is the user-hide feature and would hide recipes too); a chat command (slower than a key over the item).
+
 ## 2026-10-21 — Auto Mods menu and an independent DECOR toggle
 
 **Decision.**

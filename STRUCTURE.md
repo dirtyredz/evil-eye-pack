@@ -12,11 +12,12 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `shaderpacks/` — shaderpack metafiles and saved shader options
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
 - `config/` — mod configs installed as plain files
-- `config/emi-curation/` — EMI curation data: `rules.json`, five explicit item lists, `decor.json` (the DECOR toggle's rules) and `mods.json` (Mods menu overrides: rename, hide, pin)
+- `config/emi-curation/` — EMI curation data: `rules.json`, five explicit item lists, `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
 - `defaultconfigs/` — Forge default (per-world) configs
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
-- `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy and the Java tag adapter
-- `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
+- `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter
+- `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the mark-as-decor key handler, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
+- `kubejs/startup_scripts/` — `emi_curation_keys.js` registers the "EMI Curation" key mapping (startup-only in Forge); `kubejs/assets/emi_curation/lang/` names it
 - `tools/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
 - `tools/packwiz/tests/`, `tools/server_smoke/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
@@ -49,11 +50,13 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 | `emi_curation/ui/mods_layout.js` (48) | pure dropdown geometry, no Java: `layoutMenu`, `paginate`/`layoutPaged` (pages plus the Prev/Next strip), `shiftClear`, `inside` |
 | `emi_curation/ui/mods_source.js` (49) | the Mods menu's entries: namespaces owning a stack of the current index, `Platform` names, overrides from `mods.json`; cached per index list |
 | `emi_curation/ui/mods_list.js` (47) | pure Mods menu data logic, no Java: `parseOverrides`, `buildEntries` (A-Z, rename, hide, pin), `nextSearch` |
+| `emi_curation/decor/decor_local.js` (88) | pure local DECOR marks: parse/serialize `decor-local.json`, `lookup` (item mark, then mod mark, else null), the automatic/decor/not-decor `cycle*`, `load`/`mark` over an injected IO, and `kubeIo()` (KubeJS `JsonIO`) |
+| `emi_curation/ui/decor_mark.js` (43) | the mark-as-decor key: Forge `KeyPressed.Pre` listener, hovered item from EMI (`getHoveredStack`) or the vanilla slot, toast, then `decorLocal.mark` and `session.refreshDecor()` |
 | `emi_curation/ui/decor_button.js` (44) | the DECOR: SHOWN/HIDDEN button; loads after `button.js` and `mods_menu.js` so it settles beside them in one pass (Forge calls listeners in registration order) |
 | `emi_curation/ui/mods_text.js` (46) | the text layer: `draw(g, font, text, x, y, color)` via `drawWordWrap` and `width(text)` estimated from font metrics; never `drawString`/`Font.width` (see GOTCHAS) |
 | `emi_curation/ui/mods_menu.js` (45) | the Mods dropdown: state, handlers and wiring. Builds its rows from `mods_source`, pages them with `mods_layout`, places the button beside CLEAN/ALL (`ns.ui.button`, `placement`), draws the rows in `Render.Post`, sets EMI's search text. Registered through `forge_hooks`. |
 | `tools/emi_curation/tests/harness.cjs`, `fake_emi.cjs`, `fixture.cjs` | Node harness that loads the production scripts (all subfolders) into a `vm` context in KubeJS priority order (plus `boot()`), a fake EMI/Java world to drive them, and the shared test world data (`fixture()`: named stacks and recipes) |
-| `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `mods_menu.test.cjs`, `decor.test.cjs`, `interop.test.cjs` | session lifecycle and views; button placement and listeners; Mods menu behaviour, auto list, paging and pure logic; DECOR rules, toggle, persistence and button; Java list-copy handling |
+| `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `mods_menu.test.cjs`, `decor.test.cjs`, `decor_local.test.cjs` (shared world: `decor_world.cjs`), `interop.test.cjs` | session lifecycle and views; button placement and listeners; Mods menu behaviour, auto list, paging and pure logic; DECOR rules, toggle, persistence and button; Java list-copy handling |
 | `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs` | policy rules (including the real curation lists), class filter, EMI config |
 | `tools/server_smoke/smoke.cjs` | CLI: argument parsing, orchestration (setup, `--drop`, boot, or `--analyze` of a finished run) and printing the verdict |
 | `tools/server_smoke/env.cjs` | the machine environment: java, packwiz bootstrap and installer jars, artifacts root, Forge version and URL; each overridable by a `SMOKE_*` env var |

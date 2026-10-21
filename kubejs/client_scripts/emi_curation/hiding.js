@@ -14,6 +14,7 @@
 (function (ns) {
   var policy = null
   var decor = null
+  var getLocal = null
   var getMaster = null
 
   // Classification per registry key (Item/Fluid object), so the id string is built once
@@ -26,11 +27,12 @@
   // Decor classification per registry key (true/false), like keyClass.
   var decorClass = null
 
-  // ctx: { policy: loaded policy, decor: loaded decor policy or null, getMaster: function ()
-  // -> EMI's master index list }
+  // ctx: { policy: loaded policy, decor: loaded decor policy or null, getLocal: function () -> the
+  // local decor marks ({ data }, decor_local.js), getMaster: function () -> EMI's master index list }
   function configure(ctx) {
     policy = ctx.policy
     decor = ctx.decor || null
+    getLocal = ctx.getLocal || null
     getMaster = ctx.getMaster
     keyClass = null
     keySet = null
@@ -44,12 +46,18 @@
     ns.decorTags.reset()
   }
 
+  // Local marks (decor-local.json) decide first; otherwise the shipped decor.json layers do.
   function decorOf(stack) {
     var desc = ns.interop.describe(stack)
+    var local = getLocal ? ns.decorLocal.lookup(getLocal().data, desc.id) : null
+    if (local !== null) return local
     return ns.decorPolicy.classify(decor, desc.id, function () {
       return desc.isItem && ns.decorTags.itemSet(decor).contains(stack.getKey())
     })
   }
+
+  // Local marks changed: drop the per-key answers (the tag set is unaffected).
+  function clearDecorClassification() { decorClass = null }
 
   function isDecorHidden(stack) {
     if (decor == null) return false
@@ -115,6 +123,7 @@
   ns.hiding = {
     configure: configure,
     resetDecor: resetDecor,
+    clearDecorClassification: clearDecorClassification,
     isPolicyHidden: isPolicyHidden,
     isDecorHidden: isDecorHidden,
     isDisplayHidden: isDisplayHidden
