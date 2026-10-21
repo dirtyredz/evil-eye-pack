@@ -7,7 +7,7 @@ const F = require('./fake_emi.cjs');
 test('one Forge listener pair and one button per screen after repeated script reloads', () => {
   const c = boot();
   c.load(); c.load(); c.load();
-  assert.equal(c.world.counters.listeners.length, 10, 'two CLEAN, six Mods menu and two DECOR listeners');
+  assert.equal(c.world.counters.listeners.length, 11, 'two CLEAN, six Mods menu, two DECOR and one decor-mark listener');
   c.tick();
   const added = [];
   const screen = new F.AbstractContainerScreen(427, 240, 125, 37, 176, 166);

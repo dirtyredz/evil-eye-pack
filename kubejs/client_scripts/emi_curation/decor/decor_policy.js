@@ -86,5 +86,5 @@
     return inTags ? !!inTags() : false
   }
 
-  ns.decorPolicy = { SCHEMA: SCHEMA, compile: compile, load: load, classify: classify }
+  ns.decorPolicy = { SCHEMA: SCHEMA, ID_RE: ID_RE, NS_RE: NS_RE, compile: compile, load: load, classify: classify }
 })(global.emiCuration || (global.emiCuration = {}))

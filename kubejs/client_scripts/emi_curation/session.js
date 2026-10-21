@@ -41,13 +41,16 @@
   var policy = null
   var policyError = null
   var decorPolicy = null
+  // Local DECOR marks (decor-local.json): { data, status }, see decor_local.js. Always present.
+  var decorLocal = { data: ns.decorLocal.empty(), status: 'missing', error: null }
 
   function loadPolicy() {
     if (policy || policyError) return policy
     try {
       policy = ns.policy.load(function (p) { return JsonIO.readString(p) })
       decorPolicy = loadDecorPolicy()
-      ns.hiding.configure({ policy: policy, decor: decorPolicy, getMaster: function () { return st.index.master } })
+      decorLocal = loadDecorLocal()
+      ns.hiding.configure({ policy: policy, decor: decorPolicy, getLocal: function () { return decorLocal }, getMaster: function () { return st.index.master } })
       ns.diag.info('loaded curation (' + policy.itemIdCount + ' explicit ids' + (decorPolicy ? ', decor rules' : ', no decor rules') + ')')
     } catch (err) {
       policyError = err
@@ -64,6 +67,13 @@
       ns.diag.logError('load decor.json', err)
       return null
     }
+  }
+
+  // A malformed decor-local.json is logged once here and ignored; the shipped rules still apply.
+  function loadDecorLocal() {
+    var loaded = ns.decorLocal.load(ns.decorLocal.kubeIo())
+    if (loaded.status === 'malformed') ns.diag.logError('load decor-local.json', loaded.error)
+    return loaded
   }
 
   function emiReady() {
@@ -261,6 +271,24 @@
     }
   }
 
+  // The local DECOR marks, for ui/decor_mark.js (it saves through decorLocal.mark).
+  function localMarks() { return decorLocal }
+
+  // Re-applies the index after the local marks changed, with the current CLEAN/ALL and DECOR
+  // state. Returns true when the new view is installed.
+  function refreshDecor() {
+    if (st.status !== 'ready') return false
+    st.index.views = {}
+    ns.hiding.clearDecorClassification()
+    try {
+      applyAll(false)
+      return true
+    } catch (err) {
+      fail('refresh decor', err)
+      return false
+    }
+  }
+
   // Logout: put EMI's own objects back (only if ours are still installed, so objects
   // from a previous world are never restored over new ones) and reset to CLEAN.
   function logout() {
@@ -298,7 +326,8 @@
 
   ns.session = {
     tick: tick, toggle: toggle, toggleDecor: toggleDecor, logout: logout, label: label,
-    decorLabel: decorLabel, canPress: canPress, canPressDecor: canPressDecor, CLEAN: CLEAN, ALL: ALL
+    decorLabel: decorLabel, canPress: canPress, canPressDecor: canPressDecor, localMarks: localMarks,
+    refreshDecor: refreshDecor, CLEAN: CLEAN, ALL: ALL
   }
 
   // KubeJS replaces these handlers on every script reload, so they never duplicate.
