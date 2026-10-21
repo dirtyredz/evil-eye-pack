@@ -1,0 +1,13 @@
+name = "Customizable Player Models"
+filename = "CustomPlayerModels-1.20-0.6.27a.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/h1E7sQNL/versions/BZZSHBbA/CustomPlayerModels-1.20-0.6.27a.jar"
+hash-format = "sha512"
+hash = "ec0ae724e5cc58180f1203d0c155cecf5f362030bb445083d15abd4c1d09585e2000c68e7e074f78bd8416267e792f98322e551b09cd0e9bd0fbf94eb7cf9331"
+
+[update]
+[update.modrinth]
+mod-id = "h1E7sQNL"
+version = "BZZSHBbA"

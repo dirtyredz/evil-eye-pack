@@ -2754,6 +2754,11 @@ hash = "55d77d596c2d805f28b47ea53725ccaa220d2857177cad3909e48d8c12b2a2cb"
 metafile = true
 
 [[files]]
+file = "mods/custom-player-models.pw.toml"
+hash = "fc68312343382c905a8776d49489990cc4e4d57236a59e686abde53f01e7a181"
+metafile = true
+
+[[files]]
 file = "mods/cyclops-core.pw.toml"
 hash = "ce751efd1e64565620d6cc96a43dcdada09bcc3eab608206f08343e95b0d6c56"
 metafile = true
@@ -3149,6 +3154,11 @@ hash = "cd3140db1982e4e1b17c60b71e436fc92c22b1a6ce189e6b8197d1275487679c"
 metafile = true
 
 [[files]]
+file = "mods/modern-ui.pw.toml"
+hash = "fb078f45d04576d994b31f76911eedf74aa6b4ca5ed177eedffd0853887cf97f"
+metafile = true
+
+[[files]]
 file = "mods/modernfix.pw.toml"
 hash = "5996e886bd284d7a20287355ab42a7f5df7f6cce90fe74b04223cd55a4fd6c5d"
 metafile = true
@@ -3419,13 +3429,33 @@ hash = "ebf991e3897283ce84876112583e18d11eca4125778e619a6738b9fceed76378"
 metafile = true
 
 [[files]]
+file = "resourcepacks/better-leaves.pw.toml"
+hash = "eb0b5f269171cd5b891d9bdf2c5da89698e21a71ffec1172ead75bc19411cbdc"
+metafile = true
+
+[[files]]
+file = "resourcepacks/cozyui-plus.pw.toml"
+hash = "817d84eeb39cb133686b66225331c560ddc803839a7b13f0cba72fe4cf980a61"
+metafile = true
+
+[[files]]
 file = "resourcepacks/eat-quiet.pw.toml"
 hash = "7d733354ee6af6f31004d76aea76ded8ba00dd9545254136fdc432ea9474d540"
 metafile = true
 
 [[files]]
+file = "resourcepacks/fancy-crops.pw.toml"
+hash = "2326f399a4a89ddb88843b6331af3e036ecebe846617142a93ac080bb38fdc47"
+metafile = true
+
+[[files]]
 file = "resourcepacks/fresh-animations.pw.toml"
 hash = "174dfc4e2332878c681272c43ed881f963ec34f9560a8f7e858eb1927c99fa51"
+metafile = true
+
+[[files]]
+file = "resourcepacks/new-hearts.pw.toml"
+hash = "e26dc31ec472a3c1c73532d24fcdab50c3696316975358d80ded51d185650c13"
 metafile = true
 
 [[files]]

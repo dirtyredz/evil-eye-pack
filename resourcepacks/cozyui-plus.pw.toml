@@ -1,0 +1,13 @@
+name = "CozyUI+"
+filename = "CozyUI+_v1.11.zip"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/G5rf50k2/versions/rHjmKyke/CozyUI%2B_v1.11.zip"
+hash-format = "sha512"
+hash = "7006fcbcae94d1dfb526799362c6010721caa936eaaab95f517c22181e5a697358724507eaa43a19a5327d0019bd0c6f98098ce484d5dc6351c1e0ab8096822b"
+
+[update]
+[update.modrinth]
+mod-id = "G5rf50k2"
+version = "rHjmKyke"
