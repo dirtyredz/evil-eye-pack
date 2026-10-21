@@ -2,8 +2,10 @@
 // "Mods" dropdown beside the CLEAN/ALL button. Choosing a mod sets EMI's search text to
 // "@<modid>" (exactly as if the player typed it), choosing the active mod again or
 // "Clear" empties it. A click outside the menu or Esc closes it without changing
-// anything. The mod list is config/emi-curation/mods.json ([{label, modid}]); entries
-// whose mod is not loaded are dropped.
+// anything. The list is built when the menu opens: every loaded mod that owns at least one
+// item in EMI's current index (so CLEAN and DECOR changes show), sorted A-Z by display name,
+// with config/emi-curation/mods.json applying renames, hides and pins. A list too long for
+// the screen is split into pages (a Prev / Next strip next to the button).
 //
 // Only the Mods button is a widget. The dropdown is drawn by this script in Render$Post
 // (above EMI's panels) and hit-tested from the mouse-press hook. The search is
@@ -15,29 +17,27 @@
 
 (function (ns) {
   var L = ns.modsList
-  var LIST_PATH = 'config/emi-curation/mods.json'
-  var BUTTON_W = 56
+  var G = ns.modsLayout
+  var BUTTON_W = 46
   var BUTTON_LABEL = 'Mods ▾'
   var PAD = 4
   var CLEAR_LABEL = 'Clear'
+  var PREV_LABEL = '< Prev'
   var ESC = 256
 
   // ---- state ----
 
-  // u.items: [{label, modid}] (modid null = Clear); u.rects: their screen rects while open.
-  function ui() { return ns.modsUi || (ns.modsUi = { screen: null, button: null, items: [], rects: [], open: false, mouse: null }) }
+  // u.items: [{label, modid}] (modid null = Clear). While open, u.rows holds what is on the
+  // current page, [{kind: 'item'|'prev'|'next', index, rect}], and u.rects their rects.
+  function ui() {
+    return ns.modsUi || (ns.modsUi = { screen: null, button: null, items: [], rows: [], rects: [], open: false, mouse: null, page: 0, pageCount: 1 })
+  }
 
-  var listCache = null
-  function loadList() {
-    if (listCache) return listCache
-    var list = []
-    try {
-      list = L.visibleEntries(L.parseList(JsonIO.readString(LIST_PATH)), function (id) { return Platform.isLoaded(id) })
-    } catch (err) {
-      ns.diag.logError('load mods.json', err)
-    }
-    listCache = list
-    return list
+  function menuItems() {
+    var items = [{ label: CLEAR_LABEL, modid: null }]
+    var entries = ns.modsSource.entries()
+    for (var i = 0; i < entries.length; i++) items.push({ label: entries[i].label, modid: entries[i].modid })
+    return items
   }
 
   function searchWidget() { return ns.interop.cls('dev.emi.emi.screen.EmiScreenManager').search }
@@ -64,15 +64,63 @@
 
   function layoutItems(u) {
     if (!u.widths || u.widths.length !== u.items.length) u.widths = measureRows(u)
-    u.rects = L.layoutMenu(rectOf(u.button), u.widths,
-      { w: u.screen.width, h: u.screen.height }).rects
+    var lay = G.layoutPaged(rectOf(u.button), u.widths, { w: u.screen.width, h: u.screen.height }, u.page)
+    u.page = lay.page
+    u.pageCount = lay.pageCount
+    var rows = []
+    for (var i = 0; i < lay.rows.length; i++) rows.push({ kind: 'item', index: lay.rows[i].index, rect: lay.rows[i].rect })
+    if (lay.pager) {
+      rows.push({ kind: 'prev', index: -1, rect: lay.pager.prev })
+      rows.push({ kind: 'next', index: -1, rect: lay.pager.next })
+    }
+    var rects = []
+    for (var j = 0; j < rows.length; j++) rects.push(rows[j].rect)
+    // Never cover the other buttons (CLEAN, DECOR): slide the dropdown sideways if it would.
+    var dx = G.shiftClear(rects, otherButtons(), u.screen.width)
+    for (var k = 0; k < rects.length; k++) {
+      if (dx !== 0) rows[k].rect = { x: rects[k].x + dx, y: rects[k].y, w: rects[k].w, h: rects[k].h }
+    }
+    u.rows = rows
+    u.rects = []
+    for (var n = 0; n < rows.length; n++) u.rects.push(rows[n].rect)
+  }
+
+  // Rects of the visible CLEAN and DECOR buttons.
+  function otherButtons() {
+    var out = []
+    var others = [ns.ui ? ns.ui.button : null, ns.decorUi ? ns.decorUi.button : null]
+    for (var i = 0; i < others.length; i++) if (others[i] != null && others[i].visible) out.push(rectOf(others[i]))
+    return out
   }
 
   function setOpen(u, open) {
     u.open = open
+    u.rows = []
     u.rects = []
-    if (open) u.widths = null
-    if (open) layoutItems(u)
+    u.page = 0
+    if (open) {
+      u.items = menuItems()
+      u.widths = null
+      layoutItems(u)
+    }
+  }
+
+  // Prev / Next wrap around.
+  function turnPage(u, delta) {
+    u.page = (u.page + delta + u.pageCount) % u.pageCount
+    layoutItems(u)
+  }
+
+  function rowLabel(u, row, cur) {
+    if (row.kind === 'prev') return PREV_LABEL
+    if (row.kind === 'next') return 'Next > ' + (u.page + 1) + '/' + u.pageCount
+    return rowText(u.items[row.index], cur)
+  }
+
+  function rowActive(u, row, cur) {
+    if (row.kind !== 'item') return false
+    var item = u.items[row.index]
+    return item.modid !== null && L.isActive(cur, item.modid)
   }
 
   function choose(modid) {
@@ -88,7 +136,7 @@
   }
 
   function rowAt(u, x, y) {
-    for (var i = 0; i < u.rects.length; i++) if (L.inside(u.rects[i], x, y)) return i
+    for (var i = 0; i < u.rows.length; i++) if (G.inside(u.rows[i].rect, x, y)) return i
     return -1
   }
 
@@ -147,8 +195,8 @@
     var cur = currentSearch()
     var hover = rowAt(u, mouseX, mouseY)
     var bounds = { x1: 1e9, y1: 1e9, x2: -1e9, y2: -1e9 }
-    for (var i = 0; i < u.rects.length; i++) {
-      var r = u.rects[i]
+    for (var i = 0; i < u.rows.length; i++) {
+      var r = u.rows[i].rect
       bounds.x1 = Math.min(bounds.x1, r.x); bounds.y1 = Math.min(bounds.y1, r.y)
       bounds.x2 = Math.max(bounds.x2, r.x + r.w); bounds.y2 = Math.max(bounds.y2, r.y + r.h)
     }
@@ -156,17 +204,16 @@
     try {
       g.pose().translate(0, 0, DRAW_Z)
       g.fill(bounds.x1 - 1, bounds.y1 - 1, bounds.x2 + 1, bounds.y2 + 1, COLOR_BORDER)
-      for (var j = 0; j < u.rects.length; j++) {
-        var rr = u.rects[j]
-        var active = u.items[j].modid !== null && L.isActive(cur, u.items[j].modid)
-        g.fill(rr.x, rr.y, rr.x + rr.w, rr.y + rr.h, j === hover ? COLOR_HOVER : (active ? COLOR_ACTIVE : COLOR_BACK))
+      for (var j = 0; j < u.rows.length; j++) {
+        var rr = u.rows[j].rect
+        g.fill(rr.x, rr.y, rr.x + rr.w, rr.y + rr.h, j === hover ? COLOR_HOVER : (rowActive(u, u.rows[j], cur) ? COLOR_ACTIVE : COLOR_BACK))
       }
       g.flush()
       // Text via ns.modsText (drawWordWrap, opaque ARGB colour), above the fills.
       g.pose().translate(0, 0, 50)
-      for (var k = 0; k < u.rects.length; k++) {
-        var rk = u.rects[k]
-        ns.modsText.draw(g, font, rowText(u.items[k], cur), rk.x + PAD, rk.y + 2, COLOR_TEXT)
+      for (var k = 0; k < u.rows.length; k++) {
+        var rk = u.rows[k].rect
+        ns.modsText.draw(g, font, rowLabel(u, u.rows[k], cur), rk.x + PAD, rk.y + 2, COLOR_TEXT)
       }
       g.flush()
     } finally {
@@ -187,12 +234,10 @@
       }
     }).bounds(0, 0, BUTTON_W, 18).build()
     button.visible = false
-    var items = [{ label: CLEAR_LABEL, modid: null }]
-    var list = loadList()
-    for (var i = 0; i < list.length; i++) items.push({ label: list[i].label, modid: list[i].modid })
     u.screen = screen
     u.button = button
-    u.items = items
+    u.items = []
+    u.rows = []
     u.rects = []
     u.open = false
     e.addListener(button)
@@ -212,7 +257,7 @@
 
   function onScreenPost(e) {
     var u = ui()
-    if (!u.open || u.rects.length === 0) return
+    if (!u.open || u.rows.length === 0) return
     if (!ns.interop.isContainerScreen(e.getScreen())) return
     try {
       drawMenu(e.getGuiGraphics(), u, e.getMouseX(), e.getMouseY())
@@ -242,10 +287,14 @@
     var row = rowAt(u, x, y)
     if (row >= 0) {
       e.setCanceled(true)
-      if (e.getButton() === 0) choose(u.items[row].modid)
+      if (e.getButton() !== 0) return
+      var hit = u.rows[row]
+      if (hit.kind === 'prev') turnPage(u, -1)
+      else if (hit.kind === 'next') turnPage(u, 1)
+      else choose(u.items[hit.index].modid)
       return
     }
-    if (L.inside(rectOf(u.button), x, y)) return
+    if (G.inside(rectOf(u.button), x, y)) return
     setOpen(u, false)
   }
 

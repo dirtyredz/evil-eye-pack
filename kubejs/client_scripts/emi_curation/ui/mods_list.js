@@ -1,32 +1,74 @@
 // priority: 47
-// Pure logic of the Mods menu: mods.json parsing, search-text toggling, dropdown layout and
-// hit-testing. No Java and no EMI, so it is unit-tested directly.
+// Pure data logic of the Mods menu, no Java: the override file (config/emi-curation/
+// mods.json), building the sorted entry list from the mods that own indexed items, and
+// search-text toggling. Layout lives in mods_layout.js.
 
 (function (ns) {
-  var ROW_H = 12
+  var MODID_RE = /^[a-z0-9_.-]+$/
 
-  // Parses mods.json text into [{label, modid}], dropping malformed and duplicate entries.
-  function parseList(text) {
-    var raw = JSON.parse(String(text))
+  function fail(msg) { throw new Error('mods.json: ' + msg) }
+
+  function modidArray(value, where) {
+    if (value === undefined) return []
+    if (!Array.isArray(value)) fail(where + ' must be an array')
     var out = []
-    var seen = {}
-    if (!Array.isArray(raw)) throw new Error('mods.json must be an array')
-    for (var i = 0; i < raw.length; i++) {
-      var e = raw[i]
-      if (!e || typeof e.label !== 'string' || typeof e.modid !== 'string') continue
-      var label = e.label.trim()
-      var modid = e.modid.trim()
-      if (label === '' || !/^[a-z0-9_]+$/.test(modid) || seen[modid]) continue
-      seen[modid] = true
-      out.push({ label: label, modid: modid })
+    for (var i = 0; i < value.length; i++) {
+      if (typeof value[i] === 'string' && MODID_RE.test(value[i])) out.push(value[i])
     }
     return out
   }
 
-  function visibleEntries(list, isLoaded) {
-    var out = []
-    for (var i = 0; i < list.length; i++) if (isLoaded(list[i].modid)) out.push(list[i])
-    return out
+  // Parses the override file: { schema: 1, rename: {modid: "Label"}, hide: [modid], pin: [modid] }.
+  // Malformed entries are dropped; a wrong shape throws.
+  function parseOverrides(text) {
+    var raw = JSON.parse(String(text))
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) fail('must be an object')
+    var rename = {}
+    var src = raw.rename === undefined ? {} : raw.rename
+    if (!src || typeof src !== 'object' || Array.isArray(src)) fail('rename must be an object')
+    var keys = Object.keys(src)
+    for (var i = 0; i < keys.length; i++) {
+      var label = typeof src[keys[i]] === 'string' ? src[keys[i]].trim() : ''
+      if (MODID_RE.test(keys[i]) && label !== '') rename[keys[i]] = label
+    }
+    return { rename: rename, hide: modidArray(raw.hide, 'hide'), pin: modidArray(raw.pin, 'pin') }
+  }
+
+  function emptyOverrides() { return { rename: {}, hide: [], pin: [] } }
+
+  function byLabel(a, b) {
+    var x = a.label.toLowerCase()
+    var y = b.label.toLowerCase()
+    if (x !== y) return x < y ? -1 : 1
+    return a.modid < b.modid ? -1 : (a.modid > b.modid ? 1 : 0)
+  }
+
+  // owned: array of mod ids (namespaces) that own at least one item; isLoaded(modid) and
+  // nameOf(modid) come from the loader (Platform). Returns [{label, modid}]: pinned mods first
+  // in pin order, then everything else A-Z by label. Hidden, unloaded and duplicate ids drop out.
+  function buildEntries(owned, isLoaded, nameOf, overrides) {
+    var ov = overrides || emptyOverrides()
+    var hidden = {}
+    var i
+    for (i = 0; i < ov.hide.length; i++) hidden[ov.hide[i]] = true
+    var byId = {}
+    var entries = []
+    for (i = 0; i < owned.length; i++) {
+      var id = owned[i]
+      if (byId[id] || hidden[id] || !isLoaded(id)) continue
+      var label = ov.rename[id] || String(nameOf(id) || '').trim() || id
+      byId[id] = { label: label, modid: id }
+      entries.push(byId[id])
+    }
+    var pinned = []
+    for (i = 0; i < ov.pin.length; i++) {
+      var p = byId[ov.pin[i]]
+      if (p && pinned.indexOf(p) === -1) pinned.push(p)
+    }
+    var rest = []
+    for (i = 0; i < entries.length; i++) if (pinned.indexOf(entries[i]) === -1) rest.push(entries[i])
+    rest.sort(byLabel)
+    return pinned.concat(rest)
   }
 
   function searchText(modid) { return '@' + modid }
@@ -40,50 +82,8 @@
     return isActive(current, modid) ? '' : searchText(modid)
   }
 
-  // Pure menu layout. anchor: the Mods button rect; widths: each row's width. Returns
-  // { rects:[{x,y,w,h}] }, one per row. Rows stack in one column opened upward when the
-  // anchor is in the lower half of the screen (downward otherwise); extra columns are
-  // used only when the height runs out. Each column is as wide as its own longest row,
-  // and the whole menu is clamped to the screen.
-  function layoutMenu(anchor, widths, screen) {
-    var count = widths.length
-    var up = anchor.y + anchor.h / 2 > screen.h / 2
-    var room = up ? anchor.y : screen.h - (anchor.y + anchor.h)
-    var maxRows = Math.max(1, Math.floor(room / ROW_H))
-    var columns = Math.max(1, Math.ceil(count / maxRows))
-    var rows = Math.max(1, Math.ceil(count / columns))
-    var colW = []
-    var total = 0
-    for (var c = 0; c < columns; c++) {
-      var w = 1
-      for (var i = c * rows; i < Math.min(count, (c + 1) * rows); i++) w = Math.max(w, widths[i])
-      colW.push(w)
-      total += w
-    }
-    if (total > screen.w) {
-      // Too wide even so: squeeze the columns evenly.
-      for (var s = 0; s < columns; s++) colW[s] = Math.max(1, Math.floor(screen.w / columns))
-      total = colW[0] * columns
-    }
-    var x0 = Math.max(0, Math.min(anchor.x, screen.w - total))
-    var rects = []
-    for (var n = 0; n < count; n++) {
-      var col = Math.floor(n / rows)
-      var row = n % rows
-      var cx = x0
-      for (var k = 0; k < col; k++) cx += colW[k]
-      var y = up ? anchor.y - (rows - row) * ROW_H : anchor.y + anchor.h + row * ROW_H
-      rects.push({ x: cx, y: Math.max(0, Math.min(y, screen.h - ROW_H)), w: colW[col], h: ROW_H })
-    }
-    return { rects: rects }
-  }
-
-  function inside(rect, x, y) {
-    return x >= rect.x && x < rect.x + rect.w && y >= rect.y && y < rect.y + rect.h
-  }
-
   ns.modsList = {
-    ROW_H: ROW_H, parseList: parseList, visibleEntries: visibleEntries, searchText: searchText,
-    isActive: isActive, nextSearch: nextSearch, layoutMenu: layoutMenu, inside: inside
+    parseOverrides: parseOverrides, emptyOverrides: emptyOverrides, buildEntries: buildEntries,
+    searchText: searchText, isActive: isActive, nextSearch: nextSearch
   }
 })(global.emiCuration || (global.emiCuration = {}))

@@ -2,6 +2,18 @@
 
 Newest first.
 
+## 2026-10-21 — Auto Mods menu and an independent DECOR toggle
+
+**Decision.**
+- The Mods menu lists every loaded mod that owns an item in EMI's current index, A-Z by display name. `mods.json` is now only overrides (rename, hide, pin). A dropdown too long for the window is paged, not squeezed.
+- DECOR is a second axis beside CLEAN/ALL, not a third CLEAN mode. It removes decor stacks from the index copy only; recipe displays, uses and lookups are never filtered by it. The rules live in `config/emi-curation/decor.json` in three layers (manual exceptions, whole mods, tags).
+- It starts SHOWN (`defaultHidden: false`), so the out-of-the-box index and ALL are unchanged. The owner flips the default in `decor.json`.
+- Doors and trapdoors are not decor (access and redstone parts); beds and signs are. Joy of Painting is not a decor mod, only its easel and canvases are.
+
+**Why.** A hand-written list always misses newly added mods. With decor as a second axis, ALL still means EMI's ordinary index when DECOR is shown, and decor can be hidden under either CLEAN mode. Keeping recipes intact avoids hiding crafting steps that merely use a decor block.
+
+**Rejected.** A third "CLEAN + no decor" mode (not independent); hiding decor in recipe displays (breaks recipe lookups); a hand-listed decor item set (stale on every mod add).
+
 ## 2026-10-20 — Dank Recipe Transfer: owner's standalone mod, hosted as a GitHub release
 
 **Decision.**

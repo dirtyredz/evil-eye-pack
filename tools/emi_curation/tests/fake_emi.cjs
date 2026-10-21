@@ -45,6 +45,7 @@ class HashSet {
 // ---- Minecraft-ish ----
 class Item { constructor(id) { this.id = id; } }
 class Fluid { constructor(id) { this.id = id; } }
+class Block { constructor(item) { this.item = item; } asItem() { return this.item; } }
 
 // Plain value -> fake NBT tag (compound / string / list).
 function tag(v) {
@@ -225,6 +226,17 @@ function createWorld(spec) {
   };
   const EmiPersistentData = { save() { counters.persistentSaves++; } };
   const EmiConfig = { enabled: true, writeConfig() { counters.configWrites++; } };
+  // Tag registries: world.tags.item / .block map 'ns:tag' -> [Item | Block]. Read through the same
+  // Optional / HolderSet shape the scripts use (size(), get(i).value()); no iterator exists.
+  const tags = { item: {}, block: {} };
+  const registry = (kind) => ({
+    getTag(key) {
+      if (world.failTags) throw new Error('injected tag failure');
+      const list = tags[kind][key.id];
+      if (!list) return { isPresent: () => false };
+      return { isPresent: () => true, get: () => ({ size: () => list.length, get: (i) => ({ value: () => list[i] }) }) };
+    },
+  });
   const player = {};
   const Minecraft = { getInstance: () => ({ player: world.inWorld ? player : null, font: fakeFont() }) };
 
@@ -237,6 +249,10 @@ function createWorld(spec) {
       synchronizedMap: (m) => m,
     },
     'net.minecraft.world.item.Item': Item,
+    'net.minecraft.core.registries.Registries': { ITEM: 'item', BLOCK: 'block' },
+    'net.minecraft.core.registries.BuiltInRegistries': { ITEM: registry('item'), BLOCK: registry('block') },
+    'net.minecraft.tags.TagKey': { create: (reg, loc) => ({ reg, id: loc.id }) },
+    'net.minecraft.resources.ResourceLocation': { tryParse: (s) => (/^[a-z0-9_.-]+:[a-z0-9_./-]+$/.test(s) ? { id: s } : null) },
     'net.minecraft.client.Minecraft': Minecraft,
     'net.minecraft.network.chat.Component': Component,
     'net.minecraft.client.gui.components.Button': Button,
@@ -263,7 +279,7 @@ function createWorld(spec) {
   };
 
   const world = {
-    counters, userHidden, favorites, panels, inWorld: true, failFreeze: false,
+    counters, userHidden, favorites, panels, tags, inWorld: true, failFreeze: false, failTags: false,
     classes, EmiStackList, EmiRecipes, EmiReloadManager, EmiHidden, EmiConfig, EmiScreenManager,
     Java: { loadClass: (name) => { if (!(name in classes)) throw new Error('ClassNotFound ' + name); return classes[name]; } },
     // EMI reload: new master/filtered lists, then a provisional manager while the worker
@@ -300,6 +316,6 @@ function clientEvents() {
 
 module.exports = {
   fakeGraphics,
-  JList, OpaqueList, opaque, Item, Fluid, EmiStack, EMPTY_STACK, ingredient, Recipe, Manager,
+  JList, OpaqueList, opaque, Item, Fluid, Block, EmiStack, EMPTY_STACK, ingredient, Recipe, Manager,
   Screen, AbstractContainerScreen, CreativeModeInventoryScreen, createWorld, clientEvents,
 };

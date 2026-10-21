@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "description": "Evil Eye DECOR toggle (starts SHOWN after every launch and logout; set defaultHidden to true to start HIDDEN). When DECOR is HIDDEN, anything matching these rules is removed from the EMI index (in memory only; recipes, lookups and uses are untouched). Order: forceNotDecor, forceDecor, then whole mods, then tags.",
+  "defaultHidden": false,
+  "mods": [
+    "handcrafted",
+    "another_furniture",
+    "cluttered",
+    "domum_ornamentum",
+    "createdeco",
+    "interiors",
+    "roundwood",
+    "connectedglass",
+    "friendly_furnishings",
+    "refurbished_furniture"
+  ],
+  "modPrefixes": [
+    "mcw"
+  ],
+  "pathPrefixes": {
+    "herbalwitch": [
+      "decor/"
+    ]
+  },
+  "itemTags": [
+    "minecraft:stairs",
+    "minecraft:slabs",
+    "minecraft:walls",
+    "minecraft:fences",
+    "minecraft:fence_gates",
+    "minecraft:wool_carpets",
+    "minecraft:carpets",
+    "minecraft:banners",
+    "minecraft:candles",
+    "minecraft:signs",
+    "minecraft:hanging_signs",
+    "minecraft:beds",
+    "forge:fences",
+    "forge:fence_gates",
+    "forge:glass_panes",
+    "forge:stained_glass_panes"
+  ],
+  "blockTags": [
+    "minecraft:stairs",
+    "minecraft:slabs",
+    "minecraft:walls",
+    "minecraft:fences",
+    "minecraft:fence_gates",
+    "minecraft:wool_carpets",
+    "minecraft:banners",
+    "minecraft:candles",
+    "minecraft:flower_pots",
+    "minecraft:signs",
+    "minecraft:beds",
+    "forge:fences",
+    "forge:fence_gates",
+    "forge:glass_panes"
+  ],
+  "forceDecor": [
+    "xercapaint:item_easel",
+    "xercapaint:item_canvas",
+    "xercapaint:item_canvas_large",
+    "xercapaint:item_canvas_long",
+    "xercapaint:item_canvas_tall",
+    "xercapaint:item_canvas_glass",
+    "xercapaint:item_canvas_glass_large",
+    "xercapaint:item_canvas_glass_long",
+    "xercapaint:item_canvas_glass_tall"
+  ],
+  "forceNotDecor": [
+    "supplementaries:faucet",
+    "domum_ornamentum:architectscutter",
+    "handcrafted:hammer",
+    "refurbished_furniture:wrench",
+    "refurbished_furniture:spatula",
+    "refurbished_furniture:television_remote"
+  ]
+}
