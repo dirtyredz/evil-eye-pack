@@ -1873,10 +1873,6 @@ file = "config/forgeendertech/cached.dat"
 hash = "84d53f5c03f44d9f358547f1db098612dd8cfddc29632b49cdb4138181eb1217"
 
 [[files]]
-file = "config/fusion-common.toml"
-hash = "de7be99d0c69d9044c67181b9658917d0cd1afd53a6ff618a2a622dc0ccb930e"
-
-[[files]]
 file = "config/guideme.toml"
 hash = "82bcfdf8624ec94cf4cfe30b1def3a0f3d562561b31a0ccef7468657f48e0987"
 
@@ -2814,11 +2810,6 @@ hash = "724ef5d1976e623bccf155159410708893b16fb1f35911ab7911ef6f047552ad"
 metafile = true
 
 [[files]]
-file = "mods/enchanted-witchcraft.pw.toml"
-hash = "2f380d409c11ac17cf12df9c69c91cff6ea415b7a482cfa331c415d9d70342d3"
-metafile = true
-
-[[files]]
 file = "mods/enchantment-descriptions.pw.toml"
 hash = "e4c69a3551a4343fc76fb135266aecac0042863693f04d2c58a26c71b6e988d9"
 metafile = true
@@ -2940,7 +2931,7 @@ metafile = true
 
 [[files]]
 file = "mods/fusion.pw.toml"
-hash = "b7a30e53e85668e1947ddf22002d8db75d2c55f852432c97b972c69f4a51b269"
+hash = "db148013fbbea186042c117cedc80aab06452268f8e599a31a58f2a1b22aee91"
 metafile = true
 
 [[files]]
@@ -2976,11 +2967,6 @@ metafile = true
 [[files]]
 file = "mods/handcrafted.pw.toml"
 hash = "2143dc055ae837c6a4de5da8dd228cacf73dbe872a5c603a28f5e623e22ea5e6"
-metafile = true
-
-[[files]]
-file = "mods/hexalia.pw.toml"
-hash = "2a0cdeb1651d0ae5e95b1279cdd72f09d0843427eccecfd21f2f38e3aa5f9553"
 metafile = true
 
 [[files]]
@@ -3304,23 +3290,8 @@ hash = "7b74687503a817ae7e7a8145996f0a09ddab38933af1e244b324083aeed2fa16"
 metafile = true
 
 [[files]]
-file = "mods/simplecore-api.pw.toml"
-hash = "0a54c2837eec1b98c22da607a0f1484c4ae0560a0aa0dacaeaeda1b010d67df5"
-metafile = true
-
-[[files]]
 file = "mods/simply-graves.pw.toml"
 hash = "ea0204e024e561c7e56456146ba5c282595eeebd0077343f50d5c7d0f9d0a231"
-metafile = true
-
-[[files]]
-file = "mods/smartbrainlib.pw.toml"
-hash = "640c3885bce6e23c6e86a2cd30d98b234c92194cf78344bd1810d39e35f3e487"
-metafile = true
-
-[[files]]
-file = "mods/stateobserver.pw.toml"
-hash = "cb1e63923f5ee0760eef3b3ab31713f91f054fece47b36d5c2eaff04247b6827"
 metafile = true
 
 [[files]]

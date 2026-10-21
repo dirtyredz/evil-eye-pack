@@ -2,6 +2,14 @@
 
 Newest first.
 
+## 2026-10-21 — Fusion is SuperMartijn642's connected-textures library, not Alexndr's alloy add-on
+
+**Decision.**
+- `mods/fusion.pw.toml` pins SuperMartijn642's Fusion 1.2.12 (Modrinth direct URL, sha512). The previous Alexndr/Sinhika "SimpleOres: Fusion" 6.0.0.3, its only dependency SimpleCore API, and `config/fusion-common.toml` are removed. The two mods share mod id `fusion` and cannot coexist.
+- 1.2.12 rather than 1.3.16: Connected Glass 1.1.14 references Fusion API classes that 1.3.x no longer has.
+
+**Why.** Connected Glass (and Ender IO glass) need the `fusion:model` loader; the old jar logged 425 "Model loader 'fusion:model' not found" errors. Nothing in the pack (recipes, KubeJS, configs, other jars) referenced the alloy add-on; its only trace was a chest-loot toggle added to suppress its duplicate bronze/steel. Consequence: items such as `fusion:bronze_*`/`steel_*` in existing worlds become unidentified.
+
 ## 2026-10-20 — Dank Recipe Transfer: owner's standalone mod, hosted as a GitHub release
 
 **Decision.**
