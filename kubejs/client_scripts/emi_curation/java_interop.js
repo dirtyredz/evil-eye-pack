@@ -63,7 +63,7 @@
 
   // Immutable list of the elements of `javaList` for which keepFn(element) is truthy,
   // in order. Snapshots through copy() first, then index-loops (Rhino cannot for...of
-  // a Java collection; see GOTCHAS). The one home of that shape.
+  // a Java collection; see GOTCHAS). The one home of list *filtering* (hiding.js buildKeySet still iterates a Java list by hand to build a set, deliberately).
   function filterToList(javaList, keepFn) {
     var out = newList()
     var C = ns.collections

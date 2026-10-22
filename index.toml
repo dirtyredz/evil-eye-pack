@@ -2390,7 +2390,7 @@ hash = "b9194871bc7abb113668ab525210a9327bc37c01b5b0f1c2fbfdcee7e2d2cc8d"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/java_interop.js"
-hash = "27c25c5e9b8df0319149ad6358ad4bc97c557dc8347d1701f6f69769bc8f7efb"
+hash = "d367e1fe380e5d28c6b6552de814853c4a703fe9456dd2aa0cce82a847ca28d2"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/policy.js"

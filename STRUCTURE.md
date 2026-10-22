@@ -35,7 +35,7 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 | `emi_curation/diagnostics.js` (priority 100) | guarded logging; nothing may throw into Forge or EMI |
 | `emi_curation/collections.js` (95) | pure `len`/`at` accessors for JS arrays and Java lists; the one copy used by policy, views and hiding |
 | `emi_curation/policy.js` (90) | parse and validate the curation JSON. Stack (id, `nbtExceptions` keep, `hideWhenNbtHasKey` hide) and REI display-rule predicates. Pure: no Java, no EMI mutation. |
-| `emi_curation/java_interop.js` (85) | class lookup, `isContainerScreen`/`literal` (shared by both buttons), Java reference identity, Java list copy/freeze, `EmiStack` → policy descriptor (NBT walk) |
+| `emi_curation/java_interop.js` (85) | class lookup, `isContainerScreen`/`literal` (shared by both buttons), Java reference identity, Java list copy/freeze, list filtering (`filterToList`), item-key test (`isItemKey`), `EmiStack` → policy descriptor (NBT walk) |
 | `emi_curation/index_view.js` (80) | swap `EmiStackList.filteredStacks` between EMI's list and the CLEAN copy, then refresh search and sidebars. No hide decisions. |
 | `emi_curation/recipe_view.js` (70) | JS `EmiRecipeManager` wrapper over the baseline manager, filtering displays |
 | `emi_curation/hiding.js` (65) | the single home of hide decisions: `configure({ policy, getMaster })` (called once by `session.js`), then pack policy per stack (cached per registry key) and REI-style display hiding (adds EMI's user-hidden set and the master-index key set, built and cached here) |
@@ -76,7 +76,6 @@ handlers.
 Baseline review 2026-10-12. Remaining debt is filed in Docket (`docs/items/`, `dk list`):
 
 - Recipe-wrapper lifecycle still lives in `session.js`; it belongs with `recipe_view` (dk-b787a93f).
-- `interop.filterToList` is missing; list filtering is repeated in the views (dk-b9ec6a98).
 - Classification is cached in more than one place; one cache is wanted (dk-8a0232a6).
 - The EMI views rely on public-but-internal EMI fields. A custom mod would avoid that but would need building and hosting. Rejected for now; see `docs/DECISIONS.md`.
 
