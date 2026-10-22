@@ -2,6 +2,34 @@
 
 Newest first.
 
+## 2026-10-21 — Fusion is SuperMartijn642's connected-textures library, not Alexndr's alloy add-on
+
+**Decision.**
+- `mods/fusion.pw.toml` pins SuperMartijn642's Fusion 1.2.12 (Modrinth direct URL, sha512). The previous Alexndr/Sinhika "SimpleOres: Fusion" 6.0.0.3, its only dependency SimpleCore API, and `config/fusion-common.toml` are removed. The two mods share mod id `fusion` and cannot coexist.
+- 1.2.12 rather than 1.3.16: Connected Glass 1.1.14 references Fusion API classes that 1.3.x no longer has.
+
+**Why.** Connected Glass (and Ender IO glass) need the `fusion:model` loader; the old jar logged 425 "Model loader 'fusion:model' not found" errors. Nothing in the pack (recipes, KubeJS, configs, other jars) referenced the alloy add-on; its only trace was a chest-loot toggle added to suppress its duplicate bronze/steel. Consequence: items such as `fusion:bronze_*`/`steel_*` in existing worlds become unidentified.
+
+## 2026-10-21 — Local decor marks, set in game
+
+**Decision.** A rebindable key (default D, "EMI Curation" controls category, GUI conflict context) cycles the hovered item's local override automatic -> decor -> not decor; Shift does the same for its mod. Marks persist in `config/emi-curation/decor-local.json`, which is not in the pack index and layers above `decor.json` (item marks, then mod marks, then the shipped layers). A malformed file is ignored and never overwritten.
+
+**Why.** Curating decor from a config file means leaving the game and guessing ids; the owner sees the item in front of them. Keeping the marks out of the pack means a packwiz update cannot erase them; folding them into `decor.json` later is an explicit ask.
+
+**Rejected.** Writing to `decor.json` directly (the index would change and the next sync would overwrite it); EMI's own hidden-stack store (that is the user-hide feature and would hide recipes too); a chat command (slower than a key over the item).
+
+## 2026-10-21 — Auto Mods menu and an independent DECOR toggle
+
+**Decision.**
+- The Mods menu lists every loaded mod that owns an item in EMI's current index, A-Z by display name. `mods.json` is now only overrides (rename, hide, pin). A dropdown too long for the window is paged, not squeezed.
+- DECOR is a second axis beside CLEAN/ALL, not a third CLEAN mode. It removes decor stacks from the index copy only; recipe displays, uses and lookups are never filtered by it. The rules live in `config/emi-curation/decor.json` in three layers (manual exceptions, whole mods, tags).
+- It starts SHOWN (`defaultHidden: false`), so the out-of-the-box index and ALL are unchanged. The owner flips the default in `decor.json`.
+- Doors and trapdoors are not decor (access and redstone parts); beds and signs are. Joy of Painting is not a decor mod, only its easel and canvases are.
+
+**Why.** A hand-written list always misses newly added mods. With decor as a second axis, ALL still means EMI's ordinary index when DECOR is shown, and decor can be hidden under either CLEAN mode. Keeping recipes intact avoids hiding crafting steps that merely use a decor block.
+
+**Rejected.** A third "CLEAN + no decor" mode (not independent); hiding decor in recipe displays (breaks recipe lookups); a hand-listed decor item set (stale on every mod add).
+
 ## 2026-10-20 — Dank Recipe Transfer: owner's standalone mod, hosted as a GitHub release
 
 **Decision.**

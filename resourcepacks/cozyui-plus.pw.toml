@@ -1,0 +1,13 @@
+name = "CozyUI+"
+filename = "CozyUI+_v1.11_no-fonts.zip"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/G5rf50k2/versions/vXaZkfWj/CozyUI%2B_v1.11_no-fonts.zip"
+hash-format = "sha512"
+hash = "fc9edbbb71576ab76f5222abda563095fa95179db9150b77858e17e280822056da056f8112e8f36d06505933b00624d0bb9a7593729f961e177f92ceb8a310a7"
+
+[update]
+[update.modrinth]
+mod-id = "G5rf50k2"
+version = "vXaZkfWj"

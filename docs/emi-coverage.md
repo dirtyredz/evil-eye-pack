@@ -75,7 +75,6 @@ parts, and others.
 | Ender IO 6.2.18 | | `EnderIOJEI`, `MachinesJEI` | | Bridge. Check machines and NBT variants. | |
 | Extreme Reactors 2.0.84 | | `ExtremeReactorsJeiPlugin` | | Bridge | |
 | FTB Library 2001.1.5 | | `JEIIntegration` | `REIForgePluginStub` | Bridge. The REI favorites integration is gone (see below). | |
-| Fusion 6.0.0.3 | | `JEIFusionPlugin` | | Bridge | |
 | HammerLib 20.1.50 | | `JeiHammerLib` | | Bridge | |
 | HammerMicroblocks 20.1.13 | | `JEIHammerMicroblocks` | | Bridge | |
 | Ice and Fire 2.1.13 | | `IceAndFireJEIPlugin` | | Bridge | |

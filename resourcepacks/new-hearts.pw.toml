@@ -1,0 +1,13 @@
+name = "New Hearts"
+filename = "New Hearts 1.9-15w49b.zip"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/wsRvBYae/versions/I2QfpvO2/New%20Hearts%201.9-15w49b.zip"
+hash-format = "sha512"
+hash = "92ca376e2d3c5ff98bb4ef74ce1e949616587568e02b23d9267b4104a200c057bc757211b22e749af3827379695a95142c4111226d0e6110cf39374140cfdfd4"
+
+[update]
+[update.modrinth]
+mod-id = "wsRvBYae"
+version = "I2QfpvO2"

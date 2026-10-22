@@ -49,6 +49,25 @@ function makeConsole(sink) {
 }
 
 /**
+ * The fake KubeJS JsonIO: `files` (path -> text) holds what scripts wrote; a missing
+ * decor-local.json reads as "null", like the real JsonIO.readString; `state.failWrites` makes write throw.
+ */
+function makeJsonIO(base, files, state) {
+  return {
+    readString(p) {
+      if (files.has(p)) return files.get(p);
+      if (/decor-local.json$/.test(p)) return 'null';
+      return (base && base.readString ? base.readString : readRepoText)(p);
+    },
+    parseRaw(text) { return JSON.parse(text); },
+    write(p, element) {
+      if (state.failWrites) throw new Error('java.nio.file.AccessDeniedException: ' + p);
+      files.set(p, JSON.stringify(element));
+    },
+  };
+}
+
+/**
  * Runs the named scripts (default: all, in KubeJS priority order) in a fresh context.
  * env: { global, Java, ClientEvents, JsonIO, logs }
  */
@@ -58,8 +77,8 @@ function loadScripts(env, names) {
     global: env.global,
     Java: env.Java,
     ClientEvents: env.ClientEvents,
-    JsonIO: env.JsonIO || { readString: readRepoText },
-    Platform: env.Platform || { isLoaded: () => false },
+    JsonIO: env.JsonIO || makeJsonIO(null, new Map(), {}),
+    Platform: env.Platform || { isLoaded: () => false, getInfo: () => null },
     console: makeConsole(env.logs || []),
   };
   const context = vm.createContext(sandbox);
@@ -70,17 +89,24 @@ function loadScripts(env, names) {
   return sandbox;
 }
 
-/** Boots the production scripts against a fresh fake world; `opts`: { noReload, jsonIO }. */
+/**
+ * Boots the production scripts against a fresh fake world;
+ * `opts`: { noReload, jsonIO, fixture (a fixture()-shaped world to use instead of the default) }.
+ */
 function boot(opts) {
-  const fx = fixture();
+  const fx = (opts && opts.fixture) || fixture();
   const world = F.createWorld(fx.spec);
   const g = {};
-  const ctx = { world, fx, g, events: null, logs: [], loadedMods: new Set(['ae2', 'create', 'enderio']) };
+  const ctx = { world, fx, g, events: null, files: new Map((opts && opts.files) || []), io: { failWrites: false }, logs: [], loadedMods: new Set(['minecraft', 'ae2', 'create', 'enderio', 'allthecompressed', 'dramaticdoors']),
+    modNames: { minecraft: 'Minecraft', ae2: 'Applied Energistics 2', enderio: 'Ender IO', allthecompressed: 'AllTheCompressed', dramaticdoors: 'Dramatic Doors' } };
   ctx.load = (jsonIO) => {
     ctx.events = F.clientEvents();
     loadScripts({
-      global: g, Java: world.Java, ClientEvents: ctx.events.api, JsonIO: jsonIO, logs: ctx.logs,
-      Platform: { isLoaded: (id) => ctx.loadedMods.has(id) },
+      global: g, Java: world.Java, ClientEvents: ctx.events.api, JsonIO: makeJsonIO(jsonIO, ctx.files, ctx.io), logs: ctx.logs,
+      Platform: {
+        isLoaded: (id) => ctx.loadedMods.has(id),
+        getInfo: (id) => (ctx.loadedMods.has(id) ? { getName: () => ctx.modNames[id] || id } : null),
+      },
     });
   };
   ctx.tick = () => { for (const h of ctx.events.handlers.tick) h(); };
@@ -92,4 +118,4 @@ function boot(opts) {
   return ctx;
 }
 
-module.exports = { ROOT, SCRIPT_DIR, scriptFiles, scriptOrder, readRepoText, loadScripts, boot };
+module.exports = { makeJsonIO, ROOT, SCRIPT_DIR, scriptFiles, scriptOrder, readRepoText, loadScripts, boot };

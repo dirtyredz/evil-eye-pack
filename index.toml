@@ -1677,6 +1677,10 @@ file = "config/emi-curation/creative.json"
 hash = "4f71ecce73d6acda9d390bc2369796a360842f02208f4a28d943c5667c4b1815"
 
 [[files]]
+file = "config/emi-curation/decor.json"
+hash = "b10e772ce55b23dbd83665ec93a9f0b15f4087d281d1cc329480f4cc5939f983"
+
+[[files]]
 file = "config/emi-curation/enderio-glass.json"
 hash = "a271188e84b47f8c6f324d42dcadc3c5d49cb8b5958ec03c44e91984e79842c7"
 
@@ -1686,7 +1690,7 @@ hash = "f4389ca4bd9e12f0fbb6ba8c271c35f77b32885e39962b5f53cfc75ac53cbe90"
 
 [[files]]
 file = "config/emi-curation/mods.json"
-hash = "377d6bb327ffc71a566cd50795411b280575ea8d16ffe274f683ab1ac366dcc6"
+hash = "4f8d780084c3aa515dfa2cc5e90f169193cffbbe207fb2f1e131d3ed93ca55d5"
 
 [[files]]
 file = "config/emi-curation/rules.json"
@@ -1871,10 +1875,6 @@ hash = "68acdb3b0b6a646196af6c37c9f1b63773df24cc88cf5f515158ffc88bc5c957"
 [[files]]
 file = "config/forgeendertech/cached.dat"
 hash = "84d53f5c03f44d9f358547f1db098612dd8cfddc29632b49cdb4138181eb1217"
-
-[[files]]
-file = "config/fusion-common.toml"
-hash = "de7be99d0c69d9044c67181b9658917d0cd1afd53a6ff618a2a622dc0ccb930e"
 
 [[files]]
 file = "config/guideme.toml"
@@ -2373,8 +2373,24 @@ file = "defaultconfigs/ftbessentials-server.snbt"
 hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
+file = "kubejs/assets/emi_curation/lang/en_us.json"
+hash = "8d7c5fccb391d945ac1f39619689bb5216925fc25d0eb1b977e762ef977dc7ad"
+
+[[files]]
 file = "kubejs/client_scripts/emi_curation/collections.js"
 hash = "e2bdc46033ba8cc4ca773e940377e119fe4945d026cb811d9090d60acc564777"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/decor/decor_local.js"
+hash = "03286eae6f17f53f3f50cf907964928fcc4d451b3a9462f7caf490fa5a80298e"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/decor/decor_policy.js"
+hash = "7221325a4abc4cd35d7c6346a63bb08c9d579daa865d5286c2d7c238a5c830b9"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/decor/decor_tags.js"
+hash = "03c01cd81c01dea68eb30cc2010e13cd218ae294ab592c4f78bbde5a5c5d3ce7"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/diagnostics.js"
@@ -2382,7 +2398,7 @@ hash = "bcb0e60fbbe4115f0f0c274648f988ae8b3843c6bf686da79ae6db94a43ae8f4"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/hiding.js"
-hash = "49b8d4d73f7b74cf9609e32e8608047a96a058102ea2074449a826eb4045cef1"
+hash = "7ff0f7ed669751339a7b8a45bbd34410953c62214551211a85f9f8628d2982ce"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/index_view.js"
@@ -2402,23 +2418,39 @@ hash = "dc29cbdf22e411c5bc89c72e7e05a8d734582d1b01814c5aae9fea5d18ddde7d"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/session.js"
-hash = "2aae04d72a41cc50721d6aeda0ca84e85eaa09c06b6b41dc339c987261894186"
+hash = "2637bca0ba3067cda393d4e903b2393b1fc8b1ee63d264c7061230f6407788c2"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/button.js"
 hash = "5758051be408d6e8df33df1e6dba5d5d3a5f68456864f14a77a259cd6c8a90f7"
 
 [[files]]
+file = "kubejs/client_scripts/emi_curation/ui/decor_button.js"
+hash = "6ee350c864bc6d4c8e191e5b5ac6b23e0dc2a09096b3041237f48df40af42f37"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/ui/decor_mark.js"
+hash = "6280ab34914d1665c3b93a4586236a36f09c8acd414a09789ef95a9fcd9fe9b8"
+
+[[files]]
 file = "kubejs/client_scripts/emi_curation/ui/forge_hooks.js"
 hash = "f4f4a10d1feb9fdca15ab896205875f812a2c1eb515147cdcdef335977fd70bf"
 
 [[files]]
+file = "kubejs/client_scripts/emi_curation/ui/mods_layout.js"
+hash = "2b5fc3056f859f25e9ab96f7f6a4d7c9b473b262a08c3bf6266c171a3ff12115"
+
+[[files]]
 file = "kubejs/client_scripts/emi_curation/ui/mods_list.js"
-hash = "1a3e113ee86c0769d468e1cc9c5c9d1eac3d80ecea79aac4420beaf88e64ee31"
+hash = "9fa4f0dbcd895f651552053fba634f01c076d61be47c1ac8246340478ab81f60"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/mods_menu.js"
-hash = "3b9c1a5e2188045d9130366e2612e992827370b909c63cb95d1876464dc6ded0"
+hash = "0c5220828b24dabf38936adeb4473002740c1fc9640148b7df447a1b89b0f6f0"
+
+[[files]]
+file = "kubejs/client_scripts/emi_curation/ui/mods_source.js"
+hash = "e6667b6e4747cb472cf4f255e497cc834bf1955499bb7ca2fa10cf59ed067022"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/mods_text.js"
@@ -2427,6 +2459,15 @@ hash = "a1b5b75b2e89da5a93b65e26e925b0c5259186cc642a90d0d6b678159686a8d1"
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/placement.js"
 hash = "ac6d23ab2f6c75d9c0e137fef45b2d28f560670324df70efcf5aeb2eb971c960"
+
+[[files]]
+file = "kubejs/startup_scripts/emi_curation_keys.js"
+hash = "5757ce455fb5e3b52df9a4a1423b0e471c73c43669c56c338ae7408c08676ec5"
+
+[[files]]
+file = "mods/3dskinlayers.pw.toml"
+hash = "256010c606e682fadcf21a0d755b3a5be0946b556545d765eaad69fa470b285a"
+metafile = true
 
 [[files]]
 file = "mods/additional-lanterns.pw.toml"
@@ -2529,6 +2570,11 @@ hash = "09b84a42da91339efbc640824636624920b1fd74b7e251d70adbb3217b3f7cf3"
 metafile = true
 
 [[files]]
+file = "mods/astikorcarts-redux.pw.toml"
+hash = "555b419d3fab26d098997844d1648d10220468dcb34402f7a174ac03f9d7561f"
+metafile = true
+
+[[files]]
 file = "mods/ato.pw.toml"
 hash = "01a0bd2de5a9eb726d35fedfcd6961a97e77c41eda29d4bc7881a2d0bf8dd81e"
 metafile = true
@@ -2609,6 +2655,11 @@ hash = "903352ffbd84d4b95fed905893f4715d9c3f88ec9fff6fb06f6e359e0b839dc3"
 metafile = true
 
 [[files]]
+file = "mods/cluttered.pw.toml"
+hash = "73f6e09497de9fe0b9560a25320f34fbd0d24ae6ed8711e568322900f3119d39"
+metafile = true
+
+[[files]]
 file = "mods/collective.pw.toml"
 hash = "763f6094d5f377b1e05960f3ac5306c778746444abed2f716ceb70ddeef51aa0"
 metafile = true
@@ -2621,6 +2672,11 @@ metafile = true
 [[files]]
 file = "mods/common-capabilities.pw.toml"
 hash = "5bdc976d64496e58cbc5e6b3f1afcccaa31f8dd4029c7cf47c3bb1fc15b1a84f"
+metafile = true
+
+[[files]]
+file = "mods/companion.pw.toml"
+hash = "f282bb9fc5fcd8d6c92be2b317f7c211b91fc16df3c5b759c8039f0c0f37595d"
 metafile = true
 
 [[files]]
@@ -2646,6 +2702,16 @@ metafile = true
 [[files]]
 file = "mods/cosmetic-armor-reworked.pw.toml"
 hash = "cfa8aa9c0437721dab2057c932c9cf8ec3d3a11f672040601305238d13df85e8"
+metafile = true
+
+[[files]]
+file = "mods/cozycafe.pw.toml"
+hash = "041431adf6a55bd808be5806c4193b8383aaaed9cf1300849ade87261ed7ddc7"
+metafile = true
+
+[[files]]
+file = "mods/cozys-improved-cats.pw.toml"
+hash = "bcd927257fb325a649329c96ca84ba947e136bf96a53d915962d2102a2b43eb8"
 metafile = true
 
 [[files]]
@@ -2724,6 +2790,11 @@ hash = "55d77d596c2d805f28b47ea53725ccaa220d2857177cad3909e48d8c12b2a2cb"
 metafile = true
 
 [[files]]
+file = "mods/custom-player-models.pw.toml"
+hash = "fc68312343382c905a8776d49489990cc4e4d57236a59e686abde53f01e7a181"
+metafile = true
+
+[[files]]
 file = "mods/cyclops-core.pw.toml"
 hash = "ce751efd1e64565620d6cc96a43dcdada09bcc3eab608206f08343e95b0d6c56"
 metafile = true
@@ -2746,6 +2817,11 @@ metafile = true
 [[files]]
 file = "mods/diagonal-fences.pw.toml"
 hash = "57d291aa5d25da88e5f166124d89b1fe7b5c9c91aa6266b960dc443582baa76d"
+metafile = true
+
+[[files]]
+file = "mods/doggy-talents-next.pw.toml"
+hash = "cccfa8ade28caa5adc0f47779d86b6cd9d49c7d49f2473df8bb830bd9b09ae69"
 metafile = true
 
 [[files]]
@@ -2799,8 +2875,23 @@ hash = "a5306e8b8818ae6ade2941a0a3caed2b56756aeb812997cdb6210dc8ecb1b372"
 metafile = true
 
 [[files]]
+file = "mods/entity-model-features.pw.toml"
+hash = "223e44f83fc7bb33e28d0c70cd89efc31bd3b23d31d13c0118a2b33226b80f36"
+metafile = true
+
+[[files]]
 file = "mods/entityculling.pw.toml"
 hash = "03783bea6895d8acf198ac7d8bce4f91746659d0954f7367d0029b11963edee0"
+metafile = true
+
+[[files]]
+file = "mods/entitytexturefeatures.pw.toml"
+hash = "83e42fa3fb8b0e3e12b702748cd73d3f474498e906a20069023cee6cfeda4769"
+metafile = true
+
+[[files]]
+file = "mods/epic-structures-witch-huts.pw.toml"
+hash = "67410d7cebcc5aceb83c55be00fb977f30b30204ba3929321cd3479468041690"
 metafile = true
 
 [[files]]
@@ -2816,6 +2907,11 @@ metafile = true
 [[files]]
 file = "mods/fallingtree.pw.toml"
 hash = "c3855a5011cc263726532999f35c8691db9fa60b9d470758dd826d25c29ed4cb"
+metafile = true
+
+[[files]]
+file = "mods/farmers-delight.pw.toml"
+hash = "729ef2fb2cf98c7d6db74e20e65d6a4f4f3f54db5a162d8db6c0a6290733a537"
 metafile = true
 
 [[files]]
@@ -2849,6 +2945,16 @@ hash = "e49bd3414462c531e9ba0a9b56755625e9f4cbba9a1f3efd55f950ffb61c0a8e"
 metafile = true
 
 [[files]]
+file = "mods/framework.pw.toml"
+hash = "9e2175476f720e0b2d21b28e91873cecf5555648e2137310e1b7cf98f6b98ab8"
+metafile = true
+
+[[files]]
+file = "mods/friendly-furnishings.pw.toml"
+hash = "066fde3e493c9d2cda5eaf4a48258cb4ce7377e8c70a4bb4b39373cf13ab458a"
+metafile = true
+
+[[files]]
 file = "mods/ftb-essentials.pw.toml"
 hash = "e196c44c69785ae15eb47a10207fee12362d34e63d94f663a00aa58e26313c37"
 metafile = true
@@ -2865,7 +2971,7 @@ metafile = true
 
 [[files]]
 file = "mods/fusion.pw.toml"
-hash = "b7a30e53e85668e1947ddf22002d8db75d2c55f852432c97b972c69f4a51b269"
+hash = "db148013fbbea186042c117cedc80aab06452268f8e599a31a58f2a1b22aee91"
 metafile = true
 
 [[files]]
@@ -2896,6 +3002,11 @@ metafile = true
 [[files]]
 file = "mods/hammer-multipart.pw.toml"
 hash = "977c23ae70f89df064fed42478893e0087bc0d5cb1a08b1dbb76c6edbe717c73"
+metafile = true
+
+[[files]]
+file = "mods/handcrafted.pw.toml"
+hash = "2143dc055ae837c6a4de5da8dd228cacf73dbe872a5c603a28f5e623e22ea5e6"
 metafile = true
 
 [[files]]
@@ -2944,8 +3055,18 @@ hash = "fcdb28f2879759167d5caba28d2bdc3b7ed61ee6f49c5ed0c134632415d52dcb"
 metafile = true
 
 [[files]]
+file = "mods/joy-of-painting.pw.toml"
+hash = "f4d4839c08a0913c970091e458a47185dcd7eec7a2570d959383e7b6f8c5074a"
+metafile = true
+
+[[files]]
 file = "mods/just-enough-professions-jep.pw.toml"
 hash = "051e68cdc04c210afa273cda7e109bea1f08380451593be022db86e6301dff36"
+metafile = true
+
+[[files]]
+file = "mods/kiwi.pw.toml"
+hash = "cdb7acff5130627a627707eed22adf294100e3f0512885441c610810bbce3e3c"
 metafile = true
 
 [[files]]
@@ -3049,8 +3170,18 @@ hash = "12790e4a5fbfd30d4fb57954901adba37564c1924875edd975d6ed30b82471a8"
 metafile = true
 
 [[files]]
+file = "mods/minecraft-comes-alive-reborn.pw.toml"
+hash = "be277383c9f5d84868497a0d51fda6b0cf36c31e5efbb6213d549b25f15620f2"
+metafile = true
+
+[[files]]
 file = "mods/model-gap-fix.pw.toml"
 hash = "cd3140db1982e4e1b17c60b71e436fc92c22b1a6ce189e6b8197d1275487679c"
+metafile = true
+
+[[files]]
+file = "mods/modern-ui.pw.toml"
+hash = "fb078f45d04576d994b31f76911eedf74aa6b4ca5ed177eedffd0853887cf97f"
 metafile = true
 
 [[files]]
@@ -3119,6 +3250,11 @@ hash = "4dd7038889da90e145f9d074bec64a61aaae12dc57c875aa7ad99b8b2e07979b"
 metafile = true
 
 [[files]]
+file = "mods/quick-skin.pw.toml"
+hash = "2ce045963f0f415bcf910b7181272d5e3a23401fcac328fff2b7b4d5189b0881"
+metafile = true
+
+[[files]]
 file = "mods/radium-reforged.pw.toml"
 hash = "77fa86d36ada0d178545853f987f9e71128e1833c9c29ae62c436c09bdb31948"
 metafile = true
@@ -3129,6 +3265,11 @@ hash = "ef23b1b2b42baa9ab3cee4b4865aeda8f1ad5863908a066a5cadb97cfc9dcdbe"
 metafile = true
 
 [[files]]
+file = "mods/refurbished-furniture.pw.toml"
+hash = "2bcee75d08b33dd6506b7cd3f67ea9d0d2c1bf14e26728fa8e12ef19c895b165"
+metafile = true
+
+[[files]]
 file = "mods/repurposed-structures.pw.toml"
 hash = "f4f8689cf079b6372bfbb380b9d0ae325163704c5a4655c80a43a8a56d3f32bc"
 metafile = true
@@ -3136,6 +3277,11 @@ metafile = true
 [[files]]
 file = "mods/resource-pack-overrides.pw.toml"
 hash = "fcb95ac9e305c0ac7d78f4fb66901da4fd73cd1f80f48ebeb08d0aea466da3ef"
+metafile = true
+
+[[files]]
+file = "mods/resourceful-lib.pw.toml"
+hash = "33c1012df4c3267ee9e70509001739908b2f2c72ae0b2728a750b3516644aa2c"
 metafile = true
 
 [[files]]
@@ -3181,11 +3327,6 @@ metafile = true
 [[files]]
 file = "mods/shetiphiancore.pw.toml"
 hash = "7b74687503a817ae7e7a8145996f0a09ddab38933af1e244b324083aeed2fa16"
-metafile = true
-
-[[files]]
-file = "mods/simplecore-api.pw.toml"
-hash = "0a54c2837eec1b98c22da607a0f1484c4ae0560a0aa0dacaeaeda1b010d67df5"
 metafile = true
 
 [[files]]
@@ -3244,8 +3385,8 @@ hash = "0188496a2cffbd5a1aad3fa0429d646487bd685aa2b109c2c649aff675c91a6c"
 metafile = true
 
 [[files]]
-file = "mods/tipthescales.pw.toml"
-hash = "5e38896bef914cf05ae45212046c3d58de94a5af176c8130224d5701f843d44c"
+file = "mods/thirst-was-taken.pw.toml"
+hash = "539a4acb37215792f298f3706462116630f200bc4fe7ae17f8c4a8b51dab8a26"
 metafile = true
 
 [[files]]
@@ -3294,8 +3435,49 @@ hash = "ebf991e3897283ce84876112583e18d11eca4125778e619a6738b9fceed76378"
 metafile = true
 
 [[files]]
+file = "resourcepacks/better-leaves.pw.toml"
+hash = "eb0b5f269171cd5b891d9bdf2c5da89698e21a71ffec1172ead75bc19411cbdc"
+metafile = true
+
+[[files]]
+file = "resourcepacks/cozyui-plus.pw.toml"
+hash = "859d71ed7c0455add9a031d18c6ead95a7ab3fe5a4c9bb44ad892d3ee377fef7"
+metafile = true
+
+[[files]]
 file = "resourcepacks/eat-quiet.pw.toml"
 hash = "7d733354ee6af6f31004d76aea76ded8ba00dd9545254136fdc432ea9474d540"
+metafile = true
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/cosmeticarmorreworked/textures/gui/cosarmorinventory.png"
+hash = "9da0e04009c8a52cdd362827c9c562d236eb2dbc0fbd7d4fcfbc3019058ec7af"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/curios/textures/gui/inventory.png"
+hash = "703027e03f6c3c85c751fefda57a543819c201105e038add10b1f0ed5490b1fc"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/curios/textures/gui/inventory_revamp.png"
+hash = "e7fa5937f6be374c9c7ec91f44ce1efcf4d9c06e23992917af31ceb70f146630"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/pack.mcmeta"
+hash = "1961a0a255a347c5089e1b409aff8bdd7636795145163e3e674a7898da1414b3"
+
+[[files]]
+file = "resourcepacks/fancy-crops.pw.toml"
+hash = "2326f399a4a89ddb88843b6331af3e036ecebe846617142a93ac080bb38fdc47"
+metafile = true
+
+[[files]]
+file = "resourcepacks/fresh-animations.pw.toml"
+hash = "174dfc4e2332878c681272c43ed881f963ec34f9560a8f7e858eb1927c99fa51"
+metafile = true
+
+[[files]]
+file = "resourcepacks/new-hearts.pw.toml"
+hash = "e26dc31ec472a3c1c73532d24fcdab50c3696316975358d80ded51d185650c13"
 metafile = true
 
 [[files]]

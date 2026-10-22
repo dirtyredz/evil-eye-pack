@@ -1,0 +1,13 @@
+name = "Cozy's Improved Cats"
+filename = "cozys-improved-cats-1.3.0-forge-1.20.1.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/5MaZBjPT/versions/xeA7oZv5/cozys-improved-cats-1.3.0-forge-1.20.1.jar"
+hash-format = "sha1"
+hash = "f1599d8c58db3e003aaa2dbb9f0ddfd52812976a"
+
+[update]
+[update.modrinth]
+mod-id = "5MaZBjPT"
+version = "xeA7oZv5"

@@ -1,0 +1,13 @@
+name = "Joy of Painting"
+filename = "xercapaint-1.20.1-2.0.0.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/YOs4tZea/versions/lK1v231e/xercapaint-1.20.1-2.0.0.jar"
+hash-format = "sha1"
+hash = "6310a9d55ae2dbd8af8f8d526d332aa9dbc413fb"
+
+[update]
+[update.modrinth]
+mod-id = "YOs4tZea"
+version = "lK1v231e"

@@ -45,6 +45,7 @@ class HashSet {
 // ---- Minecraft-ish ----
 class Item { constructor(id) { this.id = id; } }
 class Fluid { constructor(id) { this.id = id; } }
+class Block { constructor(item) { this.item = item; } asItem() { return this.item; } }
 
 // Plain value -> fake NBT tag (compound / string / list).
 function tag(v) {
@@ -66,6 +67,7 @@ class EmiStack {
   getNbt() { return this.nbt === null ? null : tag(this.nbt); }
   isEmpty() { return false; }
   getEmiStacks() { return mk([this]); }
+  getName() { return Component.literal(this.key.id.split(':')[1]); }
   toString() { return this.key.id; }
 }
 const EMPTY_STACK = { isEmpty: () => true, getEmiStacks: () => new JList([]), getKey: () => null };
@@ -143,7 +145,10 @@ class AbstractContainerScreen extends Screen {
   getGuiTop() { return this.gy; }
   getXSize() { return this.xs; }
   getYSize() { return this.ys; }
+  getFocused() { return this.focused || null; }
+  getSlotUnderMouse() { return this.slot || null; }
 }
+class EditBox { constructor(focused) { this.focused = focused; } isFocused() { return this.focused; } }
 
 class CreativeModeInventoryScreen extends AbstractContainerScreen {}
 
@@ -200,7 +205,7 @@ function createWorld(spec) {
     x: 133, y: 219, w: 160, h: 18, visible: true,
     getX() { return this.x; }, getY() { return this.y; }, getWidth() { return this.w; },
     getHeight() { return this.h; }, isVisible() { return this.visible; },
-    value: '', sets: [],
+    value: '', sets: [], focused: false, isFocused() { return this.focused; },
     getValue() { return this.value; },
     // EditBox.setValue runs EMI's responder, which refilters.
     setValue(v) { this.value = v; this.sets.push(v); counters.searchUpdates++; },
@@ -209,6 +214,8 @@ function createWorld(spec) {
   const EmiScreenManager = {
     search,
     forceRecalculate() { counters.recalcs++; },
+    // world.hover: the stack or ingredient EMI reports under the mouse (null = nothing).
+    getHoveredStack() { const h = world.hover; return h ? { isEmpty: () => false, getStack: () => (h.getEmiStacks ? h : ingredient(h)) } : { isEmpty: () => true }; },
     getHoveredPanel(x, y) {
       return panels.find((p) => x >= p.x && x < p.x + p.w && y >= p.y && y < p.y + p.h) || null;
     },
@@ -225,8 +232,30 @@ function createWorld(spec) {
   };
   const EmiPersistentData = { save() { counters.persistentSaves++; } };
   const EmiConfig = { enabled: true, writeConfig() { counters.configWrites++; } };
-  const player = {};
-  const Minecraft = { getInstance: () => ({ player: world.inWorld ? player : null, font: fakeFont() }) };
+  // Tag registries: world.tags.item / .block map 'ns:tag' -> [Item | Block]. Read through the same
+  // Optional / HolderSet shape the scripts use (size(), get(i).value()); no iterator exists.
+  const tags = { item: {}, block: {} };
+  const registry = (kind) => ({
+    getTag(key) {
+      if (world.failTags) throw new Error('injected tag failure');
+      const list = tags[kind][key.id];
+      if (!list) return { isPresent: () => false };
+      return { isPresent: () => true, get: () => ({ size: () => list.length, get: (i) => ({ value: () => list[i] }) }) };
+    },
+  });
+  const toasts = [];
+  const actionbar = [];
+  const player = { displayClientMessage: (c, overlay) => actionbar.push({ text: c.getString(), overlay }) };
+  const instance = {
+    get player() { return world.inWorld ? player : null; }, font: fakeFont(),
+    getWindow: () => ({ getGuiScaledWidth: () => 427, getScreenWidth: () => 854, getGuiScaledHeight: () => 240, getScreenHeight: () => 480 }),
+    mouseHandler: { xpos: () => 2 * world.mouse.x, ypos: () => 2 * world.mouse.y },
+    getToasts: () => 'toasts',
+  };
+  const Minecraft = { getInstance: () => instance };
+  const SystemToast = {
+    addOrUpdate: (box, id, title, msg) => { if (world.failToast) throw new Error('toast failure'); toasts.push({ box, id, title: title.getString(), msg: msg.getString() }); },
+  };
 
   const classes = {
     'java.util.IdentityHashMap': IdentityHashMap,
@@ -237,6 +266,13 @@ function createWorld(spec) {
       synchronizedMap: (m) => m,
     },
     'net.minecraft.world.item.Item': Item,
+    'net.minecraft.core.registries.Registries': { ITEM: 'item', BLOCK: 'block' },
+    'net.minecraft.core.registries.BuiltInRegistries': { ITEM: Object.assign(registry('item'), { getKey: (item) => ({ toString: () => item.id }) }), BLOCK: registry('block') },
+    'net.minecraft.client.gui.components.EditBox': EditBox,
+    'net.minecraft.client.gui.components.toasts.SystemToast': SystemToast,
+    'net.minecraft.client.gui.components.toasts.SystemToast$SystemToastIds': { PERIODIC_NOTIFICATION: 'PERIODIC' },
+    'net.minecraft.tags.TagKey': { create: (reg, loc) => ({ reg, id: loc.id }) },
+    'net.minecraft.resources.ResourceLocation': { tryParse: (s) => (/^[a-z0-9_.-]+:[a-z0-9_./-]+$/.test(s) ? { id: s } : null) },
     'net.minecraft.client.Minecraft': Minecraft,
     'net.minecraft.network.chat.Component': Component,
     'net.minecraft.client.gui.components.Button': Button,
@@ -263,7 +299,7 @@ function createWorld(spec) {
   };
 
   const world = {
-    counters, userHidden, favorites, panels, inWorld: true, failFreeze: false,
+    counters, userHidden, favorites, panels, tags, toasts, actionbar, hover: null, mouse: { x: 100, y: 100 }, failToast: false, inWorld: true, failFreeze: false, failTags: false,
     classes, EmiStackList, EmiRecipes, EmiReloadManager, EmiHidden, EmiConfig, EmiScreenManager,
     Java: { loadClass: (name) => { if (!(name in classes)) throw new Error('ClassNotFound ' + name); return classes[name]; } },
     // EMI reload: new master/filtered lists, then a provisional manager while the worker
@@ -300,6 +336,6 @@ function clientEvents() {
 
 module.exports = {
   fakeGraphics,
-  JList, OpaqueList, opaque, Item, Fluid, EmiStack, EMPTY_STACK, ingredient, Recipe, Manager,
-  Screen, AbstractContainerScreen, CreativeModeInventoryScreen, createWorld, clientEvents,
+  JList, OpaqueList, opaque, Item, Fluid, Block, EmiStack, EMPTY_STACK, ingredient, Recipe, Manager,
+  Screen, AbstractContainerScreen, CreativeModeInventoryScreen, EditBox, createWorld, clientEvents,
 };

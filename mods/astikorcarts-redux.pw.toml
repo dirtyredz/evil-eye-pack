@@ -1,0 +1,13 @@
+name = "AstikorCarts Redux"
+filename = "astikorcartsredux-1.2.5.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/mnLFouB0/versions/I8Wr3Oid/astikorcartsredux-1.2.5.jar"
+hash-format = "sha1"
+hash = "77a95e6f367d286d903ea2bc2aa7145f2ec7108f"
+
+[update]
+[update.modrinth]
+mod-id = "mnLFouB0"
+version = "I8Wr3Oid"

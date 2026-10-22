@@ -1,0 +1,13 @@
+name = "Entity Texture Features"
+filename = "entity_texture_features-7.2.6-1.20.1-forge.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/BVzZfTc1/versions/EAHEZRbp/entity_texture_features-7.2.6-1.20.1-forge.jar"
+hash-format = "sha1"
+hash = "61f8c27ea487064f674a587780f3b6f24f22a74f"
+
+[update]
+[update.modrinth]
+mod-id = "BVzZfTc1"
+version = "EAHEZRbp"
