@@ -1,20 +1,17 @@
 // priority: 65
-// The single home of "what is hidden" decisions for the CLEAN view, kept apart from the
+// The single home of the pack's "what is hidden" decisions for the CLEAN view, kept apart from the
 // session lifecycle. policy.js holds the pure rules; this file applies them to EMI stacks.
 //
 // - isPolicyHidden: the pack's own curation (classification cached per registry key).
-// - isDecorHidden: the DECOR toggle (decor_policy.js layers; tags through decor_tags.js). It only
-//   feeds the index view. Recipe displays never look at it ("hide from the index only").
 // - isDisplayHidden: REI-style display filtering. Hidden by the pack, hidden by the
 //   user in EMI, or removed from EMI's index entirely (tag/plugin/data exclusions).
+// DECOR is not decided here: see decor/decor_state.js.
 // session.js calls configure() once with the loaded policy and a getter for EMI's current
 // master index list. The caches live here and reset on configure() and on a script reload;
 // the key-set cache is rebuilt whenever EMI's master index list is replaced.
 
 (function (ns) {
   var policy = null
-  var decor = null
-  var getLocal = null
   var getMaster = null
 
   // Classification per registry key (Item/Fluid object), so the id string is built once
@@ -24,51 +21,13 @@
   var keySet = null
   var keySetMaster = null
 
-  // Decor classification per registry key (true/false), like keyClass.
-  var decorClass = null
-
-  // ctx: { policy: loaded policy, decor: loaded decor policy or null, getLocal: function () -> the
-  // local decor marks ({ data }, decor_local.js), getMaster: function () -> EMI's master index list }
+  // ctx: { policy: loaded policy, getMaster: function () -> EMI's master index list }
   function configure(ctx) {
     policy = ctx.policy
-    decor = ctx.decor || null
-    getLocal = ctx.getLocal || null
     getMaster = ctx.getMaster
     keyClass = null
     keySet = null
     keySetMaster = null
-    resetDecor()
-  }
-
-  // Tag contents depend on the joined world: forget them when EMI starts a new generation.
-  function resetDecor() {
-    decorClass = null
-    ns.decorTags.reset()
-  }
-
-  // Local marks (decor-local.json) decide first; otherwise the shipped decor.json layers do.
-  function decorOf(stack) {
-    var desc = ns.interop.describe(stack)
-    var local = getLocal ? ns.decorLocal.lookup(getLocal().data, desc.id) : null
-    if (local !== null) return local
-    return ns.decorPolicy.classify(decor, desc.id, function () {
-      return desc.isItem && ns.decorTags.itemSet(decor).contains(stack.getKey())
-    })
-  }
-
-  // Local marks changed: drop the per-key answers (the tag set is unaffected).
-  function clearDecorClassification() { decorClass = null }
-
-  function isDecorHidden(stack) {
-    if (decor == null) return false
-    if (decorClass == null) decorClass = ns.interop.newIdentityMap()
-    var key = stack.getKey()
-    var c = decorClass.get(key)
-    if (c == null) {
-      c = decorOf(stack)
-      decorClass.put(key, c)
-    }
-    return c === true || String(c) === 'true'
   }
 
   function isPolicyHidden(stack) {
@@ -118,12 +77,5 @@
     return false
   }
 
-  ns.hiding = {
-    configure: configure,
-    resetDecor: resetDecor,
-    clearDecorClassification: clearDecorClassification,
-    isPolicyHidden: isPolicyHidden,
-    isDecorHidden: isDecorHidden,
-    isDisplayHidden: isDisplayHidden
-  }
+  ns.hiding = { configure: configure, isPolicyHidden: isPolicyHidden, isDisplayHidden: isDisplayHidden }
 })(global.emiCuration || (global.emiCuration = {}))

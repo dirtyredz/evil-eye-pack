@@ -1,8 +1,8 @@
 // priority: 60
-// CLEAN/ALL and DECOR shown/hidden session state for the EMI curation views.
+// CLEAN/ALL session lifecycle for the EMI curation views; DECOR state itself lives in decor/decor_state.js.
 //
 // - State lives in global.emiCuration.state so /kubejs reload keeps the selection.
-// - A fresh launch and every logout reset to CLEAN and to decor.json's default DECOR mode.
+// - A fresh launch and every logout reset to CLEAN (and, through decorState, to the default DECOR mode).
 // - DECOR is an independent second axis: decor stacks are removed from the index in CLEAN and in
 //   ALL alike, and never from recipe displays.
 // - Views are installed only once EMI's reload and recipe worker have finished, and are
@@ -14,13 +14,10 @@
 (function (ns) {
   var CLEAN = 'CLEAN'
   var ALL = 'ALL'
-  var SHOWN = 'SHOWN'
-  var HIDDEN = 'HIDDEN'
 
   function freshState() {
     return {
       mode: CLEAN,
-      decor: null, // null = decor.json's default; else SHOWN | HIDDEN
       status: 'waiting',
       error: null,
       reapply: true,
@@ -40,40 +37,19 @@
 
   var policy = null
   var policyError = null
-  var decorPolicy = null
-  // Local DECOR marks (decor-local.json): { data, status }, see decor_local.js. Always present.
-  var decorLocal = { data: ns.decorLocal.empty(), status: 'missing', error: null }
 
   function loadPolicy() {
     if (policy || policyError) return policy
     try {
       policy = ns.policy.load(function (p) { return JsonIO.readString(p) })
-      decorPolicy = loadDecorPolicy()
-      decorLocal = loadDecorLocal()
-      ns.hiding.configure({ policy: policy, decor: decorPolicy, getLocal: function () { return decorLocal }, getMaster: function () { return st.index.master } })
-      ns.diag.info('loaded curation (' + policy.itemIdCount + ' explicit ids' + (decorPolicy ? ', decor rules' : ', no decor rules') + ')')
+      ns.decorState.load(function (p) { return JsonIO.readString(p) })
+      ns.hiding.configure({ policy: policy, getMaster: function () { return st.index.master } })
+      ns.diag.info('loaded curation (' + policy.itemIdCount + ' explicit ids' + (ns.decorState.available() ? ', decor rules' : ', no decor rules') + ')')
     } catch (err) {
       policyError = err
       ns.diag.logError('load curation', err)
     }
     return policy
-  }
-
-  // decor.json is optional for CLEAN: a bad file disables the DECOR button, nothing else.
-  function loadDecorPolicy() {
-    try {
-      return ns.decorPolicy.load(function (p) { return JsonIO.readString(p) })
-    } catch (err) {
-      ns.diag.logError('load decor.json', err)
-      return null
-    }
-  }
-
-  // A malformed decor-local.json is logged once here and ignored; the shipped rules still apply.
-  function loadDecorLocal() {
-    var loaded = ns.decorLocal.load(ns.decorLocal.kubeIo())
-    if (loaded.status === 'malformed') ns.diag.logError('load decor-local.json', loaded.error)
-    return loaded
   }
 
   function emiReady() {
@@ -86,23 +62,17 @@
 
   // ---- index ----
 
-  function decorMode() {
-    if (decorPolicy == null) return SHOWN
-    if (st.decor != null) return st.decor
-    return decorPolicy.defaultHidden ? HIDDEN : SHOWN
-  }
-
   // The index to install for the current CLEAN/ALL x DECOR combination; built views are
   // kept per combination until EMI replaces its list.
   function applyIndex() {
     var clean = st.mode === CLEAN
-    var decor = decorMode() === HIDDEN
+    var decor = ns.decorState.indexHidden()
     var target = st.index.baseline
     if (clean || decor) {
       var key = (clean ? 'c' : '') + (decor ? 'd' : '')
       if (st.index.views[key] == null) {
         st.index.views[key] = ns.indexView.buildClean(st.index.baseline, function (stack) {
-          return (clean && ns.hiding.isPolicyHidden(stack)) || (decor && ns.hiding.isDecorHidden(stack))
+          return (clean && ns.hiding.isPolicyHidden(stack)) || (decor && ns.decorState.isHidden(stack))
         })
       }
       target = st.index.views[key]
@@ -121,7 +91,7 @@
     }
     st.index.baseline = cur
     st.index.views = {}
-    ns.hiding.resetDecor()
+    ns.decorState.invalidate()
     return true
   }
 
@@ -225,7 +195,7 @@
       // starts a new generation.
       if (st.status === 'error' && !indexChanged && !recipeChanged && !retry) return
       if (indexChanged || recipeChanged || retry || st.status !== 'ready') {
-        if (retry) { st.index.views = {}; ns.hiding.resetDecor(); st.recipe.wrapper = null }
+        if (retry) { st.index.views = {}; ns.decorState.invalidate(); st.recipe.wrapper = null }
         st.reapply = false
         applyAll(indexChanged)
       }
@@ -258,28 +228,23 @@
 
   // DECOR button press. Returns true when the mode changed.
   function toggleDecor() {
-    if (st.status !== 'ready' || decorPolicy == null) return false
-    var prev = st.decor
-    st.decor = decorMode() === HIDDEN ? SHOWN : HIDDEN
+    if (!canPressDecor()) return false
+    var prev = ns.decorState.flip()
     try {
       applyAll(false)
       return true
     } catch (err) {
-      st.decor = prev
+      ns.decorState.setOverride(prev)
       fail('toggle decor', err)
       return false
     }
   }
 
-  // The local DECOR marks, for ui/decor_mark.js (it saves through decorLocal.mark).
-  function localMarks() { return decorLocal }
-
-  // Re-applies the index after the local marks changed, with the current CLEAN/ALL and DECOR
-  // state. Returns true when the new view is installed.
+  // Re-applies the index after the local DECOR marks changed (decorState.mark already dropped
+  // its caches), with the current CLEAN/ALL and DECOR state. Returns true when it is installed.
   function refreshDecor() {
     if (st.status !== 'ready') return false
     st.index.views = {}
-    ns.hiding.clearDecorClassification()
     try {
       applyAll(false)
       return true
@@ -305,6 +270,7 @@
       ns.diag.logError('logout restore', err)
     }
     ns.state = st = freshState()
+    ns.decorState.resetMode()
   }
 
   function label() {
@@ -316,18 +282,12 @@
 
   function canPress() { return st.status === 'ready' || st.status === 'error' }
 
-  function decorLabel() {
-    if (decorPolicy == null) return 'DECOR: N/A'
-    return 'DECOR: ' + decorMode()
-  }
-
   // Pressable when the index is ready and decor.json loaded.
-  function canPressDecor() { return st.status === 'ready' && decorPolicy != null }
+  function canPressDecor() { return st.status === 'ready' && ns.decorState.available() }
 
   ns.session = {
     tick: tick, toggle: toggle, toggleDecor: toggleDecor, logout: logout, label: label,
-    decorLabel: decorLabel, canPress: canPress, canPressDecor: canPressDecor, localMarks: localMarks,
-    refreshDecor: refreshDecor, CLEAN: CLEAN, ALL: ALL
+    canPress: canPress, canPressDecor: canPressDecor, refreshDecor: refreshDecor, CLEAN: CLEAN, ALL: ALL
   }
 
   // KubeJS replaces these handlers on every script reload, so they never duplicate.

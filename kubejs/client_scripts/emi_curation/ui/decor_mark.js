@@ -2,7 +2,7 @@
 // "Mark as decor" key: hover an item, press the "EMI Curation" key (default D) and its local
 // override cycles automatic -> decor -> not decor -> automatic; Shift+key does the same for the
 // item's whole mod. The marks are saved by decor_local.js (config/emi-curation/decor-local.json)
-// and the index is rebuilt at once through session.refreshDecor().
+// and the index is rebuilt at once through session.refreshDecor() after decorState.mark().
 //
 // The KeyMapping itself is created by startup_scripts/emi_curation_keys.js (Forge only accepts
 // key mappings during startup) and handed over as global.emiCurationDecorKey. Without it this
@@ -33,15 +33,14 @@
     var EditBox = ns.interop.cls('net.minecraft.client.gui.components.EditBox')
     var focused = screen.getFocused()
     if (focused != null && focused instanceof EditBox && focused.isFocused()) return true
-    var search = ns.interop.cls('dev.emi.emi.screen.EmiScreenManager').search
-    return search != null && search.isFocused()
+    return ns.emiScreen.searchFocused()
   }
 
   // { id, name } for the one item EMI shows under the mouse (index, favorites, recipe screens,
   // inventory slots through EMI's stack providers), { problem } when it is not a single item.
   function emiTarget(x, y) {
-    var hit = ns.interop.cls('dev.emi.emi.screen.EmiScreenManager').getHoveredStack(x, y, false)
-    if (hit == null || hit.isEmpty()) return null
+    var hit = ns.emiScreen.hoveredEmiStack(x, y)
+    if (hit == null) return null
     var stacks = ns.interop.copy(hit.getStack().getEmiStacks())
     var C = ns.collections
     if (C.len(stacks) === 0) return null
@@ -99,8 +98,7 @@
       notify(found.problem)
       return true
     }
-    var holder = ns.session.localMarks()
-    var result = ns.decorLocal.mark(holder, ns.decorLocal.kubeIo(), found.id, wholeMod)
+    var result = ns.decorState.mark(found.id, wholeMod)
     if (!result.ok) ns.diag.logError('decor mark', result.error)
     else ns.session.refreshDecor()
     notify(describeResult(result, found))

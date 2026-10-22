@@ -162,7 +162,7 @@ test('the key cycles the hovered item, shows a toast, writes the local file and 
   assert.ok(names(c).includes('minecraft:oak_stairs'));
   s.toggle(); // ALL
   assert.ok(names(c).includes('minecraft:oak_stairs'));
-  assert.equal(s.decorLabel(), 'DECOR: HIDDEN');
+  assert.equal(c.ns().decorState.label(), 'DECOR: HIDDEN');
 });
 
 test('Shift cycles the whole mod; an item mark still beats the mod mark', () => {

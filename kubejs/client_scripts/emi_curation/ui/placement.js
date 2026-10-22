@@ -63,8 +63,7 @@
   // Reads the live layout for `screen`; null when EMI's search widget does not exist.
   function layoutContext(screen) {
     var I = ns.interop
-    var EmiScreenManager = I.cls('dev.emi.emi.screen.EmiScreenManager')
-    var search = EmiScreenManager.search
+    var search = ns.emiScreen.searchWidget()
     if (search == null) return null
     var avoid = emiButtonRects(screen.height)
     // The search bar itself: a button "beside" another button must not land on it.
@@ -80,7 +79,7 @@
       search: { x: search.getX(), y: search.getY(), w: search.getWidth(), h: search.getHeight() },
       searchVisible: search.isVisible(),
       avoid: avoid,
-      isPanelAt: function (x, y) { return EmiScreenManager.getHoveredPanel(x, y) != null }
+      isPanelAt: function (x, y) { return ns.emiScreen.panelAt(x, y) }
     }
   }
 

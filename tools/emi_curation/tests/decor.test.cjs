@@ -76,10 +76,10 @@ const { decorWorld, bootDecor, names, DECOR_IDS, KEPT_IDS } = require('./decor_w
 test('DECOR hides all three layers from the index, in CLEAN and in ALL, keeping the functional exceptions', () => {
   const c = bootDecor();
   const s = c.ns().session;
-  assert.equal(s.decorLabel(), 'DECOR: SHOWN');
+  assert.equal(c.ns().decorState.label(), 'DECOR: SHOWN');
   for (const id of DECOR_IDS.concat(KEPT_IDS)) if (id !== 'minecraft:stone') assert.ok(names(c).includes(id), 'shown at first: ' + id);
   assert.equal(s.toggleDecor(), true);
-  assert.equal(s.decorLabel(), 'DECOR: HIDDEN');
+  assert.equal(c.ns().decorState.label(), 'DECOR: HIDDEN');
   for (const id of DECOR_IDS) assert.ok(!names(c).includes(id), 'hidden in CLEAN: ' + id);
   for (const id of KEPT_IDS) assert.ok(names(c).includes(id), 'kept in CLEAN: ' + id);
   s.toggle(); // ALL
@@ -124,18 +124,18 @@ test('DECOR persists like CLEAN: kept over a script reload and a new EMI generat
   s().toggleDecor();
   c.load(); // /kubejs reload client_scripts
   c.tick();
-  assert.equal(s().decorLabel(), 'DECOR: HIDDEN');
+  assert.equal(c.ns().decorState.label(), 'DECOR: HIDDEN');
   assert.ok(!names(c).includes('handcrafted:oak_table'));
   c.world.reload(); c.world.finishWorker(); // EMI reloads (F3+T): new generation
   c.tick();
-  assert.equal(s().decorLabel(), 'DECOR: HIDDEN');
+  assert.equal(c.ns().decorState.label(), 'DECOR: HIDDEN');
   assert.ok(!names(c).includes('minecraft:oak_stairs'), 'tag set rebuilt for the new generation');
   s().toggle(); // ALL: independent of CLEAN
-  assert.equal(s().decorLabel(), 'DECOR: HIDDEN');
+  assert.equal(c.ns().decorState.label(), 'DECOR: HIDDEN');
   c.logout();
   c.tick();
   assert.equal(s().label(), 'EMI: CLEAN');
-  assert.equal(s().decorLabel(), 'DECOR: SHOWN', 'back to the decor.json default');
+  assert.equal(c.ns().decorState.label(), 'DECOR: SHOWN', 'back to the decor.json default');
   assert.ok(names(c).includes('handcrafted:oak_table'));
 });
 
@@ -145,7 +145,7 @@ test('decor.json defaultHidden: true starts HIDDEN', () => {
   const w = decorWorld();
   const c = boot({ fixture: w.fx, jsonIO: { readString: (p) => (p.endsWith('decor.json') ? JSON.stringify(real) : readRepoText(p)) } });
   c.tick();
-  assert.equal(c.ns().session.decorLabel(), 'DECOR: HIDDEN');
+  assert.equal(c.ns().decorState.label(), 'DECOR: HIDDEN');
   assert.ok(!names(c).includes('handcrafted:oak_table'));
 });
 
@@ -167,7 +167,7 @@ test('a broken decor.json disables only the DECOR button, not CLEAN', () => {
   c.tick();
   const s = c.ns().session;
   assert.equal(s.label(), 'EMI: CLEAN');
-  assert.equal(s.decorLabel(), 'DECOR: N/A');
+  assert.equal(c.ns().decorState.label(), 'DECOR: N/A');
   assert.equal(s.canPressDecor(), false);
   assert.equal(s.toggleDecor(), false);
   assert.ok(c.logs.some((l) => l[0] === 'error' && /decor\.json/.test(l[1])));
@@ -181,7 +181,7 @@ test('a failed DECOR toggle keeps the previous view and returns to the previous 
   assert.equal(s.toggleDecor(), false);
   assert.equal(c.world.EmiStackList.filteredStacks, before);
   assert.equal(s.label(), 'EMI: ERROR');
-  assert.equal(s.decorLabel(), 'DECOR: SHOWN');
+  assert.equal(c.ns().decorState.label(), 'DECOR: SHOWN');
 });
 
 // ---- the button ----
@@ -212,7 +212,7 @@ test('the DECOR button toggles, relabels, and sits on the search row without cov
     assert.ok(t.decor.x >= 0 && t.decor.x + t.decor.w <= W, W + 'x' + H + ' on screen');
     t.decor.press();
     assert.equal(t.decor.msg.getString(), 'DECOR: HIDDEN');
-    assert.equal(c.ns().session.decorLabel(), 'DECOR: HIDDEN');
+    assert.equal(c.ns().decorState.label(), 'DECOR: HIDDEN');
     assert.equal(t.clean.msg.getString(), 'EMI: CLEAN', 'CLEAN is independent');
     t.decor.press();
     assert.equal(t.decor.msg.getString(), 'DECOR: SHOWN');

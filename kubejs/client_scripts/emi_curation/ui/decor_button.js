@@ -45,7 +45,7 @@
     button.setWidth(r.w)
     button.visible = true
     button.active = ns.session.canPressDecor()
-    var label = ns.session.decorLabel()
+    var label = ns.decorState.label()
     if (String(button.getMessage().getString()) !== label) button.setMessage(ns.interop.literal(label))
   }
 
@@ -53,7 +53,7 @@
     var screen = e.getScreen()
     if (!ns.interop.isContainerScreen(screen)) return
     var Button = ns.interop.cls('net.minecraft.client.gui.components.Button')
-    var button = Button.builder(ns.interop.literal(ns.session.decorLabel()), function (btn) {
+    var button = Button.builder(ns.interop.literal(ns.decorState.label()), function (btn) {
       // Resolve through global at press time so reloaded code is used.
       try {
         var cur = global.emiCuration

@@ -40,7 +40,7 @@
     return items
   }
 
-  function searchWidget() { return ns.interop.cls('dev.emi.emi.screen.EmiScreenManager').search }
+  function searchWidget() { return ns.emiScreen.searchWidget() }
 
   function currentSearch() {
     var w = searchWidget()
