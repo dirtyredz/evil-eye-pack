@@ -61,6 +61,25 @@
     return cls('java.util.Collections').unmodifiableList(list)
   }
 
+  // Immutable list of the elements of `javaList` for which keepFn(element) is truthy,
+  // in order. Snapshots through copy() first, then index-loops (Rhino cannot for...of
+  // a Java collection; see GOTCHAS). The one home of that shape.
+  function filterToList(javaList, keepFn) {
+    var out = newList()
+    var C = ns.collections
+    var src = copy(javaList)
+    for (var i = 0; i < C.len(src); i++) {
+      var el = C.at(src, i)
+      if (keepFn(el)) out.add(el)
+    }
+    return freeze(out)
+  }
+
+  // True when an EmiStack's key is an Item (as opposed to a Fluid).
+  function isItemKey(stack) {
+    return stack.getKey() instanceof cls('net.minecraft.world.item.Item')
+  }
+
   var NUMERIC = { 1: 'byte', 2: 'short', 3: 'int', 4: 'long', 5: 'float', 6: 'double' }
 
   // CompoundTag -> plain object, ListTag -> array, StringTag -> string, numbers and
@@ -89,10 +108,9 @@
 
   // EmiStack -> { id, isItem, nbt() } for ns.policy.isStackHidden.
   function describe(stack) {
-    var Item = cls('net.minecraft.world.item.Item')
     return {
       id: String(stack.getId()),
-      isItem: stack.getKey() instanceof Item,
+      isItem: isItemKey(stack),
       nbt: function () { return toPlainNbt(stack.getNbt()) }
     }
   }
@@ -103,9 +121,9 @@
     literal: literal,
     sameRef: sameRef,
     newIdentityMap: newIdentityMap,
-    newList: newList,
     copy: copy,
-    freeze: freeze,
+    filterToList: filterToList,
+    isItemKey: isItemKey,
     toPlainNbt: toPlainNbt,
     describe: describe
   }

@@ -2,8 +2,8 @@
 id: dk-b9ec6a98
 type: task
 created: 2026-10-12
-status: todo
-since: 2026-10-12
+status: done
+since: 2026-10-21
 area: emi-curation
 priority: P3
 rank: zw

@@ -23,3 +23,27 @@ test('JDK-internal immutable lists from EMI are copied, never reflected on', () 
     F.opaque.on = false;
   }
 });
+
+test('filterToList keeps matching elements in order and returns an immutable copy', () => {
+  const c = boot();
+  const I = c.ns().interop;
+  const base = c.world.EmiStackList.stacks;
+  const all = c.ids(base);
+  const kept = I.filterToList(base, (s) => String(s.getId()) !== all[0]);
+  assert.deepEqual(c.ids(kept), all.slice(1));
+  assert.throws(() => kept.add(base.get ? base.get(0) : null));
+});
+
+test('isItemKey tells item stacks from fluid stacks', () => {
+  const c = boot();
+  const I = c.ns().interop;
+  const stacks = c.world.EmiStackList.stacks;
+  const n = stacks.size ? stacks.size() : stacks.length;
+  let items = 0;
+  for (let i = 0; i < n; i++) {
+    const s = stacks.get ? stacks.get(i) : stacks[i];
+    assert.equal(I.isItemKey(s), I.describe(s).isItem);
+    if (I.isItemKey(s)) items++;
+  }
+  assert.ok(items > 0);
+});

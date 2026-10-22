@@ -72,9 +72,7 @@
     if (isPolicyHidden(stack)) return true
     var EmiHidden = ns.interop.cls('dev.emi.emi.runtime.EmiHidden')
     if (EmiHidden.isHidden(stack)) return true
-    var Item = ns.interop.cls('net.minecraft.world.item.Item')
-    var key = stack.getKey()
-    if (key instanceof Item) return !currentKeys().contains(key)
+    if (ns.interop.isItemKey(stack)) return !currentKeys().contains(stack.getKey())
     return false
   }
 

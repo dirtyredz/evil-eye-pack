@@ -20,14 +20,7 @@
 
   // Immutable copy of `baseline` without the stacks `isHidden` rejects, in EMI order.
   function buildClean(baseline, isHidden) {
-    var out = ns.interop.newList()
-    var C = ns.collections
-    var src = ns.interop.copy(baseline)
-    for (var i = 0; i < C.len(src); i++) {
-      var stack = C.at(src, i)
-      if (!isHidden(stack)) out.add(stack)
-    }
-    return ns.interop.freeze(out)
+    return ns.interop.filterToList(baseline, function (stack) { return !isHidden(stack) })
   }
 
   function install(list) {

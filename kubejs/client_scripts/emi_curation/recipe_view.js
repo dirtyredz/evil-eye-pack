@@ -64,13 +64,7 @@
       if (list == null) return list
       var cached = lists.get(list)
       if (cached != null) return cached
-      var out = I.newList()
-      var src = I.copy(list)
-      for (var i = 0; i < ns.collections.len(src); i++) {
-        var r = ns.collections.at(src, i)
-        if (!recipeHidden(r)) out.add(r)
-      }
-      var view = I.freeze(out)
+      var view = I.filterToList(list, function (r) { return !recipeHidden(r) })
       lists.put(list, view)
       return view
     }
