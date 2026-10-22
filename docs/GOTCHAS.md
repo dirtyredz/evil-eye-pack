@@ -15,6 +15,7 @@
 - `.minecraft/packwiz.json` is the installer's record of the files it manages. It is how removed mods and configs get deleted on the next sync. Keep it when copying an instance; deleting it leaves stale jars behind.
 - The installer overwrites pack-managed configs on every sync. In-game config changes are lost unless they are copied back into the repo.
 - Local instances install straight from the checkout's files (no server) and never rehash. Rehash and verify before every local install, and do not edit files while an install is reading them.
+- **A "Failed file downloads" dialog listing a few random files is usually a download timeout, not a pack defect.** The installer fetches many files in parallel over HTTP/2 with a short stream timeout and two retries, so a large sync (such as a merge adding ~60 files) can leave a few with `SocketTimeoutException`; which ones varies per run. It writes no log file (`MultiMC-0.log` only says "PreLaunchCommand succeeded"). Relaunch: it re-fetches only the missing files. Suspect the pack only if `verify_hashes.cjs` fails or the same file fails again (2026-10-22: ETF, Modern UI and `cosarmorinventory.png` all succeeded on relaunch).
 - MultiMC's instance ID is the **folder name**; the display name is `name=` in `instance.cfg`. Renaming the display name does not rename the folder. Rename folders only with MultiMC closed, and update `SelectedInstance` in `multimc.cfg`.
 
 ## Mod updates and removals
