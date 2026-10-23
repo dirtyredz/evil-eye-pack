@@ -2358,7 +2358,7 @@ hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
 file = "kubejs/assets/emi/index/stacks/dedup.json"
-hash = "fba2dad47e3efb062c0149859af4d06a9857cac9d4e10e116068192ab83fd9f6"
+hash = "e5577fca78dfd771e1b6bd97ffd6041508d21e19b1246239173917b713196c12"
 
 [[files]]
 file = "kubejs/assets/emi_curation/lang/en_us.json"
@@ -2458,7 +2458,7 @@ hash = "8d1c5cbf48ef06ee5174adf60692e2c54d91ac08d84edbadd03a39e10385a62e"
 
 [[files]]
 file = "kubejs/config/dedup.json"
-hash = "2f21af65fa1700a3cbefa60eb1b06add2d65445f4d0cd89633112a9203ef40c2"
+hash = "78230068e99817c52f4f5399e285d29c23a2649fb30371a2621190d8083f2d94"
 
 [[files]]
 file = "kubejs/config/dedup_sources.json"
@@ -3919,6 +3919,10 @@ hash = "d38bb403e1b34401a446a85939cab26328a48462c53dd8fe81de382e5e77cc8b"
 [[files]]
 file = "kubejs/data/refurbished_furniture/recipes/combining/raw_vegetable_pizza.json"
 hash = "b041667e68c28d75da0a6d187ec4d27798447c1420cd70c36bb701e6d3ac3fce"
+
+[[files]]
+file = "kubejs/data/supplementaries/recipes/spiky_bomb_2.json"
+hash = "c5cd512f58030e74039976fc24796c24c331a03f0fedb96fdf1f9303ba43f072"
 
 [[files]]
 file = "kubejs/server_scripts/dedup.js"

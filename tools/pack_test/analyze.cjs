@@ -41,12 +41,14 @@ function incomplete(needs, sections) {
   return missing.length ? { state: 'incomplete', error: `probe sections missing: ${missing.map((n) => `${n} (${(sections[n] && sections[n].error) || 'missing'})`).join('; ')}`, findings: [] } : null;
 }
 
-function recipeOutputs(recipes) {
+function recipeOutputs(recipes, registries) {
   const { declaredOutputs } = require('./checks/recipes.cjs');
+  const { beeProductItems } = require('./checks/bees.cjs');
   const out = new Map();
   for (const r of recipes) {
     const ids = new Set(r.out ? [r.out] : []);
     for (const o of declaredOutputs(r.json)) ids.add(o);
+    if (registries) for (const o of beeProductItems(r, registries)) ids.add(o);
     for (const id of ids) { if (!out.has(id)) out.set(id, []); out.get(id).push(r.id); }
   }
   return out;
@@ -85,7 +87,7 @@ function analyzeRun(runDir, { data = loadToolData(), log = () => {} } = {}) {
     logged: logs ? { droppedTags: logs.droppedTags, failedLoot: new Set(logs.lootFailures.keys()) } : {}
   }) : noStaged);
   sections.acquisition = needCore || incomplete(['recipes'], S) || (resources && dedupCfg ? checkAcquisition({
-    recipeOutputs: recipeOutputs(snap.recipes), loot: resources.loot, live: { ...snap.registries, itemTags: snap.itemTags },
+    recipeOutputs: recipeOutputs(snap.recipes, snap.registries), loot: resources.loot, live: { ...snap.registries, itemTags: snap.itemTags },
     worldgenBlocks: resources.worldgenBlocks, blockItems: new Map()
   }, compilePolicy(data.policy, { dedup: dedupCfg.policy, curated: (data.policy.curatedLists || []).map(packConfig) })) : noStaged);
   sections.machines = needCore || incomplete(['recipes'], S) || checkMachines(snap.recipes, snap.itemTags, data.machines);

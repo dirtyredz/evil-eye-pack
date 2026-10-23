@@ -2,7 +2,7 @@
 id: dk-e4cc1e7b
 type: task
 created: 2026-10-23
-status: todo
+status: done
 since: 2026-10-23
 area: pack-test
 priority: P3
