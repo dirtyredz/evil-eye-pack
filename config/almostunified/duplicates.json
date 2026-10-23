@@ -2,7 +2,9 @@
   "ignoredRecipeTypes": [
     "cucumber:shaped_tag"
   ],
-  "ignoredRecipes": [],
+  "ignoredRecipes": [
+    "kubejs:ato_retirement/.*"
+  ],
   "defaultDuplicateRules": {
     "ignoredFields": [
       "conditions",

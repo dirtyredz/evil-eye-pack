@@ -22,7 +22,7 @@ function fixture() {
     zombieVial: S('enderio:filled_soul_vial', ZOMBIE),
     villagerVial: S('enderio:filled_soul_vial', VILLAGER),
     emptyVial: S('enderio:empty_soul_vial'),
-    c4: S('allthecompressed:cobblestone_4x'),
+    glass: S('enderio:clear_glass_a'),
     c1: S('allthecompressed:cobblestone_1x'),
     water: new F.EmiStack(new F.Fluid('minecraft:water')),
     removed: S('removedmod:thing'),
@@ -31,7 +31,7 @@ function fixture() {
   const R = (id, ins, outs, cats) => new F.Recipe(id, 'cat', ins, outs, cats);
   const r = {
     visible: R('r:visible', [I(s.stone)], [s.c1]),
-    hiddenOut: R('r:hidden_out', [I(s.c1)], [s.c4]),
+    hiddenOut: R('r:hidden_out', [I(s.c1)], [s.glass]),
     hiddenIn: R('r:hidden_in', [I(s.cell)], [s.stone]),
     mixed: R('r:mixed', [I(s.cell, s.stone)], [s.c1]),
     catalyst: R('r:catalyst', [I(s.stone)], [s.c1], [I(s.cell)]),
@@ -42,7 +42,7 @@ function fixture() {
     villager: R('r:villager', [I(s.emptyVial)], [s.villagerVial]),
     fluid: R('r:fluid', [I(s.water)], [s.stone]),
   };
-  const items = [s.stone, s.cell, s.egg, s.door, s.zombieVial, s.villagerVial, s.emptyVial, s.c4, s.c1, s.water];
+  const items = [s.stone, s.cell, s.egg, s.door, s.zombieVial, s.villagerVial, s.emptyVial, s.glass, s.c1, s.water];
   return { s, r, spec: { items, recipes: Object.values(r) } };
 }
 

@@ -22,13 +22,14 @@ curation and the CLEAN/ALL button.
 ### Curation and the button
 
 - CLEAN (the default after every launch and logout) hides these from the index:
-  - 1,759 explicit item IDs: 20 creative-only, 654 compressed, 708 Ender IO glass, 361 colour variants and 16 MineColonies eggs;
+  - 1,105 explicit item IDs: 20 creative-only, 708 Ender IO glass, 361 colour variants and 16 MineColonies eggs;
   - every ID containing `spawn_egg`;
   - the whole `dramaticdoors` namespace;
   - every Filled Soul Vial and Broken Spawner, except exactly one canonical Zombie stack of each;
   - every RFTools Utility syringe carrying a `mobId` tag (one per mob); the plain syringe stays (`hideWhenNbtHasKey` in `rules.json`).
 - NBT rules in `rules.json`: `nbtExceptions` hides every stack of an ID except those whose NBT equals `keepWhenNbtEquals`; `hideWhenNbtHasKey` hides a stack of an ID when its NBT has *any* listed key (the value is never inspected). An ID may appear in only one NBT rule across both types; a repeat fails compile with `duplicate nbt rule id`.
 - CLEAN also hides recipe displays the way REI's "filter displays" option did. A display is hidden when some input or output has *all* of its alternatives hidden. Catalysts and empty slots never hide a display.
+- During [AllTheOres retirement release 1](ato-retirement.md), all compressed tiers and AllTheOres items stay visible for migration. The compressed hide list is removed and Almost Unified's global auto-hide switch is off (it has no per-mod visibility exemption); its recipe unification stays active.
 - **EMI: ALL** restores EMI's ordinary index and its complete recipe set without an EMI reload. Recipes, items and EMI's own hidden-stack settings, favorites and config are never written.
 - The button sits beside the centred search bar on container and inventory screens. It moves aside for EMI's sidebars and buttons. It disappears with Ctrl+O and is inactive (`EMI: ...`) while EMI loads.
 - `EMI: ERROR` means applying a view failed and the last complete view was kept. Click it to retry. `EMI: N/A` means the curation files could not be read. Check `logs/kubejs/client.log` for `EMI curation`.
@@ -104,7 +105,7 @@ After editing any pack file, save it as UTF-8 with LF line endings. Then run
 
 Record the results in [emi-coverage.md](emi-coverage.md).
 
-1. Launch the disposable world. There should be one viewer (EMI) and one `EMI: CLEAN` button. `logs/latest.log` and `logs/kubejs/client.log` should show no EMI curation, plugin or script errors. The log line `EMI curation: loaded curation (1759 explicit ids, decor rules)` should appear.
+1. Launch the disposable world. There should be one viewer (EMI) and one `EMI: CLEAN` button. `logs/latest.log` and `logs/kubejs/client.log` should show no EMI curation, plugin or script errors. The log line `EMI curation: loaded curation (1105 explicit ids, decor rules)` should appear.
 2. In CLEAN, check every hidden family and its kept base example:
    - fluix cables;
    - white paint balls;

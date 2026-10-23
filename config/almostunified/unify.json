@@ -88,7 +88,25 @@
     "forge:silicon": "ae2",
     "forge:wither_bones": "iceandfire",
     "forge:dusts/ender_pearl": "ae2",
-    "forge:dusts/ender": "ae2"
+    "forge:dusts/ender": "ae2",
+    "forge:ingots/silver": "iceandfire",
+    "forge:nuggets/silver": "iceandfire",
+    "forge:storage_blocks/silver": "iceandfire",
+    "forge:raw_materials/silver": "iceandfire",
+    "forge:ores/silver": "iceandfire",
+    "forge:storage_blocks/raw_silver": "iceandfire",
+    "forge:ingots/electrum": "createaddition",
+    "forge:nuggets/electrum": "createaddition",
+    "forge:storage_blocks/electrum": "createaddition",
+    "forge:plates/electrum": "createaddition",
+    "forge:rods/electrum": "createaddition",
+    "forge:ingots/uranium": "bigreactors",
+    "forge:nuggets/uranium": "bigreactors",
+    "forge:storage_blocks/uranium": "bigreactors",
+    "forge:raw_materials/uranium": "bigreactors",
+    "forge:ores/uranium": "bigreactors",
+    "forge:dusts/uranium": "bigreactors",
+    "forge:storage_blocks/raw_uranium": "bigreactors"
   },
   "customTags": {
     "forge:wither_bones": [
@@ -111,6 +129,8 @@
   "ignoredRecipeTypes": [
     "cucumber:shaped_tag"
   ],
-  "ignoredRecipes": [],
-  "itemsHidingJeiRei": true
+  "ignoredRecipes": [
+    "kubejs:ato_retirement/.*"
+  ],
+  "itemsHidingJeiRei": false
 }

@@ -12,12 +12,15 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `shaderpacks/` — shaderpack metafiles and saved shader options
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
 - `config/` — mod configs installed as plain files
-- `config/emi-curation/` — EMI curation data: `rules.json`, five explicit item lists, `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
+- `config/emi-curation/` — EMI curation data: `rules.json`, four explicit item lists, `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
 - `defaultconfigs/` — Forge default (per-world) configs
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
 - `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter
 - `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the mark-as-decor key handler, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
 - `kubejs/startup_scripts/` — `emi_curation_keys.js` registers the "EMI Curation" key mapping (startup-only in Forge); `kubejs/assets/emi_curation/lang/` names it
+- `kubejs/server_scripts/ato_retirement.js`, `kubejs/config/ato_retirement.json` — temporary release-1 conversion recipes and their explicit item map; see `docs/ato-retirement.md`
+- `kubejs/data/alltheores/` — temporary datapack overrides: disable all 31 biome modifiers and redirect 29 ore/raw-block loot tables
+- `tools/ato_retirement/` — `check_installed.cjs` checks cached jar inventories, loot, deposit tags and unpacking; `tests/` covers recipes, worldgen, loot, visibility and the pinned item catalog
 - `tools/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
 - `tools/packwiz/tests/`, `tools/server_smoke/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage

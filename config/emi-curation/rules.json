@@ -3,7 +3,6 @@
   "description": "Evil Eye EMI curation. CLEAN hides these stacks from the EMI index (in memory only) and hides recipe displays where every alternative of some input or output is hidden. ALL restores EMI's ordinary index and recipe set. Nothing here is written to EMI's own config or persistent data.",
   "itemLists": [
     "creative.json",
-    "compressed.json",
     "enderio-glass.json",
     "colours.json",
     "minecolonies-eggs.json"

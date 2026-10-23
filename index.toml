@@ -402,7 +402,7 @@ hash = "36c6c26fdbf244180f7649f10c62ff592b60738ad2b66e708a97a9c2402b4b0e"
 
 [[files]]
 file = "config/adlods/Deposits/aluminum.cfg"
-hash = "c78e211afe34cf501e7a4f9c7b25302e1f240662c49ab7df099cc5c3bb2e0506"
+hash = "3fabb52bbd1670c22c2598a5f7e3d2079b50063e0d78331713c5a5484c8aba08"
 
 [[files]]
 file = "config/adlods/Deposits/amethyst.cfg"
@@ -438,11 +438,11 @@ hash = "e25a6c2e456232ad1e8e863e6f5f80e758c28aa1fa7eea54b1735b73ff775985"
 
 [[files]]
 file = "config/adlods/Deposits/gold.cfg"
-hash = "efedd971a61b956a1f3f4dbcf0fdf266952eeedc3fec605cf0a074078ae5d989"
+hash = "7958f2dba75e715289ea4898cdc54e18bbb89caaab264c595e4c9aab9b69d930"
 
 [[files]]
 file = "config/adlods/Deposits/iridium.cfg"
-hash = "1f2fd96da060a2bf15059529decb5c3c4d61969ee4c7f683afea2f3f1b96ff7c"
+hash = "529dad0656d530a8f6d4c53acf50fca5b728af677977876d34f574407f5fda96"
 
 [[files]]
 file = "config/adlods/Deposits/iron.cfg"
@@ -454,7 +454,7 @@ hash = "080b8ff0d32c587c3c853d116f9ed868a9c19959fb1e5e14d1e234034e74c174"
 
 [[files]]
 file = "config/adlods/Deposits/lead.cfg"
-hash = "7827d2fef9a6d31020872783c709bda66ad814f6fdc151abcc4bceb54baa842c"
+hash = "abc84e61fa0f702fd4b2a77c9bc1e7f1419215a1cd9b198a0627863d7f63db82"
 
 [[files]]
 file = "config/adlods/Deposits/nether_gold.cfg"
@@ -466,11 +466,11 @@ hash = "cef62bf44617d56f226be005d8805c94a23f766883c4b81282f8b767290e37f6"
 
 [[files]]
 file = "config/adlods/Deposits/nickel.cfg"
-hash = "6cc96fec0e48516446648af035623542d9479de5aafdaa98ff45ce92b1794610"
+hash = "419da39f4f7263607804f98940d5532ae6b04c048883768c690fa76a25785720"
 
 [[files]]
 file = "config/adlods/Deposits/osmium.cfg"
-hash = "2b34ead07c051cf4eb0f389ad458acdb9456d7a05e6ce2a64dfec256fd776239"
+hash = "247d500b407ad2d6d3ae6a8f0161b9ab5955e8a0b3cf24fea572ffb30e3d1575"
 
 [[files]]
 file = "config/adlods/Deposits/palladium.cfg"
@@ -478,7 +478,7 @@ hash = "30d7bf0251a121a12a00fc13d6a838d46c93713811b18b8ddaeb0e827de92da8"
 
 [[files]]
 file = "config/adlods/Deposits/platinum.cfg"
-hash = "94747e59154607842df0a7cec47481eb41ccd37e1b2af958b4506ae647e5b0a2"
+hash = "70467f1e30b91daa6f668b1c39a3ed7a979166777ee7d14c6d89e84d06ef03bf"
 
 [[files]]
 file = "config/adlods/Deposits/redstone.cfg"
@@ -490,7 +490,7 @@ hash = "126e5d111d0ba1d411245588715d2a6320bdf02581643413f06f03164b460842"
 
 [[files]]
 file = "config/adlods/Deposits/ruby.cfg"
-hash = "a94851590b76931a7d954774382e3cbeef4bde4cc63f541573019a71e5f1d66d"
+hash = "8bf3939dd9512a5a1fce8ff1abdf2f1981e8ed18cad7554ad9244eb44847c373"
 
 [[files]]
 file = "config/adlods/Deposits/ruthenium.cfg"
@@ -498,15 +498,15 @@ hash = "b5c33ef0d97bf60bcda716a229de968e1631ea38d3e6251422c16c09b4d11977"
 
 [[files]]
 file = "config/adlods/Deposits/sapphire.cfg"
-hash = "87f84b0f0bd0c9019d6457b6977c5abe528df6cada21fa66d732b07d46b050b2"
+hash = "c8e3428d1e66b1f53523bffcd4845902fcfcf38a6af47f59a3519886bcb7f29d"
 
 [[files]]
 file = "config/adlods/Deposits/silver.cfg"
-hash = "892f1c07428c6fc3fc7df851556f52486d99b616734079c7ae40ab98b56f54de"
+hash = "115275cf3486224a56fc4164e70128ac8cbc506335b947b191ffe67763e8dd92"
 
 [[files]]
 file = "config/adlods/Deposits/tin.cfg"
-hash = "c1408be5f68ea7e75683242cec32512c0d6e880f8cb6990cc8a119548d75cfa9"
+hash = "26483c6496787614bd58d7501f0e94e60e7e6599ef416157e1ce7941fcaf021c"
 
 [[files]]
 file = "config/adlods/Deposits/topaz.cfg"
@@ -514,11 +514,11 @@ hash = "e68ef72c865ca950bf1aaa484ecf8dbafd0270502e30256937909f5a34ceba9e"
 
 [[files]]
 file = "config/adlods/Deposits/uranium.cfg"
-hash = "c2660bd372394c7429403edcd9fd43ff58fd825246936f70ff615dacc435f41a"
+hash = "cb6de3340a88eb2a69a0d02c7367e283d4e31b9a5a56d6d1ac11636cd7abcc34"
 
 [[files]]
 file = "config/adlods/Deposits/zinc.cfg"
-hash = "d004fa9330c2fcedad07fafaa6ad8460996abf56c4cf000852cc3726b0190d15"
+hash = "208c9d7235e177b3938bd858f6648facfb93efe1bfcc00ea0b25f77b5d726ee4"
 
 [[files]]
 file = "config/adlods/VanillaOres/ancient_debris.cfg"
@@ -1022,7 +1022,7 @@ hash = "3e03a291b5310a6b94a45aff63e4731baa643701c42a968ed716483ccd1d5a37"
 
 [[files]]
 file = "config/almostunified/duplicates.json"
-hash = "153d252f0802b79517673c25c891c72b1e52566d7dac172832c6a83cfc224a90"
+hash = "8262391a59691fd2f6dab52c3c5fc8ae0aa57715f3669c6ec50cdbf6c5253f86"
 
 [[files]]
 file = "config/almostunified/startup.json"
@@ -1030,7 +1030,7 @@ hash = "ad711622f9b8c5cc8115f52396f5d82587b809fb20cbf9d94c7744aeebcaf4d5"
 
 [[files]]
 file = "config/almostunified/unify.json"
-hash = "d62a2df03d6293c7f9d9d5680b01461eff4645f76715bfb6a792dc2afe9fee11"
+hash = "88da331103b1daac80e913ee2baf5718089809373cdc6f2ece1dc3b31f3e78ce"
 
 [[files]]
 file = "config/appleskin-client.toml"
@@ -1669,10 +1669,6 @@ file = "config/emi-curation/colours.json"
 hash = "7f24c23660df62deb15a473cb07689bc3471f75ec9ef933ac8933a7421033ed2"
 
 [[files]]
-file = "config/emi-curation/compressed.json"
-hash = "0623da8d2574330ce447c4bba7e93c2800af5e03149e9b0965d98431d5c0f3de"
-
-[[files]]
 file = "config/emi-curation/creative.json"
 hash = "4f71ecce73d6acda9d390bc2369796a360842f02208f4a28d943c5667c4b1815"
 
@@ -1694,7 +1690,7 @@ hash = "4f8d780084c3aa515dfa2cc5e90f169193cffbbe207fb2f1e131d3ed93ca55d5"
 
 [[files]]
 file = "config/emi-curation/rules.json"
-hash = "29b6dcfb00559e78bde98e16d4ffce4e7160db03a20bd594acb93a7b6e80c4a1"
+hash = "5f9ad2755f3d9721b687419eb8190fa118e4c480d4cd90753eef1e83dd6431a3"
 
 [[files]]
 file = "config/emi.css"
@@ -2467,6 +2463,254 @@ hash = "a1b5b75b2e89da5a93b65e26e925b0c5259186cc642a90d0d6b678159686a8d1"
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/placement.js"
 hash = "8d1c5cbf48ef06ee5174adf60692e2c54d91ac08d84edbadd03a39e10385a62e"
+
+[[files]]
+file = "kubejs/config/ato_retirement.json"
+hash = "9669cdc4ae75d31f0336f650bd1a391bff189ac6c4c9ae87cac11de2679b505d"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/aluminum.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/aluminum_end.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/aluminum_nether.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/iridium.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/lead.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/lead_end.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/lead_nether.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/nickel.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/nickel_end.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/nickel_nether.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/osmium.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/osmium_end.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/osmium_nether.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/peridot.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/platinum.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/platinum_end.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/platinum_nether.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/ruby.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/sapphire.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/silver.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/silver_end.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/silver_nether.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/tin.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/tin_end.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/tin_nether.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/uranium.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/uranium_end.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/uranium_nether.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/zinc.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/zinc_end.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/zinc_nether.json"
+hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/deepslate_sapphire_ore.json"
+hash = "816efaae5955a9625276708d1cdbc0d70e79dfc46fd35692e61386aa52a7f0e6"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/deepslate_silver_ore.json"
+hash = "6ac04f38fa224c79cbea8bdd8b8869fbe30096d5d8fbbbf55591ffd357e85d73"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/deepslate_uranium_ore.json"
+hash = "b8509a08befdcd3163daccdbb7dd1fc35f59d7684a2a59855db7cc3a8751ec8e"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/deepslate_zinc_ore.json"
+hash = "f417c53f69aa3e1e44c8391bcde307e305022d2ce139c77b4f56a2bb09c39120"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/end_silver_ore.json"
+hash = "7184ed7119b7b3e9716184f187324db70270e542adb169bbc0ea9cb9a85cc6a9"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/end_uranium_ore.json"
+hash = "53c8dc726d08174e8883d9beb0e18fc75a2c027d468e5953c10070bbbc0ee102"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/end_zinc_ore.json"
+hash = "e8fbd1976f58edec46bda3d37ed670cba9ed36b08b9a4ce229ade39cefb8b843"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/nether_silver_ore.json"
+hash = "76d4139df628c941ac61eb99172ff70495de91ac076affa5cb147c3d72a23444"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/nether_uranium_ore.json"
+hash = "4042e6a94da86bca978bc29f46412b8bc8ff092042344831da6ae5d8f651053b"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/nether_zinc_ore.json"
+hash = "75f2e6eafe0f22ae117d555c28baf3fa1edeaaf767f4bb40920a8f9335acfb42"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_coal_ore.json"
+hash = "1b568760885623711e7e41c816ecdc3d8ccad9dc277d2bb6e42077d0c17e0444"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_copper_ore.json"
+hash = "2d53d10be1af3381ebda08305f1f703c161bef47dc1ae627df094f87226a34ed"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_diamond_ore.json"
+hash = "67f60994504a9b592c4710a74d8381769f78dabcf38f6aad05ef0b8cebc38347"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_emerald_ore.json"
+hash = "39e7cc45037eee116e3b097f73c17edc36b6629c4e1917e84ee2df7a29dea92e"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_gold_ore.json"
+hash = "4665a4caadd7cfd422b1e7f23d191501cc25140ec791f6948cf04c1374eb7a66"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_iron_ore.json"
+hash = "8e9d1aa427dbf067585d6c9f80c2c4d57ac0d2abeffee58e61f029861e85dfce"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_lapis_ore.json"
+hash = "2f5128df3a7198ed2634c4b403f64c5a3be958379a7b325efbf2c9e1f785388b"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_quartz_ore.json"
+hash = "dc087f2678ec6268948f07a884207814c51289efb35472d1278c9e07024a02b9"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_redstone_ore.json"
+hash = "f603834ce4738b5719316089f31457568e7d76f144c79d470f0bf80ba56f3079"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_silver_ore.json"
+hash = "dc3f9a2a76637edb899fca7f2a8c574577ccdf0b78a4b435b28509eac03de62d"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_uranium_ore.json"
+hash = "a05026e78f9e992f7a8fc38ac004c9f89f3399acb851cfd3623a942990115ccd"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/other_zinc_ore.json"
+hash = "d6763f2f6360ee44aeb4a1433e37feb987302695759d79fb237575aa66a2d603"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/raw_silver_block.json"
+hash = "dd86dec9f717db80679227eed5b7134c9c236be0d044d39bf2a540d4856a9e39"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/raw_uranium_block.json"
+hash = "f8c231e7ede61c2bdcfdadba399128e6730fd8731792dff2f3465ba83a63d988"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/raw_zinc_block.json"
+hash = "b8c6868f575a7231a0d1919675f0582959c77ca672dfa979e67627e8f4785bb5"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/sapphire_ore.json"
+hash = "89c06901e30364c61ffb677a0504075d6f242260a12dd7acfcd76e10185b3001"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/silver_ore.json"
+hash = "56e69fe20ce6ff52d4ccb1a310e3b56086d813695a18d2ce50f88f8d56bdbdd9"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/uranium_ore.json"
+hash = "570467ed89c990932ed73bc06300f453f495987cdb283e935de32c4aa839136f"
+
+[[files]]
+file = "kubejs/data/alltheores/loot_tables/blocks/zinc_ore.json"
+hash = "ce030fcac5132ba61eaa7ef0060777f4c4d62d8c9ca7dbe401a39ca0b3d084b7"
+
+[[files]]
+file = "kubejs/server_scripts/ato_retirement.js"
+hash = "dbbc0a1ed8576476a742dddb427ea4be4c05b34a98c4fce7e79ecadbc764181f"
 
 [[files]]
 file = "kubejs/startup_scripts/emi_curation_keys.js"

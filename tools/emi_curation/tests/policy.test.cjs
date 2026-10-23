@@ -12,8 +12,8 @@ const ZOMBIE = { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zom
 const item = (id, nbt) => ({ id, isItem: true, nbt: () => (nbt === undefined ? null : nbt) });
 const hidden = (id, nbt) => P.isStackHidden(policy, item(id, nbt));
 
-test('loads the shipped curation: 1,759 explicit ids plus rules', () => {
-  assert.equal(policy.itemIdCount, 1759);
+test('loads the shipped curation: 1,105 explicit ids plus rules', () => {
+  assert.equal(policy.itemIdCount, 1105);
   assert.deepEqual([...policy.idContains], ['spawn_egg']);
   assert.equal(policy.namespaces.dramaticdoors, true);
   assert.equal(policy.displayFiltering, true);
@@ -22,7 +22,6 @@ test('loads the shipped curation: 1,759 explicit ids plus rules', () => {
 test('every explicit family hides its listed ids', () => {
   for (const id of [
     'ae2:creative_item_cell', 'create:creative_motor', 'enderio:creative_power',
-    'allthecompressed:cobblestone_4x', 'allthecompressed:cobblestone_9x',
     'enderio:clear_glass_a', 'enderio:fused_quartz_red', 'enderio:clear_glass_dnp_white',
     'ae2:red_covered_cable', 'ae2:white_glass_cable', 'ae2:red_paint_ball', 'ae2:red_lumen_paint_ball',
     'connectedglass:borderless_glass_black', 'supplementaries:present_red', 'supplementaries:flag_black',
@@ -40,6 +39,8 @@ test('documented uncoloured/base examples and lower tiers stay visible', () => {
     'create:brown_toolbox', 'create:copper_valve_handle', 'create:red_seat',
     'alexscaves:radon_lamp_white', 'alexscaves:rock_candy_white',
     'allthecompressed:cobblestone_1x', 'allthecompressed:cobblestone_3x',
+    'allthecompressed:cobblestone_4x', 'allthecompressed:cobblestone_9x',
+    'alltheores:zinc_ingot', 'alltheores:silver_ingot', 'alltheores:electrum_ingot',
     'enderio:clear_glass', 'enderio:clear_glass_e', 'enderio:clear_glass_d', 'enderio:fused_quartz',
     'enderio:empty_soul_vial', 'enderio:powered_spawner', 'minecolonies:blockhutbuilder', 'minecraft:egg',
   ]) assert.equal(hidden(id), false, id);

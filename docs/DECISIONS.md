@@ -2,6 +2,12 @@
 
 Newest first.
 
+## 2026-10-22 — Two-release retirement of AllTheOres and AllTheCompressed
+
+**Decision.** Keep AllTheOres, AllTheCompressed and Almost Unified installed in release 1. Stop all new AllTheOres generation, redirect surviving ore drops, and provide literal one-to-one material conversion recipes. Keep retiring items visible so players can find migration recipes. Almost Unified keeps running with survivor priorities and exclusions for the conversion recipes.
+
+**World consequence.** Release 2 removes the mods and the temporary scripts/data. Unconverted stacks and placed/unmined AllTheOres blocks disappear; the owner accepted the loss, so no registry-remap mod is built. [The migration note](ato-retirement.md) enumerates all items without a survivor and records the compressed-block limitation: there is no other compressed provider, so native 9:1 unpacking preserves material before the base-item conversions. The other seams and duplicates in the audit are separate work.
+
 ## 2026-10-21 — Fusion is SuperMartijn642's connected-textures library, not Alexndr's alloy add-on
 
 **Decision.**
