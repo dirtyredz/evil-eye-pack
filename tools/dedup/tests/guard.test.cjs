@@ -28,3 +28,14 @@ test('material guard detects new groups and nested tags without counting strata 
   data.get('data/forge/tags/items/ores/copper.json').values.push('third:copper_ore');
   assert.deepEqual(duplicateGroups(resolveTags(data, 'items'))['forge:ores/copper'], ['minecraft', 'third']);
 });
+test('allowance check: unexplained, changed and stale groups; exact namespaces only', () => {
+  const { compareAllowances } = require('../guard.cjs');
+  const allowed = { 'forge:ingots/a': { namespaces: ['x', 'y'], reason: 'kept' }, 'forge:ingots/gone': { namespaces: ['x', 'z'], reason: 'old' } };
+  const r = compareAllowances({ 'forge:ingots/a': ['x', 'y', 'z'], 'forge:ingots/b': ['p', 'q'] }, allowed);
+  assert.deepEqual(r.unexplained, [{ tag: 'forge:ingots/b', namespaces: ['p', 'q'] }]);
+  assert.deepEqual(r.changed, [{ tag: 'forge:ingots/a', namespaces: ['x', 'y', 'z'], allowed: ['x', 'y'] }]);
+  assert.deepEqual(r.stale, ['forge:ingots/gone']);
+  assert.equal(r.ok, false);
+  assert.equal(compareAllowances({ 'forge:ingots/a': ['x', 'y'] }, { 'forge:ingots/a': { namespaces: ['x', 'y'], reason: 'r' } }).ok, true);
+  assert.equal(compareAllowances({ 'forge:ingots/a': ['x', 'y'] }, { 'forge:ingots/a': { namespaces: ['x', 'y'] } }).unexplained.length, 1);
+});

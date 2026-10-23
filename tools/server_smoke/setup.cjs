@@ -2,7 +2,7 @@
 // Builds the throwaway server dir: cached Forge install + packwiz `-s server` install.
 const fs = require('node:fs');
 const path = require('node:path');
-const { run } = require('./procs.cjs');
+const procs = require('./procs.cjs');
 
 const { FORGE, FORGE_URL, BOOTSTRAP, INSTALLER_JAR_SOURCES } = require('./env.cjs');
 
@@ -13,7 +13,8 @@ async function download(url, dest) {
 }
 
 // Forge server installed once into <cache>/forge-base; its libraries are reused by every run.
-async function ensureForgeBase(cache, java, log) {
+// scope: an optional procs.scope() that owns the installer process (defaults to the shared one).
+async function ensureForgeBase(cache, java, log, scope = procs) {
   const base = path.join(cache, 'forge-base');
   const argsFile = path.join(base, 'libraries/net/minecraftforge/forge', FORGE, 'win_args.txt');
   if (fs.existsSync(argsFile)) return base;
@@ -21,7 +22,7 @@ async function ensureForgeBase(cache, java, log) {
   const installer = path.join(cache, `forge-${FORGE}-installer.jar`);
   if (!fs.existsSync(installer)) { log(`downloading ${FORGE_URL}`); await download(FORGE_URL, installer); }
   log('installing Forge server (first run only)');
-  const r = await run(java, ['-jar', installer, '--installServer', base], { cwd: base });
+  const r = await scope.run(java, ['-jar', installer, '--installServer', base], { cwd: base });
   fs.writeFileSync(path.join(cache, 'forge-install.log'), r.out);
   if (!fs.existsSync(argsFile)) throw new Error(`Forge install failed (see ${path.join(cache, 'forge-install.log')})`);
   return base;
@@ -48,7 +49,7 @@ function readRunSeed(runDir) {
   return m ? m[1] : null;
 }
 
-async function installPack(runDir, packToml, java, cache, log) {
+async function installPack(runDir, packToml, java, cache, log, scope = procs) {
   const cachedInstaller = path.join(cache, 'packwiz-installer.jar');
   if (!fs.existsSync(cachedInstaller)) {
     const src = INSTALLER_JAR_SOURCES.find((p) => fs.existsSync(p));
@@ -58,7 +59,7 @@ async function installPack(runDir, packToml, java, cache, log) {
   if (fs.existsSync(cachedInstaller)) args.push('--bootstrap-main-jar', cachedInstaller);
   args.push('--bootstrap-no-update', '-g', '-s', 'server', packToml);
   log('packwiz install (-s server)');
-  const r = await run(java, args, { cwd: runDir });
+  const r = await scope.run(java, args, { cwd: runDir });
   fs.writeFileSync(path.join(runDir, 'packwiz-install.log'), r.out);
   if (r.code !== 0) throw new Error(`packwiz install exited ${r.code} (see ${path.join(runDir, 'packwiz-install.log')})`);
 }

@@ -28,7 +28,7 @@ function makePack() {
   w('mods/thing.pw.toml', 'name = "Thing"\nfilename = "thing.jar"\nside = "both"\n\n[download]\nhash-format = "sha1"\nhash = "' + sha1(JAR) + '"\nmode = "metadata:curseforge"\n\n[update]\n[update.curseforge]\nfile-id = 1\nproject-id = 2\n');
   w('tools/check.cjs', '// tooling\n');
   w('docs/notes.md', '# notes\n');
-  execFileSync('git', ['init', '-q'], { cwd: root });
+  execFileSync('git', ['init', '-q'], { cwd: root, windowsHide: true });
   const r = rehash(root);
   assert.deepEqual(r.problems, []);
   return { root, w, edit: (rel, fn) => w(rel, fn(fs.readFileSync(path.join(root, rel), 'utf8'))) };

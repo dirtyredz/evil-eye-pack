@@ -7,6 +7,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const { root, scan, resolveTags, duplicateGroups } = require('../catalog.cjs');
 const { plan } = require('../overrides.cjs');
+const { compareAllowances } = require('../guard.cjs');
 const read = f => JSON.parse(fs.readFileSync(path.join(root, f), 'utf8'));
 const policy = read('kubejs/config/dedup.json');
 const catalog = scan((process.env.DEDUP_MODS || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods').split(';'));
@@ -34,12 +35,10 @@ test('no new duplicate material group in effective pinned jar tags', () => {
     data.set(file, { values: [...(data.get(file)?.values || []), ...ids] });
   }
   const actual = duplicateGroups(resolveTags(data, 'items', retired));
-  const allowed = read('tools/dedup/allowed_groups.json');
-  for (const [tag, namespaces] of Object.entries(actual)) {
-    assert.ok(allowed[tag]?.reason, `New duplicate material group ${tag}: ${namespaces.join(', ')}`);
-    assert.deepEqual(namespaces, allowed[tag].namespaces, `New namespace in ${tag}`);
-  }
-  for (const tag of Object.keys(allowed)) assert.ok(actual[tag], 'Stale exception: ' + tag);
+  const result = compareAllowances(actual, read('tools/dedup/allowed_groups.json'));
+  for (const g of result.unexplained) assert.fail(`New duplicate material group ${g.tag}: ${g.namespaces.join(', ')}`);
+  for (const g of result.changed) assert.deepEqual(g.namespaces, g.allowed, `New namespace in ${g.tag}`);
+  for (const tag of result.stale) assert.fail('Stale exception: ' + tag);
 });
 
 test('no effective loot item entry can produce a retired copy, including unqualified vanilla types', () => {

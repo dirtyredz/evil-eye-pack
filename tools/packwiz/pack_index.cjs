@@ -197,7 +197,7 @@ function isMetafile(rel) {
 
 /** Files git would publish: tracked plus untracked-but-not-gitignored. */
 function listRepoFiles(root) {
-  const out = execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard', '-z'], { cwd: root });
+  const out = execFileSync('git', ['ls-files', '--cached', '--others', '--exclude-standard', '-z'], { cwd: root, windowsHide: true });
   return out.toString('utf8').split('\0').filter((p) => p !== '' && fs.existsSync(path.join(root, p)));
 }
 
