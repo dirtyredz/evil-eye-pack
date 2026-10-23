@@ -2713,6 +2713,10 @@ file = "kubejs/server_scripts/ato_retirement.js"
 hash = "dbbc0a1ed8576476a742dddb427ea4be4c05b34a98c4fce7e79ecadbc764181f"
 
 [[files]]
+file = "kubejs/server_scripts/ato_retirement_swap.js"
+hash = "3cef247790a1425fc67252157bf409ccc9c59542116516957d23324a93f93e06"
+
+[[files]]
 file = "kubejs/startup_scripts/emi_curation_keys.js"
 hash = "5757ce455fb5e3b52df9a4a1423b0e471c73c43669c56c338ae7408c08676ec5"
 
