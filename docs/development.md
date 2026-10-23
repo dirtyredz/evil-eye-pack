@@ -80,9 +80,11 @@ offline) with a KubeJS probe injected into that throwaway server only, stops eve
 and writes `report.json` + `summary.txt` into its run folder. Run it after any pack-file change (after
 `rehash.cjs` and `verify_hashes.cjs`), and read `summary.txt`.
 
-- **Where it runs.** By default on **ANU** (see below). `--local` runs on Valhalla. If ANU is unreachable,
-  or busy for longer than `--anu-wait` seconds (default 600), the run falls back to Valhalla and the
-  summary's first line says `fallback: ...`.
+- **Where it runs.** By default on **ANU** (see below). `--local` runs on Valhalla. The first line of
+  `summary.txt` starts `mode: ...`: `anu (alone)`, `anu (shared with <job>)` or
+  `local (fallback: <reason>)` (`local (--local)` when asked for). An unreachable ANU, a held pack-test
+  lock or no room beside another project's job falls back to Valhalla at once; there is no waiting for
+  ANU to become idle (`--anu-wait` is gone).
 - **Output.** `C:/Users/dirty/projects/artifacts/evil-eye-pack/pack-test/runs/run-<time>/` by default;
   pass `--out <job folder>` to put the run there. A run folder holds `run.json` (what was tested: commit,
   dirty flag, pack/index hashes, seed, timings, boot result), `evidence/` (probe payloads, raw-resource
@@ -104,7 +106,7 @@ and writes `report.json` + `summary.txt` into its run folder. Run it after any p
 - **Re-analyse without booting:** `node tools/pack_test/run.cjs --analyze <run folder>` (same verdict
   from the saved evidence; use it after editing the baseline or the checks).
 - **Options.** `--seed` (default `20261020`), `--fresh-world` (ignore the cached world),
-  `--priority` (local JVM, default `AboveNormal`; ANU runs at `BelowNormal`), `--timeout`, `--silent`,
+  `--priority` (local JVM, default `AboveNormal`; ANU always runs at `BelowNormal`, alone or shared), `--timeout`, `--silent`,
   `--sample` (watchdog, as in the smoke), `--probe-timeout` (seconds allowed after `Done`, default 300),
   `--heap` (default `6G`), `--port` (default 25601). Java, the installer jars and the artifacts root come
   from `tools/server_smoke/env.cjs` (`SMOKE_*` overrides).
@@ -126,13 +128,26 @@ changed.
   syncs only new or changed files to `G:\evil-eye-pack-ci\stage\server` (one tar over scp), resends the
   tool code, and starts `remote/agent.cjs` detached through `Win32_Process.Create` at BelowNormal (it
   survives the SSH session; Java inherits the priority).
-- One heavy job at a time: a heartbeat lock in `G:\evil-eye-pack-ci\lock\` (stale after 10 min), and the
-  run also waits while `G:\mods-ci\lock` is held by a live process (read only).
+- Two pack tests never overlap: a heartbeat lock in `G:\evil-eye-pack-ci\lock\` (stale after 10 min); a
+  second run finds it held and falls back to Valhalla immediately.
+- **Sharing with another project (owner ruling 2026-10-23).** While `G:\mods-ci\lock` is held by a live
+  process, the run checks twice (before the sync, and again just before launching the agent) that ANU has
+  room: free physical RAM >= 8 GB and the mean of 5 one-second CPU readings < 50%. If so it runs beside
+  that job (`anu (shared with <job>)`) at BelowNormal, the agent and the server JVM it starts; otherwise it
+  falls back to Valhalla. Without the neighbour's lock it runs `anu (alone)` with no load check.
+  Thresholds are in `tools/pack_test/remote/config.cjs` (`PACKTEST_ANU_MIN_FREE_GB`,
+  `PACKTEST_ANU_MAX_CPU_PCT`, `PACKTEST_ANU_CPU_SAMPLES`, `PACKTEST_ANU_CPU_SAMPLE_MS`); the decision is
+  `remote/capacity.cjs`. The neighbour's `lock\pid`, `lock\job` and `queue\*.ticket` count are only read.
+- **Starved shared runs.** A boot that never finished, with no crash and the JVM averaging under 0.25 cores
+  (the smoke's HOST STARVED rule), is reported as `HOST STARVED` (exit 2, neighbour named, not a pack
+  failure). When that happens on a shared run the pack test re-runs **once, automatically, on Valhalla**
+  (its summary then says `local (fallback: shared ANU run beside <job> was CPU-starved)` plus a `note:`
+  line); the same starvation on a run that is not re-run (alone, or the re-run itself) stays exit 2.
 - The agent boots through the same code as a local run, keeps the evidence, deletes the server copy
   and releases the lock; Valhalla polls `status.json`, pulls the evidence back and analyses it locally,
   so exit codes and reports are identical. Ctrl+C on Valhalla also kills the remote agent and its JVM.
 - Protected on ANU, never touched: Plex and its boot task, `E:\`, `G:\Work`, `C:\ProgramData\CommandDeckCI\`,
-  the `cd-ci` account, `G:\ci`, `G:\mods-ci` (its lock is only read).
+  the `cd-ci` account, `G:\ci`, `G:\mods-ci` (only its lock `pid`/`job` and queue ticket count are read).
 
 ## Server compatibility smoke (agents)
 

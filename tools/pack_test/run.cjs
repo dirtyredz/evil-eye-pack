@@ -6,10 +6,12 @@
 //
 // Usage: node tools/pack_test/run.cjs [--local] [--pack pack.toml] [--out <job dir>] [--seed 20261020]
 //        [--priority AboveNormal] [--timeout 1800] [--silent 180] [--sample 10] [--probe-timeout 300]
-//        [--heap 6G] [--port 25601] [--fresh-world] [--keep-server] [--anu-wait 600]
+//        [--heap 6G] [--port 25601] [--fresh-world] [--keep-server]
 //        node tools/pack_test/run.cjs --analyze <run dir>     re-analyse saved evidence, no boot
-// Target: ANU by default (see docs/development.md); --local runs on this machine. An unreachable or busy
-// ANU falls back to this machine, and the summary says so.
+// Target: ANU by default (see docs/development.md); --local runs on this machine. ANU is used alone, or
+// beside another project's running job when it has room (free RAM and CPU); an unreachable ANU, a held
+// pack-test lock or no room falls back to this machine at once, and the summary's first line says which
+// mode ran. A shared ANU run that was CPU-starved is re-run once on this machine.
 // Exit: 0 no new findings; 1 new findings; 2 invalid/incomplete run, setup or cleanup failure.
 const fs = require('node:fs');
 const path = require('node:path');
@@ -22,16 +24,17 @@ const { analyzeRun, EXIT } = require('./analyze.cjs');
 const { loadToolData } = require('./verdict/policy.cjs');
 const { scanResources, serverSources } = require('./session/resources.cjs');
 const { localLock } = require('./session/lock.cjs');
+const { starvedBoot, starvedText } = require('./verdict/mode.cjs');
 
 const ROOT = path.resolve(__dirname, '../..');
-const NUM = new Set(['timeout', 'silent', 'sample', 'probeTimeout', 'port', 'anuWait']);
+const NUM = new Set(['timeout', 'silent', 'sample', 'probeTimeout', 'port']);
 const FLAGS = new Set(['local', 'freshWorld', 'keepServer']);
 
 function parseArgs(argv) {
   const o = {
     pack: path.join(ROOT, 'pack.toml'), out: `${env.ARTIFACTS}/pack-test/runs`, seed: '20261020', priority: 'AboveNormal',
     timeout: 1800, silent: 180, sample: 10, probeTimeout: 300, heap: '6G', port: 25601, analyze: '', local: false,
-    freshWorld: false, keepServer: false, anuWait: 600
+    freshWorld: false, keepServer: false
   };
   for (let i = 0; i < argv.length; i++) {
     const k = argv[i].replace(/^--/, '').replace(/-([a-z])/g, (_, c) => c.toUpperCase());
@@ -89,20 +92,33 @@ async function main() {
     stageEvidence(stageDir, path.join(runDir, 'evidence'), data);
     run.timings.scan = (Date.now() - t) / 1000;
     const bootOpts = { priority: o.priority, sample: o.sample, silent: o.silent, timeout: o.timeout, probeTimeout: o.probeTimeout };
+    const runLocal = async () => {
+      const r = await execute({ stageDir, runDir, worldCache: `${env.ARTIFACTS}/pack-test/cache/worlds`, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, keepServer: o.keepServer, scope }, log);
+      Object.assign(run, { target: 'local', boot: r.boot, world: r.world });
+      Object.assign(run.timings, r.timings);
+    };
     let remote = null;
     if (!o.local) {
       const { runOnAnu } = require('./remote/anu.cjs');
       run.target = 'anu';
-      remote = await runOnAnu({ stageDir, runDir, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: { ...bootOpts, priority: 'BelowNormal' }, freshWorld: o.freshWorld, anuWait: o.anuWait, scope, log, onAbort: (fn) => aborts.push(fn), onSynced: () => { if (lock) { lock.release(); lock = null; } } });
+      remote = await runOnAnu({ stageDir, runDir, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, scope, log, onAbort: (fn) => aborts.push(fn), onSynced: () => { if (lock) { lock.release(); lock = null; } } });
       if (remote.fallback) { run.fallback = remote.fallback; run.target = 'local'; log(`ANU not used: ${remote.fallback}; running on this machine`); }
     }
     if (remote && !remote.fallback) {
-      Object.assign(run, { target: 'anu', boot: remote.boot, world: remote.world });
+      Object.assign(run, { target: 'anu', boot: remote.boot, world: remote.world, shared: remote.shared });
       Object.assign(run.timings, remote.timings);
+      // Starved beside a neighbour: not a pack result. One automatic re-run here, then the analysis reports it.
+      if (remote.shared && starvedBoot(remote.boot)) {
+        const text = `${starvedText(remote.boot, remote.shared)}; re-ran once on this machine`;
+        log(text);
+        run.sharedAttempt = { text, job: remote.shared.job, boot: remote.boot };
+        run.fallback = `shared ANU run beside ${remote.shared.job} was CPU-starved`;
+        run.target = 'local'; run.shared = null;
+        for (const d of ['probe', 'logs', 'crash-reports']) fs.rmSync(path.join(runDir, 'evidence', d), { recursive: true, force: true });
+        await runLocal();
+      }
     } else {
-      const r = await execute({ stageDir, runDir, worldCache: `${env.ARTIFACTS}/pack-test/cache/worlds`, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, keepServer: o.keepServer, scope }, log);
-      Object.assign(run, { target: 'local', boot: r.boot, world: r.world });
-      Object.assign(run.timings, r.timings);
+      await runLocal();
     }
   } catch (e) {
     run.errors.push(`setup/boot: ${e.message}`);

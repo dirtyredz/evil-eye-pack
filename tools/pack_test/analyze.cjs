@@ -9,6 +9,7 @@ const { validateBaseline, candidate } = require('./verdict/baseline.cjs');
 const { buildReport, toJson, summarize, EXIT } = require('./verdict/report.cjs');
 const { checkAcquisition } = require('./checks/acquisition.cjs');
 const { compilePolicy, loadToolData } = require('./verdict/policy.cjs');
+const { modeLabel, starvedBoot, starvedText } = require('./verdict/mode.cjs');
 const { checkRecipes } = require('./checks/recipes.cjs');
 const { checkReferences } = require('./checks/references.cjs');
 const { checkMachines } = require('./checks/machines.cjs');
@@ -63,6 +64,7 @@ function analyzeRun(runDir, { data = loadToolData(), log = () => {} } = {}) {
   const probe = loadRun(path.join(ev, 'probe'), { token: run.input.token, expected: SECTIONS });
   infraErrors.push(...probe.manifestErrors.map((e) => `probe: ${e}`));
   if (run.boot && run.boot.completed !== true) infraErrors.push(`probe did not complete (${describeBoot(run.boot)})`);
+  if (starvedBoot(run.boot)) infraErrors.push(starvedText(run.boot, run.shared));
   for (const c of crashCauses(path.join(ev, 'crash-reports'))) infraErrors.push(`crash: ${c}`);
   const resources = fs.existsSync(path.join(ev, 'resources.json')) ? readJson(path.join(ev, 'resources.json')) : null;
   if (!resources) infraErrors.push('raw resource evidence missing');
@@ -97,7 +99,7 @@ function analyzeRun(runDir, { data = loadToolData(), log = () => {} } = {}) {
   for (const s of Object.values(sections)) delete s.evidence;
 
   const model = buildReport({
-    run: { ...run.meta, target: run.target, fallback: run.fallback, seed: run.seed, timings: run.timings, world: run.world, runDir: runDir.replace(/\\/g, '/') },
+    run: { ...run.meta, target: run.target, mode: modeLabel(run), fallback: run.fallback, shared: run.shared, sharedAttempt: run.sharedAttempt, seed: run.seed, timings: run.timings, world: run.world, runDir: runDir.replace(/\\/g, '/') },
     boot: run.boot, sections, logs: logs ? logs.analysis : null, baseline: data.baseline, infraErrors
   });
   fs.writeFileSync(path.join(runDir, 'report.json'), JSON.stringify(toJson(model), null, 1));

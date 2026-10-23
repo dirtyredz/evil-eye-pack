@@ -1,8 +1,9 @@
 'use strict';
-// The ANU target, driven from Valhalla: connect, provision if needed, take the heartbeat lock (waiting
-// for our own or a neighbour's running job), sync the staged server and the tool code, start the agent
-// detached, poll its status, pull the evidence back into the local run folder, clean the remote run.
-// Returns { boot, world, timings } or { fallback: reason } when ANU cannot be used (the caller runs
+// The ANU target, driven from Valhalla: connect, provision if needed, take our heartbeat lock (never
+// waiting), check ANU has room when a neighbour project's job is running, sync the staged server and
+// the tool code, start the agent detached at BelowNormal, poll its status, pull the evidence back into
+// the local run folder, clean the remote run. Returns { boot, world, timings, shared } (shared = the
+// neighbour job we ran beside, or null) or { fallback: reason } when ANU cannot be used (the caller runs
 // locally). Errors after the agent has started are real failures, never silent fallbacks.
 const fs = require('node:fs');
 const os = require('node:os');
@@ -11,24 +12,19 @@ const cfg = require('./config.cjs');
 const { connect, q } = require('./ssh.cjs');
 const { syncDir } = require('./sync.cjs');
 const { ensureProvisioned, nodeExe, javaExe, jcmdExe } = require('./provision.cjs');
+const { probeScript, parseProbe, decide } = require('./capacity.cjs');
 
 const TOOLS_DIR = path.resolve(__dirname, '../..');
 const CODE_DIRS = ['server_smoke', 'pack_test', 'emi_coverage'];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const STAGE_SKIP = (rel) => /^(smoke-world|logs|crash-reports|pack_test)(\/|$)/.test(rel);
 
-// Takes G:\...\lock unless our own fresh lock or a live neighbour job holds the machine.
+// Takes our own single-job lock (G:\evil-eye-pack-ci\lock) unless another pack test holds it fresh, so two
+// pack tests never run on ANU at once. A neighbour project's lock is not looked at here (see capacity.cjs).
 // Prints LOCKED or BUSY <why>.
 function lockScript(owner) {
   return `
 $lock = ${q(cfg.LOCK)}; $staleMs = ${cfg.LOCK_STALE_MS}; $now = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
-foreach ($n in @(${cfg.NEIGHBOUR_LOCKS.map(q).join(', ')})) {
-  $pf = Join-Path $n 'pid'
-  if ((Test-Path $n) -and (Test-Path $pf)) {
-    $p = 0; [int]::TryParse((Get-Content $pf -TotalCount 1), [ref]$p) | Out-Null
-    if ($p -and (Get-Process -Id $p -ErrorAction SilentlyContinue)) { $j = Get-Content (Join-Path $n 'job') -TotalCount 1 -ErrorAction SilentlyContinue; Write-Output "BUSY neighbour job $j (pid $p, $n)"; exit 0 }
-  }
-}
 if (Test-Path $lock) {
   $o = $null; try { $o = Get-Content -Raw (Join-Path $lock 'owner.json') | ConvertFrom-Json } catch {}
   if ($o -and ($now - [int64]$o.at) -lt $staleMs) { Write-Output "BUSY pack-test run $($o.owner)"; exit 0 }
@@ -59,18 +55,25 @@ Write-Output ("ALIVE=$alive"); Write-Output $body`;
 // Kills a remote agent and everything it started (used on interrupt).
 const killScript = (agentPid) => `taskkill /PID ${Number(agentPid)} /T /F 2>&1 | Out-Null; Write-Output done`;
 
-async function acquire(ssh, owner, waitMs, log) {
-  const until = Date.now() + waitMs;
-  let last = '';
-  for (;;) {
-    const out = await ssh.must(lockScript(owner), { timeoutMs: 60000 });
-    if (/LOCKED/.test(out)) return { ok: true };
-    const why = (out.match(/BUSY .*/) || ['BUSY'])[0];
-    if (why !== last) { log(`ANU busy (${why.slice(5)}); waiting up to ${Math.round(waitMs / 60000)} min`); last = why; }
-    if (Date.now() >= until) return { ok: false, why: why.slice(5) };
-    await sleep(30000);
-  }
+// One attempt, no waiting: a busy ANU means this run goes to Valhalla.
+async function acquire(ssh, owner) {
+  const out = await ssh.must(lockScript(owner), { timeoutMs: 60000 });
+  return /LOCKED/.test(out) ? { ok: true } : { ok: false, why: (out.match(/BUSY .*/) || ['BUSY'])[0].slice(5) };
 }
+
+// Reads ANU's load and decides alone / shared / fallback (capacity.cjs).
+async function checkCapacity(ssh, log) {
+  const r = await ssh.ps(probeScript(), { timeoutMs: 90000 });
+  let reading = null;
+  try { reading = r.code === 0 ? parseProbe(r.out) : null; } catch { /* unreadable: fall back */ }
+  const d = decide(reading);
+  log(`ANU capacity: ${d.mode} (${d.reason})`);
+  return d;
+}
+
+// ANU runs the server at BelowNormal whether alone or beside a neighbour: it must never outrank the
+// neighbour's job (the local default, AboveNormal, does not apply here).
+const anuBoot = (boot) => ({ ...boot, priority: 'BelowNormal' });
 
 async function pullEvidence(ssh, scope, remoteRun, runDir) {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'packtest-pull-'));
@@ -90,7 +93,7 @@ async function pullEvidence(ssh, scope, remoteRun, runDir) {
   } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
 }
 
-// o: { stageDir, runDir, input, seed, port, heap, boot, freshWorld, anuWait (s), scope, log, onAbort, onSynced }
+// o: { stageDir, runDir, input, seed, port, heap, boot, freshWorld, scope, log, onAbort, onSynced }
 async function runOnAnu(o) {
   const { scope, log } = o;
   const timings = {};
@@ -101,20 +104,25 @@ async function runOnAnu(o) {
   log(`ANU reachable as ${ssh.host}`);
   await ensureProvisioned(ssh, scope, log);
   const runId = path.basename(o.runDir);
-  const lock = await acquire(ssh, runId, o.anuWait * 1000, log);
-  if (!lock.ok) return { fallback: `ANU busy for ${o.anuWait} s (${lock.why})` };
+  const lock = await acquire(ssh, runId);
+  if (!lock.ok) return { fallback: `${lock.why} holds ANU` };
   const remoteRun = `${cfg.RUNS}\\${runId}`;
   let agentPid = null;
   try {
+    const early = await checkCapacity(ssh, log); // cheap early exit before the sync
+    if (early.mode === 'fallback') return { fallback: early.reason };
     t = Date.now();
     const st = await syncDir(ssh, scope, o.stageDir, cfg.STAGE, { incoming: cfg.INCOMING, skip: STAGE_SKIP, log, label: 'stage' });
     for (const d of CODE_DIRS) await syncDir(ssh, scope, path.join(TOOLS_DIR, d), `${cfg.CODE}\\${d}`, { incoming: cfg.INCOMING, skip: (r) => /^tests(\/|$)/.test(r), log, label: `tools-${d}` });
     timings.sync = (Date.now() - t) / 1000;
     if (o.onSynced) o.onSynced(); // the local stage may change again now
     log(`synced stage (${st.changed} changed, ${st.removed} removed, ${(st.bytes / 1048576).toFixed(1)} MiB) in ${Math.round(timings.sync)} s`);
+    const verdict = await checkCapacity(ssh, log); // authoritative: just before starting
+    if (verdict.mode === 'fallback') return { fallback: verdict.reason };
+    const shared = verdict.mode === 'shared' ? { job: verdict.neighbour, freeGb: verdict.freeGb, cpuPct: verdict.cpuPct } : null;
     const job = {
       runId, root: cfg.ROOT, stageDir: cfg.STAGE, worldCache: cfg.WORLDS, lock: cfg.LOCK, input: o.input, seed: o.seed, port: o.port, heap: o.heap,
-      boot: o.boot, freshWorld: o.freshWorld, java: javaExe, jcmd: jcmdExe
+      boot: anuBoot(o.boot), freshWorld: o.freshWorld, java: javaExe, jcmd: jcmdExe
     };
     const jobLocal = path.join(o.runDir, 'job.json');
     fs.writeFileSync(jobLocal, JSON.stringify(job, null, 1));
@@ -147,10 +155,10 @@ async function runOnAnu(o) {
     timings.pull = (Date.now() - t) / 1000;
     await ssh.ps(`Remove-Item -Recurse -Force ${q(remoteRun)}`, { timeoutMs: 300000 });
     if (status.state === 'error') throw new Error(`ANU agent failed: ${status.error}`);
-    return { boot: status.boot, world: status.world, timings: { ...timings, ...Object.fromEntries(Object.entries(status.timings || {}).map(([k, v]) => [`anu_${k}`, v])) } };
+    return { boot: status.boot, world: status.world, shared, timings: { ...timings, ...Object.fromEntries(Object.entries(status.timings || {}).map(([k, v]) => [`anu_${k}`, v])) } };
   } finally {
     if (!agentPid) await ssh.ps(releaseScript(runId), { timeoutMs: 60000 }); // the agent releases its own lock
   }
 }
 
-module.exports = { runOnAnu, lockScript, launchScript };
+module.exports = { runOnAnu, lockScript, launchScript, anuBoot };

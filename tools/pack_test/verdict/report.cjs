@@ -56,7 +56,8 @@ const line = (f) => `  [${f.check}/${f.code}] ${f.subject}${f.ref ? ` -> ${f.ref
 function summarize(model, { maxList = 40 } = {}) {
   const r = model.run || {};
   const out = [];
-  out.push(`${model.verdict.label} (exit ${model.verdict.exit})  target=${r.target || '?'}${r.fallback ? ` (fallback: ${r.fallback})` : ''}  commit=${r.commit || '?'}${r.dirty ? ' (dirty)' : ''}  seed=${r.seed || '?'}`);
+  out.push(`mode: ${r.mode || r.target || '?'}  ${model.verdict.label} (exit ${model.verdict.exit})  commit=${r.commit || '?'}${r.dirty ? ' (dirty)' : ''}  seed=${r.seed || '?'}`);
+  if (r.sharedAttempt) out.push(`note: ${r.sharedAttempt.text}`);
   if (model.boot) out.push(`boot: Done ${model.boot.wallSeconds ?? '-'} s, total ${Math.round(model.boot.totalWallSeconds || 0)} s, JVM CPU ${model.boot.cpuSeconds == null ? '?' : Math.round(model.boot.cpuSeconds)} s, probe ${model.boot.completed ? 'complete' : 'NOT complete'}`);
   if (r.timings) out.push(`timings (s): ${Object.entries(r.timings).map(([k, v]) => `${k} ${Math.round(v)}`).join(', ')}`);
   for (const p of model.verdict.problems) out.push(`INVALID: ${p}`);

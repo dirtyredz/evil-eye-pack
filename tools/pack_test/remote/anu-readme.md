@@ -27,8 +27,18 @@ file (SMOKE_JAVA/SMOKE_JCMD set inside the Node process only).
 
 ## How a run works
 
-1. Valhalla takes `lock\` over SSH, waiting while another of our runs or a live `G:\mods-ci\lock` job
-   holds the machine (one heavy job at a time).
+1. Valhalla takes `lock\` over SSH. If another pack test holds it, the run does not wait: it falls back to
+   Valhalla (two pack tests never run here at once). It then reads ANU's load (read only) and picks a mode:
+   - **alone** - no other project's job is running (`G:\mods-ci\lock` absent, or its pid dead);
+   - **shared** - that job is running, but free RAM is >= 8 GB and the mean of 5 one-second CPU readings is
+     < 50%: the pack test runs beside it at BelowNormal (agent and server JVM);
+   - **fallback** - that job is running and there is no room (or the probe failed): the run goes to
+     Valhalla at once, no waiting.
+   The probe reads `G:\mods-ci\lock\pid` and `job` and counts `G:\mods-ci\queue\*.ticket`; it never takes,
+   edits or deletes anything there. Thresholds live in `tools/pack_test/remote/config.cjs`
+   (`PACKTEST_ANU_MIN_FREE_GB`, `PACKTEST_ANU_MAX_CPU_PCT`, `PACKTEST_ANU_CPU_SAMPLES`).
+   A shared run that is starved of CPU is reported HOST STARVED (exit 2, neighbour named) and re-run once
+   on Valhalla.
 2. It syncs `stage\server\` and `tools\`, writes `runs\<id>\job.json`, and starts
    `node tools\pack_test\remote\agent.cjs runs\<id>\job.json` through `Win32_Process.Create` at
    BelowNormal priority (the Java server inherits it), so it survives the SSH session.
@@ -47,4 +57,4 @@ file (SMOKE_JAVA/SMOKE_JCMD set inside the Node process only).
 - Remove everything: delete `G:\evil-eye-pack-ci` and `C:\Tools\evil-eye-pack`.
 
 Never touch: Plex and its `Plex Media Server (boot)` task, `E:\`, `G:\Work`, `C:\ProgramData\CommandDeckCI\`,
-the `cd-ci` account, `G:\ci`, `G:\mods-ci` (read its `lock\` only).
+the `cd-ci` account, `G:\ci`, `G:\mods-ci` (read only: `lock\pid`, `lock\job`, and the `queue\` ticket count).

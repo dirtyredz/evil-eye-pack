@@ -55,10 +55,10 @@ test('remote PowerShell is UTF-16LE base64 and literals are single-quote escaped
   assert.equal(q("it's"), "'it''s'");
 });
 
-test('the lock script waits for a live neighbour job and for our own fresh lock', () => {
+test('the lock script guards only our own runs and never looks at a neighbour', () => {
   const s = lockScript('run-x');
-  assert.match(s, /G:\\mods-ci\\lock/);
-  assert.match(s, /BUSY neighbour job/);
+  assert.doesNotMatch(s, /mods-ci/);
+  assert.doesNotMatch(s, /BUSY neighbour/);
   assert.match(s, /BUSY pack-test run/);
   assert.match(s, /owner = 'run-x'/);
 });

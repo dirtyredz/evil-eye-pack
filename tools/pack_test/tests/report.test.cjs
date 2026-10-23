@@ -61,9 +61,17 @@ test('toJson drops internal comparison handles', () => {
 
 test('summarize names the verdict, sections and new findings', () => {
   const text = summarize(build({ sections: { recipes: sec([fail('fresh', { ref: 'r' })]), loot: sec([], 'passed') } }));
-  assert.match(text, /^NEW FINDINGS \(exit 1\)/);
+  assert.match(text, /^mode: \S.* NEW FINDINGS \(exit 1\)/);
   assert.match(text, /recipes\s+findings/);
   assert.match(text, /loot\s+passed/);
   assert.match(text, /\[recipes\/c\] fresh -> r: msg/);
   assert.ok(text.endsWith('\n'));
+});
+
+test('the summary starts with the mode, and a shared-run re-run is noted', () => {
+  const m = build({ run: { mode: 'anu (shared with J1)' } });
+  assert.match(summarize(m).split('\n')[0], /^mode: anu \(shared with J1\)  PASS \(exit 0\)/);
+  const re = summarize(build({ run: { mode: 'local (fallback: shared ANU run beside J1 was CPU-starved)', sharedAttempt: { text: 'HOST STARVED: x; re-ran once on this machine' } } }));
+  assert.match(re.split('\n')[0], /^mode: local \(fallback: shared ANU run beside J1/);
+  assert.match(re, /\nnote: HOST STARVED: x/);
 });
