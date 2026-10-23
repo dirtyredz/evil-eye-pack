@@ -49,7 +49,7 @@
 - **KubeJS JSON lists cannot hold `null`.** `JsonIO.read` gives Java lists whose null elements throw a Java NPE that a script `try/catch` does not catch; probe inputs use `''` for empty grid slots.
 - **`Recipe.getType()` from KubeJS returns the serializer id**, not the `RecipeType` (KubeJS mixes in its own `getType`). The probe records both: `type` from the registry walk, `ser` from `getType()`.
 - **Acquisition is evidence, not proof.** Items obtained by trades, Java-coded drops or in-world conversion (waxing, stripping, filling a bucket, bucketing a mob) have no data trail; they need a reasoned exclusion in `data/policy.json` or a baseline entry. A block whose loot table only drops itself is reported as `unverified-source` (info), not a failure.
-- **KubeJS can crash at mod construction with a `ConcurrentModificationException`** in `ScriptManager.load` (seen once in three boots on 2026-10-23, Valhalla). It is a startup race, not the probe (server scripts load later); the run reports it as an invalid run (exit 2) with the crash cause. Rerun.
+- **KubeJS can crash at mod construction with a `ConcurrentModificationException`** in `ScriptManager.load` (seen once in three boots on 2026-10-23, Valhalla). It is a startup race, not the probe (server scripts load later): `ScriptManager.load` line 192 walks the root registry's key set while another mod's constructor (parallel mod loading) adds a registry. KubeJS build.26 is the latest and has no setting for it; `fml.toml` `maxThreads = 1` would serialise construction at a launch-time cost (Docket `dk-e9c3d82d`). The run reports it as an invalid run (exit 2) with the crash cause. Rerun.
 
 ## Worktrees
 

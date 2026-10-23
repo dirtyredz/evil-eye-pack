@@ -1,6 +1,8 @@
 'use strict';
 // Machine recipe types: runtime counts against configured floors, plus named recipe/tag assertions.
-// config (data/machines.json): { types: { "<type>": { min, observed, mod } }, assertions: [...] }.
+// config (data/machines.json): { types: { "<type>": { min, observed, varies?, mod } }, assertions: [...] }.
+// `varies` (a reason string) marks a type whose count legitimately differs between boots (e.g. Create: Dragons
+// Plus sandpaper_polishing, 256-270): only the floor applies and a changed count is not reported.
 // Assertion kinds: tag-contains {tag,item} | recipe-loaded {id} | recipe-not-loaded {id} |
 //                  recipe-uses-tag {id,tag} | recipe-output {id,item}.
 const { ingredientRefs, declaredOutputs } = require('./recipes.cjs');
@@ -40,7 +42,7 @@ function checkMachines(recipes, itemTags, config) {
     const n = counts[type] || 0;
     if (!n) findings.push(finding('type-missing', type, null, 'no loaded recipes of this type'));
     else if (n < t.min) findings.push(finding('type-below-floor', type, String(t.min), `${n} loaded recipes, floor ${t.min}`));
-    else if (t.observed !== undefined && n !== t.observed) findings.push(finding('type-count-changed', type, null, `${n} loaded recipes (recorded ${t.observed})`, 'info'));
+    else if (!t.varies && t.observed !== undefined && n !== t.observed) findings.push(finding('type-count-changed', type, null, `${n} loaded recipes (recorded ${t.observed})`, 'info'));
   }
   for (const a of config.assertions) {
     const err = assertion(a, byId, itemTags);

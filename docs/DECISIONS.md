@@ -2,6 +2,16 @@
 
 Newest first.
 
+## 2026-10-23 — First pack-test findings: fixed, allowed or hidden (orchestrator rulings, owner away)
+
+**Decision.**
+- **Ars Elemental quartz crush.** `ars_elemental:quartz_crush` output the nonexistent `minecraft:nether_quartz`; `kubejs/data/ars_elemental/recipes/quartz_crush.json` overrides it with `minecraft:quartz` (same counts and chances).
+- **Allowed duplicate groups** (`tools/dedup/allowed_groups.json`, `liveOnly`): `alexscaves:galena_iron_ore` in `#forge:ores/iron` (a stone-variant iron ore, same material) and `supplementaries:ash_brick` in `#forge:ingots/brick` (a distinct material Supplementaries deliberately tags as a brick). Both reach the tag through Forge's own tags, which the cached-jar test cannot see, so the cached-jar stale check skips `liveOnly` entries and only the live pack test guards them.
+- **Removed from a tag.** `cluttered:chiseled_gold_block` is a decor block and must not act as gold storage: `dedup.json` `tagRemovals` (`forge:storage_blocks/gold`) is applied by `kubejs/server_scripts/dedup.js` (`event.remove`) and subtracted in the cached-jar duplicate test.
+- **Hidden orphans.** Nineteen items players could see in EMI but never obtain went into `dedup.json` `hiddenOnly` (regenerated `kubejs/assets/emi/index/stacks/dedup.json`): nine Extreme Reactors dusts, `reinforced_reactorfluidport_mekanism_passive`, `enderio:powdered_cobalt`/`powdered_tin`, three Iron Furnaces allthemodium/unobtainium/vibranium upgrades, and four Create items (`chromatic_compound`, `refined_radiance`, `shadow_steel`, `crushed_raw_quicksilver`). Checked in the evidence: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, `allthemodium`-gated recipes and quicksilver-tag-gated Create crushing, all of which are unloaded because those mods or tags are absent; no loot or worldgen source. The pack test already treats `hiddenOnly` as an expected acquisition exclusion.
+- **Create: Dragons Plus** registers 256-270 `create:sandpaper_polishing` recipes depending on the boot. `tools/pack_test/data/machines.json` marks the type `varies`: only the floor applies and a changed count is no longer reported.
+- **KubeJS construction race** is diagnosed, not fixed: see Docket `dk-e9c3d82d` and GOTCHAS.
+
 ## 2026-10-23 — Automated pack test: one headless boot, an artifact-only KubeJS probe, exact baselines, ANU by default
 
 **Decision.** `node tools/pack_test/run.cjs` is the agent's acceptance command for pack changes. It boots the checkout once on a hidden Forge dedicated server (no client, no window), and a KubeJS probe in that throwaway server writes the live registries, final tags, every loaded recipe and the results of five scripted crafts. Node then checks recipes, tag/loot/removed-mod references, acquisition coverage, machine recipe types, crafts, the duplicate-material guard on live tags, and log groups, and compares every finding with `tools/pack_test/data/baseline.json`.

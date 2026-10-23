@@ -6,5 +6,15 @@
   "forge:raw_materials/uranium": {
     "namespaces": ["alexscaves", "bigreactors"],
     "reason": "Alex's Caves uranium retains biome and Tremorzilla mechanics; both raw materials feed its machines and smelt to yellorium."
+  },
+  "forge:ores/iron": {
+    "namespaces": ["alexscaves", "minecraft"],
+    "liveOnly": true,
+    "reason": "Alex's Caves galena iron ore is a stone-variant iron ore (a new ore block in the Magnetic Caves), not a duplicate material or producer to merge with vanilla iron. liveOnly: the group exists through forge:ores/iron -> #minecraft:iron_ores, and Forge's own tag is not in the cached-jar scan, so only the live pack test sees it."
+  },
+  "forge:ingots/brick": {
+    "namespaces": ["minecraft", "supplementaries"],
+    "liveOnly": true,
+    "reason": "Supplementaries deliberately tags its ash brick (made from ash, a distinct material) as a brick for brick-accepting recipes; it is not a second copy of the clay brick. liveOnly: Forge's own tag is not in the cached-jar scan, so only the live pack test sees the group."
   }
 }

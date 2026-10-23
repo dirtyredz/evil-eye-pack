@@ -34,11 +34,15 @@ test('no new duplicate material group in effective pinned jar tags', () => {
     const file = `data/${ns}/tags/items/${name}.json`;
     data.set(file, { values: [...(data.get(file)?.values || []), ...ids] });
   }
-  const actual = duplicateGroups(resolveTags(data, 'items', retired));
+  const tagged = resolveTags(data, 'items', retired);
+  for (const [tag, ids] of Object.entries(policy.tagRemovals || {})) tagged.set(tag, (tagged.get(tag) || []).filter(id => !ids.includes(id)));
+  const actual = duplicateGroups(tagged);
   const result = compareAllowances(actual, read('tools/dedup/allowed_groups.json'));
   for (const g of result.unexplained) assert.fail(`New duplicate material group ${g.tag}: ${g.namespaces.join(', ')}`);
   for (const g of result.changed) assert.deepEqual(g.namespaces, g.allowed, `New namespace in ${g.tag}`);
-  for (const tag of result.stale) assert.fail('Stale exception: ' + tag);
+  // liveOnly exceptions come from tags the cached-jar scan cannot see (Forge's own); the live pack test guards them.
+  const allowed = read('tools/dedup/allowed_groups.json');
+  for (const tag of result.stale.filter(tag => !allowed[tag].liveOnly)) assert.fail('Stale exception: ' + tag);
 });
 
 test('no effective loot item entry can produce a retired copy, including unqualified vanilla types', () => {
@@ -71,8 +75,10 @@ test('recipe and tag events remove producers and code-driven loot candidates', (
   assert.deepEqual(removedRecipes.filter(r => r.id).map(r => r.id), sources.removeRecipes);
   assert.equal(addedRecipes.length, 4);
   const removed = [], added = {};
-  handlers.item({ removeAllTagsFrom: id => removed.push(id), add: (tag, ids) => { added[tag] = ids; } });
+  const untagged = {};
+  handlers.item({ removeAllTagsFrom: id => removed.push(id), add: (tag, ids) => { added[tag] = ids; }, remove: (tag, ids) => { untagged[tag] = ids; } });
   assert.deepEqual(removed, [...retired]);
+  assert.deepEqual(untagged, policy.tagRemovals);
   assert.deepEqual(added, sources.itemTags);
   assert.ok(added['forge:wither_bones'].includes('iceandfire:witherbone'));
   assert.ok(added['forge:nuggets/copper'].includes('create:copper_nugget'));

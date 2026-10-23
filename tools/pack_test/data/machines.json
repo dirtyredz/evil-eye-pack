@@ -60,7 +60,8 @@
     },
     "create:sandpaper_polishing": {
       "min": 243,
-      "observed": 270
+      "observed": 270,
+      "varies": "Create: Dragons Plus registers a boot-dependent number of sandpaper polishing recipes (256-270 across boots on 2026-10-23); only the floor applies"
     },
     "create:sequenced_assembly": {
       "min": 101,

@@ -2354,7 +2354,7 @@ hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
 file = "kubejs/assets/emi/index/stacks/dedup.json"
-hash = "46a06eb287403b2a62cdbbb4168539fa4caedbd14f4830e88a38f5bf285d2868"
+hash = "fba2dad47e3efb062c0149859af4d06a9857cac9d4e10e116068192ab83fd9f6"
 
 [[files]]
 file = "kubejs/assets/emi_curation/lang/en_us.json"
@@ -2454,11 +2454,15 @@ hash = "8d1c5cbf48ef06ee5174adf60692e2c54d91ac08d84edbadd03a39e10385a62e"
 
 [[files]]
 file = "kubejs/config/dedup.json"
-hash = "12d9f5a769fd651f67d156f94e51b603630633923d9ceef006cc031c3dce15d6"
+hash = "2f21af65fa1700a3cbefa60eb1b06add2d65445f4d0cd89633112a9203ef40c2"
 
 [[files]]
 file = "kubejs/config/dedup_sources.json"
 hash = "8a4d34b4fbaf888ae7dab8ff1dd6408093bdac7b8b2ada0551d750b9c723ec74"
+
+[[files]]
+file = "kubejs/data/ars_elemental/recipes/quartz_crush.json"
+hash = "d7b48aa81b142f08e80f2d3076c89203c4ea91133d003ecf948008fb993edbe5"
 
 [[files]]
 file = "kubejs/data/cluttered/loot_tables/blocks/flowering_willow_leaves.json"
@@ -2838,7 +2842,7 @@ hash = "b041667e68c28d75da0a6d187ec4d27798447c1420cd70c36bb701e6d3ac3fce"
 
 [[files]]
 file = "kubejs/server_scripts/dedup.js"
-hash = "38a29790e5a11bb8af7002bf5f0d70d273224ed41b88a7bfcc1ad35654deae60"
+hash = "323db56c19ceddcd3e399afa4b2a360a4e35ef55b396090965bc5cf6ccadd403"
 
 [[files]]
 file = "kubejs/startup_scripts/emi_curation_keys.js"

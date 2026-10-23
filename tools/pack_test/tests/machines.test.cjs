@@ -20,6 +20,12 @@ test('count change alone is info and the run passes', () => {
   assert.equal(r.state, 'passed');
 });
 
+test('a type marked varies reports no count change but still enforces its floor', () => {
+  const types = { 'm:v': { min: 5, observed: 10, varies: 'boot-dependent' } };
+  assert.deepEqual(codes(run(recs('m:v', 7), { types })), []);
+  assert.deepEqual(codes(run(recs('m:v', 4), { types })), ['type-below-floor:fail']);
+});
+
 const tags = new Map([['c:t', ['a:i']]]);
 const rule = (a, recipes = []) => codes(run(recipes, { assertions: [a] }, tags));
 

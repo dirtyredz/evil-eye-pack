@@ -50,6 +50,25 @@
     "item:create:crushed_raw_nickel",
     "item:create:crushed_raw_aluminum",
     "item:create:crushed_raw_osmium",
-    "item:create:crushed_raw_platinum"
+    "item:create:crushed_raw_platinum",
+    "item:bigreactors:blutonium_dust",
+    "item:bigreactors:cyanite_dust",
+    "item:bigreactors:graphite_dust",
+    "item:bigreactors:inanite_dust",
+    "item:bigreactors:insanite_dust",
+    "item:bigreactors:ludicrite_dust",
+    "item:bigreactors:magentite_dust",
+    "item:bigreactors:ridiculite_dust",
+    "item:bigreactors:yellorium_dust",
+    "item:bigreactors:reinforced_reactorfluidport_mekanism_passive",
+    "item:enderio:powdered_cobalt",
+    "item:enderio:powdered_tin",
+    "item:ironfurnaces:upgrade_allthemodium",
+    "item:ironfurnaces:upgrade_unobtainium",
+    "item:ironfurnaces:upgrade_vibranium",
+    "item:create:chromatic_compound",
+    "item:create:refined_radiance",
+    "item:create:shadow_steel",
+    "item:create:crushed_raw_quicksilver"
   ]
 }

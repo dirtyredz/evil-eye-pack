@@ -54,7 +54,26 @@
     "create:crushed_raw_nickel",
     "create:crushed_raw_aluminum",
     "create:crushed_raw_osmium",
-    "create:crushed_raw_platinum"
+    "create:crushed_raw_platinum",
+    "bigreactors:blutonium_dust",
+    "bigreactors:cyanite_dust",
+    "bigreactors:graphite_dust",
+    "bigreactors:inanite_dust",
+    "bigreactors:insanite_dust",
+    "bigreactors:ludicrite_dust",
+    "bigreactors:magentite_dust",
+    "bigreactors:ridiculite_dust",
+    "bigreactors:yellorium_dust",
+    "bigreactors:reinforced_reactorfluidport_mekanism_passive",
+    "enderio:powdered_cobalt",
+    "enderio:powdered_tin",
+    "ironfurnaces:upgrade_allthemodium",
+    "ironfurnaces:upgrade_unobtainium",
+    "ironfurnaces:upgrade_vibranium",
+    "create:chromatic_compound",
+    "create:refined_radiance",
+    "create:shadow_steel",
+    "create:crushed_raw_quicksilver"
   ],
   "removeOutputs": [
     "createdeco:zinc_sheet",
@@ -90,6 +109,9 @@
   "tagFixes": {
     "minecraft:wooden_trapdoors": { "biomesoplenty:willow_door": "biomesoplenty:willow_trapdoor" },
     "minecraft:trapdoors": { "biomesoplenty:willow_door": "biomesoplenty:willow_trapdoor" }
+  },
+  "tagRemovals": {
+    "forge:storage_blocks/gold": ["cluttered:chiseled_gold_block"]
   },
   "extraItemTags": {
     "forge:ingots/steel": [

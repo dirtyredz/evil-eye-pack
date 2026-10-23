@@ -1,5 +1,6 @@
 'use strict';
 // Duplicate-material allowance check, shared by the cached-jar test and the live pack test.
+// An allowance may carry liveOnly: true when only live tags show the group (see installed.test.cjs).
 // actual: { tag: [namespaces] } from catalog.duplicateGroups; allowed: allowed_groups.json.
 function compareAllowances(actual, allowed) {
   const unexplained = [], changed = [], stale = [];

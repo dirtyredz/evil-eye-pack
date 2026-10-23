@@ -19,7 +19,11 @@
     retired.forEach(function (id) { event.removeAllTagsFrom(id) })
     Object.keys(additions).forEach(function (tag) { event.add(tag, additions[tag]) })
   }
-  ServerEvents.tags('item', function (event) { tags(event, sources.itemTags) })
+  ServerEvents.tags('item', function (event) {
+    tags(event, sources.itemTags)
+    // Jar tags that mislabel a decor item as a material (e.g. Cluttered's chiseled gold block as gold storage).
+    Object.keys(policy.tagRemovals || {}).forEach(function (tag) { event.remove(tag, policy.tagRemovals[tag]) })
+  })
   ServerEvents.tags('block', function (event) {
     // Only block duplicates have block tags. Do not feed non-block item ids to the registry.
     Object.keys(policy.replacements).forEach(function (id) {
