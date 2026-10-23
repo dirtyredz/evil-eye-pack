@@ -2,6 +2,14 @@
 
 Newest first.
 
+## 2026-10-23 — Acquisition baseline reviewed item by item (dk-e4cc1e7b)
+
+**Decision.** The 439 `acquisition/no-known-source` entries accepted in bulk were each classified from the mod jar (classes, lang, data). The full table (item, class, mechanism and evidence, action) is `classification.md` in the job folder `artifacts/evil-eye-pack/jobs/2026-10-23-acquisition-review/`.
+- **Kept in the baseline (307)** with a per-item reason naming the mechanism: made in Java with no recipe (special-recipe serializers, machine/block-entity output, in-world interactions, rituals, NBT or filled variants, tablets, packages, paint pitchers, presents; 226) or a mob drop, villager/colonist trade, boss or structure loot, loot modifier (81). Policy: a baseline entry says what produces the item, never just "mod code"; a mechanism that could not be confirmed says so in the reason.
+- **Hidden (131)** through `dedup.json` `hiddenOnly` (regenerated EMI index): creative-only, icon, render-state and placed-only technical items (106, plus six placed-only encased Create blocks) and items with no source in this pack (18, plus `dankstorage:red_print`, whose jar ships no recipe). Hiding removes them from EMI only. To un-hide an item, remove it from `hiddenOnly` and regenerate.
+- **Fixed (1):** `supplementaries:bomb_spiky` was craftable only with lead ingots (or Oreganized), neither in the pack; `kubejs/data/supplementaries/recipes/spiky_bomb_2.json` overrides it with iron ingots (the Oreganized variant's own ingredient).
+- **Productive Bees bee types.** `bee_conversion` `result` and `bee_breeding` `offspring` are bee type ids (data-driven NBT on one configurable bee entity), not items. The pack test now recognises them (`tools/pack_test/checks/bees.cjs`), no longer reports `output-unrecognized` for them, and counts the configurable spawn egg as their product for acquisition evidence.
+
 ## 2026-10-23 — First pack-test findings: fixed, allowed or hidden (orchestrator rulings, owner away)
 
 **Decision.**
