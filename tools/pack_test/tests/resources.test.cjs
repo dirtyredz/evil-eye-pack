@@ -7,7 +7,7 @@ const path = require('node:path');
 const { parseLenient, lootRefs, scanResources } = require('../session/resources.cjs');
 
 test('parseLenient accepts BOM, comments and trailing commas', () => {
-  assert.deepEqual(parseLenient('﻿{"a":1}'), { json: { a: 1 }, lenient: true });
+  assert.deepEqual(parseLenient(String.fromCharCode(0xfeff) + '{"a":1}'), { json: { a: 1 }, lenient: true });
   const text = '{\n // line\n "a": 1, /* block */\n # hash\n "b": [1,2,],\n}';
   assert.deepEqual(parseLenient(text).json, { a: 1, b: [1, 2] });
 });

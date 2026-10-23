@@ -38,7 +38,7 @@
 
 - **A mod marked `side = "both"` can still be client-only.** packwiz `-s server` installs every `both` mod, and Forge aborts server boot at the first one that touches client classes. Oculus 1.8.0 (`side = "both"`) crashes the server: `Attempted to load class net/minecraft/client/gui/screens/Screen for invalid dist DEDICATED_SERVER`. Forge reports only the first failing mod and leaves the JVM alive after "Crash report saved", so the smoke stops on that line. Use `--drop <name>` to find the next offender, then fix the metafile's `side`.
 - **Known server boot noise** (observed 2026-10-18 on a successful boot, listed in `tools/server_smoke/known_noise.json`): datapack tags, recipes and advancements from dramaticdoors, productivebees and totw_modded that reference mods the pack does not ship (Mekanism and others); Radium probing Minecolonies `BlockHutTownHall` (`RuntimeDistCleaner ... ClientLevel`); Structurize's ModernFix `LazyDataFixer` banner; HammerLib's test recipe extension. Mixin "Error loading class ... ClassNotFoundException" lines are WARN, not errors.
-- A boot takes ~3 minutes to `Done (` on this machine (about 200 s server-reported); the JVM exits within a minute of `stop`.
+- Time to `Done (` with a fresh world, measured 2026-10-23: 136 s wall on Valhalla with a light load, 527 s while Valhalla was busy with other work, 135 s on ANU. Spawn-area generation dominates; the pack test's cached world brings it to about 50 s. The JVM exits within a minute of `stop`.
 
 ## Pack test (`tools/pack_test/`)
 

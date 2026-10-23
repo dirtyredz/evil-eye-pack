@@ -2,8 +2,8 @@
 id: dk-41edac11
 type: idea
 created: 2026-10-20
-status: todo
-since: 2026-10-20
+status: done
+since: 2026-10-23
 area: server-smoke
 priority: P3
 rank: zzt

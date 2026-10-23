@@ -65,7 +65,7 @@ function summarize(model, { maxList = 40 } = {}) {
   for (const [n, s] of Object.entries(model.sections)) {
     out.push(`${n.padEnd(14)} ${s.state.padEnd(12)} ${String(s.counts.new).padStart(3)}  ${String(s.counts.known).padStart(5)}  ${String(s.counts.info).padStart(4)}  ${Object.entries(s.stats).map(([k, v]) => `${k}=${v}`).join(' ')}`);
   }
-  if (model.logs) out.push(`logs           ${model.logs.new.length ? 'findings' : 'passed'}       ${String(model.logs.new.length).padStart(3)}  ${String(model.logs.known.length).padStart(5)}     -  knownNoise=${model.logs.knownNoise} resolved=${model.logs.resolved.length}`);
+  if (model.logs) out.push(`log groups     ${model.logs.new.length ? 'findings' : 'passed'}       ${String(model.logs.new.length).padStart(3)}  ${String(model.logs.known.length).padStart(5)}     -  knownNoise=${model.logs.knownNoise} resolved=${model.logs.resolved.length}`);
   const fresh = model.findings.new;
   if (fresh.length) {
     out.push('', `NEW findings (${fresh.length}):`);

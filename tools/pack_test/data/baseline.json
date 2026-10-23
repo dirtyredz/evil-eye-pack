@@ -1,5 +1,2317 @@
 {
-  "schema": 1,
-  "findings": [],
-  "logSignatures": []
+ "schema": 1,
+ "findings": [
+  {
+   "key": "recipes|ingredient-empty-tag|storagedrawers:personal_key_cofh|#cofh_core:crafting/locks",
+   "reason": "Storage Drawers ships its CoFH personal-key recipe without a mod_loaded condition; CoFH Core is not in the pack, so the CoFH-only key is uncraftable by design.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "recipes|recipe-missing|productivebees:create/mixing/create_enchantment_industry/honeycomb_hyper_experience|",
+   "reason": "Productive Bees' Create Enchantment Industry mixing recipe targets a hyper-experience fluid that CEI 2.5 no longer registers; the recipe is skipped silently. Upstream compat drift, harmless.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|supplementaries:cannonball_2|#forge:storage_blocks/lead",
+   "reason": "Supplementaries makes cannonballs from lead blocks only when some mod provides lead; the pack has none since AllTheOres left, so its iron recipe is the intended one.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:crafting_pattern|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:facade|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:fe_p2p_tunnel|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:fluid_p2p_tunnel|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:item_p2p_tunnel|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:light_p2p_tunnel|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:matrix_frame|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:matter_ball|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:name_press|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:processing_pattern|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:redstone_p2p_tunnel|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:singularity|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:smithing_table_pattern|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:stonecutting_pattern|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. AE2 makes these in code: encoded patterns and facades in terminals/special recipes, P2P tunnels by attunement, singularities and matter balls in the condenser, presses from meteorites. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:cave_codex|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:cave_map_filled|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:cave_map_loading|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:dinosaur_train|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:disc_fragment_fusion|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:gingerbread_boots|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:gingerbread_chestplate|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:gingerbread_helmet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:gingerbread_leggings|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:jelly_bean|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:licowitch_radiant_essence|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:stinky_fish|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:submarine|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:sweetish_fish_blue|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:sweetish_fish_green|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:sweetish_fish_pink|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:sweetish_fish_yellow|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexscaves:volcanic_core|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Caves gives these from coded mob drops, trades, structure features or special crafting. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:ambergris|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:ancient_dart|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:cachalot_whale_tooth|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:ender_residue|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:ghostly_pickaxe|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:gongylidia|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:halo|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:komodo_spit|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:lost_tentacle|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:mungal_spores|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:music_disc_daze|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:mysterious_worm|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:pigshoes|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:poison_bottle|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:red_sand_circle|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:sand_circle|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:shattered_dimensional_carver|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:shed_snake_skin|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:shrimp_fried_rice|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:spiked_scute|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:stink_bottle|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:terrapin_egg|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|alexsmobs:warped_mixture|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Alex's Mobs drops, sheds and mob interactions are coded (whale ambergris, snake skin, komodo spit, stink bottle...), not loot tables. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|amendments:dye_bottle|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Amendments: dye bottles are filled in the world. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:air_caster_tome|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Elemental: rituals, familiars and mob drops in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:firenando_familiar|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Elemental: rituals, familiars and mob drops in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:mermaid_rock|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Elemental: rituals, familiars and mob drops in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:siren_familiar|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Elemental: rituals, familiars and mob drops in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:siren_shards|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Elemental: rituals, familiars and mob drops in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:amethyst_golem_charm|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:blank_glyph|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:bookwyrm_charm|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:drygmy_se|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:drygmy_shard|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:drygmy_stone|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:familiar_amethyst_golem|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:familiar_bookwyrm|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:familiar_drygmy|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:familiar_starbuncle|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:familiar_whirlisprig|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:familiar_wixie|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:mage_block|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:magic_fire|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:music_disc_aria_biblio|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:music_disc_firel_the_wild_hunt|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:music_disc_thistle_the_sound_of_glass|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:portal|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:rune|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:scryer_scroll|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:spell_parchment|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:starbuncle_se|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:starby_gift|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:whirlisprig_flower|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:whirlisprig_se|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:whirlisprig_shards|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:wilden_guardian_se|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:wilden_hunter_se|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:wilden_stalker_se|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:wilden_tribute|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:wixie_cauldron|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:wixie_shards|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ars Nouveau makes these through rituals, familiars, mob tributes and spell effects in code, or they are placed-only blocks (portals, runes, mage blocks). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|arseng:source_p2p_tunnel|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Applied Arcane Engineering P2P tunnels are made by attuning an ME P2P tunnel in the world (code). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|arseng:spell_p2p_tunnel|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Applied Arcane Engineering P2P tunnels are made by attuning an ME P2P tunnel in the world (code). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|biomesoplenty:blood|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Biomes O Plenty: plant parts and fluids that exist only as placed blocks or come from shearing/growth in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|biomesoplenty:flesh_tendons_strand|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Biomes O Plenty: plant parts and fluids that exist only as placed blocks or come from shearing/growth in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|biomesoplenty:glowworm_silk_strand|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Biomes O Plenty: plant parts and fluids that exist only as placed blocks or come from shearing/growth in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|biomesoplenty:hanging_cobweb_strand|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Biomes O Plenty: plant parts and fluids that exist only as placed blocks or come from shearing/growth in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|biomesoplenty:high_grass_plant|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Biomes O Plenty: plant parts and fluids that exist only as placed blocks or come from shearing/growth in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|biomesoplenty:liquid_null|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Biomes O Plenty: plant parts and fluids that exist only as placed blocks or come from shearing/growth in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|biomesoplenty:lumaloop_plant|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Biomes O Plenty: plant parts and fluids that exist only as placed blocks or come from shearing/growth in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|biomesoplenty:spanish_moss_plant|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Biomes O Plenty: plant parts and fluids that exist only as placed blocks or come from shearing/growth in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|biomesoplenty:stringy_cobweb|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Biomes O Plenty: plant parts and fluids that exist only as placed blocks or come from shearing/growth in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|buildinggadgets2:template|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Building Gadgets 2: templates are written by the gadgets. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:altar_of_abyss|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:altar_of_amethyst|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:altar_of_fire|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:altar_of_void|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:blazing_bone|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:chain_of_soul_binding|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:coral_bardiche|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:coral_spear|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:dungeon_block|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:emp|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:enderite_ingot|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:final_fractal|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:lionfish_spike|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:void_shard|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:zweiender|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. L_Ender's Cataclysm: boss drops, altars and dungeon blocks placed by structures and code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cozycafe:dirty_serving_plate|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Cozy Cafe: dirty plates come from serving food in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cozys-improved-cats:ancient_cod|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Cozy's Improved Cats: cat gifts and collars are coded. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cozys-improved-cats:ancient_salmon|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Cozy's Improved Cats: cat gifts and collars are coded. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|cozys-improved-cats:cat_collar|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Cozy's Improved Cats: cat gifts and collars are coded. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:andesite_encased_cogwheel|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:andesite_encased_large_cogwheel|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:andesite_encased_shaft|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:brass_encased_cogwheel|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:brass_encased_large_cogwheel|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:brass_encased_shaft|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:cardboard_package_10x12|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:cardboard_package_10x8|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:cardboard_package_12x10|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:cardboard_package_12x12|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:chest_minecart_contraption|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:elevator_contact|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:furnace_minecart_contraption|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:minecart_contraption|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:rare_creeper_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:rare_darcy_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:rare_evan_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:rare_jinx_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:rare_kryppers_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:rare_simi_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:rare_starlotte_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:rare_thunder_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:rare_up_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:rare_vector_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:schematic|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create:shopping_list|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: contraption items, packages and encased parts come from in-world use (encasing, packaging, contraption assembly); Create 6's legacy items have no source. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create_connected:andesite_encased_cross_connector|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create Connected: encased variants made by right-clicking a casing in the world. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create_connected:brass_encased_cross_connector|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create Connected: encased variants made by right-clicking a casing in the world. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create_dragons_plus:rare_blaze_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: Dragons Plus rare packages are cosmetic package variants made in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create_dragons_plus:rare_marble_gate_package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create: Dragons Plus rare packages are cosmetic package variants made in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create_enchantment_industry:blazes_enchanting_handbook|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create Enchantment Industry: handbook and drain made through in-world conversion or code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|create_enchantment_industry:grindstone_drain|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Create Enchantment Industry: handbook and drain made through in-world conversion or code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|dankstorage:red_print|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Dank Storage: the red print is copied in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:angel_halo|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:angel_wings|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:creative_canine_tracker|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:creative_collar|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:disc_chopin_op64_no1|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:doggy_charm|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:drool_scent_treat|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:easter_egg_candy|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:edamame_unpodded|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:firefighter_hat_blue|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:firefighter_hat_red|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:firefighter_suit_black|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:firefighter_suit_blue|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:firefighter_suit_kaki|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:firefighter_suit_red|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:frisbee_wet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:goose|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:grand_piano_black_item|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:grand_piano_white_item|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:head_band_highhh|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:head_band_mystery|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:locator_orb_ka|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:locator_orb_moku|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:locator_orb_sui|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:midi_keyboard|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:onsen_tamago|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:sake|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:samoyed_plushie_toy_item|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:starter_bundle|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:throw_bone_wet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:throw_stick_wet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:uncooked_rice|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:upright_piano_black_item|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:upright_piano_brown_item|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|doggytalents:upright_piano_white_item|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Doggy Talents gives these through dog interactions, starter kits and coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|enderio:confusing_powder|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ender IO: filled soul vials, printouts and confusing powder come from tool use and machine code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|enderio:filled_soul_vial|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ender IO: filled soul vials, printouts and confusing powder come from tool use and machine code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|enderio:location_printout|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ender IO: filled soul vials, printouts and confusing powder come from tool use and machine code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|farmersdelight:gleaming_salad|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Farmer's Delight: feast servings are taken from placed feast blocks with a bowl; rich soil farmland is made by tilling rich soil. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|farmersdelight:honey_glazed_ham|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Farmer's Delight: feast servings are taken from placed feast blocks with a bowl; rich soil farmland is made by tilling rich soil. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|farmersdelight:rich_soil_farmland|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Farmer's Delight: feast servings are taken from placed feast blocks with a bowl; rich soil farmland is made by tilling rich soil. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|farmersdelight:roast_chicken|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Farmer's Delight: feast servings are taken from placed feast blocks with a bowl; rich soil farmland is made by tilling rich soil. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|farmersdelight:shepherds_pie|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Farmer's Delight: feast servings are taken from placed feast blocks with a bowl; rich soil farmland is made by tilling rich soil. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|farmersdelight:stuffed_pumpkin|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Farmer's Delight: feast servings are taken from placed feast blocks with a bowl; rich soil farmland is made by tilling rich soil. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|friendly_furnishings:ff_feather|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Friendly Furnishings: feathers are coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|friendly_furnishings:ffb_feather|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Friendly Furnishings: feathers are coded drops. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|guideme:guide|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. GuideME: the guide item is a creative/guide stub. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragon_skull_fire|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragon_skull_ice|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragon_skull_lightning|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_amythest|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_black|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_bronze|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_copper|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_gray|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_green|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_sapphire|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_silver|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_white|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonforge_fire_core|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonforge_ice_core|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonforge_lightning_core|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dread_knight_sword|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dread_queen_staff|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dread_queen_sword|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dread_spawner|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dread_sword|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:egginice|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:fire_dragon_heart|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:fishing_spear|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:hippogryph_egg|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:lich_staff|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:lightning_dragon_heart|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:myrmex_desert_egg|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:myrmex_jungle_egg|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:pixie_jar_0|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:pixie_jar_1|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:pixie_jar_2|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:pixie_jar_3|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:pixie_jar_4|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:stone_statue|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_axe|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_column|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_column_forest|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_column_frost|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_hammer|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_trunk|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_trunk_frost|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:weezer_blue_album|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Ice and Fire: dragon eggs, hearts, skulls and troll/dread weapons are coded mob drops or structure loot. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|ironfurnaces:rainbow_coal|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Iron Furnaces: rainbow coal is made in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|mca:book_cult_0|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MCA Reborn: villager life events and letters are made in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|mca:book_cult_1|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MCA Reborn: villager life events and letters are made in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|mca:book_cult_2|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MCA Reborn: villager life events and letters are made in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|mca:book_cult_ancient|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MCA Reborn: villager life events and letters are made in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|mca:divorce_papers|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MCA Reborn: villager life events and letters are made in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|mca:jeweler_workbench|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MCA Reborn: villager life events and letters are made in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|mca:letter|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MCA Reborn: villager life events and letters are made in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|mca:scythe|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MCA Reborn: villager life events and letters are made in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:blockminecoloniesgrave|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:blockminecoloniesnamedgrave|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:bread_dough|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:cake_batter|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:chorus_bread|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:cookie_dough|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:decorationcontroller|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:golden_bread|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:magicpotion|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:milky_bread|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:mistletoe|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:plate_armor_boots|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:plate_armor_chest|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:plate_armor_helmet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:plate_armor_legs|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:raw_pumpkin_pie|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:santa_hat|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:scan_analyzer|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:scepterbeekeeper|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:scepterguard|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:scepterlumberjack|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:scepterpermission|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:scroll_area_tp|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:scroll_guard_help|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:scroll_highlight|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:scroll_tp|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:sifter_mesh_diamond|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:sifter_mesh_flint|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:sifter_mesh_iron|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:sifter_mesh_string|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:sugary_bread|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. MineColonies colonists craft or hand out these in code (bakery, sifter, guard tools, scepters). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|productivebees:adv_breed_all_bees|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Productive Bees: breeding items and gene bottles are made in machines and bee interactions in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|productivebees:adv_breed_bee|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Productive Bees: breeding items and gene bottles are made in machines and bee interactions in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|productivebees:gene_bottle|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Productive Bees: breeding items and gene bottles are made in machines and bee interactions in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|productivebees:invisible_redstone_block|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Productive Bees: breeding items and gene bottles are made in machines and bee interactions in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:black_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:blue_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:brown_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:chartreuse_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:copycat_headstock_buffer|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:copycat_headstock_knuckle_coupler|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:copycat_headstock_link_and_pin_linkless|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:copycat_headstock_screwlink_coupler|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:copycat_headstock_split_knuckle_coupler|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:cyan_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:diorite_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:dripstone_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:granite_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:gray_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:green_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:knuckle_coupler|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:light_blue_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:light_gray_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:lime_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:limestone_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:link_and_pin_linkless|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:magenta_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:maroon_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:ochrum_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:olive_green_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:orange_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:pine_green_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:pink_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:purple_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:red_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:royal_blue_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:sandy_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:scorchia_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:screwlink_coupler|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:sea_green_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:split_knuckle_coupler|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:tuff_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:turquoise_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:vermilion_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:white_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:wooden_headstock_buffer|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:wooden_headstock_knuckle_coupler|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:wooden_headstock_link_and_pin_linkless|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:wooden_headstock_screwlink_coupler|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:wooden_headstock_split_knuckle_coupler|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|railways:yellow_paint_pitcher|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Steam 'n' Rails: paint pitchers, couplers and headstocks come from special/dyeing recipes or in-world assembly in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|refurbished_furniture:package|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Refurbished Furniture: packages are made by its delivery system in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsbase:smartwrench_select|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Base: filled/selected variants produced by using the base item. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsbase:tablet_filled|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Base: filled/selected variants produced by using the base item. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsbuilder:superharvestingtool|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Builder: superharvesting tool is a creative/debug tool. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolscontrol:tablet_processor|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Control: tablet processor is configured in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:attribute_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:biome_category_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:biome_controller_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:biome_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:block_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:feature_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:fluid_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:realized_dimension_tab|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:sky_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:structure_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:tag_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:terrain_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsdim:time_dimlet|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Dimensions: dimlets are researched/made in machines driven by code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsutility:computer_module|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Utility: modules and tablets configured or produced in machines (code). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsutility:tablet_redstone|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Utility: modules and tablets configured or produced in machines (code). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsutility:tablet_screen|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Utility: modules and tablets configured or produced in machines (code). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|rftoolsutility:teleport_probe|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. RFTools Utility: modules and tablets configured or produced in machines (code). Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:connection_key_both|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:connection_key_input|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:connection_key_none|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:connection_key_output|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:detached_drawer_full|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_compacting_drawers_2|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_compacting_drawers_3|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_compacting_half_drawers_2|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_compacting_half_drawers_3|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_controller|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_controller_io|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_full_drawers_1|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_full_drawers_2|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_full_drawers_4|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_half_drawers_1|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_half_drawers_2|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_half_drawers_4|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:framed_trim|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_connection|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_connection_both|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_connection_input|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_connection_none|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_connection_output|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_drawer|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_personal|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_personal_cofh|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_personal_ftb|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_personal_unlock|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_priority|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_priority_n1|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_priority_n2|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_priority_p1|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_priority_p2|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_puller|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_quantify|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_shroud|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:keyring_suspend|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:personal_key_ftb|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:personal_key_unlock|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:priority_key_n1|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:priority_key_n2|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:priority_key_p1|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:priority_key_p2|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|storagedrawers:remote_upgrade_bound|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Storage Drawers: framed drawers, keyrings and key variants come from the framing table and special crafting in code. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:bomb_spiky|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:bubble_block|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:music_disc_heave_ho|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_black|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_blue|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_brown|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_cyan|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_gray|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_green|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_light_blue|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_light_gray|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_lime|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_magenta|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_orange|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_pink|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_purple|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_red|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_white|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:present_yellow|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:rope_arrow|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_black|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_blue|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_brown|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_cyan|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_gray|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_green|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_light_blue|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_light_gray|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_lime|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_magenta|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_orange|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_pink|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_purple|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_red|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_white|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:trapped_present_yellow|",
+   "reason": "Accepted from the first pack-test run (2026-10-23): no recipe, loot or worldgen evidence. Supplementaries: presents, bombs and bubble blocks come from dyeing/special recipes or coded interaction. Bulk-reviewed by namespace; listed in the job report for owner review.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "logs|tag-load-failed|#cataclysm:sunken_city_avoid|minecraft:monument",
+   "reason": "L_Ender's Cataclysm 1.28 ships a sunken_city_avoid tag naming minecraft:monument in a registry that has no such entry; the game drops that one placement tag. Upstream, harmless.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "logs|data-parse-error|cozycafe:vinery/kelp_cider|cozycafe:menu/vinery/kelp_cider.json",
+   "reason": "Cozy Cafe's menu/vinery/kelp_cider.json is malformed upstream (docs/GOTCHAS.md, cozy-mods trial); only that menu entry is lost.",
+   "since": "2026-10-23"
+  }
+ ],
+ "logSignatures": [
+  {
+   "signature": "com.google.gson.JsonSyntaxException: Expected name to be an item, was unknown string '<id>'",
+   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [mixin/]: Mixin config astikorcartsredux.mixins.json does not specify \"minVersion\" property",
+   "reason": "AstikorCarts Redux mixin config has no minVersion; logged at ERROR, harmless (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener/]: Couldn't parse data file <id> from <id>",
+   "reason": "Cozy Cafe's menu/vinery/kelp_cider.json is malformed upstream (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "com.google.gson.JsonParseException: com.google.gson.stream.MalformedJsonException: Use JsonReader.setLenient(true) to accept malformed JSON at line # column # path $.themes[#]",
+   "reason": "Cozy Cafe's menu/vinery/kelp_cider.json is malformed upstream (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "Caused by: com.google.gson.stream.MalformedJsonException: Use JsonReader.setLenient(true) to accept malformed JSON at line # column # path $.themes[#]",
+   "reason": "Cozy Cafe's menu/vinery/kelp_cider.json is malformed upstream (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/bastion_other_bc",
+   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/bastion_other_fr",
+   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/shipwreck_supply_bc",
+   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/shipwreck_supply_fr",
+   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/simple_dungeon_bc",
+   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/simple_dungeon_fr",
+   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/abandoned_mineshaft_fr",
+   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/abandoned_mineshaft_bc",
+   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/nether_bridge_fr",
+   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  },
+  {
+   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/nether_bridge_bc",
+   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
+   "since": "2026-10-23",
+   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
+  }
+ ]
 }
