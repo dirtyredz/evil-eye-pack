@@ -1017,22 +1017,6 @@ file = "config/alexsmobs/warped_toad_spawns.json"
 hash = "72126b26d7f3ae03b80df97dd103e0cec87d10829e86ac8b08da23abc7b318d8"
 
 [[files]]
-file = "config/almostunified/debug.json"
-hash = "3e03a291b5310a6b94a45aff63e4731baa643701c42a968ed716483ccd1d5a37"
-
-[[files]]
-file = "config/almostunified/duplicates.json"
-hash = "8262391a59691fd2f6dab52c3c5fc8ae0aa57715f3669c6ec50cdbf6c5253f86"
-
-[[files]]
-file = "config/almostunified/startup.json"
-hash = "ad711622f9b8c5cc8115f52396f5d82587b809fb20cbf9d94c7744aeebcaf4d5"
-
-[[files]]
-file = "config/almostunified/unify.json"
-hash = "88da331103b1daac80e913ee2baf5718089809373cdc6f2ece1dc3b31f3e78ce"
-
-[[files]]
 file = "config/appleskin-client.toml"
 hash = "28c6ad7570268b02ec6f73fb7c39c49ecf90f0697d0db9447899e8aa96285200"
 
@@ -1890,7 +1874,7 @@ hash = "5da09bd4b707b7519df57aa98ebaa5df9005d23e127af37617e50bd845b43e4f"
 
 [[files]]
 file = "config/hammerlib/recipes/modded/hammerlib.json"
-hash = "09558f531693a4ef0ca2d49789b79bbe06e6534cfb1260119ad0730260a1013b"
+hash = "fa9f138174e1342791719d667b6e0f01f8ca2efee2ea30d311021823f74fe734"
 
 [[files]]
 file = "config/hammerlib/recipes/modded/hammermicroblocks.json"
@@ -1902,7 +1886,7 @@ hash = "9ce1e21174fac3aad87c190482cf2a43ca2a29e16fda963bc97f4eb399c8d9d2"
 
 [[files]]
 file = "config/hammerlib/tags/modded/hammerlib.json"
-hash = "8c4abdbf5d4ccaabccf7405c822e9d4f85dc6883fee4e530dc2e339e21d0ea91"
+hash = "00116d7eea58e8f789448be064c756c7ae1eab3f0b434568d252d17cc979ef96"
 
 [[files]]
 file = "config/hammerlib/tags/modded/hammermicroblocks.json"
@@ -2266,7 +2250,7 @@ hash = "343b149cbbf93127e06d66e9f38866e6ddb233ed7b8fffdd993a8c9818bb25fd"
 
 [[files]]
 file = "config/supplementaries-common.toml"
-hash = "9c2c732dc1dcb54f4c3a0a8da6966d196482b2a85198257e130c302630685b62"
+hash = "4e6431a22ba69caefb0fff565ab3386fabd16b7708edb4ea8545f95b2a04474a"
 
 [[files]]
 file = "config/terrablender.toml"
@@ -2369,6 +2353,10 @@ file = "defaultconfigs/ftbessentials-server.snbt"
 hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
+file = "kubejs/assets/emi/index/stacks/dedup.json"
+hash = "46a06eb287403b2a62cdbbb4168539fa4caedbd14f4830e88a38f5bf285d2868"
+
+[[files]]
 file = "kubejs/assets/emi_curation/lang/en_us.json"
 hash = "8d7c5fccb391d945ac1f39619689bb5216925fc25d0eb1b977e762ef977dc7ad"
 
@@ -2465,256 +2453,392 @@ file = "kubejs/client_scripts/emi_curation/ui/placement.js"
 hash = "8d1c5cbf48ef06ee5174adf60692e2c54d91ac08d84edbadd03a39e10385a62e"
 
 [[files]]
-file = "kubejs/config/ato_retirement.json"
-hash = "9669cdc4ae75d31f0336f650bd1a391bff189ac6c4c9ae87cac11de2679b505d"
+file = "kubejs/config/dedup.json"
+hash = "7a669b0dc21b82715b28ee1d452255c6812224d67b275c45d0d769acf45b8bba"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/aluminum.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/config/dedup_sources.json"
+hash = "4e99c66a6463775b103eb73e5b2a0a20b8a0e307225bb9eb0d15c0f8c4132e69"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/aluminum_end.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/flowering_willow_leaves.json"
+hash = "71cfed5525df4b3186bcbe0018cb74d48cb7afb462828cd701212c66b5704088"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/aluminum_nether.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/potted_willow_sapling.json"
+hash = "5b1076c8d3c531b2d2ffcd28ce762ac08dcd65c1f96e014255022c0ac4e1b889"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/iridium.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/stripped_willow_log.json"
+hash = "912bd5ecd2e2d2ddb21dac6444802db7f57616b63e128700c05f08aaf8d8cad7"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/lead.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/stripped_willow_wood.json"
+hash = "621f75feb32adfea0b95e52dc8626c747c1a30920ae026717b86bffe84ee8196"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/lead_end.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_button.json"
+hash = "d973fc4940c2ad650b436731bfb2075c2236423f2da2470350249c32d70379a8"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/lead_nether.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_door.json"
+hash = "b58d7e6d561c154d590946fd132c820b3ca60b5b5191252a3a85e73cf5d308d6"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/nickel.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_fence.json"
+hash = "406300139f21dba2c8f41bde7e27ad375c853ee909a3b164dcb41faa517dcc70"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/nickel_end.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_fence_gate.json"
+hash = "641736f61bef6a1141983b0fee96c37121638fce4abd74be770fe2dcd18f80eb"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/nickel_nether.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_hanging_sign.json"
+hash = "c083b08077d5a2b99541fb63a660a056cc2bc486bff1d00f80e19747549f1af9"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/osmium.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_leaves.json"
+hash = "aaf337f19f636f30a65bc55be665510b20d985305af143e192a45f636eff1408"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/osmium_end.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_log.json"
+hash = "706bc190c3f4da9262494e6bf6587eec688ce17a08f037d4744317641b64f539"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/osmium_nether.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_planks.json"
+hash = "d312a31b205bf691a0b34972294d57aabf463366d2d0523261001aae5a678e6a"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/peridot.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_pressure_plate.json"
+hash = "1c888ffc9d42225331423510e5faf11ae15db234135b9a8ba15ea446bfbb9ab3"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/platinum.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_sapling.json"
+hash = "24e7d77d891877519445d28bbd4e1d78e2f5a8e14e231777428f5e6b846b17f5"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/platinum_end.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_sign.json"
+hash = "aed404315c8c97e92f15e1a7e61573a0ad9fa66c7cd156edc4723629c4d5e68c"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/platinum_nether.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_slab.json"
+hash = "fc597c25629e2173752f2779b52822996e611786f698b5c965a1f7b3b63ccb50"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/ruby.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_stairs.json"
+hash = "cb55075dd4146b06adc4da1a9cc8ddcc9d69f10388f091f1945037cab7614609"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/sapphire.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_trapdoor.json"
+hash = "90b7311c8ccb26a0cb26ffb4a307a25cd1d93da84ec686ac6513b3c2c6ebc052"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/silver.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_wall_hanging_sign.json"
+hash = "aee6fef7b10e8d632e036560cba7bec64eb6183a7c5bf991bd5f401b3cf911f7"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/silver_end.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_wall_sign.json"
+hash = "865bc5b20fa19ae64629b91a19ccbc91bc0acaa27d1d83475e579d64725c6023"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/silver_nether.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/blocks/willow_wood.json"
+hash = "e65f50cba39982dfb3294ebba20cbf008f49d09b6b0c63061cfaad1bf2406334"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/tin.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/loot_tables/chests/sapling_chest_loot.json"
+hash = "0cb3a9b91a623d09269a784c537b6eeb51ac358f0c228a2edba75b0b723a38f7"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/tin_end.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/recipes/black_cat_counter_drawers.json"
+hash = "f7a1db5d92aab40c3840a0e6f25302a2f27d4d665fc4a66ed5b109d341fa1bcd"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/tin_nether.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/recipes/black_cat_sink.json"
+hash = "5c079f4bb2c5b2bb73797a60667ef465882360de296a5f9fc14acb52e3aed6dc"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/uranium.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/recipes/black_cat_table.json"
+hash = "6740c042884b120599a1407f5f2c56d143dd738f49fb7927b17821664dd7a0aa"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/uranium_end.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/recipes/murex_cabinet.json"
+hash = "e8f0c023365d9a33a1e3466d33cf576a443e0f1fd8f950beeae2882f4eca2760"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/uranium_nether.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/recipes/potion_shelf.json"
+hash = "53ad206eefd20004954b465ca80408f9a33a8235b4ac68202260df58dbe08ed7"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/zinc.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/recipes/tarrey_town_planter_purple.json"
+hash = "c7139ad0a0fbeed26bf9bf64cc72b0b16e3dcb3ff4edd7c49c93be8d9f97445a"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/zinc_end.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/recipes/willow_bookshelf_black_cat.json"
+hash = "93489b4d14f80c94b9d6ae9b0df70b7d52d7c7cfc4a329479feec96f3f567d61"
 
 [[files]]
-file = "kubejs/data/alltheores/forge/biome_modifier/alltheores/zinc_nether.json"
-hash = "a75d5d611e58e3c80bbf0244f82a8a8351c4e8c4aa0f3a1c56da5343aa6d5ae5"
+file = "kubejs/data/cluttered/recipes/willow_bookshelf_bottles.json"
+hash = "cb826cfcfeeb0d01406b5013dacda87a652efc80c870729b10f8d6a6a5e21e39"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/deepslate_sapphire_ore.json"
-hash = "816efaae5955a9625276708d1cdbc0d70e79dfc46fd35692e61386aa52a7f0e6"
+file = "kubejs/data/cluttered/recipes/willow_bookshelf_calico_cat.json"
+hash = "e887d17d94ddb4dd7013a4ec9a92a08d7915d560cb29be942afc41a03c4e3c48"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/deepslate_silver_ore.json"
-hash = "6ac04f38fa224c79cbea8bdd8b8869fbe30096d5d8fbbbf55591ffd357e85d73"
+file = "kubejs/data/cluttered/recipes/willow_bookshelf_cobweb.json"
+hash = "f2e17b8d419ed2ab0940870fbea39abc180c0f72ccb9dd828912b69b8d8a9e43"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/deepslate_uranium_ore.json"
-hash = "b8509a08befdcd3163daccdbb7dd1fc35f59d7684a2a59855db7cc3a8751ec8e"
+file = "kubejs/data/cluttered/recipes/willow_bookshelf_vase.json"
+hash = "b19d036a07348ca2340d8a15e1daeb85607acb7a5ebdefc6e81d4f8b840f1f70"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/deepslate_zinc_ore.json"
-hash = "f417c53f69aa3e1e44c8391bcde307e305022d2ce139c77b4f56a2bb09c39120"
+file = "kubejs/data/cluttered/recipes/willow_garden_door.json"
+hash = "71d4e257a386ad8d89b7f405c0d08d32789667a55c93ba62a1535f356d529bbd"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/end_silver_ore.json"
-hash = "7184ed7119b7b3e9716184f187324db70270e542adb169bbc0ea9cb9a85cc6a9"
+file = "kubejs/data/cluttered/recipes/willow_log_door.json"
+hash = "ed245253f14a0c7dbf0e83dcdb8fe39b44f88588a56c78416557c67f4b34549a"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/end_uranium_ore.json"
-hash = "53c8dc726d08174e8883d9beb0e18fc75a2c027d468e5953c10070bbbc0ee102"
+file = "kubejs/data/cluttered/recipes/willow_wainscoting.json"
+hash = "14949cbead6ebb6aa825c211ba0dbad6e2319b03b71d0a0f7c03b17b9e19be17"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/end_zinc_ore.json"
-hash = "e8fbd1976f58edec46bda3d37ed670cba9ed36b08b9a4ce229ade39cefb8b843"
+file = "kubejs/data/cluttered/recipes/willow_window.json"
+hash = "0dd58c05b06725b7e47b03aa65c7309dd9582ebae91e5e8e10e39b00a42f5bb7"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/nether_silver_ore.json"
-hash = "76d4139df628c941ac61eb99172ff70495de91ac076affa5cb147c3d72a23444"
+file = "kubejs/data/create/recipes/campfire_cooking/bread.json"
+hash = "d7a600cd2a4ff0ec53f34a09f8625b0ee9d381eda52e09571e53862e4459d37b"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/nether_uranium_ore.json"
-hash = "4042e6a94da86bca978bc29f46412b8bc8ff092042344831da6ae5d8f651053b"
+file = "kubejs/data/create/recipes/crafting/appliances/dough.json"
+hash = "4db12571bdc0bbcaad44eb3450c206582c83a5dc03f7bacbf452f6d4b0ac60c9"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/nether_zinc_ore.json"
-hash = "75f2e6eafe0f22ae117d555c28baf3fa1edeaaf767f4bb40920a8f9335acfb42"
+file = "kubejs/data/create/recipes/crafting/appliances/slime_ball.json"
+hash = "bd149e45dab879e0322ca3bfe5026274586102924d8d7911e2781ef5bf581e87"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_coal_ore.json"
-hash = "1b568760885623711e7e41c816ecdc3d8ccad9dc277d2bb6e42077d0c17e0444"
+file = "kubejs/data/create/recipes/mixing/dough_by_mixing.json"
+hash = "2275e9c2b141bd30a53e3fe7f92d1bc924f893451993602f879124b800d70d2b"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_copper_ore.json"
-hash = "2d53d10be1af3381ebda08305f1f703c161bef47dc1ae627df094f87226a34ed"
+file = "kubejs/data/create/recipes/smelting/bread.json"
+hash = "98744b13efc9c45b75845927573e9fdc4cc61ebe63d6a5d00a4ae75b4a7fcc05"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_diamond_ore.json"
-hash = "67f60994504a9b592c4710a74d8381769f78dabcf38f6aad05ef0b8cebc38347"
+file = "kubejs/data/create/recipes/smoking/bread.json"
+hash = "69dff00d3e5c53f44409d1af42254efc101f1d266812542650865e68217b4821"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_emerald_ore.json"
-hash = "39e7cc45037eee116e3b097f73c17edc36b6629c4e1917e84ee2df7a29dea92e"
+file = "kubejs/data/create/recipes/splashing/wheat_flour.json"
+hash = "11bee2955721b4f174238ce739fe9a526a455a8adad1c76bf07733030e2a1020"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_gold_ore.json"
-hash = "4665a4caadd7cfd422b1e7f23d191501cc25140ec791f6948cf04c1374eb7a66"
+file = "kubejs/data/createaddition/recipes/compacting/cake_base.json"
+hash = "a1e488332d92103de0f3075f7e1f570da4b3e912123d475c9228b8baf9896843"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_iron_ore.json"
-hash = "8e9d1aa427dbf067585d6c9f80c2c4d57ac0d2abeffee58e61f029861e85dfce"
+file = "kubejs/data/createdeco/loot_tables/blocks/andesite_bars.json"
+hash = "6f792b7b40cd2c3326792946d03a5b68e857087c6d898a0bd3f48da3416e75d6"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_lapis_ore.json"
-hash = "2f5128df3a7198ed2634c4b403f64c5a3be958379a7b325efbf2c9e1f785388b"
+file = "kubejs/data/createdeco/loot_tables/blocks/andesite_door.json"
+hash = "c4c65739460bc0f572c5234ffbe96b380050d98eb93ec31402ea72ab664bca96"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_quartz_ore.json"
-hash = "dc087f2678ec6268948f07a884207814c51289efb35472d1278c9e07024a02b9"
+file = "kubejs/data/createdeco/loot_tables/blocks/brass_bars.json"
+hash = "a8f35eaed217d50dc97a9ad757b3d2714b777c0bfbd7bef9ab85160f6d22d472"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_redstone_ore.json"
-hash = "f603834ce4738b5719316089f31457568e7d76f144c79d470f0bf80ba56f3079"
+file = "kubejs/data/createdeco/loot_tables/blocks/brass_door.json"
+hash = "f8c82fb57e0a7df84f9b544723dddd785e0b43902f56bbf2ee6fc2c539cf5303"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_silver_ore.json"
-hash = "dc3f9a2a76637edb899fca7f2a8c574577ccdf0b78a4b435b28509eac03de62d"
+file = "kubejs/data/createdeco/loot_tables/blocks/copper_bars.json"
+hash = "efb3c016fadf6855c95b25e9dd3e8d4dee85c2f908da5f55bf6b16b71e6aa5b5"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_uranium_ore.json"
-hash = "a05026e78f9e992f7a8fc38ac004c9f89f3399acb851cfd3623a942990115ccd"
+file = "kubejs/data/createdeco/loot_tables/blocks/copper_door.json"
+hash = "4a3cf746c658e7146c80dc1cebcafa73e25868724c9f8dbbd97e3defae06b1eb"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/other_zinc_ore.json"
-hash = "d6763f2f6360ee44aeb4a1433e37feb987302695759d79fb237575aa66a2d603"
+file = "kubejs/data/createdeco/loot_tables/blocks/industrial_iron_window.json"
+hash = "3cabbbc18e522adf47d067552b4c4c7ed73d2d9a6f34ea73cfac07adf75b2e62"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/raw_silver_block.json"
-hash = "dd86dec9f717db80679227eed5b7134c9c236be0d044d39bf2a540d4856a9e39"
+file = "kubejs/data/createdeco/loot_tables/blocks/industrial_iron_window_pane.json"
+hash = "e82810b106db2bd23954bb9c6b1704f0278e2d2c47a61267fd3aee49439a1e19"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/raw_uranium_block.json"
-hash = "f8c231e7ede61c2bdcfdadba399128e6730fd8731792dff2f3465ba83a63d988"
+file = "kubejs/data/createdeco/recipes/andesite_catwalk_forge.json"
+hash = "d97c031e06996444d443eaf14c2dcadd821ddd3de451bb2043503145747fbe19"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/raw_zinc_block.json"
-hash = "b8c6868f575a7231a0d1919675f0582959c77ca672dfa979e67627e8f4785bb5"
+file = "kubejs/data/createdeco/recipes/andesite_catwalk_railing_forge.json"
+hash = "08d0d785b4c33e82094d714d4373cc51b8024c5826908fb6970f66308ceea4b2"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/sapphire_ore.json"
-hash = "89c06901e30364c61ffb677a0504075d6f242260a12dd7acfcd76e10185b3001"
+file = "kubejs/data/createdeco/recipes/andesite_catwalk_stairs.json"
+hash = "af16c317656713e6b2ebcb3d26adb514a7aca3e114feb1244ddfa79b298c133d"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/silver_ore.json"
-hash = "56e69fe20ce6ff52d4ccb1a310e3b56086d813695a18d2ce50f88f8d56bdbdd9"
+file = "kubejs/data/createdeco/recipes/brass_catwalk_forge.json"
+hash = "8b4c7a85f289ebe6074ae8d6606cc7bd0271ea21d4450a13547579cd3998003d"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/uranium_ore.json"
-hash = "570467ed89c990932ed73bc06300f453f495987cdb283e935de32c4aa839136f"
+file = "kubejs/data/createdeco/recipes/brass_catwalk_railing_forge.json"
+hash = "33cc29bbb98e82524d9780f552245f3d0b9182c97347809aef66a6e762b0dbeb"
 
 [[files]]
-file = "kubejs/data/alltheores/loot_tables/blocks/zinc_ore.json"
-hash = "ce030fcac5132ba61eaa7ef0060777f4c4d62d8c9ca7dbe401a39ca0b3d084b7"
+file = "kubejs/data/createdeco/recipes/brass_catwalk_stairs.json"
+hash = "f27597628aa80e99136127eff53b40b19906cf96bd83696f897ec656688b44ba"
 
 [[files]]
-file = "kubejs/server_scripts/ato_retirement.js"
-hash = "dbbc0a1ed8576476a742dddb427ea4be4c05b34a98c4fce7e79ecadbc764181f"
+file = "kubejs/data/createdeco/recipes/copper_catwalk_forge.json"
+hash = "fa87d8b9741f524d4f9c19d0621302f86aa750a6f35a76e369b37008c6c6d085"
 
 [[files]]
-file = "kubejs/server_scripts/ato_retirement_swap.js"
-hash = "3cef247790a1425fc67252157bf409ccc9c59542116516957d23324a93f93e06"
+file = "kubejs/data/createdeco/recipes/copper_catwalk_railing_forge.json"
+hash = "01cb248f5a79cd956f13ec5405648f756151894892a591f07f1ab629507cb62e"
+
+[[files]]
+file = "kubejs/data/createdeco/recipes/copper_catwalk_stairs.json"
+hash = "c08568aa5804a048768429956f39f99d2a24a2943181600dda0f89fe22e76f40"
+
+[[files]]
+file = "kubejs/data/createdeco/recipes/locked_andesite_door.json"
+hash = "75597b2cdd9fb6d164b30ec5b396620cde89fef1b368a96c59c0c6b6d307559d"
+
+[[files]]
+file = "kubejs/data/createdeco/recipes/locked_brass_door.json"
+hash = "39c08343a05dfc1383faae8a016fd5152c1d1823d13d57222452cf327b3ed34d"
+
+[[files]]
+file = "kubejs/data/createdeco/recipes/locked_copper_door.json"
+hash = "1b625fd85ae6b63ca0604be0f25f7658471f40a5e70c19b524ce3eb74bf59ba4"
+
+[[files]]
+file = "kubejs/data/enderio/recipes/enderios.json"
+hash = "9a7f05fa19cd66c639dcd21e9ff26bccbd51b26464aaf8503cffd4de8978247c"
+
+[[files]]
+file = "kubejs/data/enderio/recipes/sag_milling/clay.json"
+hash = "bede7ba40a80e35dcea575ed8f4e246e57ed6bde1d4063c9e0005b86cebb3c65"
+
+[[files]]
+file = "kubejs/data/enderio/recipes/sag_milling/ender_pearl.json"
+hash = "63cd467525cfac57d40783c4c8cc48e979705a2a16a5ebf696dee0158b0c5fc8"
+
+[[files]]
+file = "kubejs/data/enderio/recipes/sag_milling/obsidian.json"
+hash = "d962414f82411037efda446f202c0adc691d5b4994b1fcfe9bd2f6a3b365e8ad"
+
+[[files]]
+file = "kubejs/data/enderio/recipes/sag_milling/redstone_ore.json"
+hash = "e5d8295899968e4b84befb657dc841efdc28479bc347fff18a4705887d95cc4d"
+
+[[files]]
+file = "kubejs/data/farmersdelight/loot_tables/blocks/rope.json"
+hash = "5866e8cbe1015ebae0a19049ddffed9eced9aa3f2e541bacc7b8b5550e99555f"
+
+[[files]]
+file = "kubejs/data/farmersdelight/loot_tables/chests/fd_abandoned_mineshaft.json"
+hash = "3abb893bfad7d8ba74b520e0d0b04672acd26933d872c14a2719ef6682f95a8e"
+
+[[files]]
+file = "kubejs/data/farmersdelight/loot_tables/chests/fd_shipwreck_supply.json"
+hash = "5ca3fff4091dfd55e8ba7354bc9775ebe79fee5a2184d2faddde12f5b475f864"
+
+[[files]]
+file = "kubejs/data/farmersdelight/loot_tables/chests/fd_simple_dungeon.json"
+hash = "5b27f508e12dcfb5d300d742399dff52aefb9c979c39062b8985089ce4c743b1"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipes/rope.json"
+hash = "ecb07bfd91649bc2a18791913d143caf2b9d1d02de5c7c058f38f5bef960f36a"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipes/rope_fence.json"
+hash = "ead41329f51b63f6811ba71c70b0578f01d32aa0f3fc0a6bd8aeec1c54821bfe"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipes/rope_fence_gate.json"
+hash = "bb22ee586854acdee882479c04ed757a662845d5b10934330870ac4249640f23"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipes/rope_from_safety_net.json"
+hash = "09e4df422650ee3af298d7d5af0d70bb665ec688e429c3d29643780d64c1f315"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipes/safety_net.json"
+hash = "83dd8cc91c257ad411300223e850da8be0581193c14f6f9137054f035b429c8f"
+
+[[files]]
+file = "kubejs/data/iceandfire/loot_tables/blocks/copper_pile.json"
+hash = "676d20528844a62f7cdcb00c1b9661dbe40be35dc960fec0c21d6c44e80a84d7"
+
+[[files]]
+file = "kubejs/data/iceandfire/loot_tables/chest/lightning_dragon_female_cave.json"
+hash = "c25f5633b8fe80d688b99c0bd32b076b8b2e52bab022e283074b2b2d247fecfa"
+
+[[files]]
+file = "kubejs/data/iceandfire/loot_tables/chest/lightning_dragon_male_cave.json"
+hash = "2dfcb7f864d3429b83eff8ba2ae56c3706ed3d05a0e68f26563ae2456b88daa4"
+
+[[files]]
+file = "kubejs/data/iceandfire/loot_tables/chest/lightning_dragon_roost.json"
+hash = "c25f5633b8fe80d688b99c0bd32b076b8b2e52bab022e283074b2b2d247fecfa"
+
+[[files]]
+file = "kubejs/data/iceandfire/loot_tables/entities/stymphalian_bird.json"
+hash = "af18aaacbb247f24e3ecf977caf64e72a68d9bbb3a60adfff6912d173a4f94a7"
+
+[[files]]
+file = "kubejs/data/iceandfire/recipes/copper_ingot_to_nuggets.json"
+hash = "25031c9f78a4f8f8191f0e48918018295d982cd7d29c53254baa0975ef53e6c9"
+
+[[files]]
+file = "kubejs/data/iceandfire/recipes/furnace/copper_nugget.json"
+hash = "38afa70da4085e2b27c4272d252fa8af1a256d732e8d9a342213134e29bb905f"
+
+[[files]]
+file = "kubejs/data/iceandfire/recipes/furnace/copper_nugget_blasting.json"
+hash = "026add55141eb99d3e2a9db8f887fc4154a670facaccb0c201c9948e8fc4c6c1"
+
+[[files]]
+file = "kubejs/data/minecraft/recipes/black_cat_counter_left_recipe_1.json"
+hash = "56ed1a858a344c1ae1553aec8813ce705f94ce4f1a7f6449a9c470c200b1bdee"
+
+[[files]]
+file = "kubejs/data/minecraft/recipes/black_cat_counter_right_recipe_1.json"
+hash = "842fe06b5b042dd49ac423ba9b6271a05e240ddf1bbc4f4bf4caa2d7722016b2"
+
+[[files]]
+file = "kubejs/data/productivebees/recipes/bottler/milk_bottle.json"
+hash = "9b4f573ac77f50db77bf91b1800b9a4b725ac7f02feeb5d215a4e08ad64c2f8e"
+
+[[files]]
+file = "kubejs/data/productivebees/recipes/milk_bucket.json"
+hash = "2ae574c2df2dc053a032196e94228166772e4cecb476d2b78a091fce127b4a82"
+
+[[files]]
+file = "kubejs/data/productivebees/recipes/pamhc2/milk_pams.json"
+hash = "d28b43a6403b16599e31101963963d878195af64b0b9e6240b5c9e4ee8d9bded"
+
+[[files]]
+file = "kubejs/data/refurbished_furniture/recipes/combining/raw_meatlovers_pizza.json"
+hash = "d38bb403e1b34401a446a85939cab26328a48462c53dd8fe81de382e5e77cc8b"
+
+[[files]]
+file = "kubejs/data/refurbished_furniture/recipes/combining/raw_vegetable_pizza.json"
+hash = "b041667e68c28d75da0a6d187ec4d27798447c1420cd70c36bb701e6d3ac3fce"
+
+[[files]]
+file = "kubejs/server_scripts/dedup.js"
+hash = "38a29790e5a11bb8af7002bf5f0d70d273224ed41b88a7bfcc1ad35654deae60"
 
 [[files]]
 file = "kubejs/startup_scripts/emi_curation_keys.js"
@@ -2766,18 +2890,8 @@ hash = "5e1239fd67c97c042d09cf38664698c9d1a3cfbc50d779fc550c461cf6aeb565"
 metafile = true
 
 [[files]]
-file = "mods/allthecompressed.pw.toml"
-hash = "023dbd597a018bc8914544c9d781fdffc3dc78a3b2fab5f5b6771c119bb81653"
-metafile = true
-
-[[files]]
 file = "mods/almanac-lib.pw.toml"
 hash = "067c72c78318b03c01b6d35aff74135ef1c969425e471efe777dce7a174c7005"
-metafile = true
-
-[[files]]
-file = "mods/almostunified.pw.toml"
-hash = "8e9376087852491eb52037279506fefc45e174303530630e8b8afa571b1bd697"
 metafile = true
 
 [[files]]
@@ -2828,11 +2942,6 @@ metafile = true
 [[files]]
 file = "mods/astikorcarts-redux.pw.toml"
 hash = "555b419d3fab26d098997844d1648d10220468dcb34402f7a174ac03f9d7561f"
-metafile = true
-
-[[files]]
-file = "mods/ato.pw.toml"
-hash = "01a0bd2de5a9eb726d35fedfcd6961a97e77c41eda29d4bc7881a2d0bf8dd81e"
 metafile = true
 
 [[files]]

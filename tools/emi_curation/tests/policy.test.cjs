@@ -38,9 +38,7 @@ test('documented uncoloured/base examples and lower tiers stay visible', () => {
     'supplementaries:candle_holder', 'supplementaries:candle_holder_soul', 'supplementaries:flag_white',
     'create:brown_toolbox', 'create:copper_valve_handle', 'create:red_seat',
     'alexscaves:radon_lamp_white', 'alexscaves:rock_candy_white',
-    'allthecompressed:cobblestone_1x', 'allthecompressed:cobblestone_3x',
-    'allthecompressed:cobblestone_4x', 'allthecompressed:cobblestone_9x',
-    'alltheores:zinc_ingot', 'alltheores:silver_ingot', 'alltheores:electrum_ingot',
+    'create:zinc_ingot', 'iceandfire:silver_ingot', 'createaddition:electrum_ingot',
     'enderio:clear_glass', 'enderio:clear_glass_e', 'enderio:clear_glass_d', 'enderio:fused_quartz',
     'enderio:empty_soul_vial', 'enderio:powered_spawner', 'minecolonies:blockhutbuilder', 'minecraft:egg',
   ]) assert.equal(hidden(id), false, id);

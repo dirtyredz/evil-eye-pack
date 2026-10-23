@@ -1,0 +1,17 @@
+{
+  "type": "enderio:sag_milling",
+  "energy": 2400,
+  "input": {
+    "tag": "forge:obsidian"
+  },
+  "outputs": [
+    {
+      "chance": 1,
+      "item": {
+        "count": 4,
+        "item": "create:powdered_obsidian"
+      },
+      "optional": false
+    }
+  ]
+}

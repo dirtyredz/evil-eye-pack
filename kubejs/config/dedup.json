@@ -1,0 +1,104 @@
+{
+  "replacements": {
+    "enderio:silicon": "ae2:silicon",
+    "iceandfire:copper_nugget": "create:copper_nugget",
+    "enderio:powdered_obsidian": "create:powdered_obsidian",
+    "enderio:powdered_ender_pearl": "ae2:ender_dust",
+    "bhc:wither_bone": "iceandfire:witherbone",
+    "createdeco:zinc_sheet": "createaddition:zinc_sheet",
+    "refurbished_furniture:wheat_flour": "create:wheat_flour",
+    "refurbished_furniture:dough": "farmersdelight:wheat_dough",
+    "create:dough": "farmersdelight:wheat_dough",
+    "productivebees:milk_bottle": "farmersdelight:milk_bottle",
+    "farmersdelight:rope": "supplementaries:rope",
+    "hammerlib:wrench": "create:wrench",
+    "supplementaries:wrench": "create:wrench",
+    "cluttered:stripped_willow_log": "biomesoplenty:stripped_willow_log",
+    "cluttered:stripped_willow_wood": "biomesoplenty:stripped_willow_wood",
+    "cluttered:willow_button": "biomesoplenty:willow_button",
+    "cluttered:willow_door": "biomesoplenty:willow_door",
+    "cluttered:willow_fence": "biomesoplenty:willow_fence",
+    "cluttered:willow_fence_gate": "biomesoplenty:willow_fence_gate",
+    "cluttered:willow_hanging_sign": "biomesoplenty:willow_hanging_sign",
+    "cluttered:willow_leaves": "biomesoplenty:willow_leaves",
+    "cluttered:willow_log": "biomesoplenty:willow_log",
+    "cluttered:willow_planks": "biomesoplenty:willow_planks",
+    "cluttered:willow_pressure_plate": "biomesoplenty:willow_pressure_plate",
+    "cluttered:willow_sapling": "biomesoplenty:willow_sapling",
+    "cluttered:willow_sign": "biomesoplenty:willow_sign",
+    "cluttered:willow_slab": "biomesoplenty:willow_slab",
+    "cluttered:willow_stairs": "biomesoplenty:willow_stairs",
+    "cluttered:willow_trapdoor": "biomesoplenty:willow_trapdoor",
+    "cluttered:willow_wood": "biomesoplenty:willow_wood",
+    "createdeco:andesite_bars": "create:andesite_bars",
+    "createdeco:andesite_door": "create:andesite_door",
+    "createdeco:brass_bars": "create:brass_bars",
+    "createdeco:brass_door": "create:brass_door",
+    "createdeco:copper_bars": "create:copper_bars",
+    "createdeco:copper_door": "create:copper_door",
+    "createdeco:industrial_iron_window": "create:industrial_iron_window",
+    "createdeco:industrial_iron_window_pane": "create:industrial_iron_window_pane"
+  },
+  "disabled": [
+    "hammerlib:gears/wooden",
+    "hammerlib:gears/stone",
+    "hammerlib:gears/copper",
+    "hammerlib:gears/iron",
+    "hammerlib:gears/gold",
+    "hammerlib:gears/diamond",
+    "hammerlib:gears/netherite"
+  ],
+  "hiddenOnly": [
+    "create:crushed_raw_tin",
+    "create:crushed_raw_lead",
+    "create:crushed_raw_nickel",
+    "create:crushed_raw_aluminum",
+    "create:crushed_raw_osmium",
+    "create:crushed_raw_platinum"
+  ],
+  "removeOutputs": [
+    "createdeco:zinc_sheet",
+    "refurbished_furniture:wheat_flour",
+    "refurbished_furniture:dough",
+    "supplementaries:wrench",
+    "cluttered:stripped_willow_log",
+    "cluttered:stripped_willow_wood",
+    "cluttered:willow_button",
+    "cluttered:willow_door",
+    "cluttered:willow_fence",
+    "cluttered:willow_fence_gate",
+    "cluttered:willow_hanging_sign",
+    "cluttered:willow_leaves",
+    "cluttered:willow_log",
+    "cluttered:willow_planks",
+    "cluttered:willow_pressure_plate",
+    "cluttered:willow_sapling",
+    "cluttered:willow_sign",
+    "cluttered:willow_slab",
+    "cluttered:willow_stairs",
+    "cluttered:willow_trapdoor",
+    "cluttered:willow_wood",
+    "createdeco:andesite_bars",
+    "createdeco:andesite_door",
+    "createdeco:brass_bars",
+    "createdeco:brass_door",
+    "createdeco:copper_bars",
+    "createdeco:copper_door",
+    "createdeco:industrial_iron_window",
+    "createdeco:industrial_iron_window_pane"
+  ],
+  "extraItemTags": {
+    "forge:wither_bones": [
+      "iceandfire:witherbone"
+    ],
+    "forge:dusts/ender": [
+      "ae2:ender_dust"
+    ],
+    "forge:dusts/ender_pearl": [
+      "ae2:ender_dust"
+    ],
+    "forge:raw_materials/uranium": [
+      "bigreactors:raw_yellorium"
+    ]
+  }
+}

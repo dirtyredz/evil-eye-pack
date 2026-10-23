@@ -2,8 +2,8 @@
 id: dk-498acdeb
 type: task
 created: 2026-10-22
-status: todo
-since: 2026-10-22
+status: done
+since: 2026-10-23
 area:
 priority: P2
 rank: zzzn
@@ -14,21 +14,16 @@ relates: []
 ---
 # Remove AllTheOres, AllTheCompressed and Almost Unified in release 2
 
+Owner scope update, 2026-10-23: abandon the release-1 migration after the owner's partial auto-swap test. Remove AllTheOres, AllTheCompressed and Almost Unified outright, accepting all remaining stacks/placed blocks/unmined ores being lost. No conversion, swap or remap. The owner also explicitly included the seam audit's other duplicate materials in this implementation. This supersedes the earlier migration-window and separate-scope checklist.
 
-Release 2 follows the release-1 migration window. The owner accepted deletion of remaining AllTheOres/AllTheCompressed stacks and placed blocks, including unmined AllTheOres worldgen. No registry remap is required. Read docs/ato-retirement.md for all dead ends and compressed-block unpacking instructions. Do not include the audit's other duplicates or seams in this task.
+Completed on dedup-remove:
 
-Acceptance checklist:
+- Removed the three mod metafiles, all Almost Unified configs, both migration scripts, shared manifest, all 60 temporary data overrides and tools/ato_retirement. Kept Large Ore Deposits explicit survivors and disabled dead-end ores. No removed namespace references remain in shipped configs/scripts/data.
+- Permanent policy covers 38 duplicate IDs, disables all seven HammerLib gears, and hides six unused Create crushed materials. Survivors: Create zinc/brass/sheets/copper nuggets/obsidian dust/bars/doors/windows; I&F silver/sapphire/witherbone; Crafts & Additions electrum/rods/zinc sheet; Ender IO iron gears/metal dusts; AE2 silicon/ender dust; Create flour and FD dough/milk bottles; BOP willow; Supplementaries rope; Create generic wrench.
+- 94 source-preserving recipe/loot overrides, 27 removed producer recipes, item/block tag cleanup, permanent EMI removals. Config switches precede data patches where available. No inventory conversion hooks.
+- Offline pinned-jar Node guard resolves material tags and rejects new duplicate groups/namespaces. Exact exceptions: Alex's Caves/ER uranium and specialized Productive Bees/vanilla honeycomb storage blocks.
+- Deliberate exceptions and limitations are documented in docs/ato-retirement.md: specialty wrenches, decor/function variants, amber mechanics, separate honey-fluid buckets; remaining mods still register old copies and existing inventories/placed blocks are not swept. Refurbished milk is not a registered item in this version.
 
-- Confirm release 1 reached players and the conversion/unpacking window is over; have the owner check the real world in game. Work on a disposable world copy for verification, never write to Stable from an agent test.
-- Remove mods/ato.pw.toml, mods/allthecompressed.pw.toml and mods/almostunified.pw.toml.
-- Delete kubejs/server_scripts/ato_retirement.js and kubejs/config/ato_retirement.json. These recipes reference removed registries and must not survive release 2.
-- Delete kubejs/data/alltheores/ in full: 31 forge/biome_modifier/alltheores/*.json overrides and 29 loot_tables/blocks/*.json overrides. Check for any additional release-1 files before deletion.
-- Remove config/almostunified/startup.json, unify.json, duplicates.json and debug.json together with Almost Unified. Inspect surviving recipes affected by its existing silicon/wither-bone/ender-dust preferences; any broader duplicate cleanup is separately scoped work.
-- Keep the permanent Large Ore Deposits changes: explicit vanilla gold/Create zinc/Ice and Fire silver and sapphire/Extreme Reactors yellorite; aluminum, iridium, lead, nickel, osmium, platinum, ruby and tin deposits disabled. Do not restore old shared tags or AllTheOres ids.
-- The old config/emi-curation/compressed.json and its rules.json entry were already removed in release 1 to expose all unpacking recipes. Remove any newly introduced retiring-item visibility rules, but retain unrelated EMI curation.
-- Retire tools/ato_retirement/check_installed.cjs and tools/ato_retirement/tests/ (including the pinned catalog), update the affected EMI fixtures/tests and remove their release-1 commands from docs/development.md. Retain permanent no-AllTheOres placement coverage as appropriate for the removed-mod pack.
-- Update STRUCTURE.md, docs/ato-retirement.md, docs/emi.md and the living decision/gotcha notes to state that the migration window has ended. Search all shipped files for alltheores/allthecompressed/almostunified; resolve dangling references and orphaned scripts/data.
-- Save pack files as UTF-8 LF, run node tools/packwiz/rehash.cjs, node tools/packwiz/verify_hashes.cjs, the documented focused fast gate, and the headless server smoke with a fresh world and no KubeJS script errors. Check known pre-existing Cozy/Thirst smoke errors separately; do not mask new errors.
-- Have the owner verify a copy of the existing world: survivor inventories remain, expected missing content is removed, and there are no remaining conversion recipes. Never launch a visible game client as the implementation agent.
+Verification: 146 Node tests pass; rehash/UTF-8 LF/hash verification and diff checks pass. Final fresh-world offline headless smoke uses 177 hash-verified server jars, reaches Done (94.820 s reported server initialization; 148.501 s process-to-Done), zero KubeJS errors, exactly the baseline's 15 error groups and no new groups. Live probes verify 38 survivor pairs, all 41 inherited item tags, 27 removed recipes and 23,145 loaded recipes without retired item references. Namespace grep only finds Productive Bees' built-in default preference list mentioning alltheores/ato; no removed registry is loaded.
 
-Release 1 is tracked by dk-b1fbcc3d. Its job artifacts are under C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-22-ato-retire-step1/.
+Artifacts: C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-23-dedup-remove/ (final-tests.txt, server-final/, smoke-final.txt, smoke-comparison.json). No network downloads, visible client, main-checkout writes, pushes or PR. Existing-world/EMI visual verification remains the owner's manual check.

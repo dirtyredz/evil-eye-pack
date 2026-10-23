@@ -1,0 +1,310 @@
+{
+  "removeRecipes": [
+    "cluttered:willow_button",
+    "cluttered:willow_door",
+    "cluttered:willow_fence",
+    "cluttered:willow_fence_gate",
+    "cluttered:willow_hanging_sign",
+    "cluttered:willow_planks",
+    "cluttered:willow_pressure_plate",
+    "cluttered:willow_sign",
+    "cluttered:willow_slab",
+    "cluttered:willow_stairs",
+    "cluttered:willow_trapdoor",
+    "cluttered:willow_wood",
+    "createdeco:andesite_bars",
+    "createdeco:andesite_bars_from_stonecutting",
+    "createdeco:andesite_door",
+    "createdeco:brass_bars",
+    "createdeco:brass_bars_from_stonecutting",
+    "createdeco:brass_door",
+    "createdeco:copper_bars",
+    "createdeco:copper_bars_from_stonecutting",
+    "createdeco:copper_door",
+    "createdeco:industrial_iron_window",
+    "createdeco:industrial_iron_window_pane",
+    "createdeco:pressing/zinc_sheet",
+    "refurbished_furniture:combining/wheat_flour",
+    "refurbished_furniture:dough",
+    "supplementaries:wrench"
+  ],
+  "itemTags": {
+    "minecraft:fence_gates": [
+      "biomesoplenty:willow_fence_gate"
+    ],
+    "minecraft:hanging_signs": [
+      "biomesoplenty:willow_hanging_sign"
+    ],
+    "minecraft:leaves": [
+      "biomesoplenty:willow_leaves"
+    ],
+    "minecraft:logs": [
+      "biomesoplenty:willow_log",
+      "biomesoplenty:willow_wood",
+      "biomesoplenty:stripped_willow_log",
+      "biomesoplenty:stripped_willow_wood"
+    ],
+    "minecraft:logs_that_burn": [
+      "biomesoplenty:willow_log",
+      "biomesoplenty:willow_wood",
+      "biomesoplenty:stripped_willow_log",
+      "biomesoplenty:stripped_willow_wood"
+    ],
+    "minecraft:planks": [
+      "biomesoplenty:willow_planks"
+    ],
+    "minecraft:saplings": [
+      "biomesoplenty:willow_sapling"
+    ],
+    "minecraft:signs": [
+      "biomesoplenty:willow_sign"
+    ],
+    "minecraft:stairs": [
+      "biomesoplenty:willow_stairs"
+    ],
+    "minecraft:wooden_buttons": [
+      "biomesoplenty:willow_button"
+    ],
+    "minecraft:wooden_doors": [
+      "biomesoplenty:willow_door"
+    ],
+    "minecraft:wooden_fences": [
+      "biomesoplenty:willow_fence"
+    ],
+    "minecraft:wooden_pressure_plates": [
+      "biomesoplenty:willow_pressure_plate"
+    ],
+    "minecraft:wooden_slabs": [
+      "biomesoplenty:willow_slab"
+    ],
+    "minecraft:wooden_stairs": [
+      "biomesoplenty:willow_stairs"
+    ],
+    "minecraft:wooden_trapdoors": [
+      "biomesoplenty:willow_door"
+    ],
+    "amendments:goes_in_tripwire_hook": [
+      "create:wrench"
+    ],
+    "forge:dusts/ender_pearl": [
+      "ae2:ender_dust"
+    ],
+    "forge:silicon": [
+      "ae2:silicon"
+    ],
+    "forge:tools/wrench": [
+      "create:wrench"
+    ],
+    "minecraft:buttons": [
+      "biomesoplenty:willow_button"
+    ],
+    "minecraft:doors": [
+      "biomesoplenty:willow_door",
+      "create:andesite_door",
+      "create:brass_door",
+      "create:copper_door"
+    ],
+    "minecraft:fences": [
+      "biomesoplenty:willow_fence"
+    ],
+    "minecraft:slabs": [
+      "biomesoplenty:willow_slab"
+    ],
+    "minecraft:trapdoors": [
+      "biomesoplenty:willow_door"
+    ],
+    "forge:wither_bones": [
+      "iceandfire:witherbone"
+    ],
+    "cluttered:willow_log": [
+      "biomesoplenty:willow_log",
+      "biomesoplenty:willow_wood",
+      "biomesoplenty:stripped_willow_log",
+      "biomesoplenty:stripped_willow_wood"
+    ],
+    "minecraft:willow_log": [
+      "biomesoplenty:willow_log",
+      "biomesoplenty:willow_wood",
+      "biomesoplenty:stripped_willow_log",
+      "biomesoplenty:stripped_willow_wood"
+    ],
+    "createdeco:internal/plates/zinc_plates": [
+      "createaddition:zinc_sheet"
+    ],
+    "forge:nuggets": [
+      "create:copper_nugget"
+    ],
+    "forge:dough": [
+      "farmersdelight:wheat_dough"
+    ],
+    "forge:dough/wheat": [
+      "farmersdelight:wheat_dough"
+    ],
+    "forge:dusts/obsidian": [
+      "create:powdered_obsidian"
+    ],
+    "forge:nuggets/copper": [
+      "create:copper_nugget"
+    ],
+    "forge:milk/milk_bottle": [
+      "farmersdelight:milk_bottle"
+    ],
+    "forge:milk/freshmilk": [
+      "farmersdelight:milk_bottle"
+    ],
+    "refurbished_furniture:food": [
+      "create:wheat_flour",
+      "farmersdelight:wheat_dough"
+    ],
+    "supplementaries:ropes": [
+      "supplementaries:rope"
+    ],
+    "supplementaries:statue_tools": [
+      "create:wrench"
+    ],
+    "forge:dusts/ender": [
+      "ae2:ender_dust"
+    ],
+    "forge:raw_materials/uranium": [
+      "bigreactors:raw_yellorium"
+    ]
+  },
+  "blockTags": {
+    "minecraft:mineable/pickaxe": [
+      "create:andesite_bars",
+      "create:brass_bars",
+      "create:copper_bars",
+      "create:andesite_door",
+      "create:brass_door",
+      "create:copper_door"
+    ],
+    "minecraft:climbable": [
+      "supplementaries:rope"
+    ],
+    "minecraft:ceiling_hanging_signs": [
+      "biomesoplenty:willow_hanging_sign"
+    ],
+    "minecraft:fence_gates": [
+      "biomesoplenty:willow_fence_gate"
+    ],
+    "minecraft:impermeable": [
+      "create:industrial_iron_window"
+    ],
+    "minecraft:leaves": [
+      "biomesoplenty:willow_leaves"
+    ],
+    "minecraft:logs": [
+      "biomesoplenty:willow_log",
+      "biomesoplenty:willow_wood",
+      "biomesoplenty:stripped_willow_log",
+      "biomesoplenty:stripped_willow_wood"
+    ],
+    "minecraft:logs_that_burn": [
+      "biomesoplenty:willow_log",
+      "biomesoplenty:willow_wood",
+      "biomesoplenty:stripped_willow_log",
+      "biomesoplenty:stripped_willow_wood"
+    ],
+    "minecraft:mineable/axe": [
+      "biomesoplenty:stripped_willow_log",
+      "biomesoplenty:stripped_willow_wood",
+      "biomesoplenty:willow_log",
+      "biomesoplenty:willow_wood",
+      "biomesoplenty:willow_planks",
+      "biomesoplenty:willow_stairs",
+      "biomesoplenty:willow_slab",
+      "biomesoplenty:willow_button",
+      "biomesoplenty:willow_sign",
+      "biomesoplenty:willow_hanging_sign",
+      "biomesoplenty:willow_pressure_plate",
+      "biomesoplenty:willow_fence",
+      "biomesoplenty:willow_fence_gate",
+      "biomesoplenty:willow_door",
+      "biomesoplenty:willow_trapdoor"
+    ],
+    "minecraft:mineable/hoe": [
+      "biomesoplenty:willow_leaves"
+    ],
+    "minecraft:planks": [
+      "biomesoplenty:willow_planks"
+    ],
+    "minecraft:saplings": [
+      "biomesoplenty:willow_sapling"
+    ],
+    "minecraft:stairs": [
+      "biomesoplenty:willow_stairs"
+    ],
+    "minecraft:standing_signs": [
+      "biomesoplenty:willow_sign"
+    ],
+    "minecraft:wooden_buttons": [
+      "biomesoplenty:willow_button"
+    ],
+    "minecraft:wooden_doors": [
+      "biomesoplenty:willow_door"
+    ],
+    "minecraft:wooden_fences": [
+      "biomesoplenty:willow_fence"
+    ],
+    "minecraft:wooden_pressure_plates": [
+      "biomesoplenty:willow_pressure_plate"
+    ],
+    "minecraft:wooden_slabs": [
+      "biomesoplenty:willow_slab"
+    ],
+    "minecraft:wooden_stairs": [
+      "biomesoplenty:willow_stairs"
+    ],
+    "minecraft:wooden_trapdoors": [
+      "biomesoplenty:willow_trapdoor"
+    ],
+    "minecraft:slabs": [
+      "biomesoplenty:willow_slab"
+    ],
+    "minecraft:buttons": [
+      "biomesoplenty:willow_button"
+    ],
+    "minecraft:doors": [
+      "biomesoplenty:willow_door",
+      "create:andesite_door",
+      "create:brass_door",
+      "create:copper_door"
+    ],
+    "minecraft:fences": [
+      "biomesoplenty:willow_fence"
+    ],
+    "minecraft:trapdoors": [
+      "biomesoplenty:willow_trapdoor"
+    ],
+    "minecraft:all_hanging_signs": [
+      "biomesoplenty:willow_hanging_sign"
+    ],
+    "minecraft:all_signs": [
+      "biomesoplenty:willow_sign",
+      "biomesoplenty:willow_hanging_sign"
+    ],
+    "minecraft:pressure_plates": [
+      "biomesoplenty:willow_pressure_plate"
+    ],
+    "minecraft:signs": [
+      "biomesoplenty:willow_sign"
+    ],
+    "create:fan_transparent": [
+      "create:andesite_bars",
+      "create:brass_bars",
+      "create:copper_bars"
+    ],
+    "farmersdelight:ropes": [
+      "supplementaries:rope"
+    ],
+    "farmersdelight:straw_blocks": [
+      "supplementaries:rope"
+    ],
+    "supplementaries:hang_from_ropes": [
+      "supplementaries:rope"
+    ],
+    "supplementaries:rope_support": [
+      "supplementaries:rope"
+    ]
+  }
+}

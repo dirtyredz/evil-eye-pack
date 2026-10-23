@@ -1,0 +1,10 @@
+{
+  "forge:storage_blocks/honeycombs": {
+    "namespaces": ["minecraft", "productivebees"],
+    "reason": "Productive Bees comb blocks carry bee-specific resource data; they are not interchangeable vanilla honeycomb blocks."
+  },
+  "forge:raw_materials/uranium": {
+    "namespaces": ["alexscaves", "bigreactors"],
+    "reason": "Alex's Caves uranium retains biome and Tremorzilla mechanics; both raw materials feed its machines and smelt to yellorium."
+  }
+}

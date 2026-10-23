@@ -107,7 +107,7 @@ EMI's `VanillaPlugin`, but having no plugin does not prove complete coverage.
 ## Native EMI category parity (JEMI skips handled namespaces)
 
 `JemiPlugin` (EMI 1.1.24) skips every JEI category whose namespace belongs to a mod that
-ships a native EMI plugin. Here that means `ae2`, `almostunified` and `emi`.
+ships a native EMI plugin. Here that means `ae2` and `emi` (Almost Unified was removed on 2026-10-23).
 
 - **AE2.**
   - JEI categories: Attunement, **Certus Growth**, Charger, Condenser, Entropy Manipulator, Inscriber, Transform, and facades.

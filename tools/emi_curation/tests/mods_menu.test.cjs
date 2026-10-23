@@ -57,7 +57,7 @@ function setup(size, many) {
 }
 
 // CLEAN index: stone, vials and compressed stacks. ae2 and dramaticdoors only own hidden items there.
-const LABELS = ['Clear', 'AllTheCompressed', 'Ender IO', 'Minecraft'];
+const LABELS = ['Clear', 'Create', 'Ender IO', 'Minecraft'];
 
 test('the Mods button sits beside CLEAN/ALL, not on top of it', () => {
   const t = setup();
@@ -89,8 +89,9 @@ test('text width estimate never undershoots vanilla advances for ASCII and is co
   const t = setup();
   t.mods.press();
   const w = Array.from(t.rects(), (r) => r.w);
-  // "> Applied Energistics 2" is 23 chars: at most 6 px each plus padding, at least 3 px each.
-  assert.ok(w[1] <= 23 * 6 + 8 && w[1] >= 23 * 3);
+  // Rows share the width of the longest label, with space for the active marker.
+  const longest = Math.max(...LABELS.map(label => label.length + 2));
+  assert.ok(w[1] <= longest * 6 + 8 && w[1] >= longest * 3);
 });
 
 test('a draw failure is logged once but never disables the menu', () => {
@@ -109,7 +110,7 @@ test('a draw failure is logged once but never disables the menu', () => {
   assert.equal(logged.length, 1, 'logged once');
   assert.ok(t.rects().length > 0, 'menu is still open after failures');
   t.mouse(...t.center(t.rects()[1]));
-  assert.equal(t.search.value, '@allthecompressed', 'and still works');
+  assert.equal(t.search.value, '@create', 'and still works');
   t.mods.press();
   assert.ok(t.rects().length > 0, 'and reopens');
   assert.ok(t.post().strings.length > 0, 'a later healthy frame draws normally');
@@ -152,10 +153,10 @@ test('choosing a mod sets @modid; choosing it again, or Clear, empties the searc
   t.mods.press();
   const click = (i) => { const e = t.mouse(...t.center(t.rects()[i])); return e; };
   assert.equal(click(1).canceled, true, 'the click on a row is consumed');
-  assert.equal(t.search.value, '@allthecompressed');
+  assert.equal(t.search.value, '@create');
   assert.equal(t.rects().length, 0, 'menu closed after choosing');
   t.mods.press();
-  assert.equal(t.post().strings[1].s, '> AllTheCompressed', 'active mod is marked');
+  assert.equal(t.post().strings[1].s, '> Create', 'active mod is marked');
   click(1);
   assert.equal(t.search.value, '');
   t.mods.press();
@@ -164,7 +165,7 @@ test('choosing a mod sets @modid; choosing it again, or Clear, empties the searc
   t.mods.press();
   click(0);
   assert.equal(t.search.value, '');
-  assert.equal(JSON.stringify(t.search.sets), JSON.stringify(['@allthecompressed', '', '@enderio', '']));
+  assert.equal(JSON.stringify(t.search.sets), JSON.stringify(['@create', '', '@enderio', '']));
 });
 
 test('a click outside or Esc closes the menu without touching the search', () => {
@@ -263,7 +264,7 @@ test('the list is built automatically: loaded mods with indexed items, A-Z by di
   const drawn = () => { t.mods.press(); const s = t.post().strings.map((x) => x.s); t.mouse(5, 5); return s; };
   assert.equal(JSON.stringify(drawn()), JSON.stringify(LABELS));
   t.c.ns().session.toggle(); // ALL: ae2 and dramaticdoors own items again
-  assert.equal(JSON.stringify(drawn()), JSON.stringify(['Clear', 'AllTheCompressed', 'Applied Energistics 2', 'Dramatic Doors', 'Ender IO', 'Minecraft']));
+  assert.equal(JSON.stringify(drawn()), JSON.stringify(['Clear', 'Applied Energistics 2', 'Create', 'Dramatic Doors', 'Ender IO', 'Minecraft']));
 });
 
 test('a new mod appears with no config edit; a namespace that is not a loaded mod does not', () => {

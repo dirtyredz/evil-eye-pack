@@ -28,7 +28,7 @@ test('CLEAN hides every curated family from the index, keeping EMI order', () =>
   assert.notEqual(shown, emiList);
   assert.deepEqual(c.ids(shown), [
     'minecraft:stone', 'enderio:filled_soul_vial#minecraft:zombie', 'enderio:empty_soul_vial',
-    'allthecompressed:cobblestone_1x', 'minecraft:water',
+    'create:zinc_ingot', 'minecraft:water',
   ]);
   assert.equal(c.world.EmiStackList.stacks.size(), 10, 'master list untouched');
 });

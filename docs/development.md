@@ -51,8 +51,10 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/ato_retirement/tests/*.cjs tools/emi_curation/tests/policy.test.cjs tools/emi_curation/tests/session.test.cjs tools/emi_curation/tests/mods_menu.test.cjs  # release-1 migration and affected EMI views
-node tools/ato_retirement/check_installed.cjs "C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods"  # read-only, cached jars; inventory, loot, every deposit tag, compressed unpacking
+node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs
+# DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
+# After changing duplicate policy or a pinned source jar, review and regenerate:
+# node tools/dedup/generate.cjs "C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods"
 node tools/packwiz/rehash.cjs --dry-run      # a second run after rehash must show +0 -0 ~0
 node tools/packwiz/verify_hashes.cjs
 git diff --check

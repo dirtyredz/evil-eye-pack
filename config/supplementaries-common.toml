@@ -104,7 +104,7 @@
 		horizontal_ropes = true
 		#Use this config to turn allow supplementaries to replace all items tagged as #supplementaies:ropes with supplementaries own rope or turn them to air instead. This is applied to all loot tables (chests and drops)
 		#Allowed Values: REPLACE, NONE, REMOVE
-		replace_in_loot_tables = "NONE"
+		replace_in_loot_tables = "REPLACE"
 
 	[functional.jar]
 		enabled = true

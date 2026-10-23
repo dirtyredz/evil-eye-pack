@@ -2,6 +2,12 @@
 
 Newest first.
 
+## 2026-10-23 ? Abandon migration and remove duplicate providers
+
+The owner tested release 1 locally: auto-swap only converted some items. The owner chose outright removal of AllTheOres, AllTheCompressed and Almost Unified, accepting loss of every remaining stack and placed/unmined block. The two-release plan below is superseded; neither release-1 commit had been pushed. No conversion, swap or registry remap is shipped.
+
+Large Ore Deposits keeps its explicit survivors and disabled dead-end deposits. Remaining duplicates use config switches first, then recipe/loot overrides and tag cleanup, with permanent EMI hiding. Ender IO owns iron gears; HammerLib gears are disabled (release 1 incorrectly targeted its copper/gold/diamond gears). [The survivor table](ato-retirement.md) records exceptions and compatibility limits. The cached-jar Node guard rejects new multi-namespace material groups, with narrow documented exceptions.
+
 ## 2026-10-22 — Two-release retirement of AllTheOres and AllTheCompressed
 
 **Decision.** Keep AllTheOres, AllTheCompressed and Almost Unified installed in release 1. Stop all new AllTheOres generation, redirect surviving ore drops, and provide literal one-to-one material conversion recipes. Keep retiring items visible so players can find migration recipes. Almost Unified keeps running with survivor priorities and exclusions for the conversion recipes.

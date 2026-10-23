@@ -23,7 +23,7 @@ function fixture() {
     villagerVial: S('enderio:filled_soul_vial', VILLAGER),
     emptyVial: S('enderio:empty_soul_vial'),
     glass: S('enderio:clear_glass_a'),
-    c1: S('allthecompressed:cobblestone_1x'),
+    c1: S('create:zinc_ingot'),
     water: new F.EmiStack(new F.Fluid('minecraft:water')),
     removed: S('removedmod:thing'),
   };

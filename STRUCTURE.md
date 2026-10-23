@@ -18,11 +18,10 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter
 - `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the mark-as-decor key handler, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
 - `kubejs/startup_scripts/` — `emi_curation_keys.js` registers the "EMI Curation" key mapping (startup-only in Forge); `kubejs/assets/emi_curation/lang/` names it
-- `kubejs/server_scripts/ato_retirement.js` (recipes), `kubejs/server_scripts/ato_retirement_swap.js` (auto-swap on inventory change), `kubejs/config/ato_retirement.json` — temporary release-1 conversion recipes and their explicit item map; see `docs/ato-retirement.md`
-- `kubejs/data/alltheores/` — temporary datapack overrides: disable all 31 biome modifiers and redirect 29 ore/raw-block loot tables
-- `tools/ato_retirement/` — `check_installed.cjs` checks cached jar inventories, loot, deposit tags and unpacking; `tests/` covers recipes, auto-swap, worldgen, loot, visibility and the pinned item catalog
+- `kubejs/server_scripts/dedup.js`, `kubejs/config/dedup*.json` ? permanent duplicate recipe/tag policy; no stack conversion. Generated recipe/loot overrides live under `kubejs/data/<owning-mod>/`, permanent EMI removals under `kubejs/assets/emi/index/stacks/`. Survivor choices: `docs/ato-retirement.md`.
+- `tools/dedup/` ? pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions.
 - `tools/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
-- `tools/packwiz/tests/`, `tools/server_smoke/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs`)
+- `tools/packwiz/tests/`, `tools/server_smoke/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
 - `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its environment, setup, boot, process, watchdog, verdict and log-analysis modules, and known boot noise
 - `tools/packwiz/` — unshipped: hash-chain verifier, index rebuild, localhost pack server, tests

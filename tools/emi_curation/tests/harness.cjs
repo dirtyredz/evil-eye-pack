@@ -97,8 +97,8 @@ function boot(opts) {
   const fx = (opts && opts.fixture) || fixture();
   const world = F.createWorld(fx.spec);
   const g = {};
-  const ctx = { world, fx, g, events: null, files: new Map((opts && opts.files) || []), io: { failWrites: false }, logs: [], loadedMods: new Set(['minecraft', 'ae2', 'create', 'enderio', 'allthecompressed', 'dramaticdoors']),
-    modNames: { minecraft: 'Minecraft', ae2: 'Applied Energistics 2', enderio: 'Ender IO', allthecompressed: 'AllTheCompressed', dramaticdoors: 'Dramatic Doors' } };
+  const ctx = { world, fx, g, events: null, files: new Map((opts && opts.files) || []), io: { failWrites: false }, logs: [], loadedMods: new Set(['minecraft', 'ae2', 'create', 'enderio', 'dramaticdoors']),
+    modNames: { minecraft: 'Minecraft', ae2: 'Applied Energistics 2', enderio: 'Ender IO', create: 'Create', dramaticdoors: 'Dramatic Doors' } };
   ctx.load = (jsonIO) => {
     ctx.events = F.clientEvents();
     loadScripts({
