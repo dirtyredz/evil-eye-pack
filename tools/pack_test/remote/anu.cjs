@@ -18,7 +18,6 @@ const { pullEvidence } = require('./evidence.cjs');
 
 const TOOLS_DIR = path.resolve(__dirname, '../..');
 const CODE_DIRS = ['server_smoke', 'pack_test', 'emi_coverage'];
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const STAGE_SKIP = (rel) => /^(smoke-world|logs|crash-reports|pack_test)(\/|$)/.test(rel);
 
 // Reads ANU's load and decides alone / shared / fallback (capacity.cjs).
@@ -37,6 +36,7 @@ const anuBoot = (boot) => ({ ...boot, priority: 'BelowNormal' });
 
 // o: { stageDir, runDir, input, seed, port, heap, boot, freshWorld, scope, log, onAbort, onSynced }
 async function runOnAnu(o) {
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const { scope, log } = o;
   const timings = {};
   let t = Date.now();
@@ -50,6 +50,7 @@ async function runOnAnu(o) {
   if (!lock.ok) return { fallback: `${lock.why} holds ANU` };
   const remoteRun = `${cfg.RUNS}\\${runId}`;
   let agentPid = null;
+  let disarmAbort = () => {}; // the interrupt kill callback, live only while the agent is running
   try {
     const early = await checkCapacity(ssh, log); // cheap early exit before the sync
     if (early.mode === 'fallback') return { fallback: early.reason };
@@ -74,14 +75,15 @@ async function runOnAnu(o) {
     const launched = await ssh.must(launchScript(`${remoteRun}\\job.json`));
     agentPid = Number((launched.match(/PID (\d+)/) || [])[1]);
     if (!agentPid) throw new Error(`agent did not start: ${launched.slice(0, 300)}`);
-    if (o.onAbort) o.onAbort(() => ssh.ps(killScript(agentPid), { timeoutMs: 30000 }));
+    const killAgent = () => ssh.ps(killScript(agentPid, `${remoteRun}\\job.json`), { timeoutMs: 30000 });
+    if (o.onAbort) disarmAbort = o.onAbort(killAgent) || disarmAbort;
     log(`agent started on ANU (pid ${agentPid}); waiting for the boot`);
     t = Date.now();
     const deadline = Date.now() + (o.boot.timeout + o.boot.probeTimeout + 600) * 1000;
     let status = null;
     let misses = 0;
     for (;;) {
-      await sleep(15000);
+      await sleep(o.pollMs || 15000);
       const r = await ssh.ps(statusScript(remoteRun, agentPid), { timeoutMs: 60000 });
       if (r.code !== 0) { if (++misses >= 8) throw new Error(`lost contact with ANU while the run was in progress: ${r.out.slice(0, 200)}`); continue; }
       misses = 0;
@@ -89,8 +91,9 @@ async function runOnAnu(o) {
       try { status = JSON.parse(r.out.slice(r.out.indexOf('{'))); } catch { status = {}; }
       if (status.state === 'done' || status.state === 'error') break;
       if (!alive) throw new Error('the ANU agent exited without writing a final status');
-      if (Date.now() > deadline) { await ssh.ps(killScript(agentPid), { timeoutMs: 30000 }); throw new Error('the ANU run exceeded its deadline; agent killed'); }
+      if (Date.now() > deadline) { await killAgent(); throw new Error('the ANU run exceeded its deadline; agent killed'); }
     }
+    disarmAbort(); // terminal state: the PID may be reused from here on, so Ctrl+C must not kill it
     timings.remote = (Date.now() - t) / 1000;
     t = Date.now();
     await pullEvidence(ssh, scope, remoteRun, o.runDir);
@@ -99,6 +102,7 @@ async function runOnAnu(o) {
     if (status.state === 'error') throw new Error(`ANU agent failed: ${status.error}`);
     return { boot: status.boot, world: status.world, shared, timings: { ...timings, ...Object.fromEntries(Object.entries(status.timings || {}).map(([k, v]) => [`anu_${k}`, v])) } };
   } finally {
+    disarmAbort();
     if (!agentPid) await ssh.ps(releaseScript(runId), { timeoutMs: 60000 }); // the agent releases its own lock
   }
 }

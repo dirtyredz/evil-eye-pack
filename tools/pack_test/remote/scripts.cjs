@@ -18,7 +18,13 @@ $alive = [bool](Get-Process -Id ${Number(agentPid)} -ErrorAction SilentlyContinu
 $body = if (Test-Path $s) { Get-Content -Raw $s } else { '{}' }
 Write-Output ("ALIVE=$alive"); Write-Output $body`;
 
-// Kills a remote agent and everything it started (used on interrupt).
-const killScript = (agentPid) => `taskkill /PID ${Number(agentPid)} /T /F 2>&1 | Out-Null; Write-Output done`;
+// Kills a remote agent and everything it started (used on interrupt and on the deadline). Windows reuses
+// PIDs and ANU hosts other projects' processes, so the kill happens only when that PID's command line
+// still holds this agent's script AND this run's job file; anything else prints MISMATCH and is left alone.
+const AGENT_SCRIPT = 'pack_test\\remote\\agent.cjs';
+const killScript = (agentPid, jobFile) => `$p = Get-CimInstance Win32_Process -Filter "ProcessId = ${Number(agentPid)}" -ErrorAction SilentlyContinue
+$c = if ($p) { [string]$p.CommandLine } else { '' }
+if ($p -and $c.Contains(${q(AGENT_SCRIPT)}) -and $c.Contains(${q(jobFile)})) { taskkill /PID ${Number(agentPid)} /T /F 2>&1 | Out-Null; Write-Output 'KILLED' }
+elseif ($p) { Write-Output 'MISMATCH: not our agent, left running' } else { Write-Output 'GONE' }`;
 
-module.exports = { launchScript, statusScript, killScript };
+module.exports = { launchScript, statusScript, killScript, AGENT_SCRIPT };

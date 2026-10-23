@@ -25,6 +25,7 @@ const { analyzeRun, EXIT } = require('./analyze.cjs');
 const { loadToolData, packConfigFiles } = require('./verdict/policy.cjs');
 const { scanResources, serverSources, shippedMentions } = require('./session/resources.cjs');
 const { localLock } = require('./session/lock.cjs');
+const { abortRegistry } = require('./session/aborts.cjs');
 const { starvedBoot, starvedText } = require('./verdict/mode.cjs');
 
 const ROOT = path.resolve(__dirname, '../..');
@@ -66,10 +67,10 @@ async function main() {
   fs.mkdirSync(runDir, { recursive: true });
   const data = loadToolData();
   const scope = procs.scope();
-  const aborts = [];
+  const aborts = abortRegistry();
   const onSignal = async () => {
     log('interrupted; stopping every process this run started');
-    for (const a of aborts) { try { await a(); } catch { /* best effort */ } }
+    await aborts.runAll();
     scope.killAll();
     process.exit(EXIT.INVALID);
   };
@@ -100,7 +101,7 @@ async function main() {
     if (!o.local) {
       const { runOnAnu } = require('./remote/anu.cjs');
       run.target = 'anu';
-      remote = await runOnAnu({ stageDir, runDir, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, scope, log, onAbort: (fn) => aborts.push(fn), onSynced: () => { if (lock) { lock.release(); lock = null; } } });
+      remote = await runOnAnu({ stageDir, runDir, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, scope, log, onAbort: aborts.register, onSynced: () => { if (lock) { lock.release(); lock = null; } } });
       if (remote.fallback) { run.fallback = remote.fallback; run.target = 'local'; log(`ANU not used: ${remote.fallback}; running on this machine`); }
     }
     if (remote && !remote.fallback) {

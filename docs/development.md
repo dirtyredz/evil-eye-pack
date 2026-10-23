@@ -145,7 +145,7 @@ changed.
   line); the same starvation on a run that is not re-run (alone, or the re-run itself) stays exit 2.
 - The agent boots through the same code as a local run, keeps the evidence, deletes the server copy
   and releases the lock; Valhalla polls `status.json`, pulls the evidence back and analyses it locally,
-  so exit codes and reports are identical. Ctrl+C on Valhalla also kills the remote agent and its JVM.
+  so exit codes and reports are identical. Ctrl+C on Valhalla also kills the remote agent and its JVM, but only while the agent is running and only when that PID's command line still holds the agent script and this run's job file (Windows reuses PIDs; ANU hosts other projects). A missing or unreadable lock `owner.json` counts as busy until the lock directory itself is stale.
 - Protected on ANU, never touched: Plex and its boot task, `E:\`, `G:\Work`, `C:\ProgramData\CommandDeckCI\`,
   the `cd-ci` account, `G:\ci`, `G:\mods-ci` (only its lock `pid`/`job` and queue ticket count are read).
 
