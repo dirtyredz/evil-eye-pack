@@ -1,6 +1,6 @@
 'use strict';
-// A single-holder lock file ({ pid, host, at, owner }). A lock whose process is gone, or older than
-// staleMs, is taken over. Used for the local staged server and, on ANU, for the one-heavy-job rule.
+// A single-holder lock file ({ pid, host, at, owner }) for the local staged server. A lock whose process is
+// gone, or older than staleMs, is taken over. (The ANU one-job lock is remote/dir_lock.cjs.)
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
@@ -34,34 +34,4 @@ function localLock(file, opts) {
   return holder(file);
 }
 
-// Waits up to waitMs for the lock, polling every pollMs.
-async function waitLock(file, { waitMs, pollMs = 5000, onWait = () => {}, ...opts }) {
-  const until = Date.now() + waitMs;
-  for (;;) {
-    const r = tryLock(file, opts);
-    if (r.ok) return holder(file);
-    if (Date.now() >= until) return null;
-    onWait(r.held);
-    await new Promise((res) => setTimeout(res, pollMs));
-  }
-}
-
-// Directory lock with a heartbeat (ANU): <dir>/owner.json = { owner, at }. Taken by the launcher over SSH,
-// then kept fresh by the agent of the same run (same owner); stale once `at` is older than the stale limit.
-function refreshDirLock(dir, owner) {
-  fs.mkdirSync(dir, { recursive: true });
-  const f = path.join(dir, 'owner.json');
-  let cur = null;
-  try { cur = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { /* new or torn: ours now */ }
-  if (cur && cur.owner && cur.owner !== owner) throw new Error(`lock held by ${cur.owner}`);
-  fs.writeFileSync(f, JSON.stringify({ owner, at: Date.now(), host: os.hostname(), pid: process.pid }));
-}
-
-// Removes the lock only when this run owns it.
-function releaseDirLock(dir, owner) {
-  try { if (JSON.parse(fs.readFileSync(path.join(dir, 'owner.json'), 'utf8')).owner !== owner) return false; } catch { return false; }
-  fs.rmSync(dir, { recursive: true, force: true });
-  return true;
-}
-
-module.exports = { tryLock, localLock, waitLock, alive, refreshDirLock, releaseDirLock };
+module.exports = { tryLock, localLock, alive };

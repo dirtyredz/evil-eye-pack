@@ -19,6 +19,11 @@ function loadToolData(dataDir = DATA) {
   };
 }
 
+// The pack files the analysis reads, as paths inside the staged server: the two dedup files plus every
+// curated list policy.json names (all under config/emi-curation/). Evidence copies them by basename.
+const DEDUP_CONFIG = ['kubejs/config/dedup.json', 'kubejs/config/dedup_sources.json'];
+const packConfigFiles = (policyJson) => [...DEDUP_CONFIG, ...(policyJson.curatedLists || []).map((f) => `config/emi-curation/${f}`)];
+
 // Builds the exclusion policy from policy.json and the curated lists. Each exclusion keeps its reason.
 function compilePolicy(policyJson, { dedup, curated }) {
   const ids = {};
@@ -30,4 +35,4 @@ function compilePolicy(policyJson, { dedup, curated }) {
   return { exclude: { ids, patterns: policyJson.exclude.patterns || [] } };
 }
 
-module.exports = { loadToolData, compilePolicy, DATA };
+module.exports = { loadToolData, compilePolicy, packConfigFiles, DATA };

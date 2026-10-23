@@ -9,7 +9,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { listEntries, readEntry } = require('../../emi_coverage/zip_reader.cjs');
-const { declaredOutputs } = require('../checks/recipes.cjs');
+const { declaredOutputs } = require('../recipe_json.cjs');
 
 const DATA_RE = /^data\/([^/]+)\/(recipes|loot_tables|tags\/(?:items|blocks|fluids)|worldgen|forge\/biome_modifier)\/(.+)\.json$/;
 
@@ -103,6 +103,25 @@ function namespaceMentions(text, namespaces) {
   return [...new Set((text.match(re) || []).map((m) => m.slice(1)))];
 }
 
+// Text files a player receives (configs, KubeJS) that still name a removed mod.
+function shippedMentions(serverDir, namespaces) {
+  const out = [];
+  const re = new RegExp(`(?:${namespaces.join('|')}):`);
+  for (const dir of ['config', 'defaultconfigs', 'kubejs']) {
+    const abs = path.join(serverDir, dir);
+    if (!fs.existsSync(abs)) continue;
+    for (const e of fs.readdirSync(abs, { recursive: true, withFileTypes: true })) {
+      if (!e.isFile() || !/\.(json|json5|toml|cfg|txt|js|properties|yaml|yml)$/.test(e.name)) continue;
+      const file = path.join(e.parentPath, e.name);
+      const text = fs.readFileSync(file, 'utf8');
+      if (!re.test(text)) continue;
+      const refs = [...new Set((text.match(new RegExp(`(?:${namespaces.join('|')}):[a-z0-9_/.-]+`, 'g')) || []))];
+      out.push({ file: path.relative(serverDir, file).replace(/\\/g, '/'), refs: refs.length ? refs : namespaceMentions(text, namespaces) });
+    }
+  }
+  return out;
+}
+
 // Minecraft reads data JSON through lenient Gson: a BOM, comments and trailing commas are accepted.
 // Returns { json, lenient } or throws when even the lenient form is not JSON.
 function parseLenient(text) {
@@ -173,4 +192,4 @@ function scanResources(sources, { removedNamespaces = [] } = {}) {
   return ev;
 }
 
-module.exports = { scanResources, parseLenient, serverSources, lootRefs, worldgenBlocks, namespaceMentions, walkJar };
+module.exports = { scanResources, shippedMentions, parseLenient, serverSources, lootRefs, worldgenBlocks, namespaceMentions, walkJar };

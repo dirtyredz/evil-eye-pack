@@ -5,7 +5,9 @@
 // item is itself obtainable (crops, leaves). A self-drop table alone proves nothing.
 // This is evidence of an obtain method, not survival progression or recursive ingredient reachability.
 
-const finding = (code, subject, ref, message, severity = 'fail') => ({ check: 'acquisition', code, subject, ref, message, severity });
+const { makeFinding, sectionResult } = require('../verdict/finding.cjs');
+
+const finding = makeFinding('acquisition');
 
 // policy: { exclude: { ids: {id: reason}, patterns: [{ re, reason }] } } plus curated lists already merged
 // into exclude.ids by the caller (dedup retirements, creative-only, MineColonies eggs).
@@ -74,7 +76,7 @@ function checkAcquisition(input, policy) {
     stats.noSource += 1;
     findings.push(finding('no-known-source', id, null, 'no recipe, loot table or worldgen drop produces this item'));
   }
-  return { state: findings.some((f) => f.severity === 'fail') ? 'findings' : 'passed', findings, stats };
+  return sectionResult(findings, stats);
 }
 
 module.exports = { checkAcquisition, buildEvidence, excluded };

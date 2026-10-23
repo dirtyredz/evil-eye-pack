@@ -4,7 +4,9 @@
 const { duplicateGroups } = require('../../dedup/catalog.cjs');
 const { compareAllowances } = require('../../dedup/guard.cjs');
 
-const finding = (code, subject, ref, message, severity = 'fail') => ({ check: 'dedup', code, subject, ref, message, severity });
+const { makeFinding, sectionResult } = require('../verdict/finding.cjs');
+
+const finding = makeFinding('dedup');
 
 // itemTags: Map<tag, item[]>; liveRecipeIds: Set; policy: dedup.json; sources: dedup_sources.json; allowed: allowed_groups.json.
 function checkDedup(itemTags, liveRecipeIds, { policy, sources, allowed }) {
@@ -21,7 +23,7 @@ function checkDedup(itemTags, liveRecipeIds, { policy, sources, allowed }) {
     for (const id of ids) if (!live.has(id)) findings.push(finding('survivor-tag-missing', id, `#${tag}`, 'survivor does not carry the tag the policy gives it'));
   }
   for (const id of sources.removeRecipes) if (liveRecipeIds.has(id)) findings.push(finding('retired-recipe-loaded', id, null, 'retired producer recipe is loaded'));
-  return { state: findings.some((f) => f.severity === 'fail') ? 'findings' : 'passed', findings, stats: { groups: Object.keys(groups).length, allowed: Object.keys(allowed).length, survivorTags: Object.keys(sources.itemTags).length, removedRecipes: sources.removeRecipes.length } };
+  return sectionResult(findings, { groups: Object.keys(groups).length, allowed: Object.keys(allowed).length, survivorTags: Object.keys(sources.itemTags).length, removedRecipes: sources.removeRecipes.length });
 }
 
 module.exports = { checkDedup };

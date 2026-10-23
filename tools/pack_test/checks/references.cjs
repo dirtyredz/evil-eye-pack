@@ -2,7 +2,9 @@
 // Tags, loot tables and removed-mod references. Pure over the raw evidence and the live registries.
 // Registry existence is a Set lookup, so an unknown id can never fall back to air.
 
-const finding = (code, subject, ref, message, severity = 'fail') => ({ check: 'references', code, subject, ref, message, severity });
+const { makeFinding, sectionResult } = require('../verdict/finding.cjs');
+
+const finding = makeFinding('references');
 
 // Ids without a namespace mean minecraft:, as in the game.
 const qualify = (id) => (id.includes(':') ? id : `minecraft:${id}`);
@@ -87,7 +89,7 @@ function checkReferences(resources, live, { removed = [], shipped = [], logged =
     if (m.kind === 'recipes') continue; // reported by the recipe check
     findings.push(finding('resource-malformed-json', m.id, m.source, `${m.kind}: ${m.error}`));
   }
-  return { state: findings.some((f) => f.severity === 'fail') ? 'findings' : 'passed', findings, stats };
+  return sectionResult(findings, stats);
 }
 
 module.exports = { checkReferences, lootCycles, checkTags, qualify };

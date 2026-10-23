@@ -19,10 +19,11 @@ const env = require('../server_smoke/env.cjs');
 const procs = require('../server_smoke/procs.cjs');
 const { verify } = require('../packwiz/verify_hashes.cjs');
 const prep = require('./session/prepare.cjs');
+const { checkDestination, runId, runMeta } = require('./session/run_meta.cjs');
 const { execute } = require('./session/execute.cjs');
 const { analyzeRun, EXIT } = require('./analyze.cjs');
-const { loadToolData } = require('./verdict/policy.cjs');
-const { scanResources, serverSources } = require('./session/resources.cjs');
+const { loadToolData, packConfigFiles } = require('./verdict/policy.cjs');
+const { scanResources, serverSources, shippedMentions } = require('./session/resources.cjs');
 const { localLock } = require('./session/lock.cjs');
 const { starvedBoot, starvedText } = require('./verdict/mode.cjs');
 
@@ -46,15 +47,13 @@ function parseArgs(argv) {
   return o;
 }
 
-const PACK_CONFIG = ['kubejs/config/dedup.json', 'kubejs/config/dedup_sources.json', 'config/emi-curation/creative.json', 'config/emi-curation/minecolonies-eggs.json'];
-
 // Raw resources, shipped-config mentions and the pack's own policy files, read from the staged server.
 function stageEvidence(stageDir, evidenceDir, data) {
   fs.mkdirSync(path.join(evidenceDir, 'pack-config'), { recursive: true });
   const ev = scanResources(serverSources(stageDir), { removedNamespaces: data.policy.removedMods });
-  ev.shipped = prep.shippedMentions(stageDir, data.policy.removedMods);
+  ev.shipped = shippedMentions(stageDir, data.policy.removedMods);
   fs.writeFileSync(path.join(evidenceDir, 'resources.json'), JSON.stringify(ev));
-  for (const f of PACK_CONFIG) fs.copyFileSync(path.join(stageDir, f), path.join(evidenceDir, 'pack-config', path.basename(f)));
+  for (const f of packConfigFiles(data.policy)) fs.copyFileSync(path.join(stageDir, f), path.join(evidenceDir, 'pack-config', path.basename(f)));
 }
 
 async function main() {
@@ -62,8 +61,8 @@ async function main() {
   const log = (m) => console.log(`[pack-test] ${m}`);
   if (o.analyze) { finish(analyzeRun(path.resolve(o.analyze), { log })); return; }
 
-  const runDir = path.join(path.resolve(o.out), prep.runId());
-  prep.checkDestination(runDir, { artifacts: env.ARTIFACTS, checkouts: [ROOT, path.dirname(o.pack)] });
+  const runDir = path.join(path.resolve(o.out), runId());
+  checkDestination(runDir, { artifacts: env.ARTIFACTS, checkouts: [ROOT, path.dirname(o.pack)] });
   fs.mkdirSync(runDir, { recursive: true });
   const data = loadToolData();
   const scope = procs.scope();
@@ -76,7 +75,7 @@ async function main() {
   };
   process.once('SIGINT', onSignal);
   process.once('SIGTERM', onSignal);
-  const run = { schema: 1, meta: prep.runMeta(o.pack), seed: o.seed, target: 'local', fallback: null, errors: [], timings: {}, input: { token: `${path.basename(runDir)}-${process.pid}`, crafts: data.crafts.crafts.map((c) => ({ name: c.name, recipe: c.recipe, grid: c.grid.map((g) => g || '') })) } };
+  const run = { schema: 1, meta: runMeta(o.pack), seed: o.seed, target: 'local', fallback: null, errors: [], timings: {}, input: { token: `${path.basename(runDir)}-${process.pid}`, crafts: data.crafts.crafts.map((c) => ({ name: c.name, recipe: c.recipe, grid: c.grid.map((g) => g || '') })) } };
   const save = () => fs.writeFileSync(path.join(runDir, 'run.json'), JSON.stringify(run, null, 1));
   const t0 = Date.now();
   let lock = null;

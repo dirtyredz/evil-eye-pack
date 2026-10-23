@@ -6,60 +6,20 @@
 // neighbour job we ran beside, or null) or { fallback: reason } when ANU cannot be used (the caller runs
 // locally). Errors after the agent has started are real failures, never silent fallbacks.
 const fs = require('node:fs');
-const os = require('node:os');
 const path = require('node:path');
 const cfg = require('./config.cjs');
 const { connect, q } = require('./ssh.cjs');
 const { syncDir } = require('./sync.cjs');
-const { ensureProvisioned, nodeExe, javaExe, jcmdExe } = require('./provision.cjs');
+const { ensureProvisioned, javaExe, jcmdExe } = require('./provision.cjs');
 const { probeScript, parseProbe, decide } = require('./capacity.cjs');
+const { acquire, releaseScript } = require('./dir_lock.cjs');
+const { launchScript, statusScript, killScript } = require('./scripts.cjs');
+const { pullEvidence } = require('./evidence.cjs');
 
 const TOOLS_DIR = path.resolve(__dirname, '../..');
 const CODE_DIRS = ['server_smoke', 'pack_test', 'emi_coverage'];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const STAGE_SKIP = (rel) => /^(smoke-world|logs|crash-reports|pack_test)(\/|$)/.test(rel);
-
-// Takes our own single-job lock (G:\evil-eye-pack-ci\lock) unless another pack test holds it fresh, so two
-// pack tests never run on ANU at once. A neighbour project's lock is not looked at here (see capacity.cjs).
-// Prints LOCKED or BUSY <why>.
-function lockScript(owner) {
-  return `
-$lock = ${q(cfg.LOCK)}; $staleMs = ${cfg.LOCK_STALE_MS}; $now = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
-if (Test-Path $lock) {
-  $o = $null; try { $o = Get-Content -Raw (Join-Path $lock 'owner.json') | ConvertFrom-Json } catch {}
-  if ($o -and ($now - [int64]$o.at) -lt $staleMs) { Write-Output "BUSY pack-test run $($o.owner)"; exit 0 }
-  Remove-Item -Recurse -Force $lock
-}
-try { New-Item -ItemType Directory $lock -ErrorAction Stop | Out-Null } catch { Write-Output 'BUSY lock race'; exit 0 }
-Set-Content -Encoding ascii -LiteralPath (Join-Path $lock 'owner.json') -Value (@{ owner = ${q(owner)}; at = $now; host = 'valhalla-launcher' } | ConvertTo-Json -Compress)
-Write-Output 'LOCKED'`;
-}
-
-const releaseScript = (owner) => `$lock = ${q(cfg.LOCK)}; $f = Join-Path $lock 'owner.json'
-if (Test-Path $f) { $o = Get-Content -Raw $f | ConvertFrom-Json; if ($o.owner -eq ${q(owner)}) { Remove-Item -Recurse -Force $lock } }`;
-
-// Win32_Process.Create: the agent is not a child of sshd, so it survives the session; BelowNormal is
-// inherited by the Java server it starts.
-const launchScript = (jobFile) => `
-$si = New-CimInstance -ClassName Win32_ProcessStartup -ClientOnly -Property @{ PriorityClass = [uint32]16384; ShowWindow = [uint16]0 }
-$cmd = '"' + ${q(nodeExe)} + '" "' + ${q(`${cfg.CODE}\\pack_test\\remote\\agent.cjs`)} + '" "' + ${q(jobFile)} + '"'
-$r = Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{ CommandLine = $cmd; CurrentDirectory = ${q(cfg.ROOT)}; ProcessStartupInformation = $si }
-if ($r.ReturnValue -ne 0) { throw "Win32_Process.Create returned $($r.ReturnValue)" }
-Write-Output "PID $($r.ProcessId)"`;
-
-const statusScript = (runDir, agentPid) => `$s = Join-Path ${q(runDir)} 'status.json'
-$alive = [bool](Get-Process -Id ${Number(agentPid)} -ErrorAction SilentlyContinue)
-$body = if (Test-Path $s) { Get-Content -Raw $s } else { '{}' }
-Write-Output ("ALIVE=$alive"); Write-Output $body`;
-
-// Kills a remote agent and everything it started (used on interrupt).
-const killScript = (agentPid) => `taskkill /PID ${Number(agentPid)} /T /F 2>&1 | Out-Null; Write-Output done`;
-
-// One attempt, no waiting: a busy ANU means this run goes to Valhalla.
-async function acquire(ssh, owner) {
-  const out = await ssh.must(lockScript(owner), { timeoutMs: 60000 });
-  return /LOCKED/.test(out) ? { ok: true } : { ok: false, why: (out.match(/BUSY .*/) || ['BUSY'])[0].slice(5) };
-}
 
 // Reads ANU's load and decides alone / shared / fallback (capacity.cjs).
 async function checkCapacity(ssh, log) {
@@ -74,24 +34,6 @@ async function checkCapacity(ssh, log) {
 // ANU runs the server at BelowNormal whether alone or beside a neighbour: it must never outrank the
 // neighbour's job (the local default, AboveNormal, does not apply here).
 const anuBoot = (boot) => ({ ...boot, priority: 'BelowNormal' });
-
-async function pullEvidence(ssh, scope, remoteRun, runDir) {
-  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'packtest-pull-'));
-  try {
-    const remoteTar = `${remoteRun}\\evidence.tar`;
-    await ssh.must(`Set-Location ${q(remoteRun)}; if (-not (Test-Path evidence)) { New-Item -ItemType Directory evidence | Out-Null }; tar -cf evidence.tar evidence agent.log status.json job.json; if ($LASTEXITCODE -ne 0) { throw "tar exit $LASTEXITCODE" }`, { timeoutMs: 600000 });
-    const local = path.join(tmp, 'evidence.tar');
-    const r = await ssh.scpFrom(remoteTar, local);
-    if (r.code !== 0) throw new Error(`evidence download failed: ${r.out.slice(0, 300)}`);
-    const remoteFiles = path.join(runDir, 'remote');
-    fs.mkdirSync(remoteFiles, { recursive: true });
-    const x = await scope.run(cfg.LOCAL_TAR, ['-xf', local, '-C', remoteFiles], { timeoutMs: 600000 });
-    if (x.code !== 0) throw new Error(`evidence unpack failed: ${x.out.slice(0, 300)}`);
-    // Probe payloads, logs and crash reports join the locally staged evidence (resources, pack config).
-    fs.cpSync(path.join(remoteFiles, 'evidence'), path.join(runDir, 'evidence'), { recursive: true });
-    fs.rmSync(path.join(remoteFiles, 'evidence'), { recursive: true, force: true });
-  } finally { fs.rmSync(tmp, { recursive: true, force: true }); }
-}
 
 // o: { stageDir, runDir, input, seed, port, heap, boot, freshWorld, scope, log, onAbort, onSynced }
 async function runOnAnu(o) {
@@ -161,4 +103,4 @@ async function runOnAnu(o) {
   }
 }
 
-module.exports = { runOnAnu, lockScript, launchScript, anuBoot };
+module.exports = { runOnAnu, anuBoot };

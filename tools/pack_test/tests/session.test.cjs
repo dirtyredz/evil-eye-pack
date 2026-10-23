@@ -6,6 +6,8 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const prep = require('../session/prepare.cjs');
+const { checkDestination } = require('../session/run_meta.cjs');
+const { WORLD } = require('../session/world_cache.cjs');
 const { execute } = require('../session/execute.cjs');
 const { analyzeRun } = require('../analyze.cjs');
 const { loadToolData } = require('../verdict/policy.cjs');
@@ -25,9 +27,9 @@ function fakeStage(root) {
 
 test('writable run folders must be under the artifacts root and outside every checkout', () => {
   const artifacts = 'C:/a/artifacts';
-  assert.doesNotThrow(() => prep.checkDestination('C:/a/artifacts/pack-test/runs/r1', { artifacts, checkouts: ['C:/a/repo'] }));
-  assert.throws(() => prep.checkDestination('C:/a/elsewhere/r1', { artifacts, checkouts: [] }), /outside the artifacts root/);
-  assert.throws(() => prep.checkDestination('C:/a/artifacts/repo/r1', { artifacts, checkouts: ['C:/a/artifacts/repo'] }), /inside a checkout/);
+  assert.doesNotThrow(() => checkDestination('C:/a/artifacts/pack-test/runs/r1', { artifacts, checkouts: ['C:/a/repo'] }));
+  assert.throws(() => checkDestination('C:/a/elsewhere/r1', { artifacts, checkouts: [] }), /outside the artifacts root/);
+  assert.throws(() => checkDestination('C:/a/artifacts/repo/r1', { artifacts, checkouts: ['C:/a/artifacts/repo'] }), /inside a checkout/);
 });
 
 test('execute boots exactly once, injects the probe before the boot and keeps the evidence after it', async () => {
@@ -48,8 +50,8 @@ test('execute boots exactly once, injects the probe before the boot and keeps th
       assert.equal(opts.complete(), true);
       fs.mkdirSync(path.join(serverDir, 'logs'), { recursive: true });
       fs.writeFileSync(path.join(serverDir, 'logs/latest.log'), 'Done (1.0s)!\n');
-      fs.mkdirSync(path.join(serverDir, prep.WORLD));
-      fs.writeFileSync(path.join(serverDir, prep.WORLD, 'level.dat'), 'w');
+      fs.mkdirSync(path.join(serverDir, WORLD));
+      fs.writeFileSync(path.join(serverDir, WORLD, 'level.dat'), 'w');
       return { completed: true };
     };
     const o = { stageDir: stage, runDir, worldCache: path.join(root, 'worlds'), input, seed: '1', port: 1, heap: '1G', boot: { probeTimeout: 5 }, bootImpl };
@@ -61,7 +63,7 @@ test('execute boots exactly once, injects the probe before the boot and keeps th
     assert.equal(r.world.saved, true);
     // The next run with the same mods and seed reuses the generated world.
     const runDir2 = path.join(root, 'run2');
-    const r2 = await execute({ ...o, runDir: runDir2, bootImpl: async (serverDir) => { assert.ok(fs.existsSync(path.join(serverDir, prep.WORLD, 'level.dat'))); return { completed: true }; } }, () => {});
+    const r2 = await execute({ ...o, runDir: runDir2, bootImpl: async (serverDir) => { assert.ok(fs.existsSync(path.join(serverDir, WORLD, 'level.dat'))); return { completed: true }; } }, () => {});
     assert.equal(r2.world.reused, true);
     assert.equal(fs.readFileSync(path.join(stage, 'mods/a.jar'), 'utf8'), 'jar', 'the stage is untouched');
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
