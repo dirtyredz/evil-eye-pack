@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "description": "Machine recipe types (Create, Ender IO, Extreme Reactors): a floor of ~90% of the 2026-10-23 count fails a run; any other count change is reported as info. Assertions spot-check key recipes and tags.",
+  "types": {
+    "bigreactors:fluidizer": {
+      "min": 18,
+      "observed": 20
+    },
+    "bigreactors:reprocessor": {
+      "min": 4,
+      "observed": 5
+    },
+    "create:compacting": {
+      "min": 15,
+      "observed": 17
+    },
+    "create:crushing": {
+      "min": 58,
+      "observed": 65
+    },
+    "create:cutting": {
+      "min": 450,
+      "observed": 500
+    },
+    "create:deploying": {
+      "min": 101,
+      "observed": 113
+    },
+    "create:emptying": {
+      "min": 5,
+      "observed": 6
+    },
+    "create:filling": {
+      "min": 35,
+      "observed": 39
+    },
+    "create:haunting": {
+      "min": 19,
+      "observed": 22
+    },
+    "create:item_application": {
+      "min": 58,
+      "observed": 65
+    },
+    "create:mechanical_crafting": {
+      "min": 129,
+      "observed": 144
+    },
+    "create:milling": {
+      "min": 76,
+      "observed": 85
+    },
+    "create:mixing": {
+      "min": 1050,
+      "observed": 1167
+    },
+    "create:pressing": {
+      "min": 20,
+      "observed": 23
+    },
+    "create:sandpaper_polishing": {
+      "min": 243,
+      "observed": 270
+    },
+    "create:sequenced_assembly": {
+      "min": 101,
+      "observed": 113
+    },
+    "create:splashing": {
+      "min": 33,
+      "observed": 37
+    },
+    "enderio:alloy_smelting": {
+      "min": 233,
+      "observed": 259
+    },
+    "enderio:enchanting": {
+      "min": 36,
+      "observed": 41
+    },
+    "enderio:fire_crafting": {
+      "min": 1,
+      "observed": 1
+    },
+    "enderio:grinding_ball": {
+      "min": 9,
+      "observed": 10
+    },
+    "enderio:painting": {
+      "min": 21,
+      "observed": 24
+    },
+    "enderio:sag_milling": {
+      "min": 58,
+      "observed": 65
+    },
+    "enderio:slicing": {
+      "min": 4,
+      "observed": 5
+    },
+    "enderio:soul_binding": {
+      "min": 9,
+      "observed": 11
+    },
+    "enderio:tank": {
+      "min": 18,
+      "observed": 21
+    }
+  },
+  "assertions": [
+    {
+      "kind": "tag-contains",
+      "tag": "forge:ingots/steel",
+      "item": "enderio:dark_steel_ingot",
+      "why": "Extreme Reactors' reinforced parts need a non-empty steel tag"
+    },
+    {
+      "kind": "recipe-loaded",
+      "id": "bigreactors:reactor/reinforced/casing"
+    },
+    {
+      "kind": "recipe-uses-tag",
+      "id": "bigreactors:reactor/reinforced/casing",
+      "tag": "forge:ingots/steel"
+    },
+    {
+      "kind": "recipe-not-loaded",
+      "id": "bigreactors:reactor/reinforced/casing_alt",
+      "why": "the iron-block fallback loads only when the steel tag is empty"
+    },
+    {
+      "kind": "recipe-loaded",
+      "id": "bigreactors:turbine/reinforced/casing"
+    },
+    {
+      "kind": "recipe-not-loaded",
+      "id": "bigreactors:turbine/reinforced/casing_alt"
+    },
+    {
+      "kind": "recipe-output",
+      "id": "bigreactors:reprocessor/blutonium_to_ludicrite",
+      "item": "bigreactors:ludicrite_ingot"
+    },
+    {
+      "kind": "recipe-output",
+      "id": "create:mixing/andesite_alloy",
+      "item": "create:andesite_alloy"
+    },
+    {
+      "kind": "recipe-output",
+      "id": "create:crushing/redstone_ore",
+      "item": "minecraft:redstone"
+    },
+    {
+      "kind": "recipe-output",
+      "id": "create:pressing/iron_ingot",
+      "item": "create:iron_sheet"
+    },
+    {
+      "kind": "recipe-output",
+      "id": "enderio:alloy_smelting/dark_steel_ingot",
+      "item": "enderio:dark_steel_ingot"
+    },
+    {
+      "kind": "recipe-output",
+      "id": "enderio:sag_milling/obsidian",
+      "item": "create:powdered_obsidian",
+      "why": "dedup survivor: Ender IO's powdered obsidian is replaced by Create's"
+    }
+  ]
+}

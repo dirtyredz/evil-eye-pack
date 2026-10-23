@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "removedMods": ["alltheores", "allthecompressed", "almostunified", "simplecorelib"],
+  "curatedLists": ["creative.json", "minecolonies-eggs.json"],
+  "exclude": {
+    "patterns": [
+      { "re": "_spawn_egg$|:spawn_egg_", "reason": "spawn eggs are creative-only" },
+      { "re": "^minecraft:(command_block|chain_command_block|repeating_command_block|command_block_minecart|structure_block|structure_void|jigsaw|barrier|light|debug_stick|knowledge_book|petrified_oak_slab|bedrock|end_portal_frame|budding_amethyst|reinforced_deepslate|spawner|farmland|dirt_path|frogspawn|player_head|infested_[a-z_]+|suspicious_(sand|gravel))$", "reason": "vanilla technical or creative-only block/item (no survival source by design)" }
+    ],
+    "ids": {}
+  }
+}

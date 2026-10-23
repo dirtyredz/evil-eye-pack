@@ -25,6 +25,7 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `tools/packwiz/tests/`, `tools/server_smoke/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
 - `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its environment, setup, boot, process, watchdog, verdict and log-analysis modules, and known boot noise
+- `tools/pack_test/` — unshipped: one-boot automated pack test (`run.cjs`): runner, report, baseline and protocol modules; `checks/` (pure Node checks over the probe's evidence), `probe/` (KubeJS server scripts injected into the throwaway server only, never shipped), `remote/` (ANU target: sync, launch, collect), `data/` (policy, fixtures, baseline), `tests/`
 - `tools/packwiz/` — unshipped: hash-chain verifier, index rebuild, localhost pack server, tests
 - `docs/` — unshipped living docs (development workflow, decisions, gotchas, EMI guide and integration coverage)
 - `docs/items/`, `docket.json` — Docket work-item store (use `dk`); `AGENTS.md` — agent instructions. All unshipped.

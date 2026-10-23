@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "description": "Curated crafts the probe's stand-in player performs in a real crafting menu. grid: 9 slots, row by row, null = empty. remainders: what must be left in the grid after taking the result.",
+  "crafts": [
+    {
+      "name": "create-andesite-alloy",
+      "recipe": "create:crafting/materials/andesite_alloy",
+      "grid": ["minecraft:iron_nugget", "minecraft:andesite", null, "minecraft:andesite", "minecraft:iron_nugget", null, null, null, null],
+      "expect": { "id": "create:andesite_alloy", "count": 1 }
+    },
+    {
+      "name": "er-reinforced-casing-dark-steel",
+      "recipe": "bigreactors:reactor/reinforced/casing",
+      "why": "Extreme Reactors gates its reinforced parts on forge:ingots/steel; the pack fills that tag with Ender IO Dark Steel (docs/GOTCHAS.md)",
+      "grid": ["enderio:dark_steel_ingot", "bigreactors:graphite_ingot", "enderio:dark_steel_ingot", "bigreactors:graphite_ingot", "minecraft:iron_block", "bigreactors:graphite_ingot", "enderio:dark_steel_ingot", "bigreactors:graphite_ingot", "enderio:dark_steel_ingot"],
+      "expect": { "id": "bigreactors:reinforced_reactorcasing", "count": 1 }
+    },
+    {
+      "name": "farmersdelight-nether-salad",
+      "recipe": "farmersdelight:nether_salad",
+      "grid": ["minecraft:crimson_fungus", "minecraft:warped_fungus", "minecraft:bowl", null, null, null, null, null, null],
+      "expect": { "id": "farmersdelight:nether_salad", "count": 1 }
+    },
+    {
+      "name": "ae2-1k-cell-component",
+      "recipe": "ae2:network/cells/item_storage_components_cell_1k_part",
+      "grid": ["minecraft:redstone", "ae2:certus_quartz_crystal", "minecraft:redstone", "ae2:certus_quartz_crystal", "ae2:logic_processor", "ae2:certus_quartz_crystal", "minecraft:redstone", "ae2:certus_quartz_crystal", "minecraft:redstone"],
+      "expect": { "id": "ae2:cell_component_1k", "count": 1 }
+    },
+    {
+      "name": "dough-survivor-with-bucket-remainder",
+      "recipe": "create:crafting/appliances/dough",
+      "why": "dedup survivor: Create dough now yields Farmer's Delight wheat dough; the water bucket must come back empty",
+      "grid": ["create:wheat_flour", "minecraft:water_bucket", null, null, null, null, null, null, null],
+      "expect": { "id": "farmersdelight:wheat_dough", "count": 1 },
+      "remainders": [{ "slot": 1, "id": "minecraft:bucket", "count": 1 }]
+    }
+  ]
+}
