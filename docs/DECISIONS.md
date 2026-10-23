@@ -2,6 +2,17 @@
 
 Newest first.
 
+## 2026-10-23 — Automated pack test: one headless boot, an artifact-only KubeJS probe, exact baselines, ANU by default
+
+**Decision.** `node tools/pack_test/run.cjs` is the agent's acceptance command for pack changes. It boots the checkout once on a hidden Forge dedicated server (no client, no window), and a KubeJS probe in that throwaway server writes the live registries, final tags, every loaded recipe and the results of five scripted crafts. Node then checks recipes, tag/loot/removed-mod references, acquisition coverage, machine recipe types, crafts, the duplicate-material guard on live tags, and log groups, and compares every finding with `tools/pack_test/data/baseline.json`.
+- **Probe = KubeJS server scripts copied into the throwaway server only** (`tools/pack_test/probe/`, unshipped). KubeJS already ships, earlier artifact probes worked, and it reaches the live `RecipeManager`, registries and a `FakePlayer` crafting menu. A Forge test mod would add a build and distribution step for no extra reach.
+- **Raw data is read by Node, not the probe.** KubeJS's class filter denies `java.io`, so resource streams cannot be read from a script; Node reads the same installed jars (vanilla, Forge, mods, KubeJS data) for conditions, loot references, tag files and worldgen blocks. Precedence is approximated (KubeJS > mods > Forge > vanilla); the log and live state stay authoritative.
+- **One boot.** The supervisor waits for `Done` *and* the probe's manifest (run token checked); it never boots twice. Spawn-area generation is the slowest part of a boot and is irrelevant to recipes, so a generated world is cached per mod set and seed (`--fresh-world` regenerates).
+- **Exact baselines.** Findings have a stable key (check, code, subject, reference); only `fail` findings can be new; each baseline entry carries a reason. A run writes `baseline-candidate.json` for review and never updates the committed baseline itself. Exit 0 = no new findings, 1 = new findings, 2 = invalid run (incomplete probe, crash, setup or cleanup failure), which a baseline can never absorb.
+- **ANU by default.** The run executes on ANU (the LAN test PC) so Valhalla stays free; `--local` runs here, and an unreachable or busy ANU falls back to Valhalla with the reason in the summary. Valhalla stages the pack (incremental `-s server` install), syncs only changed files, starts a detached agent (`Win32_Process.Create`, BelowNormal), and analyses the pulled-back evidence itself, so local and remote verdicts come from the same code.
+
+**Limits.** Server-side only: no EMI rendering or search, textures, keybindings, client mixins or multiplayer sync. Acquisition evidence covers recipes, loot tables, worldgen block drops and block-drop chains; trades, Java-coded drops and in-world conversions (waxing, stripping, bucketing) are invisible, so those items need reasoned policy exclusions or baseline entries. Ingredient checks rely on Forge's ingredient JSON plus the live match count; custom ingredient predicates are only checked for "matches nothing".
+
 ## 2026-10-23 — Audit 2 fixes: Dark Steel is the pack's steel, keymap clashes resolved
 
 **Decision.**

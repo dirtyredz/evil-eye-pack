@@ -11,7 +11,7 @@ and how to test a change in the game before it is pushed.
 | `projects/worktrees/evil-eye-pack/<name>/` | Linked worktrees for experiments (none kept after the EMI adoption). |
 | `projects/artifacts/evil-eye-pack/jobs/<date-task>/` | Dispatch prompts, plans, reports and their `.events.jsonl` / `.job.json` / `.stderr.log` sidecars. |
 | `MultiMC/instances/Evil Eye Stable/` | Display name **Evil Eye (Stable)**. The owner's real worlds. Installs published `main`. |
-| `MultiMC/instances/Evil Eye Local/` | Disposable copy of Stable (no saves). Installs the main checkout from localhost. |
+| `MultiMC/instances/Evil Eye Local/` | Disposable copy of Stable (no saves). Installs the main checkout from its `pack.toml` file path. |
 | `MultiMC/packwiz/packwiz-installer-bootstrap.jar` | Shared installer bootstrap used by every instance. |
 | `MultiMC/backups/evil-eye/<instance>/<timestamp>/` | Instance backups (`instance/`, `launcher/`, `SHA256SUMS.txt`). Older `MultiMC/backups/Evil Eye 2026-10-11/` is kept as is. |
 
@@ -51,7 +51,7 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs
+node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*.cjs
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
 # node tools/dedup/generate.cjs "C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods"
@@ -62,6 +62,67 @@ git worktree list --porcelain
 ```
 
 Tooling needs Node 22. There is no packwiz CLI and no build step.
+
+## Pack test (agents' acceptance command)
+
+`node tools/pack_test/run.cjs` verifies a pack change without anyone playing. It checks the hash chain,
+boots the checkout **once** on a hidden Forge dedicated server (no client, no window, `127.0.0.1` only,
+offline) with a KubeJS probe injected into that throwaway server only, stops every process it started,
+and writes `report.json` + `summary.txt` into its run folder. Run it after any pack-file change (after
+`rehash.cjs` and `verify_hashes.cjs`), and read `summary.txt`.
+
+- **Where it runs.** By default on **ANU** (see below). `--local` runs on Valhalla. If ANU is unreachable,
+  or busy for longer than `--anu-wait` seconds (default 600), the run falls back to Valhalla and the
+  summary's first line says `fallback: ...`.
+- **Output.** `C:/Users/dirty/projects/artifacts/evil-eye-pack/pack-test/runs/run-<time>/` by default;
+  pass `--out <job folder>` to put the run there. A run folder holds `run.json` (what was tested: commit,
+  dirty flag, pack/index hashes, seed, timings, boot result), `evidence/` (probe payloads, raw-resource
+  scan, pack policy copies, logs, crash reports), `report.json`, `summary.txt` and, when there are new
+  findings, `baseline-candidate.json`. The throwaway server itself is deleted (`--keep-server` keeps it).
+- **Checks.** recipes (every ingredient resolves, outputs registered, conditional/empty-tag gating,
+  parse failures), references (tags, loot tables, removed mods), acquisition (every expected item has an
+  obtain method), machines (Create / Ender IO / Extreme Reactors type counts and key recipes), crafting
+  (five curated crafts through a real crafting menu: Create andesite alloy, ER reinforced casing via
+  Dark Steel, a Farmer's Delight dish, an AE2 component, the dough survivor with its bucket remainder),
+  dedup (the duplicate-material guard on live tags), logs (the smoke's error groups plus per-resource
+  load failures). Inputs: `tools/pack_test/data/{policy,crafts,machines,baseline}.json`.
+- **Exit codes.** `0` complete run, no new findings; `1` new findings (listed in `summary.txt`);
+  `2` invalid run: probe incomplete, crash, setup or cleanup failure. A baseline never turns 2 into 0.
+- **Baseline review.** Known findings live in `data/baseline.json`, each with a reason. New ones are
+  either fixed in the pack or, after review, copied from `baseline-candidate.json` with a real reason
+  (never the `TODO`). Entries reported as "resolved" are removed. Acquisition gaps that are by design
+  (trades, Java drops, in-world conversions, technical items) go into `data/policy.json` exclusions.
+- **Re-analyse without booting:** `node tools/pack_test/run.cjs --analyze <run folder>` (same verdict
+  from the saved evidence; use it after editing the baseline or the checks).
+- **Options.** `--seed` (default `20261020`), `--fresh-world` (ignore the cached world),
+  `--priority` (local JVM, default `AboveNormal`; ANU runs at `BelowNormal`), `--timeout`, `--silent`,
+  `--sample` (watchdog, as in the smoke), `--probe-timeout` (seconds allowed after `Done`, default 300),
+  `--heap` (default `6G`), `--port` (default 25601). Java, the installer jars and the artifacts root come
+  from `tools/server_smoke/env.cjs` (`SMOKE_*` overrides).
+- **Timing (measured 2026-10-23).** Valhalla, warm caches: stage ~6 s, raw scan ~15 s, server copy ~6 s,
+  boot to `Done` ~90-140 s, probe ~10 s, stop ~10 s; about 3 minutes in all. A fresh world costs minutes
+  more (spawn-area generation), once per mod set. The first run after a pack change re-installs only the
+  changed files into the stage.
+
+### ANU (remote target)
+
+ANU is the spare LAN PC (`ssh anu`, fallback `ssh anu-byname`). The pack test owns `G:\evil-eye-pack-ci\`
+(README there explains layout, manual stop and clean-up) and `C:\Tools\evil-eye-pack\` (portable Node 22
+and Temurin JDK 17, SHA-256-verified; `node tools/pack_test/remote/provision.cjs` installs them and is
+idempotent; `run.cjs` calls it when they are missing). The machine PATH, JAVA_HOME and Defender are never
+changed.
+
+- Valhalla stages the pack (`artifacts/.../pack-test/stage/server`, incremental `packwiz -s server`),
+  syncs only new or changed files to `G:\evil-eye-pack-ci\stage\server` (one tar over scp), resends the
+  tool code, and starts `remote/agent.cjs` detached through `Win32_Process.Create` at BelowNormal (it
+  survives the SSH session; Java inherits the priority).
+- One heavy job at a time: a heartbeat lock in `G:\evil-eye-pack-ci\lock\` (stale after 10 min), and the
+  run also waits while `G:\mods-ci\lock` is held by a live process (read only).
+- The agent boots through the same code as a local run, keeps the evidence, deletes the server copy
+  and releases the lock; Valhalla polls `status.json`, pulls the evidence back and analyses it locally,
+  so exit codes and reports are identical. Ctrl+C on Valhalla also kills the remote agent and its JVM.
+- Protected on ANU, never touched: Plex and its boot task, `E:\`, `G:\Work`, `C:\ProgramData\CommandDeckCI\`,
+  the `cd-ci` account, `G:\ci`, `G:\mods-ci` (its lock is only read).
 
 ## Server compatibility smoke (agents)
 

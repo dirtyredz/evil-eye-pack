@@ -5,13 +5,13 @@
 // Each fixture gets a fresh menu and an emptied inventory.
 ;(function () {
   var ns = (global.packTest = global.packTest || {})
-  var BR = Java.loadClass('net.minecraft.core.registries.BuiltInRegistries')
-  var SETTLE_TICKS = 3
+  var SETTLE_TICKS = 2
+  var MAX_WAIT_TICKS = 60
 
   function stackInfo(s) {
     if (!s || s.isEmpty()) return null
     var nbt = s.getNbt()
-    return { id: String(BR.ITEM.getKey(s.getItem())), count: s.getCount(), nbt: nbt ? String(nbt) : undefined }
+    return { id: String(s.getId()), count: s.getCount(), nbt: nbt ? String(nbt) : undefined }
   }
 
   // fixtures: [{ name, recipe, grid: [9 ids, '' for an empty slot] }] (no nulls: KubeJS's JSON lists cannot
@@ -41,8 +41,19 @@
         step(i + 1)
         return
       }
-      server.scheduleInTicks(SETTLE_TICKS, function () {
-        var r = { name: fx.name, ok: true }
+      // FastWorkbench fills the result slot on a later tick; poll until it appears or the wait runs out.
+      var waited = 0
+      function settled() {
+        if (menu.getSlot(0).getItem().isEmpty() && waited < MAX_WAIT_TICKS) {
+          waited += SETTLE_TICKS
+          server.scheduleInTicks(SETTLE_TICKS, settled)
+          return
+        }
+        take()
+      }
+      server.scheduleInTicks(SETTLE_TICKS, function () { waited += SETTLE_TICKS; settled() })
+      function take() {
+        var r = { name: fx.name, ok: true, waitedTicks: waited }
         try {
           var used = menu.getSlot(0).container.getRecipeUsed()
           r.recipe = used ? String(used.getId()) : null
@@ -66,7 +77,7 @@
         player.containerMenu = player.inventoryMenu
         results.push(r)
         step(i + 1)
-      })
+      }
     }
     step(0)
   }

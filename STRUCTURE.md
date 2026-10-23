@@ -22,7 +22,7 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `kubejs/server_scripts/dedup.js`, `kubejs/config/dedup*.json` ? permanent duplicate recipe/tag policy; no stack conversion. Generated recipe/loot overrides live under `kubejs/data/<owning-mod>/`, permanent EMI removals under `kubejs/assets/emi/index/stacks/`. Survivor choices: `docs/ato-retirement.md`.
 - `tools/dedup/` ? pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions.
 - `tools/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
-- `tools/packwiz/tests/`, `tools/server_smoke/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs`)
+- `tools/packwiz/tests/`, `tools/server_smoke/tests/`, `tools/pack_test/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
 - `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its environment, setup, boot, process, watchdog, verdict and log-analysis modules, and known boot noise
 - `tools/pack_test/` — unshipped: one-boot automated pack test (`run.cjs`): runner, report, baseline and protocol modules; `checks/` (pure Node checks over the probe's evidence), `probe/` (KubeJS server scripts injected into the throwaway server only, never shipped), `remote/` (ANU target: sync, launch, collect), `data/` (policy, fixtures, baseline), `tests/`
@@ -66,11 +66,19 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 | `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs` | policy rules (including the real curation lists), class filter, EMI config |
 | `tools/server_smoke/smoke.cjs` | CLI: argument parsing, orchestration (setup, `--drop`, boot, or `--analyze` of a finished run) and printing the verdict |
 | `tools/server_smoke/env.cjs` | the machine environment: java, packwiz bootstrap and installer jars, artifacts root, Forge version and URL; each overridable by a `SMOKE_*` env var |
-| `tools/server_smoke/setup.cjs`, `procs.cjs` | cached Forge server install, `packwiz-installer -s server` install, `level-seed` (`--seed`, `readRunSeed`), `dropMods`; hidden child processes (`start`, `run`), tree kill, JVM priority and CPU-time sampling (`setPriority`, `cpuSeconds`) |
-| `tools/server_smoke/boot.cjs` | boot supervisor: spawn hidden, tee the console, raise JVM priority, wait for `Done (` or a crash report under the progress watchdog, send `stop`, jcmd thread dump then kill the tree on stop |
+| `tools/server_smoke/setup.cjs`, `procs.cjs` | cached Forge server install, `packwiz-installer -s server` install, `level-seed` (`--seed`, `readRunSeed`), `dropMods` (each install takes an optional process scope); hidden child processes: `procs.scope()` owns what it starts (`start`, bounded `run`, `killAll`), plus tree kill, JVM priority and CPU time (`setPriority`, `cpuSeconds`) |
+| `tools/server_smoke/boot.cjs` | boot supervisor: spawn hidden, tee the console, raise JVM priority, wait for `Done (` (line-buffered) or a crash report under the progress watchdog; with `complete()`, keep waiting after Done for the caller's own completion (bounded by `completeTimeout`); `finally` stop and cleanup |
+| `tools/server_smoke/cpu_sampler.cjs`, `shutdown.cjs` | one-in-flight CPU sampling with last-growth time; ending a boot: `stop` with grace, bounded jcmd thread dump, tree kill, scope cleanup, bounded log close |
 | `tools/server_smoke/watchdog.cjs` | pure watchdog decision (log silent AND CPU flat, hard cap) and CPU-per-wall starvation test |
 | `tools/server_smoke/verdict.cjs` | pure PASS/STALL/HOST STARVED/FAIL decision (worldgen-stall classification) and crash-report parsing (mod name and failure message) |
 | `tools/server_smoke/log_report.cjs`, `known_noise.json` | pure log grouping: errors and exceptions by signature, known boot noise vs new; the `DONE_RE` and `SPAWN_RE` regexes |
+| `tools/dedup/guard.cjs` | duplicate-group allowance comparison (unexplained, changed, stale) shared by the cached-jar test and the pack test's live check |
+| `tools/pack_test/run.cjs`, `analyze.cjs` | CLI and orchestration (verify, stage, scan, boot locally or on ANU, analyse); offline analysis of a run folder: load evidence, run every check, write report/summary/candidate baseline |
+| `tools/pack_test/session/` | before and during the boot: `prepare` (artifact-root guard, run metadata, staged server, per-run copy with hard-linked jars, world cache, probe injection, shipped-config scan), `execute` (one boot until the probe manifest, evidence collection), `resources` (raw data scan of the installed jars and KubeJS data), `lock` (local file lock, ANU heartbeat dir lock) |
+| `tools/pack_test/probe/` | KubeJS server scripts injected into the test server only: `registries` (registries, final tags, mods, loot tables), `recipes` (every live recipe normalized), `crafting` (FakePlayer crafts in a real crafting menu), `bootstrap` (sections, payloads, manifest last) |
+| `tools/pack_test/checks/` | pure checks over the evidence: `recipes` (+ `conditions` evaluator), `references`, `acquisition`, `machines`, `crafting`, `dedup`, `logs` |
+| `tools/pack_test/verdict/` | `protocol` (probe contract and validation), `baseline` (finding identity, new/known/resolved), `report` (report.json, summary.txt, exit code), `policy` (tool data and the acquisition exclusion policy) |
+| `tools/pack_test/remote/` | ANU target: `config`, `ssh` (encoded PowerShell over SSH, scp), `sync` (manifest-diff tar sync), `provision` (portable Node/JDK, README), `anu` (lock, sync, detached launch, poll, pull), `agent` (runs on ANU) |
 | `tools/emi_coverage/scan_jars.cjs`, `zip_reader.cjs` | read-only scan of mod jars for viewer plugin coverage; `zip_reader` is its dependency-free jar reader |
 
 `docs/emi.md` is the architecture doc for the EMI subsystem (there is no separate `ARCHITECTURE.md`).
@@ -85,6 +93,7 @@ handlers.
 - JEI must stay installed: EMI's JEMI bridge only loads JEI plugins when JEI is present.
 - Tooling needs Node 22 and git (`rehash.cjs` lists files with `git ls-files`). There is no packwiz CLI, Python or build step.
 - The installer is `packwiz-installer-bootstrap.jar` in `C:/Users/dirty/MultiMC/packwiz/`, outside the repo. See `docs/development.md`.
+- The pack test needs `ssh`/`scp`/`tar` on Valhalla for its ANU target, and on ANU only what `remote/provision.cjs` installs under `C:Toolsevil-eye-pack`.
 
 ## Structural debt
 

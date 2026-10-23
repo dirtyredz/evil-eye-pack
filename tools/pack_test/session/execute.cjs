@@ -4,8 +4,8 @@
 // Shared by the local target (run.cjs) and the ANU agent (remote/agent.cjs).
 const fs = require('node:fs');
 const path = require('node:path');
-const { boot } = require('../server_smoke/boot.cjs');
-const { manifestReady } = require('./protocol.cjs');
+const { boot } = require('../../server_smoke/boot.cjs');
+const { manifestReady } = require('../verdict/protocol.cjs');
 const { makeRunServer, worldKey, restoreWorld, saveWorld, injectProbe } = require('./prepare.cjs');
 
 // The files analysis needs, copied out of the server dir (relative source -> relative destination).
@@ -29,7 +29,7 @@ function collectEvidence(serverDir, evidenceDir) {
 }
 
 // o: { stageDir, runDir, worldCache, input, seed, port, heap, boot: {priority, sample, silent, timeout, probeTimeout},
-//      keepServer, java, jcmd, scope }. Returns { boot, world: {key, reused, saved}, timings }.
+//      keepServer, java, jcmd, scope, bootImpl (tests) }. Returns { boot, world: {key, reused, saved}, timings }.
 async function execute(o, log) {
   const serverDir = path.join(o.runDir, 'server');
   const evidenceDir = path.join(o.runDir, 'evidence');
@@ -45,7 +45,7 @@ async function execute(o, log) {
   const outDir = path.join(serverDir, 'pack_test/out');
   let result;
   try {
-    result = await boot(serverDir, { ...o.boot, complete: () => manifestReady(outDir, o.input.token), completeTimeout: o.boot.probeTimeout }, log,
+    result = await (o.bootImpl || boot)(serverDir, { ...o.boot, complete: () => manifestReady(outDir, o.input.token), completeTimeout: o.boot.probeTimeout }, log,
       { scope: o.scope, java: o.java, jcmd: o.jcmd });
   } finally {
     timings.boot = (Date.now() - t) / 1000;

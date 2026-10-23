@@ -8,8 +8,8 @@
 // merged (respecting `replace`); for recipes and loot tables the highest source wins.
 const fs = require('node:fs');
 const path = require('node:path');
-const { listEntries, readEntry } = require('../emi_coverage/zip_reader.cjs');
-const { declaredOutputs } = require('./checks/recipes.cjs');
+const { listEntries, readEntry } = require('../../emi_coverage/zip_reader.cjs');
+const { declaredOutputs } = require('../checks/recipes.cjs');
 
 const DATA_RE = /^data\/([^/]+)\/(recipes|loot_tables|tags\/(?:items|blocks|fluids)|worldgen|forge\/biome_modifier)\/(.+)\.json$/;
 

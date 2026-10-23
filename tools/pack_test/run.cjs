@@ -16,12 +16,12 @@ const path = require('node:path');
 const env = require('../server_smoke/env.cjs');
 const procs = require('../server_smoke/procs.cjs');
 const { verify } = require('../packwiz/verify_hashes.cjs');
-const prep = require('./prepare.cjs');
-const { execute } = require('./execute.cjs');
+const prep = require('./session/prepare.cjs');
+const { execute } = require('./session/execute.cjs');
 const { analyzeRun, EXIT } = require('./analyze.cjs');
-const { loadToolData } = require('./policy.cjs');
-const { scanResources, serverSources } = require('./resources.cjs');
-const { localLock } = require('./lock.cjs');
+const { loadToolData } = require('./verdict/policy.cjs');
+const { scanResources, serverSources } = require('./session/resources.cjs');
+const { localLock } = require('./session/lock.cjs');
 
 const ROOT = path.resolve(__dirname, '../..');
 const NUM = new Set(['timeout', 'silent', 'sample', 'probeTimeout', 'port', 'anuWait']);
@@ -64,7 +64,13 @@ async function main() {
   fs.mkdirSync(runDir, { recursive: true });
   const data = loadToolData();
   const scope = procs.scope();
-  const onSignal = () => { log('interrupted; stopping every process this run started'); scope.killAll(); process.exit(EXIT.INVALID); };
+  const aborts = [];
+  const onSignal = async () => {
+    log('interrupted; stopping every process this run started');
+    for (const a of aborts) { try { await a(); } catch { /* best effort */ } }
+    scope.killAll();
+    process.exit(EXIT.INVALID);
+  };
   process.once('SIGINT', onSignal);
   process.once('SIGTERM', onSignal);
   const run = { schema: 1, meta: prep.runMeta(o.pack), seed: o.seed, target: 'local', fallback: null, errors: [], timings: {}, input: { token: `${path.basename(runDir)}-${process.pid}`, crafts: data.crafts.crafts.map((c) => ({ name: c.name, recipe: c.recipe, grid: c.grid.map((g) => g || '') })) } };
@@ -86,8 +92,9 @@ async function main() {
     let remote = null;
     if (!o.local) {
       const { runOnAnu } = require('./remote/anu.cjs');
-      remote = await runOnAnu({ stageDir, runDir, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: { ...bootOpts, priority: 'BelowNormal' }, freshWorld: o.freshWorld, anuWait: o.anuWait, scope, log });
-      if (remote.fallback) { run.fallback = remote.fallback; log(`ANU not used: ${remote.fallback}; running on this machine`); }
+      run.target = 'anu';
+      remote = await runOnAnu({ stageDir, runDir, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: { ...bootOpts, priority: 'BelowNormal' }, freshWorld: o.freshWorld, anuWait: o.anuWait, scope, log, onAbort: (fn) => aborts.push(fn), onSynced: () => { if (lock) { lock.release(); lock = null; } } });
+      if (remote.fallback) { run.fallback = remote.fallback; run.target = 'local'; log(`ANU not used: ${remote.fallback}; running on this machine`); }
     }
     if (remote && !remote.fallback) {
       Object.assign(run, { target: 'anu', boot: remote.boot, world: remote.world });

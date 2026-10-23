@@ -4,7 +4,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 
-const DATA = path.join(__dirname, 'data');
+const DATA = path.join(__dirname, '../data');
 const readJson = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 
 // Test data shipped with the tool (policy, fixtures, machine expectations, baseline).
@@ -14,8 +14,8 @@ function loadToolData(dataDir = DATA) {
     crafts: readJson(path.join(dataDir, 'crafts.json')),
     machines: readJson(path.join(dataDir, 'machines.json')),
     baseline: readJson(path.join(dataDir, 'baseline.json')),
-    allowed: readJson(path.join(__dirname, '../dedup/allowed_groups.json')),
-    knownNoise: readJson(path.join(__dirname, '../server_smoke/known_noise.json'))
+    allowed: readJson(path.join(__dirname, '../../dedup/allowed_groups.json')),
+    knownNoise: readJson(path.join(__dirname, '../../server_smoke/known_noise.json'))
   };
 }
 

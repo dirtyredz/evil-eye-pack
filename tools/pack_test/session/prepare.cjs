@@ -6,9 +6,9 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { execFileSync } = require('node:child_process');
-const { ensureForgeBase, prepareRunDir, installPack } = require('../server_smoke/setup.cjs');
+const { ensureForgeBase, prepareRunDir, installPack } = require('../../server_smoke/setup.cjs');
 
-const PROBE_DIR = path.join(__dirname, 'probe');
+const PROBE_DIR = path.join(__dirname, '../probe');
 const WORLD = 'smoke-world';
 
 const norm = (p) => path.resolve(p).replace(/\\/g, '/').toLowerCase();

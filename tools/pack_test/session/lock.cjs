@@ -46,4 +46,22 @@ async function waitLock(file, { waitMs, pollMs = 5000, onWait = () => {}, ...opt
   }
 }
 
-module.exports = { tryLock, localLock, waitLock, alive };
+// Directory lock with a heartbeat (ANU): <dir>/owner.json = { owner, at }. Taken by the launcher over SSH,
+// then kept fresh by the agent of the same run (same owner); stale once `at` is older than the stale limit.
+function refreshDirLock(dir, owner) {
+  fs.mkdirSync(dir, { recursive: true });
+  const f = path.join(dir, 'owner.json');
+  let cur = null;
+  try { cur = JSON.parse(fs.readFileSync(f, 'utf8')); } catch { /* new or torn: ours now */ }
+  if (cur && cur.owner && cur.owner !== owner) throw new Error(`lock held by ${cur.owner}`);
+  fs.writeFileSync(f, JSON.stringify({ owner, at: Date.now(), host: os.hostname(), pid: process.pid }));
+}
+
+// Removes the lock only when this run owns it.
+function releaseDirLock(dir, owner) {
+  try { if (JSON.parse(fs.readFileSync(path.join(dir, 'owner.json'), 'utf8')).owner !== owner) return false; } catch { return false; }
+  fs.rmSync(dir, { recursive: true, force: true });
+  return true;
+}
+
+module.exports = { tryLock, localLock, waitLock, alive, refreshDirLock, releaseDirLock };

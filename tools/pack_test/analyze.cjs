@@ -4,17 +4,18 @@
 // reproduces a run's verdict exactly from its saved evidence.
 const fs = require('node:fs');
 const path = require('node:path');
-const { loadRun, SECTIONS } = require('./protocol.cjs');
-const { validateBaseline, candidate } = require('./baseline.cjs');
-const { buildReport, toJson, summarize, EXIT } = require('./report.cjs');
+const { loadRun, SECTIONS } = require('./verdict/protocol.cjs');
+const { validateBaseline, candidate } = require('./verdict/baseline.cjs');
+const { buildReport, toJson, summarize, EXIT } = require('./verdict/report.cjs');
 const { checkAcquisition } = require('./checks/acquisition.cjs');
-const { compilePolicy, loadToolData } = require('./policy.cjs');
+const { compilePolicy, loadToolData } = require('./verdict/policy.cjs');
 const { checkRecipes } = require('./checks/recipes.cjs');
 const { checkReferences } = require('./checks/references.cjs');
 const { checkMachines } = require('./checks/machines.cjs');
 const { checkCrafting } = require('./checks/crafting.cjs');
 const { checkDedup } = require('./checks/dedup.cjs');
 const { checkLogs } = require('./checks/logs.cjs');
+const { parseCrashCauses } = require('../server_smoke/verdict.cjs');
 
 const readJson = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 const readText = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null);
@@ -60,6 +61,7 @@ function analyzeRun(runDir, { data = loadToolData(), log = () => {} } = {}) {
   const probe = loadRun(path.join(ev, 'probe'), { token: run.input.token, expected: SECTIONS });
   infraErrors.push(...probe.manifestErrors.map((e) => `probe: ${e}`));
   if (run.boot && run.boot.completed !== true) infraErrors.push(`probe did not complete (${describeBoot(run.boot)})`);
+  for (const c of crashCauses(path.join(ev, 'crash-reports'))) infraErrors.push(`crash: ${c}`);
   const resources = fs.existsSync(path.join(ev, 'resources.json')) ? readJson(path.join(ev, 'resources.json')) : null;
   if (!resources) infraErrors.push('raw resource evidence missing');
   const packConfig = (f) => readJson(path.join(ev, 'pack-config', f));
@@ -69,23 +71,26 @@ function analyzeRun(runDir, { data = loadToolData(), log = () => {} } = {}) {
   const snap = needCore ? null : snapshot(S);
   const latest = readText(path.join(ev, 'logs/latest.log'));
   const kube = readText(path.join(ev, 'logs/kubejs-server.log')) || '';
-  const logs = latest !== null && snap ? checkLogs(latest, kube, data.knownNoise, snap.registries.mods) : null;
-  const dedupCfg = { policy: packConfig('dedup.json'), sources: packConfig('dedup_sources.json'), allowed: data.allowed };
+  const logs = latest !== null ? checkLogs(latest, kube, data.knownNoise, snap ? snap.registries.mods : new Set()) : null;
+  const hasPackConfig = fs.existsSync(path.join(ev, 'pack-config', 'dedup.json'));
+  if (resources && !hasPackConfig) infraErrors.push('pack config evidence missing');
+  const dedupCfg = hasPackConfig ? { policy: packConfig('dedup.json'), sources: packConfig('dedup_sources.json'), allowed: data.allowed } : null;
+  const noStaged = { state: 'incomplete', error: 'staged evidence (raw resources, pack config) missing', findings: [] };
 
-  sections.recipes = needCore || incomplete(['recipes'], S) || (resources ? checkRecipes(snap, resources, {
+  sections.recipes = needCore || incomplete(['recipes'], S) || (resources && dedupCfg ? checkRecipes(snap, resources, {
     deliberate: new Set(dedupCfg.sources.removeRecipes), parseErrors: logs ? logs.recipeFailures : new Map()
-  }) : { state: 'incomplete', error: 'no resource evidence', findings: [] });
+  }) : noStaged);
   sections.references = needCore || (resources ? checkReferences(resources, { ...snap.registries, itemTags: snap.itemTags, blockTags: snap.blockTags, fluidTags: snap.fluidTags }, {
     removed: data.policy.removedMods, shipped: resources.shipped || [],
     logged: logs ? { droppedTags: logs.droppedTags, failedLoot: new Set(logs.lootFailures.keys()) } : {}
-  }) : { state: 'incomplete', error: 'no resource evidence', findings: [] });
-  sections.acquisition = needCore || incomplete(['recipes'], S) || (resources ? checkAcquisition({
+  }) : noStaged);
+  sections.acquisition = needCore || incomplete(['recipes'], S) || (resources && dedupCfg ? checkAcquisition({
     recipeOutputs: recipeOutputs(snap.recipes), loot: resources.loot, live: { ...snap.registries, itemTags: snap.itemTags },
     worldgenBlocks: resources.worldgenBlocks, blockItems: new Map()
-  }, compilePolicy(data.policy, { dedup: dedupCfg.policy, curated: (data.policy.curatedLists || []).map(packConfig) })) : { state: 'incomplete', error: 'no resource evidence', findings: [] });
+  }, compilePolicy(data.policy, { dedup: dedupCfg.policy, curated: (data.policy.curatedLists || []).map(packConfig) })) : noStaged);
   sections.machines = needCore || incomplete(['recipes'], S) || checkMachines(snap.recipes, snap.itemTags, data.machines);
   sections.crafting = incomplete(['crafting'], S) || checkCrafting(S.crafting.data, data.crafts.crafts);
-  sections.dedup = needCore || incomplete(['recipes'], S) || checkDedup(snap.itemTags, new Set(snap.recipes.map((r) => r.id)), dedupCfg);
+  sections.dedup = needCore || incomplete(['recipes'], S) || (!dedupCfg ? noStaged : checkDedup(snap.itemTags, new Set(snap.recipes.map((r) => r.id)), dedupCfg));
   sections.logs = logs ? { state: logs.state, findings: logs.findings, stats: logs.stats } : { state: 'incomplete', error: 'latest.log missing', findings: [] };
   for (const s of Object.values(sections)) delete s.evidence;
 
@@ -100,6 +105,12 @@ function analyzeRun(runDir, { data = loadToolData(), log = () => {} } = {}) {
   }
   log(`analysis written: ${path.join(runDir, 'summary.txt')}`);
   return model;
+}
+
+// Mod name and failure message from every crash report in the evidence.
+function crashCauses(dir) {
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).flatMap((f) => parseCrashCauses(fs.readFileSync(path.join(dir, f), 'utf8')).map((c) => `${f}: ${c}`.slice(0, 300)));
 }
 
 function describeBoot(b) {

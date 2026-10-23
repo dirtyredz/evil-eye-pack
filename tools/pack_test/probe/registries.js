@@ -25,7 +25,9 @@
       var ids = []
       if (opt.isPresent()) {
         var set = opt.get()
-        for (var j = 0; j < set.size(); j++) ids.push(String(registry.getKey(set.get(j).value())))
+        // Holder keys, not values: wrapping a mod's Item/Block object makes Rhino reflect its class, which
+        // loads client-only classes named in its method signatures (RuntimeDistCleaner errors in the log).
+        for (var j = 0; j < set.size(); j++) ids.push(String(set.get(j).unwrapKey().get().location()))
       }
       out[String(key.location())] = ids
     }

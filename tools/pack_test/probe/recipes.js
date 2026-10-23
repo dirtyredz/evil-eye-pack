@@ -37,24 +37,27 @@
     } catch (e) { out.ingError = String(e).slice(0, 200) }
     try {
       var s = r.getResultItem(registryAccess)
-      if (s && !s.isEmpty()) { out.out = String(BR.ITEM.getKey(s.getItem())); out.outCount = s.getCount() }
+      if (s && !s.isEmpty()) { out.out = String(s.getId()); out.outCount = s.getCount() } // getId(): no Item object wrapped
     } catch (e) { out.outError = String(e).slice(0, 200) }
     if (eventJson[out.id]) out.json = eventJson[out.id]
     return out
   }
 
-  // Walks RecipeManager's type -> (id -> recipe) map so each recipe keeps its real RecipeType.
+  // Asks RecipeManager for every registered RecipeType's recipes so each recipe keeps its real type.
+  // (rm.getRecipes() is not usable: KubeJS resolves it to the type map in one context and to the flat
+  // recipe collection in another.) Recipes of an unregistered type cannot exist, so this is complete.
   function collect(server) {
     var rm = server.getRecipeManager()
     var registryAccess = server.registryAccess()
     var list = []
-    var byType = rm.getRecipes()
-    var entries = byType.entrySet().toArray()
-    for (var i = 0; i < entries.length; i++) {
-      var typeId = String(BR.RECIPE_TYPE.getKey(entries[i].getKey()))
-      var recipes = entries[i].getValue().values().toArray()
+    var types = BR.RECIPE_TYPE.keySet().toArray()
+    var total = rm.getRecipeIds().toArray().length
+    for (var i = 0; i < types.length; i++) {
+      var typeId = String(types[i])
+      var recipes = rm.getAllRecipesFor(BR.RECIPE_TYPE.get(types[i])).toArray()
       for (var j = 0; j < recipes.length; j++) list.push(describe(recipes[j], typeId, registryAccess))
     }
+    if (list.length !== total) throw new Error('collected ' + list.length + ' recipes by type but the manager holds ' + total)
     return { data: list, count: list.length }
   }
 

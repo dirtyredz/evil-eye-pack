@@ -40,6 +40,17 @@
 - **Known server boot noise** (observed 2026-10-18 on a successful boot, listed in `tools/server_smoke/known_noise.json`): datapack tags, recipes and advancements from dramaticdoors, productivebees and totw_modded that reference mods the pack does not ship (Mekanism and others); Radium probing Minecolonies `BlockHutTownHall` (`RuntimeDistCleaner ... ClientLevel`); Structurize's ModernFix `LazyDataFixer` banner; HammerLib's test recipe extension. Mixin "Error loading class ... ClassNotFoundException" lines are WARN, not errors.
 - A boot takes ~3 minutes to `Done (` on this machine (about 200 s server-reported); the JVM exits within a minute of `stop`.
 
+## Pack test (`tools/pack_test/`)
+
+- **Read tags after the server has started, not in a tag event.** KubeJS's item-tag event fires more than once while data loads; the audit-2 probe saw `forge:ingots/steel` empty in the first call and filled in a later one. The probe reads final tags in `ServerEvents.loaded` through `Registry.getTag(TagKey)`.
+- **Recipes can be missing for reasons a loaded-recipe scan cannot see.** Forge conditions (`forge:conditional`, `conditions`) drop recipes before KubeJS or the `RecipeManager` see them, and parse failures only reach the logs. The test reconciles raw data against the live manager. A recipe disabled by an empty tag is only a failure when the pack ships a fallback recipe for that tag with the same output (Extreme Reactors' `_alt` casings); AE2's matter-cannon ammo for absent metals is ordinary optional compatibility.
+- **`rm.getRecipes()` is ambiguous from KubeJS.** It resolved to the type map in one context and to the flat recipe collection in another; the probe uses `getAllRecipesFor(type)` per registered type and checks the total against `getRecipeIds()`.
+- **FastWorkbench computes the crafting result a few ticks later.** A scripted craft must fill the grid, wait (`server.scheduleInTicks`), then click the result slot. Reading the result slot immediately returns air.
+- **KubeJS JSON lists cannot hold `null`.** `JsonIO.read` gives Java lists whose null elements throw a Java NPE that a script `try/catch` does not catch; probe inputs use `''` for empty grid slots.
+- **`Recipe.getType()` from KubeJS returns the serializer id**, not the `RecipeType` (KubeJS mixes in its own `getType`). The probe records both: `type` from the registry walk, `ser` from `getType()`.
+- **Acquisition is evidence, not proof.** Items obtained by trades, Java-coded drops or in-world conversion (waxing, stripping, filling a bucket, bucketing a mob) have no data trail; they need a reasoned exclusion in `data/policy.json` or a baseline entry. A block whose loot table only drops itself is reported as `unverified-source` (info), not a failure.
+- **KubeJS can crash at mod construction with a `ConcurrentModificationException`** in `ScriptManager.load` (seen once in three boots on 2026-10-23, Valhalla). It is a startup race, not the probe (server scripts load later); the run reports it as an invalid run (exit 2) with the crash cause. Rerun.
+
 ## Worktrees
 
 - Move a linked worktree only with `git worktree move`. An Explorer move breaks the `.git` file link and the main repo's `worktrees/` record; `git worktree prune` would then delete the record.
