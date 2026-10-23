@@ -1586,7 +1586,7 @@ hash = "bbcc81de697b22295d1fb327a0fd0b1deebe86a33daba4713c341e15ecf89316"
 
 [[files]]
 file = "config/craftingtweaks-common.toml"
-hash = "93f36d2398364f18a25a222c7ad3d7bae8f3724be72d776ad7858496f0336ad4"
+hash = "97b4c3ae7430785922a53453238e5ea3d16ac3b82744fdcf6c5de37bc0b210cd"
 
 [[files]]
 file = "config/create-client.toml"
@@ -1627,6 +1627,10 @@ hash = "541ee90994c1cf3d4e132df2ac3ff74004bc3952d3914ae843b5089a4dda8a95"
 [[files]]
 file = "config/cyclopscore-common.toml"
 hash = "0831137d786836b00554342190518f12ccf4a9f420049515fce077d451799a5d"
+
+[[files]]
+file = "config/defaultoptions/keybindings.txt"
+hash = "84ee2d6834dd11b8f07a6d13916d4cd663fc5254b83e53fbe836ca76cd54bde2"
 
 [[files]]
 file = "config/doubledoors.json5"
@@ -2190,7 +2194,7 @@ hash = "c21921f03014bdd061fc83803277218093d6b7c0a6175dd931d2d46045701a5f"
 
 [[files]]
 file = "config/resourcepackoverrides.json"
-hash = "97f03afa961c7361668315c6432e7ded0431f8bea29e6df020b975776b896049"
+hash = "25c8bc53e7fd503d14ab13fbe4ef605a9a2d6c6d62ee891753c95c124952244d"
 
 [[files]]
 file = "config/rftoolsbuilder-client.toml"
@@ -3177,6 +3181,11 @@ metafile = true
 [[files]]
 file = "mods/data-anchor.pw.toml"
 hash = "481e252f80a15ee45ad5feb27047a20d3eaeee077dbf56fd684e682cc02975d8"
+metafile = true
+
+[[files]]
+file = "mods/default-options.pw.toml"
+hash = "6311134242af3f639923e825caea40821c7e7ee7caadf4105234f5d7fa44ec8b"
 metafile = true
 
 [[files]]

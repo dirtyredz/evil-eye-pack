@@ -2,6 +2,15 @@
 
 Newest first.
 
+## 2026-10-23 — Config polish pass: default keymap, Cozy look by default, Crafting Tweaks hotkeys
+
+**Decision.**
+- **Default Options** (BlayTheNinth, 18.0.5, client side) ships `config/defaultoptions/keybindings.txt`, a conflict-free default keymap for every mod key that collided in the owner's `options.txt` (C, V, R, K, X, Z, U, M, F7, G). Lines use options.txt syntax (`key_<mapping>:<key>[:<modifier>]`). Vanilla keys, plain movement and inventory stay untouched; the vanilla creative toolbar C/X, the Iris/Create/Railways context keys and the dragon-riding keys (R, X) keep their defaults.
+- `config/resourcepackoverrides.json` gets `default_packs` for the Cozy set, in the order the owner tested in the Cozy trial (Fresh Animations, Eat Quiet, Fancy Crops, Better Leaves, New Hearts, CozyUI+, then the `evil-eye-cozy-overrides` folder on top). New Hearts declares pack_format 2, so it gets `force_compatible`. Eat Quiet stays `required`.
+- Crafting Tweaks `mode = "HOTKEYS"`: its grid buttons are gone, IPN already sorts (middle mouse) and shows only its move-all button.
+
+**Why / limits.** Packwiz cannot manage `options.txt`. Both Default Options keys and Resource Pack Overrides defaults apply only where the player has no saved value, so existing instances (Stable, Local) need a one-time manual rebind and pack selection. Pixlli (the owner's own 128x pack, not pack-managed) is deliberately left alone: it is not forced off, and fresh instances do not get it. No button overlap between IPN, Curios and Cosmetic Armor could be shown from configs alone (Curios `TOP_LEFT` with 0 offsets, Cosmetic Armor button at 65,67, IPN's sort buttons hidden), so those were not moved.
+
 ## 2026-10-23 ? Abandon migration and remove duplicate providers
 
 The owner tested release 1 locally: auto-swap only converted some items. The owner chose outright removal of AllTheOres, AllTheCompressed and Almost Unified, accepting loss of every remaining stack and placed/unmined block. The two-release plan below is superseded; neither release-1 commit had been pushed. No conversion, swap or registry remap is shipped.

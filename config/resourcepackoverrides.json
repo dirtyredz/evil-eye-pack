@@ -1,8 +1,20 @@
 {
   "schema_version": 2,
+  "default_packs": [
+    "file/FreshAnimations_v1.11.1_1.20+.zip",
+    "file/Eat-Quiet-1.0.0_1.20-1.21.zip",
+    "file/Fancy Crops v1.3.zip",
+    "file/Better-Leaves-9.6.zip",
+    "file/New Hearts 1.9-15w49b.zip",
+    "file/CozyUI+_v1.11_no-fonts.zip",
+    "file/evil-eye-cozy-overrides"
+  ],
   "pack_overrides": {
     "file/Eat-Quiet-1.0.0_1.20-1.21.zip": {
       "required": true
+    },
+    "file/New Hearts 1.9-15w49b.zip": {
+      "force_compatible": true
     }
   }
 }

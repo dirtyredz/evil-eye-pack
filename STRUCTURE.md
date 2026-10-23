@@ -12,6 +12,7 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `shaderpacks/` — shaderpack metafiles and saved shader options
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
 - `config/` — mod configs installed as plain files
+- `config/defaultoptions/keybindings.txt` — Default Options default keymap (new instances only; see GOTCHAS)
 - `config/emi-curation/` — EMI curation data: `rules.json`, four explicit item lists, `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
 - `defaultconfigs/` — Forge default (per-world) configs
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
