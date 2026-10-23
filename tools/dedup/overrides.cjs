@@ -41,6 +41,10 @@ function plan(data, policy) {
     }
   }
   for (const [tag, ids] of Object.entries(policy.extraItemTags)) itemTags[tag] = [...new Set([...(itemTags[tag] || []), ...ids])];
+  // Jar tag mistakes inherited through a replacement (e.g. Cluttered tags its willow door as a trapdoor).
+  for (const [tag, fixes] of Object.entries(policy.tagFixes || {})) {
+    if (itemTags[tag]) itemTags[tag] = [...new Set(itemTags[tag].map(id => fixes[id] || id))];
+  }
   return { overrides, removeRecipes: removeRecipes.sort(), itemTags, blockTags };
 }
 module.exports = { replace, plan };

@@ -1630,7 +1630,7 @@ hash = "0831137d786836b00554342190518f12ccf4a9f420049515fce077d451799a5d"
 
 [[files]]
 file = "config/defaultoptions/keybindings.txt"
-hash = "84ee2d6834dd11b8f07a6d13916d4cd663fc5254b83e53fbe836ca76cd54bde2"
+hash = "e53134e09424f4127c3d00f151903a808b4b1e21308177b54b931f80e6b7d47f"
 
 [[files]]
 file = "config/doubledoors.json5"
@@ -2194,7 +2194,7 @@ hash = "c21921f03014bdd061fc83803277218093d6b7c0a6175dd931d2d46045701a5f"
 
 [[files]]
 file = "config/resourcepackoverrides.json"
-hash = "25c8bc53e7fd503d14ab13fbe4ef605a9a2d6c6d62ee891753c95c124952244d"
+hash = "c8965efbed3141ab8ad17b7f273f6874bb81a55ae925c675a16267fff7811157"
 
 [[files]]
 file = "config/rftoolsbuilder-client.toml"
@@ -2219,10 +2219,6 @@ hash = "3df8dd0c1ab739e48bd92b098fb3e36b4ddc5578ac5b21839290d6470ed7519a"
 [[files]]
 file = "config/sidebar_buttons.json"
 hash = "c15e8bc2e15de3248b51d2c7a582bb01a1235be123c24348c1393c6d9cefb137"
-
-[[files]]
-file = "config/simplecorelib-common.toml"
-hash = "ec3565cd78e31458809eb21c9c301e77652ab14fff5826fefcde1210efa56fa0"
 
 [[files]]
 file = "config/simplygraves-common.toml"
@@ -2458,11 +2454,11 @@ hash = "8d1c5cbf48ef06ee5174adf60692e2c54d91ac08d84edbadd03a39e10385a62e"
 
 [[files]]
 file = "kubejs/config/dedup.json"
-hash = "7a669b0dc21b82715b28ee1d452255c6812224d67b275c45d0d769acf45b8bba"
+hash = "12d9f5a769fd651f67d156f94e51b603630633923d9ceef006cc031c3dce15d6"
 
 [[files]]
 file = "kubejs/config/dedup_sources.json"
-hash = "4e99c66a6463775b103eb73e5b2a0a20b8a0e307225bb9eb0d15c0f8c4132e69"
+hash = "8a4d34b4fbaf888ae7dab8ff1dd6408093bdac7b8b2ada0551d750b9c723ec74"
 
 [[files]]
 file = "kubejs/data/cluttered/loot_tables/blocks/flowering_willow_leaves.json"

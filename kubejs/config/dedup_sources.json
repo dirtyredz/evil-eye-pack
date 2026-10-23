@@ -81,7 +81,7 @@
       "biomesoplenty:willow_stairs"
     ],
     "minecraft:wooden_trapdoors": [
-      "biomesoplenty:willow_door"
+      "biomesoplenty:willow_trapdoor"
     ],
     "amendments:goes_in_tripwire_hook": [
       "create:wrench"
@@ -111,7 +111,7 @@
       "biomesoplenty:willow_slab"
     ],
     "minecraft:trapdoors": [
-      "biomesoplenty:willow_door"
+      "biomesoplenty:willow_trapdoor"
     ],
     "forge:wither_bones": [
       "iceandfire:witherbone"
@@ -161,6 +161,9 @@
     ],
     "supplementaries:statue_tools": [
       "create:wrench"
+    ],
+    "forge:ingots/steel": [
+      "enderio:dark_steel_ingot"
     ],
     "forge:dusts/ender": [
       "ae2:ender_dust"

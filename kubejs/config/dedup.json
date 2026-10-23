@@ -87,7 +87,14 @@
     "createdeco:industrial_iron_window",
     "createdeco:industrial_iron_window_pane"
   ],
+  "tagFixes": {
+    "minecraft:wooden_trapdoors": { "biomesoplenty:willow_door": "biomesoplenty:willow_trapdoor" },
+    "minecraft:trapdoors": { "biomesoplenty:willow_door": "biomesoplenty:willow_trapdoor" }
+  },
   "extraItemTags": {
+    "forge:ingots/steel": [
+      "enderio:dark_steel_ingot"
+    ],
     "forge:wither_bones": [
       "iceandfire:witherbone"
     ],

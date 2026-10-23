@@ -2,6 +2,16 @@
 
 Newest first.
 
+## 2026-10-23 — Audit 2 fixes: Dark Steel is the pack's steel, keymap clashes resolved
+
+**Decision.**
+- **Steel.** With AllTheOres gone, `forge:ingots/steel` was empty, so Extreme Reactors' 17 `forge:conditional` recipes fell back to their `_alt` versions (iron blocks) and its manual showed 14 missing-recipe pages. `kubejs/config/dedup.json` `extraItemTags` now adds `enderio:dark_steel_ingot` to `forge:ingots/steel` (regenerated into `dedup_sources.json`). ER only reads the ingot tag, so plates, nuggets and blocks are not tagged (the Productive Bees steel comb reads `nuggets/steel` and stays off). This fills an empty tag with one namespace, so the duplicate-material guard needs no exception in `allowed_groups.json`; `pack.test.cjs` pins the entry instead.
+- **Willow door.** Cluttered's jar tags `cluttered:willow_door` as a trapdoor; the replacement inherited it. `dedup.json` `tagFixes` (applied in `tools/dedup/overrides.cjs`) maps it to `biomesoplenty:willow_trapdoor` in `minecraft:trapdoors` and `minecraft:wooden_trapdoors`, so regeneration keeps the fix.
+- Removed `config/simplecorelib-common.toml` (SimpleCore API left on 10-21). `builtin/towntalk` (MineColonies citizen voice lines) joins `default_packs`, before the overrides folder.
+- **Keymap.** Every in-world clash from the audit is gone. Kept: Ars book I, Chloride zoom Z, Tool Belt R, Xaero U, GuideME G, Building Gadgets anchor H, Iris O, Xaero minimap settings Y and settings ], vanilla keys. Moved: Dank Storage construction/pickup to keypad 7/6, AstikorCarts slow/action to right Ctrl/right Alt, Create Jetpack active/hover to 0/Caps Lock, Customizable Player Models gestures to F6. Unbound: MCA skin library, Ender IO probe mode, RFTools next destination, Modern UI zoom (Chloride is the single zoom; Modern UI's would also clash with vanilla's creative hotbar save on C).
+
+**Limits.** Context-limited shares stay (dragon riding R/X, JEI/Ponder GUI keys). Default Options applies only to instances with no saved value, so existing instances need these `key_...` lines removed from `options.txt` (or a manual rebind). Caps Lock and the right modifier keys are unusual bindings chosen because every letter, digit and numpad key was taken.
+
 ## 2026-10-23 — Config polish pass: default keymap, Cozy look by default, Crafting Tweaks hotkeys
 
 **Decision.**
