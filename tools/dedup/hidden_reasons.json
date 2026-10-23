@@ -1,0 +1,941 @@
+{
+ "schema": 1,
+ "reasons": {
+  "create:crushed_raw_tin": {
+   "class": "duplicate-removed",
+   "evidence": "Unused Create crushed metal with no producer or consumer in the pack after the AllTheOres/Almost Unified retirement (docs/ato-retirement.md, commit 34f6dc2).",
+   "date": "2026-10-23",
+   "source": "commit 34f6dc2"
+  },
+  "create:crushed_raw_lead": {
+   "class": "duplicate-removed",
+   "evidence": "Unused Create crushed metal with no producer or consumer in the pack after the AllTheOres/Almost Unified retirement (docs/ato-retirement.md, commit 34f6dc2).",
+   "date": "2026-10-23",
+   "source": "commit 34f6dc2"
+  },
+  "create:crushed_raw_nickel": {
+   "class": "duplicate-removed",
+   "evidence": "Unused Create crushed metal with no producer or consumer in the pack after the AllTheOres/Almost Unified retirement (docs/ato-retirement.md, commit 34f6dc2).",
+   "date": "2026-10-23",
+   "source": "commit 34f6dc2"
+  },
+  "create:crushed_raw_aluminum": {
+   "class": "duplicate-removed",
+   "evidence": "Unused Create crushed metal with no producer or consumer in the pack after the AllTheOres/Almost Unified retirement (docs/ato-retirement.md, commit 34f6dc2).",
+   "date": "2026-10-23",
+   "source": "commit 34f6dc2"
+  },
+  "create:crushed_raw_osmium": {
+   "class": "duplicate-removed",
+   "evidence": "Unused Create crushed metal with no producer or consumer in the pack after the AllTheOres/Almost Unified retirement (docs/ato-retirement.md, commit 34f6dc2).",
+   "date": "2026-10-23",
+   "source": "commit 34f6dc2"
+  },
+  "create:crushed_raw_platinum": {
+   "class": "duplicate-removed",
+   "evidence": "Unused Create crushed metal with no producer or consumer in the pack after the AllTheOres/Almost Unified retirement (docs/ato-retirement.md, commit 34f6dc2).",
+   "date": "2026-10-23",
+   "source": "commit 34f6dc2"
+  },
+  "bigreactors:blutonium_dust": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "bigreactors:cyanite_dust": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "bigreactors:graphite_dust": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "bigreactors:inanite_dust": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "bigreactors:insanite_dust": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "bigreactors:ludicrite_dust": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "bigreactors:magentite_dust": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "bigreactors:ridiculite_dust": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "bigreactors:yellorium_dust": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "bigreactors:reinforced_reactorfluidport_mekanism_passive": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "enderio:powdered_cobalt": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "enderio:powdered_tin": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "ironfurnaces:upgrade_allthemodium": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "ironfurnaces:upgrade_unobtainium": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "ironfurnaces:upgrade_vibranium": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "create:chromatic_compound": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "create:refined_radiance": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "create:shadow_steel": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "create:crushed_raw_quicksilver": {
+   "class": "unobtainable-absent-mod",
+   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+   "date": "2026-10-23",
+   "source": "commit 4e899fd"
+  },
+  "ae2:matrix_frame": {
+   "class": "creative-technical",
+   "evidence": "Block of the spatial storage plot structure (SpatialStorageHelper/CachedPlane); not in any recipe and not meant to be held. (appeng/spatial/*, AEBlocks.class; no recipe/loot in data/ae2; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "alexscaves:dinosaur_train": {
+   "class": "creative-technical",
+   "evidence": "Advancement icon item only (advancement dinosaurs_minecart); registered in ACItemRegistry with no creative tab entry or recipe. (dinosaurs_minecart.json icon; absent from ACCreativeTabRegistry; no recipe/loot; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "alexscaves:disc_fragment_fusion": {
+   "class": "unobtainable",
+   "evidence": "Ingredient of recipe alexscaves:music_disc_fusion but no loot table, chest or entity code awards it; the Fusion disc itself is dropped by NucleeperEntity. (recipes/music_disc_fusion.json; NucleeperEntity refs MUSIC_DISC_FUSION; DISC_FRAGMENT_FUSION only in ACItemRegistry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "alexscaves:volcanic_core": {
+   "class": "creative-technical",
+   "evidence": "World-gen only block placed by VolcanoStructurePiece; its block loot table is empty, so it drops nothing and exists as an item only in the creative tab. (loot_tables/blocks/volcanic_core.json is {}, VolcanoStructurePiece.class, ACCreativeTabRegistry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "alexsmobs:ender_residue": {
+   "class": "creative-technical",
+   "evidence": "Block trail left by EntityVoidWorm; block loot table has empty pools so no item drops. (loot_tables/blocks/ender_residue.json pools [], EntityVoidWorm.class; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "alexsmobs:halo": {
+   "class": "creative-technical",
+   "evidence": "Render-only cosmetic item used by LayerGorillaItem/LayerKangarooArmor; no recipe, loot or mob drop reference. (LayerGorillaItem.class, LayerKangarooArmor.class, AMItemRegistry only; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "alexsmobs:poison_bottle": {
+   "class": "unobtainable",
+   "evidence": "Used only as a brewing ingredient in AMEffectRegistry (poison resistance potion); no recipe, loot or entity code found that produces it. (AMEffectRegistry.class and AMItemRegistry.class are the only refs; no data refs; low)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "alexsmobs:red_sand_circle": {
+   "class": "creative-technical",
+   "evidence": "Decorative blocks placed by EntitySeaBear / ServerEvents (sea bear sand circles); block loot drops plain sand, not the item. (EntitySeaBear.class, ServerEvents.class, loot_tables/blocks/sand_circle.json drops minecraft:sand; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "alexsmobs:sand_circle": {
+   "class": "creative-technical",
+   "evidence": "Decorative blocks placed by EntitySeaBear / ServerEvents (sea bear sand circles); block loot drops plain sand, not the item. (EntitySeaBear.class, ServerEvents.class, loot_tables/blocks/sand_circle.json drops minecraft:sand; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "alexsmobs:terrapin_egg": {
+   "class": "creative-technical",
+   "evidence": "Block laid by EntityTerrapin (LayEggGoal) with TileEntityTerrapinEgg; its block loot table has empty pools, so no survival item. (loot_tables/blocks/terrapin_egg.json pools [], EntityTerrapin$LayEggGoal.class; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_elemental:air_caster_tome": {
+   "class": "unobtainable",
+   "evidence": "Registered in ModItems but no caster_tome recipe uses tome_type air_caster_tome (fire/water/earth/anima do); only the levitation advancement icon references it. (data/ars_nouveau/recipes/tomes/*.json tome_type values; advancements/levitation.json icon; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_elemental:mermaid_rock": {
+   "class": "creative-technical",
+   "evidence": "Siren Shrine world-gen block with a tile entity (ModTiles); its loot table drops prismarine, not itself. (loot_tables/blocks/mermaid_rock.json, ModTiles.class; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:music_disc_aria_biblio": {
+   "class": "unobtainable",
+   "evidence": "Registered in ItemsRegistry with sound events but no recipe, loot table or DungeonLootTables entry found. (Only ItemsRegistry/SoundRegistry/BiomeRegistry (archwood_forest biome music) reference them; not in DungeonLootTables or data loot; low)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:music_disc_thistle_the_sound_of_glass": {
+   "class": "unobtainable",
+   "evidence": "Registered in ItemsRegistry with sound events but no recipe, loot table or DungeonLootTables entry found. (Only ItemsRegistry/SoundRegistry/BiomeRegistry (archwood_forest biome music) reference them; not in DungeonLootTables or data loot; low)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:blank_glyph": {
+   "class": "creative-technical",
+   "evidence": "Technical glyph placeholder item used only by ScribesRenderer/Patchouli; no recipe, loot or code grant. (ScribesRenderer.class, PatchouliProvider.class only; low)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:drygmy_se": {
+   "class": "creative-technical",
+   "evidence": "Spawn egg item for the entity; creative-tab only. (name suffix _se; no recipe/loot; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:starbuncle_se": {
+   "class": "creative-technical",
+   "evidence": "Spawn egg item for the entity; creative-tab only. (name suffix _se; no recipe/loot; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:whirlisprig_se": {
+   "class": "creative-technical",
+   "evidence": "Spawn egg item for the entity; creative-tab only. (name suffix _se; no recipe/loot; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:wilden_guardian_se": {
+   "class": "creative-technical",
+   "evidence": "Spawn egg item for the entity; creative-tab only. (name suffix _se; no recipe/loot; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:wilden_hunter_se": {
+   "class": "creative-technical",
+   "evidence": "Spawn egg item for the entity; creative-tab only. (name suffix _se; no recipe/loot; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:wilden_stalker_se": {
+   "class": "creative-technical",
+   "evidence": "Spawn egg item for the entity; creative-tab only. (name suffix _se; no recipe/loot; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:starby_gift": {
+   "class": "creative-technical",
+   "evidence": "Starbuncle gift entity item (LibItemNames STARBY_GIFT / GIFT_STARBY) tied to gift entity worldgen spawn, not obtainable by players. (LibItemNames, ModEntities, WorldgenProvider$BiomeModifierRegistry; no recipe/loot; low)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:mage_block": {
+   "class": "creative-technical",
+   "evidence": "Temporary block conjured by spell effects (MageBlock class, tags gravity_blacklist/ignore_tile); not meant to be held. (MageBlock.class; data tags; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:magic_fire": {
+   "class": "creative-technical",
+   "evidence": "Fire block placed by spells (tags/blocks/fire.json); item form is technical. (data/minecraft/tags/blocks/fire.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:portal": {
+   "class": "creative-technical",
+   "evidence": "Warp portal block created by portal logic; item form is technical. (data/minecraft/tags/blocks/portals.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:rune": {
+   "class": "creative-technical",
+   "evidence": "Rune block placed by the Rune spell glyph (tile entity); item form technical. (tags/blocks/mineable/pickaxe.json; glyph_rune recipe only makes the glyph; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:drygmy_stone": {
+   "class": "creative-technical",
+   "evidence": "Drygmy Henge block produced when a Drygmy Charm is used on mossy cobblestone (lang page3.drygmy_charm). (lang page3.drygmy_charm; loot_tables/blocks/drygmy_stone.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:wixie_cauldron": {
+   "class": "creative-technical",
+   "evidence": "Block created when a Wixie Charm is used on a cauldron (lang page3.wixie_charm). (lang page3.wixie_charm; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "ars_nouveau:whirlisprig_flower": {
+   "class": "creative-technical",
+   "evidence": "Block placed by WhirlisprigCharm use on a flower as the Whirlisprig home marker. (WhirlisprigCharm.class, BlockRegistry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "biomesoplenty:flesh_tendons_strand": {
+   "class": "creative-technical",
+   "evidence": "Strand (tip) half of a hanging plant block; shears loot table drops the base item (flesh_tendons/glowworm_silk/hanging_cobweb), the strand item is never obtained. (data/biomesoplenty/loot_tables/blocks/<id>.json drops the base item with biomesoplenty:shears; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "biomesoplenty:glowworm_silk_strand": {
+   "class": "creative-technical",
+   "evidence": "Strand (tip) half of a hanging plant block; shears loot table drops the base item (flesh_tendons/glowworm_silk/hanging_cobweb), the strand item is never obtained. (data/biomesoplenty/loot_tables/blocks/<id>.json drops the base item with biomesoplenty:shears; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "biomesoplenty:hanging_cobweb_strand": {
+   "class": "creative-technical",
+   "evidence": "Strand (tip) half of a hanging plant block; shears loot table drops the base item (flesh_tendons/glowworm_silk/hanging_cobweb), the strand item is never obtained. (data/biomesoplenty/loot_tables/blocks/<id>.json drops the base item with biomesoplenty:shears; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "biomesoplenty:high_grass_plant": {
+   "class": "creative-technical",
+   "evidence": "Plant half of a two-block plant; loot table drops the base plant item, plant half item never obtained. (data/biomesoplenty/loot_tables/blocks/<id>.json; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "biomesoplenty:lumaloop_plant": {
+   "class": "creative-technical",
+   "evidence": "Plant half of a two-block plant; loot table drops the base plant item, plant half item never obtained. (data/biomesoplenty/loot_tables/blocks/<id>.json; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "biomesoplenty:spanish_moss_plant": {
+   "class": "creative-technical",
+   "evidence": "Plant half of a two-block plant; loot table drops the base plant item, plant half item never obtained. (data/biomesoplenty/loot_tables/blocks/<id>.json; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "biomesoplenty:blood": {
+   "class": "creative-technical",
+   "evidence": "Fluid block item (blood lake/spring and liquid_null lake/spring worldgen features); fluid blocks have no loot table or recipe. (worldgen configured_feature blood_lake/liquid_null_lake, tags/fluids; no loot table; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "biomesoplenty:liquid_null": {
+   "class": "creative-technical",
+   "evidence": "Fluid block item (blood lake/spring and liquid_null lake/spring worldgen features); fluid blocks have no loot table or recipe. (worldgen configured_feature blood_lake/liquid_null_lake, tags/fluids; no loot table; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "biomesoplenty:stringy_cobweb": {
+   "class": "creative-technical",
+   "evidence": "Worldgen-only cobweb variant generated by the stringy_cobweb feature in spider_nest; no loot table or recipe. (worldgen/configured_feature/stringy_cobweb.json; no loot_tables/blocks/stringy_cobweb.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:altar_of_abyss": {
+   "class": "creative-technical",
+   "evidence": "Structure-only block (generated in cataclysm structures, in altar_destroy_immune/dragon_immune tags); no recipe or loot. (data/cataclysm/tags/blocks/altar_destroy_immune.json etc; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:altar_of_amethyst": {
+   "class": "creative-technical",
+   "evidence": "Structure-only block (generated in cataclysm structures, in altar_destroy_immune/dragon_immune tags); no recipe or loot. (data/cataclysm/tags/blocks/altar_destroy_immune.json etc; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:altar_of_fire": {
+   "class": "creative-technical",
+   "evidence": "Structure-only block (generated in cataclysm structures, in altar_destroy_immune/dragon_immune tags); no recipe or loot. (data/cataclysm/tags/blocks/altar_destroy_immune.json etc; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:altar_of_void": {
+   "class": "creative-technical",
+   "evidence": "Structure-only block (generated in cataclysm structures, in altar_destroy_immune/dragon_immune tags); no recipe or loot. (data/cataclysm/tags/blocks/altar_destroy_immune.json etc; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:dungeon_block": {
+   "class": "creative-technical",
+   "evidence": "Structure-only block (generated in cataclysm structures, in altar_destroy_immune/dragon_immune tags); no recipe or loot. (data/cataclysm/tags/blocks/altar_destroy_immune.json etc; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:emp": {
+   "class": "creative-technical",
+   "evidence": "Structure-only block (generated in cataclysm structures, in altar_destroy_immune/dragon_immune tags); no recipe or loot. (data/cataclysm/tags/blocks/altar_destroy_immune.json etc; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:blazing_bone": {
+   "class": "creative-technical",
+   "evidence": "Item form of a projectile entity (Blazing_Bone_Entity / Lionfish_Spike_Entity / Void_Shard_Entity) used only as thrown render item; no recipe/loot. (ModItems.class, ModEntities.class, entity/projectile/*.class; impact_projectiles tag; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:lionfish_spike": {
+   "class": "creative-technical",
+   "evidence": "Item form of a projectile entity (Blazing_Bone_Entity / Lionfish_Spike_Entity / Void_Shard_Entity) used only as thrown render item; no recipe/loot. (ModItems.class, ModEntities.class, entity/projectile/*.class; impact_projectiles tag; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:void_shard": {
+   "class": "creative-technical",
+   "evidence": "Item form of a projectile entity (Blazing_Bone_Entity / Lionfish_Spike_Entity / Void_Shard_Entity) used only as thrown render item; no recipe/loot. (ModItems.class, ModEntities.class, entity/projectile/*.class; impact_projectiles tag; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:chain_of_soul_binding": {
+   "class": "unobtainable",
+   "evidence": "Item registered in ModItems with no recipe, loot table or code reference elsewhere. (ModItems.class only; no data references; low)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:enderite_ingot": {
+   "class": "unobtainable",
+   "evidence": "Item registered in ModItems with no recipe, loot or smithing; only enderite_block loot table exists. (ModItems.class; lang; data has no enderite_ingot recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:final_fractal": {
+   "class": "unobtainable",
+   "evidence": "Weapon items (items/final_fractal.class, items/zweiender.class; on-hit logic in ServerEventHandler) with no recipe, weapon_infusion or loot table: creative-only. (no data recipe/loot; only ModItems, ServerEventHandler; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "cataclysm:zweiender": {
+   "class": "unobtainable",
+   "evidence": "Weapon items (items/final_fractal.class, items/zweiender.class; on-hit logic in ServerEventHandler) with no recipe, weapon_infusion or loot table: creative-only. (no data recipe/loot; only ModItems, ServerEventHandler; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "create:andesite_encased_cogwheel": {
+   "class": "code-made",
+   "evidence": "Placed-only encased block produced by using a casing on a shaft/cogwheel (EncasedBlock casing interaction); loot table drops the base shaft/cogwheel + casing, item never held. (data/create/loot_tables/blocks/<id>.json; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "create:andesite_encased_large_cogwheel": {
+   "class": "code-made",
+   "evidence": "Placed-only encased block produced by using a casing on a shaft/cogwheel (EncasedBlock casing interaction); loot table drops the base shaft/cogwheel + casing, item never held. (data/create/loot_tables/blocks/<id>.json; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "create:andesite_encased_shaft": {
+   "class": "code-made",
+   "evidence": "Placed-only encased block produced by using a casing on a shaft/cogwheel (EncasedBlock casing interaction); loot table drops the base shaft/cogwheel + casing, item never held. (data/create/loot_tables/blocks/<id>.json; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "create:brass_encased_cogwheel": {
+   "class": "code-made",
+   "evidence": "Placed-only encased block produced by using a casing on a shaft/cogwheel (EncasedBlock casing interaction); loot table drops the base shaft/cogwheel + casing, item never held. (data/create/loot_tables/blocks/<id>.json; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "create:brass_encased_large_cogwheel": {
+   "class": "code-made",
+   "evidence": "Placed-only encased block produced by using a casing on a shaft/cogwheel (EncasedBlock casing interaction); loot table drops the base shaft/cogwheel + casing, item never held. (data/create/loot_tables/blocks/<id>.json; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "create:brass_encased_shaft": {
+   "class": "code-made",
+   "evidence": "Placed-only encased block produced by using a casing on a shaft/cogwheel (EncasedBlock casing interaction); loot table drops the base shaft/cogwheel + casing, item never held. (data/create/loot_tables/blocks/<id>.json; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "create:elevator_contact": {
+   "class": "creative-technical",
+   "evidence": "Variant block converted from a redstone contact in an elevator column (ElevatorColumn); loot table drops create:redstone_contact. (data/create/loot_tables/blocks/elevator_contact.json; ElevatorColumn.class; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "create_enchantment_industry:blazes_enchanting_handbook": {
+   "class": "unobtainable",
+   "evidence": "Shapeless crafting recipe (blaze_upgrade_smithing_template + 2 create:sturdy_sheet + 2 experience_bottle + magma_block) is wrapped in forge:conditional on config feature processing/classic_blaze_enchanter, which the pack config sets to false, so the recipe never loads. (data/create_enchantment_industry/recipes/crafting/blazes_enchanting_handbook.json; Evil Eye Local config/create_enchantment_industry-common.toml line 14 classic_blaze_enchanter=false; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "dankstorage:red_print": {
+   "class": "unobtainable",
+   "evidence": "RedprintItem (copies a dank frequency to same-tier danks) is registered in ModItems but the jar ships no recipe, loot or tag for it; only dank_1..7, dock and 1_to_2..6_to_7 upgrade recipes exist. Useful item with its recipe missing. (tfar/dankstorage/item/RedprintItem.class; data/dankstorage/recipes has no red_print; lang item.dankstorage.red_print; the jar ships no recipe, loot or tag for it (upstream gives no survival route); hidden rather than inventing a recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "enderio:confusing_powder": {
+   "class": "unobtainable",
+   "evidence": "EIOItems.CONFUSION_POWDER is registered but no recipe, loot table, loot modifier, tag or other class references it (legacy item from the removed Concussion Creeper drops). (com/enderio/base/common/init/EIOItems.class is the only class referencing CONFUSION_POWDER; data/ has no confusing_powder; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "friendly_furnishings:ff_feather": {
+   "class": "creative-technical",
+   "evidence": "MCreator icon item (FFFeatherItem/FfbFeatherItem) used as creative-tab icon in FriendlyFurnishingsModTabs; no recipe or loot. (net/mcreator/friendlyfurnishings/item/FFFeatherItem.class, FfbFeatherItem.class; init/FriendlyFurnishingsModTabs.class; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "friendly_furnishings:ffb_feather": {
+   "class": "creative-technical",
+   "evidence": "MCreator icon item (FFFeatherItem/FfbFeatherItem) used as creative-tab icon in FriendlyFurnishingsModTabs; no recipe or loot. (net/mcreator/friendlyfurnishings/item/FFFeatherItem.class, FfbFeatherItem.class; init/FriendlyFurnishingsModTabs.class; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "guideme:guide": {
+   "class": "creative-technical",
+   "evidence": "GuideME GuideItem is a framework item that opens a guide by NBT guideId; it has no recipe and is only available from the creative tab. (guideme/internal/item/GuideItem.class (getGuideId/openGuide); no recipes in jar; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:creative_canine_tracker": {
+   "class": "creative-technical",
+   "evidence": "Creative-only DTN item (lang: unlimited points / finds ANY owned dogs), registered in DoggyItems/DoggyAccessories with no recipe. (lang item.doggytalents.creative_*; DoggyAccessories.class; no data recipe; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:creative_collar": {
+   "class": "creative-technical",
+   "evidence": "Creative-only DTN item (lang: unlimited points / finds ANY owned dogs), registered in DoggyItems/DoggyAccessories with no recipe. (lang item.doggytalents.creative_*; DoggyAccessories.class; no data recipe; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:angel_halo": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:angel_wings": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:goose": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:midi_keyboard": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:head_band_highhh": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:head_band_mystery": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:firefighter_hat_blue": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:firefighter_hat_red": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:firefighter_suit_black": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:firefighter_suit_blue": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:firefighter_suit_kaki": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:firefighter_suit_red": {
+   "class": "creative-technical",
+   "evidence": "Cosmetic dog accessory registered in DoggyAccessories (AccessoryItem subclass) with no crafting recipe, loot or code grant, so only reachable from the creative tab (DoggyItemGroups). (DoggyAccessories.class and common/entity/accessory/*; data/doggytalents/recipes has no entry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:grand_piano_black_item": {
+   "class": "creative-technical",
+   "evidence": "Piano entity spawn item (entity/misc/Piano); lang labels it Experimental and no recipe exists, so creative tab only. (lang '(Experimental)'; DoggyEntityTypes.class, Piano.class; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:grand_piano_white_item": {
+   "class": "creative-technical",
+   "evidence": "Piano entity spawn item (entity/misc/Piano); lang labels it Experimental and no recipe exists, so creative tab only. (lang '(Experimental)'; DoggyEntityTypes.class, Piano.class; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:upright_piano_black_item": {
+   "class": "creative-technical",
+   "evidence": "Piano entity spawn item (entity/misc/Piano); lang labels it Experimental and no recipe exists, so creative tab only. (lang '(Experimental)'; DoggyEntityTypes.class, Piano.class; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:upright_piano_brown_item": {
+   "class": "creative-technical",
+   "evidence": "Piano entity spawn item (entity/misc/Piano); lang labels it Experimental and no recipe exists, so creative tab only. (lang '(Experimental)'; DoggyEntityTypes.class, Piano.class; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:upright_piano_white_item": {
+   "class": "creative-technical",
+   "evidence": "Piano entity spawn item (entity/misc/Piano); lang labels it Experimental and no recipe exists, so creative tab only. (lang '(Experimental)'; DoggyEntityTypes.class, Piano.class; no recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:samoyed_plushie_toy_item": {
+   "class": "creative-technical",
+   "evidence": "SamoyedPlushieItem spawns a SamoyedPlushie entity; unlike dog_plushie_toy_item (which has a recipe) it has no recipe, so creative tab only. (common/item/SamoyedPlushieItem.class; recipes/dog_plushie_toy_item.json exists, no samoyed recipe; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:locator_orb_ka": {
+   "class": "unobtainable",
+   "evidence": "Elemental locator orb (Flame/Vegetation/Water) registered in DoggyItems, but unlike chi/chu/ko/gi/tei/rei/shin/jin (dye + empty_locator_orb recipes) the jar has no recipe for it and no code references it. (recipes/locator_orb_*.json has no ka/moku/sui; only DoggyItems/DTNItemCategory reference them; low)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:locator_orb_moku": {
+   "class": "unobtainable",
+   "evidence": "Elemental locator orb (Flame/Vegetation/Water) registered in DoggyItems, but unlike chi/chu/ko/gi/tei/rei/shin/jin (dye + empty_locator_orb recipes) the jar has no recipe for it and no code references it. (recipes/locator_orb_*.json has no ka/moku/sui; only DoggyItems/DTNItemCategory reference them; low)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "doggytalents:locator_orb_sui": {
+   "class": "unobtainable",
+   "evidence": "Elemental locator orb (Flame/Vegetation/Water) registered in DoggyItems, but unlike chi/chu/ko/gi/tei/rei/shin/jin (dye + empty_locator_orb recipes) the jar has no recipe for it and no code references it. (recipes/locator_orb_*.json has no ka/moku/sui; only DoggyItems/DTNItemCategory reference them; low)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "iceandfire:dread_spawner": {
+   "class": "creative-technical",
+   "evidence": "BlockDreadSpawner/TileEntityDreadSpawner spawner block placed by worldgen (DreadRuinProcessor in dread ruins); block loot table is empty and there is no recipe, so players are never meant to hold it. (block/BlockDreadSpawner.class, world/gen/processor/DreadRuinProcessor.class; loot_tables/blocks/dread_spawner.json empty; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "iceandfire:egginice": {
+   "class": "creative-technical",
+   "evidence": "BlockEggInIce/TileEntityEggInIce (frozen dragon egg) is placed by ice dragon roost/cave worldgen and hatches in code (spawnEgg/tickEgg); loot table is empty and no recipe. (block/BlockEggInIce.class, entity/tile/TileEntityEggInIce.class; loot_tables/blocks/egginice.json empty; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "iceandfire:hippogryph_egg": {
+   "class": "creative-technical",
+   "evidence": "ItemHippogryphEgg throws EntityHippogryphEgg (also a dispenser behavior in IafRecipeRegistry$6) to hatch a hippogryph; no recipe, loot table or mob drop references it, so it is creative-tab-only. (item/ItemHippogryphEgg.class, entity/EntityHippogryphEgg.class, recipe/IafRecipeRegistry$6; only tags/items eggs in data; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "iceandfire:fishing_spear": {
+   "class": "unobtainable",
+   "evidence": "ItemFishingSpear is registered (IafItemRegistry.FISHING_SPEAR) but referenced nowhere else: no recipe, no loot entry, no mob equipment. Legacy item with no source. (item/ItemFishingSpear.class; grep of all data and classes finds only IafItemRegistry; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "mca:jeweler_workbench": {
+   "class": "unobtainable",
+   "evidence": "BlocksMCA.JEWELER_WORKBENCH has blockstate and lang but no recipe, no block loot table and no trade or structure referencing it; only a storage_blocks tag lists it. Nothing in this build produces it. (data/mca/recipes (none); loot_tables/blocks (none); tags/blocks/storage_blocks.json; BlocksMCA.class; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "minecolonies:santa_hat": {
+   "class": "creative-technical",
+   "evidence": "ItemSantaHead is a cosmetic ArmorItem registered in ModItemsInitializer and referenced by EntityCitizen for a holiday look; no recipe, loot or trade gives it to players. (core/items/ItemSantaHead.class, core/entity/citizen/EntityCitizen.class; no data hit; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "minecolonies:scan_analyzer": {
+   "class": "creative-technical",
+   "evidence": "ItemScanAnalyzer (Schematic Analyzer, opens WindowSchematicAnalyzer) is only registered in ModItemsInitializer; no recipe, hut tool slot or loot references it, so it is a creative/dev tool. (core/items/ItemScanAnalyzer.class, apiimp/initializer/ModItemsInitializer.class; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "productivebees:adv_breed_all_bees": {
+   "class": "creative-technical",
+   "evidence": "Registered in ModItems with models only (adv_breed_*) and ClientSetupEvents; no recipe, loot, or crafting hook, so a debug/creative breeding item. (models/item/adv_breed_*.json; init/ModItems.class, event/ClientSetupEvents.class; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "productivebees:adv_breed_bee": {
+   "class": "creative-technical",
+   "evidence": "Registered in ModItems with models only (adv_breed_*) and ClientSetupEvents; no recipe, loot, or crafting hook, so a debug/creative breeding item. (models/item/adv_breed_*.json; init/ModItems.class, event/ClientSetupEvents.class; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "productivebees:invisible_redstone_block": {
+   "class": "creative-technical",
+   "evidence": "InvisibleRedstone block is placed in world by ConfigurableBee (redstone bee); no recipe or drop. (common/block/InvisibleRedstone.class, common/entity/bee/ConfigurableBee.class; high)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "rftoolsbuilder:superharvestingtool": {
+   "class": "creative-technical",
+   "evidence": "SuperHarvestingTool is a bare DiggerItem (Tiers.DIAMOND, BlockTags) with no recipe, loot entry, advancement or data reference; an internal/legacy tool registered by the mod and not surfaced to players. (rftoolsbuilder jar: modules/builder/items/SuperHarvestingTool.class; grep of all data/* for superharvestingtool found 0 hits; no recipe in data/rftoolsbuilder/recipes; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "rftoolsutility:computer_module": {
+   "class": "unobtainable",
+   "evidence": "ComputerModuleItem (screen module computer_module, COMPUTER_RFPERTICK) has no recipe, loot or advancement in data (0 hits for rftoolsutility:computer_module); it is a screen module driven by a computer-mod peripheral and the pack has no such integration. Would otherwise be a screen-module recipe like the other *_module recipes. (rftoolsutility jar: modules/screen/ScreenModule.class, items/modules/ComputerModuleItem.class, ComputerScreenModule; data/rftoolsutility/recipes lists no computer_module; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "rftoolsutility:teleport_probe": {
+   "class": "unobtainable",
+   "evidence": "TeleportProbeItem (GuiTeleportProbe) is registered in TeleporterModule but no recipe, loot table or advancement in the jar produces it (0 hits for rftoolsutility:teleport_probe), so it is a legacy item with no source. (rftoolsutility jar: modules/teleporter/TeleporterModule.class, items/teleportprobe/TeleportProbeItem.class; data scan found no reference; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:connection_key_both": {
+   "class": "creative-technical",
+   "evidence": "ModItems registers a per-ConnectionMode render-state item of ItemConnectionKey (connection_key_none/input/output/both) used only for model selection; the real craftable item is storagedrawers:connection_key (drawer_key + hopper). (core/ModItems.class CONNECTION_KEY_*; ModCreativeTabs EXCLUDE_ITEMS_CREATIVE_TAB; recipes/connection_key.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:connection_key_input": {
+   "class": "creative-technical",
+   "evidence": "ModItems registers a per-ConnectionMode render-state item of ItemConnectionKey (connection_key_none/input/output/both) used only for model selection; the real craftable item is storagedrawers:connection_key (drawer_key + hopper). (core/ModItems.class CONNECTION_KEY_*; ModCreativeTabs EXCLUDE_ITEMS_CREATIVE_TAB; recipes/connection_key.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:connection_key_none": {
+   "class": "creative-technical",
+   "evidence": "ModItems registers a per-ConnectionMode render-state item of ItemConnectionKey (connection_key_none/input/output/both) used only for model selection; the real craftable item is storagedrawers:connection_key (drawer_key + hopper). (core/ModItems.class CONNECTION_KEY_*; ModCreativeTabs EXCLUDE_ITEMS_CREATIVE_TAB; recipes/connection_key.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:connection_key_output": {
+   "class": "creative-technical",
+   "evidence": "ModItems registers a per-ConnectionMode render-state item of ItemConnectionKey (connection_key_none/input/output/both) used only for model selection; the real craftable item is storagedrawers:connection_key (drawer_key + hopper). (core/ModItems.class CONNECTION_KEY_*; ModCreativeTabs EXCLUDE_ITEMS_CREATIVE_TAB; recipes/connection_key.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:detached_drawer_full": {
+   "class": "creative-technical",
+   "evidence": "Filled-state render variant of ItemDetachedDrawer (carries DetachedDrawerData); base detached_drawer is craftable (recipes/detached_drawer.json), full form is produced by interacting with a drawer block. (item/ItemDetachedDrawer.class; recipes/detached_drawer.json, add_detached_upgrade.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_connection": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_connection_both": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_connection_input": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_connection_none": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_connection_output": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_drawer": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_personal": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_personal_cofh": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_personal_ftb": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_personal_unlock": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_priority": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_priority_n1": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_priority_n2": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_priority_p1": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_priority_p2": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_puller": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_quantify": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_shroud": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:keyring_suspend": {
+   "class": "creative-technical",
+   "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:personal_key_ftb": {
+   "class": "creative-technical",
+   "evidence": "Render-state variant of ItemPersonalKey (ftb/unlock security mode); cycled by the storagedrawers:personal_key_cycle special recipe (PersonalKeyRecipe) or integration, base personal_key is craftable (drawer_key + name_tag). (core/recipe/PersonalKeyRecipe.class; recipes/personal_key_cycle.json, personal_key.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:personal_key_unlock": {
+   "class": "creative-technical",
+   "evidence": "Render-state variant of ItemPersonalKey (ftb/unlock security mode); cycled by the storagedrawers:personal_key_cycle special recipe (PersonalKeyRecipe) or integration, base personal_key is craftable (drawer_key + name_tag). (core/recipe/PersonalKeyRecipe.class; recipes/personal_key_cycle.json, personal_key.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:priority_key_n1": {
+   "class": "creative-technical",
+   "evidence": "Render-state variant of ItemPriorityKey (n1/n2/p1/p2 priority level) set by ItemPriorityKey.getNextKey when cycling; base item storagedrawers:priority_key is craftable (drawer_key + compass). (item/ItemPriorityKey.class getNextKey; recipes/priority_key.json; no recipe for variant; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:priority_key_n2": {
+   "class": "creative-technical",
+   "evidence": "Render-state variant of ItemPriorityKey (n1/n2/p1/p2 priority level) set by ItemPriorityKey.getNextKey when cycling; base item storagedrawers:priority_key is craftable (drawer_key + compass). (item/ItemPriorityKey.class getNextKey; recipes/priority_key.json; no recipe for variant; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:priority_key_p1": {
+   "class": "creative-technical",
+   "evidence": "Render-state variant of ItemPriorityKey (n1/n2/p1/p2 priority level) set by ItemPriorityKey.getNextKey when cycling; base item storagedrawers:priority_key is craftable (drawer_key + compass). (item/ItemPriorityKey.class getNextKey; recipes/priority_key.json; no recipe for variant; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "storagedrawers:priority_key_p2": {
+   "class": "creative-technical",
+   "evidence": "Render-state variant of ItemPriorityKey (n1/n2/p1/p2 priority level) set by ItemPriorityKey.getNextKey when cycling; base item storagedrawers:priority_key is craftable (drawer_key + compass). (item/ItemPriorityKey.class getNextKey; recipes/priority_key.json; no recipe for variant; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "supplementaries:bubble_block": {
+   "class": "creative-technical",
+   "evidence": "BubbleBlock is placed by the BubbleBlower/bubble blower charge projectile (recipes bubble_blower.json, bubble_blower_charge.json) and is not meant to be held; no recipe for the block item. (lang block.supplementaries.bubble_block; recipes/bubble_blower*.json; medium)",
+   "date": "2026-10-23",
+   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  }
+ }
+}

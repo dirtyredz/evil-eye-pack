@@ -63,6 +63,15 @@ git worktree list --porcelain
 
 Tooling needs Node 22. There is no packwiz CLI and no build step.
 
+## Known exceptions registry
+
+Three lists record why something is deliberately hidden, missing or duplicated. Check them before
+investigating an item, a pack-test finding or a duplicate group; when you add an entry, add its reason.
+
+- `tools/dedup/hidden_reasons.json`: one reason (class, evidence, date, source) per id in `kubejs/config/dedup.json` `hiddenOnly`. `tools/dedup/tests/hidden_reasons.test.cjs` fails if an id has no reason or a reason names an id that is not hidden. The shipped `dedup.json` stays a plain array; reasons are never shipped (`tools/` is packwiz-ignored).
+- `tools/pack_test/data/baseline.json` (with `policy.json`): known pack-test findings, each with a reason and date.
+- `tools/dedup/allowed_groups.json`: duplicate material groups that are allowed to stay, each with a reason.
+
 ## Pack test (agents' acceptance command)
 
 `node tools/pack_test/run.cjs` verifies a pack change without anyone playing. It checks the hash chain,
