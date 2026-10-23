@@ -1597,6 +1597,10 @@ file = "config/create-common.toml"
 hash = "6c0f6254798808bce8079a1cfafe4d6c082cead42c51d1e3121f3580f8a44eca"
 
 [[files]]
+file = "config/create_dragons_plus-common.toml"
+hash = "537275e4d6af26666b75ffaa0fea3df7df9e38c4b21698ad547edd703f37f27d"
+
+[[files]]
 file = "config/createaddition-common.toml"
 hash = "1d28b40d466308be422d511bcd662b26807a9616144055591ccabb53b42fad92"
 
@@ -2639,6 +2643,1082 @@ hash = "69dff00d3e5c53f44409d1af42254efc101f1d266812542650865e68217b4821"
 [[files]]
 file = "kubejs/data/create/recipes/splashing/wheat_flour.json"
 hash = "11bee2955721b4f174238ce739fe9a526a455a8adad1c76bf07733030e2a1020"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/black_exposed_copper_lantern.json"
+hash = "e749ddea8d3bd30660e60d48bfbaee890bf969a1e2be2b6f4e1216748ee837d3"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/black_oxidized_copper_lantern.json"
+hash = "c3899ad2eae89ecf8d5526628daa22cefc88a1f17a4c9fd97cf476160682a2a3"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/black_waxed_copper_lantern.json"
+hash = "4c2855211815fffbcf7f955ebb7b8a6455b02d236561f51c053337d7839081b3"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/black_waxed_exposed_copper_lantern.json"
+hash = "7309fdb8e9e869a79d09179d973579e7e97091de62253a339cf46ad3d30b4452"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/black_waxed_oxidized_copper_lantern.json"
+hash = "8095768307daf0c1a66d9d0e1b479e31536d9c822fd93323ad4671b321348fe8"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/black_waxed_weathered_copper_lantern.json"
+hash = "f9a4fd2b40a61d25d720f3da77e3382af4d6ff5e66cc13bc0d6c4ae6c37acdba"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/black_weathered_copper_lantern.json"
+hash = "af7735735d3e8cba8400cab1c47bca2819577f0f3562ee5a4d1aec9d16639db0"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/blue_exposed_copper_lantern.json"
+hash = "7ef90024940077cdc6ecea7d971858e128ce8c3d2c41d9403ef9daa0ec145608"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/blue_oxidized_copper_lantern.json"
+hash = "93f7c20407d4a0be8da16a845ea60f4e3c25e292973bac0d34b55b9abff374ac"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/blue_waxed_copper_lantern.json"
+hash = "674c75d345fa7659916a50abad65786fcb016a7c9adda7f611c558f95a625a43"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/blue_waxed_exposed_copper_lantern.json"
+hash = "1f3164d1242d1b78e3415960fcc4920a27a0c28f3a41f1d5643515b96dec7127"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/blue_waxed_oxidized_copper_lantern.json"
+hash = "79cb10ec723703e1410bc538eed2dba6142629c1e1fec2fed97e3a4455f38107"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/blue_waxed_weathered_copper_lantern.json"
+hash = "70cc7c936e650b5e44531bec16892a737186949a16d4e8599a26a85bb0069dee"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/blue_weathered_copper_lantern.json"
+hash = "2c58b12f7de35b4a98176b7d2615aea9cbaa6399b0b86228513addc9e1669d92"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/brown_exposed_copper_lantern.json"
+hash = "c3563645e81729d72bc58c8f39c5d04c643ee096fb5af361ae443f5febb43a2a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/brown_oxidized_copper_lantern.json"
+hash = "b39e07ac6cc32276b5067df5e380fd6d4fd5098b15d70750b09efd7b1faaa32b"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/brown_waxed_copper_lantern.json"
+hash = "d06b27931a1607015b154f6878ec4dbfc52ea88d4b54771819dc2bfcfa4c20de"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/brown_waxed_exposed_copper_lantern.json"
+hash = "124fa8e49b25835f5981f8eaed026e430fe4df952dae7220ffd6a45692cef967"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/brown_waxed_oxidized_copper_lantern.json"
+hash = "8c06a73f31fbf34b6e36af2e8f7832c6d203ba9c884eedb2632fb6d4e15e6f99"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/brown_waxed_weathered_copper_lantern.json"
+hash = "49368d2106d797a1ea39d94a7f71709f6b247a7587c6c55be734462b2c4dc26e"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/brown_weathered_copper_lantern.json"
+hash = "99167d91c6589e158f089be78029e544e361b95a12664f1debb181655981f457"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/cyan_exposed_copper_lantern.json"
+hash = "68bd84b87797966e66a05e44a61c9ad743e70572ef733af0c59157a2e3512d0b"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/cyan_oxidized_copper_lantern.json"
+hash = "902899aa9f59d8589df3486f49fd91389572f143f4f8f1ebe39cfdbd6cc45350"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/cyan_waxed_copper_lantern.json"
+hash = "a38854be4bd7bdb4352c3636ea79d8443874162d591f6b3df4cbd1fb816073b5"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/cyan_waxed_exposed_copper_lantern.json"
+hash = "3343488dd709f462542c9f115002df970efe3f77a749219a0b79e34eefa0c9af"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/cyan_waxed_oxidized_copper_lantern.json"
+hash = "82d589634476cc91330ee40d8dd61e9c6976938cb4a5e873d161003092f4d1dd"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/cyan_waxed_weathered_copper_lantern.json"
+hash = "95d8b23740ec65ddc14280312ddf0baa16558c7a437be22f9dee5634ab8a9442"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/cyan_weathered_copper_lantern.json"
+hash = "a77ecf9065520d12b64595c8dca6f1e4bd3e8b09639ae0cfa08525973c3cd99d"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/exposed_copper_chain.json"
+hash = "49aa754a20186b1aeff3d13631ac963b08e69fa08475085a87febddffa3f89d6"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/exposed_copper_lantern.json"
+hash = "52240b8bc15ada4157a07d4cc48935e39c429effa1080f5a073d8669d6d30960"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/gray_exposed_copper_lantern.json"
+hash = "b3768b40e332729a631f8c77f61e0ecfe39d58bd31a5e28822239bccc11bcda3"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/gray_oxidized_copper_lantern.json"
+hash = "007657cc61e68b358515a10a35a272029148f22b676c7d7b01875b229701843f"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/gray_waxed_copper_lantern.json"
+hash = "84c3b870e5e0e808cacab96058beeaac7d0bff92c85455acbe9c67ce715bd8fc"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/gray_waxed_exposed_copper_lantern.json"
+hash = "3b710c739feaaab9376c598754aa272bc9d3165314dfa6bddff0455ecc2ee503"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/gray_waxed_oxidized_copper_lantern.json"
+hash = "5ffd4a0d9e1dfd0ca70a583d5fd38f71754aeff0e0f453d9bade46e8cd6fcf4a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/gray_waxed_weathered_copper_lantern.json"
+hash = "ca292aeccff044fbf81bc964e764e82a4a67163647d220ce3fb7742248bfa175"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/gray_weathered_copper_lantern.json"
+hash = "bf4356b9a7d05a7c6c761f1b9bc4bc0d13169471b48b0cf459592b62a2fc3ecc"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/green_exposed_copper_lantern.json"
+hash = "23a5557ced90ebea61ca2d17396be9867dc6cdb9a1b65c3fabbec614a8a45d56"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/green_oxidized_copper_lantern.json"
+hash = "ed98382ab99b88eb03f12f3a7712fa5c4bdac775da8566e39fc09aaae89c265c"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/green_waxed_copper_lantern.json"
+hash = "eb4ae10b3e428a0269100acf8d0aeb66905eb31d067bf9e515ec1d2b42ee5d73"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/green_waxed_exposed_copper_lantern.json"
+hash = "f3180728d3b1aba1027a9198d3f9393351cf5f14dd4bc1238fbd437ef36bc4bb"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/green_waxed_oxidized_copper_lantern.json"
+hash = "be9e359349bad11e467d546ecf0afec93be91ac418fffd7487388ee2a6aea72f"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/green_waxed_weathered_copper_lantern.json"
+hash = "8f5b234d03a8641af44c00e8a1dafd9e5dd0a0a45d7077d6007d7ba829d7b13f"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/green_weathered_copper_lantern.json"
+hash = "aa3e543878246a5c9ef57ecb50575c9db3edde5d018e80a97defe05dfbd76c74"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_blue_exposed_copper_lantern.json"
+hash = "fa6ebc1075abc0315e81f1f738393870fadf25a867e6157fe946ae4514aab76f"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_blue_oxidized_copper_lantern.json"
+hash = "ff03d8011a5da9bba26686d53b5858baae79c5b378238a9d0cb2dc1cfcefa1fe"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_blue_waxed_copper_lantern.json"
+hash = "14967c662da5dee906351988a722fe1c550f4874896b3814295f6d16f6e7c366"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_blue_waxed_exposed_copper_lantern.json"
+hash = "731359356df3b7770823a6d3daf54d5b8b129fd2a5ce444cc900ac98c7239815"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_blue_waxed_oxidized_copper_lantern.json"
+hash = "eedbfba15e7b1d73c00fdbd675dd5030d6143c7b4a23082ef73531b1020c8963"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_blue_waxed_weathered_copper_lantern.json"
+hash = "c765f20c3d166a7c36ddb740e24091cc358f59445ff9dcdcbf1c276f1bebd6b2"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_blue_weathered_copper_lantern.json"
+hash = "cdb08150a28a51584fcccd74d07f5f9041ae614c7e1ebd103999d2d4218c15ed"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_gray_exposed_copper_lantern.json"
+hash = "78ac30006720c5483327496edf283271ef3d5574335088449c9b78a4fbe235e7"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_gray_oxidized_copper_lantern.json"
+hash = "f48a7d602300603336fdf497b83152c712afa3a67352080da65a5e21bbe81bf7"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_gray_waxed_copper_lantern.json"
+hash = "476088f3423a46b3ca6b4fbe236cb40c4f4870bff579ca6736e4e2785dda0910"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_gray_waxed_exposed_copper_lantern.json"
+hash = "e019a0fd4a5d399c70389f2dbd6ec773bd07bbc3ab47e32cc32256fb832cd3ba"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_gray_waxed_oxidized_copper_lantern.json"
+hash = "491279c1b71fe432f8ea91de1403ac919ba0c2904c382fab0df1f13f6893b3c0"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_gray_waxed_weathered_copper_lantern.json"
+hash = "89a56908c6c15957d33e501b942d610b1372018adaf182b8a85b9957819c80a0"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/light_gray_weathered_copper_lantern.json"
+hash = "276efd7aa147286823b30963db21262f00421f44c12f882ac46747fa79a55f72"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/lime_exposed_copper_lantern.json"
+hash = "87fab2ab7a9d0ad3bc5440b8cc6ff5344957cf94cb2e5359d10f6fd943a4bf0e"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/lime_oxidized_copper_lantern.json"
+hash = "a56492387d4d3775d63e20ffcdc7fd77229774c16cb056c1acd646d8f9963235"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/lime_waxed_copper_lantern.json"
+hash = "2e4a5612ca4a1d824d2af52fcde6494146131a06143f8d8f938fed1d2eaa09a7"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/lime_waxed_exposed_copper_lantern.json"
+hash = "d7911bbc5dccdbdd4d13f9ca9f34e092320c016c4c2e593b95ba50fd4380a9ab"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/lime_waxed_oxidized_copper_lantern.json"
+hash = "ce6678b0c5ca3f8292169151e3e27a3a04f54148fdda9afc24b1e85789751487"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/lime_waxed_weathered_copper_lantern.json"
+hash = "3ac8ae45091e624280d541d9e6b3a800e8defde785d40cd2b4d2801280d35b1f"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/lime_weathered_copper_lantern.json"
+hash = "d715d5d3031c4ea466b3f0524b746bc8c10caacee073e2d0a6bb07abb1ff04d5"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/magenta_exposed_copper_lantern.json"
+hash = "2f9148c138229db301e2c3f4447dacc09f64a2365542228cc9e54d272bec1822"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/magenta_oxidized_copper_lantern.json"
+hash = "fb41f8c3854cd05ccbb330b18077423a82aa9eb588bbbb9df56656ef94d2764f"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/magenta_waxed_copper_lantern.json"
+hash = "0878579cbb90fc13e54db90e8ef6aae623b0ff266be468048675a23a573f0525"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/magenta_waxed_exposed_copper_lantern.json"
+hash = "9d93673f24637382d04049d69a9fb4f39b5e74531f31e57b87b01e41caed4f88"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/magenta_waxed_oxidized_copper_lantern.json"
+hash = "5e14d8529501bed8c81e609f0ce44c293f24436e6a8b3f4cb79f01e40875136e"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/magenta_waxed_weathered_copper_lantern.json"
+hash = "c7069a1e0e9d7b0e21c606d37c2066ff33328d6e7d67bfe1a32c30b87bbe0547"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/magenta_weathered_copper_lantern.json"
+hash = "f635fb683371c1496a150de12242b4ad861cfd8ee2ddfcae9c6589ef8ba17a0c"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/orange_exposed_copper_lantern.json"
+hash = "822594c62e7436460d0947f1ad63ab6cd81a2b33473f019f5c5ff436d32a55aa"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/orange_oxidized_copper_lantern.json"
+hash = "80dc01458f92dff5e7dec7b14311b218af911bd8baf68a5045eb07f6322586ad"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/orange_waxed_copper_lantern.json"
+hash = "7cad16d3a7878b8daa8b370dfca2ccbb071440972c6b9a1f2485db24009ea90a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/orange_waxed_exposed_copper_lantern.json"
+hash = "f2aa0a8fa334401b6bb69b11019c3d4624ce61ca35ea6b70507335c66760a012"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/orange_waxed_oxidized_copper_lantern.json"
+hash = "d2f825b3a6a1b313ef7c0ebc5482cc1f12ff035c8178c991e3c8492169576c98"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/orange_waxed_weathered_copper_lantern.json"
+hash = "9346777c6c2bfa212aea226106a6fb6a25d7f6ef67a2c0ef5c9a7a410b7f36a3"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/orange_weathered_copper_lantern.json"
+hash = "8fe13394e7f0e060210e97a643f5cd693838cf980a01169e3e375cc86a400de5"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/oxidized_copper_chain.json"
+hash = "1c51b69ef3f07e7e7bc19e71773cf604de0cb4ea60adca3c84eff1046f07f9b1"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/oxidized_copper_lantern.json"
+hash = "1b41dcbdf14a0244973661b1142eccb393e30f3cd53ea31b740abd4c5eaa35b7"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/pink_exposed_copper_lantern.json"
+hash = "74af5f6298611a158713366f429ff3104c3977128b49c8bbacc9b229d84a55ce"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/pink_oxidized_copper_lantern.json"
+hash = "e0e6b29f383c789c865961c37538ee10df2464310c50a5070442e81c51ca821c"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/pink_waxed_copper_lantern.json"
+hash = "6a33961469a8257095a7005e22fca3a3029d434aa3f62e1d43d34752a3322fa4"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/pink_waxed_exposed_copper_lantern.json"
+hash = "624c43ee27ef5175520d6d24fd6b8132a8f01b0942bbe07688b17a3aa9dffe96"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/pink_waxed_oxidized_copper_lantern.json"
+hash = "fe41fb6c96532e67d18a832ffe1c36d25e5e09b065022b7592115ae4ade057fa"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/pink_waxed_weathered_copper_lantern.json"
+hash = "7254dc30df4177543ddfb7c3b10d12bced59158e2e4f4cfb91ba7fd3ab7a1878"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/pink_weathered_copper_lantern.json"
+hash = "3822e51b1b7c46f2f9eed9596b262de740dc291b651d82d7d50778a6164d00db"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/purple_exposed_copper_lantern.json"
+hash = "b9dd75f200a0fd80e8767c01c1fffb13336202b4c13d3c69ef3504783ebc3a06"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/purple_oxidized_copper_lantern.json"
+hash = "935a15af1ab3c3604535c6ad3745fc2fa96eb8f2ce015a83fa96a8e7aef5ef3e"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/purple_waxed_copper_lantern.json"
+hash = "a7511e7477bcce2b786e9cc66488882324c99bf8f7bff4c1b58225f5f2fe1c16"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/purple_waxed_exposed_copper_lantern.json"
+hash = "694429034616c89146c3934ca9dc7b2b3a931f6be7d24cd67e6853c1c6d1dfac"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/purple_waxed_oxidized_copper_lantern.json"
+hash = "215f9062895e067a9b6d8a0f7930ceb73cc5ddb5853442d9103c8f8c3747937d"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/purple_waxed_weathered_copper_lantern.json"
+hash = "115b7d10df405fc130b24e8c7b3075fca5deaa106fc29730f9e82077635813eb"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/purple_weathered_copper_lantern.json"
+hash = "50b20a28f0363b35d9f8e052a9167eb1393eac635625d7268ce87ea1fff273c9"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/red_exposed_copper_lantern.json"
+hash = "3177c1b8d4bdc927a69f36122fe8d74e8593514be80056d5f9576615f1b62bb3"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/red_oxidized_copper_lantern.json"
+hash = "1e8403d52062cd2f79afcdffa247f2aa2aad38ff0c2d3cd75885537c9cfebe2a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/red_waxed_copper_lantern.json"
+hash = "f7f2c11a3b26548cb5715ff864a0c5830831ecaa0f78f7b561910a71754897a6"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/red_waxed_exposed_copper_lantern.json"
+hash = "f7b820a2a726f4e7dd7e21a1c30a6f5779a9f4e0eb51fcb123308ff90d4f277c"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/red_waxed_oxidized_copper_lantern.json"
+hash = "fe6aeb32a9cdc72b886fdd586a9e1533d7714025d5ce8a541ede351f51e14257"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/red_waxed_weathered_copper_lantern.json"
+hash = "24cbc0ac6b1ba9c383197ca8b93feefbcf43d78f8e856862fcbd1760c3a32a5b"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/red_weathered_copper_lantern.json"
+hash = "3b15f68591fcbc31863db4c0dc3d4ee8be3e175740cc129f0a76f9f7f1523e13"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/waxed_copper_chain.json"
+hash = "fe87bfd636b71016e12d55d81aaca53bef900c689d6b412883903d4246d4fc03"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/waxed_copper_lantern.json"
+hash = "e19458abe1bf7a7cf616c446dd80b9d25a66604002760e38401564b39f7897a5"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/waxed_exposed_copper_chain.json"
+hash = "4ed3d421bc82e8fe77f6a03adf407f6fbb6fe4e1d8f327c522bf634d20cc5a98"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/waxed_exposed_copper_lantern.json"
+hash = "1889a780978f4803920b7014204971688d0b6a41c070865ce8ae6c0939666273"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/waxed_oxidized_copper_chain.json"
+hash = "c85f16050619180f5184595d646b8488a314f48add0c640e184921758e0ad787"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/waxed_oxidized_copper_lantern.json"
+hash = "5d1edebeb13f4593ced3563f93b81a811ecef09f51543a106863528c1fb1879b"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/waxed_weathered_copper_chain.json"
+hash = "995655f8e47f383028df0808b2fbb8d572f5d26ee34b835d205c6b0c4f5fdc28"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/waxed_weathered_copper_lantern.json"
+hash = "a19942397959832c74e94b1da7c1b5b83187f1c4155434cab54cf9ee45ed39ba"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/weathered_copper_chain.json"
+hash = "7f93dd6ac7fbdf1300e23be154903624ca7b64aa52babc96b1ad2787276d5b7b"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/weathered_copper_lantern.json"
+hash = "0d785bf316a93c7dc71f927882caaf24ba83e6e0abfa7ea0746016f9445a191d"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/white_exposed_copper_lantern.json"
+hash = "b891029d12454bed886706709c2da8b58a5dcdf18d3d7f0016eeecbcca05d3f1"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/white_oxidized_copper_lantern.json"
+hash = "bfc06481eed20ee2f0896b2636e54e16429b95174247201161efa22a2facac4d"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/white_waxed_copper_lantern.json"
+hash = "43ffe71ade546526466e1d7db65b5f05f12a04b682ab2282bd604c924c597ac9"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/white_waxed_exposed_copper_lantern.json"
+hash = "fc3a2413dc4c2bcd1026b82f4c415673bd9a7e914266426ef188dbb2b4613a77"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/white_waxed_oxidized_copper_lantern.json"
+hash = "76644edf80420b1eabcfe3c2c5d5b06edee4bc58b8504c9e065701d6db94501a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/white_waxed_weathered_copper_lantern.json"
+hash = "39ca1b8927429da6e60a0c737f66fc9d28bff43260bef9f5aaf43a55d34c7c65"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/white_weathered_copper_lantern.json"
+hash = "96857c57541f0daf20c0533998179b03a704f6c12d9cad5cc18f70681fcf346b"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/yellow_exposed_copper_lantern.json"
+hash = "0af5cbd6507505af5b104d6f293921b16aad1c062cac5e6bc2f73f9bf9c7db91"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/yellow_oxidized_copper_lantern.json"
+hash = "80361e2df778f846dab97c6b05735e35b6ddf4c24dfe0d7a2aa709e04dc2f081"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/yellow_waxed_copper_lantern.json"
+hash = "a22c4e9cd393c163337847005db5fad03d388d8d9e9276b9dd7712f833eab55c"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/yellow_waxed_exposed_copper_lantern.json"
+hash = "e112ad857c444929ce3673205c85787ae5d5972e64e8c9918779e4d93bc3f7b9"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/yellow_waxed_oxidized_copper_lantern.json"
+hash = "0cb78339e490e7ea422dccdbde074a4778762a98134f6ced3e9485bf97aebcb3"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/yellow_waxed_weathered_copper_lantern.json"
+hash = "071a3b89501ba80d21d03cbaab2a0cf79b7eb96a59b510e6d9933630c3cfe042"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/additionallanterns/yellow_weathered_copper_lantern.json"
+hash = "72833f4d29ffbe7a35f9c91ce8bd299838f494da1c2f3e2060537667dcf3cd65"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/alexscaves/block_of_chocolate.json"
+hash = "bd73de1b7b00eb405bda2fd9ea3b15a946d7c6dbe18288b21372dc1384945444"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/ars_nouveau/sconce.json"
+hash = "277d07340d115da726d8187901a19ae1407dd19647856ef6b11643081845e77b"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_andesite.json"
+hash = "377aa1e23fd6b6e3855e2302a6ff2ca2a09838f190a1706a4dc6e015dc3f380d"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_andesite_slab.json"
+hash = "ab5c44b19a807e9f4bea89042e2c1ad8b070a34b29bca2ca0ef6b45e6315a757"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_andesite_stairs.json"
+hash = "18551e42d7e4f724875a496c0ac640a882f76123140646821815799f5b08f5a5"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_andesite_wall.json"
+hash = "2a5225cd41fb0c31e88c6607f8674061b661e1aba711bcc6e2f6e3274efebd1a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_asurine.json"
+hash = "d297a318f344ecec71b1628b1c581bd05777c68c46ecc17102f58cdabf92fb65"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_asurine_slab.json"
+hash = "187afc5df30077206abc6fb6a537186d36a3ec8044de84d7fa4a9c8fc81e60b0"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_asurine_stairs.json"
+hash = "0c2600299a61718d87e7acda02f944600555c61c32fc85239fb2b0285343732c"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_asurine_wall.json"
+hash = "e2d16c4f730b9c724b9b56d01197db39e920c3cc91cdc85d8d4c494ad30da9ff"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_calcite.json"
+hash = "1edd7ed13d97f04e587e3629bcf62cf694458d96d4536622b965ae252fdcbebc"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_calcite_slab.json"
+hash = "f38993f6671cd3ab1b44adbeed4b8342abf8397fdf42cd351d716a6d6e4ca8be"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_calcite_stairs.json"
+hash = "33785e4282c5758e4d8f13294f2b8c818c0bf5212b04d54a9a8f8e34f064444d"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_calcite_wall.json"
+hash = "e32c1e7e10202543c9a8fd738d56301c484355a2c0ccf12169d23b3daa757fe5"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_crimsite.json"
+hash = "61696a8b69e529fad93e099aedcc0b398298a027133816ec7cb593c2b3c2dda0"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_crimsite_slab.json"
+hash = "e6726044d9f5ba334db22160f751d3f158daca3cc813263c76cf3180b4e268ec"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_crimsite_stairs.json"
+hash = "1e341180d343603177111c965566511b5dc9924e7044ca5de5d10ceadead0ced"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_crimsite_wall.json"
+hash = "fdda42f8e7b804ff037d4bdce2c005a642da08c633f977ca1ef5b91688e62e59"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_deepslate.json"
+hash = "b1360bce10775b5f157a021f2f42cfa0b8aeb75cb1b8c0ea639ecaa46595e6c4"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_deepslate_slab.json"
+hash = "b4ed15db4fabfa77f611a16d2295b77374de03b4a38c2144b883f0c986457e3a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_deepslate_stairs.json"
+hash = "369b118ba7ae5e335ff360113cd2049d656467fb486de54669a2db1109a4564a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_deepslate_wall.json"
+hash = "1850f434af52a7319a45014b3ec7dc169d05df7f286f0da9535b7a2c59396371"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_diorite.json"
+hash = "4395e16bccae8ad14de3e56cac0a4f8de3a6979c361172c9dc2a3e3409a55d0a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_diorite_slab.json"
+hash = "c9d1371bfcf8f4b438e21637c875b0a5650bea4c02aa6a9f0a7a22ccccb08e57"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_diorite_stairs.json"
+hash = "8f3d567e468ab688c5a10b95ae6a953318817346f439cdd1fa548ea3cad194be"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_diorite_wall.json"
+hash = "f3fb7ca88561f1cbd3c16c82f1de0ffbe8a8bd90670f849917507a7102f74614"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_dripstone.json"
+hash = "2092ba1fd1dcbc8fe063e3da315bb85f0b6b4a64d5217c5f055830c19f4eed19"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_dripstone_slab.json"
+hash = "b343d6da23fe4066398bf1aa2591a51486f06cf26c92c6ca7d90019deefb0782"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_dripstone_stairs.json"
+hash = "389834ed3fa04bb0807c261f46a24509e195922ce599306d8ab5e057f9af01f5"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_dripstone_wall.json"
+hash = "a2628e6faecdc6bfe520151926d4dedaede79e1ff0801f4bab23d1bb3c3abcd3"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_granite.json"
+hash = "416998b43c8f76647569e2e5e64bf38d0c6f80f47e0622fe390e842a899b8750"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_granite_slab.json"
+hash = "a429f9cc376a3cb149f0f02962689449dd3b129c60192af4f250f4843a0ee530"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_granite_stairs.json"
+hash = "ab073ea816c926b98c9561cad1e03d051ed12871e17bc15ed13ec62f43a7cf10"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_granite_wall.json"
+hash = "eaacc4541f22876513a1180cfcb496fda4448224850236d353e6569929bb6dc2"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_limestone.json"
+hash = "5680b962d044a22249026ee5d39b46953aba7f17aa480ea17510586428a93b6e"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_limestone_slab.json"
+hash = "c344afdb920728da1147ac6d5f851758dcf7b624c7f24a84ed3cdfbdc6d12ecc"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_limestone_stairs.json"
+hash = "7dd81df5033ec1ba758102507ea782bb3269fa609dbacf4be690f88367eb9a24"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_limestone_wall.json"
+hash = "18ea746f48bbfd02831ec5ec5ef74b49c872b0d77ba215bcc4e62f50ebaa1a61"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_ochrum.json"
+hash = "cc7f319683f2b4582670071fcf56162a514b8c2c59737ad85481e65b13e22b3a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_ochrum_slab.json"
+hash = "c1dd475e8eae565791cb78e3a37c3131d00e7ba44b71698951c037e8c55003ee"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_ochrum_stairs.json"
+hash = "156257face6925efb12636358470fb1c4e0c544225ebb38dd088be872d97fefc"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_ochrum_wall.json"
+hash = "8f349ae7b8dd63d85fe50ff358cafcd65210e642b83044a4ef3fdb435de6f424"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_scorchia.json"
+hash = "f23cd4a1dcec9726d3bf22443fb5698bc33869c70d74c6363a605191a454db14"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_scorchia_slab.json"
+hash = "20c60c9f0554ffcd24a1b74c66d471b4513d41e5b402467509cfdd24438bacad"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_scorchia_stairs.json"
+hash = "0dcc508e9c27baf64e785cf31e98802742471d775f2de0a1da16d2294d7e1699"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_scorchia_wall.json"
+hash = "2327b7052a4cb5f2e2936aed884aba1e92a3928861ebc996e2b30dfce1136f17"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_scoria.json"
+hash = "3fcb52e663d12863584d42bfb78ffaf9fe3992eb6f6a7f731b59bca616a67183"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_scoria_slab.json"
+hash = "7930521ef921b6e4d1eb7019acd871797f15febec6890dc3ea9e7d5a16c95807"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_scoria_stairs.json"
+hash = "9689bd44d7d8b72cc89fbf95d2eadff2874e70bfd1f24185b3108f8f754b8748"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_scoria_wall.json"
+hash = "6f8fee3c3dab8ae1c061f7d134f3061a8412443edf414f429cbf1f277bd139d7"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_tuff.json"
+hash = "6fc9b781ed0d9836defa161f41751e680f52a0e4d4870a0a8ff0c44cc8567fc1"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_tuff_slab.json"
+hash = "d1b9c76c847ce77e6b2d9706c5625d54c0bcb7a7fc5b077284e9aab2ca2a587e"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_tuff_stairs.json"
+hash = "a799336bfac3ae8373961085095e2d984fa2fd953b14b0147a0a13ad1df8b0d9"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_tuff_wall.json"
+hash = "09d5bb97615e85ce8cf03c91ad5db0dc69f9440ab4e201309ea64af44098e50b"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_veridium.json"
+hash = "c5945bf50aad7d2bf1e4c76feb5cca08c440e957c1d5e7a9ac7abe3cb1bbab97"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_veridium_slab.json"
+hash = "513c5ed23a02d8fab3b75c35b02dc05b6a6c2acd221be7d623d21ee8e468ea2d"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_veridium_stairs.json"
+hash = "06a9dc4e6a41e11f1d737185b79bd367c5824631de330cbc2dfcc429ab9b039b"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/cut_veridium_wall.json"
+hash = "5bd2bd12f9dde1272c23e7d315ca13ae5f8220ef3e8277a87f1b46a76b516890"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/exposed_copper_shingle_slab.json"
+hash = "b349ca680822479d8f3ed097df6090f1243a5a696d567653813bc01f8ddabc32"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/exposed_copper_shingle_stairs.json"
+hash = "66474bf98eb0ab9e5a71f1ee3bf6ab5f0e440aef913e946a1bc249afe7177207"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/exposed_copper_shingles.json"
+hash = "25deceb20a26097a9a14cb64025724a53d46be64dbd20f1026f6d9b78e462b27"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/exposed_copper_tile_slab.json"
+hash = "0e8a02dcda310e9c2044f6c1476c8c3aab7d93f8b7dd098a4ea5e07d29a51816"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/exposed_copper_tile_stairs.json"
+hash = "e92b83b91076bbd266b2561282248a4d710c1718e473394b92463c14d004617b"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/exposed_copper_tiles.json"
+hash = "2337ef6d082465de54938db88c09da92a148423ebceac6fe8d067662ee333a05"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/oxidized_copper_shingle_slab.json"
+hash = "149077b02311cf60c74ddfc1fd5b440dd6fe72c56793c21e98117a2fceb89821"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/oxidized_copper_shingle_stairs.json"
+hash = "d6a62ae18d065154a39c894623f50a46d006b57b5397f74e2174594557de94ca"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/oxidized_copper_shingles.json"
+hash = "2a66058d2c5e347c4e9df05e791d958380548791b25586e0cf5a183be74aa203"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/oxidized_copper_tile_slab.json"
+hash = "6acb001209fcdaff44aa32809cc29236469a1782b5bf39c71a2b640508fdfe22"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/oxidized_copper_tile_stairs.json"
+hash = "64358d2e7f39732c1ad528391cea103ecb0ebaa6d1fb014ef36b8a01ac2910b9"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/oxidized_copper_tiles.json"
+hash = "23f0551ead8efd21d0295fb70ebc294128bb0b7fe8d19669a673f272548a445e"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_copper_shingle_slab.json"
+hash = "96d98f56c92568d69786108dd6d39f60abdac21b1e8fc072d876f0b8346db0e8"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_copper_shingle_stairs.json"
+hash = "f415e4fd5f050f3e53036ed3c6884e7d35d7a2207ef07ebb936a9033d786ea60"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_copper_shingles.json"
+hash = "46499510023cf78e2d38819a7a7913901352e3968642b79e198d4944bd2f4b05"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_copper_tile_slab.json"
+hash = "897d4a62a8325dad581d91dc634f0365deef7f3f621043491ebd91fe19700e0f"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_copper_tile_stairs.json"
+hash = "2f7ab44df356c51eb3cfde727b552510833fd5ff7fcfd30400729ad2310b9e7c"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_copper_tiles.json"
+hash = "b56419ca3fac99cf079f18846f78e1b8bd7ae6e279445df7654958228edac1e3"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_exposed_copper_shingle_slab.json"
+hash = "06694e97db639398c0ef03a3f5e4a17b491eec3b6f19d0a00fcf86ebccebfcb7"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_exposed_copper_shingle_stairs.json"
+hash = "1d0a2fbd95648b1ed55152802480349a50e75e02493cc81245902c2ffec1ad4f"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_exposed_copper_shingles.json"
+hash = "5b1e37e224da37ed92384c725219606ca60c6e857d5cbc8a546fe609ba738f8c"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_exposed_copper_tile_slab.json"
+hash = "54a53c09971b30fa57e777b7671827d6a07d54f4669933171950f9aaf8faca55"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_exposed_copper_tile_stairs.json"
+hash = "9d9778a720ce0e03f43c69e3ecde299ccfb0877c8e98a2a90b3856e71210213a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_exposed_copper_tiles.json"
+hash = "0475b37e437342f891377d2203441a0792cc6f0250ac00a71774fe7214cb8192"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_oxidized_copper_shingle_slab.json"
+hash = "9d485b826a0a370405880767f1921f2d447a7e83fe93b1deb7a5edcba8e8b3e5"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_oxidized_copper_shingle_stairs.json"
+hash = "47844bb01f7162096e1c02510e92545e6d607aa0898a89457c5f9b78277f2bd5"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_oxidized_copper_shingles.json"
+hash = "08bb98b04dea3952b2f430a768decc30ab1e7b4dfa302c5a085064623e27f413"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_oxidized_copper_tile_slab.json"
+hash = "de14ed63986a7bad7f3c159caa757ab5074163fb175c779be228db042a4376a7"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_oxidized_copper_tile_stairs.json"
+hash = "099bf8db079a11bd9c7388aa38eb6cdcac0e1c36653bff15074b1096c667f5b4"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_oxidized_copper_tiles.json"
+hash = "072ce1ae6ed0fccedf6e505ad70e85609e2512e294d98b8a12609a556596a6ac"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_weathered_copper_shingle_slab.json"
+hash = "0162d21887258bd2ee09e5fe1b68ce871d4aa4e10cfd160020b7bbbfc8fd5922"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_weathered_copper_shingle_stairs.json"
+hash = "74d87f101bfc8d1e7f510a3a9bf7a2c2abaaba851fd7d1267d6fed7a26132830"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_weathered_copper_shingles.json"
+hash = "c674cd01a3de0713f5ebb86653ac36364131334ff81812d09592aab44e6f86da"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_weathered_copper_tile_slab.json"
+hash = "e478a84af23346e4b73b728f18e1f19477007429c4cc46c8de5640fa02358ffa"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_weathered_copper_tile_stairs.json"
+hash = "bf6f7006c248edc9cdceb3b72affe9aa7e5958b38158add7c88b953c3950dd3f"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/waxed_weathered_copper_tiles.json"
+hash = "54b0b7e39f0bb307f0820417e50bba8e7f055e931dfd89c17a15acfbd06ffabf"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/weathered_copper_shingle_slab.json"
+hash = "c2798b326930b9335515a19fc85dc969ecd6c9af417e1667cff032ab4f99207e"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/weathered_copper_shingle_stairs.json"
+hash = "4244f10aedf8ce326f84ea261be6fe151b8d280ff46fafe3ac713de1adc315ee"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/weathered_copper_shingles.json"
+hash = "c737223e47e8f0f2137ac4cf8fe0eb2dbfddea7a3a6e894b47eadc493e9efcbc"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/weathered_copper_tile_slab.json"
+hash = "6c9b16aba20c2c8e60ed8967e30517763a8b754e7871c566aa474b8b9eb5ec1c"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/weathered_copper_tile_stairs.json"
+hash = "8b92b980066887a12d28b74ef0bb3c62e30cb428ef67f6b82d5a5db88fc47877"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/create/weathered_copper_tiles.json"
+hash = "54243bfb46d2d08ba855c8cfb25023cf93125fc8509862199c22a147ee3afba3"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/andesite.json"
+hash = "09a2863cbd000fa8664790c73e15e5ce5bd7dff9d74796ab2f4fb93368a8f247"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/andesite_slab.json"
+hash = "74d2ce90924834b298ec58f3f126e1814a57589c5025f7c5d8124450b570ee27"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/andesite_stairs.json"
+hash = "2e760271e1f2cc8318b26e96d81f4195328258f5c6335d4d6f73ccc3cb45c751"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/basalt.json"
+hash = "d22dce9b2ab97c8693f3b6b8a5bacecbb8af47983fd77858d7e5969cf09c6a78"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/blackstone.json"
+hash = "d6cc76bca2aeccc2f4bf7179428143d0abe59259ffeabcbf1c3f3d5a48ecf549"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/blackstone_slab.json"
+hash = "d85c658b874a18d3285c56392dd9a35829e7bfaf063d60eb71ae57c2e39e436c"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/blackstone_stairs.json"
+hash = "d861a16701f83138952868e13425f2f22fdb69733d1463e5529348f745b37cf9"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/blackstone_wall.json"
+hash = "040ff9335a5580f25f70a0dd98104ac608c0c7ce9d86fb727c56c5e14fb6514f"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/deepslate.json"
+hash = "7baa231da0c18d951e608b34b13ab7f2244a29aef9afe0e0b5b99f2638a9b546"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/diorite.json"
+hash = "b20ccd878737bf673d20b155f98d85f272ea82a80d88e53f8715b45782332a98"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/diorite_slab.json"
+hash = "211b5f2a0d6abeca57f09e73cd65e43a32a4d45e554f10840d7b5ab9c2ee2a86"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/diorite_stairs.json"
+hash = "c7258eb10a204ef442d43874ef64c49a42ae0fa0fedc8685d3f772eeeb2b3479"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/exposed_copper.json"
+hash = "e8064fad2bd695f5f5e01b75fd419b9951fdbbb2892791e730b766a38b055950"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/exposed_cut_copper.json"
+hash = "01cbfb2b444c630d612c760df9aa6239b8ac6fc58ca75014dc43a7c1fd6b457e"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/exposed_cut_copper_slab.json"
+hash = "10d9c9622559cab03cc8d7f370cfc374777b7502eadfa66481f13a09a52a55fd"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/exposed_cut_copper_stairs.json"
+hash = "636a1b332d271b4c03408d9d16c7f566d9a945c3d00f26cf01ac03bcc3359ff8"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/granite.json"
+hash = "ce6e51bc49d92fb16914939b1d718dc767d93da8b3ef4257138763503011cd65"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/granite_slab.json"
+hash = "db8da42bffc6a1b0e43101ca3c2b8ef461aad9d6c77e2ae861061d704dfcf452"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/granite_stairs.json"
+hash = "4d72c286a4175323b2d718a35bb169545a88c6c5cb74187f71b5042755e2fedb"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/oxidized_copper.json"
+hash = "a183ec191b537511c9e4a38d5264e92797d27b868e6f491ec0b03af170ae4a7f"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/oxidized_cut_copper.json"
+hash = "f41eff2f01ecae26566ce7498a314f320a1cc47430dce5540cd553356eb6089a"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/oxidized_cut_copper_slab.json"
+hash = "5180f2ca06d4054d62302a4cf89f6d465721b90288c5cd836c46965a6c398242"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/oxidized_cut_copper_stairs.json"
+hash = "a8aae9f2414cb0f08f154c1eb64e44fd84f8c5fb631d8b70b3b71f83eb093f89"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_copper_block.json"
+hash = "a5d961d1b792a7d2125dbdd4442dd5f363bdcbb54456055310f7f593289135e7"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_cut_copper.json"
+hash = "1c928b7e01026ae77843291f15cdd7fb1aba96bd63d95e682aea02bd250cdfcd"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_cut_copper_slab.json"
+hash = "f43795319e983e411cdbabbf9f59e039c695ba68d729d2c355834c4ac809dc44"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_cut_copper_stairs.json"
+hash = "1ac9c913b7e519da20070084142a21ccf9c7103aeb28e1fb38737a695e5c7d45"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_exposed_copper.json"
+hash = "566001a6eafae2af7fd2332b13a5b25de573366e3ef7daa9ba5cab2ddf50201d"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_exposed_cut_copper.json"
+hash = "4e8688771fc2a0b817107dc7986599ed866f75bd3c94984da644f12661947560"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_exposed_cut_copper_slab.json"
+hash = "ca26bc5843e1857ac1e9ac3dffd8addb5d9cbd378caaeaf85ebd4aab38015b81"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_exposed_cut_copper_stairs.json"
+hash = "2cd9b84ab4932dfe9a1099e0235af51d0067317ade69a6e79275375c86029c51"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_oxidized_copper.json"
+hash = "f7a7c3cecd5b4baffee29ca116b5adec3e0f6257d02ea2e757e28764620d17e0"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_oxidized_cut_copper.json"
+hash = "de101580c8a39fc9861196cfa486d464a5dab09a8ccd0ad2bee9ef877e435d0b"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_oxidized_cut_copper_slab.json"
+hash = "430b2302ca70079ad3b6636b173b852aba7137d86d2e20bbd5348d04da287f9d"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_oxidized_cut_copper_stairs.json"
+hash = "68dddaf9db7aa2e7acfd42f47170379c2240cbaa5591347e1401110ecc439062"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_weathered_copper.json"
+hash = "7a3e851e250d6292068ec0921c30e4508ffbb58636470aa160d6e3018043559c"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_weathered_cut_copper.json"
+hash = "a1258dbce575c6c8b9ed1b17c93edb030f69219489e02d50bc235ba543b346c9"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_weathered_cut_copper_slab.json"
+hash = "d392c8d5c817b67f884c773162bb7ea19b7d076280bf1212ff1d5fcbdc7091e0"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/waxed_weathered_cut_copper_stairs.json"
+hash = "576ebd2d584aef46b7dcd8fdf3e8ed9caa2315ed493d328d3ac38ac1e1a10b68"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/weathered_copper.json"
+hash = "3090542bd76c3baf68fe407b061fef00cee712225536043d3a59f4998bd8d320"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/weathered_cut_copper.json"
+hash = "2a905eadf9568260c6efcfada012c2972f60eabac5ba0e0e731c63b85a6a8908"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/weathered_cut_copper_slab.json"
+hash = "c61ea7a2b7a5015ffc3743ed4581a8887be77ac5ea0399003be14645d8c51888"
+
+[[files]]
+file = "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/minecraft/weathered_cut_copper_stairs.json"
+hash = "88846dd3a8b181f86f10be871dffb6a942a4d7751e567ab487d919e822f94203"
 
 [[files]]
 file = "kubejs/data/createaddition/recipes/compacting/cake_base.json"

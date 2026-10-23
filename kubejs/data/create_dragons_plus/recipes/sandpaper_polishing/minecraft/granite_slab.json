@@ -1,0 +1,13 @@
+{
+  "type": "create:sandpaper_polishing",
+  "ingredients": [
+    {
+      "item": "minecraft:granite_slab"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:polished_granite_slab"
+    }
+  ]
+}

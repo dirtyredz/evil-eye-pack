@@ -1,0 +1,13 @@
+{
+  "type": "create:sandpaper_polishing",
+  "ingredients": [
+    {
+      "item": "minecraft:blackstone_slab"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:polished_blackstone_slab"
+    }
+  ]
+}

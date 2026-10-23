@@ -1,0 +1,13 @@
+{
+  "type": "create:sandpaper_polishing",
+  "ingredients": [
+    {
+      "item": "additionallanterns:blue_waxed_copper_lantern"
+    }
+  ],
+  "results": [
+    {
+      "item": "additionallanterns:blue_copper_lantern"
+    }
+  ]
+}

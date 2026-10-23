@@ -1,0 +1,13 @@
+{
+  "type": "create:sandpaper_polishing",
+  "ingredients": [
+    {
+      "item": "ars_nouveau:sconce"
+    }
+  ],
+  "results": [
+    {
+      "item": "ars_nouveau:polished_sconce"
+    }
+  ]
+}

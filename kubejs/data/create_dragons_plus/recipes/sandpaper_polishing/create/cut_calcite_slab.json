@@ -1,0 +1,13 @@
+{
+  "type": "create:sandpaper_polishing",
+  "ingredients": [
+    {
+      "item": "create:cut_calcite_slab"
+    }
+  ],
+  "results": [
+    {
+      "item": "create:polished_cut_calcite_slab"
+    }
+  ]
+}

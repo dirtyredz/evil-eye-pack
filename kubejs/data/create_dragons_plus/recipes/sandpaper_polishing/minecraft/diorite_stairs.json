@@ -1,0 +1,13 @@
+{
+  "type": "create:sandpaper_polishing",
+  "ingredients": [
+    {
+      "item": "minecraft:diorite_stairs"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:polished_diorite_stairs"
+    }
+  ]
+}

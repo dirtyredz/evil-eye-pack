@@ -1,0 +1,13 @@
+{
+  "type": "create:sandpaper_polishing",
+  "ingredients": [
+    {
+      "item": "create:cut_crimsite_stairs"
+    }
+  ],
+  "results": [
+    {
+      "item": "create:polished_cut_crimsite_stairs"
+    }
+  ]
+}

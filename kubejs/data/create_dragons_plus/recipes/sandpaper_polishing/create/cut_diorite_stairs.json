@@ -1,0 +1,13 @@
+{
+  "type": "create:sandpaper_polishing",
+  "ingredients": [
+    {
+      "item": "create:cut_diorite_stairs"
+    }
+  ],
+  "results": [
+    {
+      "item": "create:polished_cut_diorite_stairs"
+    }
+  ]
+}
