@@ -32,7 +32,9 @@ function resourceFailures(latest, kube) {
   return out;
 }
 
-const finding = (code, subject, ref, message, severity = 'fail') => ({ check: 'logs', code, subject, ref, message, severity });
+const { makeFinding, sectionResult } = require('../verdict/finding.cjs');
+
+const finding = makeFinding('logs');
 
 // mods: Set of loaded mod ids, to tell optional-compat failures (naming absent mods) from real ones.
 function checkLogs(latest, kube, knownNoise, mods) {
@@ -57,15 +59,8 @@ function checkLogs(latest, kube, knownNoise, mods) {
     seen.add(sig);
     findings.push(finding('kubejs-error', sig, null, e));
   }
-  return {
-    analysis: rep,
-    recipeFailures: rf.recipeFailures,
-    lootFailures: rf.lootFailures,
-    droppedTags: new Set(rf.tagFailures.map((t) => t.tag)),
-    findings,
-    state: findings.some((f) => f.severity === 'fail') ? 'findings' : 'passed',
-    stats: { doneSeconds: rep.doneSeconds, knownNoise: rep.known.length, freshGroups: rep.fresh.length, tagFailures: rf.tagFailures.length, lootFailures: rf.lootFailures.size, recipeFailures: rf.recipeFailures.size }
-  };
+  const stats = { doneSeconds: rep.doneSeconds, knownNoise: rep.known.length, freshGroups: rep.fresh.length, tagFailures: rf.tagFailures.length, lootFailures: rf.lootFailures.size, recipeFailures: rf.recipeFailures.size };
+  return sectionResult(findings, stats, { analysis: rep, recipeFailures: rf.recipeFailures, lootFailures: rf.lootFailures, droppedTags: new Set(rf.tagFailures.map((t) => t.tag)) });
 }
 
 module.exports = { checkLogs, resourceFailures };

@@ -6,7 +6,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { boot } = require('../../server_smoke/boot.cjs');
 const { manifestReady } = require('../verdict/protocol.cjs');
-const { makeRunServer, worldKey, restoreWorld, saveWorld, injectProbe } = require('./prepare.cjs');
+const { makeRunServer, injectProbe } = require('./prepare.cjs');
+const { worldKey, restoreWorld, saveWorld } = require('./world_cache.cjs');
 
 // The files analysis needs, copied out of the server dir (relative source -> relative destination).
 const EVIDENCE = [

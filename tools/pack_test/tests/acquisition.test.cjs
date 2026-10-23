@@ -2,7 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { checkAcquisition } = require('../checks/acquisition.cjs');
-const { compilePolicy } = require('../verdict/policy.cjs');
+const { compilePolicy, packConfigFiles, loadToolData } = require('../verdict/policy.cjs');
 
 const noPolicy = { exclude: { ids: {}, patterns: [] } };
 const tbl = (items = [], tags = []) => ({ items, tags, tables: [], blocks: [], opaque: [] });
@@ -74,4 +74,9 @@ test('exclusions by id, pattern, dedup lists and curated lists skip the item', (
 test('minecraft:air is never checked', () => {
   const r = run({ items: ['minecraft:air'] });
   assert.equal(r.stats.items, 0);
+});
+
+test('the pack files copied as evidence follow policy.json curatedLists plus the dedup files', () => {
+  assert.deepEqual(packConfigFiles({ curatedLists: ['a.json', 'b.json'] }), ['kubejs/config/dedup.json', 'kubejs/config/dedup_sources.json', 'config/emi-curation/a.json', 'config/emi-curation/b.json']);
+  assert.ok(packConfigFiles(loadToolData().policy).includes('config/emi-curation/creative.json'));
 });

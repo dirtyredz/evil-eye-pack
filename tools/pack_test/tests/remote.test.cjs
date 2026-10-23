@@ -7,8 +7,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { buildManifest, diffManifest, MANIFEST } = require('../remote/sync.cjs');
 const { encode, q } = require('../remote/ssh.cjs');
-const { lockScript } = require('../remote/anu.cjs');
-const { refreshDirLock, releaseDirLock } = require('../session/lock.cjs');
+const { lockScript, refreshDirLock, releaseDirLock } = require('../remote/dir_lock.cjs');
 
 test('sync sends only new or changed files and deletes files gone locally', () => {
   const local = { 'mods/a.jar': '10:1', 'mods/b.jar': '20:2', 'config/c.toml': '3:3' };

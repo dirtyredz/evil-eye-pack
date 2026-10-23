@@ -3,7 +3,9 @@
 // probe result: { name, ok, error?, recipe, result: {id, count, nbt?}, grid: [{slot, id, count}] (after the take) }.
 // fixture: { name, recipe, grid: [9 ids or null], expect: { id, count, nbt? }, remainders?: [{slot, id, count}] }.
 
-const finding = (code, subject, ref, message) => ({ check: 'crafting', code, subject, ref, message, severity: 'fail' });
+const { makeFinding, sectionResult } = require('../verdict/finding.cjs');
+
+const finding = makeFinding('crafting');
 
 function evaluateCraft(fx, got) {
   if (!got) return [finding('craft-not-run', fx.name, null, 'the probe returned no result for this fixture')];
@@ -22,7 +24,7 @@ function evaluateCraft(fx, got) {
 function checkCrafting(results, fixtures) {
   const byName = new Map((results || []).map((r) => [r.name, r]));
   const findings = fixtures.flatMap((fx) => evaluateCraft(fx, byName.get(fx.name)));
-  return { state: findings.length ? 'findings' : 'passed', findings, stats: { crafts: fixtures.length, failed: new Set(findings.map((f) => f.subject)).size } };
+  return sectionResult(findings, { crafts: fixtures.length, failed: new Set(findings.map((f) => f.subject)).size });
 }
 
 module.exports = { checkCrafting, evaluateCraft };

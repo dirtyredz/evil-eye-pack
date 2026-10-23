@@ -11,6 +11,8 @@ const { checkAcquisition } = require('./checks/acquisition.cjs');
 const { compilePolicy, loadToolData } = require('./verdict/policy.cjs');
 const { modeLabel, starvedBoot, starvedText } = require('./verdict/mode.cjs');
 const { checkRecipes } = require('./checks/recipes.cjs');
+const { beeProductItems } = require('./checks/bees.cjs');
+const { declaredOutputs } = require('./recipe_json.cjs');
 const { checkReferences } = require('./checks/references.cjs');
 const { checkMachines } = require('./checks/machines.cjs');
 const { checkCrafting } = require('./checks/crafting.cjs');
@@ -43,8 +45,6 @@ function incomplete(needs, sections) {
 }
 
 function recipeOutputs(recipes, registries) {
-  const { declaredOutputs } = require('./checks/recipes.cjs');
-  const { beeProductItems } = require('./checks/bees.cjs');
   const out = new Map();
   for (const r of recipes) {
     const ids = new Set(r.out ? [r.out] : []);

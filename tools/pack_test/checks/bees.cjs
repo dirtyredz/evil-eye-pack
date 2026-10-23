@@ -3,6 +3,7 @@
 // bee_breeding recipe's `offspring` are bee type ids (e.g. productivebees:rose_quartz): data-driven types that
 // exist only as the `type` NBT of the one configurable bee entity, so no registry holds them. The player holds
 // the product as the configurable spawn egg (EntityTag.type = the bee) and later as that bee's combs.
+const { isResourceId } = require('../recipe_json.cjs');
 
 const BEE_OUTPUT_KEYS = {
   'productivebees:bee_conversion': ['result'],
@@ -16,7 +17,7 @@ function beeOutputs(type, json) {
   const keys = BEE_OUTPUT_KEYS[type];
   if (!keys || !json || typeof json !== 'object') return [];
   return keys.flatMap((k) => (Array.isArray(json[k]) ? json[k] : [json[k]]))
-    .filter((v) => typeof v === 'string' && /^[a-z0-9_.-]+:[a-z0-9_/.-]+$/.test(v));
+    .filter(isResourceId);
 }
 
 // True when `id` is one of the recipe's bee outputs and the pack registers the configurable bee that carries it.

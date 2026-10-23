@@ -4,7 +4,8 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { decide, parseProbe, probeScript } = require('../remote/capacity.cjs');
-const { anuBoot, launchScript } = require('../remote/anu.cjs');
+const { anuBoot } = require('../remote/anu.cjs');
+const { launchScript } = require('../remote/scripts.cjs');
 const { modeLabel, starvedBoot, starvedText } = require('../verdict/mode.cjs');
 
 const THR = { minFreeGb: 8, maxCpuPct: 50 };

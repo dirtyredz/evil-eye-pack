@@ -5,9 +5,10 @@
 // Plus sandpaper_polishing, 256-270): only the floor applies and a changed count is not reported.
 // Assertion kinds: tag-contains {tag,item} | recipe-loaded {id} | recipe-not-loaded {id} |
 //                  recipe-uses-tag {id,tag} | recipe-output {id,item}.
-const { ingredientRefs, declaredOutputs } = require('./recipes.cjs');
+const { ingredientRefs, declaredOutputs } = require('../recipe_json.cjs');
+const { makeFinding, sectionResult } = require('../verdict/finding.cjs');
 
-const finding = (code, subject, ref, message, severity = 'fail') => ({ check: 'machines', code, subject, ref, message, severity });
+const finding = makeFinding('machines');
 
 function typeCounts(recipes) {
   const counts = {};
@@ -48,7 +49,7 @@ function checkMachines(recipes, itemTags, config) {
     const err = assertion(a, byId, itemTags);
     if (err) findings.push(finding(`assert-${a.kind}`, a.id || `#${a.tag}`, a.item || a.tag || null, `${err}${a.why ? ` (${a.why})` : ''}`));
   }
-  return { state: findings.some((f) => f.severity === 'fail') ? 'findings' : 'passed', findings, stats, counts };
+  return sectionResult(findings, stats, { counts });
 }
 
 module.exports = { checkMachines, typeCounts };
