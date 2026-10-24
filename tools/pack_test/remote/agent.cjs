@@ -20,7 +20,7 @@ process.env.SMOKE_ARTIFACTS = job.root;
 
 const procs = require('../../server_smoke/procs.cjs');
 const { execute } = require('../session/execute.cjs');
-const { refreshDirLock, releaseDirLock } = require('./dir_lock.cjs');
+const { refreshDirLock, releaseDirLock } = require('./lease/dir_lock.cjs');
 
 async function main() {
   status({ state: 'running' });

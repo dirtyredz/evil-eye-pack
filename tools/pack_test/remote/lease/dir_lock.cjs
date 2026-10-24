@@ -10,8 +10,8 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { randomUUID } = require('node:crypto');
-const cfg = require('./config.cjs');
-const { q } = require('./ssh.cjs');
+const cfg = require('../config.cjs');
+const { q } = require('../ssh.cjs');
 
 const OWNER_FILE = 'owner.json';
 

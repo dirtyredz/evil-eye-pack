@@ -12,7 +12,7 @@ const { connect, q } = require('./ssh.cjs');
 const { syncDir } = require('./sync.cjs');
 const { ensureProvisioned, javaExe, jcmdExe } = require('./provision.cjs');
 const { probeScript, parseProbe, decide } = require('./capacity.cjs');
-const { acquire, releaseScript } = require('./dir_lock.cjs');
+const { acquire, releaseScript } = require('./lease/dir_lock.cjs');
 const { launchScript, statusScript, killScript } = require('./scripts.cjs');
 const { pullEvidence } = require('./evidence.cjs');
 

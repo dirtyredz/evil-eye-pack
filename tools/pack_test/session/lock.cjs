@@ -1,6 +1,6 @@
 'use strict';
 // A single-holder lock file ({ pid, host, at, owner }) for the local staged server. A lock whose process is
-// gone, or older than staleMs, is taken over. (The ANU one-job lock is remote/dir_lock.cjs.)
+// gone, or older than staleMs, is taken over. (The ANU one-job lock is remote/lease/dir_lock.cjs.)
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');

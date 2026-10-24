@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const { acquire, refreshDirLock, releaseDirLock } = require('../remote/dir_lock.cjs');
+const { acquire, refreshDirLock, releaseDirLock } = require('../remote/lease/dir_lock.cjs');
 const { scope } = require('../../server_smoke/procs.cjs');
 const { EventEmitter } = require('node:events');
 
@@ -37,7 +37,7 @@ test('agent heartbeat ownership loss kills its children and exits 2 with an infr
     'node:path': path,
     '../../server_smoke/procs.cjs': { scope: () => owned },
     '../session/execute.cjs': { execute: () => { owned.start('fake-server', []); return new Promise(() => {}); } },
-    './dir_lock.cjs': {
+    './lease/dir_lock.cjs': {
       refreshDirLock: (dir, owner, claimId) => {
         assert.equal(claimId, 'old-claim');
         if (++refreshes > 1) throw new Error('lock held by newer-run');
