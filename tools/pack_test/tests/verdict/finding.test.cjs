@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { makeFinding, sectionResult } = require('../verdict/finding.cjs');
+const { makeFinding, sectionResult } = require('../../verdict/finding.cjs');
 
 test('makeFinding stamps the check, defaults to fail and carries evidence only when given', () => {
   const f = makeFinding('demo');

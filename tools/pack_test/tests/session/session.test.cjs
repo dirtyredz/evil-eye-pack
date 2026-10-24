@@ -5,12 +5,12 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const prep = require('../session/prepare.cjs');
-const { checkDestination } = require('../session/run_meta.cjs');
-const { WORLD } = require('../session/world_cache.cjs');
-const { execute } = require('../session/execute.cjs');
-const { analyzeRun } = require('../analyze.cjs');
-const { loadToolData } = require('../verdict/policy.cjs');
+const prep = require('../../session/prepare.cjs');
+const { checkDestination } = require('../../session/run_meta.cjs');
+const { WORLD } = require('../../session/world_cache.cjs');
+const { execute } = require('../../session/execute.cjs');
+const { analyzeRun } = require('../../analyze.cjs');
+const { loadToolData } = require('../../verdict/policy.cjs');
 
 function tmp() { return fs.mkdtempSync(path.join(os.tmpdir(), 'packtest-session-')); }
 

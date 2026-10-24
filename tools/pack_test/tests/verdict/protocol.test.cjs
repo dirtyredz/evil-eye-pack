@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { SCHEMA, validateManifest, loadRun, manifestReady } = require('../verdict/protocol.cjs');
+const { SCHEMA, validateManifest, loadRun, manifestReady } = require('../../verdict/protocol.cjs');
 
 const T = 'tok1';
 const names = ['a', 'b'];

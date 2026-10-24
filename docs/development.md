@@ -49,7 +49,7 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*.cjs
+node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
 # node tools/dedup/generate.cjs "C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods"

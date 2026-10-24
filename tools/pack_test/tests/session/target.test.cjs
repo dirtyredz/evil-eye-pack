@@ -3,7 +3,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { runTarget } = require('../session/target.cjs');
+const { runTarget } = require('../../session/target.cjs');
 
 const starved = { completed: false, timedOut: true, totalWallSeconds: 100, cpuSeconds: 1 };
 

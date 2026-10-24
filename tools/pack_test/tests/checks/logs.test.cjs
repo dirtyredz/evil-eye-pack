@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { resourceFailures, checkLogs } = require('../checks/logs.cjs');
+const { resourceFailures, checkLogs } = require('../../checks/logs.cjs');
 
 const mods = new Set(['minecraft', 'cataclysm', 'thirst', 'cozycafe', 'dramaticdoors']);
 const tag = (name, refs) => `[23Oct2026 00:26:51.102] [Worker-Main-3/ERROR] [net.minecraft.tags.TagLoader/]: Couldn't load tag ${name} as it is missing following references: ${refs}`;

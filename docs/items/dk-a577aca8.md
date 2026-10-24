@@ -2,7 +2,7 @@
 id: dk-a577aca8
 type: task
 created: 2026-10-24
-status: todo
+status: done
 since: 2026-10-24
 area:
 priority: P2

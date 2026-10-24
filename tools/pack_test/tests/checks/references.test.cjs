@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { checkReferences, lootCycles } = require('../checks/references.cjs');
+const { checkReferences, lootCycles } = require('../../checks/references.cjs');
 
 const mkLive = (over = {}) => ({
   items: new Set(['minecraft:bow', 'a:item']), blocks: new Set(['a:block']), fluids: new Set(), mods: new Set(['minecraft', 'a']),

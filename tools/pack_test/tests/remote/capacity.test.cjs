@@ -3,10 +3,10 @@
 // script, the mode label and the starvation note.
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { decide, parseProbe, probeScript } = require('../remote/capacity.cjs');
-const { anuBoot } = require('../remote/anu.cjs');
-const { launchScript } = require('../remote/scripts.cjs');
-const { modeLabel, starvedBoot, starvedText } = require('../verdict/mode.cjs');
+const { decide, parseProbe, probeScript } = require('../../remote/capacity.cjs');
+const { anuBoot } = require('../../remote/anu.cjs');
+const { launchScript } = require('../../remote/scripts.cjs');
+const { modeLabel, starvedBoot, starvedText } = require('../../verdict/mode.cjs');
 
 const THR = { minFreeGb: 8, maxCpuPct: 50 };
 const NEIGH = { lock: 'G:\\mods-ci\\lock', job: 'HerbalWitch-m12', pid: 9004, queued: 3 };
@@ -48,7 +48,7 @@ test('unreadable probe or missing numbers fall back, but only when a neighbour i
 });
 
 test('thresholds come from the remote config by default and can be overridden per call', () => {
-  const cfg = require('../remote/config.cjs');
+  const cfg = require('../../remote/config.cjs');
   assert.equal(cfg.MIN_FREE_GB, 8);
   assert.equal(cfg.MAX_CPU_PCT, 50);
   assert.equal(decide(reading({ freeGb: 12 }), { minFreeGb: 16, maxCpuPct: 50 }).mode, 'fallback');

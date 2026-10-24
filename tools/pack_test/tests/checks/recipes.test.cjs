@@ -1,8 +1,8 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { ingredientRefs, declaredOutputs, declaredOutputRefs } = require('../recipe_json.cjs');
-const { checkLive, reconcile, fallbackTags } = require('../checks/recipes.cjs');
+const { ingredientRefs, declaredOutputs, declaredOutputRefs } = require('../../recipe_json.cjs');
+const { checkLive, reconcile, fallbackTags } = require('../../checks/recipes.cjs');
 
 test('ingredientRefs reads items, tags, alternatives and custom types', () => {
   assert.deepEqual(ingredientRefs('{"item":"a:b"}'), { tags: [], items: ['a:b'], custom: [] });

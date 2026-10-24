@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { EXIT, buildReport, toJson, summarize } = require('../verdict/report.cjs');
+const { EXIT, buildReport, toJson, summarize } = require('../../verdict/report.cjs');
 
 const fail = (subject, over = {}) => ({ check: 'recipes', code: 'c', subject, severity: 'fail', message: 'msg', ...over });
 const sec = (findings, state = 'findings', over = {}) => ({ state, findings, stats: {}, ...over });

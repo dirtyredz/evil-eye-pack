@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { evaluateCraft, checkCrafting } = require('../checks/crafting.cjs');
+const { evaluateCraft, checkCrafting } = require('../../checks/crafting.cjs');
 
 const fx = { name: 'torch', recipe: 'minecraft:torch', grid: [], expect: { id: 'minecraft:torch', count: 4 } };
 const good = { name: 'torch', ok: true, recipe: 'minecraft:torch', result: { id: 'minecraft:torch', count: 4 }, grid: [] };

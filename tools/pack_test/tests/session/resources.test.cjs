@@ -4,9 +4,9 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { scanResources } = require('../session/resources.cjs');
-const { parseLenient, lootRefs } = require('../session/extract.cjs');
-const { stageEvidence } = require('../session/evidence.cjs');
+const { scanResources } = require('../../session/resources.cjs');
+const { parseLenient, lootRefs } = require('../../session/extract.cjs');
+const { stageEvidence } = require('../../session/evidence.cjs');
 
 test('parseLenient accepts BOM, comments and trailing commas', () => {
   assert.deepEqual(parseLenient(String.fromCharCode(0xfeff) + '{"a":1}'), { json: { a: 1 }, lenient: true });

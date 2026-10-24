@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { checkMachines } = require('../checks/machines.cjs');
+const { checkMachines } = require('../../checks/machines.cjs');
 
 const recs = (type, n) => Array.from({ length: n }, (_, i) => ({ id: `${type}/${i}`, type, ings: [], out: 'a:o' }));
 const run = (recipes, config, tags = new Map()) => checkMachines(recipes, tags, { types: {}, assertions: [], ...config });

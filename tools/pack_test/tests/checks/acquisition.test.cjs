@@ -1,8 +1,8 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { checkAcquisition } = require('../checks/acquisition.cjs');
-const { compilePolicy, packConfigFiles, loadToolData } = require('../verdict/policy.cjs');
+const { checkAcquisition } = require('../../checks/acquisition.cjs');
+const { compilePolicy, packConfigFiles, loadToolData } = require('../../verdict/policy.cjs');
 
 const noPolicy = { exclude: { ids: {}, patterns: [] } };
 const tbl = (items = [], tags = []) => ({ items, tags, tables: [], blocks: [], opaque: [] });

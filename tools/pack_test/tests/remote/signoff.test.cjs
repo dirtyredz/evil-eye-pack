@@ -7,10 +7,10 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { spawn, spawnSync } = require('node:child_process');
-const { abortRegistry } = require('../session/aborts.cjs');
-const { killScript } = require('../remote/scripts.cjs');
-const { lockScript, refreshDirLock } = require('../remote/lease/dir_lock.cjs');
-const { makeRunServer, STAGE_RUNTIME } = require('../session/prepare.cjs');
+const { abortRegistry } = require('../../session/aborts.cjs');
+const { killScript } = require('../../remote/scripts.cjs');
+const { lockScript, refreshDirLock } = require('../../remote/lease/dir_lock.cjs');
+const { makeRunServer, STAGE_RUNTIME } = require('../../session/prepare.cjs');
 
 const tmp = (p) => fs.mkdtempSync(path.join(os.tmpdir(), p));
 const win = { skip: process.platform !== 'win32' };
@@ -20,12 +20,12 @@ function loadRunOnAnu(stubs) {
   const names = { ssh: 'ssh', sync: 'sync', provision: 'provision', capacity: 'capacity', evidence: 'evidence', dirLock: 'lease/dir_lock' };
   const saved = {};
   for (const [k, file] of Object.entries(names)) {
-    const id = require.resolve(`../remote/${file}.cjs`);
+    const id = require.resolve(`../../remote/${file}.cjs`);
     require(id);
     saved[id] = { ...require.cache[id].exports };
     Object.assign(require.cache[id].exports, stubs[k]);
   }
-  const anuId = require.resolve('../remote/anu.cjs');
+  const anuId = require.resolve('../../remote/anu.cjs');
   delete require.cache[anuId];
   const { runOnAnu } = require(anuId);
   return { runOnAnu, restore() { delete require.cache[anuId]; for (const [id, ex] of Object.entries(saved)) Object.assign(require.cache[id].exports, ex); } };

@@ -1,9 +1,9 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { beeOutputs, isBeeOutput, beeProductItems, CONFIGURABLE_ENTITY, CONFIGURABLE_EGG } = require('../checks/bees.cjs');
-const { checkLive } = require('../checks/recipes.cjs');
-const { recipeOutputs } = require('../checks/snapshot.cjs');
+const { beeOutputs, isBeeOutput, beeProductItems, CONFIGURABLE_ENTITY, CONFIGURABLE_EGG } = require('../../checks/bees.cjs');
+const { checkLive } = require('../../checks/recipes.cjs');
+const { recipeOutputs } = require('../../checks/snapshot.cjs');
 
 const BC = 'productivebees:bee_conversion';
 const BB = 'productivebees:bee_breeding';

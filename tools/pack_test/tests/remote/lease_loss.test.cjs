@@ -3,9 +3,9 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { startLease } = require('../remote/lease/lifecycle.cjs');
-const { acquire, refreshDirLock, releaseDirLock } = require('../remote/lease/dir_lock.cjs');
-const { scope } = require('../../server_smoke/procs.cjs');
+const { startLease } = require('../../remote/lease/lifecycle.cjs');
+const { acquire, refreshDirLock, releaseDirLock } = require('../../remote/lease/dir_lock.cjs');
+const { scope } = require('../../../server_smoke/procs.cjs');
 const { EventEmitter } = require('node:events');
 
 test('a stale claim cannot refresh or release a newer claim of the same run', () => {

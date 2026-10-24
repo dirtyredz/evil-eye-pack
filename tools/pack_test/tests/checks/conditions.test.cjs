@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { evaluate, evaluateAll } = require('../checks/conditions.cjs');
+const { evaluate, evaluateAll } = require('../../checks/conditions.cjs');
 
 const state = {
   mods: new Set(['minecraft', 'create']),

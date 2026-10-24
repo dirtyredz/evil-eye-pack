@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { findingKey, validateBaseline, compareFindings, compareLogs, candidate } = require('../verdict/baseline.cjs');
+const { findingKey, validateBaseline, compareFindings, compareLogs, candidate } = require('../../verdict/baseline.cjs');
 
 const f = (code, subject, over = {}) => ({ check: 'recipes', code, subject, severity: 'fail', message: 'm', ...over });
 
