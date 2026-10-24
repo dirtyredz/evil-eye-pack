@@ -19,7 +19,7 @@ const OWNER_FILE = 'owner.json';
 // heartbeat age; a missing or malformed one (a heartbeat mid-replace, or a launcher between mkdir and its
 // first write) is BUSY until the lock DIRECTORY is older than the stale threshold (its mtime moves on every
 // atomic heartbeat replace). Parameters exist so tests can aim the script at a temp directory.
-function lockScript(owner, lockDir = cfg.LOCK, staleMs = cfg.LOCK_STALE_MS, claimId = randomUUID()) {
+function lockScript(runId, lockDir = cfg.LOCK, staleMs = cfg.LOCK_STALE_MS, claimId = randomUUID()) {
   return `
 $lock = ${q(lockDir)}; $staleMs = ${staleMs}; $now = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
 if (Test-Path $lock) {
@@ -34,7 +34,7 @@ if (Test-Path $lock) {
 }
 try { New-Item -ItemType Directory $lock -ErrorAction Stop | Out-Null } catch { Write-Output 'BUSY lock race'; exit 0 }
 $tmp = Join-Path $lock '${OWNER_FILE}.tmp'
-Set-Content -Encoding ascii -LiteralPath $tmp -Value (@{ owner = ${q(owner)}; claimId = ${q(claimId)}; at = $now; host = 'valhalla-launcher' } | ConvertTo-Json -Compress)
+Set-Content -Encoding ascii -LiteralPath $tmp -Value (@{ owner = ${q(runId)}; claimId = ${q(claimId)}; at = $now; host = 'valhalla-launcher' } | ConvertTo-Json -Compress)
 Move-Item -Force -LiteralPath $tmp -Destination (Join-Path $lock '${OWNER_FILE}')
 Write-Output 'LOCKED'`;
 }
