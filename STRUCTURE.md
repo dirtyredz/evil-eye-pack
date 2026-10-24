@@ -19,6 +19,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |   |   `-- emi_curation/
 |   |       |-- decor/
 |   |       `-- ui/
+|   |           `-- mods/
 |   |-- config/
 |   |-- data/
 |   |-- server_scripts/
@@ -60,6 +61,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
 - `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter
 - `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the mark-as-decor key handler, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
+- `kubejs/client_scripts/emi_curation/ui/mods/` ? Mods dropdown, source entries, layout, list policy and text drawing.
 - `kubejs/startup_scripts/` — `emi_curation_keys.js` registers the "EMI Curation" key mapping (startup-only in Forge); `kubejs/assets/emi_curation/lang/` names it
 - `kubejs/server_scripts/dedup.js` — permanent duplicate recipe/tag cleanup; no stack conversion. Survivor choices: `docs/duplicate-cleanup.md`.
 - `kubejs/config/dedup.json` — authored duplicate policy; the generator never writes this input.
@@ -103,14 +105,14 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 | `emi_curation/ui/button.js` (50) | the CLEAN/ALL button; screen handlers registered through `forge_hooks`. **The Mods menu depends on this button's rect and on load order:** `mods_menu.js` reads `ns.ui.button` to sit beside it, so `button.js` must stay at a higher priority than `mods_menu.js`. |
 | `emi_curation/decor/decor_policy.js` (89) | pure DECOR rules: parse/validate `decor.json`, `classify(policy, id, inTags)` over the manual-exception, whole-mod and tag layers. No Java. |
 | `emi_curation/decor/decor_tags.js` (84) | Java side of the tag layer: item and block tags from the live registries into one cached `HashSet` of Items; `reset()` per EMI generation |
-| `emi_curation/ui/mods_layout.js` (48) | pure dropdown geometry, no Java: `layoutMenu`, `paginate`/`layoutPaged` (pages plus the Prev/Next strip), `shiftClear`, `inside` |
-| `emi_curation/ui/mods_source.js` (49) | the Mods menu's entries: namespaces owning a stack of the current index, `Platform` names, overrides from `mods.json`; cached per index list |
-| `emi_curation/ui/mods_list.js` (47) | pure Mods menu data logic, no Java: `parseOverrides`, `buildEntries` (A-Z, rename, hide, pin), `nextSearch` |
+| `emi_curation/ui/mods/mods_layout.js` (48) | pure dropdown geometry, no Java: `layoutMenu`, `paginate`/`layoutPaged` (pages plus the Prev/Next strip), `shiftClear`, `inside` |
+| `emi_curation/ui/mods/mods_source.js` (49) | the Mods menu's entries: namespaces owning a stack of the current index, `Platform` names, overrides from `mods.json`; cached per index list |
+| `emi_curation/ui/mods/mods_list.js` (47) | pure Mods menu data logic, no Java: `parseOverrides`, `buildEntries` (A-Z, rename, hide, pin), `nextSearch` |
 | `emi_curation/decor/decor_local.js` (88) | pure local DECOR marks: parse/serialize `decor-local.json`, `lookup` (item mark, then mod mark, else null), the automatic/decor/not-decor `cycle*`, `load`/`mark` over an injected IO, and `kubeIo()` (KubeJS `JsonIO`) |
 | `emi_curation/ui/decor_mark.js` (43) | the mark-as-decor key: Forge `KeyPressed.Pre` listener, hovered item from EMI (`emiScreen.hoveredEmiStack`) or the vanilla slot, toast, then `decorState.mark` and `session.refreshDecor()`. The key mapping comes from `kubejs/startup_scripts/emi_curation_keys.js` as `global.emiCurationDecorKey` (Forge accepts key mappings only at startup; without it this script logs once and does nothing). |
 | `emi_curation/ui/decor_button.js` (44) | the DECOR: SHOWN/HIDDEN button (label from `decorState`; pressability and the toggle through `session.canPressDecor`/`toggleDecor`, which re-apply the index); loads after `button.js` and `mods_menu.js` so it settles beside them in one pass (Forge calls listeners in registration order) |
-| `emi_curation/ui/mods_text.js` (46) | the text layer: `draw(g, font, text, x, y, color)` via `drawWordWrap` and `width(text)` estimated from font metrics; never `drawString`/`Font.width` (see GOTCHAS) |
-| `emi_curation/ui/mods_menu.js` (45) | the Mods dropdown: state, handlers and wiring. Builds its rows from `mods_source`, pages them with `mods_layout`, places the button beside CLEAN/ALL (`ns.ui.button`, `placement`), draws the rows in `Render.Post`, sets EMI's search text. Registered through `forge_hooks`. |
+| `emi_curation/ui/mods/mods_text.js` (46) | the text layer: `draw(g, font, text, x, y, color)` via `drawWordWrap` and `width(text)` estimated from font metrics; never `drawString`/`Font.width` (see GOTCHAS) |
+| `emi_curation/ui/mods/mods_menu.js` (45) | the Mods dropdown: state, handlers and wiring. Builds its rows from `mods_source`, pages them with `mods_layout`, places the button beside CLEAN/ALL (`ns.ui.button`, `placement`), draws the rows in `Render.Post`, sets EMI's search text. Registered through `forge_hooks`. |
 | `tools/emi_curation/tests/support/` (`harness.cjs`, `fake_emi.cjs`, `fixture.cjs`, `decor_world.cjs`) | Node harness that loads the production scripts (all subfolders) into a `vm` context in KubeJS priority order (plus `boot()`), a fake EMI/Java world to drive them, and the shared test world data (`fixture()`: named stacks and recipes) |
 | `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `mods_menu.test.cjs`, `decor.test.cjs`, `decor_local.test.cjs` (shared world: `support/decor_world.cjs`), `interop.test.cjs` | session lifecycle and views; button placement and listeners; Mods menu behaviour, auto list, paging and pure logic; DECOR rules, toggle, persistence and button; Java list-copy handling |
 | `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs` | policy rules (including the real curation lists), class filter, EMI config |
@@ -139,7 +141,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 [EMI](docs/emi.md) is the architecture doc for the EMI subsystem.
 
 KubeJS loads client scripts in descending `// priority:` order. Each script adds one
-namespace to `global.emiCuration`. Only `session.js` (through `ClientEvents`), `ui/button.js`, `ui/mods_menu.js`, `ui/decor_button.js` and `ui/decor_mark.js` (through `ui/forge_hooks.js`) register event
+namespace to `global.emiCuration`. Only `session.js` (through `ClientEvents`), `ui/button.js`, `ui/mods/mods_menu.js`, `ui/decor_button.js` and `ui/decor_mark.js` (through `ui/forge_hooks.js`) register event
 handlers.
 
 ## Dependencies

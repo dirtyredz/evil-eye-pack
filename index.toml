@@ -2433,23 +2433,23 @@ file = "kubejs/client_scripts/emi_curation/ui/forge_hooks.js"
 hash = "f4f4a10d1feb9fdca15ab896205875f812a2c1eb515147cdcdef335977fd70bf"
 
 [[files]]
-file = "kubejs/client_scripts/emi_curation/ui/mods_layout.js"
+file = "kubejs/client_scripts/emi_curation/ui/mods/mods_layout.js"
 hash = "2b5fc3056f859f25e9ab96f7f6a4d7c9b473b262a08c3bf6266c171a3ff12115"
 
 [[files]]
-file = "kubejs/client_scripts/emi_curation/ui/mods_list.js"
+file = "kubejs/client_scripts/emi_curation/ui/mods/mods_list.js"
 hash = "9fa4f0dbcd895f651552053fba634f01c076d61be47c1ac8246340478ab81f60"
 
 [[files]]
-file = "kubejs/client_scripts/emi_curation/ui/mods_menu.js"
+file = "kubejs/client_scripts/emi_curation/ui/mods/mods_menu.js"
 hash = "c0b0763079e27f63144a9f7e2f64f3b461347f5ff286396a1e744ce091676bfa"
 
 [[files]]
-file = "kubejs/client_scripts/emi_curation/ui/mods_source.js"
+file = "kubejs/client_scripts/emi_curation/ui/mods/mods_source.js"
 hash = "e6667b6e4747cb472cf4f255e497cc834bf1955499bb7ca2fa10cf59ed067022"
 
 [[files]]
-file = "kubejs/client_scripts/emi_curation/ui/mods_text.js"
+file = "kubejs/client_scripts/emi_curation/ui/mods/mods_text.js"
 hash = "a1b5b75b2e89da5a93b65e26e925b0c5259186cc642a90d0d6b678159686a8d1"
 
 [[files]]
