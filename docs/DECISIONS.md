@@ -2,6 +2,14 @@
 
 Newest first.
 
+## 2026-10-24 — EMI toolbar ownership and shared Node data I/O
+
+**Decision.** `ui/placement.js` owns the toolbar rect registry and the CLEAN, Mods and DECOR widget names. Widgets publish live visible rectangles; siblings consume geometry without reading each other's widget state. Unknown names log once per script load. `recipe_view.js` owns `recipeState` and the recipe-wrapper lifecycle; the existing migration shim remains for reload compatibility.
+
+Node tools share `tools/data_io/`: `zip_reader.cjs` reads ZIP entries, `walk.cjs` traverses jars with caller-selected entries and optional nesting, and `files.cjs` reads strict JSON and hashes bytes with SHA-256. Coverage, dedup and pack-test depend on this folder; ANU code sync includes it.
+
+**Why.** Geometry and recipe-wrapper state belong with the components that manage them. A neutral data I/O folder removes the jar walk's dependency on the coverage CLI and consolidates the thin file-data and jar-data folders. Traversal policy, non-SHA-256 jar hashes and in-game button behavior remain unchanged.
+
 ## 2026-10-24 — Dedup data ownership and acquisition exclusion registry
 
 **Decision.**

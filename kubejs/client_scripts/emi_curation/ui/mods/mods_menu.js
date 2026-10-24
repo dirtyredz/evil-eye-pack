@@ -33,7 +33,7 @@
     return ns.modsUi || (ns.modsUi = { screen: null, button: null, items: [], rows: [], rects: [], open: false, mouse: null, page: 0, pageCount: 1 })
   }
 
-  ns.placement.register('mods', function () { return ns.placement.visibleRect(ui().button) })
+  ns.placement.register(ns.placement.MODS, function () { return ns.placement.visibleRect(ui().button) })
 
   function menuItems() {
     var items = [{ label: CLEAR_LABEL, modid: null }]
@@ -88,7 +88,7 @@
   }
 
   // Rects of the visible CLEAN and DECOR buttons.
-  function otherButtons() { return ns.placement.rects(['clean', 'decor']) }
+  function otherButtons() { return ns.placement.rects([ns.placement.CLEAN, ns.placement.DECOR]) }
 
   function setOpen(u, open) {
     u.open = open
@@ -155,7 +155,7 @@
       if (u.open) setOpen(u, false)
       return
     }
-    var clean = ns.placement.rect('clean')
+    var clean = ns.placement.rect(ns.placement.CLEAN)
     if (clean != null) ctx.avoid.push(clean)
     var r = ns.placement.chooseRect(ctx, BUTTON_W, preferredSpots(ctx, clean))
     u.button.setX(r.x)

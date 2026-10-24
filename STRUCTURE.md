@@ -28,6 +28,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |-- resourcepacks/
 |-- shaderpacks/
 `-- tools/
+    |-- data_io/
     |-- dedup/
     |   `-- tests/
     |-- emi_coverage/
@@ -42,6 +43,10 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |   |   `-- lease/
     |   |-- session/
     |   |-- tests/
+    |   |   |-- checks/
+    |   |   |-- remote/
+    |   |   |-- session/
+    |   |   `-- verdict/
     |   `-- verdict/
     |-- packwiz/
     |   `-- tests/
@@ -60,8 +65,8 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `defaultconfigs/` — Forge default (per-world) configs
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
 - `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter
-- `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the mark-as-decor key handler, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
-- `kubejs/client_scripts/emi_curation/ui/mods/` ? Mods dropdown, source entries, layout, list policy and text drawing.
+- `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the mark-as-decor key handler and shared UI infrastructure (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
+- `kubejs/client_scripts/emi_curation/ui/mods/` — Mods dropdown, source entries, layout, list policy and text drawing.
 - `kubejs/startup_scripts/` — `emi_curation_keys.js` registers the "EMI Curation" key mapping (startup-only in Forge); `kubejs/assets/emi_curation/lang/` names it
 - `kubejs/server_scripts/dedup.js` — permanent duplicate recipe/tag cleanup; no stack conversion. Survivor choices: `docs/duplicate-cleanup.md`.
 - `kubejs/config/dedup.json` — authored duplicate policy; the generator never writes this input.
@@ -70,6 +75,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/assets/emi/index/stacks/dedup.json` — generated permanent EMI removals.
 - `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
+- `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte SHA-256.
 - `tools/dedup/` — pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions; `hidden_reasons.json` holds the reason for every `hiddenOnly` id (see docs/development.md "Known exceptions registry").
 - `tools/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
 - `tools/packwiz/tests/`, `tools/server_smoke/tests/`, `tools/pack_test/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs`)
@@ -86,7 +92,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |---|---|
 | `kubejs/server_scripts/dedup.js` | applies authored dedup policy and generated recipe/tag cleanup; hand-written server recipes go in a script named for the concern, not dedup.js |
 | `kubejs/server_scripts/uranium.js` | hand-written Alex's Caves / Create crushed-uranium → yellorium smelting and blasting recipes |
-| `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (`readTable` is the one `key = "value"` table reader), `isMetafile`, `.packwizignore`, byte hashing, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
+| `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (`readTable` is the one `key = "value"` table reader), `isMetafile`, `.packwizignore`, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
 | `tools/packwiz/rehash.cjs` | rebuild `index.toml` membership and hashes, then `pack.toml`'s index hash |
 | `tools/packwiz/verify_hashes.cjs` | check the hash chain, index membership and optionally jar hashes |
 | `tools/packwiz/serve.cjs` | serve the containing checkout on `127.0.0.1` over HTTP (not used by MultiMC: local instances install from the file path) |
@@ -103,7 +109,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 | `emi_curation/ui/emi_screen.js` (57) | the one adapter over `EmiScreenManager`'s screen state: `searchWidget`, `searchFocused`, `hoveredEmiStack(x, y)`, `panelAt(x, y)`. Used by `placement.js`, `mods_menu.js` and `decor_mark.js`. |
 | `emi_curation/ui/placement.js` (55) | shared button placement from EMI's search bounds: pure `chooseRect`, `searchPlaced`, live `layoutContext`/`usableLayout`; toolbar rect registry (`register`, `rect`, `rects`), with live visible rects published by each widget |
 | `emi_curation/ui/screen_button.js` (54) | `makeScreenButton`: shared CLEAN/DECOR widget holder, placement, label, guarded press/refresh and reloadable Forge handler registration; called by the button configs at their original priorities |
-| `emi_curation/ui/button.js` (50) | the CLEAN/ALL button config for `makeScreenButton`. Publishes the CLEAN rect to `placement`; priorities preserve CLEAN ? Mods ? DECOR placement in one frame. |
+| `emi_curation/ui/button.js` (50) | the CLEAN/ALL button config for `makeScreenButton`. Publishes the CLEAN rect to `placement`; priorities preserve CLEAN → Mods → DECOR placement in one frame. |
 | `emi_curation/decor/decor_policy.js` (89) | pure DECOR rules: parse/validate `decor.json`, `classify(policy, id, inTags)` over the manual-exception, whole-mod and tag layers. No Java. |
 | `emi_curation/decor/decor_tags.js` (84) | Java side of the tag layer: item and block tags from the live registries into one cached `HashSet` of Items; `reset()` per EMI generation |
 | `emi_curation/ui/mods/mods_layout.js` (48) | pure dropdown geometry, no Java: `layoutMenu`, `paginate`/`layoutPaged` (pages plus the Prev/Next strip), `shiftClear`, `inside` |
@@ -134,9 +140,13 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 | `tools/pack_test/checks/` | pure checks over the evidence: `recipes` (+ `conditions` evaluator), `references`, `acquisition`, `bees` (Productive Bees outputs), `machines`, `crafting`, `dedup`, `logs`; `snapshot` indexes probe registries/tags and recipe/bee products for the checks; each check builds findings with `verdict/finding` |
 | `tools/pack_test/verdict/` | `protocol` (probe contract and validation), `baseline` (finding identity, new/known/resolved), `report` (report.json, summary.txt, exit code), `mode` (run mode label, starved-boot rule), `policy` (tool data, the acquisition exclusion policy, the pack config files copied as evidence), `finding` (`makeFinding(check)` and `sectionResult`, the one finding shape) |
 | `tools/pack_test/remote/` | ANU target: `config`, `ssh` (encoded PowerShell over SSH, scp), `sync` (manifest-diff tar sync), `provision` (portable Node/JDK, README), `capacity` (alone/shared/fallback decision + read-only load probe), `lease/` (`dir_lock`: owner.json contract, stale rule incl. unreadable owners, PowerShell take/release, `{ runId, claimId }` lease values, `ownsLease` and atomic Node heartbeat; `lifecycle`: `startLease`, heartbeat and terminal stop/cleanup), `scripts` (launch, status, command-line-guarded kill PowerShell), `evidence` (pull the run's evidence home), `anu` (the sync, launch, poll, pull orchestrator), `agent` (runs on ANU with explicit job Java/jcmd and run/cache paths; lease loss kills owned children and exits 2) |
-| `tools/pack_test/tests/` | `checks/`: evidence checks and recipe/bee product indexing; `remote/`: capacity, sync, lease lifecycle and guarded process cleanup; `verdict/`: protocol, baseline, finding and report; `session/`: locks, resource extraction, evidence, boot lifecycle and target sequencing. Run all four with `node --test tools/pack_test/tests/*/*.cjs`. |
+| `tools/pack_test/tests/` | `checks/`: evidence checks and recipe/bee product indexing; `remote/`: `dir_lock.test.cjs`, capacity, sync, lease lifecycle and guarded process cleanup; `verdict/`: protocol, baseline, finding and report; `session/`: locks, `jar_walk.test.cjs`, resource extraction, boot lifecycle and target sequencing. Run all four with `node --test tools/pack_test/tests/*/*.cjs`. |
 | `tools/dedup/catalog.cjs`, `generate.cjs`, `overrides.cjs`, `hidden_reasons.json` | `catalog`: scan of the pinned jars (duplicate groups); `generate`: writes `kubejs/data/<mod>/` overrides and the EMI removals from `dedup.json` after a jar change, never downloads; `overrides`: computes `dedup.json` block-tag removals and data-only patches for custom serializers (counts, chances, conditions kept); `hidden_reasons.json`: one recorded reason per `hiddenOnly` id (guarded by its test) |
-| `tools/emi_coverage/scan_jars.cjs`, `zip_reader.cjs` | read-only scan of mod jars for viewer plugin coverage; `zip_reader` is its dependency-free jar reader |
+| `tools/emi_coverage/scan_jars.cjs` | read-only scan of mod jars for viewer plugin coverage using data_io's ZIP reader |
+| `tools/data_io/zip_reader.cjs` | dependency-free ZIP entry listing and decompression; shared by coverage and jar traversal |
+| `tools/data_io/walk.cjs` | ordered jar traversal, optional jarjar recursion, caller-owned selection and parsing |
+| `tools/data_io/files.cjs` | strict JSON file reading (`readJson`) and byte SHA-256 (`sha256`) |
+| `tools/dedup/policy.cjs` | ordered retired ids for Node consumers; shipped KubeJS mirror pinned by `tests/policy.test.cjs` |
 
 [Architecture](docs/ARCHITECTURE.md) maps the automated pack-test flow;
 [EMI](docs/emi.md) is the architecture doc for the EMI subsystem.
@@ -149,6 +159,8 @@ handlers.
 
 - The curation scripts depend on **EMI internals** (`EmiStackList`, `EmiRecipes.manager`, `EmiSearch`, `EmiScreenManager`, `EmiReloadManager`, `EmiHidden`). Those are confined to `index_view.js` (also its `EmiScreenManager` refresh), `recipe_view.js`, `hiding.js` (`EmiHidden`), `session.js` (`EmiReloadManager`) and `ui/emi_screen.js` (the `EmiScreenManager` search widget and hover lookups; `placement.js`, `mods_menu.js` and `decor_mark.js` go through it). EMI is pinned to 1.1.24+1.20.1+forge, so re-verify these before changing its version.
 - JEI must stay installed: EMI's JEMI bridge only loads JEI plugins when JEI is present.
+- `tools/pack_test/session/resources.cjs` depends on `verdict/policy.cjs` for the pack config files copied as evidence.
+- Node sleeps use `node:timers/promises`; process priority/CPU queries require an explicit owning scope.
 - Tooling needs Node 22 and git (`rehash.cjs` lists files with `git ls-files`). There is no packwiz CLI, Python or build step.
 - The installer is `packwiz-installer-bootstrap.jar` in `C:/Users/dirty/MultiMC/packwiz/`, outside the repo. See `docs/development.md`.
 - The pack test needs `ssh`/`scp`/`tar` on Valhalla for its ANU target, and on ANU only what `remote/provision.cjs` installs under `C:\Tools\evil-eye-pack`.
@@ -157,15 +169,6 @@ handlers.
 
 Baseline review 2026-10-12. Remaining debt is filed in Docket (`docs/items/`, `dk list`):
 
-- Recipe-wrapper lifecycle still lives in `session.js`; it belongs with `recipe_view` (dk-b787a93f).
-- Classification is cached in more than one place; one cache is wanted (dk-8a0232a6).
 - The EMI views rely on public-but-internal EMI fields. A custom mod would avoid that but would need building and hosting. Rejected for now; see `docs/DECISIONS.md`.
 
 Last full review: 2026-10-12
-
-### Shared Node data operations
-
-- `tools/dedup/policy.cjs`: ordered retired ids for all Node consumers; the shipped KubeJS mirror is pinned by `tests/policy.test.cjs`.
-- `tools/jar_data/walk.cjs`: ordered jar entry traversal, optional jarjar recursion, caller-owned selection and parsing.
-- `tools/file_data/`: strict JSON file reading (`json.cjs`) and byte SHA-256 (`hash.cjs`). Sleeps use `node:timers/promises`.
-- Process priority/CPU queries require an explicit owning scope; no module-global process scope remains.

@@ -12,9 +12,18 @@
 (function (ns) {
   // Widgets publish live getters; consumers see geometry, never sibling widget state.
   // Rebuilt on script reload. A null rect means absent or hidden.
-  var toolbar = {}
+  var CLEAN = 'clean', MODS = 'mods', DECOR = 'decor'
+  var toolbar = Object.create(null)
+  var unregistered = Object.create(null)
   function register(name, getRect) { toolbar[name] = getRect }
-  function rect(name) { return toolbar[name] ? toolbar[name]() : null }
+  function rect(name) {
+    if (toolbar[name]) return toolbar[name]()
+    if (!unregistered[name]) {
+      unregistered[name] = true
+      ns.diag.info('unregistered toolbar widget: ' + name)
+    }
+    return null
+  }
   function rects(names) {
     var out = []
     for (var i = 0; i < names.length; i++) {
@@ -110,6 +119,7 @@
   }
 
   ns.placement = {
+    CLEAN: CLEAN, MODS: MODS, DECOR: DECOR,
     register: register, rect: rect, rects: rects, visibleRect: visibleRect,
     GAP: GAP, overlaps: overlaps, emiButtonRects: emiButtonRects, searchPlaced: searchPlaced,
     chooseRect: chooseRect, layoutContext: layoutContext, usableLayout: usableLayout

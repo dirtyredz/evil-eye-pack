@@ -92,18 +92,18 @@ test('non-container screens get no button; the button is inactive while EMI load
 
 test('placement avoids the container, EMI buttons and sidebar panels', () => {
   const c = boot();
-  const B = c.ns().button;
+  const chooseRect = ctx => c.ns().placement.chooseRect(ctx, 66);
   const base = { screen: { w: 427, h: 240 }, search: { x: 133, y: 219, w: 160, h: 18 }, avoid: [] };
-  assert.deepEqual({ ...B.chooseRect(base) }, { x: 65, y: 219, w: 66, h: 18 });
+  assert.deepEqual({ ...chooseRect(base) }, { x: 65, y: 219, w: 66, h: 18 });
   // A sidebar panel covering the left slot pushes it to the right of the search bar.
   const panel = (x, y) => x < 132 && y > 200;
-  assert.deepEqual({ ...B.chooseRect({ ...base, isPanelAt: panel }) }, { x: 295, y: 219, w: 66, h: 18 });
+  assert.deepEqual({ ...chooseRect({ ...base, isPanelAt: panel }) }, { x: 295, y: 219, w: 66, h: 18 });
   // A tall container (AE2 terminal) covering both sides pushes it above the search bar.
   const tall = { x: 120, y: 0, w: 240, h: 240 };
-  const r = B.chooseRect({ ...base, search: { x: 133, y: 219, w: 160, h: 18 }, avoid: [tall], isPanelAt: () => false });
+  const r = chooseRect({ ...base, search: { x: 133, y: 219, w: 160, h: 18 }, avoid: [tall], isPanelAt: () => false });
   assert.deepEqual({ ...r }, { x: 46, y: 219, w: 66, h: 18 });
   // Narrow screen: everything blocked -> clamped on screen.
-  const narrow = B.chooseRect({ screen: { w: 170, h: 100 }, search: { x: 5, y: 80, w: 160, h: 18 }, avoid: [{ x: 0, y: 0, w: 170, h: 100 }] });
+  const narrow = chooseRect({ screen: { w: 170, h: 100 }, search: { x: 5, y: 80, w: 160, h: 18 }, avoid: [{ x: 0, y: 0, w: 170, h: 100 }] });
   assert.ok(narrow.x >= 0 && narrow.x + narrow.w <= 170);
 });
 
@@ -183,4 +183,18 @@ test('shared toolbar buttons held across reloads use current actions and guard p
     assert.doesNotThrow(() => added[i].press());
   }
   assert.equal(c.logs.filter(l => /press.*press failed/.test(l[1])).length, 2);
+});
+
+test('toolbar reports an unregistered name once and permits later registration', () => {
+  const c = boot();
+  const messages = [];
+  c.ns().diag.info = msg => messages.push(msg);
+  const placement = c.ns().placement;
+  assert.equal(placement.rect('missing-widget'), null);
+  assert.equal(placement.rect('missing-widget'), null);
+  assert.equal(messages.length, 1);
+  assert.match(messages[0], /missing-widget/);
+  placement.register('missing-widget', () => ({ x: 1 }));
+  assert.equal(placement.rect('missing-widget').x, 1);
+  assert.equal(messages.length, 1);
 });

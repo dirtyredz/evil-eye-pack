@@ -8,7 +8,7 @@ and how to test a change in the game before it is pushed.
 | Path (under `C:/Users/dirty/`) | Responsibility |
 |---|---|
 | `projects/evil-eye-pack/` | Main checkout (`main`). Pack files keep their layout. |
-| `projects/worktrees/evil-eye-pack/<name>/` | Linked worktrees for experiments (none kept after the EMI adoption). |
+| `projects/worktrees/evil-eye-pack/<name>/` | Linked worktrees for isolated experiments and implementation branches. |
 | `projects/artifacts/evil-eye-pack/jobs/<date-task>/` | Dispatch prompts, plans, reports and their `.events.jsonl` / `.job.json` / `.stderr.log` sidecars. |
 | `MultiMC/instances/Evil Eye Stable/` | Display name **Evil Eye (Stable)**. The owner's real worlds. Installs published `main`. |
 | `MultiMC/instances/Evil Eye Local/` | Disposable copy of Stable (no saves). Installs the main checkout from its `pack.toml` file path. |

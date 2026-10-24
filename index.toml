@@ -2414,11 +2414,11 @@ hash = "71c904a0dd27bab703d1ebb264b465d8571d95787591a88364bed00c65a887db"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/button.js"
-hash = "09229f83d304fac211d8be95320637f31f7f772421f141a9799a456e2b4cdca1"
+hash = "36684fe8fbefb4e23cacf2ade99568a5e8e67f1f0b301584c81b86117b13aef7"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/decor_button.js"
-hash = "5e76fa3deeda701d5fec057fc0c00a96fdae8d7c896fb1e78ea812e71ad6b5c6"
+hash = "74d930bcf1498bec6934ccccaeece3fae307521c330939a910c00a9f16e77ead"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/decor_mark.js"
@@ -2442,7 +2442,7 @@ hash = "9fa4f0dbcd895f651552053fba634f01c076d61be47c1ac8246340478ab81f60"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/mods/mods_menu.js"
-hash = "4b4b23bc3da2ee2a1f68bcfd092a4a2c8c57f863c38091e0533a0a2325a3ca11"
+hash = "5b9ff2d3525d836dcee6b50a0f96eb8d4fd687c5a167af8812cdc5a990b00ed8"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/mods/mods_source.js"
@@ -2454,11 +2454,11 @@ hash = "a1b5b75b2e89da5a93b65e26e925b0c5259186cc642a90d0d6b678159686a8d1"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/placement.js"
-hash = "ebb2f3064955b703544b6eeb2dc112534bae5a5cfb946b28d126452cb8dc401d"
+hash = "71bec2ca4090619a5e4955caa3794f103bf8d72be011110966e51b9653b649f9"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/screen_button.js"
-hash = "6b99a6e47a898a8a15769a6169635661f4daf8e13329cb9f38227fb58df81567"
+hash = "1d9e34eb05d4ac28ce58c4dabb1276f78189491aefebba23ef9dbe067cd10ac8"
 
 [[files]]
 file = "kubejs/config/dedup.json"

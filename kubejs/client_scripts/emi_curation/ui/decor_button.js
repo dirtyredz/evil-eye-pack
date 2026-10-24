@@ -5,7 +5,7 @@
   // its dropdown opens there. placement tries its usual search-bar spots afterwards.
   function preferredSpots() {
     var spots = []
-    var rects = ns.placement.rects(['mods', 'clean'])
+    var rects = ns.placement.rects([ns.placement.MODS, ns.placement.CLEAN])
     for (var i = 0; i < rects.length; i++) {
       var r = rects[i]
       spots.push({ x: r.x + r.w + ns.placement.GAP, y: r.y })
@@ -14,11 +14,11 @@
   }
 
   ns.makeScreenButton({
-    name: 'decor', state: 'decorUi', handlers: 'decorHandlers', flag: 'emiCurationDecorListeners',
+    name: ns.placement.DECOR,
     width: 80,
     label: function () { return ns.decorState.label() },
     canPress: function () { return ns.session.canPressDecor() },
     onPress: function () { ns.session.toggleDecor() },
-    avoid: ['clean', 'mods'], spots: preferredSpots
+    avoid: [ns.placement.CLEAN, ns.placement.MODS], spots: preferredSpots
   })
 })(global.emiCuration || (global.emiCuration = {}))
