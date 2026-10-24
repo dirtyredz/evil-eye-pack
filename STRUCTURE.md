@@ -27,7 +27,7 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `tools/packwiz/tests/`, `tools/server_smoke/tests/`, `tools/pack_test/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
 - `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its environment, setup, boot, process, watchdog, verdict and log-analysis modules, and known boot noise
-- `tools/pack_test/` — unshipped: one-boot automated pack test (`run.cjs`): runner, report, baseline and protocol modules; `recipe_json.cjs` (pure recipe-JSON readers shared by session, checks and analysis), `session/` (prepare, boot, scan, lock), `checks/` (pure Node checks over the probe's evidence), `verdict/` (protocol, baseline, report, finding factory), `probe/` (KubeJS server scripts injected into the throwaway server only, never shipped), `remote/` (ANU target: sync, launch, collect), `data/` (policy, fixtures, baseline), `tests/`
+- `tools/pack_test/` — unshipped: one-boot automated pack test (`run.cjs`); `recipe_json.cjs`, `session/`, `checks/`, `verdict/`, `probe/`, `remote/`, `data/`, `tests/`. See the Components table below for module responsibilities; `data/` holds baseline, crafts, machines and policy JSON.
 - `tools/packwiz/` — unshipped: hash-chain verifier, index rebuild, localhost pack server, tests
 - `docs/` — unshipped living docs (development workflow, decisions, gotchas, EMI guide and integration coverage)
 - `docs/items/`, `docket.json` — Docket work-item store (use `dk`); `AGENTS.md` — agent instructions. All unshipped.
@@ -97,7 +97,7 @@ handlers.
 - JEI must stay installed: EMI's JEMI bridge only loads JEI plugins when JEI is present.
 - Tooling needs Node 22 and git (`rehash.cjs` lists files with `git ls-files`). There is no packwiz CLI, Python or build step.
 - The installer is `packwiz-installer-bootstrap.jar` in `C:/Users/dirty/MultiMC/packwiz/`, outside the repo. See `docs/development.md`.
-- The pack test needs `ssh`/`scp`/`tar` on Valhalla for its ANU target, and on ANU only what `remote/provision.cjs` installs under `C:Toolsevil-eye-pack`.
+- The pack test needs `ssh`/`scp`/`tar` on Valhalla for its ANU target, and on ANU only what `remote/provision.cjs` installs under `C:\Tools\evil-eye-pack`.
 
 ## Structural debt
 

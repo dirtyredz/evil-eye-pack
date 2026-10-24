@@ -22,7 +22,7 @@ file (SMOKE_JAVA/SMOKE_JCMD set inside the Node process only).
   crash reports). The throwaway server copy `server\` is deleted when the boot ends. Old runs can be
   deleted at any time.
 - `cache\worlds\<key>\` - a generated world reused by later runs with the same mods and seed.
-- `lock\owner.json` - single-job lock with a heartbeat (stale after 10 minutes without a refresh).
+- `lock\owner.json` - single-job lock with an immutable acquisition ID (`claimId`) and a heartbeat (stale after 10 minutes without a refresh).
 - `incoming\`, `downloads\` - transfer and installer leftovers; safe to delete.
 
 ## How a run works
@@ -53,6 +53,8 @@ file (SMOKE_JAVA/SMOKE_JCMD set inside the Node process only).
 - Stop a run: `Stop-Process -Id <agent pid from status.json>`, then `taskkill /PID <java pid> /T /F` if a
   server JVM is left (`Get-CimInstance Win32_Process -Filter "Name='java.exe'"` and match the run path
   in its command line). Then delete `lock\`.
+  An agent that detects a lost claim (missing, unreadable or replaced lock) stops its owned child
+  processes and exits 2; it never reacquires the lock. Check the run status and processes before recovery.
 - Clean up: delete `runs\*`, `incoming\*`, `downloads\*`; delete `cache\worlds\*` to force a fresh world.
 - Remove everything: delete `G:\evil-eye-pack-ci` and `C:\Tools\evil-eye-pack`.
 
