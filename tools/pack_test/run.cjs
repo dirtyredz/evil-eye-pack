@@ -20,13 +20,12 @@ const procs = require('../server_smoke/procs.cjs');
 const { verify } = require('../packwiz/verify_hashes.cjs');
 const prep = require('./session/prepare.cjs');
 const { checkDestination, runId, runMeta } = require('./session/run_meta.cjs');
-const { execute } = require('./session/execute.cjs');
+const { runTarget } = require('./session/target.cjs');
 const { analyzeRun, EXIT } = require('./analyze.cjs');
-const { loadToolData, packConfigFiles } = require('./verdict/policy.cjs');
-const { scanResources, serverSources, shippedMentions } = require('./session/resources.cjs');
+const { loadToolData } = require('./verdict/policy.cjs');
+const { stageEvidence } = require('./session/evidence.cjs');
 const { localLock } = require('./session/lock.cjs');
 const { abortRegistry } = require('./session/aborts.cjs');
-const { starvedBoot, starvedText } = require('./verdict/mode.cjs');
 
 const ROOT = path.resolve(__dirname, '../..');
 const NUM = new Set(['timeout', 'silent', 'sample', 'probeTimeout', 'port']);
@@ -46,15 +45,6 @@ function parseArgs(argv) {
   }
   o.pack = path.resolve(o.pack);
   return o;
-}
-
-// Raw resources, shipped-config mentions and the pack's own policy files, read from the staged server.
-function stageEvidence(stageDir, evidenceDir, data) {
-  fs.mkdirSync(path.join(evidenceDir, 'pack-config'), { recursive: true });
-  const ev = scanResources(serverSources(stageDir), { removedNamespaces: data.policy.removedMods });
-  ev.shipped = shippedMentions(stageDir, data.policy.removedMods);
-  fs.writeFileSync(path.join(evidenceDir, 'resources.json'), JSON.stringify(ev));
-  for (const f of packConfigFiles(data.policy)) fs.copyFileSync(path.join(stageDir, f), path.join(evidenceDir, 'pack-config', path.basename(f)));
 }
 
 async function main() {
@@ -91,35 +81,8 @@ async function main() {
     t = Date.now();
     stageEvidence(stageDir, path.join(runDir, 'evidence'), data);
     run.timings.scan = (Date.now() - t) / 1000;
-    const bootOpts = { priority: o.priority, sample: o.sample, silent: o.silent, timeout: o.timeout, probeTimeout: o.probeTimeout };
-    const runLocal = async () => {
-      const r = await execute({ stageDir, runDir, worldCache: `${env.ARTIFACTS}/pack-test/cache/worlds`, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, keepServer: o.keepServer, scope }, log);
-      Object.assign(run, { target: 'local', boot: r.boot, world: r.world });
-      Object.assign(run.timings, r.timings);
-    };
-    let remote = null;
-    if (!o.local) {
-      const { runOnAnu } = require('./remote/anu.cjs');
-      run.target = 'anu';
-      remote = await runOnAnu({ stageDir, runDir, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, scope, log, onAbort: aborts.register, onSynced: () => { if (lock) { lock.release(); lock = null; } } });
-      if (remote.fallback) { run.fallback = remote.fallback; run.target = 'local'; log(`ANU not used: ${remote.fallback}; running on this machine`); }
-    }
-    if (remote && !remote.fallback) {
-      Object.assign(run, { target: 'anu', boot: remote.boot, world: remote.world, shared: remote.shared });
-      Object.assign(run.timings, remote.timings);
-      // Starved beside a neighbour: not a pack result. One automatic re-run here, then the analysis reports it.
-      if (remote.shared && starvedBoot(remote.boot)) {
-        const text = `${starvedText(remote.boot, remote.shared)}; re-ran once on this machine`;
-        log(text);
-        run.sharedAttempt = { text, job: remote.shared.job, boot: remote.boot };
-        run.fallback = `shared ANU run beside ${remote.shared.job} was CPU-starved`;
-        run.target = 'local'; run.shared = null;
-        for (const d of ['probe', 'logs', 'crash-reports']) fs.rmSync(path.join(runDir, 'evidence', d), { recursive: true, force: true });
-        await runLocal();
-      }
-    } else {
-      await runLocal();
-    }
+    await runTarget({ options: o, stageDir, runDir, run, worldCache: `${env.ARTIFACTS}/pack-test/cache/worlds`, scope,
+      onAbort: aborts.register, onSynced: () => { if (lock) { lock.release(); lock = null; } } }, log);
   } catch (e) {
     run.errors.push(`setup/boot: ${e.message}`);
     log(`FAILED: ${e.stack || e.message}`);

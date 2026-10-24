@@ -11,8 +11,7 @@ const { checkAcquisition } = require('./checks/acquisition.cjs');
 const { compilePolicy, loadToolData } = require('./verdict/policy.cjs');
 const { modeLabel, starvedBoot, starvedText } = require('./verdict/mode.cjs');
 const { checkRecipes } = require('./checks/recipes.cjs');
-const { beeProductItems } = require('./checks/bees.cjs');
-const { declaredOutputs } = require('./recipe_json.cjs');
+const { snapshot, recipeOutputs } = require('./checks/snapshot.cjs');
 const { checkReferences } = require('./checks/references.cjs');
 const { checkMachines } = require('./checks/machines.cjs');
 const { checkCrafting } = require('./checks/crafting.cjs');
@@ -23,36 +22,9 @@ const { parseCrashCauses } = require('../server_smoke/verdict.cjs');
 const readJson = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
 const readText = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null);
 
-// The live state as Sets/Maps, built from the probe's registries and tags payloads.
-function snapshot(sections) {
-  const reg = sections.registries.data;
-  const tags = sections.tags.data;
-  return {
-    registries: {
-      items: new Set(reg.items), blocks: new Set(reg.blocks), fluids: new Set(reg.fluids), entities: new Set(reg.entities),
-      mods: new Set(Object.keys(reg.mods)), lootTables: new Set(reg.lootTables), modVersions: reg.mods, recipeTypes: reg.recipeTypes
-    },
-    itemTags: new Map(Object.entries(tags.items)),
-    blockTags: new Map(Object.entries(tags.blocks)),
-    fluidTags: new Map(Object.entries(tags.fluids || {})),
-    recipes: sections.recipes.ok ? sections.recipes.data : []
-  };
-}
-
 function incomplete(needs, sections) {
   const missing = needs.filter((n) => !sections[n] || !sections[n].ok);
   return missing.length ? { state: 'incomplete', error: `probe sections missing: ${missing.map((n) => `${n} (${(sections[n] && sections[n].error) || 'missing'})`).join('; ')}`, findings: [] } : null;
-}
-
-function recipeOutputs(recipes, registries) {
-  const out = new Map();
-  for (const r of recipes) {
-    const ids = new Set(r.out ? [r.out] : []);
-    for (const o of declaredOutputs(r.json)) ids.add(o);
-    if (registries) for (const o of beeProductItems(r, registries)) ids.add(o);
-    for (const id of ids) { if (!out.has(id)) out.set(id, []); out.get(id).push(r.id); }
-  }
-  return out;
 }
 
 function analyzeRun(runDir, { data = loadToolData(), log = () => {} } = {}) {
@@ -126,4 +98,4 @@ function describeBoot(b) {
   return 'unknown';
 }
 
-module.exports = { analyzeRun, loadToolData, snapshot, recipeOutputs, EXIT };
+module.exports = { analyzeRun, loadToolData, EXIT };
