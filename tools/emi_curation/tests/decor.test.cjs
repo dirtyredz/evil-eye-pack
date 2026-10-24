@@ -1,9 +1,9 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { boot, loadScripts, readRepoText } = require('./harness.cjs');
-const { fixture } = require('./fixture.cjs');
-const F = require('./fake_emi.cjs');
+const { boot, loadScripts, readRepoText } = require('./support/harness.cjs');
+const { fixture } = require('./support/fixture.cjs');
+const F = require('./support/fake_emi.cjs');
 
 // ---- the pure policy ----
 
@@ -70,7 +70,7 @@ test('the shipped decor.json compiles and names the verified mod ids and the req
 
 // ---- the session ----
 
-const { decorWorld, bootDecor, names, DECOR_IDS, KEPT_IDS } = require('./decor_world.cjs');
+const { decorWorld, bootDecor, names, DECOR_IDS, KEPT_IDS } = require('./support/decor_world.cjs');
 
 
 test('DECOR hides all three layers from the index, in CLEAN and in ALL, keeping the functional exceptions', () => {

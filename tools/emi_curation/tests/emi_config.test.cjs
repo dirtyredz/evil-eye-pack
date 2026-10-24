@@ -5,7 +5,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { readRepoText } = require('./harness.cjs');
+const { readRepoText } = require('./support/harness.cjs');
 
 const JUNK = /^(\s*(\/\*[\s\S]*?\*\/)?\s*)*$/;
 const RULESET = /[#.]?(\w+?)\s*\{([\s\S]*?)\}/g;

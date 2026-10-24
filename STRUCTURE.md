@@ -32,6 +32,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |-- emi_coverage/
     |-- emi_curation/
     |   `-- tests/
+    |       `-- support/
     |-- pack_test/
     |   |-- checks/
     |   |-- data/
@@ -110,8 +111,8 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 | `emi_curation/ui/decor_button.js` (44) | the DECOR: SHOWN/HIDDEN button (label from `decorState`; pressability and the toggle through `session.canPressDecor`/`toggleDecor`, which re-apply the index); loads after `button.js` and `mods_menu.js` so it settles beside them in one pass (Forge calls listeners in registration order) |
 | `emi_curation/ui/mods_text.js` (46) | the text layer: `draw(g, font, text, x, y, color)` via `drawWordWrap` and `width(text)` estimated from font metrics; never `drawString`/`Font.width` (see GOTCHAS) |
 | `emi_curation/ui/mods_menu.js` (45) | the Mods dropdown: state, handlers and wiring. Builds its rows from `mods_source`, pages them with `mods_layout`, places the button beside CLEAN/ALL (`ns.ui.button`, `placement`), draws the rows in `Render.Post`, sets EMI's search text. Registered through `forge_hooks`. |
-| `tools/emi_curation/tests/harness.cjs`, `fake_emi.cjs`, `fixture.cjs` | Node harness that loads the production scripts (all subfolders) into a `vm` context in KubeJS priority order (plus `boot()`), a fake EMI/Java world to drive them, and the shared test world data (`fixture()`: named stacks and recipes) |
-| `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `mods_menu.test.cjs`, `decor.test.cjs`, `decor_local.test.cjs` (shared world: `decor_world.cjs`), `interop.test.cjs` | session lifecycle and views; button placement and listeners; Mods menu behaviour, auto list, paging and pure logic; DECOR rules, toggle, persistence and button; Java list-copy handling |
+| `tools/emi_curation/tests/support/` (`harness.cjs`, `fake_emi.cjs`, `fixture.cjs`, `decor_world.cjs`) | Node harness that loads the production scripts (all subfolders) into a `vm` context in KubeJS priority order (plus `boot()`), a fake EMI/Java world to drive them, and the shared test world data (`fixture()`: named stacks and recipes) |
+| `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `mods_menu.test.cjs`, `decor.test.cjs`, `decor_local.test.cjs` (shared world: `support/decor_world.cjs`), `interop.test.cjs` | session lifecycle and views; button placement and listeners; Mods menu behaviour, auto list, paging and pure logic; DECOR rules, toggle, persistence and button; Java list-copy handling |
 | `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs` | policy rules (including the real curation lists), class filter, EMI config |
 | `tools/server_smoke/smoke.cjs` | CLI: argument parsing, orchestration (setup, `--drop`, boot, or `--analyze` of a finished run) and printing the verdict |
 | `tools/server_smoke/env.cjs` | the machine environment: java, packwiz bootstrap and installer jars, artifacts root, Forge version and URL; each overridable by a `SMOKE_*` env var |

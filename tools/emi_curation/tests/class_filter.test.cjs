@@ -6,7 +6,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
-const { scriptFiles } = require('./harness.cjs');
+const { scriptFiles } = require('./support/harness.cjs');
 
 const RULES = [
   ['deny', 'java.lang'], ['allow', 'java.lang.Number'], ['allow', 'java.lang.String'], ['allow', 'java.lang.Object'],

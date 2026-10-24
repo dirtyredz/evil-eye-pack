@@ -1,8 +1,8 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { boot } = require('./harness.cjs');
-const F = require('./fake_emi.cjs');
+const { boot } = require('./support/harness.cjs');
+const F = require('./support/fake_emi.cjs');
 
 test('JDK-internal immutable lists from EMI are copied, never reflected on', () => {
   F.opaque.on = true;

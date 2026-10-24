@@ -9,7 +9,7 @@ const vm = require('node:vm');
 const F = require('./fake_emi.cjs');
 const { fixture } = require('./fixture.cjs');
 
-const ROOT = path.resolve(__dirname, '..', '..', '..');
+const ROOT = path.resolve(__dirname, '..', '..', '..', '..');
 const SCRIPT_DIR = path.join(ROOT, 'kubejs', 'client_scripts', 'emi_curation');
 
 // KubeJS order: `// priority: N` header, higher first.

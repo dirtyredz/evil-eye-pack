@@ -3,9 +3,9 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { boot, ROOT } = require('./harness.cjs');
-const { fixture } = require('./fixture.cjs');
-const F = require('./fake_emi.cjs');
+const { boot, ROOT } = require('./support/harness.cjs');
+const { fixture } = require('./support/fixture.cjs');
+const F = require('./support/fake_emi.cjs');
 
 // Adds `n` loaded mods, each owning one item, named 'A long mod display name <i>'.
 function crowded(n) {

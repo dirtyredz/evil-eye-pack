@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { loadScripts, readRepoText } = require('./harness.cjs');
+const { loadScripts, readRepoText } = require('./support/harness.cjs');
 
 const env = { global: {}, logs: [] };
 loadScripts(env, ['diagnostics', 'collections', 'policy']);

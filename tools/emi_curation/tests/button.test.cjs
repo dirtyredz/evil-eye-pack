@@ -1,8 +1,8 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { boot } = require('./harness.cjs');
-const F = require('./fake_emi.cjs');
+const { boot } = require('./support/harness.cjs');
+const F = require('./support/fake_emi.cjs');
 
 test('one Forge listener pair and one button per screen after repeated script reloads', () => {
   const c = boot();

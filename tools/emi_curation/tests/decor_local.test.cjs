@@ -4,9 +4,9 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
-const { loadScripts, ROOT } = require('./harness.cjs');
-const F = require('./fake_emi.cjs');
-const { bootDecor, names } = require('./decor_world.cjs');
+const { loadScripts, ROOT } = require('./support/harness.cjs');
+const F = require('./support/fake_emi.cjs');
+const { bootDecor, names } = require('./support/decor_world.cjs');
 
 const LOCAL = 'config/emi-curation/decor-local.json';
 
