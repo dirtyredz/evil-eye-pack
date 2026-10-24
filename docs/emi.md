@@ -27,7 +27,7 @@ curation and the CLEAN/ALL button.
   - the whole `dramaticdoors` namespace;
   - every Filled Soul Vial and Broken Spawner, except exactly one canonical Zombie stack of each;
   - every RFTools Utility syringe carrying a `mobId` tag (one per mob); the plain syringe stays (`hideWhenNbtHasKey` in `rules.json`).
-- NBT rules in `rules.json`: `nbtExceptions` hides every stack of an ID except those whose NBT equals `keepWhenNbtEquals`; `hideWhenNbtHasKey` hides a stack of an ID when its NBT has *any* listed key (the value is never inspected). An ID may appear in only one NBT rule across both types; a repeat fails compile with `duplicate nbt rule id`.
+- NBT rules in `rules.json`: `nbtExceptions` hides every stack of an ID except those whose NBT equals `keepWhenNbtEquals`; `hideWhenNbtHasKey` hides a stack of an ID when its NBT has *any* listed key (the value is never inspected). An ID may appear in only one NBT rule across both types; a repeat fails compile with `duplicate nbt exception id` within the keep rules or `duplicate nbt rule id` for the hide-key rules, including cross-type repeats. Both compile into one internal `nbtRules` map; the authored JSON format is unchanged.
 - CLEAN also hides recipe displays the way REI's "filter displays" option did. A display is hidden when some input or output has *all* of its alternatives hidden. Catalysts and empty slots never hide a display.
 - [Duplicate cleanup](duplicate-cleanup.md) removes the retired mods and permanently removes the remaining duplicate stacks from EMI via `kubejs/assets/emi/index/stacks/dedup.json`. CLEAN/ALL still controls cosmetic curation; ALL does not restore retired duplicates.
 - **EMI: ALL** restores EMI's ordinary index and its complete recipe set without an EMI reload. Recipes, items and EMI's own hidden-stack settings, favorites and config are never written.
@@ -66,6 +66,10 @@ The key mapping is a **startup script** (`startup_scripts/emi_curation_keys.js`)
 
 **Restore on failure:** before applying, the session remembers the objects currently installed. If any step throws, it puts those back (each step guarded), keeps the last complete view, sets `EMI: ERROR`, and does not retry until EMI replaces its lists or the owner clicks the button. A failed toggle also returns to the previous mode. On logout the session reinstalls EMI's own objects, but only if ours are still the installed ones, and resets to CLEAN.
 
+`recipe_view.js` owns the recipe baseline, installed Java proxy, known-wrapper map and reload token in `global.emiCuration.recipeState`. Its `viewFor`/`unwrap` boundary prevents wrapping our own managers; `sync`, `apply`, `invalidate`, `restore`, `release` and `reset` keep that lifecycle out of the session's mode/status logic. Script reloads retain enough identity information to replace old wrappers safely; logout clears it. `hiding.js` holds the single registry-key classification cache, and `policy.verdictHidden` evaluates those verdicts with lazy, per-stack NBT reads.
+
+The CLEAN and DECOR configs use `ui/screen_button.js` for their shared widget lifecycle. Each toolbar widget publishes its visible rect to `ui/placement.js`; Mods and DECOR consume those rects without reading sibling widget holders. Registration priorities still place CLEAN, then Mods, then DECOR each frame. The Mods modules live in `ui/mods/`; folder nesting does not change KubeJS's global priority ordering.
+
 ### Settings mapping (REI → EMI)
 
 | REI | EMI (`config/emi.css`) |
@@ -92,7 +96,8 @@ node --test tools/emi_curation/tests/*.cjs
 node --test tools/packwiz/tests/*.cjs
 node tools/packwiz/verify_hashes.cjs
 node tools/packwiz/verify_hashes.cjs --jars <dir with the downloaded jars>
-for f in kubejs/client_scripts/emi_curation/*.js kubejs/client_scripts/emi_curation/ui/*.js; do node --check "$f"; done
+# PowerShell: include every nested client module.
+Get-ChildItem kubejs/client_scripts/emi_curation -Recurse -Filter *.js | ForEach-Object { node --check $_.FullName; if ($LASTEXITCODE -ne 0) { throw "Syntax check failed: $_" } }
 git diff --check
 ```
 

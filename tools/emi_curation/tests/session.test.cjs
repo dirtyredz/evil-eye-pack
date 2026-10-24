@@ -57,7 +57,7 @@ test('CLEAN -> ALL -> CLEAN restores identical objects; repeated toggles never r
   const c = boot();
   const emiList = c.world.EmiStackList.filteredStacks;
   c.tick();
-  const emiManager = c.ns().state.recipe.baseline;
+  const emiManager = c.ns().recipeView.unwrap(c.world.EmiRecipes.manager);
   const cleanList = c.world.EmiStackList.filteredStacks;
   const cleanManager = c.world.EmiRecipes.manager;
   c.ns().session.toggle();
@@ -87,7 +87,7 @@ test('toggles never save config or persistent data and never touch user-hidden s
 test('script reload during ALL keeps ALL; during CLEAN rebuilds the wrapper without double wrapping', () => {
   const c = boot();
   c.tick();
-  const emiManager = c.ns().state.recipe.baseline;
+  const emiManager = c.ns().recipeView.unwrap(c.world.EmiRecipes.manager);
   c.ns().session.toggle();
   c.load();
   c.tick();
@@ -99,7 +99,7 @@ test('script reload during ALL keeps ALL; during CLEAN rebuilds the wrapper with
   c.tick();
   const newWrapper = c.world.EmiRecipes.manager;
   assert.notEqual(newWrapper, oldWrapper, 'reloaded code installs a fresh wrapper');
-  assert.equal(c.ns().state.recipe.baseline, emiManager, 'wrapper wraps the EMI manager, not the old wrapper');
+  assert.equal(c.ns().recipeView.unwrap(c.world.EmiRecipes.manager), emiManager, 'wrapper wraps the EMI manager, not the old wrapper');
   assert.deepEqual(recipeIds(newWrapper.getRecipes()), recipeIds(oldWrapper.getRecipes()));
   c.ns().session.toggle();
   assert.equal(c.world.EmiRecipes.manager, emiManager);
@@ -127,9 +127,10 @@ test('an EMI reload (new generation) is followed; previous-generation objects ar
   c.world.reload();
   c.tick(); // worker busy: wait
   c.world.finishWorker();
+  const sortedManager = c.world.EmiRecipes.manager;
   c.tick();
   assert.notEqual(c.world.EmiRecipes.manager, oldManager);
-  assert.equal(c.world.EmiRecipes.manager, c.ns().state.recipe.baseline);
+  assert.equal(c.world.EmiRecipes.manager, sortedManager);
   assert.equal(c.ns().session.label(), 'EMI: ALL', 'session selection survives F3+T');
   c.ns().session.toggle();
   assert.equal(c.world.EmiStackList.filteredStacks.size(), 5);
@@ -139,7 +140,7 @@ test('logout restores EMI objects and resets to CLEAN; rejoin starts CLEAN', () 
   const c = boot();
   const emiList = c.world.EmiStackList.filteredStacks;
   c.tick();
-  const emiManager = c.ns().state.recipe.baseline;
+  const emiManager = c.ns().recipeView.unwrap(c.world.EmiRecipes.manager);
   c.ns().session.toggle();
   c.ns().session.toggle(); // back to CLEAN with our views installed
   c.logout();
@@ -218,4 +219,88 @@ test('a failed apply retries automatically when EMI replaces its lists', () => {
   c.world.reload(); c.world.finishWorker();
   c.tick();
   assert.equal(c.ns().session.label(), 'EMI: CLEAN');
+});
+
+test('recipe lifecycle remembers installed Java proxies and unwraps older wrappers after reload', () => {
+  const c = boot();
+  const baseline = c.world.EmiRecipes.manager;
+  let current = baseline, proxies = 0;
+  const javaRefs = new Set();
+  Object.defineProperty(c.world.EmiRecipes, 'manager', {
+    get: () => current,
+    set(value) {
+      // Rhino assignment creates a distinct Java interface proxy for a raw JS wrapper.
+      if (value instanceof F.Manager || javaRefs.has(value)) current = value;
+      else { current = new Proxy(value, {}); javaRefs.add(current); proxies++; }
+    },
+  });
+  c.tick();
+  const first = current;
+  assert.equal(proxies, 1);
+  assert.equal(c.ns().recipeView.viewFor(baseline), first);
+  assert.equal(c.ns().recipeView.unwrap(first), baseline);
+  c.ns().session.toggle(); c.ns().session.toggle();
+  assert.equal(current, first, 'cached Java proxy reused');
+  assert.equal(proxies, 1);
+  c.load(); c.tick();
+  assert.equal(proxies, 2, 'reload rebuilds using the new code');
+  assert.notEqual(current, first);
+  current = first; // another writer reinstalls a known older proxy
+  c.tick();
+  assert.equal(c.ns().recipeView.unwrap(current), baseline);
+  assert.equal(proxies, 3);
+  c.ns().session.toggle();
+  assert.equal(current, baseline, 'ALL never restores one of our wrappers');
+  c.logout();
+  assert.equal(c.ns().recipeView.installed(), null);
+});
+
+test('recipe installation and refresh failures restore both views and permit a clean retry', () => {
+  for (const site of ['install', 'refresh']) {
+    const c = boot();
+    c.tick();
+    const clean = c.world.EmiRecipes.manager;
+    const index = c.world.EmiStackList.filteredStacks;
+    let current = clean, fail = true;
+    if (site === 'install') {
+      Object.defineProperty(c.world.EmiRecipes, 'manager', {
+        get: () => current,
+        set(value) {
+          if (fail) { fail = false; throw new Error('manager assignment failed'); }
+          current = value;
+        },
+      });
+    } else {
+      const refresh = c.ns().indexView.refresh;
+      c.ns().indexView.refresh = () => {
+        if (fail) { fail = false; throw new Error('refresh failed'); }
+        refresh();
+      };
+    }
+    assert.equal(c.ns().session.toggle(), false, site);
+    assert.equal(c.ns().session.label(), 'EMI: ERROR');
+    assert.equal(c.ns().state.mode, 'CLEAN');
+    assert.equal(c.world.EmiStackList.filteredStacks, index);
+    assert.equal(c.world.EmiRecipes.manager, clean);
+    assert.equal(c.ns().recipeView.installed(), clean);
+    c.ns().session.toggle(); c.tick();
+    assert.equal(c.ns().session.label(), 'EMI: CLEAN');
+    assert.notEqual(c.world.EmiRecipes.manager, clean, 'retry invalidates the old wrapper');
+    assert.deepEqual(recipeIds(c.world.EmiRecipes.manager.getRecipes()), recipeIds(clean.getRecipes()));
+  }
+});
+
+test('first reload adopts the former session recipe holder without losing the EMI baseline', () => {
+  const c = boot();
+  const baseline = c.world.EmiRecipes.manager;
+  c.tick();
+  const old = c.world.EmiRecipes.manager;
+  c.ns().state.recipe = c.ns().recipeState;
+  delete c.ns().recipeState;
+  c.load(); c.tick();
+  assert.equal(Object.hasOwn(c.ns().state, 'recipe'), false);
+  assert.notEqual(c.world.EmiRecipes.manager, old);
+  assert.equal(c.ns().recipeView.unwrap(c.world.EmiRecipes.manager), baseline);
+  c.logout();
+  assert.equal(c.world.EmiRecipes.manager, baseline);
 });

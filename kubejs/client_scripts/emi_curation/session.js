@@ -22,14 +22,11 @@
       error: null,
       reapply: true,
       failed: { index: null, recipe: null },
-      index: { master: null, baseline: null, views: {}, installed: null },
-      recipe: { baseline: null, wrapper: null, wrapperLoad: null, installed: null, known: null }
+      index: { master: null, baseline: null, views: {}, installed: null }
     }
   }
 
   var st = ns.state || (ns.state = freshState())
-  var loadToken = {}
-  ns.loadToken = loadToken
   // A script reload must rebuild views with the reloaded policy and code, and retry a
   // curation file that failed to load.
   st.reapply = true
@@ -95,50 +92,16 @@
     return true
   }
 
-  // ---- recipes ----
-
-  function knownWrappers() {
-    if (st.recipe.known == null) st.recipe.known = ns.interop.newIdentityMap()
-    return st.recipe.known
-  }
-
-  function applyRecipes() {
-    if (st.mode === CLEAN && policy.displayFiltering) {
-      if (st.recipe.wrapper == null || st.recipe.wrapperLoad !== loadToken) {
-        var ref = ns.recipeView.install(ns.recipeView.createWrapper(st.recipe.baseline, ns.hiding.isDisplayHidden))
-        knownWrappers().put(ref, st.recipe.baseline)
-        st.recipe.wrapper = ref
-        st.recipe.wrapperLoad = loadToken
-      } else {
-        ns.recipeView.install(st.recipe.wrapper)
-      }
-      st.recipe.installed = st.recipe.wrapper
-    } else {
-      st.recipe.installed = ns.recipeView.install(st.recipe.baseline)
-    }
-  }
-
-  function syncRecipes() {
-    var cur = ns.recipeView.current()
-    if (ns.interop.sameRef(cur, st.recipe.installed)) return false
-    // Never wrap one of our own wrappers: map it back to the manager it wraps.
-    var known = knownWrappers()
-    st.recipe.baseline = known.containsKey(cur) ? known.get(cur) : cur
-    st.recipe.wrapper = null
-    known.clear()
-    return true
-  }
-
   // ---- lifecycle ----
 
   function applyAll(indexChanged) {
     var prevIndex = st.index.installed
-    var prevRecipe = st.recipe.installed
+    var prevRecipe = ns.recipeView.installed()
     try {
       applyIndex()
       // Display filtering depends on the index (user hides, key set): rebuild it too.
-      if (indexChanged) st.recipe.wrapper = null
-      applyRecipes()
+      if (indexChanged) ns.recipeView.invalidate()
+      ns.recipeView.apply(st.mode === CLEAN && policy.displayFiltering)
       ns.indexView.refresh()
       st.status = 'ready'
       st.error = null
@@ -151,7 +114,7 @@
   // Puts back the last complete view after a failure.
   function restore(indexRef, recipeRef) {
     try { if (indexRef != null) { ns.indexView.install(indexRef); st.index.installed = indexRef } } catch (e1) { ns.diag.logError('restore index', e1) }
-    try { if (recipeRef != null) { ns.recipeView.install(recipeRef); st.recipe.installed = recipeRef } } catch (e2) { ns.diag.logError('restore recipes', e2) }
+    try { ns.recipeView.restore(recipeRef) } catch (e2) { ns.diag.logError('restore recipes', e2) }
     try { ns.indexView.refresh() } catch (e3) { ns.diag.logError('restore refresh', e3) }
   }
 
@@ -189,13 +152,13 @@
     if (st.status === 'error' && !st.reapply && unchangedSinceFailure()) return
     try {
       var indexChanged = syncIndex()
-      var recipeChanged = syncRecipes()
+      var recipeChanged = ns.recipeView.sync()
       var retry = st.reapply
       // After a failure, stay in the error state until the owner retries or EMI
       // starts a new generation.
       if (st.status === 'error' && !indexChanged && !recipeChanged && !retry) return
       if (indexChanged || recipeChanged || retry || st.status !== 'ready') {
-        if (retry) { st.index.views = {}; ns.decorState.invalidate(); st.recipe.wrapper = null }
+        if (retry) { st.index.views = {}; ns.decorState.invalidate(); ns.recipeView.invalidate() }
         st.reapply = false
         applyAll(indexChanged)
       }
@@ -262,13 +225,11 @@
           ns.interop.sameRef(ns.indexView.currentFiltered(), st.index.installed)) {
         ns.indexView.install(st.index.baseline)
       }
-      if (st.recipe.installed != null && st.recipe.baseline != null &&
-          ns.interop.sameRef(ns.recipeView.current(), st.recipe.installed)) {
-        ns.recipeView.install(st.recipe.baseline)
-      }
+      ns.recipeView.release()
     } catch (err) {
       ns.diag.logError('logout restore', err)
     }
+    ns.recipeView.reset()
     ns.state = st = freshState()
     ns.decorState.resetMode()
   }
