@@ -13,6 +13,7 @@ function write(file, json) {
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   fs.writeFileSync(dest, JSON.stringify(json, null, 2) + '\n');
 }
+write('kubejs/config/dedup.json', { ...policy, blockTagRemovals: result.blockTagRemovals });
 for (const [file, json] of result.overrides) write(file, json);
 write('kubejs/config/dedup_sources.json', {
   removeRecipes: result.removeRecipes, itemTags: result.itemTags, blockTags: result.blockTags

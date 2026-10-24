@@ -7,12 +7,6 @@
   ServerEvents.recipes(function (event) {
     sources.removeRecipes.forEach(function (id) { event.remove({ id: id }) })
     policy.disabled.forEach(function (id) { event.remove({ output: id }) })
-    // Alex's Caves uranium remains biome-specific, but can fuel Extreme Reactors.
-    event.smelting('bigreactors:yellorium_ingot', 'alexscaves:uranium').id('kubejs:uranium_ingot')
-    event.blasting('bigreactors:yellorium_ingot', 'alexscaves:uranium').id('kubejs:uranium_ingot_blasting')
-    // Create's compat crushed uranium otherwise loses its smelting target with ATO gone.
-    event.smelting('bigreactors:yellorium_ingot', 'create:crushed_raw_uranium').id('kubejs:crushed_uranium_ingot')
-    event.blasting('bigreactors:yellorium_ingot', 'create:crushed_raw_uranium').id('kubejs:crushed_uranium_ingot_blasting')
   })
 
   function tags(event, additions) {
@@ -26,9 +20,7 @@
   })
   ServerEvents.tags('block', function (event) {
     // Only block duplicates have block tags. Do not feed non-block item ids to the registry.
-    Object.keys(policy.replacements).forEach(function (id) {
-      if (id.indexOf('cluttered:') === 0 || (id.indexOf('createdeco:') === 0 && id !== 'createdeco:zinc_sheet') || id === 'farmersdelight:rope') event.removeAllTagsFrom(id)
-    })
+    policy.blockTagRemovals.forEach(function (id) { event.removeAllTagsFrom(id) })
     Object.keys(sources.blockTags).forEach(function (tag) { event.add(tag, sources.blockTags[tag]) })
   })
 })()

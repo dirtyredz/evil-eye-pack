@@ -18,6 +18,7 @@ const retired = new Set([...Object.keys(policy.replacements), ...policy.disabled
 test('all data overrides match pinned jars, preserving custom counts/chances/conditions', () => {
   assert.ok(planned.overrides.size > 0);
   for (const [file, expected] of planned.overrides) assert.deepEqual(read(file), expected, file);
+  assert.deepEqual(policy.blockTagRemovals, planned.blockTagRemovals);
   assert.deepEqual(sources, { removeRecipes: planned.removeRecipes, itemTags: planned.itemTags, blockTags: planned.blockTags });
   for (const [source, survivor] of Object.entries(policy.replacements)) {
     assert.ok(catalog.models.has(source), source);
@@ -63,17 +64,30 @@ test('no effective loot item entry can produce a retired copy, including unquali
 
 test('recipe and tag events remove producers and code-driven loot candidates', () => {
   const handlers = {};
-  vm.runInNewContext(fs.readFileSync(path.join(root, 'kubejs/server_scripts/dedup.js'), 'utf8'), {
+  const recipeHandlers = [];
+  for (const script of ['dedup.js', 'uranium.js']) vm.runInNewContext(fs.readFileSync(path.join(root, 'kubejs/server_scripts', script), 'utf8'), {
     JsonIO: { read }, ServerEvents: {
-      recipes: fn => { handlers.recipes = fn; }, tags: (kind, fn) => { handlers[kind] = fn; }
+      recipes: fn => { recipeHandlers.push(fn); }, tags: (kind, fn) => { handlers[kind] = fn; }
     }
   });
   const removedRecipes = [], addedRecipes = [];
   const event = { remove: filter => removedRecipes.push(filter) };
   for (const type of ['smelting', 'blasting']) event[type] = (output, input) => ({ id: id => addedRecipes.push({ id, type, output, input }) });
-  handlers.recipes(event);
+  recipeHandlers.forEach(fn => fn(event));
   assert.deepEqual(removedRecipes.filter(r => r.id).map(r => r.id), sources.removeRecipes);
-  assert.equal(addedRecipes.length, 4);
+  assert.deepEqual(addedRecipes, [
+    { id: 'kubejs:uranium_ingot', type: 'smelting', output: 'bigreactors:yellorium_ingot', input: 'alexscaves:uranium' },
+    { id: 'kubejs:uranium_ingot_blasting', type: 'blasting', output: 'bigreactors:yellorium_ingot', input: 'alexscaves:uranium' },
+    { id: 'kubejs:crushed_uranium_ingot', type: 'smelting', output: 'bigreactors:yellorium_ingot', input: 'create:crushed_raw_uranium' },
+    { id: 'kubejs:crushed_uranium_ingot_blasting', type: 'blasting', output: 'bigreactors:yellorium_ingot', input: 'create:crushed_raw_uranium' }
+  ]);
+  const blocks = [], blockAdditions = {};
+  handlers.block({ removeAllTagsFrom: id => blocks.push(id), add: (tag, ids) => { blockAdditions[tag] = ids; } });
+  assert.deepEqual(blocks, policy.blockTagRemovals);
+  // Pin the pre-extraction selection, including zinc_sheet's item-only exception.
+  assert.deepEqual(blocks, Object.keys(policy.replacements).filter(id =>
+    id.startsWith('cluttered:') || (id.startsWith('createdeco:') && id !== 'createdeco:zinc_sheet') || id === 'farmersdelight:rope'));
+  assert.deepEqual(blockAdditions, sources.blockTags);
   const removed = [], added = {};
   const untagged = {};
   handlers.item({ removeAllTagsFrom: id => removed.push(id), add: (tag, ids) => { added[tag] = ids; }, remove: (tag, ids) => { untagged[tag] = ids; } });

@@ -39,3 +39,30 @@ test('allowance check: unexplained, changed and stale groups; exact namespaces o
   assert.equal(compareAllowances({ 'forge:ingots/a': ['x', 'y'] }, { 'forge:ingots/a': { namespaces: ['x', 'y'], reason: 'r' } }).ok, true);
   assert.equal(compareAllowances({ 'forge:ingots/a': ['x', 'y'] }, { 'forge:ingots/a': { namespaces: ['x', 'y'] } }).unexplained.length, 1);
 });
+
+
+test('block strip generation keeps the reviewed block subset and ignores stale generated data', () => {
+  const replacements = Object.fromEntries([
+    'cluttered:willow_door', 'createdeco:brass_bars', 'createdeco:zinc_sheet',
+    'farmersdelight:rope', 'create:dough', 'other:block'
+  ].map(id => [id, 'keep:survivor']));
+  const policy = { replacements, disabled: ['cluttered:disabled'], removeOutputs: [], extraItemTags: {}, blockTagRemovals: ['stale:block'] };
+  assert.deepEqual(plan(new Map(), policy).blockTagRemovals,
+    ['cluttered:willow_door', 'createdeco:brass_bars', 'farmersdelight:rope']);
+});
+
+test('server block cleanup consumes the explicit policy list without namespace rules', () => {
+  const vm = require('node:vm');
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const handlers = {};
+  const policy = { replacements: { 'cluttered:excluded': 'keep:block' }, disabled: [], blockTagRemovals: ['example:retired'] };
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../../../kubejs/server_scripts/dedup.js'), 'utf8'), {
+    JsonIO: { read: file => file.endsWith('/dedup.json') ? policy : { blockTags: { 'example:tag': ['keep:block'] } } },
+    ServerEvents: { recipes() {}, tags: (kind, fn) => { handlers[kind] = fn; } }
+  });
+  const removed = [], added = {};
+  handlers.block({ removeAllTagsFrom: id => removed.push(id), add: (tag, ids) => { added[tag] = ids; } });
+  assert.deepEqual(removed, ['example:retired']);
+  assert.deepEqual(added, { 'example:tag': ['keep:block'] });
+});

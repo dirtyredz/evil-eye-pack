@@ -2458,7 +2458,7 @@ hash = "8d1c5cbf48ef06ee5174adf60692e2c54d91ac08d84edbadd03a39e10385a62e"
 
 [[files]]
 file = "kubejs/config/dedup.json"
-hash = "78230068e99817c52f4f5399e285d29c23a2649fb30371a2621190d8083f2d94"
+hash = "2e68e64c381ff50e439beeabeb0faba5015de0353fe459468eef34c6224a8da5"
 
 [[files]]
 file = "kubejs/config/dedup_sources.json"
@@ -3926,7 +3926,11 @@ hash = "c5cd512f58030e74039976fc24796c24c331a03f0fedb96fdf1f9303ba43f072"
 
 [[files]]
 file = "kubejs/server_scripts/dedup.js"
-hash = "323db56c19ceddcd3e399afa4b2a360a4e35ef55b396090965bc5cf6ccadd403"
+hash = "b1d05bf7353a50db3c94f940d9180d7a029dff0ccc94dbff3d8e50806ea082d8"
+
+[[files]]
+file = "kubejs/server_scripts/uranium.js"
+hash = "bbc6a73cc91781bbe970c00ad87686e7bc9269f39a2a849de6c1dd9b46453115"
 
 [[files]]
 file = "kubejs/startup_scripts/emi_curation_keys.js"
