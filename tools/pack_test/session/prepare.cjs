@@ -18,7 +18,9 @@ async function ensureStage(stageDir, { cache, java, pack, log, scope, seed, port
   return stageDir;
 }
 
-const STAGE_SKIP = new Set([WORLD, 'logs', 'crash-reports', 'pack_test', 'packwiz-install.log', 'console.log']);
+// Runtime output never belongs in a local copy or an ANU stage sync.
+const STAGE_RUNTIME = Object.freeze([WORLD, 'logs', 'crash-reports', 'pack_test', 'packwiz-install.log', 'console.log']);
+const STAGE_SKIP = new Set(STAGE_RUNTIME);
 
 // The run's own server copy. Jars are hard-linked (the server only reads them); everything else is copied.
 function makeRunServer(stageDir, serverDir, { seed, port, heap }) {
@@ -51,4 +53,4 @@ function injectProbe(serverDir, input) {
   fs.writeFileSync(path.join(serverDir, 'pack_test/in/run.json'), JSON.stringify(input));
 }
 
-module.exports = { ensureStage, makeRunServer, injectProbe };
+module.exports = { ensureStage, makeRunServer, injectProbe, STAGE_RUNTIME };

@@ -39,7 +39,9 @@ test('execute boots exactly once, injects the probe before the boot and keeps th
     const runDir = path.join(root, 'run');
     const input = { token: 't-1', crafts: [] };
     const calls = [];
-    const bootImpl = async (serverDir, opts) => {
+    const bootImpl = async (serverDir, opts, log, deps) => {
+      assert.equal(deps.java, "job/java.exe");
+      assert.equal(deps.jcmd, "job/jcmd.exe");
       calls.push(serverDir);
       assert.ok(fs.existsSync(path.join(serverDir, 'kubejs/server_scripts/pack_test/bootstrap.js')), 'probe injected before boot');
       assert.deepEqual(JSON.parse(fs.readFileSync(path.join(serverDir, 'pack_test/in/run.json'), 'utf8')), input);
@@ -54,7 +56,7 @@ test('execute boots exactly once, injects the probe before the boot and keeps th
       fs.writeFileSync(path.join(serverDir, WORLD, 'level.dat'), 'w');
       return { completed: true };
     };
-    const o = { stageDir: stage, runDir, worldCache: path.join(root, 'worlds'), input, seed: '1', port: 1, heap: '1G', boot: { probeTimeout: 5 }, bootImpl };
+    const o = { stageDir: stage, runDir, worldCache: path.join(root, 'worlds'), input, seed: '1', port: 1, heap: '1G', boot: { probeTimeout: 5 }, java: 'job/java.exe', jcmd: 'job/jcmd.exe', bootImpl };
     const r = await execute(o, () => {});
     assert.equal(calls.length, 1);
     assert.ok(fs.existsSync(path.join(runDir, 'evidence/probe/manifest.json')));

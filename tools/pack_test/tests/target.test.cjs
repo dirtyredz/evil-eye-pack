@@ -26,7 +26,7 @@ for (const scenario of [
         fs.writeFileSync(path.join(runDir, 'evidence', name, 'old'), 'old');
       }
       fs.writeFileSync(path.join(runDir, 'evidence/resources.json'), '{}');
-      await runTarget({ options: { local: scenario.local, seed: '1', priority: 'AboveNormal', keepServer: true }, stageDir: 'stage', runDir, run, worldCache: 'worlds', scope: {}, onAbort, onSynced }, () => {}, {
+      await runTarget({ options: { local: scenario.local, seed: '1', priority: 'AboveNormal', keepServer: true }, stageDir: 'stage', runDir, run, worldCache: 'worlds', java: 'local/java', jcmd: 'local/jcmd', scope: {}, onAbort, onSynced }, () => {}, {
         runOnAnuImpl: async (o) => {
           calls.push('anu');
           assert.equal(o.input, run.input);
@@ -37,6 +37,8 @@ for (const scenario of [
         executeImpl: async (o) => {
           calls.push('local');
           assert.equal(o.worldCache, 'worlds');
+          assert.equal(o.java, 'local/java');
+          assert.equal(o.jcmd, 'local/jcmd');
           assert.equal(o.keepServer, true);
           assert.equal(o.boot.priority, 'AboveNormal');
           for (const name of ['probe', 'logs', 'crash-reports']) {

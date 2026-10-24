@@ -10,6 +10,7 @@ const { spawn, spawnSync } = require('node:child_process');
 const { abortRegistry } = require('../session/aborts.cjs');
 const { killScript } = require('../remote/scripts.cjs');
 const { lockScript, refreshDirLock } = require('../remote/lease/dir_lock.cjs');
+const { makeRunServer, STAGE_RUNTIME } = require('../session/prepare.cjs');
 
 const tmp = (p) => fs.mkdtempSync(path.join(os.tmpdir(), p));
 const win = { skip: process.platform !== 'win32' };
@@ -72,6 +73,43 @@ test('the abort callback is disarmed once the ANU agent reaches a terminal state
     assert.equal(scripts.length, before, 'a later Ctrl+C sends no kill to ANU');
     assert.ok(!scripts.some((s) => s.includes('taskkill')));
   } finally { restore(); fs.rmSync(runDir, { recursive: true, force: true }); }
+});
+
+test('local copies and remote sync exclude the same stage runtime paths', async () => {
+  const root = fs.mkdtempSync(path.join(__dirname, '.stage-test-'));
+  const stageDir = path.join(root, 'stage');
+  const runDir = path.join(root, 'run');
+  const serverDir = path.join(root, 'server');
+  const stubs = fakeAnu([]);
+  let stageSyncs = 0;
+  stubs.sync.syncDir = async (ssh, scope, from, to, opts) => {
+    if (opts.label === 'stage') {
+      stageSyncs++;
+      for (const name of STAGE_RUNTIME) {
+        assert.equal(opts.skip(name), true);
+        assert.equal(opts.skip(`${name}/nested`), true);
+        assert.equal(opts.skip(`${name}-kept`), false);
+        assert.equal(opts.skip(`config/${name}`), false);
+      }
+    }
+    return { changed: 0, removed: 0, bytes: 0 };
+  };
+  const { runOnAnu, restore } = loadRunOnAnu(stubs);
+  try {
+    fs.mkdirSync(stageDir);
+    fs.mkdirSync(runDir);
+    for (const name of STAGE_RUNTIME) {
+      fs.writeFileSync(path.join(stageDir, name), 'stale');
+      fs.writeFileSync(path.join(stageDir, `${name}-kept`), 'kept');
+    }
+    makeRunServer(stageDir, serverDir, { seed: '1', port: 1, heap: '1G' });
+    for (const name of STAGE_RUNTIME) {
+      assert.equal(fs.existsSync(path.join(serverDir, name)), false);
+      assert.equal(fs.readFileSync(path.join(serverDir, `${name}-kept`), 'utf8'), 'kept');
+    }
+    await runOnAnu({ stageDir, runDir, input: {}, boot: { timeout: 10, probeTimeout: 10 }, scope: {}, log() {}, pollMs: 1 });
+    assert.equal(stageSyncs, 1);
+  } finally { restore(); fs.rmSync(root, { recursive: true, force: true }); }
 });
 
 test('abortRegistry: a disposed callback never runs, a live one does', async () => {

@@ -81,7 +81,7 @@ async function main() {
     t = Date.now();
     stageEvidence(stageDir, path.join(runDir, 'evidence'), data);
     run.timings.scan = (Date.now() - t) / 1000;
-    await runTarget({ options: o, stageDir, runDir, run, worldCache: `${env.ARTIFACTS}/pack-test/cache/worlds`, scope,
+    await runTarget({ options: o, stageDir, runDir, run, worldCache: `${env.ARTIFACTS}/pack-test/cache/worlds`, java: env.JAVA, jcmd: env.JCMD, scope,
       onAbort: aborts.register, onSynced: () => { if (lock) { lock.release(); lock = null; } } }, log);
   } catch (e) {
     run.errors.push(`setup/boot: ${e.message}`);

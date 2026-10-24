@@ -15,10 +15,11 @@ const { probeScript, parseProbe, decide } = require('./capacity.cjs');
 const { acquire, releaseScript } = require('./lease/dir_lock.cjs');
 const { launchScript, statusScript, killScript } = require('./scripts.cjs');
 const { pullEvidence } = require('./evidence.cjs');
+const { STAGE_RUNTIME } = require('../session/prepare.cjs');
 
 const TOOLS_DIR = path.resolve(__dirname, '../..');
 const CODE_DIRS = ['server_smoke', 'pack_test', 'emi_coverage'];
-const STAGE_SKIP = (rel) => /^(smoke-world|logs|crash-reports|pack_test)(\/|$)/.test(rel);
+const STAGE_SKIP = (rel) => STAGE_RUNTIME.includes(rel.split('/')[0]);
 
 // Reads ANU's load and decides alone / shared / fallback (capacity.cjs).
 async function checkCapacity(ssh, log) {
@@ -64,7 +65,7 @@ async function runOnAnu(o) {
     if (verdict.mode === 'fallback') return { fallback: verdict.reason };
     const shared = verdict.mode === 'shared' ? { job: verdict.neighbour, freeGb: verdict.freeGb, cpuPct: verdict.cpuPct } : null;
     const job = {
-      runId, lease: lock.lease, root: cfg.ROOT, stageDir: cfg.STAGE, worldCache: cfg.WORLDS, lock: cfg.LOCK, input: o.input, seed: o.seed, port: o.port, heap: o.heap,
+      runId, lease: lock.lease, stageDir: cfg.STAGE, worldCache: cfg.WORLDS, lock: cfg.LOCK, input: o.input, seed: o.seed, port: o.port, heap: o.heap,
       boot: anuBoot(o.boot), freshWorld: o.freshWorld, java: javaExe, jcmd: jcmdExe
     };
     const jobLocal = path.join(o.runDir, 'job.json');

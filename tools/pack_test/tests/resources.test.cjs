@@ -6,6 +6,7 @@ const os = require('node:os');
 const path = require('node:path');
 const { scanResources } = require('../session/resources.cjs');
 const { parseLenient, lootRefs } = require('../session/extract.cjs');
+const { stageEvidence } = require('../session/evidence.cjs');
 
 test('parseLenient accepts BOM, comments and trailing commas', () => {
   assert.deepEqual(parseLenient(String.fromCharCode(0xfeff) + '{"a":1}'), { json: { a: 1 }, lenient: true });
@@ -87,4 +88,20 @@ test('removed-namespace mentions are recorded', () => withDirs((root) => {
   assert.equal(ev.removedRefs.length, 1);
   assert.equal(ev.removedRefs[0].id, 'x:r');
   assert.deepEqual(ev.removedRefs[0].refs.sort(), ['oldmod:tag', 'oldmod:thing']);
+}));
+
+test('stageEvidence saves raw resources, shipped mentions and the selected pack policy files', () => withDirs((root) => {
+  const stage = path.join(root, 'stage'), evidence = path.join(root, 'evidence');
+  put(stage, 'kubejs/data/x/recipes/r.json', { type: 't', ingredient: { item: 'oldmod:thing' } });
+  put(stage, 'config/example.toml', 'item = "oldmod:thing"');
+  put(stage, 'kubejs/config/dedup.json', { hiddenOnly: [] });
+  put(stage, 'kubejs/config/dedup_sources.json', { removeRecipes: [] });
+  put(stage, 'config/emi-curation/selected.json', { items: ['x:one'] });
+  put(stage, 'config/emi-curation/unused.json', { items: [] });
+  stageEvidence(stage, evidence, { policy: { removedMods: ['oldmod'], curatedLists: ['selected.json'] } });
+  const resources = JSON.parse(fs.readFileSync(path.join(evidence, 'resources.json'), 'utf8'));
+  assert.equal(resources.recipes['x:r'].type, 't');
+  assert.ok(resources.shipped.some((s) => s.file === 'config/example.toml' && s.refs.includes('oldmod:thing')));
+  assert.deepEqual(fs.readdirSync(path.join(evidence, 'pack-config')).sort(), ['dedup.json', 'dedup_sources.json', 'selected.json']);
+  assert.deepEqual(JSON.parse(fs.readFileSync(path.join(evidence, 'pack-config/selected.json'), 'utf8')), { items: ['x:one'] });
 }));

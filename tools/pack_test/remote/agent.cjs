@@ -13,11 +13,7 @@ const logFile = fs.createWriteStream(path.join(runDir, 'agent.log'), { flags: 'a
 const log = (m) => logFile.write(`[${new Date().toISOString()}] ${m}\n`);
 const status = (s) => fs.writeFileSync(path.join(runDir, 'status.json'), JSON.stringify({ ...s, pid: process.pid, at: Date.now() }));
 
-// env.cjs reads these when first required, so they are set before anything loads it.
-process.env.SMOKE_JAVA = job.java;
-process.env.SMOKE_JCMD = job.jcmd;
-process.env.SMOKE_ARTIFACTS = job.root;
-
+// Runtime paths come from job fields passed to execute(), never from process-global overrides.
 const procs = require('../../server_smoke/procs.cjs');
 const { execute } = require('../session/execute.cjs');
 const { startLease } = require('./lease/lifecycle.cjs');

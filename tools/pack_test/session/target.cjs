@@ -6,10 +6,10 @@ const { execute } = require('./execute.cjs');
 const { runOnAnu } = require('../remote/anu.cjs');
 const { starvedBoot, starvedText } = require('../verdict/mode.cjs');
 
-async function runTarget({ options: o, stageDir, runDir, run, worldCache, scope, onAbort, onSynced }, log, { executeImpl = execute, runOnAnuImpl = runOnAnu } = {}) {
+async function runTarget({ options: o, stageDir, runDir, run, worldCache, java, jcmd, scope, onAbort, onSynced }, log, { executeImpl = execute, runOnAnuImpl = runOnAnu } = {}) {
   const bootOpts = { priority: o.priority, sample: o.sample, silent: o.silent, timeout: o.timeout, probeTimeout: o.probeTimeout };
   const runLocal = async () => {
-    const r = await executeImpl({ stageDir, runDir, worldCache, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, keepServer: o.keepServer, scope }, log);
+    const r = await executeImpl({ stageDir, runDir, worldCache, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, keepServer: o.keepServer, java, jcmd, scope }, log);
     Object.assign(run, { target: 'local', boot: r.boot, world: r.world });
     Object.assign(run.timings, r.timings);
   };
