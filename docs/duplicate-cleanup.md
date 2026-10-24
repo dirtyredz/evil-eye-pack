@@ -27,7 +27,7 @@ swap, unpacking window or registry remap. The old migration implementation remai
 The canonical explicit duplicate IDs are in [dedup.json](../kubejs/config/dedup.json).
 [dedup_sources.json](../kubejs/config/dedup_sources.json) records removed recipe IDs and
 inherited tags. `tools/dedup/overrides.cjs` computes the block-only strip list,
-written by the generator as `dedup.json` `blockTagRemovals`; `dedup.js` reads it
+derived from the scanned block loot tables and written by the generator as `dedup_sources.json` `blockTagRemovals` (`dedup.json` stays hand-authored); `dedup.js` reads it
 through KubeJS `JsonIO`. `server_scripts/uranium.js` owns the four uranium
 compatibility recipes with their original IDs and KubeJS cooking defaults. These are recipe/loot/tag rules, **not a stack conversion map**.
 
