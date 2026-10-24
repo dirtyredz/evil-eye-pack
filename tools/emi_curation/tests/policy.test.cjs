@@ -119,6 +119,47 @@ test('compile rejects malformed curation', () => {
   assert.throws(() => P.compile({ ...base, nbtExceptions: [{ ids: ['a:b'], keepWhenNbtEquals: 'x' }] }, lists), /must be an object/);
 });
 
+test('NBT rule compilation preserves duplicate and malformed-rule validation', () => {
+  const base = { schema: 1, itemLists: [] };
+  const keep = { ids: ['a:b'], keepWhenNbtEquals: {} };
+  const hide = { ids: ['a:b'], keys: ['mobId'] };
+  const compile = rules => P.compile({ ...base, ...rules }, {});
+  assert.throws(() => compile({ nbtExceptions: [keep, keep] }), /duplicate nbt exception id a:b/);
+  assert.throws(() => compile({ hideWhenNbtHasKey: [hide, hide] }), /duplicate nbt rule id a:b/);
+  assert.throws(() => compile({ nbtExceptions: [keep], hideWhenNbtHasKey: [hide] }), /duplicate nbt rule id a:b/);
+  for (const name of ['nbtExceptions', 'hideWhenNbtHasKey']) {
+    const rule = name === 'nbtExceptions' ? keep : hide;
+    assert.throws(() => compile({ [name]: {} }), new RegExp(name + ' must be an array'));
+    assert.throws(() => compile({ [name]: [{ ...rule, ids: 'a:b' }] }), /ids must be an array/);
+    assert.throws(() => compile({ [name]: [{ ...rule, ids: ['Invalid'] }] }), /invalid id/);
+  }
+  assert.throws(() => compile({ hideWhenNbtHasKey: [{ ...hide, keys: [''] }] }), /must be a non-empty string/);
+  assert.throws(() => compile({ hideWhenNbtHasKey: [{ ...hide, keys: {} }] }), /keys must be an array/);
+  assert.throws(() => compile({ nbtExceptions: [{ ...keep, keepWhenNbtEquals: [] }] }), /must be an object/);
+});
+
+test('NBT rules share one map while preserving lazy reads, key presence and hide precedence', () => {
+  const p = P.compile({ schema: 1, itemLists: [], namespaces: ['blocked'],
+    nbtExceptions: [{ ids: ['a:keep', 'blocked:keep'], keepWhenNbtEquals: {} }],
+    hideWhenNbtHasKey: [{ ids: ['a:keys'], keys: ['mobId', 'other'] }, { ids: ['a:none'], keys: [] }],
+  }, {});
+  assert.deepEqual(JSON.parse(JSON.stringify(p.nbtRules)), {
+    'a:keep': { keep: {} }, 'blocked:keep': { keep: {} },
+    'a:keys': { hideKeys: ['mobId', 'other'] }, 'a:none': { hideKeys: [] },
+  });
+  const check = (id, nbt) => P.isStackHidden(p, item(id, nbt));
+  assert.equal(check('a:keep', {}), false);
+  assert.equal(check('a:keep', null), true);
+  for (const value of [null, false, 0, '', {}]) assert.equal(check('a:keys', { mobId: value }), true);
+  assert.equal(check('a:keys', { other: 0 }), true);
+  assert.equal(check('a:keys', Object.create({ mobId: 'inherited' })), false);
+  for (const value of [null, {}, 'mobId', 0]) assert.equal(check('a:keys', value), false);
+  assert.equal(check('a:none', { mobId: 'zombie' }), false);
+  const unread = () => { throw new Error('must not read NBT'); };
+  assert.equal(P.isStackHidden(p, { id: 'blocked:keep', isItem: true, nbt: unread }), true);
+  assert.equal(P.isStackHidden(p, { id: 'a:keep', isItem: false, nbt: unread }), false);
+});
+
 // ---- Display filtering (REI FilteredStacksVisibilityHandler rule) ----
 
 const H = (id) => ({ id, hidden: true });

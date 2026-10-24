@@ -27,6 +27,30 @@
     return id
   }
 
+  // Both authored NBT rule types share id validation and one compiled map.
+  function parseNbtRules(target, rules, name) {
+    var entries = rules[name] || []
+    if (!Array.isArray(entries)) fail(name + ' must be an array')
+    var keeps = name === 'nbtExceptions'
+    for (var i = 0; i < entries.length; i++) {
+      var where = name + '[' + i + ']'
+      var rule
+      if (keeps) {
+        var keep = entries[i].keepWhenNbtEquals
+        if (!keep || typeof keep !== 'object' || Array.isArray(keep)) fail(where + '.keepWhenNbtEquals must be an object')
+        rule = { keep: keep }
+      } else {
+        rule = { hideKeys: requireStringArray(entries[i].keys, where + '.keys') }
+      }
+      var ids = requireStringArray(entries[i].ids, where + '.ids')
+      for (var k = 0; k < ids.length; k++) {
+        requireId(ids[k], name)
+        if (target[ids[k]]) fail('duplicate nbt ' + (keeps ? 'exception' : 'rule') + ' id ' + ids[k])
+        target[ids[k]] = rule
+      }
+    }
+  }
+
   // Builds the compiled policy. `lists` maps list file name -> parsed list document.
   function compile(rules, lists) {
     if (!rules || rules.schema !== SCHEMA) fail('rules.json schema must be ' + SCHEMA)
@@ -35,8 +59,7 @@
       itemIdCount: 0,
       idContains: requireStringArray(rules.idContains || [], 'idContains').slice(),
       namespaces: {},
-      nbtExceptions: {},
-      nbtHideKeys: {},
+      nbtRules: {},
       displayFiltering: !!(rules.displayFiltering && rules.displayFiltering.clean === true),
       idCache: {}
     }
@@ -55,29 +78,8 @@
     }
     var spaces = requireStringArray(rules.namespaces || [], 'namespaces')
     for (var n = 0; n < spaces.length; n++) policy.namespaces[spaces[n]] = true
-    var ex = rules.nbtExceptions || []
-    if (!Array.isArray(ex)) fail('nbtExceptions must be an array')
-    for (var e = 0; e < ex.length; e++) {
-      var keep = ex[e].keepWhenNbtEquals
-      if (!keep || typeof keep !== 'object' || Array.isArray(keep)) fail('nbtExceptions[' + e + '].keepWhenNbtEquals must be an object')
-      var ids = requireStringArray(ex[e].ids, 'nbtExceptions[' + e + '].ids')
-      for (var k = 0; k < ids.length; k++) {
-        requireId(ids[k], 'nbtExceptions')
-        if (policy.nbtExceptions[ids[k]]) fail('duplicate nbt exception id ' + ids[k])
-        policy.nbtExceptions[ids[k]] = keep
-      }
-    }
-    var hk = rules.hideWhenNbtHasKey || []
-    if (!Array.isArray(hk)) fail('hideWhenNbtHasKey must be an array')
-    for (var h = 0; h < hk.length; h++) {
-      var keys = requireStringArray(hk[h].keys, 'hideWhenNbtHasKey[' + h + '].keys')
-      var hids = requireStringArray(hk[h].ids, 'hideWhenNbtHasKey[' + h + '].ids')
-      for (var q = 0; q < hids.length; q++) {
-        requireId(hids[q], 'hideWhenNbtHasKey')
-        if (policy.nbtHideKeys[hids[q]] || policy.nbtExceptions[hids[q]]) fail('duplicate nbt rule id ' + hids[q])
-        policy.nbtHideKeys[hids[q]] = keys
-      }
-    }
+    parseNbtRules(policy.nbtRules, rules, 'nbtExceptions')
+    parseNbtRules(policy.nbtRules, rules, 'hideWhenNbtHasKey')
     return policy
   }
 
@@ -106,7 +108,7 @@
       for (var i = 0; i < policy.idContains.length; i++) {
         if (id.indexOf(policy.idContains[i]) !== -1) { result = 'hide'; break }
       }
-      if (result === 'show' && isItem && (policy.nbtExceptions[id] || policy.nbtHideKeys[id])) result = 'nbt'
+      if (result === 'show' && isItem && policy.nbtRules[id]) result = 'nbt'
     }
     policy.idCache[key] = result
     return result
@@ -138,7 +140,8 @@
     var c = classifyId(policy, desc.id, desc.isItem)
     if (c !== 'nbt') return c === 'hide'
     var nbt = desc.nbt ? desc.nbt() : null
-    var hideKeys = policy.nbtHideKeys[desc.id]
+    var rule = policy.nbtRules[desc.id]
+    var hideKeys = rule.hideKeys
     if (hideKeys) {
       if (nbt === null || typeof nbt !== 'object') return false
       for (var k = 0; k < hideKeys.length; k++) {
@@ -146,7 +149,7 @@
       }
       return false
     }
-    return !nbtEquals(nbt, policy.nbtExceptions[desc.id])
+    return !nbtEquals(nbt, rule.keep)
   }
 
   // REI 12.1.785 FilteredStacksVisibilityHandler rule: a display is hidden when ANY
