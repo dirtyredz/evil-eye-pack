@@ -74,6 +74,8 @@
     if (u.screen != null) update(btn, u.screen)
   }
 
+  ns.placement.register('clean', function () { return ns.placement.visibleRect(ui().button) })
+
   ns.button = { WIDTH: WIDTH, chooseRect: chooseRect }
   ns.handlers = {
     screenInit: function (e) { ns.diag.guard('screen init', function () { onScreenInit(e) }) },

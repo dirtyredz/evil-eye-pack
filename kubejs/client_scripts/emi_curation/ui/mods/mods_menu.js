@@ -33,6 +33,8 @@
     return ns.modsUi || (ns.modsUi = { screen: null, button: null, items: [], rows: [], rects: [], open: false, mouse: null, page: 0, pageCount: 1 })
   }
 
+  ns.placement.register('mods', function () { return ns.placement.visibleRect(ui().button) })
+
   function menuItems() {
     var items = [{ label: CLEAR_LABEL, modid: null }]
     var entries = ns.modsSource.entries()
@@ -86,12 +88,7 @@
   }
 
   // Rects of the visible CLEAN and DECOR buttons.
-  function otherButtons() {
-    var out = []
-    var others = [ns.ui ? ns.ui.button : null, ns.decorUi ? ns.decorUi.button : null]
-    for (var i = 0; i < others.length; i++) if (others[i] != null && others[i].visible) out.push(rectOf(others[i]))
-    return out
-  }
+  function otherButtons() { return ns.placement.rects(['clean', 'decor']) }
 
   function setOpen(u, open) {
     u.open = open
@@ -143,11 +140,11 @@
   // Where the Mods button goes first: beside the CLEAN/ALL button, on the side away from
   // the search bar's centre line it already occupies.
   function preferredSpots(ctx, clean) {
-    if (!clean || !clean.visible) return []
+    if (clean == null) return []
     var gap = ns.placement.GAP
-    var left = { x: clean.getX() - BUTTON_W - gap, y: clean.getY() }
-    var right = { x: clean.getX() + clean.getWidth() + gap, y: clean.getY() }
-    return clean.getX() < ctx.search.x ? [left, right] : [right, left]
+    var left = { x: clean.x - BUTTON_W - gap, y: clean.y }
+    var right = { x: clean.x + clean.w + gap, y: clean.y }
+    return clean.x < ctx.search.x ? [left, right] : [right, left]
   }
 
   // Positions the Mods button; hides it (and closes the menu) when EMI is unusable.
@@ -158,8 +155,8 @@
       if (u.open) setOpen(u, false)
       return
     }
-    var clean = ns.ui ? ns.ui.button : null
-    if (clean && clean.visible) ctx.avoid.push(rectOf(clean))
+    var clean = ns.placement.rect('clean')
+    if (clean != null) ctx.avoid.push(clean)
     var r = ns.placement.chooseRect(ctx, BUTTON_W, preferredSpots(ctx, clean))
     u.button.setX(r.x)
     u.button.setY(r.y)

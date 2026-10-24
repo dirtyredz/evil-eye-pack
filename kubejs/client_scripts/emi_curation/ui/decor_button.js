@@ -13,19 +13,15 @@
 
   function ui() { return ns.decorUi || (ns.decorUi = { button: null, screen: null }) }
 
-  function rectOf(w) { return { x: w.getX(), y: w.getY(), w: w.getWidth(), h: w.getHeight() } }
-
-  function shown(w) { return w != null && w.visible }
-
   // Candidate spots, best first: right of Mods, then right of CLEAN. placement.chooseRect
   // tries its own spots (beside the search bar) after these. A spot above the Mods button is
   // deliberately not offered: the Mods dropdown opens there.
   function preferredSpots() {
     var spots = []
-    var clean = ns.ui ? ns.ui.button : null
-    var mods = ns.modsUi ? ns.modsUi.button : null
-    if (shown(mods)) spots.push({ x: mods.getX() + mods.getWidth() + H_GAP, y: mods.getY() })
-    if (shown(clean)) spots.push({ x: clean.getX() + clean.getWidth() + H_GAP, y: clean.getY() })
+    var clean = ns.placement.rect('clean')
+    var mods = ns.placement.rect('mods')
+    if (mods != null) spots.push({ x: mods.x + mods.w + H_GAP, y: mods.y })
+    if (clean != null) spots.push({ x: clean.x + clean.w + H_GAP, y: clean.y })
     return spots
   }
 
@@ -35,10 +31,10 @@
       button.visible = false
       return
     }
-    var clean = ns.ui ? ns.ui.button : null
-    var mods = ns.modsUi ? ns.modsUi.button : null
-    if (shown(clean)) ctx.avoid.push(rectOf(clean))
-    if (shown(mods)) ctx.avoid.push(rectOf(mods))
+    var clean = ns.placement.rect('clean')
+    var mods = ns.placement.rect('mods')
+    if (clean != null) ctx.avoid.push(clean)
+    if (mods != null) ctx.avoid.push(mods)
     var r = ns.placement.chooseRect(ctx, WIDTH, preferredSpots())
     button.setX(r.x)
     button.setY(r.y)
@@ -84,6 +80,8 @@
     var u = ui()
     if (u.screen != null) update(btn, u.screen)
   }
+
+  ns.placement.register('decor', function () { return ns.placement.visibleRect(ui().button) })
 
   ns.decorHandlers = {
     screenInit: function (e) { ns.diag.guard('decor init', function () { onScreenInit(e) }) },

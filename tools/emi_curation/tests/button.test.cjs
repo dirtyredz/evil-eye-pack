@@ -133,3 +133,32 @@ test('interop.isContainerScreen and literal', () => {
   assert.equal(I.isContainerScreen(new F.Screen(427, 240)), false);
   assert.equal(I.literal('x').getString(), 'x');
 });
+
+test('toolbar rect registry follows live widgets, visibility, replacement and reload', () => {
+  const c = boot();
+  c.tick();
+  const screen = new F.AbstractContainerScreen(427, 240, 125, 37, 176, 166);
+  const added = [];
+  c.world.fireEvent('ScreenEvent$Init$Post', { getScreen: () => screen, addListener: b => added.push(b) });
+  const P = () => c.ns().placement;
+  for (const [i, name] of ['clean', 'mods', 'decor'].entries()) {
+    const b = added[i];
+    assert.deepEqual({ ...P().rect(name) }, { x: b.x, y: b.y, w: b.w, h: b.h });
+    b.visible = false;
+    assert.equal(P().rect(name), null);
+    b.visible = true;
+  }
+  added[0].setX(77);
+  assert.equal(P().rect('clean').x, 77, 'reads current geometry');
+  P().register('clean', () => ({ x: 9, y: 8, w: 7, h: 6 }));
+  assert.equal(P().rect('clean').x, 9, 'a name replaces its publisher');
+  assert.equal(P().rect('missing'), null);
+  assert.equal(P().rects(['missing', 'clean']).length, 1);
+  c.load();
+  assert.equal(P().rect('clean').x, 77, 'reload republishes the existing widget');
+  c.world.fireEvent('ScreenEvent$Init$Post', { getScreen: () => screen, addListener: b => added.push(b) });
+  assert.equal(P().rect('clean').x, added[3].x, 'new screen replaces the old widget');
+  c.world.EmiConfig.enabled = false;
+  c.world.fireEvent('ScreenEvent$Render$Pre', { getScreen: () => screen, getMouseX: () => 0, getMouseY: () => 0 });
+  assert.equal(P().rects(['clean', 'mods', 'decor']).length, 0);
+});

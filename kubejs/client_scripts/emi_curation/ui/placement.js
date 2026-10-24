@@ -10,6 +10,24 @@
 // per-frame placement is what puts it right (see searchPlaced).
 
 (function (ns) {
+  // Widgets publish live getters; consumers see geometry, never sibling widget state.
+  // Rebuilt on script reload. A null rect means absent or hidden.
+  var toolbar = {}
+  function register(name, getRect) { toolbar[name] = getRect }
+  function rect(name) { return toolbar[name] ? toolbar[name]() : null }
+  function rects(names) {
+    var out = []
+    for (var i = 0; i < names.length; i++) {
+      var r = rect(names[i])
+      if (r != null) out.push(r)
+    }
+    return out
+  }
+  function visibleRect(button) {
+    if (button == null || !button.visible) return null
+    return { x: button.getX(), y: button.getY(), w: button.getWidth(), h: button.getHeight() }
+  }
+
   var GAP = 2
   // EMI 1.1.24 EmiScreenManager.addWidgets: config button at x=2 and tree button at
   // x=24, both 20x20 at y = screen height - 22.
@@ -92,6 +110,7 @@
   }
 
   ns.placement = {
+    register: register, rect: rect, rects: rects, visibleRect: visibleRect,
     GAP: GAP, overlaps: overlaps, emiButtonRects: emiButtonRects, searchPlaced: searchPlaced,
     chooseRect: chooseRect, layoutContext: layoutContext, usableLayout: usableLayout
   }
