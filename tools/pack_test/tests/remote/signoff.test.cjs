@@ -10,7 +10,8 @@ const { spawn, spawnSync } = require('node:child_process');
 const { abortRegistry } = require('../../session/aborts.cjs');
 const { killScript } = require('../../remote/scripts.cjs');
 const { lockScript, refreshDirLock } = require('../../remote/lease/dir_lock.cjs');
-const { makeRunServer, STAGE_RUNTIME } = require('../../session/prepare.cjs');
+const { makeRunServer } = require('../../session/prepare.cjs');
+const { STAGE_RUNTIME } = require('../../stage_runtime.cjs');
 
 const tmp = (p) => fs.mkdtempSync(path.join(os.tmpdir(), p));
 const win = { skip: process.platform !== 'win32' };

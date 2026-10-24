@@ -3,10 +3,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { execute } = require('./execute.cjs');
-const { runOnAnu } = require('../remote/anu.cjs');
 const { starvedBoot, starvedText } = require('../verdict/mode.cjs');
 
-async function runTarget({ options: o, stageDir, runDir, run, worldCache, java, jcmd, scope, onAbort, onSynced }, log, { executeImpl = execute, runOnAnuImpl = runOnAnu } = {}) {
+async function runTarget({ options: o, stageDir, runDir, run, worldCache, java, jcmd, scope, onAbort, onSynced }, log, { executeImpl = execute, runOnAnuImpl } = {}) {
   const bootOpts = { priority: o.priority, sample: o.sample, silent: o.silent, timeout: o.timeout, probeTimeout: o.probeTimeout };
   const runLocal = async () => {
     const r = await executeImpl({ stageDir, runDir, worldCache, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, keepServer: o.keepServer, java, jcmd, scope }, log);
@@ -15,8 +14,9 @@ async function runTarget({ options: o, stageDir, runDir, run, worldCache, java, 
   };
   let remote = null;
   if (!o.local) {
+    const runOnAnu = runOnAnuImpl || require('../remote/anu.cjs').runOnAnu;
     run.target = 'anu';
-    remote = await runOnAnuImpl({ stageDir, runDir, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, scope, log, onAbort, onSynced });
+    remote = await runOnAnu({ stageDir, runDir, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, scope, log, onAbort, onSynced });
     if (remote.fallback) { run.fallback = remote.fallback; run.target = 'local'; log(`ANU not used: ${remote.fallback}; running on this machine`); }
   }
   if (remote && !remote.fallback) {

@@ -15,11 +15,10 @@ const { probeScript, parseProbe, decide } = require('./capacity.cjs');
 const { acquire, releaseScript } = require('./lease/dir_lock.cjs');
 const { launchScript, statusScript, killScript } = require('./scripts.cjs');
 const { pullEvidence } = require('./evidence.cjs');
-const { STAGE_RUNTIME } = require('../session/prepare.cjs');
+const { isStageRuntime } = require('../stage_runtime.cjs');
 
 const TOOLS_DIR = path.resolve(__dirname, '../..');
 const CODE_DIRS = ['server_smoke', 'pack_test', 'emi_coverage'];
-const STAGE_SKIP = (rel) => STAGE_RUNTIME.includes(rel.split('/')[0]);
 
 // Reads ANU's load and decides alone / shared / fallback (capacity.cjs).
 async function checkCapacity(ssh, log) {
@@ -56,7 +55,7 @@ async function runOnAnu(o) {
     const early = await checkCapacity(ssh, log); // cheap early exit before the sync
     if (early.mode === 'fallback') return { fallback: early.reason };
     t = Date.now();
-    const st = await syncDir(ssh, scope, o.stageDir, cfg.STAGE, { incoming: cfg.INCOMING, skip: STAGE_SKIP, log, label: 'stage' });
+    const st = await syncDir(ssh, scope, o.stageDir, cfg.STAGE, { incoming: cfg.INCOMING, skip: isStageRuntime, log, label: 'stage' });
     for (const d of CODE_DIRS) await syncDir(ssh, scope, path.join(TOOLS_DIR, d), `${cfg.CODE}\\${d}`, { incoming: cfg.INCOMING, skip: (r) => /^tests(\/|$)/.test(r), log, label: `tools-${d}` });
     timings.sync = (Date.now() - t) / 1000;
     if (o.onSynced) o.onSynced(); // the local stage may change again now

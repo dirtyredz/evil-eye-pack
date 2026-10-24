@@ -5,7 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 
-const WORLD = 'smoke-world';
+const { WORLD } = require('../stage_runtime.cjs');
 
 function worldKey(stageDir, seed) {
   const mods = fs.readdirSync(path.join(stageDir, 'mods')).filter((f) => f.endsWith('.jar')).sort().join('\n');
@@ -29,4 +29,4 @@ function saveWorld(worldCache, key, serverDir) {
   return true;
 }
 
-module.exports = { worldKey, restoreWorld, saveWorld, WORLD };
+module.exports = { worldKey, restoreWorld, saveWorld };

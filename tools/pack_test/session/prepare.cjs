@@ -5,7 +5,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { ensureForgeBase, prepareRunDir, installPack } = require('../../server_smoke/setup.cjs');
-const { WORLD } = require('./world_cache.cjs');
+const { WORLD, isStageRuntime } = require('../stage_runtime.cjs');
 
 const PROBE_DIR = path.join(__dirname, '../probe');
 
@@ -18,15 +18,11 @@ async function ensureStage(stageDir, { cache, java, pack, log, scope, seed, port
   return stageDir;
 }
 
-// Runtime output never belongs in a local copy or an ANU stage sync.
-const STAGE_RUNTIME = Object.freeze([WORLD, 'logs', 'crash-reports', 'pack_test', 'packwiz-install.log', 'console.log']);
-const STAGE_SKIP = new Set(STAGE_RUNTIME);
-
 // The run's own server copy. Jars are hard-linked (the server only reads them); everything else is copied.
 function makeRunServer(stageDir, serverDir, { seed, port, heap }) {
   fs.mkdirSync(serverDir, { recursive: true });
   for (const e of fs.readdirSync(stageDir, { withFileTypes: true })) {
-    if (STAGE_SKIP.has(e.name)) continue;
+    if (isStageRuntime(e.name)) continue;
     const from = path.join(stageDir, e.name);
     const to = path.join(serverDir, e.name);
     if (e.name === 'mods' && e.isDirectory()) {
@@ -53,4 +49,4 @@ function injectProbe(serverDir, input) {
   fs.writeFileSync(path.join(serverDir, 'pack_test/in/run.json'), JSON.stringify(input));
 }
 
-module.exports = { ensureStage, makeRunServer, injectProbe, STAGE_RUNTIME };
+module.exports = { ensureStage, makeRunServer, injectProbe };

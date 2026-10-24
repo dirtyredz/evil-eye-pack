@@ -7,6 +7,14 @@ const { runTarget } = require('../../session/target.cjs');
 
 const starved = { completed: false, timedOut: true, totalWallSeconds: 100, cpuSeconds: 1 };
 
+test('explicit local target never loads the ANU stack', async () => {
+  await runTarget({ options: { local: true }, run: { input: {}, timings: {} } }, () => {}, {
+    executeImpl: async () => ({ boot: { completed: true }, world: {}, timings: {} })
+  });
+  assert.equal(Object.keys(require.cache).some((file) => file.startsWith(path.resolve(__dirname, '../../remote') + path.sep)), false,
+    'local target loaded the ANU stack');
+});
+
 for (const scenario of [
   { name: 'explicit local', local: true, remote: null, calls: ['local'], target: 'local' },
   { name: 'ANU fallback', remote: { fallback: 'busy' }, calls: ['anu', 'local'], target: 'local' },
