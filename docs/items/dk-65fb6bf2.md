@@ -2,7 +2,7 @@
 id: dk-65fb6bf2
 type: task
 created: 2026-10-22
-status: wip
+status: done
 since: 2026-10-24
 area:
 priority: P3

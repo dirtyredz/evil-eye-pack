@@ -162,3 +162,25 @@ test('toolbar rect registry follows live widgets, visibility, replacement and re
   c.world.fireEvent('ScreenEvent$Render$Pre', { getScreen: () => screen, getMouseX: () => 0, getMouseY: () => 0 });
   assert.equal(P().rects(['clean', 'mods', 'decor']).length, 0);
 });
+
+test('shared toolbar buttons held across reloads use current actions and guard press failures', () => {
+  const c = boot();
+  c.tick();
+  const screen = new F.AbstractContainerScreen(427, 240, 125, 37, 176, 166);
+  const added = [];
+  c.world.fireEvent('ScreenEvent$Init$Post', { getScreen: () => screen, addListener: b => added.push(b) });
+  c.load();
+  c.tick();
+  const calls = [];
+  c.ns().session.toggle = () => calls.push('clean');
+  c.ns().session.toggleDecor = () => calls.push('decor');
+  added[0].press();
+  added[2].press();
+  assert.deepEqual(calls, ['clean', 'decor']);
+  assert.equal(c.world.counters.listeners.length, 11);
+  for (const [i, action] of [[0, 'toggle'], [2, 'toggleDecor']]) {
+    c.ns().session[action] = () => { throw new Error('press failed'); };
+    assert.doesNotThrow(() => added[i].press());
+  }
+  assert.equal(c.logs.filter(l => /press.*press failed/.test(l[1])).length, 2);
+});
