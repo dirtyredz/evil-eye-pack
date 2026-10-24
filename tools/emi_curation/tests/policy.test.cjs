@@ -12,6 +12,19 @@ const ZOMBIE = { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zom
 const item = (id, nbt) => ({ id, isItem: true, nbt: () => (nbt === undefined ? null : nbt) });
 const hidden = (id, nbt) => P.isStackHidden(policy, item(id, nbt));
 
+test('resource id parts preserve namespace, nested paths and colonless fallback', () => {
+  const ids = env.global.emiCuration.ids;
+  for (const [id, namespace, path] of [
+    ['minecraft:stone', 'minecraft', 'stone'],
+    ['herbalwitch:decor/seating/chair', 'herbalwitch', 'decor/seating/chair'],
+    ['namespace', 'namespace', ''], ['', '', ''], [':path', '', 'path'],
+    ['ns:', 'ns', ''], ['ns:path:rest', 'ns', 'path:rest'],
+  ]) {
+    assert.deepEqual({ ...ids.split(id) }, { namespace, path });
+    assert.equal(ids.namespaceOf(id), namespace);
+  }
+});
+
 test('loads the shipped curation: 1,105 explicit ids plus rules', () => {
   assert.equal(policy.itemIdCount, 1105);
   assert.deepEqual([...policy.idContains], ['spawn_egg']);

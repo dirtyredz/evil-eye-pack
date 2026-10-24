@@ -27,8 +27,7 @@
     var out = []
     for (var i = 0; i < C.len(src); i++) {
       var id = String(C.at(src, i).getId())
-      var colon = id.indexOf(':')
-      var space = colon === -1 ? id : id.substring(0, colon)
+      var space = ns.ids.namespaceOf(id)
       if (!seen[space]) {
         seen[space] = true
         out.push(space)

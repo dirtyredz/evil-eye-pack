@@ -71,16 +71,11 @@
     return JSON.stringify(doc, null, 2) + '\n'
   }
 
-  function namespaceOf(id) {
-    var colon = id.indexOf(':')
-    return colon === -1 ? id : id.substring(0, colon)
-  }
-
   // true / false when a local mark decides, null when the shipped rules do.
   function lookup(data, id) {
     if (data.forceNotDecor[id] === true) return false
     if (data.forceDecor[id] === true) return true
-    var space = namespaceOf(id)
+    var space = ns.ids.namespaceOf(id)
     if (data.notMods[space] === true) return false
     if (data.mods[space] === true) return true
     return null
@@ -145,7 +140,7 @@
   function mark(holder, io, id, wholeMod) {
     if (holder.status === 'malformed') return { ok: false, reason: 'malformed', error: holder.error }
     var draft = clone(holder.data)
-    var key = wholeMod ? namespaceOf(id) : id
+    var key = wholeMod ? ns.ids.namespaceOf(id) : id
     var state = wholeMod ? cycleMod(draft, key) : cycleItem(draft, id)
     try {
       io.write(PATH, serialize(draft))
@@ -170,6 +165,6 @@
     PATH: PATH, AUTO: AUTO, DECOR: DECOR, NOT_DECOR: NOT_DECOR,
     empty: empty, parse: parse, serialize: serialize, lookup: lookup,
     itemState: itemState, modState: modState, cycleItem: cycleItem, cycleMod: cycleMod,
-    namespaceOf: namespaceOf, load: load, mark: mark, kubeIo: kubeIo
+    load: load, mark: mark, kubeIo: kubeIo
   }
 })(global.emiCuration || (global.emiCuration = {}))

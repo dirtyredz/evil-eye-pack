@@ -99,8 +99,7 @@
     var cached = policy.idCache[key]
     if (cached !== undefined) return cached
     var result = 'show'
-    var colon = id.indexOf(':')
-    var namespace = colon === -1 ? id : id.substring(0, colon)
+    var namespace = ns.ids.namespaceOf(id)
     if (isItem && policy.itemIds[id] === true) result = 'hide'
     else if (policy.namespaces[namespace] === true) result = 'hide'
     else {

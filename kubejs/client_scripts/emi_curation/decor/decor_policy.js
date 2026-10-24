@@ -79,10 +79,8 @@
   function classify(policy, id, inTags) {
     if (policy.forceNotDecor[id] === true) return false
     if (policy.forceDecor[id] === true) return true
-    var colon = id.indexOf(':')
-    var namespace = colon === -1 ? id : id.substring(0, colon)
-    var path = colon === -1 ? '' : id.substring(colon + 1)
-    if (isDecorMod(policy, namespace, path)) return true
+    var parts = ns.ids.split(id)
+    if (isDecorMod(policy, parts.namespace, parts.path)) return true
     return inTags ? !!inTags() : false
   }
 

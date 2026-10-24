@@ -91,7 +91,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 | `tools/packwiz/verify_hashes.cjs` | check the hash chain, index membership and optionally jar hashes |
 | `tools/packwiz/serve.cjs` | serve the containing checkout on `127.0.0.1` over HTTP (not used by MultiMC: local instances install from the file path) |
 | `emi_curation/diagnostics.js` (priority 100) | guarded logging; nothing may throw into Forge or EMI |
-| `emi_curation/collections.js` (95) | pure `len`/`at` accessors for JS arrays and Java lists; the one copy used by policy, views and hiding |
+| `emi_curation/collections.js` (95) | pure `len`/`at` accessors for JS arrays and Java lists, plus `ns.ids.split`/`namespaceOf` for resource ids; shared by policy, views, hiding, DECOR and Mods |
 | `emi_curation/policy.js` (90) | parse and validate the curation JSON. Stack (id, `nbtExceptions` keep, `hideWhenNbtHasKey` hide) and REI display-rule predicates. Pure: no Java, no EMI mutation. |
 | `emi_curation/java_interop.js` (85) | class lookup, `isContainerScreen`/`literal` (shared by both buttons), Java reference identity, Java list copy/freeze, list filtering (`filterToList`), item-key test (`isItemKey`), `EmiStack` → policy descriptor (NBT walk) |
 | `emi_curation/index_view.js` (80) | swap `EmiStackList.filteredStacks` between EMI's list and the CLEAN copy, then refresh search and sidebars. No hide decisions. |

@@ -13,5 +13,14 @@
     return typeof list.get === 'function' ? list.get(i) : list[i]
   }
 
+  // Resource-id parts; a colonless value is a namespace with an empty path.
+  function splitId(id) {
+    var colon = id.indexOf(':')
+    return { namespace: colon === -1 ? id : id.substring(0, colon), path: colon === -1 ? '' : id.substring(colon + 1) }
+  }
+
+  function namespaceOf(id) { return splitId(id).namespace }
+
+  ns.ids = { split: splitId, namespaceOf: namespaceOf }
   ns.collections = { len: len, at: at }
 })(global.emiCuration || (global.emiCuration = {}))

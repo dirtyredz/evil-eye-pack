@@ -2366,15 +2366,15 @@ hash = "8d7c5fccb391d945ac1f39619689bb5216925fc25d0eb1b977e762ef977dc7ad"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/collections.js"
-hash = "e2bdc46033ba8cc4ca773e940377e119fe4945d026cb811d9090d60acc564777"
+hash = "699a69751f14bc1cd58503abd3aece35d3609560e9727a5fcc251e585c0e293f"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/decor/decor_local.js"
-hash = "03286eae6f17f53f3f50cf907964928fcc4d451b3a9462f7caf490fa5a80298e"
+hash = "3164e35d57665f8dc7e37dd21622cda95d488f965a83a6b65873673206532280"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/decor/decor_policy.js"
-hash = "7221325a4abc4cd35d7c6346a63bb08c9d579daa865d5286c2d7c238a5c830b9"
+hash = "48a989edbefb7181f059c75c6ab590a634a139e25d3b093b85b8e71d8e5d35e8"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/decor/decor_state.js"
@@ -2402,7 +2402,7 @@ hash = "d367e1fe380e5d28c6b6552de814853c4a703fe9456dd2aa0cce82a847ca28d2"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/policy.js"
-hash = "62a2ed97e771d6832b8e54a665c4182c23e91af1a7e5989e8ffeed8b80ca20d9"
+hash = "918d65d427dd19b12eb3d007548adb668d020a69bfd928097beab97ee08ebbe3"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/recipe_view.js"
@@ -2446,7 +2446,7 @@ hash = "4b4b23bc3da2ee2a1f68bcfd092a4a2c8c57f863c38091e0533a0a2325a3ca11"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/mods/mods_source.js"
-hash = "e6667b6e4747cb472cf4f255e497cc834bf1955499bb7ca2fa10cf59ed067022"
+hash = "4f6626dacb905e2bc3a48fcce675c54714b150e58ee423c482694c0cc3681fce"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/mods/mods_text.js"
