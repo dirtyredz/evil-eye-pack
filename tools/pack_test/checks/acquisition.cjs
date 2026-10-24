@@ -65,18 +65,20 @@ function buildEvidence({ recipeOutputs, loot, live, worldgenBlocks, blockItems }
 function checkAcquisition(input, policy) {
   const { ev, weak } = buildEvidence(input);
   const findings = [];
+  const exclusions = {};
   const stats = { items: 0, excluded: 0, covered: 0, weak: 0, noSource: 0 };
   for (const id of [...input.live.items].sort()) {
     if (id === 'minecraft:air') continue;
     stats.items += 1;
-    if (excluded(id, policy)) { stats.excluded += 1; continue; }
+    const reason = excluded(id, policy);
+    if (reason) { exclusions[id] = reason; stats.excluded += 1; continue; }
     const e = ev.get(id);
     if (e) { stats.covered += 1; continue; }
     if (weak.has(id)) { stats.weak += 1; findings.push(finding('unverified-source', id, weak.get(id), 'only a block drop of a block with no known source (in-world conversion or Java-placed?)', 'info')); continue; }
     stats.noSource += 1;
     findings.push(finding('no-known-source', id, null, 'no recipe, loot table or worldgen drop produces this item'));
   }
-  return sectionResult(findings, stats);
+  return sectionResult(findings, stats, { exclusions });
 }
 
 module.exports = { checkAcquisition, buildEvidence, excluded };

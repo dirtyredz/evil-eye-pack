@@ -66,6 +66,9 @@ Tooling needs Node 22. There is no packwiz CLI and no build step.
 Three lists record why something is deliberately hidden, missing or duplicated. Check them before
 investigating an item, a pack-test finding or a duplicate group; when you add an entry, add its reason.
 
+Acquisition analysis reads hidden-item classes and evidence from `hidden_reasons.json`
+and includes them in `report.json`; do not repeat those ids in `policy.json` exclusions.
+
 - `tools/dedup/hidden_reasons.json`: one reason (class, evidence, date, source) per id in `kubejs/config/dedup.json` `hiddenOnly`. `tools/dedup/tests/hidden_reasons.test.cjs` fails if an id has no reason or a reason names an id that is not hidden. The shipped `dedup.json` stays a plain array; reasons are never shipped (`tools/` is packwiz-ignored).
 - `tools/pack_test/data/baseline.json` (with `policy.json`): known pack-test findings, each with a reason and date.
 - `tools/dedup/allowed_groups.json`: duplicate material groups that are allowed to stay, each with a reason.

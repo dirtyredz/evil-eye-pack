@@ -59,6 +59,14 @@ test('toJson drops internal comparison handles', () => {
   assert.equal('_logCmp' in j, false);
 });
 
+test('report JSON retains acquisition exclusion reasons without adding findings', () => {
+  const exclusions = { 'a:hidden': 'hidden_reasons.json: creative-technical: Render-state item.' };
+  const j = toJson(build({ sections: { acquisition: sec([], 'passed', { exclusions }) } }));
+  assert.deepEqual(j.sections.acquisition.exclusions, exclusions);
+  assert.equal(j.verdict.exit, EXIT.OK);
+  assert.deepEqual(j.findings.new, []);
+});
+
 test('summarize names the verdict, sections and new findings', () => {
   const text = summarize(build({ sections: { recipes: sec([fail('fresh', { ref: 'r' })]), loot: sec([], 'passed') } }));
   assert.match(text, /^mode: \S.* NEW FINDINGS \(exit 1\)/);

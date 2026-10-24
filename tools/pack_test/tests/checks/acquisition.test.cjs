@@ -62,18 +62,44 @@ test('unnamespaced loot names and tag entries qualify and resolve', () => {
 test('exclusions by id, pattern, dedup lists and curated lists skip the item', () => {
   const policy = compilePolicy(
     { exclude: { ids: { 'a:byid': 'creative only' }, patterns: [{ re: '^a:spawn_egg_', reason: 'eggs' }] } },
-    { dedup: { replacements: { 'a:old': 'b:new' }, disabled: ['a:off'], hiddenOnly: ['a:hid'] }, curated: [{ group: 'g', description: 'd', items: ['a:cur'] }] }
+    { dedup: { replacements: { 'a:old': 'b:new' }, disabled: ['a:off'], hiddenOnly: ['a:hid'] }, hiddenReasons: { 'a:hid': { class: 'creative-technical', evidence: 'Render-state item, not an orphan.' } }, curated: [{ group: 'g', description: 'd', items: ['a:cur'] }] }
   );
   assert.match(policy.exclude.ids['a:old'], /b:new/);
   assert.equal(policy.exclude.ids['a:cur'], 'g: d');
+  assert.equal(policy.exclude.ids['a:hid'], 'hidden_reasons.json: creative-technical: Render-state item, not an orphan.');
   const r = run({ items: ['a:byid', 'a:spawn_egg_x', 'a:old', 'a:off', 'a:hid', 'a:cur', 'a:keep'] }, policy);
   assert.equal(r.stats.excluded, 6);
+  assert.equal(r.exclusions['a:hid'], policy.exclude.ids['a:hid']);
+  assert.equal(r.exclusions['a:spawn_egg_x'], 'eggs');
   assert.deepEqual(byCode(r), { 'a:keep': 'no-known-source' });
 });
 
 test('minecraft:air is never checked', () => {
   const r = run({ items: ['minecraft:air'] });
   assert.equal(r.stats.items, 0);
+});
+
+test('hidden reasons are required and take precedence over generic exclusions', () => {
+  const dedup = { replacements: {}, disabled: [], hiddenOnly: ['a:hidden'] };
+  const policy = { exclude: { ids: { 'a:hidden': 'stale generic reason' } } };
+  assert.throws(() => compilePolicy(policy, { dedup, curated: [], hiddenReasons: {} }), /hidden_reasons.json: missing class\/evidence for a:hidden/);
+  const compiled = compilePolicy(policy, { dedup, curated: [], hiddenReasons: {
+    'a:hidden': { class: 'creative-technical', evidence: 'Used only for rendering.' },
+    'a:stale': { class: 'unused', evidence: 'Not hidden in this evidence.' }
+  } });
+  assert.equal(compiled.exclude.ids['a:hidden'], 'hidden_reasons.json: creative-technical: Used only for rendering.');
+  assert.equal(compiled.exclude.ids['a:stale'], undefined);
+});
+
+test('the real hidden registry supplies every hidden exclusion without duplicate policy ids', () => {
+  const dedup = require('../../../../kubejs/config/dedup.json');
+  const reasons = require('../../../dedup/hidden_reasons.json').reasons;
+  const policy = loadToolData().policy;
+  const compiled = compilePolicy(policy, { dedup, curated: [] });
+  for (const id of dedup.hiddenOnly) {
+    assert.equal(policy.exclude.ids[id], undefined, `duplicate hidden reason in policy.json: ${id}`);
+    assert.equal(compiled.exclude.ids[id], `hidden_reasons.json: ${reasons[id].class}: ${reasons[id].evidence}`);
+  }
 });
 
 test('the pack files copied as evidence follow policy.json curatedLists plus the dedup files', () => {

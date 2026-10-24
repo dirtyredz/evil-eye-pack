@@ -25,7 +25,7 @@ function buildReport({ run, boot, sections, logs, baseline, infraErrors = [] }) 
     verdict: { exit, label: exit === 0 ? 'PASS' : exit === 1 ? 'NEW FINDINGS' : 'INVALID RUN', problems },
     run,
     boot,
-    sections: Object.fromEntries(Object.entries(sections).map(([n, s]) => [n, { state: s.state, error: s.error, stats: s.stats || {}, counts: countBy(s.findings || [], cmp) }])),
+    sections: Object.fromEntries(Object.entries(sections).map(([n, s]) => [n, { state: s.state, error: s.error, stats: s.stats || {}, counts: countBy(s.findings || [], cmp), ...(s.exclusions ? { exclusions: s.exclusions } : {}) }])),
     findings: { new: cmp.new, known: cmp.known, resolved: cmp.resolved, info: cmp.info },
     logs: logs ? { doneSeconds: logs.doneSeconds, knownNoise: logs.known.length, new: logCmp.new, known: logCmp.known.map((g) => ({ signature: g.signature, count: g.count })), resolved: logCmp.resolved.map((s) => s.signature) } : null,
     _cmp: cmp,

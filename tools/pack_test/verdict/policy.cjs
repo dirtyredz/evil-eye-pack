@@ -25,12 +25,16 @@ const DEDUP_CONFIG = ['kubejs/config/dedup.json', 'kubejs/config/dedup_sources.j
 const packConfigFiles = (policyJson) => [...DEDUP_CONFIG, ...(policyJson.curatedLists || []).map((f) => `config/emi-curation/${f}`)];
 
 // Builds the exclusion policy from policy.json and the curated lists. Each exclusion keeps its reason.
-function compilePolicy(policyJson, { dedup, curated }) {
+function compilePolicy(policyJson, { dedup, curated, hiddenReasons = readJson(path.join(__dirname, '../../dedup/hidden_reasons.json')).reasons }) {
   const ids = {};
   for (const [id, reason] of Object.entries(policyJson.exclude.ids || {})) ids[id] = reason;
   for (const id of Object.keys(dedup.replacements)) ids[id] = ids[id] || `retired duplicate (dedup.json replacement -> ${dedup.replacements[id]})`;
   for (const id of dedup.disabled) ids[id] = ids[id] || 'disabled by dedup.json';
-  for (const id of dedup.hiddenOnly) ids[id] = ids[id] || 'dedup.json hiddenOnly (orphan compat item)';
+  for (const id of dedup.hiddenOnly) {
+    const reason = hiddenReasons[id];
+    if (!reason || !reason.class || !reason.evidence) throw new Error(`hidden_reasons.json: missing class/evidence for ${id}`);
+    ids[id] = `hidden_reasons.json: ${reason.class}: ${reason.evidence}`;
+  }
   for (const list of curated) for (const id of list.items) ids[id] = ids[id] || `${list.group}: ${list.description}`;
   return { exclude: { ids, patterns: policyJson.exclude.patterns || [] } };
 }

@@ -50,6 +50,12 @@ The [EMI architecture](emi.md) covers the separate client subsystem.
    Offline analysis skips staging and booting and uses saved evidence with the
    currently loaded checks, policy and baseline.
 
+Acquisition exclusions for saved `dedup.json` `hiddenOnly` ids use the current
+`tools/dedup/hidden_reasons.json` class and evidence, rather than a generic orphan
+label. Missing reasons fail analysis; registry entries alone do not exclude items.
+`report.json` retains the matched item-to-reason map at
+`sections.acquisition.exclusions`; summary counts and finding identities are unchanged.
+
 ### ANU lease and cleanup boundary
 
 The launcher acquires an immutable `{ runId, claimId }` lease, passed in `job.json`.
