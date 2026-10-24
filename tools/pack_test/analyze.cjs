@@ -19,7 +19,7 @@ const { checkDedup } = require('./checks/dedup.cjs');
 const { checkLogs } = require('./checks/logs.cjs');
 const { parseCrashCauses } = require('../server_smoke/verdict.cjs');
 
-const readJson = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
+const { readJson } = require('../file_data/json.cjs');
 const readText = (f) => (fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : null);
 
 function incomplete(needs, sections) {

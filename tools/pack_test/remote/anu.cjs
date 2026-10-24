@@ -1,4 +1,5 @@
 'use strict';
+const { setTimeout: sleep } = require('node:timers/promises');
 // The ANU target, driven from Valhalla: connect, provision if needed, take our heartbeat lock (never
 // waiting), check ANU has room when a neighbour project's job is running, sync the staged server and
 // the tool code, start the agent detached at BelowNormal, poll its status, pull the evidence back into
@@ -18,7 +19,7 @@ const { pullEvidence } = require('./evidence.cjs');
 const { isStageRuntime } = require('../stage_runtime.cjs');
 
 const TOOLS_DIR = path.resolve(__dirname, '../..');
-const CODE_DIRS = ['server_smoke', 'pack_test', 'emi_coverage'];
+const CODE_DIRS = ['server_smoke', 'pack_test', 'emi_coverage', 'dedup', 'jar_data', 'file_data'];
 
 // Reads ANU's load and decides alone / shared / fallback (capacity.cjs).
 async function checkCapacity(ssh, log) {
@@ -36,7 +37,6 @@ const anuBoot = (boot) => ({ ...boot, priority: 'BelowNormal' });
 
 // o: { stageDir, runDir, input, seed, port, heap, boot, freshWorld, scope, log, onAbort, onSynced }
 async function runOnAnu(o) {
-  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   const { scope, log } = o;
   const timings = {};
   let t = Date.now();

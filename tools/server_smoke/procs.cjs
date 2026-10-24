@@ -53,16 +53,11 @@ function scope({ spawnImpl = spawn, killImpl = killTree } = {}) {
   return { start, run, killAll, get size() { return owned.size; }, get cancelled() { return cancelled; } };
 }
 
-// The default scope keeps the original module-level API for existing callers.
-const shared = scope();
-const start = shared.start;
-const run = shared.run;
-
 // Priority and CPU time of the server JVM (Windows, via PowerShell on the PID boot() spawned: java itself, no wrapper).
 const PRIORITIES = ['Idle', 'BelowNormal', 'Normal', 'AboveNormal', 'High'];
 const PS_TIMEOUT_MS = 30000;
 
-async function setPriority(pid, priority, s = shared) {
+async function setPriority(pid, priority, s) {
   if (!priority || priority === 'none') return { ok: true, skipped: true };
   if (!PRIORITIES.includes(priority)) return { ok: false, out: `unknown priority ${priority}` };
   const r = await s.run('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command',
@@ -71,11 +66,11 @@ async function setPriority(pid, priority, s = shared) {
 }
 
 // Total processor seconds of a PID, or null when it is gone / unreadable.
-async function cpuSeconds(pid, s = shared) {
+async function cpuSeconds(pid, s) {
   const r = await s.run('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command',
     `(Get-Process -Id ${Number(pid)}).TotalProcessorTime.TotalSeconds`], { timeoutMs: PS_TIMEOUT_MS });
   const n = parseFloat(r.out.trim());
   return r.code === 0 && Number.isFinite(n) ? n : null;
 }
 
-module.exports = { scope, start, run, killTree, setPriority, cpuSeconds, PRIORITIES };
+module.exports = { scope, killTree, setPriority, cpuSeconds, PRIORITIES };

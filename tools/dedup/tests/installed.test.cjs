@@ -1,4 +1,5 @@
 'use strict';
+const { retiredIds } = require('../policy.cjs');
 // Real cached-jar gate. Missing inputs are an error, not a silently skipped test.
 const test = require('node:test');
 const assert = require('node:assert/strict');
@@ -13,7 +14,7 @@ const policy = read('kubejs/config/dedup.json');
 const catalog = scan((process.env.DEDUP_MODS || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods').split(';'));
 const planned = plan(catalog.data, policy, catalog.blocks);
 const sources = read('kubejs/config/dedup_sources.json');
-const retired = new Set([...Object.keys(policy.replacements), ...policy.disabled]);
+const retired = new Set(retiredIds(policy));
 
 test('all data overrides match pinned jars, preserving custom counts/chances/conditions', () => {
   assert.ok(planned.overrides.size > 0);

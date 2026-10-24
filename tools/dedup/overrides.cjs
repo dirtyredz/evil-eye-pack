@@ -1,4 +1,5 @@
 'use strict';
+const { retiredIds } = require('./policy.cjs');
 // Data-only patches for custom serializers, preserving counts, chances and conditions.
 // No inventory conversion or registry remapping.
 function replace(value, replacements) {
@@ -9,7 +10,7 @@ function replace(value, replacements) {
 }
 function plan(data, policy, blocks = new Set()) {
   const overrides = new Map(), removeRecipes = [], itemTags = {}, blockTags = {};
-  const removed = new Set([...Object.keys(policy.replacements), ...policy.disabled]);
+  const removed = new Set(retiredIds(policy));
   for (const [file, original] of data) {
     const recipe = file.match(/^data\/([^/]+)\/recipes\/(.+)\.json$/);
     if (recipe) {

@@ -1,11 +1,11 @@
 'use strict';
 // Check configuration with provenance: the tool's own data files (data/*.json) and the acquisition
 // exclusion policy compiled from policy.json plus the pack's curated lists. Every exclusion keeps its reason.
-const fs = require('node:fs');
+const { retiredIds } = require('../../dedup/policy.cjs');
 const path = require('node:path');
 
 const DATA = path.join(__dirname, '../data');
-const readJson = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
+const { readJson } = require('../../file_data/json.cjs');
 
 // Test data shipped with the tool (policy, fixtures, machine expectations, baseline).
 function loadToolData(dataDir = DATA) {
@@ -29,8 +29,8 @@ const packConfigFiles = (policyJson) => [...DEDUP_CONFIG, ...(policyJson.curated
 function compilePolicy(policyJson, { dedup, curated, hiddenReasons }) {
   const ids = {};
   for (const [id, reason] of Object.entries(policyJson.exclude.ids || {})) ids[id] = reason;
-  for (const id of Object.keys(dedup.replacements)) ids[id] = ids[id] || `retired duplicate (dedup.json replacement -> ${dedup.replacements[id]})`;
-  for (const id of dedup.disabled) ids[id] = ids[id] || 'disabled by dedup.json';
+  for (const id of retiredIds(dedup)) ids[id] = ids[id] || (Object.hasOwn(dedup.replacements, id)
+    ? `retired duplicate (dedup.json replacement -> ${dedup.replacements[id]})` : 'disabled by dedup.json');
   for (const id of dedup.hiddenOnly) {
     const reason = hiddenReasons[id];
     if (!reason || !reason.class || !reason.evidence) throw new Error(`hidden_reasons.json: missing class/evidence for ${id}`);

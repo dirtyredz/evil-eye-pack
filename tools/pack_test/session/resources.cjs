@@ -8,7 +8,7 @@
 // merged (respecting `replace`); for recipes and loot tables the highest source wins.
 const fs = require('node:fs');
 const path = require('node:path');
-const { listEntries, readEntry } = require('../../emi_coverage/zip_reader.cjs');
+const { walkJar: walkDataJar } = require('../../jar_data/walk.cjs');
 const { packConfigFiles } = require('../verdict/policy.cjs');
 const { declaredOutputs } = require('../recipe_json.cjs');
 const { lootRefs, worldgenBlocks, parseLenient } = require('./extract.cjs');
@@ -17,13 +17,7 @@ const DATA_RE = /^data\/([^/]+)\/(recipes|loot_tables|tags\/(?:items|blocks|flui
 
 // Calls visit(relativeDataPath, text, sourceName) for every data JSON in a jar buffer and its nested jars.
 function walkJar(buf, source, visit) {
-  for (const entry of listEntries(buf)) {
-    if (/^META-INF\/jarjar\/.+\.jar$/.test(entry.name)) {
-      walkJar(readEntry(buf, entry), `${source}!${path.basename(entry.name)}`, visit);
-      continue;
-    }
-    if (DATA_RE.test(entry.name)) visit(entry.name, readEntry(buf, entry).toString('utf8'), source);
-  }
+  walkDataJar(buf, source, visit, { matches: (name) => DATA_RE.test(name), nested: true });
 }
 
 function walkDir(dir, rel, source, visit) {

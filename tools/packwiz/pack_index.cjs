@@ -4,7 +4,7 @@
 // Nothing here normalizes line endings; CR or BOM in a text file is reported instead,
 // because GitHub serves the LF bytes git stores (core.autocrlf=input).
 
-const crypto = require('node:crypto');
+const { sha256 } = require('../file_data/hash.cjs');
 const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
@@ -19,9 +19,6 @@ const TEXT_EXTENSIONS = new Set([
   '.yml', '.yaml', '.ini', '.conf', '.mcmeta', '.csv', '.lang', '.zs', '.xml',
 ]);
 
-function sha256(buf) {
-  return crypto.createHash('sha256').update(buf).digest('hex');
-}
 
 function isTextPath(p) {
   return TEXT_EXTENSIONS.has(path.extname(p).toLowerCase());

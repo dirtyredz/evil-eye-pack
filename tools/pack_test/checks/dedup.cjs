@@ -1,4 +1,5 @@
 'use strict';
+const { retiredIds } = require('../../dedup/policy.cjs');
 // The duplicate-material guard applied to the LIVE tags, plus the dedup policy's own promises:
 // retired copies carry no tag, survivors carry theirs, and retired producer recipes stay removed.
 const { duplicateGroups } = require('../../dedup/catalog.cjs');
@@ -16,7 +17,7 @@ function checkDedup(itemTags, liveRecipeIds, { policy, sources, allowed }) {
   for (const g of cmp.unexplained) findings.push(finding('duplicate-material-group', `#${g.tag}`, g.namespaces.join(','), 'new duplicate material group in live tags'));
   for (const g of cmp.changed) findings.push(finding('duplicate-group-changed', `#${g.tag}`, g.namespaces.join(','), `allowed namespaces are ${g.allowed.join(',')}`));
   for (const tag of cmp.stale) findings.push(finding('stale-allowance', `#${tag}`, null, 'allowed_groups.json exception no longer needed'));
-  const retired = new Set([...Object.keys(policy.replacements), ...policy.disabled]);
+  const retired = new Set(retiredIds(policy));
   for (const [tag, items] of itemTags) for (const id of items) if (retired.has(id)) findings.push(finding('retired-item-tagged', id, `#${tag}`, 'retired duplicate still carries a live tag'));
   for (const [tag, ids] of Object.entries(sources.itemTags)) {
     const live = new Set(itemTags.get(tag) || []);

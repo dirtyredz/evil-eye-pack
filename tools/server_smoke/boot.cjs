@@ -1,4 +1,5 @@
 'use strict';
+const { setTimeout: sleep } = require('node:timers/promises');
 // Boot supervisor: spawn the prepared server dir hidden, tee the console, and wait for completion
 // (`Done (`, or Done plus the caller's own condition) or a crash, under the progress watchdog. Then stop it.
 const fs = require('node:fs');
@@ -10,7 +11,6 @@ const { watchdog } = require('./watchdog.cjs');
 const { cpuSampler } = require('./cpu_sampler.cjs');
 const { threadDump, stopServer, closeStream } = require('./shutdown.cjs');
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // Line-buffered matcher: a marker split across two output chunks is still seen.
 function lineWatcher(re) {

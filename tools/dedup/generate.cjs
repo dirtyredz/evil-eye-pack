@@ -1,4 +1,5 @@
 'use strict';
+const { retiredIds } = require('./policy.cjs');
 // Run after reviewing dedup.json when a pinned jar changes. Never downloads jars.
 const fs = require('node:fs');
 const path = require('node:path');
@@ -19,6 +20,6 @@ write('kubejs/config/dedup_sources.json', {
   blockTagRemovals: result.blockTagRemovals, removeRecipes: result.removeRecipes, itemTags: result.itemTags, blockTags: result.blockTags
 });
 write('kubejs/assets/emi/index/stacks/dedup.json', {
-  removed: [...Object.keys(policy.replacements), ...policy.disabled, ...policy.hiddenOnly].map(id => 'item:' + id)
+  removed: [...retiredIds(policy), ...policy.hiddenOnly].map(id => 'item:' + id)
 });
 console.log(`${result.overrides.size} recipe/loot overrides; ${result.removeRecipes.length} removed recipes`);

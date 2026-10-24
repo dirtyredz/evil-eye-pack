@@ -158,3 +158,10 @@ Baseline review 2026-10-12. Remaining debt is filed in Docket (`docs/items/`, `d
 - The EMI views rely on public-but-internal EMI fields. A custom mod would avoid that but would need building and hosting. Rejected for now; see `docs/DECISIONS.md`.
 
 Last full review: 2026-10-12
+
+### Shared Node data operations
+
+- `tools/dedup/policy.cjs`: ordered retired ids for all Node consumers; the shipped KubeJS mirror is pinned by `tests/policy.test.cjs`.
+- `tools/jar_data/walk.cjs`: ordered jar entry traversal, optional jarjar recursion, caller-owned selection and parsing.
+- `tools/file_data/`: strict JSON file reading (`json.cjs`) and byte SHA-256 (`hash.cjs`). Sleeps use `node:timers/promises`.
+- Process priority/CPU queries require an explicit owning scope; no module-global process scope remains.

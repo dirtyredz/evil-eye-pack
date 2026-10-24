@@ -3,7 +3,7 @@
 // commit, dirty state, pack and index hashes).
 const fs = require('node:fs');
 const path = require('node:path');
-const crypto = require('node:crypto');
+const { sha256 } = require('../../file_data/hash.cjs');
 const { execFileSync } = require('node:child_process');
 
 const norm = (p) => path.resolve(p).replace(/\\/g, '/').toLowerCase();
@@ -17,7 +17,6 @@ function checkDestination(dir, { artifacts, checkouts }) {
 
 const runId = (d = new Date()) => `run-${d.toISOString().replace(/[:.]/g, '-')}`;
 
-const sha256 = (buf) => crypto.createHash('sha256').update(buf).digest('hex');
 
 function git(root, args) {
   try { return execFileSync('git', args, { cwd: root, windowsHide: true, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch { return null; }

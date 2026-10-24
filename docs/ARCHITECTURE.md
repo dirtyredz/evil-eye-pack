@@ -78,3 +78,7 @@ This is a server data/behaviour check, not a client rendering or interaction tes
 Raw-resource scans approximate pack precedence; live state and logs supply runtime
 evidence. Trades, Java-coded drops and other invisible acquisition mechanisms need
 reviewed exclusions or reasoned baseline entries.
+
+### Shared jar traversal
+
+Dedup and resource scanning use `tools/jar_data/walk.cjs`. Dedup keeps top-level-only traversal, strict JSON parsing, item models and loot modifiers; pack-test retains nested jarjar traversal, lenient JSON and fluid tags. Selection, merging and provenance remain caller-owned. ANU tool sync includes the shared file-data, jar-data and dedup modules.

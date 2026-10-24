@@ -3,7 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { listEntries, readEntry } = require('../emi_coverage/zip_reader.cjs');
+const { walkJar } = require('../jar_data/walk.cjs');
 const { readMetafileDownload } = require('../packwiz/pack_index.cjs');
 const root = path.resolve(__dirname, '../..');
 function scan(dirs) {
@@ -15,21 +15,24 @@ function scan(dirs) {
     const bytes = fs.readFileSync(source);
     if (crypto.createHash(meta.hashFormat).update(bytes).digest('hex') !== meta.hash) throw new Error('Jar hash mismatch: ' + source);
     jars.push(meta.filename);
-    for (const entry of listEntries(bytes)) {
-      const model = entry.name.match(/^assets\/([^/]+)\/models\/item\/(.+)\.json$/);
-      if (model) models.add(model[1] + ':' + model[2]);
-      if (!/^data\/[^/]+\/(tags\/(items|blocks)|recipes|loot_tables|loot_modifiers|worldgen|forge\/biome_modifier)\/.+\.json$/.test(entry.name)) continue;
+    walkJar(bytes, meta.filename, (name, text) => {
       let json;
-      try { json = JSON.parse(readEntry(bytes, entry)); } catch { continue; }
-      if (entry.name.includes('/tags/')) {
-        const previous = data.get(entry.name);
+      try { json = JSON.parse(text); } catch { return; }
+      if (name.includes('/tags/')) {
+        const previous = data.get(name);
         if (previous && !json.replace) json.values = [...previous.values, ...json.values];
       }
       // Block loot-table paths identify blocks independently of item naming conventions.
-      const block = entry.name.match(/^data\/([^/]+)\/loot_tables\/blocks\/(.+)\.json$/);
+      const block = name.match(/^data\/([^/]+)\/loot_tables\/blocks\/(.+)\.json$/);
       if (block) blocks.add(block[1] + ':' + block[2]);
-      data.set(entry.name, json);
-    }
+      data.set(name, json);
+    }, {
+      matches: name => /^data\/[^/]+\/(tags\/(items|blocks)|recipes|loot_tables|loot_modifiers|worldgen|forge\/biome_modifier)\/.+\.json$/.test(name),
+      inspect: name => {
+        const model = name.match(/^assets\/([^/]+)\/models\/item\/(.+)\.json$/);
+        if (model) models.add(model[1] + ':' + model[2]);
+      }
+    });
   }
   return { data, models, blocks, jars };
 }

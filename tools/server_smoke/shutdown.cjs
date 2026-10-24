@@ -1,10 +1,10 @@
 'use strict';
+const { setTimeout: sleep } = require('node:timers/promises');
 // Ending a server boot: console `stop` with a grace period, an optional jcmd thread dump, then a tree kill.
 // Every wait is bounded so a stuck JVM or a stuck jcmd can never hold up cleanup.
 const fs = require('node:fs');
 const path = require('node:path');
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // Saves `jcmd <pid> Thread.print` to stall-threads.txt so a stall can be pinned to the stuck thread.
 async function threadDump(pid, runDir, log, { scope, jcmd, timeoutMs = 60000 }) {
