@@ -15,7 +15,7 @@
   var getMaster = null
 
   // Classification per registry key (Item/Fluid object), so the id string is built once
-  // per key rather than once per stack; only the two NBT-exception ids look at NBT.
+  // per key rather than once per stack; only NBT-rule verdicts read per-stack NBT.
   var keyClass = null
 
   var keySet = null
@@ -33,17 +33,18 @@
   function isPolicyHidden(stack) {
     if (keyClass == null) keyClass = ns.interop.newIdentityMap()
     var key = stack.getKey()
-    var c = keyClass.get(key)
-    if (c == null) {
-      var desc = ns.interop.describe(stack)
-      c = ns.policy.classifyId(policy, desc.id, desc.isItem)
-      keyClass.put(key, c)
-      if (c === 'nbt') return ns.policy.isStackHidden(policy, desc)
-      return c === 'hide'
+    var verdict = keyClass.get(key)
+    var desc = null
+    if (verdict == null) {
+      desc = ns.interop.describe(stack)
+      verdict = ns.policy.classifyId(policy, desc.id, desc.isItem)
+      keyClass.put(key, verdict)
     }
-    c = String(c)
-    if (c === 'nbt') return ns.policy.isStackHidden(policy, ns.interop.describe(stack))
-    return c === 'hide'
+    // On cache hits neither the id nor the item class is read again. NBT remains lazy
+    // and belongs to this stack, never to the stack that first populated the cache.
+    return ns.policy.verdictHidden(verdict, desc || {
+      nbt: function () { return ns.interop.toPlainNbt(stack.getNbt()) }
+    })
   }
 
   // Item keys present anywhere in the master index. An item whose key is absent was

@@ -2390,7 +2390,7 @@ hash = "bcb0e60fbbe4115f0f0c274648f988ae8b3843c6bf686da79ae6db94a43ae8f4"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/hiding.js"
-hash = "65b3b145e26bd3368cd9ef2be8c65bb7ec771afd7e27a7f90433a9cc7d6103f8"
+hash = "8c8f4a6539e8d162a1e01225c12d5237b26de33f36afd0ccde0ec440a675db26"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/index_view.js"
@@ -2402,7 +2402,7 @@ hash = "d367e1fe380e5d28c6b6552de814853c4a703fe9456dd2aa0cce82a847ca28d2"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/policy.js"
-hash = "6b873eba3e26bd8e4269242ff1b73b230ce75b92f46a6513a55b9ce83713b551"
+hash = "837037ddf7ebf8cc2d85102dfd581122930fbd337133603afd9952a52c03fecc"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/recipe_view.js"

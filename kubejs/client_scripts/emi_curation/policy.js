@@ -60,8 +60,7 @@
       idContains: requireStringArray(rules.idContains || [], 'idContains').slice(),
       namespaces: {},
       nbtRules: {},
-      displayFiltering: !!(rules.displayFiltering && rules.displayFiltering.clean === true),
-      idCache: {}
+      displayFiltering: !!(rules.displayFiltering && rules.displayFiltering.clean === true)
     }
     var files = requireStringArray(rules.itemLists, 'itemLists')
     for (var f = 0; f < files.length; f++) {
@@ -94,24 +93,16 @@
     return compile(rules, lists)
   }
 
-  // 'hide' | 'show' | 'nbt' (decided per stack from its NBT: hidden unless it equals an
-  // nbtExceptions entry, or hidden when it carries a hideWhenNbtHasKey key).
+  // A pure verdict; hiding.js owns the only classification cache, by registry key.
+  // NBT verdicts carry the compiled rule, so deciding a stack never classifies it again.
   function classifyId(policy, id, isItem) {
-    var key = (isItem ? 'i|' : 'o|') + id
-    var cached = policy.idCache[key]
-    if (cached !== undefined) return cached
-    var result = 'show'
-    var namespace = ns.ids.namespaceOf(id)
-    if (isItem && policy.itemIds[id] === true) result = 'hide'
-    else if (policy.namespaces[namespace] === true) result = 'hide'
-    else {
-      for (var i = 0; i < policy.idContains.length; i++) {
-        if (id.indexOf(policy.idContains[i]) !== -1) { result = 'hide'; break }
-      }
-      if (result === 'show' && isItem && policy.nbtRules[id]) result = 'nbt'
+    if (isItem && policy.itemIds[id] === true) return { kind: 'hide' }
+    if (policy.namespaces[ns.ids.namespaceOf(id)] === true) return { kind: 'hide' }
+    for (var i = 0; i < policy.idContains.length; i++) {
+      if (id.indexOf(policy.idContains[i]) !== -1) return { kind: 'hide' }
     }
-    policy.idCache[key] = result
-    return result
+    if (isItem && policy.nbtRules[id]) return { kind: 'nbt', rule: policy.nbtRules[id] }
+    return { kind: 'show' }
   }
 
   // Structural NBT equality over plain values (objects, arrays, strings, tagged numbers).
@@ -136,11 +127,10 @@
   }
 
   // desc = { id: 'ns:path', isItem: boolean, nbt: function () -> plain NBT object | null }
-  function isStackHidden(policy, desc) {
-    var c = classifyId(policy, desc.id, desc.isItem)
-    if (c !== 'nbt') return c === 'hide'
+  function verdictHidden(verdict, desc) {
+    if (verdict.kind !== 'nbt') return verdict.kind === 'hide'
     var nbt = desc.nbt ? desc.nbt() : null
-    var rule = policy.nbtRules[desc.id]
+    var rule = verdict.rule
     var hideKeys = rule.hideKeys
     if (hideKeys) {
       if (nbt === null || typeof nbt !== 'object') return false
@@ -150,6 +140,10 @@
       return false
     }
     return !nbtEquals(nbt, rule.keep)
+  }
+
+  function isStackHidden(policy, desc) {
+    return verdictHidden(classifyId(policy, desc.id, desc.isItem), desc)
   }
 
   // REI 12.1.785 FilteredStacksVisibilityHandler rule: a display is hidden when ANY
@@ -181,6 +175,7 @@
     load: load,
     classifyId: classifyId,
     nbtEquals: nbtEquals,
+    verdictHidden: verdictHidden,
     isStackHidden: isStackHidden,
     isDisplayHidden: isDisplayHidden
   }
