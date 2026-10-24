@@ -47,7 +47,7 @@ function fakeAnu(scripts) {
     provision: { ensureProvisioned: async () => {} },
     capacity: { probeScript: () => 'probe', parseProbe: () => ({}), decide: () => ({ mode: 'alone', reason: 'test' }) },
     evidence: { pullEvidence: async () => {} },
-    dirLock: { acquire: async () => ({ ok: true }) }
+    dirLock: { acquire: async () => ({ ok: true, claimId: 'test-claim' }) }
   };
 }
 
@@ -64,6 +64,7 @@ test('the abort callback is disarmed once the ANU agent reaches a terminal state
       onAbort: (fn) => { const d = reg.register(fn); armedWhileRunning = reg.size(); return d; }
     });
     assert.deepEqual(r.boot, { ok: 1 });
+    assert.equal(JSON.parse(fs.readFileSync(path.join(runDir, 'job.json'), 'utf8')).claimId, 'test-claim');
     assert.equal(armedWhileRunning, 1);
     assert.equal(reg.size(), 0, 'registry empty after the terminal state');
     const before = scripts.length;
@@ -142,11 +143,13 @@ test('heartbeat write is temp file + rename, and leaves no temp behind', () => {
   const root = tmp('packtest-hb-');
   const dir = path.join(root, 'lock');
   const calls = [];
+  fs.mkdirSync(dir);
+  fs.writeFileSync(path.join(dir, 'owner.json'), JSON.stringify({ owner: 'run-a', claimId: 'claim-a' }));
   const w = fs.writeFileSync;
   const rn = fs.renameSync;
   fs.writeFileSync = (p, ...a) => { calls.push(['write', path.basename(String(p))]); return w(p, ...a); };
   fs.renameSync = (a, b) => { calls.push(['rename', path.basename(String(a)), path.basename(String(b))]); return rn(a, b); };
-  try { refreshDirLock(dir, 'run-a'); } finally { fs.writeFileSync = w; fs.renameSync = rn; }
+  try { refreshDirLock(dir, 'run-a', 'claim-a'); } finally { fs.writeFileSync = w; fs.renameSync = rn; }
   try {
     assert.equal(calls.length, 2);
     assert.equal(calls[0][0], 'write');

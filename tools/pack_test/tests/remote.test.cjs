@@ -35,14 +35,16 @@ test('heartbeat dir lock: same owner refreshes, another owner is refused, only t
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'packtest-dirlock-'));
   const dir = path.join(root, 'lock');
   try {
-    refreshDirLock(dir, 'run-a');
+    fs.mkdirSync(dir);
+    fs.writeFileSync(path.join(dir, 'owner.json'), JSON.stringify({ owner: 'run-a', claimId: 'claim-a', at: Date.now() }));
+    refreshDirLock(dir, 'run-a', 'claim-a');
     const first = JSON.parse(fs.readFileSync(path.join(dir, 'owner.json'), 'utf8'));
     assert.equal(first.owner, 'run-a');
-    refreshDirLock(dir, 'run-a');
-    assert.throws(() => refreshDirLock(dir, 'run-b'), /held by run-a/);
-    assert.equal(releaseDirLock(dir, 'run-b'), false);
+    refreshDirLock(dir, 'run-a', 'claim-a');
+    assert.throws(() => refreshDirLock(dir, 'run-b', 'claim-b'), /held by run-a/);
+    assert.equal(releaseDirLock(dir, 'run-b', 'claim-b'), false);
     assert.ok(fs.existsSync(dir));
-    assert.equal(releaseDirLock(dir, 'run-a'), true);
+    assert.equal(releaseDirLock(dir, 'run-a', 'claim-a'), true);
     assert.ok(!fs.existsSync(dir));
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

@@ -25,22 +25,35 @@ const { refreshDirLock, releaseDirLock } = require('./dir_lock.cjs');
 async function main() {
   status({ state: 'running' });
   const scope = procs.scope();
-  const heartbeat = setInterval(() => { try { refreshDirLock(job.lock, job.runId); } catch (e) { log(`lock refresh failed: ${e.message}`); } }, 30000);
-  const stop = () => { log('terminated; killing children'); scope.killAll(); status({ state: 'error', error: 'agent terminated' }); releaseDirLock(job.lock, job.runId); process.exit(2); };
+  const claimId = job.claimId; // captured once; never adopt the current owner's generation
+  const stop = (error = 'agent terminated') => {
+    clearInterval(heartbeat);
+    log(`${error}; killing children`);
+    try {
+      scope.killAll();
+      status({ state: 'error', error }); // launcher reports this through run.errors as infrastructure failure
+      releaseDirLock(job.lock, job.runId, claimId);
+    } finally { process.exit(2); }
+  };
+  const heartbeat = setInterval(() => {
+    try { refreshDirLock(job.lock, job.runId, claimId); }
+    catch (e) { stop(`lock refresh failed: ${e.message}`); }
+  }, 30000);
   process.once('SIGTERM', stop);
   process.once('SIGINT', stop);
   try {
-    refreshDirLock(job.lock, job.runId);
+    refreshDirLock(job.lock, job.runId, claimId);
     const r = await execute({ ...job, runDir, scope }, log);
     status({ state: 'done', boot: r.boot, world: r.world, timings: r.timings });
     log('done');
   } catch (e) {
+    process.exitCode = 2;
     log(`FAILED: ${e.stack || e.message}`);
     status({ state: 'error', error: e.message });
   } finally {
     clearInterval(heartbeat);
     scope.killAll();
-    releaseDirLock(job.lock, job.runId);
+    releaseDirLock(job.lock, job.runId, claimId);
     logFile.end();
   }
 }

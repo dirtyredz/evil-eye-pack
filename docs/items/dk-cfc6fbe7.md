@@ -2,8 +2,8 @@
 id: dk-cfc6fbe7
 type: bug
 created: 2026-10-23
-status: todo
-since: 2026-10-23
+status: done
+since: 2026-10-24
 area:
 priority: P1
 rank: t
