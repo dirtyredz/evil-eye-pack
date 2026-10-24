@@ -31,8 +31,6 @@ directly on every launch (verified headless 2026-10-11: full install, exit 0), s
 |---|---|---|
 | Evil Eye (Stable) | `https://raw.githubusercontent.com/dirtyredz/evil-eye-pack/main/pack.toml` | GitHub (after a push) |
 | Evil Eye Local | `C:/Users/dirty/projects/evil-eye-pack/pack.toml` | the main checkout on disk |
-| Evil Eye Trial (cozy mods) | `C:/Users/dirty/projects/worktrees/evil-eye-pack/trial-cozy-mods/pack.toml` | the `trial-cozy-mods` worktree on disk |
-| Evil Eye EMI Trial | `C:/Users/dirty/projects/worktrees/evil-eye-pack/emi-trial/pack.toml` | the `emi-trial` worktree on disk |
 
 Each test instance's path belongs to one checkout; never point an instance at another checkout's `pack.toml`.
 `tools/packwiz/serve.cjs` is no longer needed for MultiMC (kept as a tool for serving a checkout over HTTP).
