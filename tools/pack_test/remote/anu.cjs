@@ -64,7 +64,7 @@ async function runOnAnu(o) {
     if (verdict.mode === 'fallback') return { fallback: verdict.reason };
     const shared = verdict.mode === 'shared' ? { job: verdict.neighbour, freeGb: verdict.freeGb, cpuPct: verdict.cpuPct } : null;
     const job = {
-      runId, claimId: lock.claimId, root: cfg.ROOT, stageDir: cfg.STAGE, worldCache: cfg.WORLDS, lock: cfg.LOCK, input: o.input, seed: o.seed, port: o.port, heap: o.heap,
+      runId, lease: lock.lease, root: cfg.ROOT, stageDir: cfg.STAGE, worldCache: cfg.WORLDS, lock: cfg.LOCK, input: o.input, seed: o.seed, port: o.port, heap: o.heap,
       boot: anuBoot(o.boot), freshWorld: o.freshWorld, java: javaExe, jcmd: jcmdExe
     };
     const jobLocal = path.join(o.runDir, 'job.json');
@@ -103,7 +103,7 @@ async function runOnAnu(o) {
     return { boot: status.boot, world: status.world, shared, timings: { ...timings, ...Object.fromEntries(Object.entries(status.timings || {}).map(([k, v]) => [`anu_${k}`, v])) } };
   } finally {
     disarmAbort();
-    if (!agentPid) await ssh.ps(releaseScript(runId, lock.claimId), { timeoutMs: 60000 }); // the agent releases its own lock
+    if (!agentPid) await ssh.ps(releaseScript(lock.lease), { timeoutMs: 60000 }); // the agent releases its own lock
   }
 }
 

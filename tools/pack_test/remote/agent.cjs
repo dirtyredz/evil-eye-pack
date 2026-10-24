@@ -20,29 +20,14 @@ process.env.SMOKE_ARTIFACTS = job.root;
 
 const procs = require('../../server_smoke/procs.cjs');
 const { execute } = require('../session/execute.cjs');
-const { refreshDirLock, releaseDirLock } = require('./lease/dir_lock.cjs');
+const { startLease } = require('./lease/lifecycle.cjs');
 
 async function main() {
   status({ state: 'running' });
   const scope = procs.scope();
-  const claimId = job.claimId; // captured once; never adopt the current owner's generation
-  const stop = (error = 'agent terminated') => {
-    clearInterval(heartbeat);
-    log(`${error}; killing children`);
-    try {
-      scope.killAll();
-      status({ state: 'error', error }); // launcher reports this through run.errors as infrastructure failure
-      releaseDirLock(job.lock, job.runId, claimId);
-    } finally { process.exit(2); }
-  };
-  const heartbeat = setInterval(() => {
-    try { refreshDirLock(job.lock, job.runId, claimId); }
-    catch (e) { stop(`lock refresh failed: ${e.message}`); }
-  }, 30000);
-  process.once('SIGTERM', stop);
-  process.once('SIGINT', stop);
+  let lease;
   try {
-    refreshDirLock(job.lock, job.runId, claimId);
+    lease = startLease({ job, scope, status, log });
     const r = await execute({ ...job, runDir, scope }, log);
     status({ state: 'done', boot: r.boot, world: r.world, timings: r.timings });
     log('done');
@@ -51,9 +36,8 @@ async function main() {
     log(`FAILED: ${e.stack || e.message}`);
     status({ state: 'error', error: e.message });
   } finally {
-    clearInterval(heartbeat);
     scope.killAll();
-    releaseDirLock(job.lock, job.runId, claimId);
+    lease?.close();
     logFile.end();
   }
 }

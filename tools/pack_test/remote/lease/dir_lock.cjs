@@ -39,29 +39,32 @@ Move-Item -Force -LiteralPath $tmp -Destination (Join-Path $lock '${OWNER_FILE}'
 Write-Output 'LOCKED'`;
 }
 
-const releaseScript = (owner, claimId) => `$lock = ${q(cfg.LOCK)}; $f = Join-Path $lock '${OWNER_FILE}'
-if (Test-Path $f) { $o = Get-Content -Raw $f | ConvertFrom-Json; if ($o.owner -eq ${q(owner)} -and $o.claimId -and $o.claimId -eq ${q(claimId)}) { Remove-Item -Recurse -Force $lock } }`;
+const releaseScript = (lease) => `$lock = ${q(cfg.LOCK)}; $f = Join-Path $lock '${OWNER_FILE}'
+if (Test-Path $f) { $o = Get-Content -Raw $f | ConvertFrom-Json; if ($o.owner -eq ${q(lease.runId)} -and $o.claimId -and $o.claimId -eq ${q(lease.claimId)}) { Remove-Item -Recurse -Force $lock } }`;
 
-// One attempt, no waiting: a busy ANU means this run goes to Valhalla. -> { ok: true, claimId } | { ok: false, why }
-async function acquire(ssh, owner) {
-  const claimId = randomUUID();
-  const out = await ssh.must(lockScript(owner, cfg.LOCK, cfg.LOCK_STALE_MS, claimId), { timeoutMs: 60000 });
-  return /LOCKED/.test(out) ? { ok: true, claimId } : { ok: false, why: (out.match(/BUSY .*/) || ['BUSY'])[0].slice(5) };
+// One attempt, no waiting: a busy ANU means this run goes to Valhalla. -> { ok: true, lease } | { ok: false, why }
+async function acquire(ssh, runId) {
+  const lease = { runId, claimId: randomUUID() };
+  const out = await ssh.must(lockScript(lease.runId, cfg.LOCK, cfg.LOCK_STALE_MS, lease.claimId), { timeoutMs: 60000 });
+  return /LOCKED/.test(out) ? { ok: true, lease } : { ok: false, why: (out.match(/BUSY .*/) || ['BUSY'])[0].slice(5) };
 }
 
+// owner.json retains its on-disk owner field; callers carry one acquired identity.
+const ownsLease = (cur, lease) => Boolean(lease?.claimId && cur?.owner === lease.runId && cur.claimId === lease.claimId);
+
 // Node side never acquires: missing, unreadable or replaced claims are terminal.
-function refreshDirLock(dir, owner, claimId) {
+function refreshDirLock(dir, lease) {
   const f = path.join(dir, OWNER_FILE);
   const check = () => {
     const cur = JSON.parse(fs.readFileSync(f, 'utf8'));
-    if (!claimId || cur?.owner !== owner || cur.claimId !== claimId) throw new Error(`lock held by ${cur?.owner}; claim lost`);
+    if (!ownsLease(cur, lease)) throw new Error(`lock held by ${cur?.owner}; claim lost`);
   };
   check();
   // Stage before the final ownership check. A takeover removes this unique temp too,
   // so a refresh suspended after that check cannot rename over the new owner's file.
   const tmp = `${f}.tmp-${randomUUID()}`;
   try {
-    fs.writeFileSync(tmp, JSON.stringify({ owner, claimId, at: Date.now(), host: os.hostname(), pid: process.pid }), { flag: 'wx' });
+    fs.writeFileSync(tmp, JSON.stringify({ owner: lease.runId, claimId: lease.claimId, at: Date.now(), host: os.hostname(), pid: process.pid }), { flag: 'wx' });
     check();
     // Atomic replace: readers never see a half-written owner.json.
     fs.renameSync(tmp, f);
@@ -73,13 +76,13 @@ function refreshDirLock(dir, owner, claimId) {
 }
 
 // Removes the lock only when this run owns it.
-function releaseDirLock(dir, owner, claimId) {
+function releaseDirLock(dir, lease) {
   try {
     const cur = JSON.parse(fs.readFileSync(path.join(dir, OWNER_FILE), 'utf8'));
-    if (!claimId || cur.owner !== owner || cur.claimId !== claimId) return false;
+    if (!ownsLease(cur, lease)) return false;
   } catch { return false; }
   fs.rmSync(dir, { recursive: true, force: true });
   return true;
 }
 
-module.exports = { acquire, lockScript, releaseScript, refreshDirLock, releaseDirLock, OWNER_FILE };
+module.exports = { acquire, lockScript, releaseScript, refreshDirLock, releaseDirLock, ownsLease, OWNER_FILE };
