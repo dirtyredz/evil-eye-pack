@@ -9,6 +9,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { listEntries, readEntry } = require('../../emi_coverage/zip_reader.cjs');
+const { packConfigFiles } = require('../verdict/policy.cjs');
 const { declaredOutputs } = require('../recipe_json.cjs');
 const { lootRefs, worldgenBlocks, parseLenient } = require('./extract.cjs');
 
@@ -127,4 +128,13 @@ function scanResources(sources, { removedNamespaces = [] } = {}) {
   return ev;
 }
 
-module.exports = { scanResources, shippedMentions, serverSources, namespaceMentions, walkJar };
+// Raw resources, shipped-config mentions and the pack's own policy files, read from the staged server.
+function writeResourceScan(stageDir, evidenceDir, data) {
+  fs.mkdirSync(path.join(evidenceDir, 'pack-config'), { recursive: true });
+  const ev = scanResources(serverSources(stageDir), { removedNamespaces: data.policy.removedMods });
+  ev.shipped = shippedMentions(stageDir, data.policy.removedMods);
+  fs.writeFileSync(path.join(evidenceDir, 'resources.json'), JSON.stringify(ev));
+  for (const f of packConfigFiles(data.policy)) fs.copyFileSync(path.join(stageDir, f), path.join(evidenceDir, 'pack-config', path.basename(f)));
+}
+
+module.exports = { writeResourceScan, scanResources, shippedMentions, serverSources, namespaceMentions, walkJar };

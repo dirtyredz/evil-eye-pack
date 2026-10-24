@@ -23,7 +23,7 @@ const { checkDestination, runId, runMeta } = require('./session/run_meta.cjs');
 const { runTarget } = require('./session/target.cjs');
 const { analyzeRun, EXIT } = require('./analyze.cjs');
 const { loadToolData } = require('./verdict/policy.cjs');
-const { stageEvidence } = require('./session/evidence.cjs');
+const { writeResourceScan } = require('./session/resources.cjs');
 const { localLock } = require('./session/lock.cjs');
 const { abortRegistry } = require('./session/aborts.cjs');
 
@@ -79,7 +79,7 @@ async function main() {
     const stageDir = await prep.ensureStage(path.join(stageRoot, 'server'), { cache: `${env.ARTIFACTS}/server-smoke/cache`, java: env.JAVA, pack: o.pack, log, scope, seed: o.seed, port: o.port, heap: o.heap });
     run.timings.stage = (Date.now() - t) / 1000;
     t = Date.now();
-    stageEvidence(stageDir, path.join(runDir, 'evidence'), data);
+    writeResourceScan(stageDir, path.join(runDir, 'evidence'), data);
     run.timings.scan = (Date.now() - t) / 1000;
     await runTarget({ options: o, stageDir, runDir, run, worldCache: `${env.ARTIFACTS}/pack-test/cache/worlds`, java: env.JAVA, jcmd: env.JCMD, scope,
       onAbort: aborts.register, onSynced: () => { if (lock) { lock.release(); lock = null; } } }, log);
