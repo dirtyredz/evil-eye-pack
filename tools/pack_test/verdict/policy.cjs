@@ -14,6 +14,7 @@ function loadToolData(dataDir = DATA) {
     crafts: readJson(path.join(dataDir, 'crafts.json')),
     machines: readJson(path.join(dataDir, 'machines.json')),
     baseline: readJson(path.join(dataDir, 'baseline.json')),
+    hiddenReasons: readJson(path.join(__dirname, '../../dedup/hidden_reasons.json')).reasons,
     allowed: readJson(path.join(__dirname, '../../dedup/allowed_groups.json')),
     knownNoise: readJson(path.join(__dirname, '../../server_smoke/known_noise.json'))
   };
@@ -25,7 +26,7 @@ const DEDUP_CONFIG = ['kubejs/config/dedup.json', 'kubejs/config/dedup_sources.j
 const packConfigFiles = (policyJson) => [...DEDUP_CONFIG, ...(policyJson.curatedLists || []).map((f) => `config/emi-curation/${f}`)];
 
 // Builds the exclusion policy from policy.json and the curated lists. Each exclusion keeps its reason.
-function compilePolicy(policyJson, { dedup, curated, hiddenReasons = readJson(path.join(__dirname, '../../dedup/hidden_reasons.json')).reasons }) {
+function compilePolicy(policyJson, { dedup, curated, hiddenReasons }) {
   const ids = {};
   for (const [id, reason] of Object.entries(policyJson.exclude.ids || {})) ids[id] = reason;
   for (const id of Object.keys(dedup.replacements)) ids[id] = ids[id] || `retired duplicate (dedup.json replacement -> ${dedup.replacements[id]})`;

@@ -7,7 +7,7 @@ const { listEntries, readEntry } = require('../emi_coverage/zip_reader.cjs');
 const { readMetafileDownload } = require('../packwiz/pack_index.cjs');
 const root = path.resolve(__dirname, '../..');
 function scan(dirs) {
-  const data = new Map(), models = new Set(), jars = [];
+  const data = new Map(), models = new Set(), blocks = new Set(), jars = [];
   for (const file of fs.readdirSync(path.join(root, 'mods')).filter(f => f.endsWith('.pw.toml'))) {
     const meta = readMetafileDownload(fs.readFileSync(path.join(root, 'mods', file), 'utf8'));
     const source = dirs.map(dir => path.join(dir, meta.filename)).find(f => fs.existsSync(f));
@@ -25,10 +25,13 @@ function scan(dirs) {
         const previous = data.get(entry.name);
         if (previous && !json.replace) json.values = [...previous.values, ...json.values];
       }
+      // Block loot-table paths identify blocks independently of item naming conventions.
+      const block = entry.name.match(/^data\/([^/]+)\/loot_tables\/blocks\/(.+)\.json$/);
+      if (block) blocks.add(block[1] + ':' + block[2]);
       data.set(entry.name, json);
     }
   }
-  return { data, models, jars };
+  return { data, models, blocks, jars };
 }
 function resolveTags(data, type, excluded = new Set()) {
   const tags = new Map();

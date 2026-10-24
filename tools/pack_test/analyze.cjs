@@ -1,7 +1,7 @@
 'use strict';
 // Offline analysis of one run folder: load the evidence, run every check, compare with the baseline,
 // write report.json, summary.txt and baseline-candidate.json. Never boots anything, so `--analyze`
-// reproduces a run's verdict exactly from its saved evidence.
+// uses saved evidence with the current checks, policy registry and baseline.
 const fs = require('node:fs');
 const path = require('node:path');
 const { loadRun, SECTIONS } = require('./verdict/protocol.cjs');
@@ -63,7 +63,7 @@ function analyzeRun(runDir, { data = loadToolData(), log = () => {} } = {}) {
   sections.acquisition = needCore || incomplete(['recipes'], S) || (resources && dedupCfg ? checkAcquisition({
     recipeOutputs: recipeOutputs(snap.recipes, snap.registries), loot: resources.loot, live: { ...snap.registries, itemTags: snap.itemTags },
     worldgenBlocks: resources.worldgenBlocks, blockItems: new Map()
-  }, compilePolicy(data.policy, { dedup: dedupCfg.policy, curated: (data.policy.curatedLists || []).map(packConfig) })) : noStaged);
+  }, compilePolicy(data.policy, { dedup: dedupCfg.policy, hiddenReasons: data.hiddenReasons, curated: (data.policy.curatedLists || []).map(packConfig) })) : noStaged);
   sections.machines = needCore || incomplete(['recipes'], S) || checkMachines(snap.recipes, snap.itemTags, data.machines);
   sections.crafting = incomplete(['crafting'], S) || checkCrafting(S.crafting.data, data.crafts.crafts);
   sections.dedup = needCore || incomplete(['recipes'], S) || (!dedupCfg ? noStaged : checkDedup(snap.itemTags, new Set(snap.recipes.map((r) => r.id)), dedupCfg));

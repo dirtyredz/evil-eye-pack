@@ -2458,11 +2458,11 @@ hash = "8d1c5cbf48ef06ee5174adf60692e2c54d91ac08d84edbadd03a39e10385a62e"
 
 [[files]]
 file = "kubejs/config/dedup.json"
-hash = "2e68e64c381ff50e439beeabeb0faba5015de0353fe459468eef34c6224a8da5"
+hash = "78230068e99817c52f4f5399e285d29c23a2649fb30371a2621190d8083f2d94"
 
 [[files]]
 file = "kubejs/config/dedup_sources.json"
-hash = "8a4d34b4fbaf888ae7dab8ff1dd6408093bdac7b8b2ada0551d750b9c723ec74"
+hash = "547828b94829d7d0302047c43afae1fc735d4ad99d59baf52823f146093d6ef6"
 
 [[files]]
 file = "kubejs/data/ars_elemental/recipes/quartz_crush.json"
@@ -3926,7 +3926,7 @@ hash = "c5cd512f58030e74039976fc24796c24c331a03f0fedb96fdf1f9303ba43f072"
 
 [[files]]
 file = "kubejs/server_scripts/dedup.js"
-hash = "b1d05bf7353a50db3c94f940d9180d7a029dff0ccc94dbff3d8e50806ea082d8"
+hash = "50442cf9eec343663cfcd7a4bc1a36e2cc061754b363a70f6d1fae17ff9acc6a"
 
 [[files]]
 file = "kubejs/server_scripts/uranium.js"

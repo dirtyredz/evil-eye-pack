@@ -20,7 +20,7 @@
   })
   ServerEvents.tags('block', function (event) {
     // Only block duplicates have block tags. Do not feed non-block item ids to the registry.
-    policy.blockTagRemovals.forEach(function (id) { event.removeAllTagsFrom(id) })
+    ;(sources.blockTagRemovals || []).forEach(function (id) { event.removeAllTagsFrom(id) })
     Object.keys(sources.blockTags).forEach(function (tag) { event.add(tag, sources.blockTags[tag]) })
   })
 })()

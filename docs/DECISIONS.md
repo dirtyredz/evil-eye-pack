@@ -2,6 +2,15 @@
 
 Newest first.
 
+## 2026-10-24 — Dedup data ownership and acquisition exclusion registry
+
+**Decision.**
+- Block-tag policy is data, not a namespace-prefix rule. The catalog identifies blocks by pinned jar block loot-table paths; `plan()` filters replacement ids against that set. This reproduces the reviewed 26 removals. `kubejs/config/dedup.json` stays authored-only; generated `blockTagRemovals` belongs in `dedup_sources.json`, with an empty-list guard in the server script. Loot-table evidence is sufficient for the current replacements, not a complete runtime block registry.
+- Hand-written server recipes belong in a script named for their concern. `uranium.js` owns the four Alex's Caves / Create crushed-uranium → yellorium recipes; `dedup.js` only applies duplicate cleanup.
+- `tools/dedup/hidden_reasons.json` is the acquisition exclusion source for `hiddenOnly` ids. `tools/pack_test/data/policy.json` must not repeat them. Tool-data loading reads the registry and passes it explicitly into the pure policy compiler. Re-analysis uses the current registry with saved pack evidence, so corrected reasons apply to historical runs.
+
+**Alternative rejected.** Hard-coded namespace prefixes duplicate block classification in code and tests and miss blocks from other namespaces.
+
 ## 2026-10-23 — Acquisition baseline reviewed item by item (dk-e4cc1e7b)
 
 **Decision.** The 439 `acquisition/no-known-source` entries accepted in bulk were each classified from the mod jar (classes, lang, data). The full table (item, class, mechanism and evidence, action) is `classification.md` in the job folder `artifacts/evil-eye-pack/jobs/2026-10-23-acquisition-review/`.

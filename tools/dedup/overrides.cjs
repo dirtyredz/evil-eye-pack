@@ -7,7 +7,7 @@ function replace(value, replacements) {
   if (value && typeof value === 'object') return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, replace(v, replacements)]));
   return value;
 }
-function plan(data, policy) {
+function plan(data, policy, blocks = new Set()) {
   const overrides = new Map(), removeRecipes = [], itemTags = {}, blockTags = {};
   const removed = new Set([...Object.keys(policy.replacements), ...policy.disabled]);
   for (const [file, original] of data) {
@@ -45,9 +45,7 @@ function plan(data, policy) {
   for (const [tag, fixes] of Object.entries(policy.tagFixes || {})) {
     if (itemTags[tag]) itemTags[tag] = [...new Set(itemTags[tag].map(id => fixes[id] || id))];
   }
-  // Preserve the reviewed block-only subset; zinc_sheet is an item, not a block.
-  const blockTagRemovals = Object.keys(policy.replacements).filter(id =>
-    id.startsWith('cluttered:') || (id.startsWith('createdeco:') && id !== 'createdeco:zinc_sheet') || id === 'farmersdelight:rope');
+  const blockTagRemovals = Object.keys(policy.replacements).filter(id => blocks.has(id));
   return { overrides, blockTagRemovals, removeRecipes: removeRecipes.sort(), itemTags, blockTags };
 }
 module.exports = { replace, plan };

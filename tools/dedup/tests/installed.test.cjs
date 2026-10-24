@@ -11,15 +11,15 @@ const { compareAllowances } = require('../guard.cjs');
 const read = f => JSON.parse(fs.readFileSync(path.join(root, f), 'utf8'));
 const policy = read('kubejs/config/dedup.json');
 const catalog = scan((process.env.DEDUP_MODS || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods').split(';'));
-const planned = plan(catalog.data, policy);
+const planned = plan(catalog.data, policy, catalog.blocks);
 const sources = read('kubejs/config/dedup_sources.json');
 const retired = new Set([...Object.keys(policy.replacements), ...policy.disabled]);
 
 test('all data overrides match pinned jars, preserving custom counts/chances/conditions', () => {
   assert.ok(planned.overrides.size > 0);
   for (const [file, expected] of planned.overrides) assert.deepEqual(read(file), expected, file);
-  assert.deepEqual(policy.blockTagRemovals, planned.blockTagRemovals);
-  assert.deepEqual(sources, { removeRecipes: planned.removeRecipes, itemTags: planned.itemTags, blockTags: planned.blockTags });
+  assert.equal(Object.hasOwn(policy, 'blockTagRemovals'), false);
+  assert.deepEqual(sources, { blockTagRemovals: planned.blockTagRemovals, removeRecipes: planned.removeRecipes, itemTags: planned.itemTags, blockTags: planned.blockTags });
   for (const [source, survivor] of Object.entries(policy.replacements)) {
     assert.ok(catalog.models.has(source), source);
     assert.ok(catalog.models.has(survivor), survivor);
@@ -83,10 +83,8 @@ test('recipe and tag events remove producers and code-driven loot candidates', (
   ]);
   const blocks = [], blockAdditions = {};
   handlers.block({ removeAllTagsFrom: id => blocks.push(id), add: (tag, ids) => { blockAdditions[tag] = ids; } });
-  assert.deepEqual(blocks, policy.blockTagRemovals);
-  // Pin the pre-extraction selection, including zinc_sheet's item-only exception.
-  assert.deepEqual(blocks, Object.keys(policy.replacements).filter(id =>
-    id.startsWith('cluttered:') || (id.startsWith('createdeco:') && id !== 'createdeco:zinc_sheet') || id === 'farmersdelight:rope'));
+  assert.deepEqual(blocks, sources.blockTagRemovals);
+  assert.deepEqual(blocks, Object.keys(policy.replacements).filter(id => catalog.blocks.has(id)));
   assert.deepEqual(blockAdditions, sources.blockTags);
   const removed = [], added = {};
   const untagged = {};

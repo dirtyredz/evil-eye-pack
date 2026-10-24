@@ -28,8 +28,10 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |-- shaderpacks/
 `-- tools/
     |-- dedup/
+    |   `-- tests/
     |-- emi_coverage/
     |-- emi_curation/
+    |   `-- tests/
     |-- pack_test/
     |   |-- checks/
     |   |-- data/
@@ -40,7 +42,9 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |   |-- tests/
     |   `-- verdict/
     |-- packwiz/
+    |   `-- tests/
     `-- server_smoke/
+        `-- tests/
 ```
 
 - `pack.toml` — pack definition; its `[index]` hash is sha256 of `index.toml`
@@ -56,7 +60,11 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter
 - `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the mark-as-decor key handler, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
 - `kubejs/startup_scripts/` — `emi_curation_keys.js` registers the "EMI Curation" key mapping (startup-only in Forge); `kubejs/assets/emi_curation/lang/` names it
-- `kubejs/server_scripts/dedup.js`, `kubejs/config/dedup*.json` — permanent duplicate recipe/tag policy; no stack conversion. Generated recipe/loot overrides live under `kubejs/data/<owning-mod>/`, permanent EMI removals under `kubejs/assets/emi/index/stacks/`. The generated `blockTagRemovals` list in `dedup.json` drives block cleanup; `server_scripts/uranium.js` owns the four uranium compatibility recipes. Survivor choices: `docs/duplicate-cleanup.md`.
+- `kubejs/server_scripts/dedup.js` — permanent duplicate recipe/tag cleanup; no stack conversion. Survivor choices: `docs/duplicate-cleanup.md`.
+- `kubejs/config/dedup.json` — authored duplicate policy; the generator never writes this input.
+- `kubejs/config/dedup_sources.json` — generated recipe removals, survivor tags and block-tag removals derived from pinned jar block loot tables.
+- `kubejs/data/*/recipes/`, `kubejs/data/*/loot_tables/` — generated dedup overrides alongside hand-written data recipes.
+- `kubejs/assets/emi/index/stacks/dedup.json` — generated permanent EMI removals.
 - `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
 - `tools/dedup/` — pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions; `hidden_reasons.json` holds the reason for every `hiddenOnly` id (see docs/development.md "Known exceptions registry").
@@ -73,6 +81,8 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 
 | Component | Responsibility |
 |---|---|
+| `kubejs/server_scripts/dedup.js` | applies authored dedup policy and generated recipe/tag cleanup; hand-written server recipes go in a script named for the concern, not dedup.js |
+| `kubejs/server_scripts/uranium.js` | hand-written Alex's Caves / Create crushed-uranium → yellorium smelting and blasting recipes |
 | `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (`readTable` is the one `key = "value"` table reader), `isMetafile`, `.packwizignore`, byte hashing, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
 | `tools/packwiz/rehash.cjs` | rebuild `index.toml` membership and hashes, then `pack.toml`'s index hash |
 | `tools/packwiz/verify_hashes.cjs` | check the hash chain, index membership and optionally jar hashes |

@@ -94,8 +94,9 @@ test('hidden reasons are required and take precedence over generic exclusions', 
 test('the real hidden registry supplies every hidden exclusion without duplicate policy ids', () => {
   const dedup = require('../../../../kubejs/config/dedup.json');
   const reasons = require('../../../dedup/hidden_reasons.json').reasons;
-  const policy = loadToolData().policy;
-  const compiled = compilePolicy(policy, { dedup, curated: [] });
+  const { policy, hiddenReasons } = loadToolData();
+  assert.deepEqual(hiddenReasons, reasons);
+  const compiled = compilePolicy(policy, { dedup, curated: [], hiddenReasons });
   for (const id of dedup.hiddenOnly) {
     assert.equal(policy.exclude.ids[id], undefined, `duplicate hidden reason in policy.json: ${id}`);
     assert.equal(compiled.exclude.ids[id], `hidden_reasons.json: ${reasons[id].class}: ${reasons[id].evidence}`);
