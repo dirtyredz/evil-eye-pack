@@ -1,4 +1,5 @@
 'use strict';
+const { readJson } = require('../data_io/files.cjs');
 const { retiredIds } = require('./policy.cjs');
 // Run after reviewing dedup.json when a pinned jar changes. Never downloads jars.
 const fs = require('node:fs');
@@ -7,7 +8,7 @@ const { root, scan } = require('./catalog.cjs');
 const { plan } = require('./overrides.cjs');
 const dirs = process.argv.slice(2);
 if (!dirs.length) throw new Error('Usage: node tools/dedup/generate.cjs <cached mods directory> [...]');
-const policy = JSON.parse(fs.readFileSync(path.join(root, 'kubejs/config/dedup.json')));
+const policy = readJson(path.join(root, 'kubejs/config/dedup.json'));
 const catalog = scan(dirs);
 const result = plan(catalog.data, policy, catalog.blocks);
 function write(file, json) {

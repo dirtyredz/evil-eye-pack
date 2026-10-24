@@ -3,13 +3,13 @@
 // generation is the slowest part of a boot and says nothing about recipes, tags or loot).
 const fs = require('node:fs');
 const path = require('node:path');
-const crypto = require('node:crypto');
+const { sha256 } = require('../../data_io/files.cjs');
 
 const { WORLD } = require('../stage_runtime.cjs');
 
 function worldKey(stageDir, seed) {
   const mods = fs.readdirSync(path.join(stageDir, 'mods')).filter((f) => f.endsWith('.jar')).sort().join('\n');
-  return crypto.createHash('sha256').update(`${seed}\n${mods}`).digest('hex').slice(0, 16);
+  return sha256(`${seed}\n${mods}`).slice(0, 16);
 }
 
 function restoreWorld(worldCache, key, serverDir) {

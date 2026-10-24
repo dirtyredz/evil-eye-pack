@@ -81,4 +81,4 @@ reviewed exclusions or reasoned baseline entries.
 
 ### Shared jar traversal
 
-Dedup and resource scanning use `tools/jar_data/walk.cjs`. Dedup keeps top-level-only traversal, strict JSON parsing, item models and loot modifiers; pack-test retains nested jarjar traversal, lenient JSON and fluid tags. Selection, merging and provenance remain caller-owned. ANU tool sync includes the shared file-data, jar-data and dedup modules.
+Dedup and resource scanning use `tools/data_io/walk.cjs`. Dedup keeps top-level-only traversal, strict JSON parsing, item models and loot modifiers; pack-test retains nested jarjar traversal, lenient JSON and fluid tags. Selection, merging and provenance remain caller-owned. ANU tool sync includes the shared data_io and dedup modules.

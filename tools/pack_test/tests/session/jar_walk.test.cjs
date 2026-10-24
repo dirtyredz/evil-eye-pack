@@ -1,8 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { walkJar } = require('../../../jar_data/walk.cjs');
-const { walkJar: resourcesWalk } = require('../../session/resources.cjs');
+const { walkJar } = require('../../../data_io/walk.cjs');
 // Small stored ZIP fixture, in directory order (the reader does not need CRC fields).
 function zip(entries) {
   const local = [], central = []; let offset = 0;
@@ -25,6 +24,6 @@ test('jar walk preserves order, text, source labels, selection and explicit nest
   assert.deepEqual(flat.map(v => v[0]), [recipe, 'data/x/loot_modifiers/a.json']);
   assert.equal(inspected.length, 4);
   const nested = [];
-  resourcesWalk(outer, 'outer', (...args) => nested.push(args));
+  walkJar(outer, 'outer', (...args) => nested.push(args), { matches: n => /^data\/x\/(recipes|tags\/fluids)\//.test(n), nested: true });
   assert.deepEqual(nested, [[recipe, '{}', 'outer'], [recipe, '{broken', 'outer!inner.jar'], ['data/x/tags/fluids/a.json', '{}', 'outer!inner.jar']]);
 });

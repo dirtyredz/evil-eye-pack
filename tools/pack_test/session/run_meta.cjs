@@ -3,7 +3,7 @@
 // commit, dirty state, pack and index hashes).
 const fs = require('node:fs');
 const path = require('node:path');
-const { sha256 } = require('../../file_data/hash.cjs');
+const { sha256 } = require('../../data_io/files.cjs');
 const { execFileSync } = require('node:child_process');
 
 const norm = (p) => path.resolve(p).replace(/\\/g, '/').toLowerCase();

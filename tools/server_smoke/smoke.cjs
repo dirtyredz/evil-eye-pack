@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 'use strict';
+const { readJson } = require('../data_io/files.cjs');
 // Headless server compatibility smoke: boots the pack on a Forge 1.20.1 dedicated server.
 // Usage: node tools/server_smoke/smoke.cjs [--pack pack.toml] [--timeout 1800]  hard cap, seconds
 //        [--silent 180]  stop when the log is silent AND JVM CPU is flat this many seconds
@@ -67,7 +68,7 @@ async function main() {
 function report(o, runDir, result) {
   const latest = path.join(runDir, 'logs/latest.log');
   const text = fs.existsSync(latest) ? fs.readFileSync(latest, 'utf8') : '';
-  const knownNoise = JSON.parse(fs.readFileSync(path.join(__dirname, 'known_noise.json'), 'utf8'));
+  const knownNoise = readJson(path.join(__dirname, 'known_noise.json'));
   const rep = analyze(text, knownNoise);
   const crashes = crashReports(runDir);
   if (!result) o.seed = readRunSeed(runDir) ?? o.seed; // --analyze: the seed is whatever the run was started with

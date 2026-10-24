@@ -1,4 +1,5 @@
 'use strict';
+const { sha256 } = require('../../data_io/files.cjs');
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const crypto = require('node:crypto');
@@ -92,7 +93,7 @@ test('a wrong index metafile flag is detected in both directions', () => {
     const entry = index.files.find((f) => f.file === file);
     entry.metafile = !entry.metafile;
     fs.writeFileSync(indexPath, P.formatIndex(index));
-    fs.writeFileSync(packPath, P.setPackIndexHash(fs.readFileSync(packPath, 'utf8'), P.sha256(fs.readFileSync(indexPath))));
+    fs.writeFileSync(packPath, P.setPackIndexHash(fs.readFileSync(packPath, 'utf8'), sha256(fs.readFileSync(indexPath))));
   };
   flip('mods/thing.pw.toml');
   assert.ok(problems(root).some((x) => x.startsWith('mods/thing.pw.toml: index metafile flag is false')));
@@ -125,15 +126,15 @@ test('a missing indexed file is detected', () => {
 
 test('a duplicate index path is detected', () => {
   const { root, edit } = makePack();
-  edit('index.toml', (t) => t + '\n[[files]]\nfile = "config/a.json"\nhash = "' + P.sha256(Buffer.from('{\n  "a": 1\n}\n')) + '"\n');
-  edit('pack.toml', (t) => P.setPackIndexHash(t, P.sha256(fs.readFileSync(path.join(root, 'index.toml')))));
+  edit('index.toml', (t) => t + '\n[[files]]\nfile = "config/a.json"\nhash = "' + sha256(Buffer.from('{\n  "a": 1\n}\n')) + '"\n');
+  edit('pack.toml', (t) => P.setPackIndexHash(t, sha256(fs.readFileSync(path.join(root, 'index.toml')))));
   assert.ok(problems(root).some((x) => x === 'index.toml: duplicate entry config/a.json'));
 });
 
 test('indexed tooling or fixtures are detected', () => {
   const { root, edit } = makePack();
-  edit('index.toml', (t) => t + '\n[[files]]\nfile = "tools/check.cjs"\nhash = "' + P.sha256(Buffer.from('// tooling\n')) + '"\n');
-  edit('pack.toml', (t) => P.setPackIndexHash(t, P.sha256(fs.readFileSync(path.join(root, 'index.toml')))));
+  edit('index.toml', (t) => t + '\n[[files]]\nfile = "tools/check.cjs"\nhash = "' + sha256(Buffer.from('// tooling\n')) + '"\n');
+  edit('pack.toml', (t) => P.setPackIndexHash(t, sha256(fs.readFileSync(path.join(root, 'index.toml')))));
   assert.ok(problems(root).some((x) => x === 'tools/check.cjs: indexed but excluded by .packwizignore'));
 });
 

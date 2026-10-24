@@ -19,7 +19,7 @@ const { pullEvidence } = require('./evidence.cjs');
 const { isStageRuntime } = require('../stage_runtime.cjs');
 
 const TOOLS_DIR = path.resolve(__dirname, '../..');
-const CODE_DIRS = ['server_smoke', 'pack_test', 'emi_coverage', 'dedup', 'jar_data', 'file_data'];
+const CODE_DIRS = ['server_smoke', 'pack_test', 'emi_coverage', 'dedup', 'data_io'];
 
 // Reads ANU's load and decides alone / shared / fallback (capacity.cjs).
 async function checkCapacity(ssh, log) {

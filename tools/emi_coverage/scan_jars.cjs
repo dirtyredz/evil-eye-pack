@@ -14,7 +14,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { listEntries, readEntry } = require('./zip_reader.cjs');
+const { listEntries, readEntry } = require('../data_io/zip_reader.cjs');
 
 const MARKERS = {
   jei: Buffer.from('Lmezz/jei/api/JeiPlugin;'),

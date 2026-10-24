@@ -1,7 +1,7 @@
 'use strict';
 // ZIP traversal only. Callers own resource selection, parsing and merge policy.
 const path = require('node:path');
-const { listEntries, readEntry } = require('../emi_coverage/zip_reader.cjs');
+const { listEntries, readEntry } = require('./zip_reader.cjs');
 function walkJar(buf, source, visit, { matches, nested = false, inspect = () => {} }) {
   for (const entry of listEntries(buf)) {
     if (nested && /^META-INF\/jarjar\/.+\.jar$/.test(entry.name)) {

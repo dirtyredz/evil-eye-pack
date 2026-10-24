@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 'use strict';
+const { sha256 } = require('../data_io/files.cjs');
 // Read-only verification of the packwiz hash chain (no packwiz CLI needed).
 //
 //   node tools/packwiz/verify_hashes.cjs [--root <dir>] [--jars <dir>]
@@ -30,7 +31,7 @@ function verify(root, opts) {
   const ref = P.readPackIndexRef(packText);
   if (ref.hashFormat !== 'sha256') problems.push('pack.toml: [index] hash-format must be sha256');
   const indexBytes = read(ref.file || 'index.toml');
-  const indexHash = P.sha256(indexBytes);
+  const indexHash = sha256(indexBytes);
   if (indexHash !== ref.hash) problems.push('pack.toml: index hash ' + ref.hash + ' != sha256(index.toml) ' + indexHash);
   problems.push(...P.textProblems('index.toml', indexBytes), ...P.textProblems('pack.toml', Buffer.from(packText)));
 
@@ -47,7 +48,7 @@ function verify(root, opts) {
     const abs = path.join(root, entry.file);
     if (!fs.existsSync(abs)) { problems.push(entry.file + ': indexed but missing'); continue; }
     const bytes = fs.readFileSync(abs);
-    const actual = P.sha256(bytes);
+    const actual = sha256(bytes);
     if (actual !== entry.hash) problems.push(entry.file + ': hash ' + entry.hash + ' != actual ' + actual);
     problems.push(...P.textProblems(entry.file, bytes));
     if (entry.metafile !== P.isMetafile(entry.file)) {
@@ -80,7 +81,8 @@ function verify(root, opts) {
       const d = byName.get(name);
       if (!d) continue;
       jarsChecked++;
-      const h = crypto.createHash(d.hashFormat).update(fs.readFileSync(path.join(options.jars, name))).digest('hex');
+      const bytes = fs.readFileSync(path.join(options.jars, name));
+      const h = d.hashFormat === 'sha256' ? sha256(bytes) : crypto.createHash(d.hashFormat).update(bytes).digest('hex');
       if (h !== d.hash) problems.push(name + ': ' + d.hashFormat + ' ' + h + ' != ' + d.file + ' ' + d.hash);
     }
   }

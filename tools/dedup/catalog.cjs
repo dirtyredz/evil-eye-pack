@@ -2,8 +2,9 @@
 // Scan only the pack's pinned jars, never stray jars left in a test instance.
 const fs = require('node:fs');
 const path = require('node:path');
+const { sha256 } = require('../data_io/files.cjs');
 const crypto = require('node:crypto');
-const { walkJar } = require('../jar_data/walk.cjs');
+const { walkJar } = require('../data_io/walk.cjs');
 const { readMetafileDownload } = require('../packwiz/pack_index.cjs');
 const root = path.resolve(__dirname, '../..');
 function scan(dirs) {
@@ -13,7 +14,7 @@ function scan(dirs) {
     const source = dirs.map(dir => path.join(dir, meta.filename)).find(f => fs.existsSync(f));
     if (!source) throw new Error('Missing cached jar: ' + meta.filename);
     const bytes = fs.readFileSync(source);
-    if (crypto.createHash(meta.hashFormat).update(bytes).digest('hex') !== meta.hash) throw new Error('Jar hash mismatch: ' + source);
+    if ((meta.hashFormat === 'sha256' ? sha256(bytes) : crypto.createHash(meta.hashFormat).update(bytes).digest('hex')) !== meta.hash) throw new Error('Jar hash mismatch: ' + source);
     jars.push(meta.filename);
     walkJar(bytes, meta.filename, (name, text) => {
       let json;

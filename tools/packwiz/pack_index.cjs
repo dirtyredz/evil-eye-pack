@@ -4,7 +4,6 @@
 // Nothing here normalizes line endings; CR or BOM in a text file is reported instead,
 // because GitHub serves the LF bytes git stores (core.autocrlf=input).
 
-const { sha256 } = require('../file_data/hash.cjs');
 const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
@@ -210,6 +209,6 @@ function comparePaths(a, b) {
 }
 
 module.exports = {
-  BUILTIN_IGNORES, sha256, isTextPath, textProblems, globToRegExp, parseIgnore, loadIgnore, isIgnored,
+  BUILTIN_IGNORES, isTextPath, textProblems, globToRegExp, parseIgnore, loadIgnore, isIgnored,
   parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, readTable, isMetafile, listRepoFiles, publishableFiles, comparePaths,
 };

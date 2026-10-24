@@ -5,7 +5,7 @@ const { retiredIds } = require('../../dedup/policy.cjs');
 const path = require('node:path');
 
 const DATA = path.join(__dirname, '../data');
-const { readJson } = require('../../file_data/json.cjs');
+const { readJson } = require('../../data_io/files.cjs');
 
 // Test data shipped with the tool (policy, fixtures, machine expectations, baseline).
 function loadToolData(dataDir = DATA) {

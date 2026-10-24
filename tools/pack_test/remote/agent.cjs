@@ -1,4 +1,5 @@
 'use strict';
+const { readJson } = require('../../data_io/files.cjs');
 // Runs ON ANU, started detached by remote/anu.cjs (Win32_Process.Create, so it outlives the SSH session).
 // Usage: node agent.cjs <runDir>\job.json
 // Holds the heartbeat lock the launcher took, boots the run server once through the same execute() as a
@@ -7,7 +8,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const jobFile = process.argv[2];
-const job = JSON.parse(fs.readFileSync(jobFile, 'utf8'));
+const job = readJson(jobFile);
 const runDir = path.dirname(jobFile);
 const logFile = fs.createWriteStream(path.join(runDir, 'agent.log'), { flags: 'a' });
 const log = (m) => logFile.write(`[${new Date().toISOString()}] ${m}\n`);

@@ -8,17 +8,12 @@
 // merged (respecting `replace`); for recipes and loot tables the highest source wins.
 const fs = require('node:fs');
 const path = require('node:path');
-const { walkJar: walkDataJar } = require('../../jar_data/walk.cjs');
+const { walkJar } = require('../../data_io/walk.cjs');
 const { packConfigFiles } = require('../verdict/policy.cjs');
 const { declaredOutputs } = require('../recipe_json.cjs');
 const { lootRefs, worldgenBlocks, parseLenient } = require('./extract.cjs');
 
 const DATA_RE = /^data\/([^/]+)\/(recipes|loot_tables|tags\/(?:items|blocks|fluids)|worldgen|forge\/biome_modifier)\/(.+)\.json$/;
-
-// Calls visit(relativeDataPath, text, sourceName) for every data JSON in a jar buffer and its nested jars.
-function walkJar(buf, source, visit) {
-  walkDataJar(buf, source, visit, { matches: (name) => DATA_RE.test(name), nested: true });
-}
 
 function walkDir(dir, rel, source, visit) {
   if (!fs.existsSync(dir)) return;
@@ -115,7 +110,7 @@ function scanResources(sources, { removedNamespaces = [] } = {}) {
     }
   };
   for (const s of sources) {
-    if (s.kind === 'jar') walkJar(fs.readFileSync(s.file), s.name, visit);
+    if (s.kind === 'jar') walkJar(fs.readFileSync(s.file), s.name, visit, { matches: (name) => DATA_RE.test(name), nested: true });
     else walkDir(s.file, 'data', s.name, visit);
   }
   ev.worldgenBlocks = [...wg].sort();
@@ -131,4 +126,4 @@ function writeResourceScan(stageDir, evidenceDir, data) {
   for (const f of packConfigFiles(data.policy)) fs.copyFileSync(path.join(stageDir, f), path.join(evidenceDir, 'pack-config', path.basename(f)));
 }
 
-module.exports = { writeResourceScan, scanResources, shippedMentions, serverSources, namespaceMentions, walkJar };
+module.exports = { writeResourceScan, scanResources, shippedMentions, serverSources, namespaceMentions };

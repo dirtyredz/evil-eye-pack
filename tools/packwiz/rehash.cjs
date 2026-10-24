@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 'use strict';
+const { sha256 } = require('../data_io/files.cjs');
 // Rebuilds index.toml membership and hashes, then pack.toml's index hash: the
 // subset of `packwiz refresh` this pack needs (the packwiz CLI is not installed).
 //
@@ -23,7 +24,7 @@ function rehash(root, opts) {
   for (const rel of files) {
     const bytes = fs.readFileSync(path.join(root, rel));
     problems.push(...P.textProblems(rel, bytes));
-    entries.push({ file: rel, hash: P.sha256(bytes), metafile: P.isMetafile(rel), hashFormat: null });
+    entries.push({ file: rel, hash: sha256(bytes), metafile: P.isMetafile(rel), hashFormat: null });
   }
   if (problems.length) return { problems, written: false };
 
@@ -37,7 +38,7 @@ function rehash(root, opts) {
 
   const indexText = P.formatIndex({ hashFormat: 'sha256', files: entries });
   const packPath = path.join(root, 'pack.toml');
-  const packText = P.setPackIndexHash(fs.readFileSync(packPath, 'utf8'), P.sha256(Buffer.from(indexText, 'utf8')));
+  const packText = P.setPackIndexHash(fs.readFileSync(packPath, 'utf8'), sha256(Buffer.from(indexText, 'utf8')));
   if (!options.dryRun) {
     fs.writeFileSync(indexPath, indexText);
     fs.writeFileSync(packPath, packText);
