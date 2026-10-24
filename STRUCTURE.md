@@ -6,6 +6,43 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 
 ## Layout
 
+Folder map derived from `git ls-files`; expanded at the busy subtrees below.
+
+```text
+|-- config/
+|-- defaultconfigs/
+|-- docs/
+|   `-- items/
+|-- kubejs/
+|   |-- assets/
+|   |-- client_scripts/
+|   |   `-- emi_curation/
+|   |       |-- decor/
+|   |       `-- ui/
+|   |-- config/
+|   |-- data/
+|   |-- server_scripts/
+|   `-- startup_scripts/
+|-- mods/
+|-- resourcepacks/
+|-- shaderpacks/
+`-- tools/
+    |-- dedup/
+    |-- emi_coverage/
+    |-- emi_curation/
+    |-- pack_test/
+    |   |-- checks/
+    |   |-- data/
+    |   |-- probe/
+    |   |-- remote/
+    |   |   `-- lease/
+    |   |-- session/
+    |   |-- tests/
+    |   `-- verdict/
+    |-- packwiz/
+    `-- server_smoke/
+```
+
 - `pack.toml` — pack definition; its `[index]` hash is sha256 of `index.toml`
 - `index.toml` — every installed file with its sha256 (rebuild with `tools/packwiz/rehash.cjs`)
 - `mods/` — packwiz metafiles (`*.pw.toml`), one per mod jar (CurseForge, Modrinth, or a direct URL such as the owner's GitHub-released Dank Recipe Transfer)
@@ -19,7 +56,7 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 - `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter
 - `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the mark-as-decor key handler, the Mods menu and what they share (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
 - `kubejs/startup_scripts/` — `emi_curation_keys.js` registers the "EMI Curation" key mapping (startup-only in Forge); `kubejs/assets/emi_curation/lang/` names it
-- `kubejs/server_scripts/dedup.js`, `kubejs/config/dedup*.json` — permanent duplicate recipe/tag policy; no stack conversion. Generated recipe/loot overrides live under `kubejs/data/<owning-mod>/`, permanent EMI removals under `kubejs/assets/emi/index/stacks/`. Survivor choices: `docs/ato-retirement.md`.
+- `kubejs/server_scripts/dedup.js`, `kubejs/config/dedup*.json` — permanent duplicate recipe/tag policy; no stack conversion. Generated recipe/loot overrides live under `kubejs/data/<owning-mod>/`, permanent EMI removals under `kubejs/assets/emi/index/stacks/`. Survivor choices: `docs/duplicate-cleanup.md`.
 - `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
 - `tools/dedup/` — pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions; `hidden_reasons.json` holds the reason for every `hiddenOnly` id (see docs/development.md "Known exceptions registry").
@@ -87,7 +124,8 @@ unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 | `tools/dedup/catalog.cjs`, `generate.cjs`, `overrides.cjs`, `hidden_reasons.json` | `catalog`: scan of the pinned jars (duplicate groups); `generate`: writes `kubejs/data/<mod>/` overrides and the EMI removals from `dedup.json` after a jar change, never downloads; `overrides`: data-only patches for custom serializers (counts, chances, conditions kept); `hidden_reasons.json`: one recorded reason per `hiddenOnly` id (guarded by its test) |
 | `tools/emi_coverage/scan_jars.cjs`, `zip_reader.cjs` | read-only scan of mod jars for viewer plugin coverage; `zip_reader` is its dependency-free jar reader |
 
-`docs/emi.md` is the architecture doc for the EMI subsystem (there is no separate `ARCHITECTURE.md`).
+[Architecture](docs/ARCHITECTURE.md) maps the automated pack-test flow;
+[EMI](docs/emi.md) is the architecture doc for the EMI subsystem.
 
 KubeJS loads client scripts in descending `// priority:` order. Each script adds one
 namespace to `global.emiCuration`. Only `session.js` (through `ClientEvents`), `ui/button.js`, `ui/mods_menu.js`, `ui/decor_button.js` and `ui/decor_mark.js` (through `ui/forge_hooks.js`) register event

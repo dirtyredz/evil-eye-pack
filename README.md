@@ -48,7 +48,7 @@ mention REI describe how those lists were first built and were migrated to EMI u
   `curios:curios_container` entry in Stylish Effects' `menu_blacklist` does not prevent overlap.
   Keep `screen_side = "RIGHT"` under `[renderers.inventory_renderer]` in
   `config/stylisheffects-client.toml`.
-- Wither bones use Ice and Fire's: the permanent KubeJS tag policy supplies `forge:wither_bones`, and BHC's code-driven bone drop is disabled. See [duplicate cleanup](docs/ato-retirement.md).
+- Wither bones use Ice and Fire's: the permanent KubeJS tag policy supplies `forge:wither_bones`, and BHC's code-driven bone drop is disabled. See [duplicate cleanup](docs/duplicate-cleanup.md).
 - Dragon griefing is set to `2`, which Ice and Fire defines as **no griefing** (not weak-block griefing). Tamed griefing, stuck digging, Cyclops griefing and Sea Serpent griefing are disabled.
 - AdLODs iron/copper deposits have half the size (350-700 blocks) and half the frequency (rarity 2040/2904), yielding roughly one quarter of their previous added ore volume. Vanilla ore generation is unchanged. Zinc deposits use explicit Create ore IDs. These generation changes and rarer Myrmex colonies affect new chunks; the colony cap is now 30.
 - Only ender dust is newly unified: Ender IO uses `forge:dusts/ender`, so its `powdered_ender_pearl` is also added to `forge:dusts/ender_pearl`, owned by AE2. The reciprocal tag addition puts AE2 ender dust in `forge:dusts/ender` as well, preserving Ender IO recipe inputs; both tags prefer AE2. AE2 15.4.10 has no ordinary quartz dust; Ender IO quartz powder and AE2 certus quartz dust remain separate.

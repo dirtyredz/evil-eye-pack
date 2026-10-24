@@ -54,13 +54,13 @@ Newest first.
 
 The owner tested release 1 locally: auto-swap only converted some items. The owner chose outright removal of AllTheOres, AllTheCompressed and Almost Unified, accepting loss of every remaining stack and placed/unmined block. The two-release plan below is superseded; neither release-1 commit had been pushed. No conversion, swap or registry remap is shipped.
 
-Large Ore Deposits keeps its explicit survivors and disabled dead-end deposits. Remaining duplicates use config switches first, then recipe/loot overrides and tag cleanup, with permanent EMI hiding. Ender IO owns iron gears; HammerLib gears are disabled (release 1 incorrectly targeted its copper/gold/diamond gears). [The survivor table](ato-retirement.md) records exceptions and compatibility limits. The cached-jar Node guard rejects new multi-namespace material groups, with narrow documented exceptions.
+Large Ore Deposits keeps its explicit survivors and disabled dead-end deposits. Remaining duplicates use config switches first, then recipe/loot overrides and tag cleanup, with permanent EMI hiding. Ender IO owns iron gears; HammerLib gears are disabled (release 1 incorrectly targeted its copper/gold/diamond gears). [The survivor table](duplicate-cleanup.md) records exceptions and compatibility limits. The cached-jar Node guard rejects new multi-namespace material groups, with narrow documented exceptions.
 
 ## 2026-10-22 — Two-release retirement of AllTheOres and AllTheCompressed
 
 **Decision.** Keep AllTheOres, AllTheCompressed and Almost Unified installed in release 1. Stop all new AllTheOres generation, redirect surviving ore drops, and provide literal one-to-one material conversion recipes. Keep retiring items visible so players can find migration recipes. Almost Unified keeps running with survivor priorities and exclusions for the conversion recipes.
 
-**World consequence.** Release 2 removes the mods and the temporary scripts/data. Unconverted stacks and placed/unmined AllTheOres blocks disappear; the owner accepted the loss, so no registry-remap mod is built. [The migration note](ato-retirement.md) enumerates all items without a survivor and records the compressed-block limitation: there is no other compressed provider, so native 9:1 unpacking preserves material before the base-item conversions. The other seams and duplicates in the audit are separate work.
+**World consequence.** Release 2 removes the mods and the temporary scripts/data. Unconverted stacks and placed/unmined AllTheOres blocks disappear; the owner accepted the loss, so no registry-remap mod is built. The former migration note (now [duplicate cleanup](duplicate-cleanup.md)) enumerated items without a survivor and recorded the compressed-block limitation: there is no other compressed provider, so native 9:1 unpacking preserves material before the base-item conversions. The other seams and duplicates in the audit are separate work.
 
 ## 2026-10-21 — Fusion is SuperMartijn642's connected-textures library, not Alexndr's alloy add-on
 
