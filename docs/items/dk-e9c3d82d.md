@@ -28,5 +28,7 @@ Acceptance: identify the registering mod (instrument or bisect), then either rep
 - **Ruled out:** Forge dependency ordering (constructors run with `runAsync` and don't wait for dependencies), a KubeJS config setting, startup scripts, and a key-set copy.
 - **`maxThreads = 1` cost:** +4.56 s mean per server launch (59.2 s → 63.8 s, n=3 each). Not measured on clients.
 - **Chosen fix (owner, 2026-10-24):** the custom compat mod `CorgiKubeJSCompat`, built in minecraft-mods as `dk-f5d5af17`. A KubeJS plugin forces CorgiLib's registry class init before KubeJS iterates the root.
-- **Blocked on minecraft-mods `dk-f5d5af17`.** When it ships, add `mods/corgi-kubejs-compat.pw.toml` (side both), rehash, and run the pack test.
+- **Shipped:** CorgiKubeJSCompat 1.0.0 is installed via `mods/corgikubejscompat.pw.toml` (side both); see the installation update below.
 - **Fallback:** `config/fml.toml maxThreads = 1`.
+
+**Update 2026-10-25: fix installed in the pack at commit 6c64748ed0d38947548d63c5f3873af09c5ff397.** CorgiKubeJSCompat 1.0.0 is pinned to the GitHub release with SHA-256 a53230f6087654395a88bf03331b7ebad092a0061a7dd1a262b0a8730276e4f1. Its hard dependencies match the pack: KubeJS 2001.6.5-build.26 and CorgiLib 4.0.3.5. Rehash, hash verification (including both supplied release jars), the malware source gate (0 findings), and all 34 malware-guard/packwiz tests passed. The orchestrator will run the pack test; no client or server was launched here. Awaiting confirmation through normal launches. Keep this item open; the owner closes it once launches show no recurrence.
