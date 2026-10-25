@@ -54,6 +54,21 @@ and Create 6.0.8.
 The finite supply is deliberately drainable. Inspect the mounted fronts while
 docked; rerun to replenish after the circuit empties the inventories.
 
+## Roundwood native showcase
+
+Roundwood 0.13.3 owns `/roundwood showcase`; it is not an `/evileye` section.
+Run it as an operator **player** in a disposable area. It builds a labelled
+90 × 8 × 28 volume, including its floor/border, three blocks ahead and centred
+across the player's facing. It clears that volume on every invocation, including
+existing builds; it does not use the pack's plot reservations or occupied checks.
+The whole area must be loaded and within the world border/build height.
+
+The display includes doors, ordinary/keyhole archways, window profiles and Cross
+Beams, trim and material samples. Inspect archway openings and Cross Beam styling
+in game; headless checks cannot establish their rendering. Native commands need
+a player source, so headless probes use a Forge fake player instead of a bare
+`execute positioned` console source. Keep this display away from pack showcases.
+
 ## Run the headless check
 
 Requires Node 22, Java/Forge from `tools/server_smoke/env.cjs`, and a prepared server

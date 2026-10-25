@@ -1,0 +1,8 @@
+name = "Roundwood"
+filename = "roundwood-1.20.1-0.13.3.jar"
+side = "both"
+
+[download]
+url = "https://github.com/dirtyredz/Roundwood/releases/download/v0.13.3/roundwood-1.20.1-0.13.3.jar"
+hash-format = "sha256"
+hash = "150874f1a48c88c8af0995cb33aa2970cdfb83dc828cd0b049a8b635f7f206e4"

@@ -4821,6 +4821,11 @@ hash = "5b92406160d9ea8a61ddf111caaecb7f6283678e2c40b08b72dce3eeaf20dc96"
 metafile = true
 
 [[files]]
+file = "mods/roundwood.pw.toml"
+hash = "1f0bf3fb78d0eeea775fe26c784fcf8a105cdf50b80897929508f6e52f22c936"
+metafile = true
+
+[[files]]
 file = "mods/searchables.pw.toml"
 hash = "b8c7497acbf4890b4609b6b20de7affdd3482fc99af975d9ff6b29c075e1d8a7"
 metafile = true

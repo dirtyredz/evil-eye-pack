@@ -15,11 +15,12 @@ mention REI describe how those lists were first built and were migrated to EMI u
 
 ## What's in it
 
+- **Roundwood 0.13.3** adds round and arched doors, windows with Cross Beams, ordinary/keyhole archways and Universal Trim, with in-world material and dye styling. Its own `/roundwood showcase` builds a labelled display (see [showcases](docs/showcases.md#roundwood-native-showcase)).
 - **CorgiKubeJSCompat 1.0.1** completes CorgiLib registry initialization before KubeJS enumerates registries, addressing the intermittent startup crash. Normal-launch confirmation is pending (Docket `dk-e9c3d82d`).
 - **FlatWorldFix 1.0.0** preserves a chosen non-default world type, such as Superflat, over datapack overworld overrides. Default worlds keep Terralith. It only affects worlds created while installed; existing saves are untouched.
 - Create contraption storage: Create: Compatible Storage 2.14.0 adds Iron Chests support; Create: Storage Drawers Compat 1.1.0 adds mounted drawer storage and manual access. Both accompany Create 6.0.8 (see `docs/DECISIONS.md` and `docs/GOTCHAS.md`).
 
-- 196 mods (metafiles pointing at CurseForge, Modrinth or a GitHub release, matched by hash to the exact versions used
+- 197 mods (metafiles pointing at CurseForge, Modrinth or a GitHub release, matched by hash to the exact versions used
   in the source instance — no upgrades)
 - `config/` — the instance's mod configs, indexed as plain files by packwiz
 - `shaderpacks/` — Complementary Unbound, Complementary Reimagined, and MakeUp UltraFast, plus their

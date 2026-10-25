@@ -2,6 +2,31 @@
 
 Newest first.
 
+## 2026-10-25 - Roundwood 0.13.3
+
+Add the owner's [Roundwood release](https://github.com/dirtyredz/Roundwood/releases/tag/v0.13.3)
+on both sides, pinned by direct URL and SHA-256 in `mods/roundwood.pw.toml`, without
+an update section. The downloaded jar matched
+`150874f1a48c88c8af0995cb33aa2970cdfb83dc828cd0b049a8b635f7f206e4`.
+Its required Minecraft `[1.20.1,1.20.2)` and Forge `[47,48)` ranges accept the pack;
+optional client EMI `[1.1,)` and JEI `[15,)` accept 1.1.24 and 15.62.0.219.
+No additional dependency is needed. Isolated content scanning and the metadata
+gate returned zero findings, with no approvals added. Evidence lives in
+`jobs/2026-10-25-add-roundwood` under the documented artifacts root.
+
+Use Roundwood's own player-only `/roundwood showcase`, not a duplicate pack
+section. Its destructive display volume is described in [showcases](showcases.md#roundwood-native-showcase).
+
+Headless acceptance built all 13 native sections and both archways; saved-world
+NBT confirmed the Cross Beam at `(420,240,18)` with display origin `(400,240,0)`.
+All 525 contraption-storage assertions passed in the same boot. Warning/error
+groups matched the prior storage run whose indexed pack exactly matches `main`
+at `ace7be9`. Two boots were needed because the first probe used an unmapped
+fake-player rotation setter. The second probe's legacy `_cross` block-ID check
+was corrected by inspecting persisted `WindowCrossBeams` NBT, without another
+boot; original failed probe reports are retained alongside `acceptance.json`.
+Client appearance remains an owner check.
+
 ## 2026-10-25 - Shared showcase plans and one-boot section checks
 
 Use a pure bounded-plan registry, one world-writer builder and one command tree,

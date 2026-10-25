@@ -1,5 +1,11 @@
 # Gotchas
 
+- **Roundwood 0.13.3 Cross Beams are attachments.** The native showcase's sample
+  persists `WindowCrossBeams` with a `Front` compound on `roundwood:round_window`;
+  searching only legacy `_cross` block IDs falsely reports it missing. Its
+  `/roundwood showcase` requires a player source and clears its entire display
+  volume without pack plot reservations; see [showcases](showcases.md#roundwood-native-showcase).
+
 - **Read command-source Vec3 coordinates with `x()`, `y()`, `z()`.** This Rhino
   version exposes their field/method collision as `FieldAndMethods`; coercing
   `position.x` to a number throws a Java `NullPointerException` outside the JS
