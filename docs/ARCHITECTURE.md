@@ -8,7 +8,8 @@ lever/motor controls (5), and permission-level-2 command registration (0).
 Priorities order files across folders. Sections return descriptors, never write
 worlds. The builder validates before clearing, persists plot ownership, and owns
 build/rebuild/teardown. Controls resume from records after reload/restart without
-force-loading chunks.
+force-loading chunks, and prepare glued collision unions on the server thread
+before enabling a motor (Create/Canary classloader constraint; see GOTCHAS).
 
 `tools/showcase/check.cjs` discovers matching checks and sequences them in one
 dedicated server. Offline preparation validates pinned cached bytes and reuses

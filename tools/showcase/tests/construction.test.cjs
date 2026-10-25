@@ -14,9 +14,10 @@ function fixture() {
   const id = p => blocks.get(key(p)) || (p.y === 63 ? 'minecraft:dirt' : 'minecraft:air');
   const level = {
     dimension: 'minecraft:overworld', getMinBuildHeight: () => -64, getMaxBuildHeight: () => 320,
-    hasChunkAt: () => true, getWorldBorder: () => ({ isWithinBounds: () => true }), holderLookup: () => ({}),
+    hasChunkAt: () => true, getWorldBorder: () => ({ getMinX: () => -30000000, getMaxX: () => 30000000, getMinZ: () => -30000000, getMaxZ: () => 30000000, isWithinBounds() { throw new Error('Rhino ambiguous overload'); } }), holderLookup: () => ({}),
     getBlockState: p => ({ isFaceSturdy: () => id(p) !== 'minecraft:air', isAir: () => id(p) === 'minecraft:air', canBeReplaced: () => false }),
     getFluidState: () => ({ isEmpty: () => true }), getBlockEntity: () => null,
+    setBlock: (p, state, flags) => { assert.equal(flags, 50); writes.push('bounded clear ' + key(p)); blocks.set(key(p), state); return true; },
     getEntities: () => ({ size: () => entities.length, get: i => entities[i] }),
   };
   const server = {
@@ -34,6 +35,7 @@ function fixture() {
   const java = { loadClass(name) {
     if (name.endsWith('.BlockPos')) return Pos;
     if (name.endsWith('.AABB')) return Box;
+    if (name.endsWith('.Blocks')) return { AIR: { defaultBlockState: () => 'minecraft:air' } };
     if (name.endsWith('.BlockStateParser')) return { parseForBlock(lookup, state) { if (state === 'missing:block') throw new Error('Unknown block'); } };
     return {};
   } };
@@ -49,10 +51,10 @@ test('occupied, unloaded, border, height and unknown-state refusals make no worl
   const cases = [
     f => f.blocks.set('11,64,21', 'minecraft:chest'),
     f => { f.level.hasChunkAt = () => false; },
-    f => { f.level.getWorldBorder = () => ({ isWithinBounds: () => false }); },
+    f => { f.level.getWorldBorder = () => ({ getMinX: () => 12, getMaxX: () => 30000000, getMinZ: () => -30000000, getMaxZ: () => 30000000 }); },
     f => { f.level.getMaxBuildHeight = () => 65; },
     f => { f.plan.blocks[0].state = 'missing:block'; },
-    f => f.entities.push({ getType: () => 'entity.minecraft.player' }),
+    f => f.entities.push({ getType: () => 'minecraft:player', getX: () => 11, getY: () => 64, getZ: () => 21 }),
   ];
   for (const change of cases) {
     const f = fixture(); change(f);
@@ -85,11 +87,33 @@ test('clear cannot claim an arbitrary occupied plot; overlapping reserved plots 
 
 test('rebuild refuses unrelated entities and glue crossing its boundary without changing blocks', () => {
   for (const entity of [
-    { getType: () => 'entity.minecraft.player' },
-    { getType: () => 'entity.create.super_glue', getBoundingBox: () => ({ minX: 9, minY: 64, minZ: 20, maxX: 11, maxY: 65, maxZ: 21 }) },
+    { getType: () => 'minecraft:player', getX: () => 11, getY: () => 64, getZ: () => 21 },
+    { getType: () => 'create:super_glue', getBoundingBox: () => ({ minX: 9, minY: 64, minZ: 20, maxX: 11, maxY: 65, maxZ: 21 }) },
   ]) {
     const f = fixture(); f.build(); const count = f.writes.length;
     f.entities.push(entity); assert.throws(() => f.build());
     assert.equal(f.writes.length, count);
   }
+});
+
+test('rebuild recognizes KubeJS namespaced glue and removes it', () => {
+  const f = fixture(); f.build();
+  const glue = { getType: () => 'create:super_glue', getBoundingBox: () => ({ minX: 10, minY: 64, minZ: 20, maxX: 11, maxY: 65, maxZ: 21 }), isAlive: () => true, discard() { f.entities.splice(f.entities.indexOf(this), 1); } };
+  f.entities.push(glue); f.build();
+  assert.equal(f.entities.length, 0);
+});
+
+test('rebuild removes inventory block entities before replacement can drop their contents', () => {
+  const f = fixture(); f.build(); let removed = false;
+  f.level.getBlockEntity = p => p.x === 11 && p.y === 64 && p.z === 21 && !removed ? {} : null;
+  f.level.removeBlockEntity = p => { assert.deepEqual([p.x, p.y, p.z], [11, 64, 21]); removed = true; };
+  const originalSet = f.blocks.set.bind(f.blocks);
+  f.blocks.set = (key, value) => { if (key === '11,64,21' && value === 'minecraft:air') assert.ok(removed, 'inventory must be detached before air replaces its block'); return originalSet(key, value); };
+  f.build(); assert.ok(removed);
+});
+
+test('rebuild uses a clear pass that suppresses support updates and drops', () => {
+  const f = fixture(); f.build(); f.build();
+  assert.ok(f.writes.some(w => w.startsWith('bounded clear ')));
+  assert.ok(!f.writes.some(w => w.startsWith('fill ') && w.endsWith('minecraft:air')));
 });

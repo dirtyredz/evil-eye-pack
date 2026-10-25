@@ -5,6 +5,26 @@
   `position.x` to a number throws a Java `NullPointerException` outside the JS
   catch. The showcase's first live run exposed it; its command test uses method
   accessors to prevent regression. Vec2's rotation `y` is a plain field.
+- **WorldBorder's `isWithinBounds(BlockPos)` overload is ambiguous in Rhino.**
+  Compare the full plot extents with `getMinX/getMaxX/getMinZ/getMaxZ` instead;
+  this also checks the far edge of the last block, not only its integer origin.
+- **Vanilla `/fill air` can pop support-attached blocks while clearing.** The
+  first showcase rebuild left a `minecraft:lever` item entity, confirmed in the
+  saved world's entity NBT, so a later rebuild correctly refused the occupied
+  plot. The builder detaches inventory block entities, then clears with
+  `UPDATE_CLIENTS | UPDATE_KNOWN_SHAPE | UPDATE_SUPPRESS_DROPS` (50). The live
+  checks require exactly one glue and no dropped items after rebuild.
+- **KubeJS entity `getType()` returns namespaced IDs.** Match `create:super_glue`
+  when recognizing owned glue. Using a vanilla description key caused the
+  showcase to reject its own glue on the second invocation.
+- **Create's asynchronous collision calculation can first-load Canary classes
+  through the common pool's wrong classloader.** A fresh bearing assembly logged
+  `Could not find parent it/unimi/dsi/fastutil/doubles/AbstractDoubleList` for
+  `OffsetFractionalDoubleList`; functional storage checks still passed. Showcase
+  motor startup now computes the glued blocks' collision unions on the server
+  thread before enabling speed. The full headless run then passed with no new
+  warning/error groups. This is local preparation for showcase rigs; ordinary
+  contraption assembly outside showcases has not been changed.
 
 - **Drawer quantity text needs the quantify flag.** Storage Drawers 12.15.1
   `BlockEntityDrawers.readPortable` reads `Qua`; without it prefilled drawers

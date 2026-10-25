@@ -3938,11 +3938,11 @@ hash = "7557f40022d45faba083f095826b47847367d085bb37f4308f2fc6395a25947e"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/construction.js"
-hash = "e9922f8b547f330bb700d73cb77e43c6df0b04830a819f85dceed2065c24510b"
+hash = "afb2e8d60a7a69ac43b6d47ed7b2bfebf956c124ef64ad20a393c2004ca996ab"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/controls.js"
-hash = "beef2d198bc4344a3c51513dd5264da38af149fd68fe832de2e470d9bbda88ce"
+hash = "5ddb7537d9f04f82bee17cb706cbb81ca296b1936af8c2986de2f03cdefce491"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/plan.js"

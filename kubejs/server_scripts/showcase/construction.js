@@ -8,6 +8,21 @@
   }
   ns.saveRecords = function (server, records) { server.persistentData.putString('evilEyeShowcasePlots', JSON.stringify(records)) }
   ns.plotKey = function (level, o) { return String(level.dimension) + ':' + o.x + ',' + o.y + ',' + o.z }
+  // Create computes contraption collision unions on the common pool. First-use
+  // Canary shape classes must resolve on the server thread's mod classloader.
+  ns.prepareCollisions = function (level, p, o) {
+    var BP = Java.loadClass('net.minecraft.core.BlockPos')
+    var Shapes = Java.loadClass('net.minecraft.world.phys.shapes.Shapes')
+    var BooleanOp = Java.loadClass('net.minecraft.world.phys.shapes.BooleanOp')
+    p.glue.forEach(function (v) {
+      var combined = Shapes.empty()
+      for (var x = v[0]; x < v[3]; x++) for (var y = v[1]; y < v[4]; y++) for (var z = v[2]; z < v[5]; z++) {
+        var at = new BP(o.x + x, o.y + y, o.z + z)
+        var shape = level.getBlockState(at).getCollisionShape(level, at).move(x - v[0], y - v[1], z - v[2])
+        combined = Shapes.joinUnoptimized(combined, shape, BooleanOp.OR)
+      }
+    })
+  }
   ns.build = function (source, p, o, name, clearOnly) {
     ns.validate(p)
     var BP = Java.loadClass('net.minecraft.core.BlockPos'), AABB = Java.loadClass('net.minecraft.world.phys.AABB')
@@ -25,6 +40,9 @@
     if (owned && (owned.name !== name || owned.width !== p.width || owned.depth !== p.depth || owned.height !== p.height)) refuse('Plot belongs to a different section/version.')
     if (clearOnly && !owned) refuse('No showcase at this origin.')
     if (o.y - 1 < level.getMinBuildHeight() || o.y + p.height > level.getMaxBuildHeight()) refuse('Outside build height.')
+    var border = level.getWorldBorder()
+    // isWithinBounds(BlockPos) is ambiguous against other overloads in this Rhino build.
+    if (o.x < border.getMinX() || o.x + p.width > border.getMaxX() || o.z < border.getMinZ() || o.z + p.depth > border.getMaxZ()) refuse('Outside the world border.')
     for (var b = 0; b < p.blocks.length; b++) Parser.parseForBlock(level.holderLookup(Registries.BLOCK), p.blocks[b].state + p.blocks[b].nbt, true)
     p.fills.forEach(function (f) { f.items.forEach(function (item) { if (Item.of(item[0], 1).isEmpty()) refuse('Unknown prefill item ' + item[0] + '.') }) })
     Object.keys(records).forEach(function (k) {
@@ -33,7 +51,7 @@
     })
     for (var x = 0; x < p.width; x++) for (var z = 0; z < p.depth; z++) {
       var floor = pos(x, -1, z)
-      if (!level.hasChunkAt(floor) || !level.getWorldBorder().isWithinBounds(floor)) refuse('Plot must be loaded and inside the world border.')
+      if (!level.hasChunkAt(floor)) refuse('Plot must be loaded.')
       if (!owned) {
         if (!level.getBlockState(floor).isFaceSturdy(level, floor, Direction.UP) || !level.getFluidState(floor).isEmpty() || level.getBlockEntity(floor) !== null) refuse('Need flat solid ground across ' + p.width + ' x ' + p.depth + '.')
         for (var y = 0; y < p.height; y++) {
@@ -52,9 +70,9 @@
       }
     })
     for (var e = 0; e < entities.size(); e++) {
-      var entity = entities.get(e), allowed = owned && String(entity.getType()) === 'entity.create.super_glue'
+      var entity = entities.get(e), allowed = owned && String(entity.getType()) === 'create:super_glue'
       for (var j = 0; j < mounted.length; j++) if (entity.equals(mounted[j])) allowed = true
-      if (!allowed) refuse('Move entities out of the plot first.')
+      if (!allowed) refuse('Move entities out of the plot first (' + String(entity.getType()) + ' at ' + entity.getX() + ', ' + entity.getY() + ', ' + entity.getZ() + ').')
       var eb = entity.getBoundingBox()
       if (eb.minX < box.minX || eb.minY < box.minY || eb.minZ < box.minZ || eb.maxX > box.maxX || eb.maxY > box.maxY || eb.maxZ > box.maxZ) refuse('Showcase entity crosses plot boundary.')
       removable.push(entity)
@@ -69,8 +87,20 @@
       // Create can restore captured glue during disassembly; remove those new entities too.
       var restored = level.getEntities(null, box)
       for (var r = 0; r < restored.size(); r++) if (String(restored.get(r).getType()).indexOf('super_glue') >= 0) restored.get(r).discard()
+      // /fill only empties vanilla Clearable containers. Mod inventories can otherwise
+      // spill their contents in onRemove, breaking idempotence and littering the plot.
+      for (var cx = 0; cx < p.width; cx++) for (var cy = -1; cy < p.height; cy++) for (var cz = 0; cz < p.depth; cz++) {
+        var clearAt = pos(cx, cy, cz)
+        if (level.getBlockEntity(clearAt) !== null) level.removeBlockEntity(clearAt)
+      }
     }
-    command('fill ' + xyz(0, 0, 0) + ' ' + xyz(p.width - 1, p.height - 1, p.depth - 1) + ' minecraft:air')
+    // UPDATE_CLIENTS | UPDATE_KNOWN_SHAPE | UPDATE_SUPPRESS_DROPS: a vanilla
+    // fill removes supports before their levers/signs, spawning stray items.
+    var air = Java.loadClass('net.minecraft.world.level.block.Blocks').AIR.defaultBlockState()
+    for (var ax = 0; ax < p.width; ax++) for (var ay = 0; ay < p.height; ay++) for (var az = 0; az < p.depth; az++) {
+      var airAt = pos(ax, ay, az)
+      if (!level.getBlockState(airAt).isAir()) level.setBlock(airAt, air, 50)
+    }
     command('fill ' + xyz(0, -1, 0) + ' ' + xyz(p.width - 1, -1, p.depth - 1) + ' minecraft:stone_bricks')
     if (clearOnly) { delete records[key]; ns.saveRecords(server, records); return o }
     for (var i = 0; i < p.blocks.length; i++) {

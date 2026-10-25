@@ -16,7 +16,10 @@
         var motor = level.getBlockEntity(at)
         if (!motor) return
         var state = String(level.getBlockState(lever)), speed = state.indexOf('minecraft:lever') >= 0 && state.indexOf('powered=true') >= 0 ? m.speed : 0
-        if (motor.generatedSpeed.getValue() !== speed) motor.generatedSpeed.setValue(speed)
+        if (motor.generatedSpeed.getValue() !== speed) {
+          if (speed !== 0) ns.prepareCollisions(level, ns.sections[r.name](), o)
+          motor.generatedSpeed.setValue(speed)
+        }
       })
     })
   })
