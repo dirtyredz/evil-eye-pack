@@ -15,7 +15,7 @@ mention REI describe how those lists were first built and were migrated to EMI u
 
 ## What's in it
 
-- **CorgiKubeJSCompat 1.0.0** completes CorgiLib registry initialization before KubeJS enumerates registries, addressing the intermittent startup crash. Normal-launch confirmation is pending (Docket `dk-e9c3d82d`).
+- **CorgiKubeJSCompat 1.0.1** completes CorgiLib registry initialization before KubeJS enumerates registries, addressing the intermittent startup crash. Normal-launch confirmation is pending (Docket `dk-e9c3d82d`).
 - **FlatWorldFix 1.0.0** preserves a chosen non-default world type, such as Superflat, over datapack overworld overrides. Default worlds keep Terralith. It only affects worlds created while installed; existing saves are untouched.
 
 - 194 mods (metafiles pointing at CurseForge, Modrinth or a GitHub release, matched by hash to the exact versions used
