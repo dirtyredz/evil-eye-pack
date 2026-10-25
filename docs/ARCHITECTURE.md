@@ -1,5 +1,22 @@
 # Architecture
 
+## Showcases
+
+`kubejs/server_scripts/showcase/` separates a pure bounded plan/registry (priority
+30), self-registering sections (20), the world-writer builder (10), shared
+lever/motor controls (5), and permission-level-2 command registration (0).
+Priorities order files across folders. Sections return descriptors, never write
+worlds. The builder validates before clearing, persists plot ownership, and owns
+build/rebuild/teardown. Controls resume from records after reload/restart without
+force-loading chunks.
+
+`tools/showcase/check.cjs` discovers matching checks and sequences them in one
+dedicated server. Offline preparation validates pinned cached bytes and reuses
+pack-test server-copy/evidence modules; server-smoke owns watchdog and shutdown.
+The injected harness calls the shipped command and records each assertion;
+domain checks live in `checks/<section>.js`. Tests never ship in pack instances.
+Commands, layout, coverage and extension recipe: [showcases](showcases.md).
+
 ## Automated pack test
 
 `tools/pack_test/run.cjs` drives a server-only acceptance run from Valhalla, normally

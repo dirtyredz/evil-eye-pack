@@ -2,6 +2,20 @@
 
 Newest first.
 
+## 2026-10-25 - Shared showcase plans and one-boot section checks
+
+Use a pure bounded-plan registry, one world-writer builder and one command tree,
+with one self-registering file per section. Signs sit two cells east of samples
+and face the north entrance, following the owner's mod showcases. Persistent
+reservations permit deliberate idempotent rebuild/clear without accepting
+arbitrary occupied terrain. Rebuild resets contents; clear retains a flat floor.
+
+Headless checks use the production command and matching section modules in one
+injected harness and server boot. Reuse server-smoke supervision and pack-test
+copying/evidence code. Offline staging validates current pins against cached
+files and never downloads. This promotes scratch-probe behaviour to committed
+checks while separating client-only claims. See [showcases](showcases.md).
+
 ## 2026-10-25 - Storage Drawers unsided capability fix
 
 Pin [Storage Drawers 1.20.1-12.15.1](https://modrinth.com/mod/storagedrawers/version/53npfO5m)

@@ -23,6 +23,8 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |   |-- config/
 |   |-- data/
 |   |-- server_scripts/
+|   |   `-- showcase/
+|   |       `-- sections/
 |   `-- startup_scripts/
 |-- mods/
 |-- resourcepacks/
@@ -55,7 +57,10 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |   `-- verdict/
     |-- packwiz/
     |   `-- tests/
-    `-- server_smoke/
+    |-- server_smoke/
+    |   `-- tests/
+    `-- showcase/
+        |-- checks/
         `-- tests/
 ```
 
@@ -94,8 +99,16 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 
 ## Components
 
+Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
+
 | Component | Responsibility |
 |---|---|
+| `kubejs/server_scripts/showcase/plan.js` | pure plan bounds, placement/sign helpers, registry and source-to-origin math |
+| `kubejs/server_scripts/showcase/sections/*.js` | one self-registering content plan per section; no world access |
+| `kubejs/server_scripts/showcase/construction.js` | preflight, persistent plot ownership, sole build/rebuild/clear writer |
+| `kubejs/server_scripts/showcase/controls.js`, `command.js` | generic lever/motor tick control and op-only command tree |
+| `tools/showcase/check.cjs`, `offline.cjs` | one-boot CLI, process guard, reports/log comparison; pinned offline server preparation using existing pack-test/server-smoke modules |
+| `tools/showcase/harness.js`, `checks/*.js`, `tests/*.cjs` | disposable server probe orchestration; one behaviour check per section; pure Node tests |
 | `tools/malware_guard/cli.cjs` | `scan`, `drift`, `gate`, explicit online `status` and hash-based `approve`; applies approvals once to raw reports before JSON output and exits 0/1/2 |
 | `tools/malware_guard/scanning/` (`scan.cjs`, `signatures.cjs`) | bounded recursive archive/folder scan using shared byte jar traversal; entry hashes, class signatures and tunable loader co-occurrence heuristics |
 | `tools/malware_guard/metadata.cjs` | packwiz installed-path inventory and expected pinned hashes |

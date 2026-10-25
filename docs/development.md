@@ -49,7 +49,7 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs
+node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
 # node tools/dedup/generate.cjs "C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods"
@@ -60,6 +60,23 @@ git worktree list --porcelain
 ```
 
 Tooling needs Node 22. There is no packwiz CLI and no build step.
+
+For showcase changes, the focused fast gate is:
+
+```powershell
+node --test tools/showcase/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs
+node tools/packwiz/rehash.cjs
+node tools/packwiz/rehash.cjs --dry-run
+node tools/packwiz/verify_hashes.cjs
+git diff --check
+dk check
+```
+
+Also run `node tools/showcase/check.cjs <section>` for the actual in-world
+behaviour. It reuses the server supervisor, requires cached inputs and never
+downloads. [Showcases](showcases.md) covers commands, layout, baseline comparison
+and adding a section with its check. This targeted live fixture check is the
+showcase acceptance run; do not also run the unrelated full pack-test tier.
 
 ## Malware guard
 

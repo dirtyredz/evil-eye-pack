@@ -1,5 +1,16 @@
 # Gotchas
 
+- **Drawer quantity text needs the quantify flag.** Storage Drawers 12.15.1
+  `BlockEntityDrawers.readPortable` reads `Qua`; without it prefilled drawers
+  can show icons without counts. Showcase plans use `{Qua:1b}` and the headless
+  check asserts `isShowingQuantity()`. This enables the feature; rendering still
+  needs client inspection.
+- **A showcase reservation is destructive on rebuild.** Use a disposable area
+  and repeat from the same position/direction. A reserved plot can be reset even
+  after block edits; clear retains its stone-brick floor. Create can restore glue
+  on disassembly, so teardown removes that restored glue before adding a new
+  payload. See [showcases](showcases.md) for boundaries and commands.
+
 ## Packwiz hashes (no packwiz CLI here)
 
 - Hashes cover **LF bytes**. Git stores and GitHub serves LF (`core.autocrlf=input`, plus `.gitattributes`). A file saved with CRLF or a BOM hashes differently from what the installer downloads.

@@ -3933,6 +3933,26 @@ file = "kubejs/server_scripts/dedup.js"
 hash = "50442cf9eec343663cfcd7a4bc1a36e2cc061754b363a70f6d1fae17ff9acc6a"
 
 [[files]]
+file = "kubejs/server_scripts/showcase/command.js"
+hash = "3b3705fa49bced28194ff38155cc67142bca4e3742bd69beac1faf280f7e3bef"
+
+[[files]]
+file = "kubejs/server_scripts/showcase/construction.js"
+hash = "e9922f8b547f330bb700d73cb77e43c6df0b04830a819f85dceed2065c24510b"
+
+[[files]]
+file = "kubejs/server_scripts/showcase/controls.js"
+hash = "beef2d198bc4344a3c51513dd5264da38af149fd68fe832de2e470d9bbda88ce"
+
+[[files]]
+file = "kubejs/server_scripts/showcase/plan.js"
+hash = "105bdabb8011080aca7535e1281e1562bda3785b635b51b2bd02b5d77e815278"
+
+[[files]]
+file = "kubejs/server_scripts/showcase/sections/contraption_storage.js"
+hash = "8c9677c80dab610bde3b348ae82cdee0d4f4bee8990102fccca91823558cbd69"
+
+[[files]]
 file = "kubejs/server_scripts/uranium.js"
 hash = "bbc6a73cc91781bbe970c00ad87686e7bc9269f39a2a849de6c1dd9b46453115"
 
