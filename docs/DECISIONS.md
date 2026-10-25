@@ -2,6 +2,23 @@
 
 Newest first.
 
+## 2026-10-25 - Storage Drawers unsided capability fix
+
+Pin [Storage Drawers 1.20.1-12.15.1](https://modrinth.com/mod/storagedrawers/version/53npfO5m)
+(Forge, Modrinth `53npfO5m`). Its upstream
+fix restores the unsided storage interface required by Create: Storage Drawers
+Compat 1.1.0. The prior 12.15.0 real-contraption probe exposed zero mounted slots
+for all three drawer types despite working placed sided handlers.
+
+The new jar passed content scanning, the source/known-bad metadata gate and live
+Modrinth status, with no findings or approvals. A disposable headless bearing/PSI
+probe verified standard, two-slot and compacting drawers, including prefilled
+contents, conversion and restoration; placed drawers expose all six sided and
+the unsided handlers. Iron Chest passes as the positive control; stone has zero
+mounted slots, rejects all items and restores unchanged. Evidence and the
+uncommitted harness live in the `2026-10-25-sd-12-15-1` job artifacts. No client
+rendering, drill/harvester collection or mounted GUI claim is made.
+
 ## 2026-10-25 - Create contraption storage
 
 Create: Compatible Storage 2.14.0 (Modrinth `Sk6HcFCU`) adds Iron Chests mounted
@@ -9,7 +26,7 @@ storage for Create 6.0.8. Create: Storage Drawers Compat 1.1.0 by Jurami_
 (CurseForge project 1626460, file 8647031) supplies drawer mounted storage,
 including item transfer, NBT restoration, compacting drawers and manual access.
 Both are installed on client and server. Their declared ranges accept Forge
-47.4.10, Create 6.0.8 and Storage Drawers 12.15.0; the drawer author tested
+47.4.10, Create 6.0.8 and Storage Drawers 12.15.1; the drawer author tested
 12.14.3. No separate dependency is added. Compatible Storage bundles MixinExtras
 0.5.0 and accepts the existing optional Moonlight 2.16.37.
 
@@ -25,9 +42,9 @@ evidence lives in the `2026-10-25-contraption-storage-compat` job artifacts.
 
 Verification: one isolated local pack-test boot passed (Done in 133 seconds,
 probe complete, clean shutdown), with no new findings or normalized warning/error
-messages against clean main `acfd50f`. PSI/drill/harvester transfers and client
-rendering still need in-game verification; the headless probe does not exercise
-those interactions.
+messages against clean main `acfd50f`. That initial boot did not exercise PSI
+transfers; the later 12.15.1 probe above does. Drill/harvester collection and client
+rendering still need in-game verification.
 
 ## 2026-10-24 — Core malware guard with exact, reviewed hash exceptions
 
