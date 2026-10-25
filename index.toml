@@ -4186,6 +4186,11 @@ hash = "71b6267e2c7f91e6dae89aaea6fefdb36e8fcc15db9ee180d10b5d706d4a657b"
 metafile = true
 
 [[files]]
+file = "mods/create-compatible-storage.pw.toml"
+hash = "4b936429dad0f68786b71ddde64e367c90c4845570a8a01cc9b1721f75f98656"
+metafile = true
+
+[[files]]
 file = "mods/create-connected.pw.toml"
 hash = "878bea7ee908c8eb9eda3035ed5a8ed53fa3d26328756777945aaa5527765c54"
 metafile = true
@@ -4223,6 +4228,11 @@ metafile = true
 [[files]]
 file = "mods/create-steam-n-rails.pw.toml"
 hash = "c13a9000148ee786906c815c6218fad32497e9b71853614d78a8ebff5077af76"
+metafile = true
+
+[[files]]
+file = "mods/create-storage-drawers-compat.pw.toml"
+hash = "92cb9fbb864b3c76eaa75b8e540a4ba93dcf68b48cd5f6634009f16151377193"
 metafile = true
 
 [[files]]

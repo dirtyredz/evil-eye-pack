@@ -2,6 +2,33 @@
 
 Newest first.
 
+## 2026-10-25 - Create contraption storage
+
+Create: Compatible Storage 2.14.0 (Modrinth `Sk6HcFCU`) adds Iron Chests mounted
+storage for Create 6.0.8. Create: Storage Drawers Compat 1.1.0 by Jurami_
+(CurseForge project 1626460, file 8647031) supplies drawer mounted storage,
+including item transfer, NBT restoration, compacting drawers and manual access.
+Both are installed on client and server. Their declared ranges accept Forge
+47.4.10, Create 6.0.8 and Storage Drawers 12.15.0; the drawer author tested
+12.14.3. No separate dependency is added. Compatible Storage bundles MixinExtras
+0.5.0 and accepts the existing optional Moonlight 2.16.37.
+
+Sources: [Compatible Storage](https://modrinth.com/mod/create-compatible-storage/version/Sk6HcFCU)
+and [Storage Drawers Compat](https://www.curseforge.com/minecraft/mc-mods/create-storage-drawers-compat/files/8647031).
+The similarly named Modrinth drawer mod is by a different author.
+
+Both jars passed the malware content scan and source/known-bad gate. The drawer
+jar was decompiled with checksum-verified Vineflower 1.12.0 and reviewed before
+commit: storage/menu/rendering code, no external network, direct filesystem,
+process execution, reflection, dynamic class loading or native code. Detailed
+evidence lives in the `2026-10-25-contraption-storage-compat` job artifacts.
+
+Verification: one isolated local pack-test boot passed (Done in 133 seconds,
+probe complete, clean shutdown), with no new findings or normalized warning/error
+messages against clean main `acfd50f`. PSI/drill/harvester transfers and client
+rendering still need in-game verification; the headless probe does not exercise
+those interactions.
+
 ## 2026-10-24 — Core malware guard with exact, reviewed hash exceptions
 
 **Decision.** Add three offline layers under `tools/malware_guard/`: recursive

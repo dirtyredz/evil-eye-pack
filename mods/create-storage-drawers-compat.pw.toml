@@ -1,0 +1,13 @@
+name = "Create: Storage Drawers Compat"
+filename = "create-storage-drawers-compat-1.1.0.jar"
+side = "both"
+
+[download]
+url = "https://mediafilez.forgecdn.net/files/8647/31/create-storage-drawers-compat-1.1.0.jar"
+hash-format = "sha256"
+hash = "5f0fb9450c95e17222fbd0981db314ecd05684e58cce7b123eb5e46e5fd53230"
+
+[update]
+[update.curseforge]
+file-id = 8647031
+project-id = 1626460
