@@ -12,11 +12,13 @@
       var source = context.source
       try {
         var plan = ns.sections[name](), at = source.getPosition()
-        var origin = ns.origin(at.x, at.y, at.z, source.getRotation().y, plan)
+        // Vec3 has both fields and methods named x/y/z; Rhino's field wrapper throws.
+        var origin = ns.origin(at.x(), at.y(), at.z(), source.getRotation().y, plan)
         ns.build(source, plan, origin, name, clearOnly)
         source.sendSuccess(function () { return Text.of('Showcase ' + name + (clearOnly ? ' cleared' : ' built') + ' at ' + origin.x + ', ' + origin.y + ', ' + origin.z + '. North entrance; labels face north. Repeating from this position resets the plot and its contents.') }, false)
         return 1
       } catch (error) {
+        console.info('Showcase command refused: ' + String(error))
         source.sendFailure(Text.of('Showcase: ' + String(error)))
         return 0
       }

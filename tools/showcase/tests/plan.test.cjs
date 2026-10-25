@@ -62,6 +62,14 @@ test('registration gates the whole command tree at permission level two', () => 
   assert.equal(typeof nodes.contraption_storage.execute, 'function');
   assert.equal(typeof nodes.list.execute, 'function');
   assert.ok(nodes.clear);
+  let built;
+  ns.build = (source, plan, origin) => { built = origin; };
+  nodes.contraption_storage.execute({ source: {
+    getPosition: () => ({ x: () => 100, y: () => 64, z: () => 200 }),
+    getRotation: () => ({ y: 0 }), sendSuccess() {}, sendFailure() {},
+  } });
+  assert.equal(built.x, 88, 'Vec3 coordinate accessor methods must be called');
+  assert.equal(built.y, 64); assert.equal(built.z, 204);
 });
 
 test('registry rejects duplicate, reserved and unsafe command names', () => {

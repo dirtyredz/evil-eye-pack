@@ -3934,7 +3934,7 @@ hash = "50442cf9eec343663cfcd7a4bc1a36e2cc061754b363a70f6d1fae17ff9acc6a"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/command.js"
-hash = "3b3705fa49bced28194ff38155cc67142bca4e3742bd69beac1faf280f7e3bef"
+hash = "7557f40022d45faba083f095826b47847367d085bb37f4308f2fc6395a25947e"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/construction.js"

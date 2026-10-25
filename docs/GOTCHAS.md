@@ -1,5 +1,11 @@
 # Gotchas
 
+- **Read command-source Vec3 coordinates with `x()`, `y()`, `z()`.** This Rhino
+  version exposes their field/method collision as `FieldAndMethods`; coercing
+  `position.x` to a number throws a Java `NullPointerException` outside the JS
+  catch. The showcase's first live run exposed it; its command test uses method
+  accessors to prevent regression. Vec2's rotation `y` is a plain field.
+
 - **Drawer quantity text needs the quantify flag.** Storage Drawers 12.15.1
   `BlockEntityDrawers.readPortable` reads `Qua`; without it prefilled drawers
   can show icons without counts. Showcase plans use `{Qua:1b}` and the headless
