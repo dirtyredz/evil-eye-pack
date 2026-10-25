@@ -1,0 +1,8 @@
+name = "Corgi KubeJS Compat"
+filename = "corgikubejscompat-1.20.1-1.0.0.jar"
+side = "both"
+
+[download]
+url = "https://github.com/dirtyredz/CorgiKubeJSCompat/releases/download/v1.0.0/corgikubejscompat-1.20.1-1.0.0.jar"
+hash-format = "sha256"
+hash = "a53230f6087654395a88bf03331b7ebad092a0061a7dd1a262b0a8730276e4f1"

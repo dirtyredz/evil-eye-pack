@@ -4156,6 +4156,11 @@ hash = "4063abe583282834b2f78e3b3e6b9ee4d231a680f74c020e405a4ef196f21ee4"
 metafile = true
 
 [[files]]
+file = "mods/corgikubejscompat.pw.toml"
+hash = "2d4c778689a7b5136734fccf88e53608045aa71465e79c015d77e55a52159d43"
+metafile = true
+
+[[files]]
 file = "mods/corgilib.pw.toml"
 hash = "74aeec9534ce02a06fdfe3c04d60f944eead173967dc88ac0592f96c7f8a0119"
 metafile = true
@@ -4403,6 +4408,11 @@ metafile = true
 [[files]]
 file = "mods/flat-bedrock.pw.toml"
 hash = "ab3457be92e9835f4063fe5ad75bb49658680702f3d47278cdeb43e16a1ca800"
+metafile = true
+
+[[files]]
+file = "mods/flatworldfix.pw.toml"
+hash = "120ebb0227426c231ed29bd154f12d009434414357c53604c2af3cd53aa6c390"
 metafile = true
 
 [[files]]
