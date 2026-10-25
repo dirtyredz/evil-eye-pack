@@ -18,7 +18,10 @@ library name or future version. Folder packs are installed file by file; approvi
 the folder wholesale would hide added payloads. Owner additions have a separate
 hash registry and still receive the static scan. Named finding/owner approval
 kinds share one identity function and report application. Pre-boot evidence is
-collected by `pack_test/session/security.cjs`; security checks consume saved data.
+collected raw by `pack_test/session/security.cjs`, with explicit scan/drift/gate
+report kinds. Approvals apply once at the CLI or offline analysis boundary, never
+in detection. Analysis accepts legacy evidence using its named report slots and
+discards saved approvals before applying current policy.
 Signature patterns are validated data; heuristics retain limits and toggles.
 
 **Evidence and tradeoffs.** Stable's initial scan found 12 matches: three loader

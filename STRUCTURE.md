@@ -96,14 +96,14 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 
 | Component | Responsibility |
 |---|---|
-| `tools/malware_guard/cli.cjs` | `scan`, `drift`, `gate`, explicit online `status` and hash-based `approve`; JSON reports and exits 0/1/2 |
+| `tools/malware_guard/cli.cjs` | `scan`, `drift`, `gate`, explicit online `status` and hash-based `approve`; applies approvals once to raw reports before JSON output and exits 0/1/2 |
 | `tools/malware_guard/scanning/` (`scan.cjs`, `signatures.cjs`) | bounded recursive archive/folder scan using shared byte jar traversal; entry hashes, class signatures and tunable loader co-occurrence heuristics |
 | `tools/malware_guard/metadata.cjs` | packwiz installed-path inventory and expected pinned hashes |
 | `tools/malware_guard/tests/*.test.cjs` | synthetic scanning, signature validation, approval identity, metadata/drift and injected status tests; `fixtures.cjs` is a helper excluded by the test glob |
 | `tools/malware_guard/drift.cjs`, `gate.cjs` | instance drift over the inventory expected map; source/hash validation, URL identities and known-bad matching |
 | `tools/malware_guard/policy.cjs`, `status.cjs`, `data/` | finding and owner approval kinds with shared keys and report application; separate injected HTTP/cache client; allowlist, owner-added hashes, known-bad projects, validated signature patterns and heuristic limits |
-| `tools/pack_test/session/security.cjs` | collect scan, gate and optional drift evidence before boot; write malware.json |
-| `tools/pack_test/checks/security/malware.cjs` | read saved evidence and translate findings through current approvals into the offline malware section |
+| `tools/pack_test/session/security.cjs` | collect raw reports with explicit scan/gate/drift kinds before boot; write malware.json without policy |
+| `tools/pack_test/checks/security/malware.cjs` | read raw or legacy evidence and apply current approvals once into the offline malware section |
 | `kubejs/server_scripts/dedup.js` | applies authored dedup policy and generated recipe/tag cleanup; hand-written server recipes go in a script named for the concern, not dedup.js |
 | `kubejs/server_scripts/uranium.js` | hand-written Alex's Caves / Create crushed-uranium → yellorium smelting and blasting recipes |
 | `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (`readTable` reads string tables and numeric CurseForge IDs; metafile name/download readers share the model), `isMetafile`, `.packwizignore`, `publishableFiles()` (the one publishable-file set used by rehash and verify) |

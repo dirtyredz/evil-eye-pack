@@ -101,9 +101,15 @@ archive finding binds the outer archive hash to its exact entry path and signatu
 folder-file findings bind the file hash. Unreadable archives, symlinks and exceeded
 limits invalidate the scan rather than silently passing.
 
+Detection returns raw reports with explicit `kind` (`scan`, `drift`, `gate`), without
+loading approvals. The CLI applies approvals once before output and exit; the
+evidence collector saves raw reports without constructing a policy.
+
 Offline analysis maps saved findings through the current hash/finding allowlist
 and owner-added registry through `policy.cjs` shared approval keys and
-`applyApprovals`; `checks/security/malware.cjs` only reads and checks evidence. Reviewed matches are info; fresh matches are failures.
+`applyApprovals` once in `checks/security/malware.cjs`. Legacy schema-1 reports
+without a kind use their named evidence slot; saved approvals are discarded so
+revoked approvals cannot survive re-analysis. Unknown report kinds are rejected. Reviewed matches are info; fresh matches are failures.
 Missing security evidence makes a historical run incomplete: never substitute a
 current instance implicitly. The guard reports static evidence, not runtime safety
 or proof of a data flow; URL/class-loader and Base64/class-loader co-occurrence
