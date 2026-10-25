@@ -39,16 +39,21 @@ function listEntries(buf) {
 }
 
 /** Returns the uncompressed bytes of one entry. */
-function readEntry(buf, entry) {
+function readEntry(buf, entry, { maxSize } = {}) {
+  if (maxSize !== undefined && entry.size > maxSize) throw new Error('entry exceeds byte limit: ' + entry.name);
   const off = entry.localOffset;
   if (buf.readUInt32LE(off) !== LOC_SIG) throw new Error('corrupt local header for ' + entry.name);
   const nameLen = buf.readUInt16LE(off + 26);
   const extraLen = buf.readUInt16LE(off + 28);
   const start = off + 30 + nameLen + extraLen;
+  if (start + entry.compressedSize > buf.length) throw new Error('truncated entry: ' + entry.name);
   const raw = buf.subarray(start, start + entry.compressedSize);
-  if (entry.method === 0) return Buffer.from(raw);
-  if (entry.method === 8) return zlib.inflateRawSync(raw);
-  throw new Error('unsupported compression method ' + entry.method + ' for ' + entry.name);
+  let bytes;
+  if (entry.method === 0) bytes = Buffer.from(raw);
+  else if (entry.method === 8) bytes = zlib.inflateRawSync(raw, maxSize === undefined ? {} : { maxOutputLength: maxSize });
+  else throw new Error('unsupported compression method ' + entry.method + ' for ' + entry.name);
+  if (bytes.length !== entry.size) throw new Error('entry size mismatch: ' + entry.name);
+  return bytes;
 }
 
 module.exports = { listEntries, readEntry };
