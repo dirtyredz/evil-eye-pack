@@ -24,6 +24,7 @@ const { runTarget } = require('./session/target.cjs');
 const { analyzeRun, EXIT } = require('./analyze.cjs');
 const { loadToolData } = require('./verdict/policy.cjs');
 const { writeResourceScan } = require('./session/resources.cjs');
+const { writeMalwareEvidence } = require('./checks/security/malware.cjs');
 const { localLock } = require('./session/lock.cjs');
 const { abortRegistry } = require('./session/aborts.cjs');
 
@@ -35,7 +36,7 @@ function parseArgs(argv) {
   const o = {
     pack: path.join(ROOT, 'pack.toml'), out: `${env.ARTIFACTS}/pack-test/runs`, seed: '20261020', priority: 'AboveNormal',
     timeout: 1800, silent: 180, sample: 10, probeTimeout: 300, heap: '6G', port: 25601, analyze: '', local: false,
-    freshWorld: false, keepServer: false
+    freshWorld: false, keepServer: false, instance: ''
   };
   for (let i = 0; i < argv.length; i++) {
     const k = argv[i].replace(/^--/, '').replace(/-([a-z])/g, (_, c) => c.toUpperCase());
@@ -80,6 +81,7 @@ async function main() {
     run.timings.stage = (Date.now() - t) / 1000;
     t = Date.now();
     writeResourceScan(stageDir, path.join(runDir, 'evidence'), data);
+    writeMalwareEvidence(stageDir, path.join(runDir, 'evidence'), { root: path.dirname(o.pack), instance: o.instance });
     run.timings.scan = (Date.now() - t) / 1000;
     await runTarget({ options: o, stageDir, runDir, run, worldCache: `${env.ARTIFACTS}/pack-test/cache/worlds`, java: env.JAVA, jcmd: env.JCMD, scope,
       onAbort: aborts.register, onSynced: () => { if (lock) { lock.release(); lock = null; } } }, log);

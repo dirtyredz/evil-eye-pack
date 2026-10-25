@@ -2,6 +2,36 @@
 
 Newest first.
 
+## 2026-10-24 — Core malware guard with exact, reviewed hash exceptions
+
+**Decision.** Add three offline layers under `tools/malware_guard/`: recursive
+static content scanning, installed-file drift, and a pinned-source/known-bad
+metadata gate. Save their evidence during pack-test staging and report new matches
+through the ordinary verdict. Optional Modrinth version/project status lives in a
+separate cached subcommand, never in an offline boot. Use the shared Node ZIP,
+jar traversal, JSON and SHA-256 readers; do not execute inspected classes.
+
+**Why.** The owner selected the core scope after the 2026-10-24 report of 34
+malicious projects. No listed project matches this pack's metadata. Exact archive
+hash plus finding approvals preserve useful signals without trusting a filename,
+library name or future version. Folder packs are installed file by file; approving
+the folder wholesale would hide added payloads. Owner additions have a separate
+hash registry and still receive the static scan.
+
+**Evidence and tradeoffs.** Stable's initial scan found 12 matches: three loader
+heuristic false positives in Guava/Reflect, four WebP natives, one targetless
+Stylecolonies shortcut and four benign signature matches in CPM, HammerLib and
+Supplementaries. Local bytecode/header inspection justified all twelve narrow
+approvals, each with its own reason and named reviewer. Six local drift hashes
+cover Pixlli, two older Complementary shader packs and their settings, and Windows
+folder metadata. These are observations of these bytes, not publisher trust.
+
+**Limits.** String scanning does not detect every obfuscation or prove a network
+download feeds a class loader. Limits and malformed inputs produce incomplete
+results. Online status has fake-HTTP coverage; a live call was not authorised.
+The seed report was supplied by the owner, not fetched; no project IDs or hashes
+were invented. No antivirus service, download, remediation or quarantine is added.
+
 ## 2026-10-24 — EMI toolbar ownership and shared Node data I/O
 
 **Decision.** `ui/placement.js` owns the toolbar rect registry and the CLEAN, Mods and DECOR widget names. Widgets publish live visible rectangles; siblings consume geometry without reading each other's widget state. Unknown names log once per script load. `recipe_view.js` owns `recipeState` and the recipe-wrapper lifecycle; the existing migration shim remains for reload compatibility.

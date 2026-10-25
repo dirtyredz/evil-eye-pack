@@ -17,6 +17,7 @@ const { checkMachines } = require('./checks/machines.cjs');
 const { checkCrafting } = require('./checks/crafting.cjs');
 const { checkDedup } = require('./checks/dedup.cjs');
 const { checkLogs } = require('./checks/logs.cjs');
+const { checkMalware, readMalwareEvidence } = require('./checks/security/malware.cjs');
 const { parseCrashCauses } = require('../server_smoke/verdict.cjs');
 
 const { readJson } = require('../data_io/files.cjs');
@@ -68,6 +69,7 @@ function analyzeRun(runDir, { data = loadToolData(), log = () => {} } = {}) {
   sections.crafting = incomplete(['crafting'], S) || checkCrafting(S.crafting.data, data.crafts.crafts);
   sections.dedup = needCore || incomplete(['recipes'], S) || (!dedupCfg ? noStaged : checkDedup(snap.itemTags, new Set(snap.recipes.map((r) => r.id)), dedupCfg));
   sections.logs = logs ? { state: logs.state, findings: logs.findings, stats: logs.stats } : { state: 'incomplete', error: 'latest.log missing', findings: [] };
+  sections.malware = checkMalware(readMalwareEvidence(ev));
   for (const s of Object.values(sections)) delete s.evidence;
 
   const model = buildReport({

@@ -35,8 +35,12 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |-- emi_curation/
     |   `-- tests/
     |       `-- support/
+    |-- malware_guard/
+    |   |-- data/
+    |   `-- tests/
     |-- pack_test/
     |   |-- checks/
+    |   |   `-- security/
     |   |-- data/
     |   |-- probe/
     |   |-- remote/
@@ -76,6 +80,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
 - `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte SHA-256.
+- `tools/malware_guard/` — offline content scanner, instance drift and metadata source/known-bad gate; opt-in cached Modrinth status, approval CLI, `data/` policies and synthetic `tests/`. Local reports/cache are ignored under `.local/`.
 - `tools/dedup/` — pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions; `hidden_reasons.json` holds the reason for every `hiddenOnly` id (see docs/development.md "Known exceptions registry").
 - `tools/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
 - `tools/packwiz/tests/`, `tools/server_smoke/tests/`, `tools/pack_test/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs`)
@@ -90,6 +95,11 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 
 | Component | Responsibility |
 |---|---|
+| `tools/malware_guard/cli.cjs` | `scan`, `drift`, `gate`, explicit online `status` and hash-based `approve`; JSON reports and exits 0/1/2 |
+| `tools/malware_guard/scan.cjs`, `signatures.cjs` | bounded recursive archive/folder scan using shared byte jar traversal; entry hashes, class signatures and tunable loader co-occurrence heuristics |
+| `tools/malware_guard/metadata.cjs` | packwiz installed-path inventory, source/hash validation, known-bad matching and instance drift |
+| `tools/malware_guard/policy.cjs`, `status.cjs`, `data/` | validated exact approvals; separate injected HTTP/cache client; allowlist, owner-added hashes, known-bad projects and heuristic limits |
+| `tools/pack_test/checks/security/malware.cjs` | collect staged security evidence before boot; translate saved findings and current approvals into the offline malware section |
 | `kubejs/server_scripts/dedup.js` | applies authored dedup policy and generated recipe/tag cleanup; hand-written server recipes go in a script named for the concern, not dedup.js |
 | `kubejs/server_scripts/uranium.js` | hand-written Alex's Caves / Create crushed-uranium → yellorium smelting and blasting recipes |
 | `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (`readTable` is the one `key = "value"` table reader), `isMetafile`, `.packwizignore`, `publishableFiles()` (the one publishable-file set used by rehash and verify) |

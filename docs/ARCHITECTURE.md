@@ -41,7 +41,7 @@ The [EMI architecture](emi.md) covers the separate client subsystem.
    as CPU-starved gets exactly one local retry, replacing its probe/log/crash evidence
    and retaining a shared-attempt note. Alone runs and the retry have no further retry.
    Save `run.json`, validate the probe contract and run the recipe, reference,
-   acquisition, machine, crafting, dedup and log checks over saved evidence.
+   acquisition, machine, crafting, dedup, malware and log checks over saved evidence.
    Compare findings with `data/baseline.json` as new, known or resolved; write
    `report.json`, `summary.txt` and, for new findings, `baseline-candidate.json`.
    The committed baseline is never updated automatically. Exit 0 means no new
@@ -82,3 +82,32 @@ reviewed exclusions or reasoned baseline entries.
 ### Shared jar traversal
 
 Dedup and resource scanning use `tools/data_io/walk.cjs`. Dedup keeps top-level-only traversal, strict JSON parsing, item models and loot modifiers; pack-test retains nested jarjar traversal, lenient JSON and fluid tags. Selection, merging and provenance remain caller-owned. ANU tool sync includes the shared data_io and dedup modules.
+
+### Malware guard
+
+The staging path also writes `evidence/malware.json` on Valhalla before choosing a
+boot target. It scans installed `mods/`, resource packs and shader packs, recursively
+visiting every jar/zip entry (including jars outside jarjar paths), and gates the
+checkout's metadata. `--instance <.minecraft>` adds a read-only drift inventory.
+The instance scan covers these three content directories; launcher libraries and
+world saves are outside that inventory. A direct directory argument scans its tree.
+
+`tools/malware_guard/` owns static detection and policy. Shared `data_io` owns ZIP
+decoding and jar walking, including optional raw bytes and bounded entry reads;
+existing consumers retain text traversal. Each visited file has a SHA-256. An
+archive finding binds the outer archive hash to its exact entry path and signature;
+folder-file findings bind the file hash. Unreadable archives, symlinks and exceeded
+limits invalidate the scan rather than silently passing.
+
+Offline analysis maps saved findings through the current hash/finding allowlist
+and owner-added registry. Reviewed matches are info; fresh matches are failures.
+Missing security evidence makes a historical run incomplete: never substitute a
+current instance implicitly. The guard reports static evidence, not runtime safety
+or proof of a data flow; URL/class-loader and Base64/class-loader co-occurrence
+deliberately needs review. It does not quarantine files or replace the boot checks.
+
+`status` is a separate opt-in Modrinth HTTP client with a caller-selected cache,
+TTL, timeouts and injected transport for tests. Offline staging and analysis never
+import or invoke it. Failed requests say `not checked`; unavailable versions are
+distinguished from archived projects. Known-bad IDs/hashes are used when present;
+the initial owner-supplied list has slugs/names only and records that limitation.

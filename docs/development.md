@@ -61,6 +61,69 @@ git worktree list --porcelain
 
 Tooling needs Node 22. There is no packwiz CLI and no build step.
 
+## Malware guard
+
+All commands use Node 22 and return JSON. Exit 0 means no unexplained findings,
+1 means new findings, 2 means invalid/incomplete input (including online `not
+checked`). The content commands only read their target. `--out <file>` saves the
+full report, including entry hashes, and prints counts. Policies live under
+`tools/malware_guard/data/`, outside the installed pack.
+
+```powershell
+node tools/malware_guard/cli.cjs scan "C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft" --out tools/malware_guard/.local/scan.json
+node tools/malware_guard/cli.cjs drift "C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft"
+node tools/malware_guard/cli.cjs gate
+node --test tools/malware_guard/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/dedup/tests/*.cjs
+```
+
+`scan` also accepts a mods directory, jar, ZIP or folder resource pack. A folder
+containing `pack.mcmeta` is a resource pack; `--resource-pack` forces that context.
+Instance scans cover `mods/`, `resourcepacks/` and `shaderpacks/`, not saves or the
+launcher's libraries. Executables and Java code hidden in pack textures are
+reported. The loader heuristics use same-class API co-occurrence, not proven data
+flow. To tune them or scan limits, copy `data/heuristics.json` and use `--config`.
+Do not suppress a finding just because its library name looks familiar.
+
+Review a match's exact bytes, then use its `sha256` and `finding` fields:
+
+```powershell
+node tools/malware_guard/cli.cjs approve --sha256 <reported-sha256> --finding "<reported-finding>" --reason "<inspection evidence>" --approver "<reviewer>"
+node tools/malware_guard/cli.cjs approve "<owner-added-file>" --owner-added --reason "<why this file belongs here>" --approver "<reviewer>"
+```
+
+Alternatively pass the top-level jar/ZIP as `approve`'s positional file instead
+of `--sha256`. An archive approval binds its hash AND the finding's entry path;
+changing any byte in that archive reflags the match. `--policy <file>` selects an
+alternate approval registry. Owner-added approval only quiets drift; run `scan`
+as well. Indexed folder packs are recognised per file, so unexpected new files
+inside `evil-eye-cozy-overrides` still flag. Pinned jar/ZIP replacements also flag;
+plain indexed settings remain installed even when the game changes their values.
+
+The initial Stable review recorded 12 static approvals and six owner-added hashes,
+with evidence in the two registries. The loader heuristic had three false
+positives (Guava's finalizer loader and classpath enumerator; Reflect's class-loader
+API). The 34-project known-bad list records owner-supplied slugs/names and supports
+future project IDs and SHA-256 hashes without pretending they are currently known.
+
+Pack-test always saves offline security evidence; `--instance <.minecraft>` adds
+drift. Analysis without `evidence/malware.json` is incomplete. For a historical
+run, copy it first and explicitly capture new evidence from a verified matching
+stage using `writeMalwareEvidence(stage, evidenceDir, { root, instance })` exported
+by `checks/security/malware.cjs`; record that the security scan was captured later.
+Never attribute a current scan to an old boot without checking pinned content.
+
+Online status requires explicit invocation and a writable cache. For the
+orchestrator's first authorised live check (not run during implementation):
+
+```powershell
+node tools/malware_guard/cli.cjs status --cache tools/malware_guard/.local/modrinth-status.json --ttl-hours 24
+```
+
+The cache stores version and project responses; `--ttl-hours 0` refreshes them.
+Timeouts, rate limits and network failures say `not checked`, not healthy. A
+404/410 means unavailable (possibly removed, hidden or inaccessible), not proof
+of malware. This command never runs as part of the offline pack test.
+
 ## Known exceptions registry
 
 Three lists record why something is deliberately hidden, missing or duplicated. Check them before
