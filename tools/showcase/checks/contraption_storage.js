@@ -4,8 +4,12 @@ global.evilEyeShowcaseChecks.contraption_storage = function (h) {
   var check = h.check, later = h.later, amount = h.amount, level = h.level
   var Direction = Java.loadClass('net.minecraft.core.Direction'), AABB = Java.loadClass('net.minecraft.world.phys.AABB')
   var before = h.shell(), plan = h.plan
+  function plotEntities() {
+    var o = h.origin
+    return level.getEntities(null, new AABB(o.x, o.y - 1, o.z, o.x + plan.width, o.y + plan.height, o.z + plan.depth))
+  }
   function glueCount() {
-    var o = h.origin, entities = level.getEntities(null, new AABB(o.x, o.y - 1, o.z, o.x + plan.width, o.y + plan.height, o.z + plan.depth)), count = 0
+    var entities = plotEntities(), count = 0
     for (var i = 0; i < entities.size(); i++) if (String(entities.get(i).getType()).indexOf('super_glue') >= 0) count++
     return count
   }
@@ -31,6 +35,7 @@ global.evilEyeShowcaseChecks.contraption_storage = function (h) {
   check(amount(h.handler(17, 0, 8), 'minecraft:iron_nugget') === 162, 'placed compacting conversion: 18 ingots = 162 nuggets')
   check(h.invoke() === 1, 'second invocation succeeds at same origin')
   h.verifyPlan(); check(glueCount() === 1, 'idempotent rebuild replaces glue instead of duplicating')
+  check(plotEntities().size() === 1, 'rebuild produces no dropped item entities')
   // Pause hoppers for exact per-inventory PSI accounting; the real automatic circuit runs next.
   h.set(14, 4, 16, 'minecraft:hopper[facing=down,enabled=false]')
   h.set(14, 2, 16, 'minecraft:hopper[facing=down,enabled=false]')
@@ -81,7 +86,7 @@ global.evilEyeShowcaseChecks.contraption_storage = function (h) {
       if (entity) {
         var all = entity.getContraption().getStorage().getAllItems()
         if (amount(all, 'minecraft:diamond') > 32 || amount(all, 'minecraft:iron_ingot') > 18 || amount(all, 'minecraft:emerald') > 32) inserted = true
-        if (Math.abs(bearing.getAngle(0)) > 10) moved = true
+        if (Math.abs(bearing.getInterpolatedAngle(0)) > 10) moved = true
       }
       var out = h.handler(14, 1, 16), input = h.handler(14, 5, 16)
       var diamond = amount(out, 'minecraft:diamond'), iron = amount(out, 'minecraft:iron_block') * 9 + amount(out, 'minecraft:iron_ingot') + amount(out, 'minecraft:iron_nugget') / 9, emerald = amount(out, 'minecraft:emerald')
@@ -94,8 +99,10 @@ global.evilEyeShowcaseChecks.contraption_storage = function (h) {
         check(h.shell() === before, 'entire exterior shell unchanged after running contraption')
         check(h.invoke() === 1, 'active contraption rebuild succeeds')
         h.verifyPlan(); check(glueCount() === 1, 'active rebuild leaves exactly one glue')
+        check(plotEntities().size() === 1, 'active rebuild produces no dropped item entities')
         check(h.invoke(null, true) === 1, 'clear command succeeds')
         check(glueCount() === 0 && h.be(8, 0, 16) === null, 'clear removes rig and glue')
+        h.verifyVolume(true)
         check(h.shell() === before, 'entire exterior shell unchanged after teardown')
         h.done()
       } else if (++ticks >= 2400) throw new Error('Automatic flow timeout: inserted=' + inserted + ' moved=' + moved + ' output=' + [diamond, iron, emerald])

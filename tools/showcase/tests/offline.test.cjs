@@ -30,6 +30,13 @@ test('warning/error comparison ignores timestamps but retains new script failure
   assert.equal(Object.keys(b).filter(k => !a[k]).length, 1);
 });
 
+test('log comparison removes only run locations and Java object identities, retaining resource names', () => {
+  const a = '[12:00:00] [main/WARN] Configuration C:/runs/baseline/server/config/example.toml wrong\n[12:00:00] [main/ERROR] parent=DisplayInfo@1a2b';
+  const b = '[13:00:00] [main/WARN] Configuration C:/runs/check/server/config/example.toml wrong\n[13:00:00] [main/ERROR] parent=DisplayInfo@feed34';
+  assert.deepEqual(logGroups(a, 'C:/runs/baseline/server'), logGroups(b, 'C:/runs/check/server'));
+  assert.notDeepEqual(logGroups(a, 'C:/runs/baseline/server'), logGroups(b.replace('example.toml', 'different.toml'), 'C:/runs/check/server'));
+});
+
 test('host guard waits through busy and inconclusive process inventories; only an observed idle host passes', async () => {
   let now = 0, calls = 0;
   const responses = [{ code: 0, out: 'another JVM' }, { code: -1, out: 'timed out' }, { code: 0, out: '' }];

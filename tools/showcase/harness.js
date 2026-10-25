@@ -52,6 +52,16 @@ ServerEvents.loaded(function (event) {
         }
       })
       plan.fills.forEach(function (f) { f.items.forEach(function (item) { h.check(h.amount(h.handler(f.x, f.y, f.z), item[0]) === item[1], 'prefill ' + [f.x, f.y, f.z] + ' ' + item[0] + '=' + item[1]) }) })
+      h.verifyVolume(false)
+    }
+    h.verifyVolume = function (cleared) {
+      var expected = {}, mismatch = ''
+      if (!cleared) plan.blocks.forEach(function (b) { expected[[b.x, b.y, b.z].join(',')] = b.state.split('[')[0] })
+      for (var x = 0; x < plan.width; x++) for (var y = -1; y < plan.height; y++) for (var z = 0; z < plan.depth; z++) {
+        var key = [x, y, z].join(','), want = expected[key] || (y === -1 ? 'minecraft:stone_bricks' : 'minecraft:air')
+        if (!mismatch && String(level.getBlockState(h.pos(x, y, z))).indexOf(want) < 0) mismatch = key + ' expected ' + want
+      }
+      h.check(!mismatch, (cleared ? 'cleared' : 'built') + ' complete volume matches plan and floor' + (mismatch ? ': ' + mismatch : ''))
     }
     h.done = function () { next(index + 1) }
     h.later(20, function () {

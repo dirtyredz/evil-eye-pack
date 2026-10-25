@@ -51,6 +51,9 @@ and Create 6.0.8.
   another hopper extracts into the chest below. Transfers pause rotation.
   The lever stops rotation; rebuild/clear performs teardown.
 
+The finite supply is deliberately drainable. Inspect the mounted fronts while
+docked; rerun to replenish after the circuit empties the inventories.
+
 ## Run the headless check
 
 Requires Node 22, Java/Forge from `tools/server_smoke/env.cjs`, and a prepared server
@@ -83,13 +86,14 @@ x=`160 + index*128`, y=240, z=0; keep fixtures within that spacing.
 complete/pass, 1 failed assertions/boot/log checks, 2 invalid setup/execution.
 After a failed assertion, later checks are **unrun**, never implicitly passed.
 The baseline is a local `git archive`, not a checkout switch or fetch. New
-normalized warning/error groups fail comparison; counts remain for inspection.
+normalized warning/error groups fail comparison; run paths and Java object
+identities are stripped before comparison, and counts remain for inspection.
 Without `--compare`, no main comparison is claimed. Script errors and missing
 completion always fail.
 
 | Section | Headless assertions | Owner's eyes |
 |---|---|---|
-| `contraption_storage` | Permissions/list; occupied/uneven preflight; all planned blocks/states/prefills; quantity flag; one glue; exterior shell; all six sided + unsided drawer handlers; idle motor; lever start/stop; five-block/three-inventory assembly; PSI docking; exact insert/extract per inventory; compacting ratios; disassembly preservation; automatic input/output hopper circuit; rotation; idle/active rebuild; clear | Drawer icons/counts at 8/24/48 blocks and front/back views; moving fronts; opening moving drawer/chest menus |
+| `contraption_storage` | Permissions/list; occupied/uneven preflight; all blocks/states/prefills and complete floor/air volume; quantity flag; one glue and no dropped items; exterior shell; all six sided + unsided drawer handlers; idle motor; lever start/stop; five-block/three-inventory assembly; PSI docking; exact insert/extract per inventory; compacting ratios; disassembly preservation; automatic input/output hopper circuit; rotation; idle/active rebuild; clear | Drawer icons/counts at 8/24/48 blocks and front/back views; moving fronts; opening moving drawer/chest menus |
 
 The exterior snapshot covers all faces immediately outside the volume, including
 block-entity data, before build and after motion/clear. Plan tests also reject

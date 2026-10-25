@@ -18,10 +18,14 @@ function sections(root) {
   for (const name of names) if (!fs.existsSync(path.join(__dirname, 'checks', name + '.js'))) throw new Error('Missing check module: ' + name);
   return names;
 }
-function logGroups(text) {
+function logGroups(text, serverDir) {
+  if (serverDir) {
+    const forward = serverDir.replace(/\\/g, '/');
+    text = text.split(forward).join('<server>').split(forward.replace(/\//g, '\\')).join('<server>');
+  }
   const groups = {};
   for (const line of text.split(/\r?\n/)) if (/\/(WARN|ERROR|FATAL)\]/.test(line)) {
-    const key = normalize(line); groups[key] = (groups[key] || 0) + 1;
+    const key = normalize(line.replace(/@[0-9a-f]{1,8}\b/gi, '@<identity>')); groups[key] = (groups[key] || 0) + 1;
   }
   return groups;
 }
@@ -84,9 +88,9 @@ async function main(argv) {
     } finally { collectEvidence(server, path.join(out, 'evidence')); }
     const log = readLog(), match = /SHOWCASE_CHECK COMPLETE (\{[^\r\n]*\})/.exec(log);
     const assertions = match ? JSON.parse(match[1]) : null;
-    const groups = logGroups(log);
+    const groups = logGroups(log, server);
     const compare = option('--compare');
-    const oldGroups = compare ? JSON.parse(fs.readFileSync(path.join(compare, 'report.json'), 'utf8')).logGroups : null;
+    const oldGroups = compare ? logGroups(fs.readFileSync(path.join(compare, 'evidence/logs/console.log'), 'utf8'), path.resolve(compare, 'server')) : null;
     const newLogGroups = oldGroups ? Object.keys(groups).filter(k => !oldGroups[k]) : [];
     const scriptErrors = log.split(/\r?\n/).filter(l => /\/(ERROR|FATAL)\]/.test(l) && /showcase|showcase_check/.test(l));
     const ok = result.wallSeconds !== null && !result.crashed && !result.timedOut && !scriptErrors.length && !newLogGroups.length && (baseline || (result.completed && assertions?.ok));
