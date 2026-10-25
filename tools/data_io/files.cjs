@@ -2,5 +2,6 @@
 const fs = require('node:fs');
 const crypto = require('node:crypto');
 const readJson = file => JSON.parse(fs.readFileSync(file, 'utf8'));
-const sha256 = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
-module.exports = { readJson, sha256 };
+const hashBytes = (algo, bytes) => crypto.createHash(algo).update(bytes).digest('hex');
+const sha256 = bytes => hashBytes('sha256', bytes);
+module.exports = { readJson, sha256, hashBytes };

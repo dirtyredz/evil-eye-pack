@@ -125,8 +125,8 @@ function formatIndex(index) {
 
 // Lines of the table under `header` (e.g. '[index]'): [start, end) line numbers, or null.
 function tableRange(lines, header) {
-  const start = lines.indexOf(header);
-  if (start === -1) return null;
+  const start = header === null ? -1 : lines.indexOf(header);
+  if (start === -1 && header !== null) return null;
   let end = start + 1;
   while (end < lines.length && !lines[end].startsWith('[')) end++;
   return [start + 1, end];
@@ -141,15 +141,16 @@ function indexTableRange(lines) {
 /**
  * The one reader for `key = "value"` lines of a TOML table. Returns an object with an entry per
  * requested key (`hash-format` becomes `hashFormat`; absent keys are null), or null when the
- * table is missing. Only plain basic strings without escapes are read, as in packwiz's output.
+ * table is missing. A null header reads the top-level table. Plain basic strings
+ * without escapes are read by default; integers opts into unsigned decimal IDs.
  */
-function readTable(text, header, keys) {
+function readTable(text, header, keys, { integers = false } = {}) {
   const lines = text.split('\n');
   const range = tableRange(lines, header);
   if (range === null) return null;
   const out = {};
   for (const k of keys) out[camelKey(k)] = null;
-  const re = new RegExp('^(' + keys.join('|') + ') = "([^"]*)"$');
+  const re = new RegExp('^(' + keys.join('|') + ') = ' + (integers ? '(\\d+)' : '"([^"]*)"') + '$');
   for (let i = range[0]; i < range[1]; i++) {
     const m = re.exec(lines[i]);
     if (m) out[camelKey(m[1])] = m[2];
@@ -186,6 +187,15 @@ function readMetafileDownload(text) {
   return { filename: fm ? fm[1] : null, url: null, hashFormat: null, hash: null, mode: null, ...table };
 }
 
+/** Numeric CurseForge IDs stay strings for exact project matching. */
+function readCurseForge(text) {
+  const table = readTable(text, '[update.curseforge]', ['project-id', 'file-id'], { integers: true });
+  return { project: table?.['project-id'] || null, file: table?.['file-id'] || null };
+}
+function readMetafileName(text) {
+  return readTable(text, null, ['name']).name || '';
+}
+
 /** Whether a repo-relative path is a packwiz metafile (flagged `metafile = true` in the index). */
 function isMetafile(rel) {
   return /^(mods|shaderpacks|resourcepacks)\/[^/]+\.pw\.toml$/.test(rel);
@@ -210,5 +220,5 @@ function comparePaths(a, b) {
 
 module.exports = {
   BUILTIN_IGNORES, isTextPath, textProblems, globToRegExp, parseIgnore, loadIgnore, isIgnored,
-  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, readTable, isMetafile, listRepoFiles, publishableFiles, comparePaths,
+  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, readMetafileName, readCurseForge, readTable, isMetafile, listRepoFiles, publishableFiles, comparePaths,
 };

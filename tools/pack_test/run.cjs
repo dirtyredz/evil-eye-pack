@@ -24,7 +24,7 @@ const { runTarget } = require('./session/target.cjs');
 const { analyzeRun, EXIT } = require('./analyze.cjs');
 const { loadToolData } = require('./verdict/policy.cjs');
 const { writeResourceScan } = require('./session/resources.cjs');
-const { writeMalwareEvidence } = require('./checks/security/malware.cjs');
+const { writeMalwareEvidence } = require('./session/security.cjs');
 const { localLock } = require('./session/lock.cjs');
 const { abortRegistry } = require('./session/aborts.cjs');
 

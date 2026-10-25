@@ -85,14 +85,16 @@ Dedup and resource scanning use `tools/data_io/walk.cjs`. Dedup keeps top-level-
 
 ### Malware guard
 
-The staging path also writes `evidence/malware.json` on Valhalla before choosing a
+`pack_test/session/security.cjs` writes `evidence/malware.json` on Valhalla before choosing a
 boot target. It scans installed `mods/`, resource packs and shader packs, recursively
 visiting every jar/zip entry (including jars outside jarjar paths), and gates the
 checkout's metadata. `--instance <.minecraft>` adds a read-only drift inventory.
 The instance scan covers these three content directories; launcher libraries and
 world saves are outside that inventory. A direct directory argument scans its tree.
 
-`tools/malware_guard/` owns static detection and policy. Shared `data_io` owns ZIP
+`tools/malware_guard/` owns static detection and policy: `metadata.cjs` inventories
+expected paths, `drift.cjs` compares installed content, `gate.cjs` checks sources,
+and `scanning/` compiles `data/signatures.json` and scans bytes. Shared `data_io` owns ZIP
 decoding and jar walking, including optional raw bytes and bounded entry reads;
 existing consumers retain text traversal. Each visited file has a SHA-256. An
 archive finding binds the outer archive hash to its exact entry path and signature;
@@ -100,7 +102,8 @@ folder-file findings bind the file hash. Unreadable archives, symlinks and excee
 limits invalidate the scan rather than silently passing.
 
 Offline analysis maps saved findings through the current hash/finding allowlist
-and owner-added registry. Reviewed matches are info; fresh matches are failures.
+and owner-added registry through `policy.cjs` shared approval keys and
+`applyApprovals`; `checks/security/malware.cjs` only reads and checks evidence. Reviewed matches are info; fresh matches are failures.
 Missing security evidence makes a historical run incomplete: never substitute a
 current instance implicitly. The guard reports static evidence, not runtime safety
 or proof of a data flow; URL/class-loader and Base64/class-loader co-occurrence

@@ -163,3 +163,12 @@ test('.packwizignore patterns behave like gitignore for directories and globs', 
   assert.equal(P.isIgnored(rules, 'README.md'), false);
   assert.equal(P.isIgnored(rules, 'STRUCTURE.md'), true);
 });
+
+test('metafile name and CurseForge readers respect table boundaries and numeric IDs', () => {
+  const text = 'name = "Top"\n[download]\nname = "Wrong"\nproject-id = 99\n[update.curseforge]\nproject-id = 123\nfile-id = 456\n[other]\nfile-id = 999\n';
+  assert.equal(P.readMetafileName(text), 'Top');
+  assert.deepEqual(P.readCurseForge(text), { project: '123', file: '456' });
+  assert.deepEqual(P.readCurseForge('[update.curseforge]\nproject-id = nope\nfile-id = -1\n'), { project: null, file: null });
+  assert.deepEqual(P.readCurseForge(''), { project: null, file: null });
+  assert.equal(P.readMetafileName('[other]\nname = "Wrong"\n'), '');
+});

@@ -16,7 +16,10 @@ malicious projects. No listed project matches this pack's metadata. Exact archiv
 hash plus finding approvals preserve useful signals without trusting a filename,
 library name or future version. Folder packs are installed file by file; approving
 the folder wholesale would hide added payloads. Owner additions have a separate
-hash registry and still receive the static scan.
+hash registry and still receive the static scan. Named finding/owner approval
+kinds share one identity function and report application. Pre-boot evidence is
+collected by `pack_test/session/security.cjs`; security checks consume saved data.
+Signature patterns are validated data; heuristics retain limits and toggles.
 
 **Evidence and tradeoffs.** Stable's initial scan found 12 matches: three loader
 heuristic false positives in Guava/Reflect, four WebP natives, one targetless

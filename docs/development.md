@@ -49,7 +49,7 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs
+node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
 # node tools/dedup/generate.cjs "C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods"
@@ -73,7 +73,7 @@ full report, including entry hashes, and prints counts. Policies live under
 node tools/malware_guard/cli.cjs scan "C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft" --out tools/malware_guard/.local/scan.json
 node tools/malware_guard/cli.cjs drift "C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft"
 node tools/malware_guard/cli.cjs gate
-node --test tools/malware_guard/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/dedup/tests/*.cjs
+node --test tools/malware_guard/tests/*.test.cjs tools/pack_test/tests/*/*.cjs tools/dedup/tests/*.cjs
 ```
 
 `scan` also accepts a mods directory, jar, ZIP or folder resource pack. A folder
@@ -82,6 +82,7 @@ Instance scans cover `mods/`, `resourcepacks/` and `shaderpacks/`, not saves or 
 launcher's libraries. Executables and Java code hidden in pack textures are
 reported. The loader heuristics use same-class API co-occurrence, not proven data
 flow. To tune them or scan limits, copy `data/heuristics.json` and use `--config`.
+Signature and loader/network/Base64 patterns live in `data/signatures.json`; invalid patterns fail at load time.
 Do not suppress a finding just because its library name looks familiar.
 
 Review a match's exact bytes, then use its `sha256` and `finding` fields:
@@ -109,7 +110,7 @@ Pack-test always saves offline security evidence; `--instance <.minecraft>` adds
 drift. Analysis without `evidence/malware.json` is incomplete. For a historical
 run, copy it first and explicitly capture new evidence from a verified matching
 stage using `writeMalwareEvidence(stage, evidenceDir, { root, instance })` exported
-by `checks/security/malware.cjs`; record that the security scan was captured later.
+by `session/security.cjs`; record that the security scan was captured later.
 Never attribute a current scan to an old boot without checking pinned content.
 
 Online status requires explicit invocation and a writable cache. For the
