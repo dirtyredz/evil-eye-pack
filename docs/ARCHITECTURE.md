@@ -7,7 +7,8 @@
 entity policy (15), staged construction (10), record-only control dispatch (5),
 and permission-level-2 command registration (0). Priorities order files across
 folders. Sections return descriptors, never write worlds. The builder preflights
-before mutations, reserves the plot, then runs teardown/place/finish stages.
+before mutations, tears down every overlapping plot with its own recorded rig,
+reserves the plot, then runs place/finish stages.
 `plots.js` owns persistence and overlap; the shared floor is `ns.FLOOR`.
 
 A section may attach a JSON-only `p.rig` descriptor. Generic code dispatches its
