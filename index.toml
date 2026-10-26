@@ -3938,7 +3938,7 @@ hash = "312b19b8dc39d36cf0b4d578715288356eee928637d1973e2c3c92b1220b1b80"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/construction.js"
-hash = "e0f7f5a89aaf3054aa2f5a10b61fca5299205b3b77be334e17486efb78e10507"
+hash = "0b38c87e8cc28371ab8790ded855a53f6c6e520f4a9bc0507bbab6737dc69dd3"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/controls.js"
@@ -3954,7 +3954,7 @@ hash = "c9dfb526e62717ee492bc41be3e7c36f1362f2c795db9fa5c36867ce54f841ce"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/plots.js"
-hash = "44c5c2732a1eac5b96b66642c8b961c3d2ccdb433114036364f452f6231f69bf"
+hash = "fc7c508f536910f4ac35fe0d8e5d3ecaef361ff58a213e66ee06237f1ebd453e"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/rigs/create_contraption.js"

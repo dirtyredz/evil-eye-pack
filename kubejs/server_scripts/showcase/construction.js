@@ -8,7 +8,7 @@
     var Parser = Java.loadClass('net.minecraft.commands.arguments.blocks.BlockStateParser')
     var Registries = Java.loadClass('net.minecraft.core.registries.Registries')
     var level = source.getLevel(), server = source.getServer()
-    var records = ns.records(server), key = ns.plotKey(level, o), owned = records[key]
+    var records = ns.records(server), key = ns.plotKey(level, o), owned = records[key], displaced = ns.displacedBy(records, level, p, o)
     function pos(x, y, z) { return new BP(o.x + x, o.y + y, o.z + z) }
     function xyz(x, y, z) { return (o.x + x) + ' ' + (o.y + y) + ' ' + (o.z + z) }
     function command(s) { return server.getCommands().performPrefixedCommand(source.withSuppressedOutput(), s) }
@@ -29,13 +29,17 @@
     if (sweep.blocking.length) refuse('Cannot clear the plot ahead of you: ' + sweep.blocking.join('; ') + '. Move it out (or walk somewhere else) and run the command again.')
     Object.keys(ns.rigs).forEach(function (key) { var rig = ns.rigs[key]; if (rig.preflight) rig.preflight(sweep, box, refuse) })
     var floorState = Parser.parseForBlock(level.holderLookup(Registries.BLOCK), ns.FLOOR, true).blockState()
-    return { p: p, o: o, level: level, server: server, records: records, key: key, owned: owned, pos: pos, xyz: xyz, command: command, box: box, sweep: sweep, floorState: floorState }
+    return { p: p, o: o, level: level, server: server, records: records, key: key, owned: owned, displaced: displaced, BP: BP, AABB: AABB, pos: pos, xyz: xyz, command: command, box: box, sweep: sweep, floorState: floorState }
   }
   function teardown(ctx) {
     var p = ctx.p, level = ctx.level, pos = ctx.pos
-    if (ctx.owned) ns.rigHook(p.rig, 'teardown', [level, pos])
+    // Each displaced plot is dismantled with its own recorded rig at its own origin, never the incoming plan's.
+    var olds = ctx.displaced.map(function (r) {
+      return { rig: ns.recordRig(r), pos: function (x, y, z) { return new ctx.BP(r.origin.x + x, r.origin.y + y, r.origin.z + z) }, box: new ctx.AABB(r.origin.x, r.origin.y - 1, r.origin.z, r.origin.x + r.width, r.origin.y + r.height, r.origin.z + r.depth) }
+    })
+    olds.forEach(function (old) { ns.rigHook(old.rig, 'teardown', [level, old.pos]) })
     ctx.sweep.removable.forEach(function (entity) { if (entity.isAlive()) entity.discard() })
-    if (ctx.owned) ns.rigHook(p.rig, 'afterTeardown', [level, ctx.box])
+    olds.forEach(function (old) { ns.rigHook(old.rig, 'afterTeardown', [level, old.box]) })
     // Mod inventories can spill their contents in onRemove, so detach every block entity first.
     for (var cx = 0; cx < p.width; cx++) for (var cy = -1; cy < p.height; cy++) for (var cz = 0; cz < p.depth; cz++) {
       var clearAt = pos(cx, cy, cz)
@@ -78,9 +82,10 @@
   }
   ns.build = function (source, p, o, name, clearOnly) {
     var ctx = preflight(source, p, o, clearOnly)
-    // Retain a reservation after partial failure for clear/retry.
-    ns.reservePlot(ctx.server, ctx.records, ctx.key, ctx.level, p, o, name)
+    // Old plots are dismantled before any record changes, so a failed teardown stays retryable.
     teardown(ctx)
+    // Retain the reservation after a partial placement failure for clear/retry.
+    ns.reservePlot(ctx.server, ctx.records, ctx.key, ctx.level, p, o, name)
     if (clearOnly) { delete ctx.records[ctx.key]; ns.saveRecords(ctx.server, ctx.records) }
     else { place(ctx); finish(ctx) }
     return { origin: o, removed: ctx.sweep.report }

@@ -17,12 +17,19 @@
     }
     return null
   }
-  ns.reservePlot = function (server, records, key, level, p, o, name) {
-    Object.keys(records).forEach(function (k) {
+  // Every record whose volume (floor row included) intersects the plot at o, the exact-origin owner too.
+  ns.displacedBy = function (records, level, p, o) {
+    return Object.keys(records).filter(function (k) {
       var r = records[k]
-      if (k !== key && r.dimension === String(level.dimension) && o.x < r.origin.x + r.width && o.x + p.width > r.origin.x && o.z < r.origin.z + r.depth && o.z + p.depth > r.origin.z && o.y - 1 < r.origin.y + r.height && o.y + p.height > r.origin.y - 1) delete records[k]
-    })
+      return r.dimension === String(level.dimension) && o.x < r.origin.x + r.width && o.x + p.width > r.origin.x && o.z < r.origin.z + r.depth && o.z + p.depth > r.origin.z && o.y - 1 < r.origin.y + r.height && o.y + p.height > r.origin.y - 1
+    }).map(function (k) { return records[k] })
+  }
+  // Replaces every overlapping record and returns the displaced ones; the caller must already have torn them down.
+  ns.reservePlot = function (server, records, key, level, p, o, name) {
+    var displaced = ns.displacedBy(records, level, p, o)
+    Object.keys(records).forEach(function (k) { if (displaced.indexOf(records[k]) >= 0) delete records[k] })
     records[key] = { name: name, dimension: String(level.dimension), origin: o, width: p.width, depth: p.depth, height: p.height, rig: p.rig || null }
     ns.saveRecords(server, records)
+    return displaced
   }
 })();

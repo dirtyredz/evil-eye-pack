@@ -149,3 +149,32 @@ test('an overlapping different showcase is replaced, not refused', () => {
   f.ns.build(f.source, f.plan, { x: 11, y: 64, z: 20 }, 'other', false);
   assert.deepEqual(Object.keys(JSON.parse(f.data.evilEyeShowcasePlots)), ['minecraft:overworld:11,64,20']);
 });
+
+test('an overlapping plot at another origin is torn down with its own recorded rig and its record removed', () => {
+  const f = fixture(), calls = [];
+  f.ns.rigs.spy = {
+    validate() {},
+    teardown(d, level, pos) { const p = pos(1, 2, 3); calls.push(['teardown', d.tag, p.x, p.y, p.z]); },
+    afterTeardown(d, level, box) { calls.push(['after', d.tag, box.minX, box.minY, box.maxX]); },
+    placed() {}, finish() {},
+  };
+  const planA = f.ns.plan(3, 3, 3); planA.rig = { type: 'spy', tag: 'old' };
+  f.ns.build(f.source, planA, f.origin, 'old', false);
+  const otherOrigin = { x: 11, y: 64, z: 20 }, planB = f.ns.plan(3, 3, 3); planB.rig = { type: 'spy', tag: 'new' };
+  calls.length = 0;
+  f.ns.build(f.source, planB, otherOrigin, 'new', false);
+  assert.deepEqual(calls.filter(c => c[0] === 'teardown'), [['teardown', 'old', 11, 66, 23]]);
+  assert.deepEqual(calls.filter(c => c[0] === 'after'), [['after', 'old', 10, 63, 13]]);
+  const records = JSON.parse(f.data.evilEyeShowcasePlots);
+  assert.deepEqual(Object.keys(records), ['minecraft:overworld:11,64,20']);
+  assert.equal(records['minecraft:overworld:11,64,20'].rig.tag, 'new');
+});
+
+test('a failed teardown of a displaced plot keeps its record', () => {
+  const f = fixture();
+  f.ns.rigs.spy = { validate() {}, teardown() { throw new Error('boom'); } };
+  const planA = f.ns.plan(3, 3, 3); planA.rig = { type: 'spy' };
+  f.ns.build(f.source, planA, f.origin, 'old', false);
+  assert.throws(() => f.ns.build(f.source, f.ns.plan(3, 3, 3), { x: 11, y: 64, z: 20 }, 'new', false), /boom/);
+  assert.deepEqual(Object.keys(JSON.parse(f.data.evilEyeShowcasePlots)), ['minecraft:overworld:10,64,20']);
+});
