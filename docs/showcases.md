@@ -24,8 +24,11 @@ preflighted and built in name order; a refusal keeps earlier sections built. The
 spans all sections, so repeat from the same position and direction to rebuild or clear.
 
 The plot starts four blocks ahead of the source, centred across the other axis.
-It always uses world east/up/south, with a north entrance and north-facing signs.
-The success message prints its origin. Repeat from the **same position and
+The floor row sits at the block under your feet, and the plot extends ahead of and
+beside you for your facing. The layout itself is fixed to world east/up/south, with
+a north entrance and north-facing signs: Create bearings, glue boxes and sign
+rotations are authored in absolute coordinates, so rotating a contraption plot is
+not practical. The success message prints its origin and size. Repeat from the **same position and
 direction** to rebuild or clear. For a fixed origin `(160,240,0)`:
 
 ```text
@@ -33,14 +36,21 @@ direction** to rebuild or clear. For a fixed origin `(160,240,0)`:
 /execute positioned 172 240 -4 rotated 0 0 run evileye showcase clear contraption_storage
 ```
 
-Use a disposable creative test area. First build requires loaded, flat, solid
-ground and an empty plot without block entities, fluids or entities. Preflight
-checks dimensions, block states, world border, build height and other reservations
-before clearing. The write volume includes the floor at relative y=-1.
-Plot ownership persists in server data. Rebuilding **discards its contents and
-later block edits inside it**, stops/disassembles the rig, and replaces its glue.
-Clear leaves a stone-brick floor; it does not restore terrain. Unrelated entities
-block these operations. A partial build retains its reservation for clear/retry.
+Use a disposable creative test area. **The showcase makes its own plot** wherever you
+stand, first time: it needs no flat ground and no empty space. Every position in the
+box becomes air except the floor row (relative y=-1), which becomes stone bricks;
+hills, trees, water, holes and block entities inside are replaced. Writes use flags
+50 (client update, no neighbour updates, no drops), so nothing outside the box is
+disturbed. Preflight refuses, naming the fix, only for real impossibilities: build
+height, the world border, chunks not fully loaded, an unknown block/item in the
+plan, or a **protected entity** inside the box (a player, a tamed/owned animal, or
+anything with a custom name). All other entities (mobs, items, frames, stale glue)
+are discarded and listed in the success message (`removed N mobs/items (...)`).
+Another showcase overlapping the plot is replaced.
+Plot ownership persists in server data so repeating stops/disassembles the rig.
+Rebuilding **discards its contents and later block edits inside it**. Clear leaves
+a stone-brick floor; it does not restore terrain, and refuses where nothing was built.
+A partial build retains its reservation for clear/retry.
 
 ## Storage section layout
 
@@ -117,7 +127,7 @@ completion always fail.
 
 | Section | Headless assertions | Owner's eyes |
 |---|---|---|
-| `contraption_storage` | Permissions/list; occupied/uneven preflight; all blocks/states/prefills and complete floor/air volume; quantity flag; one glue and no dropped items; exterior shell; all six sided + unsided drawer handlers; idle motor; lever start/stop; five-block/three-inventory assembly; PSI docking; exact insert/extract per inventory; compacting ratios; disassembly preservation; automatic input/output hopper circuit; rotation; idle/active rebuild; clear | Drawer icons/counts at 8/24/48 blocks and front/back views; moving fronts; opening moving drawer/chest menus |
+| `contraption_storage` | Permissions/list; first build on hostile terrain (hill, tree, water, floor hole, chest, fence) with an unnamed mob and item removed, a named mob refused without any change, a mob outside untouched and the exterior shell identical (shared `tools/showcase/terrain.js`); all blocks/states/prefills and complete floor/air volume; quantity flag; one glue and no dropped items; exterior shell; all six sided + unsided drawer handlers; idle motor; lever start/stop; five-block/three-inventory assembly; PSI docking; exact insert/extract per inventory; compacting ratios; disassembly preservation; automatic input/output hopper circuit; rotation; idle/active rebuild; clear | Drawer icons/counts at 8/24/48 blocks and front/back views; moving fronts; opening moving drawer/chest menus |
 
 The exterior snapshot covers all faces immediately outside the volume, including
 block-entity data, before build and after motion/clear. Plan tests also reject
@@ -138,7 +148,8 @@ belongs in a future section.
    volume to 32,768 cells including the floor and motor rates to 16 RPM.
    New world-writing primitives belong in the shared builder/controls.
 3. Add `tools/showcase/checks/<name>.js`, priority -10, registering
-   `global.evilEyeShowcaseChecks.<name> = function (h) { ... }`. Use `h.invoke()`
+   `global.evilEyeShowcaseChecks.<name> = function (h) { ... }`; call
+   `global.evilEyeShowcaseTerrain(h)` first for the shared hostile-terrain check. Use `h.invoke()`
    for the real command, `h.check` for assertions, `h.later` for bounded tick
    waits and `h.done()` on completion. The harness owns setup/failure/sequencing;
    do not add boot processes or loaded hooks. `h.verifyPlan`, `h.shell`,

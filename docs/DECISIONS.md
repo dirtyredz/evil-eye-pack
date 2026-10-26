@@ -29,6 +29,15 @@ Client appearance remains an owner check.
 
 ## 2026-10-25 - Shared showcase plans and one-boot section checks
 
+**Amended 2026-10-25:** the builder makes its own plot instead of requiring flat,
+empty ground: it clears the box (flags 50), discards ordinary entities and refuses
+only for real impossibilities or protected entities (player, tamed, named). This
+mirrors Roundwood's builder; the felt target is "type it where you stand and it
+appears". Rejected: keeping flatness/occupancy refusals (made the owner hunt for
+ground and herd mobs); rotating the plot to the player's facing (Create
+contraption and sign coordinates are absolute); the original rationale below
+("without accepting arbitrary occupied terrain") is superseded.
+
 Use a pure bounded-plan registry, one world-writer builder and one command tree,
 with one self-registering file per section. Signs sit two cells east of samples
 and face the north entrance, following the owner's mod showcases. Persistent

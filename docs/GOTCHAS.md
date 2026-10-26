@@ -11,6 +11,12 @@
   `position.x` to a number throws a Java `NullPointerException` outside the JS
   catch. The showcase's first live run exposed it; its command test uses method
   accessors to prevent regression. Vec2's rotation `y` is a plain field.
+- **Showcases must never ask the player for flat ground or an empty plot.** The
+  owner (2026-10-25) was refused twice on an ordinary field ("Need flat solid
+  ground", "Move entities out"). The builder now makes its own plot (see
+  showcases.md); only build height, border, unloaded chunks and protected
+  (player/tamed/named) entities refuse. Do not reintroduce flatness or occupancy
+  preflight in a section or the builder.
 - **WorldBorder's `isWithinBounds(BlockPos)` overload is ambiguous in Rhino.**
   Compare the full plot extents with `getMinX/getMaxX/getMinZ/getMaxZ` instead;
   this also checks the far edge of the last block, not only its integer origin.

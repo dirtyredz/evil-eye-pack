@@ -3934,15 +3934,19 @@ hash = "50442cf9eec343663cfcd7a4bc1a36e2cc061754b363a70f6d1fae17ff9acc6a"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/command.js"
-hash = "95ef4fddf27d9196d26167243be2c819beaad944c16b20e9e7e0d1c5229713f5"
+hash = "af4cdf3974a1671843832790008681124ba310fa48f5d48a40d94ff2ba95c153"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/construction.js"
-hash = "afb2e8d60a7a69ac43b6d47ed7b2bfebf956c124ef64ad20a393c2004ca996ab"
+hash = "fe61333ca6e6aefe602fe4b6522dd34d8751d99a812255682e007cdbe69ac328"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/controls.js"
 hash = "5ddb7537d9f04f82bee17cb706cbb81ca296b1936af8c2986de2f03cdefce491"
+
+[[files]]
+file = "kubejs/server_scripts/showcase/entities.js"
+hash = "17cf666a2fbbd746b2536e83cd2e098072d60d772917fc31543ae321d084e2e6"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/plan.js"

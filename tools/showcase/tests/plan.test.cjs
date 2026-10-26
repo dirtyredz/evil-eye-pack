@@ -76,9 +76,10 @@ test('registration gates the whole command tree at permission level two', () => 
 });
 test('bare, named, clear, list and unknown forms (including trailing space) behave', () => {
   const ns = load(), nodes = loadCommand(ns), calls = [];
-  ns.build = (source, plan, origin, name, clear) => { calls.push({ origin, name, clear }); };
+  ns.build = (source, plan, origin, name, clear) => { calls.push({ origin, name, clear }); return { origin, removed: { total: 2, summary: '2 minecraft:slime' } }; };
   const source = fakeSource();
   assert.equal(nodes.showcase.execute({ source }), 1); assert.equal(calls.length, 1);
+  assert.ok(source.log.ok[0].includes("over 24x8x53 ahead of you; removed 2 mobs/items (2 minecraft:slime)"));
   assert.equal(calls[0].name, 'contraption_storage'); assert.equal(calls[0].origin.x, 88, 'Vec3 accessors called, centred on player');
   assert.equal(calls[0].origin.z, 204); assert.equal(calls[0].clear, false);
   const run = args => nodes.args.execute({ source, args });
@@ -97,7 +98,7 @@ test('bare, named, clear, list and unknown forms (including trailing space) beha
 test('several sections are laid side by side without overlap', () => {
   const ns = load(), nodes = loadCommand(ns), calls = [];
   ns.register('zz_second', () => ns.plan(10, 12, 4));
-  ns.build = (source, plan, origin, name) => { calls.push({ origin, name, plan }); };
+  ns.build = (source, plan, origin, name) => { calls.push({ origin, name, plan }); return { origin, removed: { total: 0, summary: '' } }; };
   assert.equal(nodes.showcase.execute({ source: fakeSource() }), 1);
   assert.deepEqual(calls.map(c => c.name), ['contraption_storage', 'zz_second']);
   assert.ok(calls[1].origin.x >= calls[0].origin.x + calls[0].plan.width + 8, 'gap between plots');

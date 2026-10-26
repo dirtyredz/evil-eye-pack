@@ -31,12 +31,8 @@ global.evilEyeShowcaseChecks.contraption_storage = function (h) {
     check(h.shell() === before, 'entire exterior shell unchanged after command-form checks')
   }
   check(h.invoke(h.source.withPermission(1)) === 0, 'permission level 1 denied')
-  h.set(1, 0, 1, 'minecraft:chest')
-  check(h.invoke() === 0, 'occupied plot refused')
-  check(h.be(1, 0, 1) !== null && String(level.getBlockState(h.pos(0, -1, 0))).indexOf('dirt') >= 0, 'refusal preserves chest and floor')
-  h.set(1, 0, 1, 'minecraft:air'); h.set(1, -1, 1, 'minecraft:air')
-  check(h.invoke() === 0, 'uneven floor refused')
-  h.set(1, -1, 1, 'minecraft:dirt')
+  // First-time build on hostile terrain (hill, tree, water, hole, mobs); leaves a cleared plot.
+  global.evilEyeShowcaseTerrain(h)
   check(h.server.getCommands().performPrefixedCommand(h.source, 'evileye showcase list') === 1, 'list command succeeds')
   check(h.invoke() === 1, 'level 2 builds through real command')
   h.verifyPlan()

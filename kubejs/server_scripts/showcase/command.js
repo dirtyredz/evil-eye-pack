@@ -13,18 +13,20 @@
     function build(source, wanted, clearOnly) {
       try {
         var plans = wanted.map(function (name) { return ns.sections[name]() })
-        var width = 0, depth = 0
-        plans.forEach(function (p, i) { width += p.width + (i ? GAP : 0); depth = Math.max(depth, p.depth) })
+        var width = 0, depth = 0, height = 0, removed = 0, kinds = []
+        plans.forEach(function (p, i) { width += p.width + (i ? GAP : 0); depth = Math.max(depth, p.depth); height = Math.max(height, p.height) })
         var at = source.getPosition()
         // Vec3 has both fields and methods named x/y/z; Rhino's field wrapper throws.
         var base = ns.origin(at.x(), at.y(), at.z(), source.getRotation().y, { width: width, depth: depth }), x = base.x, placed = []
         wanted.forEach(function (name, i) {
           var origin = { x: x, y: base.y, z: base.z }
-          ns.build(source, plans[i], origin, name, clearOnly)
+          var result = ns.build(source, plans[i], origin, name, clearOnly)
+          removed += result.removed.total
+          if (result.removed.summary) kinds.push(result.removed.summary)
           placed.push(name + ' at ' + origin.x + ', ' + origin.y + ', ' + origin.z)
           x += plans[i].width + GAP
         })
-        reply(source, 'Showcase ' + (clearOnly ? 'cleared' : 'built') + ': ' + placed.join('; ') + '. North entrance; labels face north. Repeating from this position resets the plot and its contents.')
+        reply(source, 'Showcase ' + (clearOnly ? 'cleared' : 'built') + ': ' + placed.join('; ') + ' over ' + width + 'x' + height + 'x' + depth + ' ahead of you; removed ' + removed + ' mobs/items' + (kinds.length ? ' (' + kinds.join(', ') + ')' : '') + '. North entrance; labels face north. Repeating from this position resets the plot and its contents.')
         return 1
       } catch (error) {
         console.info('Showcase command refused: ' + String(error))
