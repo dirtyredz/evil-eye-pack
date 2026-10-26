@@ -49,27 +49,67 @@ test('the whole plot lies ahead for all cardinal headings, including negative ya
   assert.ok(ns.origin(0, 64, 0, 180, p).z + p.depth < 0);
   assert.equal(ns.origin(0, 64, 0, -90, p).x, 4);
 });
-test('registration gates the whole command tree at permission level two', () => {
-  const ns = load(), nodes = {};
-  const context = vm.createContext({ global: { evilEyeShowcase: ns }, ServerEvents: { commandRegistry(fn) {
-    fn({ commands: { literal(name) {
-      return nodes[name] = { requires(fn) { this.permission = fn; return this; }, then() { return this; }, executes(fn) { this.execute = fn; return this; } };
-    } }, register() {} });
-  } } });
+function loadCommand(ns) {
+  const nodes = {};
+  const node = name => ({ name, requires(fn) { this.permission = fn; return this; }, then(c) { return this; },
+    executes(fn) { this.execute = fn; return this; }, suggests(fn) { this.suggest = fn; return this; } });
+  const context = vm.createContext({ global: { evilEyeShowcase: ns }, console, Text: { of: s => s },
+    Java: { loadClass: () => ({ greedyString: () => 'greedy', getString: (c, n) => { if (c.args === undefined) throw new Error('No such argument'); return c.args } }) },
+    ServerEvents: { commandRegistry(fn) {
+      fn({ commands: { literal: n => nodes[n] = node(n), argument: n => nodes[n] = node(n) }, register() {} });
+    } } });
   vm.runInContext(fs.readFileSync(path.join(scripts, 'command.js'), 'utf8'), context);
+  return nodes;
+}
+function fakeSource(x = 100, y = 64, z = 200, yaw = 0) {
+  const log = { ok: [], fail: [] };
+  return { log, hasPermission: n => n <= 2, getPosition: () => ({ x: () => x, y: () => y, z: () => z }), getRotation: () => ({ y: yaw }),
+    sendSuccess(f) { log.ok.push(f()); }, sendFailure(m) { log.fail.push(m); } };
+}
+test('registration gates the whole command tree at permission level two', () => {
+  const ns = load(), nodes = loadCommand(ns);
   assert.equal(nodes.evileye.permission({ hasPermission: n => n <= 1 }), false);
   assert.equal(nodes.evileye.permission({ hasPermission: n => n <= 2 }), true);
-  assert.equal(typeof nodes.contraption_storage.execute, 'function');
-  assert.equal(typeof nodes.list.execute, 'function');
-  assert.ok(nodes.clear);
-  let built;
-  ns.build = (source, plan, origin) => { built = origin; };
-  nodes.contraption_storage.execute({ source: {
-    getPosition: () => ({ x: () => 100, y: () => 64, z: () => 200 }),
-    getRotation: () => ({ y: 0 }), sendSuccess() {}, sendFailure() {},
-  } });
-  assert.equal(built.x, 88, 'Vec3 coordinate accessor methods must be called');
-  assert.equal(built.y, 64); assert.equal(built.z, 204);
+  assert.equal(typeof nodes.showcase.execute, 'function', 'bare /evileye showcase is executable');
+  assert.equal(typeof nodes.args.execute, 'function');
+  assert.equal(typeof nodes.args.suggest, 'function');
+});
+test('bare, named, clear, list and unknown forms (including trailing space) behave', () => {
+  const ns = load(), nodes = loadCommand(ns), calls = [];
+  ns.build = (source, plan, origin, name, clear) => { calls.push({ origin, name, clear }); };
+  const source = fakeSource();
+  assert.equal(nodes.showcase.execute({ source }), 1); assert.equal(calls.length, 1);
+  assert.equal(calls[0].name, 'contraption_storage'); assert.equal(calls[0].origin.x, 88, 'Vec3 accessors called, centred on player');
+  assert.equal(calls[0].origin.z, 204); assert.equal(calls[0].clear, false);
+  const run = args => nodes.args.execute({ source, args });
+  calls.length = 0;
+  assert.equal(run('contraption_storage '), 1, 'trailing space tolerated');
+  assert.equal(run('  Contraption_Storage'), 1, 'case-insensitive');
+  assert.equal(calls.length, 2); assert.equal(calls[0].origin.x, 88);
+  assert.equal(run('clear contraption_storage '), 1); assert.equal(calls[2].clear, true);
+  assert.equal(run('clear'), 1); assert.equal(calls[3].clear, true);
+  assert.equal(run('list'), 1); assert.match(source.log.ok.at(-1), /contraption_storage/);
+  const before = calls.length;
+  assert.equal(run('nope'), 0); assert.equal(run('a b'), 0); assert.equal(run('clear nope'), 0);
+  assert.equal(calls.length, before, 'refusals build nothing');
+  assert.match(source.log.fail[0], /unknown showcase "nope"\. Available: contraption_storage/);
+});
+test('several sections are laid side by side without overlap', () => {
+  const ns = load(), nodes = loadCommand(ns), calls = [];
+  ns.register('zz_second', () => ns.plan(10, 12, 4));
+  ns.build = (source, plan, origin, name) => { calls.push({ origin, name, plan }); };
+  assert.equal(nodes.showcase.execute({ source: fakeSource() }), 1);
+  assert.deepEqual(calls.map(c => c.name), ['contraption_storage', 'zz_second']);
+  assert.ok(calls[1].origin.x >= calls[0].origin.x + calls[0].plan.width + 8, 'gap between plots');
+  assert.equal(calls[1].origin.z, calls[0].origin.z); assert.equal(calls[1].origin.y, calls[0].origin.y);
+});
+test('suggestions complete section names, list and clear', () => {
+  const ns = load(), nodes = loadCommand(ns);
+  const suggestions = remaining => { const got = []; const out = { suggest: s => got.push(s), buildFuture: () => got };
+    nodes.args.suggest({}, { getRemaining: () => remaining, getStart: () => 0, createOffset: () => out }); return got; };
+  assert.deepEqual(suggestions(''), ['list', 'clear', 'contraption_storage']);
+  assert.deepEqual(suggestions('cont'), ['contraption_storage']);
+  assert.deepEqual(suggestions('clear '), ['contraption_storage']);
 });
 
 test('registry rejects duplicate, reserved and unsafe command names', () => {

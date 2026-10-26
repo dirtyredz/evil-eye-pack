@@ -10,9 +10,18 @@ All commands require permission level 2 (operator):
 
 | Command | Effect |
 |---|---|
+| `/evileye showcase` | Build **every** section where you stand, side by side (8 blocks apart, along world east) |
 | `/evileye showcase list` | List registered sections |
 | `/evileye showcase contraption_storage` | Build or reset the storage section |
 | `/evileye showcase clear contraption_storage` | Tear down the section at the same origin |
+| `/evileye showcase clear` | Tear down every section built by the bare command |
+
+The bare command mirrors `/roundwood showcase`. Names are case-insensitive, extra spaces
+are tolerated, and the argument tab-completes (`list`, `clear`, section names). An unknown
+name or extra word gives `Showcase: unknown showcase "x". Available: ...` instead of a raw
+Brigadier error (the argument is one greedy string parsed by the script). Sections are
+preflighted and built in name order; a refusal keeps earlier sections built. The row
+spans all sections, so repeat from the same position and direction to rebuild or clear.
 
 The plot starts four blocks ahead of the source, centred across the other axis.
 It always uses world east/up/south, with a north entrance and north-facing signs.

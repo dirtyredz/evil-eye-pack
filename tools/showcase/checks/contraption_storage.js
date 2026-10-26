@@ -13,6 +13,23 @@ global.evilEyeShowcaseChecks.contraption_storage = function (h) {
     for (var i = 0; i < entities.size(); i++) if (String(entities.get(i).getType()).indexOf('super_glue') >= 0) count++
     return count
   }
+  // Command forms: the bare command builds at the issuing position (source sits 4 blocks north, facing south).
+  function commandForms() {
+    var run = function (text, who) { return h.server.getCommands().performPrefixedCommand(who || h.source, text) }
+    check(run('evileye showcase', h.source.withPermission(1)) === 0, 'bare command denied below permission level 2')
+    check(run('evileye showcase nope') === 0, 'unknown section name refused with the friendly message')
+    check(run('evileye showcase contraption_storage extra') === 0, 'extra words refused')
+    check(run('evileye showcase clear nope') === 0, 'clear of unknown section refused')
+    h.verifyVolume(true)
+    check(run('evileye showcase') === 1, 'bare /evileye showcase builds at the issuing position')
+    h.verifyPlan(); check(glueCount() === 1, 'bare build leaves exactly one glue')
+    check(run('evileye showcase contraption_storage ') === 1, 'named command with trailing space rebuilds')
+    h.verifyPlan()
+    check(run('evileye showcase list ') === 1, 'list with trailing space succeeds')
+    check(run('evileye showcase clear') === 1, 'bare clear removes the section')
+    h.verifyVolume(true); check(glueCount() === 0, 'bare clear leaves no glue')
+    check(h.shell() === before, 'entire exterior shell unchanged after command-form checks')
+  }
   check(h.invoke(h.source.withPermission(1)) === 0, 'permission level 1 denied')
   h.set(1, 0, 1, 'minecraft:chest')
   check(h.invoke() === 0, 'occupied plot refused')
@@ -104,6 +121,7 @@ global.evilEyeShowcaseChecks.contraption_storage = function (h) {
         check(glueCount() === 0 && h.be(8, 0, 16) === null, 'clear removes rig and glue')
         h.verifyVolume(true)
         check(h.shell() === before, 'entire exterior shell unchanged after teardown')
+        commandForms()
         h.done()
       } else if (++ticks >= 2400) throw new Error('Automatic flow timeout: inserted=' + inserted + ' moved=' + moved + ' output=' + [diamond, iron, emerald])
       else poll()
