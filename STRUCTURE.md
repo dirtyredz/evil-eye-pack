@@ -111,7 +111,7 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `kubejs/server_scripts/showcase/plan.js` | pure plan bounds, shared floor, placement/sign helpers, registry, rig dispatch and multi-section layout/source-to-origin math |
 | `kubejs/server_scripts/showcase/sections/*.js` | one self-registering content plan per section; no world access |
 | `kubejs/server_scripts/showcase/plots.js` | persistent records, plot keys, overlap replacement and serialized rig ownership |
-| `kubejs/server_scripts/showcase/construction.js` | read-only preflight, then reserve/teardown/place/finish stages; generic world writes and rig hooks |
+| `kubejs/server_scripts/showcase/construction.js` | read-only preflight, then teardown/reserve/place/finish stages; generic world writes and rig hooks |
 | `kubejs/server_scripts/showcase/rigs/create_contraption.js` | Create descriptor validation, glue boundary/entity policy, motor zeroing, bearing teardown, collision preparation and lever control; legacy record compatibility |
 | `kubejs/server_scripts/showcase/entities.js` | entity policy for clearing: discard ordinary, block on player/tamed/named |
 | `kubejs/server_scripts/showcase/controls.js`, `command.js` | record-only rig tick dispatch and op-only command tree |
