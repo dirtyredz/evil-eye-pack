@@ -6,7 +6,7 @@ const vm = require('node:vm');
 const scripts = path.resolve(__dirname, '../../../kubejs/server_scripts/showcase');
 function load() {
   const context = vm.createContext({ global: {} });
-  for (const file of ['plan.js', ...fs.readdirSync(path.join(scripts, 'sections')).filter(f => f.endsWith('.js')).sort().map(f => 'sections/' + f)]) vm.runInContext(fs.readFileSync(path.join(scripts, file), 'utf8'), context);
+  for (const file of ['plan.js', 'rigs/create_contraption.js', ...fs.readdirSync(path.join(scripts, 'sections')).filter(f => f.endsWith('.js')).sort().map(f => 'sections/' + f)]) vm.runInContext(fs.readFileSync(path.join(scripts, file), 'utf8'), context);
   return context.global.evilEyeShowcase;
 }
 test('the complete plot and swept payload fit the bounded clearing volume', () => {
@@ -128,9 +128,9 @@ test('validation catches invalid dimensions and writes hidden in secondary descr
     p => p.blocks.push({ x: NaN, y: 0, z: 0 }),
     p => p.blocks.push({ ...p.blocks[0] }),
     p => p.fills.push({ x: 23, y: 7, z: 52, items: [] }),
-    p => p.glue.push([0, 0, 0, 25, 1, 1]),
-    p => p.motors[0].lever = [24, 1, 16],
-    p => p.bearings.push([8, 8, 16]),
+    p => p.rig.glue.push([0, 0, 0, 25, 1, 1]),
+    p => p.rig.motors[0].lever = [24, 1, 16],
+    p => p.rig.bearings.push([8, 8, 16]),
     p => p.fills[0].items[0][1] = -2,
     p => p.fills[0].items[0][0] = 'diamond; execute something',
   ]) {
@@ -143,5 +143,46 @@ test('plans are fresh per invocation and lever starts off', () => {
   a.fills[0].items[0][1] = 1;
   assert.equal(b.fills[0].items[0][1], 64);
   assert.ok(b.blocks.some(x => x.state === 'minecraft:lever[face=floor,facing=north,powered=false]'));
-  assert.equal(b.motors[0].speed, 2);
+  assert.equal(b.rig.motors[0].speed, 2);
+});
+
+
+test('layout exposes dimensions and exact origins for differently sized sections at every heading', () => {
+  const ns = load(), plans = [ns.plan(3, 4, 2), ns.plan(6, 2, 5), ns.plan(2, 8, 1)];
+  for (const yaw of [0, 90, 180, -90]) {
+    const l = ns.layout(plans, fakeSource(100.9, 64.8, 200.3, yaw));
+    assert.equal(l.width, 27); assert.equal(l.depth, 8); assert.equal(l.height, 5);
+    const first = ns.origin(100.9, 64.8, 200.3, yaw, l);
+    assert.deepEqual(l.origins[0], first);
+    assert.equal(l.origins[1].x, first.x + 11); assert.equal(l.origins[2].x, first.x + 25);
+    assert.ok(l.origins.every(o => o.y === 64 && o.z === first.z));
+  }
+});
+
+test('both immediate placement and full validation reject fractional and nonfinite bounds', () => {
+  const ns = load();
+  for (const xyz of [[NaN, 0, 0], [0.5, 0, 0], [0, Infinity, 0], [0, 0, -1]]) {
+    const p = ns.plan(3, 3, 3);
+    assert.throws(() => p.block(...xyz, 'minecraft:stone'), /outside bounds/);
+    p.blocks.push({ x: xyz[0], y: xyz[1], z: xyz[2] });
+    assert.throws(() => ns.validate(p), /outside bounds/);
+  }
+});
+
+test('generic plans have no section mechanics; rig validation is dispatched by type', () => {
+  const ns = load(), p = ns.plan(3, 3, 3);
+  assert.equal(p.glue, undefined); assert.equal(p.motors, undefined); assert.equal(p.bearings, undefined);
+  ns.validate(p);
+  p.rig = { type: 'missing' }; assert.throws(() => ns.validate(p), /Unknown rig/);
+  let called = false;
+  ns.rigs.fixture = { validate: (d, point) => { called = true; point(...d.at); } };
+  p.rig = { type: 'fixture', at: [1, 1, 1] }; ns.validate(p); assert.ok(called);
+  p.rig.at = [3, 1, 1]; assert.throws(() => ns.validate(p), /outside bounds/);
+});
+
+test('Create rig validates glue limits, nonempty boxes and bounded integer motor speed', () => {
+  const ns = load();
+  for (const corrupt of [p => p.rig.glue = Array(33).fill([0, 0, 0, 1, 1, 1]), p => p.rig.glue.push([2, 1, 1, 2, 2, 2]), p => p.rig.motors[0].speed = 17, p => p.rig.motors[0].speed = 1.5]) {
+    const p = ns.sections.contraption_storage(); corrupt(p); assert.throws(() => ns.validate(p));
+  }
 });

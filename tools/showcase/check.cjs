@@ -75,7 +75,7 @@ async function main(argv) {
     fs.writeFileSync(path.join(out, 'inputs.json'), JSON.stringify({ ...runMeta(path.join(root, 'pack.toml')), root: packRoot, baseline, indexHash: verified.indexHash, selected, pins }, null, 2));
     if (!baseline) {
       const dest = path.join(server, 'kubejs/server_scripts/showcase_check'); fs.mkdirSync(dest, { recursive: true });
-      for (const file of ['harness.js', 'terrain.js', ...selected.map(n => 'checks/' + n + '.js')]) fs.copyFileSync(path.join(__dirname, file), path.join(dest, path.basename(file)));
+      for (const file of ['harness.js', 'helpers.js', 'command_forms.js', 'terrain.js', ...selected.map(n => 'checks/' + n + '.js')]) fs.copyFileSync(path.join(__dirname, file), path.join(dest, path.basename(file)));
       fs.writeFileSync(path.join(dest, 'selection.js'), '// priority: -15\nglobal.evilEyeShowcaseCheckSelection = ' + JSON.stringify(selected) + '\n');
     }
     const consoleFile = path.join(server, 'console.log');

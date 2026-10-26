@@ -109,6 +109,12 @@ node tools/showcase/check.cjs --baseline-ref main --out <baseline-directory>
 node tools/showcase/check.cjs contraption_storage --out <new-directory> --compare <baseline-directory>
 ```
 
+The shared `command_forms.js` check runs once after the selected section checks,
+building and clearing every registered section in a separate row. Its expected
+record count and per-section origins come from the registry and `ns.layout`; even
+a single-section run exercises the complete command tree. `helpers.js` supplies
+`makeHelpers` for both this row and the section fixtures.
+
 The runner takes a showcase lock and checks Windows' Minecraft JVM inventory,
 waiting up to 45 minutes for another game/server. It reuses the server-smoke
 watchdog/process scope and always stops its server. The dedicated server is
@@ -127,7 +133,7 @@ completion always fail.
 
 | Section | Headless assertions | Owner's eyes |
 |---|---|---|
-| `contraption_storage` | Permissions/list; first build on hostile terrain (hill, tree, water, floor hole, chest, fence) with an unnamed mob and item removed, a named mob refused without any change, a mob outside untouched and the exterior shell identical (shared `tools/showcase/terrain.js`); all blocks/states/prefills and complete floor/air volume; quantity flag; one glue and no dropped items; exterior shell; all six sided + unsided drawer handlers; idle motor; lever start/stop; five-block/three-inventory assembly; PSI docking; exact insert/extract per inventory; compacting ratios; disassembly preservation; automatic input/output hopper circuit; rotation; idle/active rebuild; clear | Drawer icons/counts at 8/24/48 blocks and front/back views; moving fronts; opening moving drawer/chest menus |
+| `contraption_storage` | First build on hostile terrain (hill, tree, water, floor hole, chest, fence) with an unnamed mob and item removed, a named mob refused without any change, a mob outside untouched and the exterior shell identical (shared `tools/showcase/terrain.js`); all blocks/states/prefills and complete floor/air volume; quantity flag; one glue and no dropped items; exterior shell; all six sided + unsided drawer handlers; idle motor; lever start/stop; five-block/three-inventory assembly; PSI docking; exact insert/extract per inventory; compacting ratios; disassembly preservation; automatic input/output hopper circuit; rotation; idle/active rebuild; clear | Drawer icons/counts at 8/24/48 blocks and front/back views; moving fronts; opening moving drawer/chest menus |
 
 The exterior snapshot covers all faces immediately outside the volume, including
 block-entity data, before build and after motion/clear. Plan tests also reject
@@ -142,18 +148,30 @@ belongs in a future section.
    Use lowercase letters/digits/underscores; list/clear are reserved. Return a
    fresh `ns.plan(width, depth, height)`. No world access in section files.
 2. Use `p.block`, `p.sample` (prefill + sign two cells east) and `p.label` (headings).
-   Put inventories in `p.fills`, glue AABBs in `p.glue`, motors in `p.motors`
-   (`{x,y,z,speed,lever:[x,y,z]}`), and bearing coordinates in `p.bearings`.
-   Keep placements, glue and the **full swept payload** inside the plot. Limit
-   volume to 32,768 cells including the floor and motor rates to 16 RPM.
-   New world-writing primitives belong in the shared builder/controls.
+   Put inventories in `p.fills`. Static sections need no rig. For Create, set
+   `p.rig = ns.createContraption()`, then populate `p.rig.glue` (AABBs),
+   `p.rig.motors` (`{x,y,z,speed,lever:[x,y,z]}`) and `p.rig.bearings`
+   (coordinates). Keep placements, glue and the **full swept payload** inside
+   the plot. Limit volume to 32,768 cells including the floor and rates to 16 RPM.
+   The floor is `ns.FLOOR`. New mechanics belong in `rigs/<type>.js` (priority
+   between 30 and 20), registered in `ns.rigs`; keep the descriptor JSON-only.
+   Hooks are `validate(descriptor, point, seen, integer)`,
+   `teardown(descriptor, level, pos)`, `afterTeardown(descriptor, level, box)`,
+   `placed(descriptor, level, pos, block)`, `finish(descriptor, level, origin)`
+   and `tick(descriptor, level, origin)`. Optional `ownEntity(type)` and
+   `preflight(sweep, box, refuse)` apply to entity sweeps for all plots; preflight
+   must only read and must throw before any mutation. The complete descriptor
+   persists in the plot record; ticks must never reconstruct a section plan.
 3. Add `tools/showcase/checks/<name>.js`, priority -10, registering
    `global.evilEyeShowcaseChecks.<name> = function (h) { ... }`; call
    `global.evilEyeShowcaseTerrain(h)` first for the shared hostile-terrain check. Use `h.invoke()`
    for the real command, `h.check` for assertions, `h.later` for bounded tick
    waits and `h.done()` on completion. The harness owns setup/failure/sequencing;
    do not add boot processes or loaded hooks. `h.verifyPlan`, `h.shell`,
-   `h.handler` and `h.amount` supply shared fixture checks.
+   `h.handler` and `h.amount` supply shared fixture checks from `helpers.js`.
+   Section checks assert only their own plan. Do not duplicate permissions or
+   command-form checks: `command_forms.js` runs once per boot across the registry,
+   verifying bare/named builds, list, refusals and clear at the row origins.
 4. Add Node VM tests of the production layout/registry under `tools/showcase/tests/`,
    including failures/negative controls. Discovery requires a matching headless
    check for each shipped section. Neither command nor runner needs another switch.

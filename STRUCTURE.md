@@ -10,6 +10,8 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 
 ```text
 |-- config/
+|   |-- defaultoptions/
+|   `-- emi-curation/
 |-- defaultconfigs/
 |-- docs/
 |   `-- items/
@@ -24,6 +26,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |   |-- data/
 |   |-- server_scripts/
 |   |   `-- showcase/
+|   |       |-- rigs/
 |   |       `-- sections/
 |   `-- startup_scripts/
 |-- mods/
@@ -78,6 +81,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the mark-as-decor key handler and shared UI infrastructure (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
 - `kubejs/client_scripts/emi_curation/ui/mods/` — Mods dropdown, source entries, layout, list policy and text drawing.
 - `kubejs/startup_scripts/` — `emi_curation_keys.js` registers the "EMI Curation" key mapping (startup-only in Forge); `kubejs/assets/emi_curation/lang/` names it
+- `kubejs/server_scripts/showcase/` — bounded plans, multi-section layout, plot records, staged construction, entity policy, control dispatch and commands; `sections/` holds pure content factories, and `rigs/` owns section-specific validation and world mechanics.
 - `kubejs/server_scripts/dedup.js` — permanent duplicate recipe/tag cleanup; no stack conversion. Survivor choices: `docs/duplicate-cleanup.md`.
 - `kubejs/config/dedup.json` — authored duplicate policy; the generator never writes this input.
 - `kubejs/config/dedup_sources.json` — generated recipe removals, survivor tags and block-tag removals derived from pinned jar block loot tables.
@@ -89,8 +93,9 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `tools/malware_guard/` — offline content scanner, instance drift and metadata source/known-bad gate; opt-in cached Modrinth status, approval CLI, `data/` policies and synthetic `tests/`. Local reports/cache are ignored under `.local/`.
 - `tools/dedup/` — pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions; `hidden_reasons.json` holds the reason for every `hiddenOnly` id (see docs/development.md "Known exceptions registry").
 - `tools/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
-- `tools/malware_guard/tests/`, `tools/packwiz/tests/`, `tools/server_smoke/tests/`, `tools/pack_test/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs`)
+- `tools/malware_guard/tests/`, `tools/packwiz/tests/`, `tools/server_smoke/tests/`, `tools/pack_test/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
+- `tools/showcase/` — offline headless runner, probe lifecycle, assertion helpers, shared terrain and registry-wide command checks; `checks/` holds section behaviour checks and `tests/` the focused Node VM/runner tests.
 - `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its environment, setup, boot, process, watchdog, verdict and log-analysis modules, and known boot noise
 - `tools/pack_test/` — unshipped: one-boot automated pack test (`run.cjs` and `analyze.cjs`); `recipe_json.cjs`, `stage_runtime.cjs`, `session/`, `checks/` (including security checks in `checks/security/`), `verdict/`, `probe/`, `remote/` (with the `lease/` cluster), `data/`, `tests/`. See the Components table below for module responsibilities; `data/` holds baseline, crafts, machines and policy JSON; `tests/` mirrors the source with `checks/`, `remote/`, `verdict/` and `session/`.
 - `tools/packwiz/` — unshipped: hash-chain verifier, index rebuild, localhost pack server, tests
@@ -103,13 +108,16 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 
 | Component | Responsibility |
 |---|---|
-| `kubejs/server_scripts/showcase/plan.js` | pure plan bounds, placement/sign helpers, registry and source-to-origin math |
+| `kubejs/server_scripts/showcase/plan.js` | pure plan bounds, shared floor, placement/sign helpers, registry, rig dispatch and multi-section layout/source-to-origin math |
 | `kubejs/server_scripts/showcase/sections/*.js` | one self-registering content plan per section; no world access |
-| `kubejs/server_scripts/showcase/construction.js` | preflight (height/border/loaded), persistent plot ownership, sole build/rebuild/clear writer; makes its own plot |
+| `kubejs/server_scripts/showcase/plots.js` | persistent records, plot keys, overlap replacement and serialized rig ownership |
+| `kubejs/server_scripts/showcase/construction.js` | read-only preflight, then reserve/teardown/place/finish stages; generic world writes and rig hooks |
+| `kubejs/server_scripts/showcase/rigs/create_contraption.js` | Create descriptor validation, glue boundary/entity policy, motor zeroing, bearing teardown, collision preparation and lever control; legacy record compatibility |
 | `kubejs/server_scripts/showcase/entities.js` | entity policy for clearing: discard ordinary, block on player/tamed/named |
-| `kubejs/server_scripts/showcase/controls.js`, `command.js` | generic lever/motor tick control and op-only command tree |
+| `kubejs/server_scripts/showcase/controls.js`, `command.js` | record-only rig tick dispatch and op-only command tree |
 | `tools/showcase/check.cjs`, `offline.cjs` | one-boot CLI, process guard, reports/log comparison; pinned offline server preparation using existing pack-test/server-smoke modules |
-| `tools/showcase/harness.js`, `terrain.js`, `checks/*.js`, `tests/*.cjs` | disposable server probe orchestration; one behaviour check per section; pure Node tests |
+| `tools/showcase/harness.js`, `helpers.js` | probe sequencing/lifecycle/completion; `makeHelpers` supplies fixture access and plan/volume assertions |
+| `tools/showcase/command_forms.js`, `terrain.js`, `checks/*.js`, `tests/*.cjs` | one registry-wide command check per boot; shared hostile terrain checks; section-specific behaviour checks and focused Node tests |
 | `tools/malware_guard/cli.cjs` | `scan`, `drift`, `gate`, explicit online `status` and hash-based `approve`; applies approvals once to raw reports before JSON output and exits 0/1/2 |
 | `tools/malware_guard/scanning/` (`scan.cjs`, `signatures.cjs`) | bounded recursive archive/folder scan using shared byte jar traversal; entry hashes, class signatures and tunable loader co-occurrence heuristics |
 | `tools/malware_guard/metadata.cjs` | packwiz installed-path inventory and expected pinned hashes |

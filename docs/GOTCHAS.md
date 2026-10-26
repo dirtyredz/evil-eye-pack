@@ -33,7 +33,7 @@
   through the common pool's wrong classloader.** A fresh bearing assembly logged
   `Could not find parent it/unimi/dsi/fastutil/doubles/AbstractDoubleList` for
   `OffsetFractionalDoubleList`; functional storage checks still passed. Showcase
-  motor startup now computes the glued blocks' collision unions on the server
+  motor startup in `showcase/rigs/create_contraption.js` now computes the glued blocks' collision unions on the server
   thread before enabling speed. The full headless run then passed with no new
   warning/error groups. This is local preparation for showcase rigs; ordinary
   contraption assembly outside showcases has not been changed.

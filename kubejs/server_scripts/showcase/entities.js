@@ -4,7 +4,7 @@
   var ns = global.evilEyeShowcase
   function where(e) { return Math.round(e.getX()) + ', ' + Math.round(e.getY()) + ', ' + Math.round(e.getZ()) }
   // The showcase's own glue and contraption entities are not "mobs" worth reporting.
-  function ownRig(type) { return type === 'create:super_glue' || type.indexOf('contraption') >= 0 }
+  function ownRig(type) { return Object.keys(ns.rigs).some(function (key) { var rig = ns.rigs[key]; return rig.ownEntity && rig.ownEntity(type) }) }
   ns.sweepEntities = function (level, box) {
     var found = level.getEntities(null, box), blocking = [], removable = [], counts = {}, total = 0
     for (var i = 0; i < found.size(); i++) {

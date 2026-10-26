@@ -3934,27 +3934,35 @@ hash = "50442cf9eec343663cfcd7a4bc1a36e2cc061754b363a70f6d1fae17ff9acc6a"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/command.js"
-hash = "af4cdf3974a1671843832790008681124ba310fa48f5d48a40d94ff2ba95c153"
+hash = "312b19b8dc39d36cf0b4d578715288356eee928637d1973e2c3c92b1220b1b80"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/construction.js"
-hash = "fe61333ca6e6aefe602fe4b6522dd34d8751d99a812255682e007cdbe69ac328"
+hash = "e0f7f5a89aaf3054aa2f5a10b61fca5299205b3b77be334e17486efb78e10507"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/controls.js"
-hash = "5ddb7537d9f04f82bee17cb706cbb81ca296b1936af8c2986de2f03cdefce491"
+hash = "574c47a0b068b87da30a0a192dfe14199a61a4bc77c4631bb5fae27a769df217"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/entities.js"
-hash = "17cf666a2fbbd746b2536e83cd2e098072d60d772917fc31543ae321d084e2e6"
+hash = "9a37ece4a67ea04408f41cc7e511f203140c2705a9b91e3a3f2df0084326426a"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/plan.js"
-hash = "105bdabb8011080aca7535e1281e1562bda3785b635b51b2bd02b5d77e815278"
+hash = "c9dfb526e62717ee492bc41be3e7c36f1362f2c795db9fa5c36867ce54f841ce"
+
+[[files]]
+file = "kubejs/server_scripts/showcase/plots.js"
+hash = "44c5c2732a1eac5b96b66642c8b961c3d2ccdb433114036364f452f6231f69bf"
+
+[[files]]
+file = "kubejs/server_scripts/showcase/rigs/create_contraption.js"
+hash = "49665c80b813b338096e28e054152188440d5f168f407856ffe86cf0dab1912d"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/contraption_storage.js"
-hash = "8c9677c80dab610bde3b348ae82cdee0d4f4bee8990102fccca91823558cbd69"
+hash = "f67008197a69ca92125d4734f5df10c6aca1d6f50f14c2efd101215aff7391aa"
 
 [[files]]
 file = "kubejs/server_scripts/uranium.js"

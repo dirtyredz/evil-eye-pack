@@ -3,6 +3,7 @@
   var ns = global.evilEyeShowcase
   ns.register('contraption_storage', function () {
     var p = ns.plan(24, 53, 8)
+    p.rig = ns.createContraption()
     p.label(2, 1, ['CONTRAPTION', 'STORAGE LAB', 'Walk south ->', 'Read each label'])
     p.label(7, 1, ['DRAWER FRONTS', 'Stand on gold', 'Icons / counts?', 'Walk away: fade?'])
     p.label(12, 1, ['MOVING STORAGE', 'Lever OFF = stop', 'Lever ON = run', '2 RPM bearing'])
@@ -18,10 +19,10 @@
     }
     // Shared motor controls read the lever; the motor itself starts at zero RPM.
     p.block(8, 0, 16, 'create:creative_motor[facing=up]')
-    p.motors.push({ x: 8, y: 0, z: 16, speed: 2, lever: [7, 1, 16] })
+    p.rig.motors.push({ x: 8, y: 0, z: 16, speed: 2, lever: [7, 1, 16] })
     p.block(8, 1, 16, 'create:shaft[axis=y]')
     p.block(8, 2, 16, 'create:mechanical_bearing[facing=up]')
-    p.bearings.push([8, 2, 16])
+    p.rig.bearings.push([8, 2, 16])
     p.block(7, 0, 16, 'minecraft:andesite')
     p.block(7, 1, 16, 'minecraft:lever[face=floor,facing=north,powered=false]')
     p.block(8, 3, 16, 'minecraft:andesite')
@@ -32,7 +33,7 @@
     p.fills.push({ x: 9, y: 3, z: 16, items: [['minecraft:diamond', 32]] })
     p.fills.push({ x: 10, y: 3, z: 16, items: [['minecraft:iron_ingot', 18]] })
     p.fills.push({ x: 11, y: 3, z: 16, items: [['minecraft:emerald', 32]] })
-    p.glue.push([8, 3, 16, 13, 4, 17])
+    p.rig.glue.push([8, 3, 16, 13, 4, 17])
     p.block(14, 3, 16, 'create:portable_storage_interface[facing=west]')
     p.block(14, 4, 16, 'minecraft:hopper[facing=down]')
     p.block(14, 5, 16, 'minecraft:chest[facing=north]')

@@ -3,7 +3,6 @@
   ServerEvents.commandRegistry(function (event) {
     var ns = global.evilEyeShowcase, commands = event.commands
     var StringArgumentType = Java.loadClass('com.mojang.brigadier.arguments.StringArgumentType')
-    var GAP = 8 // blocks between side-by-side sections
     var root = commands.literal('evileye').requires(function (source) { return source.hasPermission(2) })
     function names() { return Object.keys(ns.sections).sort() }
     function reply(source, message) { source.sendSuccess(function () { return Text.of(message) }, false) }
@@ -13,20 +12,15 @@
     function build(source, wanted, clearOnly) {
       try {
         var plans = wanted.map(function (name) { return ns.sections[name]() })
-        var width = 0, depth = 0, height = 0, removed = 0, kinds = []
-        plans.forEach(function (p, i) { width += p.width + (i ? GAP : 0); depth = Math.max(depth, p.depth); height = Math.max(height, p.height) })
-        var at = source.getPosition()
-        // Vec3 has both fields and methods named x/y/z; Rhino's field wrapper throws.
-        var base = ns.origin(at.x(), at.y(), at.z(), source.getRotation().y, { width: width, depth: depth }), x = base.x, placed = []
+        var layout = ns.layout(plans, source), removed = 0, kinds = [], placed = []
         wanted.forEach(function (name, i) {
-          var origin = { x: x, y: base.y, z: base.z }
+          var origin = layout.origins[i]
           var result = ns.build(source, plans[i], origin, name, clearOnly)
           removed += result.removed.total
           if (result.removed.summary) kinds.push(result.removed.summary)
           placed.push(name + ' at ' + origin.x + ', ' + origin.y + ', ' + origin.z)
-          x += plans[i].width + GAP
         })
-        reply(source, 'Showcase ' + (clearOnly ? 'cleared' : 'built') + ': ' + placed.join('; ') + ' over ' + width + 'x' + height + 'x' + depth + ' ahead of you; removed ' + removed + ' mobs/items' + (kinds.length ? ' (' + kinds.join(', ') + ')' : '') + '. North entrance; labels face north. Repeating from this position resets the plot and its contents.')
+        reply(source, 'Showcase ' + (clearOnly ? 'cleared' : 'built') + ': ' + placed.join('; ') + ' over ' + layout.width + 'x' + layout.height + 'x' + layout.depth + ' ahead of you; removed ' + removed + ' mobs/items' + (kinds.length ? ' (' + kinds.join(', ') + ')' : '') + '. North entrance; labels face north. Repeating from this position resets the plot and its contents.')
         return 1
       } catch (error) {
         console.info('Showcase command refused: ' + String(error))

@@ -37,12 +37,12 @@ function fixture() {
   const java = { loadClass(name) {
     if (name.endsWith('.BlockPos')) return Pos;
     if (name.endsWith('.AABB')) return Box;
-    if (name.endsWith('.Blocks')) return { AIR: { defaultBlockState: () => 'minecraft:air' }, STONE_BRICKS: { defaultBlockState: () => 'minecraft:stone_bricks' } };
-    if (name.endsWith('.BlockStateParser')) return { parseForBlock(lookup, state) { if (state === 'missing:block') throw new Error('Unknown block'); } };
+    if (name.endsWith('.Blocks')) return { AIR: { defaultBlockState: () => 'minecraft:air' } };
+    if (name.endsWith('.BlockStateParser')) return { parseForBlock(lookup, state) { if (state === 'missing:block') throw new Error('Unknown block'); return { blockState: () => state }; } };
     return {};
   } };
   const context = vm.createContext({ global: {}, Java: java });
-  for (const file of ['plan.js', 'entities.js', 'construction.js']) vm.runInContext(fs.readFileSync(path.join(__dirname, '../../../kubejs/server_scripts/showcase', file), 'utf8'), context);
+  for (const file of ['plan.js', 'rigs/create_contraption.js', 'plots.js', 'entities.js', 'construction.js']) vm.runInContext(fs.readFileSync(path.join(__dirname, '../../../kubejs/server_scripts/showcase', file), 'utf8'), context);
   const ns = context.global.evilEyeShowcase, plan = ns.plan(3, 3, 3);
   plan.block(1, 0, 1, 'minecraft:stone');
   const build = (o = origin, clear = false) => ns.build(source, plan, o, 'fixture', clear);
@@ -76,7 +76,7 @@ test('a reserved plot rebuilds and clears while its outside sentinel survives', 
   assert.equal(f.blocks.get('11,64,21'), 'minecraft:stone');
   f.build(f.origin, true);
   assert.equal(f.blocks.get('11,64,21'), 'minecraft:air');
-  assert.equal(f.blocks.get('11,63,21'), 'minecraft:stone_bricks');
+  assert.equal(f.blocks.get('11,63,21'), f.ns.FLOOR);
   assert.equal(f.blocks.get('9,64,20'), 'minecraft:diamond_block');
   assert.deepEqual(JSON.parse(f.data.evilEyeShowcasePlots), {});
 });
@@ -125,7 +125,7 @@ test('a first build makes its own plot over uneven, occupied terrain without a f
   f.level.getFluidState = () => ({ isEmpty: () => false });
   f.build();
   assert.equal(f.blocks.get('12,65,22'), 'minecraft:air');
-  assert.equal(f.blocks.get('10,63,20'), 'minecraft:stone_bricks');
+  assert.equal(f.blocks.get('10,63,20'), f.ns.FLOOR);
   assert.equal(f.blocks.get('11,64,21'), 'minecraft:stone');
   assert.equal(f.blocks.get('9,64,20'), 'minecraft:diamond_block');
 });

@@ -2,20 +2,29 @@
 
 ## Showcases
 
-`kubejs/server_scripts/showcase/` separates a pure bounded plan/registry (priority
-30), self-registering sections (20), the world-writer builder (10), shared
-lever/motor controls (5), and permission-level-2 command registration (0).
-Priorities order files across folders. Sections return descriptors, never write
-worlds. The builder validates before clearing, persists plot ownership, and owns
-build/rebuild/teardown. Controls resume from records after reload/restart without
-force-loading chunks, and prepare glued collision unions on the server thread
-before enabling a motor (Create/Canary classloader constraint; see GOTCHAS).
+`kubejs/server_scripts/showcase/` separates pure bounded plans/registry/layout
+(priority 30), rig implementations (25), content sections (20), plot records (18),
+entity policy (15), staged construction (10), record-only control dispatch (5),
+and permission-level-2 command registration (0). Priorities order files across
+folders. Sections return descriptors, never write worlds. The builder preflights
+before mutations, reserves the plot, then runs teardown/place/finish stages.
+`plots.js` owns persistence and overlap; the shared floor is `ns.FLOOR`.
+
+A section may attach a JSON-only `p.rig` descriptor. Generic code dispatches its
+validation and lifecycle hooks to `rigs/`; Create owns glue, motors, bearings and
+server-thread collision preparation (Create/Canary constraint; see GOTCHAS).
+The full rig persists in the record, so controls resume after reload/restart or
+section removal without consulting factories or force-loading chunks. The Create
+adapter handles old motor-only records by reading existing glue when starting;
+a rebuild stores the complete descriptor. Missing rig implementations skip ticks.
 
 `tools/showcase/check.cjs` discovers matching checks and sequences them in one
 dedicated server. Offline preparation validates pinned cached bytes and reuses
 pack-test server-copy/evidence modules; server-smoke owns watchdog and shutdown.
-The injected harness calls the shipped command and records each assertion;
-domain checks live in `checks/<section>.js`. Tests never ship in pack instances.
+The injected harness sequences checks and records lifecycle/completion;
+`helpers.js` owns fixture access and assertions. Domain checks live in
+`checks/<section>.js`; `command_forms.js` runs once afterward against all registry
+plans and their shared layout, independently of the selected domain checks. Tests never ship in pack instances.
 Commands, layout, coverage and extension recipe: [showcases](showcases.md).
 
 ## Automated pack test
