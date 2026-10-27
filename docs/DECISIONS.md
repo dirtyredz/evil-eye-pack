@@ -4,13 +4,12 @@ Newest first.
 
 ## 2026-10-27 - Remove Enhanced Celestials and lengthen days
 
-Remove Enhanced Celestials 5.0.3.2 and its now-orphaned mandatory dependency
-Data Anchor 1.0.0.23. Inspection of every installed jar's `META-INF/mods.toml`
-found no other dependency on `dataanchor`. Keep CorgiLib 4.0.3.5 because the
-pack's CorgiKubeJSCompat 1.0.1 has an exact mandatory dependency on it and uses
-it to mitigate the known KubeJS registry-enumeration startup race. No config,
-KubeJS, showcase or content reference to Enhanced Celestials or Data Anchor
-remained outside their metafiles.
+Remove Enhanced Celestials 5.0.3.2 and its now-orphaned mandatory dependencies
+Data Anchor 1.0.0.23 and CorgiLib 4.0.3.5. Remove CorgiKubeJSCompat 1.0.1 too:
+it existed only to initialize CorgiLib before KubeJS registry enumeration.
+Inspection of every installed jar's `META-INF/mods.toml` found that only
+Enhanced Celestials and CorgiKubeJSCompat depended on CorgiLib, and nothing
+depended on CorgiKubeJSCompat. Their configs and all pack references are removed.
 
 Add Hourglass 1.2.1.1 for Forge 1.20/1.20.1 on both client and server, pinned to
 Modrinth version `G7VDa3zX` with SHA-512. It is dependency-free and controls day
@@ -23,7 +22,7 @@ Hourglass server settings live in `<world>/serverconfig/hourglass-server.toml`;
 Forge copies `defaultconfigs/hourglass-server.toml` only when creating a world.
 Existing worlds need that file copied into their `serverconfig` directory while
 stopped. The pack test requires `hourglass` in the live mod registry and rejects
-the two retired mod ids. A spatial `/evileye showcase` section is not used: time
+all four retired mod ids. A spatial `/evileye showcase` section is not used: time
 speed has no bounded build fixture or client-rendering surface.
 
 ## 2026-10-25 - Roundwood 0.13.3

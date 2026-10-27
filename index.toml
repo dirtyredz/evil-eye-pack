@@ -1573,10 +1573,6 @@ file = "config/connectivity.json"
 hash = "d1f6a792a03e4b2ccec19ba00098db7d4c47fa3f3888b534cba2247a045cfd64"
 
 [[files]]
-file = "config/corgilib/announcement_config.json5"
-hash = "37f3bbf0adb04001cfb813938d4ace3c4d8f62021dbffecc562f2c1ebcfae56c"
-
-[[files]]
 file = "config/cosmeticarmorreworked-client.toml"
 hash = "000b9988ecbe8b294dc3577d1867b09954e237775b3a252af45df0b4cb2c591c"
 
@@ -4189,16 +4185,6 @@ metafile = true
 [[files]]
 file = "mods/controlling.pw.toml"
 hash = "4063abe583282834b2f78e3b3e6b9ee4d231a680f74c020e405a4ef196f21ee4"
-metafile = true
-
-[[files]]
-file = "mods/corgikubejscompat.pw.toml"
-hash = "8337b8acbb360f6852b928170a5aab41d5b4e4b28b4e9892a0eef0d2354a7e02"
-metafile = true
-
-[[files]]
-file = "mods/corgilib.pw.toml"
-hash = "74aeec9534ce02a06fdfe3c04d60f944eead173967dc88ac0592f96c7f8a0119"
 metafile = true
 
 [[files]]

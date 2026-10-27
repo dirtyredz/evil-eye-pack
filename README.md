@@ -17,7 +17,6 @@ mention REI describe how those lists were first built and were migrated to EMI u
 
 - **Roundwood 0.13.3** adds round and arched doors, windows with Cross Beams, ordinary/keyhole archways and Universal Trim, with in-world material and dye styling. Its own `/roundwood showcase` builds a labelled display (see [showcases](docs/showcases.md#roundwood-native-showcase)).
 - **Hourglass 1.2.1.1** slows daytime to half speed while night remains at vanilla speed. Its optional smooth-sleep feature is disabled, so beds keep vanilla sleep behavior.
-- **CorgiKubeJSCompat 1.0.1** completes CorgiLib registry initialization before KubeJS enumerates registries, addressing the intermittent startup crash. Normal-launch confirmation is pending (Docket `dk-e9c3d82d`).
 - **FlatWorldFix 1.0.0** preserves a chosen non-default world type, such as Superflat, over datapack overworld overrides. Default worlds keep Terralith. It only affects worlds created while installed; existing saves are untouched.
 - Create contraption storage: Create: Compatible Storage 2.14.0 adds Iron Chests support; Create: Storage Drawers Compat 1.1.0 adds mounted drawer storage and manual access. Both accompany Create 6.0.8 (see `docs/DECISIONS.md` and `docs/GOTCHAS.md`).
 

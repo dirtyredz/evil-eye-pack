@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "removedMods": ["alltheores", "allthecompressed", "almostunified", "simplecorelib", "enhancedcelestials", "dataanchor"],
+  "removedMods": ["alltheores", "allthecompressed", "almostunified", "simplecorelib", "enhancedcelestials", "dataanchor", "corgilib", "corgikubejscompat"],
   "requiredMods": ["hourglass"],
   "curatedLists": ["creative.json", "minecolonies-eggs.json"],
   "exclude": {
