@@ -1,5 +1,23 @@
 # Architecture
 
+## Mod map
+
+`scripts/mod-map/build.ps1` wraps `tools/mod_map/build.mjs` with the standard
+owner log contract. `inventory.cjs` validates `.pw.toml` pins, reads Forge TOML
+through `toml.cjs`, and traverses declared jar-in-jar metadata. `model.cjs` builds
+the mandatory graph, condenses cycles and computes each top's exclusive and
+shared dependencies. Physical multi-mod jars remain indivisible; duplicate
+external/embedded mod IDs retain provider provenance and one timing attribution.
+
+`capture.cjs` reuses showcase's offline preparer and idle-host guard, pack-test's
+cached-world copy and registry collector, and server-smoke's JVM supervision and
+shutdown. Only the disposable server gets a narrow Forge TRACE logger and the
+registry snapshot callback. `timing.cjs` pairs boundaries before `Done`;
+`page.cjs` renders the graph with inline styles/controls. `run.cjs` owns artifact
+placement, input identity checks and saved-evidence replay. No installed jar,
+input cache or instance is changed. [Development](development.md#mod-map) covers
+commands and [Gotchas](GOTCHAS.md#mod-map-timing) defines the timing limits.
+
 ## Showcases
 
 `kubejs/server_scripts/showcase/` separates pure bounded plans/registry/layout

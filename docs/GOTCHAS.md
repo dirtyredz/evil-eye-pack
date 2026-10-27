@@ -1,5 +1,39 @@
 # Gotchas
 
+## Mod map timing
+
+- Forge 47.4.10 DEBUG logs expose container creation and aggregate deferred queues,
+  not paired per-mod durations. Inspection of the installed `FMLModContainer`
+  bytecode (`javap -c -p`) confirmed TRACE pairs: `Loading/Loaded mod instance`,
+  `Injecting/Completed Automatic event subscribers`, and `Firing/Fired event for
+  modid`. Mod-map enables just that logger at TRACE in its disposable server.
+- Pair by mod ID, thread and exact event identity, before `Done`; never charge a
+  gap between unrelated messages to a mod. Dates handle midnight. Timestamps have
+  millisecond precision, so measured zero is possible; missing pairs are warnings.
+- Construction, subscriber registration and event-handler elapsed time exclude
+  deferred work after event return, much resource loading, discovery, mixins and
+  world loading. Parallel workers overlap, and class-loading waits may be charged
+  to whichever constructor triggered them. Sums are not exclusive wall time and
+  cannot predict the time saved by removal. TRACE adds overhead; this is one boot,
+  not a benchmark. Client-side startup/render costs cannot be measured here.
+- Exact cached worlds are keyed by jar names and seed. An explicitly supplied older
+  cached world is copied, never modified in place; its different mod-set provenance
+  remains visible. This avoids fresh spawn generation but can produce missing-mod
+  warnings. A missing exact cache without `-World` fails before starting Java.
+- Mandatory dependency graphs do not capture KubeJS recipes, optional integration
+  code or saved-world requirements (notably Terralith). A nested dependency is a
+  removal candidate, not proof it is safe to delete. Embedded mods remain inside
+  provider jars; multi-mod jars cannot be split by this report.
+- First capture (2026-10-27, Valhalla, copied older cached world): 48.993 s from
+  JVM spawn to `Done`, 192 logged mod IDs with paired measurements and no unmatched
+  pairs. The heaviest top group was Steam 'n' Rails (4.352 s). These numbers describe
+  that instrumented boot only. GeckoLib occurs externally and embedded: the map
+  coalesces the ID for timing and retains provider provenance rather than counting
+  two runtime mods. Witch Huts and Kotlin for Forge have no root Forge `mods.toml`;
+  their physical jars remain visible with unmeasured cost.
+
+## Gameplay and showcases
+
 - **Roundwood 0.13.3 Cross Beams are attachments.** The native showcase's sample
   persists `WindowCrossBeams` with a `Front` compound on `roundwood:round_window`;
   searching only legacy `_cross` block IDs falsely reports it missing. Its

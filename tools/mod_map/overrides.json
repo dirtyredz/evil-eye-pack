@@ -1,0 +1,6 @@
+{
+  "terralith": { "kind": "worldgen", "description": "Overworld biome and terrain overhaul; existing pack worlds can depend on its saved biome settings.", "reason": "docs/GOTCHAS.md: Terralith is baked into existing worlds" },
+  "modernfix": { "kind": "performance", "reason": "Mod purpose: loading and memory optimizations" },
+  "ferritecore": { "kind": "performance", "reason": "Mod purpose: memory optimization" },
+  "canary": { "kind": "performance", "reason": "Mod purpose: server tick optimizations" }
+}

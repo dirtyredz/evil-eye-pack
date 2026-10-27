@@ -78,6 +78,65 @@ downloads. [Showcases](showcases.md) covers commands, layout, baseline compariso
 and adding a section with its check. This targeted live fixture check is the
 showcase acceptance run; do not also run the unrelated full pack-test tier.
 
+## Mod map
+
+From any working directory, invoke the checkout's `scripts/mod-map/build.ps1`
+(PowerShell `-File` also works). `-DryRun` verifies the pinned jar inventory and
+describes the action without a boot or artifact writes; logs are still written.
+Node 22 is required; no packages, installers or downloads are used.
+
+```powershell
+scripts/mod-map/build.ps1 -DryRun
+scripts/mod-map/build.ps1
+# If the exact mod-set world cache is absent, explicitly select an older cached
+# world to COPY into the disposable server; the report records this limitation:
+scripts/mod-map/build.ps1 -World C:/Users/dirty/projects/artifacts/evil-eye-pack/pack-test/cache/worlds/2497b2d8a8270a64/smoke-world
+# Re-render the same boot after a presentation change, without another JVM:
+scripts/mod-map/build.ps1 -Evidence C:/Users/dirty/projects/artifacts/evil-eye-pack/mod-map/runs/<timestamp>
+```
+
+Outputs are `artifacts/evil-eye-pack/mod-map/mod-map.html` and
+`mod-map-<timestamp>.html`, both complete offline pages. Raw trace, registry
+snapshot, boot/provenance records and the stopped disposable server remain in
+`mod-map/runs/<timestamp>/`. `-Out` selects another directory under the artifacts
+root. Owner logs are under `.tmp/owner-runs/`; Node logs under `.tmp/logs/`.
+The script ends with `OK/FAILED (exit N) log: <path>`.
+
+Jar discovery searches Evil Eye Local and the pack-test staged server, accepting
+only bytes matching this checkout's `.pw.toml` hashes. `-Mods` and `-Cache`
+override those read-only inputs. Missing pins fail rather than silently dropping
+mods. The full client inventory is mapped; only server-compatible jars are booted.
+The local offline mode reuses showcase preparation, pack-test world copying and
+registry collection, and server-smoke supervision. It waits for an idle Minecraft
+JVM slot (up to 45 minutes) and takes a mod-map lock. This explicit local capture
+avoids changing ANU's shared stage/logging or triggering remote provisioning.
+It stops its JVM after `Done` and the registry snapshot. It does not run the full
+pack-test acceptance suite. `-Evidence` rejects mismatched index/jar pins.
+
+Top groups have no mandatory incoming dependencies. Multi-mod jars are indivisible;
+cycles are grouped. Exclusive dependencies nest under their top; shared dependencies
+list all transitive top users. Jar-in-jar metadata is traversed; embedded mods cannot
+be deleted separately. Optional dependencies are listed but do not create removal
+edges. Dependency roles are independent of kind: Create can be shared content.
+Kinds use side metadata, descriptions and live namespace registry counts, with
+reasoned corrections in `tools/mod_map/overrides.json`. Zero registrations plus
+mandatory users is a library heuristic, not a guarantee.
+
+Timing is the sum of paired Forge TRACE intervals for construction, subscriber
+registration and synchronous event dispatch before `Done`. It is partial elapsed
+work, not CPU time or estimated savings; concurrent intervals overlap. Unknown
+and client-only costs remain unmeasured. See [timing caveats](GOTCHAS.md#mod-map-timing).
+
+Focused fast gate (no build or lint command exists for this Node-only tooling):
+
+```powershell
+node --test tools/mod_map/tests/*.cjs tools/script-run/*.test.mjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs
+node tools/packwiz/rehash.cjs --dry-run
+node tools/packwiz/verify_hashes.cjs
+git diff --check
+dk check
+```
+
 ## Malware guard
 
 All commands use Node 22 and return JSON. Exit 0 means no unexplained findings,
