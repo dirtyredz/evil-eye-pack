@@ -59,13 +59,33 @@ test('bridge add-on belongs to two families and is visibly marked shared in both
   assert.deepEqual([...model.memberships.get('bridge')].sort(), ['ae2', 'ars']);
   assert.equal(model.families.filter(f => f.members.some(n => n.key === 'bridge')).length, 2);
   const html = render({ nodes, ...model, timing: { mods: {}, warnings: [] }, registries: regs, boot: { wallSeconds: 1 }, warnings: [], identity: {}, pins: [], created: 'now' });
-  assert.match(html, /shared · also under ae2/);
-  assert.match(html, /shared · also under ars/);
+  assert.match(html, /shared ×2 · also used by: ae2/);
+  assert.match(html, /shared ×2 · also used by: ars/);
 });
 test('library with content users never becomes a family root', () => {
   const nodes = [node('framework'), node('one', ['framework']), node('two', ['framework'])];
   const model = familyModel(nodes, registries(['one', 'two']), { framework: { kind: 'library/API', reason: 'fixture framework' } });
   assert.equal(model.families.length, 0);
+});
+test('shared library nests under every family user, counts in each total, and orphan is a compact trim row', () => {
+  const nodes = [node('alpha'), node('alpha-addon', ['alpha', 'shared-lib']), node('alpha-second', ['alpha', 'shared-lib']), node('beta'), node('beta-addon', ['beta', 'shared-lib']), node('shared-lib'), node('orphan-lib')];
+  const regs = registries(['alpha', 'alpha-addon', 'alpha-second', 'beta', 'beta-addon']);
+  const overrides = {
+    'shared-lib': { kind: 'library/API', reason: 'fixture library' },
+    'orphan-lib': { kind: 'library/API', reason: 'fixture orphan' }
+  };
+  const model = familyModel(nodes, regs, overrides);
+  assert.deepEqual(model.families.map(f => f.libraries.map(n => n.key)), [['shared-lib'], ['shared-lib']]);
+  assert.deepEqual(model.unusedLibraries.map(n => n.key), ['orphan-lib']);
+  assert.ok(!model.ungrouped.some(n => n.key.endsWith('-lib')));
+  const timing = { mods: { alpha: { ms: 10 }, beta: { ms: 20 }, 'shared-lib': { ms: 50 } }, warnings: [] };
+  const html = render({ nodes, ...model, timing, registries: regs, boot: { wallSeconds: 1 }, warnings: [], identity: {}, pins: [], created: 'now' }, overrides);
+  assert.equal((html.match(/shared-lib<\/strong>/g) || []).length, 3);
+  assert.equal((html.match(/shared ×2 · also used by:/g) || []).length, 3);
+  assert.match(html, /alpha[\s\S]*0\.060 s/);
+  assert.match(html, /beta[\s\S]*0\.070 s/);
+  assert.doesNotMatch(html, /Shared libraries/);
+  assert.match(html, /Unused libraries <span class="candidate">free trims · 1/);
 });
 const line = (time, thread, message) => `[27Oct2026 ${time}] [${thread}/TRACE] [net.minecraftforge.fml.javafmlmod.FMLModContainer/LOADING]: ${message}`;
 test('TRACE pairs parallel workers, repeated event identities, midnight and unknown intervals', () => {

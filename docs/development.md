@@ -115,8 +115,9 @@ pack-test acceptance suite. `-Evidence` rejects mismatched index/jar pins.
 
 Family roots are content mods with mandatory content add-ons. Add-ons follow
 mandatory dependencies transitively and nest under their immediate add-on or base;
-a bridge appears in every family it belongs to. Libraries used only by one family
-nest there, while libraries with family or outside users stay shared. Optional
+a bridge appears in every family it belongs to. Every mandatory library nests beneath
+its user in each applicable family; shared badges name the other families. Libraries
+with no mandatory users appear only in the collapsed unused-libraries row. Optional
 dependencies are displayed but never create membership. Suites whose metadata does
 not express the player-facing family (currently MineColonies and Macaw's) use
 reasoned data overrides rather than code special cases. Kinds use side metadata,

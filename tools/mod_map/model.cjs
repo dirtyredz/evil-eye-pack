@@ -62,7 +62,7 @@ function familyModel(nodes, registries, overrides = {}) {
   const rootNodes = new Set([...naturalRoots, ...nodes.filter(n => settings(n).familyRoot === true)]);
   const specs = new Map();
   const ensure = (id, name) => {
-    if (!specs.has(id)) specs.set(id, { key: id, name, roots: new Set(), members: new Set(), libraries: [], shared: [] });
+    if (!specs.has(id)) specs.set(id, { key: id, name, roots: new Set(), members: new Set(), libraries: [] });
     return specs.get(id);
   };
   const familyId = n => settings(n).family || n.mods[0]?.id || n.key;
@@ -113,29 +113,23 @@ function familyModel(nodes, registries, overrides = {}) {
       libraryOwners.get(key).add(spec.key);
     }
   }
-  const outsideLibraries = new Set();
-  for (const n of nodes.filter(n => memberships.get(n.key).size === 0 && !isLibrary(n))) {
-    for (const key of dependencyClosure([n.key])) if (libraryOwners.has(key)) outsideLibraries.add(key);
-  }
-  const sharedLibraries = [];
+  const libraryFamilies = new Map();
   for (const [key, owners] of libraryOwners) {
     const n = byKey.get(key);
-    if (owners.size === 1 && !outsideLibraries.has(key)) specs.get([...owners][0]).libraries.push(n);
-    else {
-      sharedLibraries.push({ node: n, families: [...owners] });
-      for (const id of owners) specs.get(id).shared.push(key);
-    }
+    libraryFamilies.set(key, new Set(owners));
+    for (const id of owners) specs.get(id).libraries.push(n);
   }
+  const allLibraries = nodes.filter(isLibrary);
+  const unusedLibraries = allLibraries.filter(n => !dependedOn.has(n.key));
   const assigned = new Set([...memberships].filter(([, ids]) => ids.size).map(([key]) => key));
   for (const spec of specs.values()) for (const n of spec.libraries) assigned.add(n.key);
-  for (const item of sharedLibraries) assigned.add(item.node.key);
+  for (const n of allLibraries) assigned.add(n.key);
   const families = [...specs.values()].map(spec => ({ ...spec,
     roots: [...spec.roots].map(key => byKey.get(key)).filter(Boolean),
     members: [...spec.members].map(key => byKey.get(key)).filter(Boolean),
-    libraries: spec.libraries.sort((a, b) => a.name.localeCompare(b.name)),
-    shared: spec.shared.map(key => byKey.get(key)).filter(Boolean) }))
+    libraries: spec.libraries.sort((a, b) => a.name.localeCompare(b.name)) }))
     .filter(f => f.roots.length).sort((a, b) => a.name.localeCompare(b.name));
-  return { families, sharedLibraries: sharedLibraries.sort((a, b) => a.node.name.localeCompare(b.node.name)),
+  return { families, libraryFamilies, unusedLibraries: unusedLibraries.sort((a, b) => a.name.localeCompare(b.name)),
     ungrouped: nodes.filter(n => !assigned.has(n.key)).sort((a, b) => a.name.localeCompare(b.name)), memberships, classifications };
 }
 module.exports = { connect, classify, cost, familyModel };
