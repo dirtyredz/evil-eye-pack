@@ -3,6 +3,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { parseMods } = require('../toml.cjs');
 const { connect, classify, cost, familyModel } = require('../model.cjs');
+const { categorize, FALLBACK_CATEGORY } = require('../categories.cjs');
 const { parseTiming } = require('../timing.cjs');
 const { render } = require('../page.cjs');
 const node = (key, dependencies = []) => ({ key, name: key, mods: [{ id: key, name: key, description: 'A mod', dependencies: [] }], dependencies, bundled: [], side: 'both' });
@@ -86,6 +87,32 @@ test('shared library nests under every family user, counts in each total, and or
   assert.match(html, /beta[\s\S]*0\.070 s/);
   assert.doesNotMatch(html, /Shared libraries/);
   assert.match(html, /Unused libraries <span class="candidate">free trims · 1/);
+});
+test('every family lands in exactly one category', () => {
+  const nodes = [node('alpha'), node('alpha-addon', ['alpha']), node('beta'), node('beta-addon', ['beta'])];
+  const model = familyModel(nodes, registries(nodes.map(n => n.key)));
+  const categories = categorize(model, { alpha: 'Tech & Automation', beta: 'Magic' }, nodes, { mods: {} }, cost);
+  const placed = categories.flatMap(category => category.entries.filter(entry => entry.type === 'family').map(entry => entry.value.key));
+  assert.deepEqual(placed.sort(), model.families.map(family => family.key).sort());
+  assert.equal(new Set(placed).size, placed.length);
+});
+test('unmapped families and standalone mods remain visible in Other / Uncategorised', () => {
+  const nodes = [node('known'), node('known-addon', ['known']), node('loose')];
+  const model = familyModel(nodes, registries(nodes.map(n => n.key)));
+  const categories = categorize(model, {}, nodes, { mods: {} }, cost);
+  const other = categories.find(category => category.name === FALLBACK_CATEGORY);
+  assert.deepEqual(other.entries.map(entry => entry.type === 'family' ? entry.value.key : entry.value.key).sort(), ['known', 'loose']);
+  assert.deepEqual(other.unmapped.sort(), ['known', 'loose']);
+});
+test('category totals count a shared library only once', () => {
+  const nodes = [node('alpha'), node('alpha-addon', ['alpha', 'shared-lib']), node('beta'), node('beta-addon', ['beta', 'shared-lib']), node('shared-lib')];
+  const regs = registries(nodes.filter(n => n.key !== 'shared-lib').map(n => n.key));
+  const model = familyModel(nodes, regs, { 'shared-lib': { kind: 'library/API', reason: 'fixture library' } });
+  const timing = { mods: { alpha: { ms: 10 }, beta: { ms: 20 }, 'shared-lib': { ms: 50 } } };
+  const categories = categorize(model, { alpha: 'Tech & Automation', beta: 'Tech & Automation' }, nodes, timing, cost);
+  const tech = categories.find(category => category.name === 'Tech & Automation');
+  assert.equal(tech.categoryCost.ms, 80);
+  assert.equal(tech.categoryCost.measured, 3);
 });
 const line = (time, thread, message) => `[27Oct2026 ${time}] [${thread}/TRACE] [net.minecraftforge.fml.javafmlmod.FMLModContainer/LOADING]: ${message}`;
 test('TRACE pairs parallel workers, repeated event identities, midnight and unknown intervals', () => {

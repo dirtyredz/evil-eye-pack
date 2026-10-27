@@ -10,6 +10,10 @@ each applicable family, and separates family-exclusive from shared libraries.
 Player-facing suites whose metadata does not encode a base relationship use
 reasoned entries in `overrides.json`. Physical multi-mod jars remain indivisible;
 duplicate external/embedded mod IDs retain provider provenance and one timing attribution.
+`categories.cjs` places each family and standalone mod through the checked-in
+`categories.json` map, with an explicit Other / Uncategorised fallback. Category
+timing de-duplicates member and library nodes within the category; the existing
+family tree remains responsible for showing libraries beneath each user.
 
 `capture.cjs` reuses showcase's offline preparer and idle-host guard, pack-test's
 cached-world copy and registry collector, and server-smoke's JVM supervision and

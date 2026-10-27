@@ -126,6 +126,12 @@ descriptions and live namespace registry counts, with corrections in
 heuristic, not a guarantee. Family totals include shared add-ons in each applicable
 family; the page-wide attributed total de-duplicates every mod ID.
 
+Every family and standalone mod is assigned to a top-level purpose category by
+`tools/mod_map/categories.json`; unknown future IDs remain visible under Other /
+Uncategorised. Category totals de-duplicate shared members and libraries within
+that category. The compact page starts with both category and family rows collapsed,
+and keeps mandatory libraries nested beneath their users.
+
 Timing is the sum of paired Forge TRACE intervals for construction, subscriber
 registration and synchronous event dispatch before `Done`. It is partial elapsed
 work, not CPU time or estimated savings; concurrent intervals overlap. Unknown

@@ -4,6 +4,7 @@ const path = require('node:path');
 const env = require('../server_smoke/env.cjs');
 const { inventory } = require('./inventory.cjs');
 const { connect, familyModel, cost } = require('./model.cjs');
+const { categorize } = require('./categories.cjs');
 const { parseTiming } = require('./timing.cjs');
 const { render } = require('./page.cjs');
 const { capture } = require('./capture.cjs');
@@ -49,12 +50,15 @@ async function run(argv, { dryRun = false, log = console.log } = {}) {
   if (!Object.keys(timing.mods).length || timing.logToDoneSeconds === null) throw new Error('No paired TRACE measurements or Done marker; refusing an empty timing report');
   const registries = JSON.parse(fs.readFileSync(path.join(evidence, 'registries.json'), 'utf8'));
   const overrides = require('./overrides.json');
+  const categoryMapping = require('./categories.json');
   const data = { ...input, ...familyModel(input.nodes, registries, overrides), timing, registries, boot, identity, evidence, created: stamp };
+  data.categories = categorize(data, categoryMapping, data.nodes, timing, cost);
   const html = render(data, overrides);
   fs.mkdirSync(out, { recursive: true });
   fs.writeFileSync(path.join(out, `mod-map-${stamp}.html`), html);
   fs.writeFileSync(path.join(out, 'mod-map.html'), html);
   const families = data.families.map(f => ({ name: f.name, members: f.members.length, ...cost([...f.members, ...f.libraries], timing) }));
-  log(JSON.stringify({ html: path.join(out, 'mod-map.html'), evidence, bootSeconds: boot.wallSeconds, measuredMods: Object.keys(timing.mods).length, warnings: [...input.warnings, ...timing.warnings], families }, null, 2));
+  const categories = data.categories.map(category => ({ name: category.name, members: category.memberCount, ...category.categoryCost }));
+  log(JSON.stringify({ html: path.join(out, 'mod-map.html'), evidence, bootSeconds: boot.wallSeconds, measuredMods: Object.keys(timing.mods).length, warnings: [...input.warnings, ...timing.warnings], categories, families }, null, 2));
 }
 module.exports = { run };
