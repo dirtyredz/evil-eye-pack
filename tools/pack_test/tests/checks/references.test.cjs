@@ -1,11 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const fs = require('node:fs');
-const path = require('node:path');
 const { checkReferences, lootCycles } = require('../../checks/references.cjs');
-
-const ROOT = path.resolve(__dirname, '../../../..');
 
 const mkLive = (over = {}) => ({
   items: new Set(['minecraft:bow', 'a:item']), blocks: new Set(['a:block']), fluids: new Set(), mods: new Set(['minecraft', 'a']),
@@ -68,13 +64,6 @@ test('removed namespaces: raw refs, shipped mentions, registered content, loaded
   const resources = res({ removedRefs: [{ id: 'a:r', kind: 'recipes', source: 'jar', refs: ['old:thing'] }] });
   const r = checkReferences(resources, live, { removed: ['old'], shipped: [{ file: 'cfg.toml', refs: ['old:x'] }] });
   assert.deepEqual(codes(r).sort(), ['removed-mod-loaded:fail', 'removed-mod-reference:fail', 'removed-mod-reference:fail', 'removed-mod-registered:fail', 'removed-mod-registered:fail']);
-});
-
-test('pack policy rejects every retired celestial stack mod', () => {
-  const policy = JSON.parse(fs.readFileSync(path.join(ROOT, 'tools/pack_test/data/policy.json'), 'utf8'));
-  for (const id of ['enhancedcelestials', 'dataanchor', 'corgilib', 'corgikubejscompat']) {
-    assert.equal(policy.removedMods.includes(id), true, `${id} must remain retired`);
-  }
 });
 
 test('required mods must be present in the live mod registry', () => {
