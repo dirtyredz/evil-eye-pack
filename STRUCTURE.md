@@ -75,7 +75,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `config/` — mod configs installed as plain files
 - `config/defaultoptions/keybindings.txt` — Default Options default keymap (new instances only; see GOTCHAS)
 - `config/emi-curation/` — EMI curation data: `rules.json`, four explicit item lists, `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
-- `defaultconfigs/` — Forge default (per-world) configs
+- `defaultconfigs/` — Forge default (per-world) configs; Hourglass sets half-speed day, vanilla-speed night and vanilla sleeping for new worlds
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
 - `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter
 - `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the mark-as-decor key handler and shared UI infrastructure (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.

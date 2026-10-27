@@ -2357,6 +2357,10 @@ file = "defaultconfigs/ftbessentials-server.snbt"
 hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
+file = "defaultconfigs/hourglass-server.toml"
+hash = "29c12c8b9c71b426585b7cf4bd761919e0495d19ed91a31c41cffde91eedf34b"
+
+[[files]]
 file = "kubejs/assets/emi/index/stacks/dedup.json"
 hash = "e5577fca78dfd771e1b6bd97ffd6041508d21e19b1246239173917b713196c12"
 
@@ -4318,11 +4322,6 @@ hash = "23a3b030c2dce29501f22bd94204aed9e2daa63ac786dc57232fc2ac076a05d8"
 metafile = true
 
 [[files]]
-file = "mods/data-anchor.pw.toml"
-hash = "481e252f80a15ee45ad5feb27047a20d3eaeee077dbf56fd684e682cc02975d8"
-metafile = true
-
-[[files]]
 file = "mods/default-options.pw.toml"
 hash = "6311134242af3f639923e825caea40821c7e7ee7caadf4105234f5d7fa44ec8b"
 metafile = true
@@ -4380,11 +4379,6 @@ metafile = true
 [[files]]
 file = "mods/endertanks.pw.toml"
 hash = "44b9b79812f7b495daed814dd4403564708b66791fd205a8187e0c671da3e570"
-metafile = true
-
-[[files]]
-file = "mods/enhanced-celestials.pw.toml"
-hash = "a5306e8b8818ae6ade2941a0a3caed2b56756aeb812997cdb6210dc8ecb1b372"
 metafile = true
 
 [[files]]
@@ -4525,6 +4519,11 @@ metafile = true
 [[files]]
 file = "mods/handcrafted.pw.toml"
 hash = "2143dc055ae837c6a4de5da8dd228cacf73dbe872a5c603a28f5e623e22ea5e6"
+metafile = true
+
+[[files]]
+file = "mods/hourglass.pw.toml"
+hash = "33c13017e0a59e5743ac644cf37496622a096c925b708e3bd39de676b1c2fc00"
 metafile = true
 
 [[files]]

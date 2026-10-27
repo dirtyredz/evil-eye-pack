@@ -1,0 +1,41 @@
+[time]
+	# Day runs at half vanilla speed; Hourglass defines day as 23500 through 12500.
+	daySpeed = 0.5
+
+	# Night keeps vanilla speed; Hourglass defines night as 12500 through 23500.
+	nightSpeed = 1.0
+
+	[time.effects]
+		weatherEffect = "SLEEPING"
+		randomTickEffect = "NEVER"
+		baseRandomTickSpeed = 3
+		potionEffect = "NEVER"
+		hungerEffect = "NEVER"
+		blockEntityEffect = "NEVER"
+
+[sleep]
+	# Keep Minecraft's ordinary sleep and night-skip behavior.
+	enableSleepFeature = false
+	sleepSpeedMax = 110.0
+	sleepSpeedMin = 1.0
+	sleepSpeedAll = -1.0
+	sleepSpeedCurve = 0.3
+	clearWeatherOnWake = true
+	displayBedClock = true
+
+	[sleep.messages]
+
+		[sleep.messages.morning]
+			message = "§e§oTempus fugit!"
+			type = "GAME_INFO"
+			target = "DIMENSION"
+
+		[sleep.messages.enterBed]
+			message = "${player} is now sleeping. [${sleepingPlayers}/${totalPlayers}]"
+			type = "GAME_INFO"
+			target = "DIMENSION"
+
+		[sleep.messages.leaveBed]
+			message = "${player} has left their bed. [${sleepingPlayers}/${totalPlayers}]"
+			type = "GAME_INFO"
+			target = "DIMENSION"

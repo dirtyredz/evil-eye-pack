@@ -74,9 +74,13 @@ function checkRemoved(resources, shipped, live, removed, findings) {
   for (const m of removed) if (live.mods.has(m)) findings.push(finding('removed-mod-loaded', m, null, 'a removed mod is still loaded'));
 }
 
+function checkRequired(live, required, findings) {
+  for (const m of required) if (!live.mods.has(m)) findings.push(finding('required-mod-missing', m, null, 'a pack-required mod did not load'));
+}
+
 // live: { items, blocks, fluids, mods, lootTables (Sets), itemTags, blockTags, fluidTags (Maps) }.
 // shipped: [{ file, refs }]. logged: { droppedTags, failedLoot } (Sets) already reported by the log check.
-function checkReferences(resources, live, { removed = [], shipped = [], logged = {} } = {}) {
+function checkReferences(resources, live, { removed = [], required = [], shipped = [], logged = {} } = {}) {
   const findings = [];
   const stats = {};
   const dropped = logged.droppedTags || new Set();
@@ -85,6 +89,7 @@ function checkReferences(resources, live, { removed = [], shipped = [], logged =
   checkTags(resources.tags.fluids || {}, live.fluids, live.fluidTags || new Map(), 'fluid', findings, stats, dropped);
   checkLoot(resources.loot, live, findings, stats, logged.failedLoot || new Set());
   checkRemoved(resources, shipped, live, removed, findings);
+  checkRequired(live, required, findings);
   for (const m of resources.malformed || []) {
     if (m.kind === 'recipes') continue; // reported by the recipe check
     findings.push(finding('resource-malformed-json', m.id, m.source, `${m.kind}: ${m.error}`));

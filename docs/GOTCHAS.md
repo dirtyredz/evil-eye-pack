@@ -69,6 +69,12 @@
 
 ## Mod updates and removals
 
+- **Hourglass's shipped server config applies automatically only to new worlds.**
+  Forge copies `defaultconfigs/hourglass-server.toml` into a world when it is
+  created. For an existing world, copy it to
+  `<world>/serverconfig/hourglass-server.toml` while the game/server is stopped.
+  The pack disables Hourglass's sleep feature so ordinary vanilla sleep remains.
+
 - **CorgiKubeJSCompat 1.0.1 hard-pins KubeJS 2001.6.5-build.26 and CorgiLib 4.0.3.5.** Check compatibility with it before updating either dependency; Forge enforces these exact versions. Both pack pins currently match. The compat mod initializes CorgiLib registries before KubeJS enumerates them.
 - **FlatWorldFix only affects worlds created while it is installed.** A chosen non-default world type (including Superflat) wins over datapack overworld overrides; default worlds retain Terralith. It does not change existing saves.
 

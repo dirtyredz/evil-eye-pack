@@ -66,6 +66,13 @@ test('removed namespaces: raw refs, shipped mentions, registered content, loaded
   assert.deepEqual(codes(r).sort(), ['removed-mod-loaded:fail', 'removed-mod-reference:fail', 'removed-mod-reference:fail', 'removed-mod-registered:fail', 'removed-mod-registered:fail']);
 });
 
+test('required mods must be present in the live mod registry', () => {
+  const missing = checkReferences(res(), mkLive(), { required: ['hourglass'] });
+  assert.deepEqual(codes(missing), ['required-mod-missing:fail']);
+  const loaded = checkReferences(res(), mkLive({ mods: new Set(['minecraft', 'a', 'hourglass']) }), { required: ['hourglass'] });
+  assert.deepEqual(loaded.findings, []);
+});
+
 test('malformed non-recipe resources fail; recipe ones are left to the recipe check', () => {
   const r = checkReferences(res({ malformed: [{ kind: 'recipes', id: 'a:r', source: 's', error: 'e' }, { kind: 'loot_tables', id: 'a:l', source: 's', error: 'bad' }] }), mkLive());
   assert.deepEqual(codes(r), ['resource-malformed-json:fail']);

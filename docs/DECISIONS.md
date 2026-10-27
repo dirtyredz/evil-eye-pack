@@ -2,6 +2,30 @@
 
 Newest first.
 
+## 2026-10-27 - Remove Enhanced Celestials and lengthen days
+
+Remove Enhanced Celestials 5.0.3.2 and its now-orphaned mandatory dependency
+Data Anchor 1.0.0.23. Inspection of every installed jar's `META-INF/mods.toml`
+found no other dependency on `dataanchor`. Keep CorgiLib 4.0.3.5 because the
+pack's CorgiKubeJSCompat 1.0.1 has an exact mandatory dependency on it and uses
+it to mitigate the known KubeJS registry-enumeration startup race. No config,
+KubeJS, showcase or content reference to Enhanced Celestials or Data Anchor
+remained outside their metafiles.
+
+Add Hourglass 1.2.1.1 for Forge 1.20/1.20.1 on both client and server, pinned to
+Modrinth version `G7VDa3zX` with SHA-512. It is dependency-free and controls day
+and night independently. The per-world default sets `daySpeed = 0.5` and
+`nightSpeed = 1.0`, making daylight roughly twice as long as night while leaving
+night at vanilla speed. `enableSleepFeature = false` keeps vanilla bed and
+night-skip behavior instead of Hourglass's optional smooth time acceleration.
+
+Hourglass server settings live in `<world>/serverconfig/hourglass-server.toml`;
+Forge copies `defaultconfigs/hourglass-server.toml` only when creating a world.
+Existing worlds need that file copied into their `serverconfig` directory while
+stopped. The pack test requires `hourglass` in the live mod registry and rejects
+the two retired mod ids. A spatial `/evileye showcase` section is not used: time
+speed has no bounded build fixture or client-rendering surface.
+
 ## 2026-10-25 - Roundwood 0.13.3
 
 Add the owner's [Roundwood release](https://github.com/dirtyredz/Roundwood/releases/tag/v0.13.3)

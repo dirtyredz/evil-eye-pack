@@ -58,7 +58,7 @@ function analyzeRun(runDir, { data = loadToolData(), log = () => {} } = {}) {
     deliberate: new Set(dedupCfg.sources.removeRecipes), parseErrors: logs ? logs.recipeFailures : new Map()
   }) : noStaged);
   sections.references = needCore || (resources ? checkReferences(resources, { ...snap.registries, itemTags: snap.itemTags, blockTags: snap.blockTags, fluidTags: snap.fluidTags }, {
-    removed: data.policy.removedMods, shipped: resources.shipped || [],
+    removed: data.policy.removedMods, required: data.policy.requiredMods, shipped: resources.shipped || [],
     logged: logs ? { droppedTags: logs.droppedTags, failedLoot: new Set(logs.lootFailures.keys()) } : {}
   }) : noStaged);
   sections.acquisition = needCore || incomplete(['recipes'], S) || (resources && dedupCfg ? checkAcquisition({
