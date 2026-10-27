@@ -21,41 +21,6 @@ function connect(nodes) {
   }
   return warnings;
 }
-// Strongly connected components keep multi-jar dependency cycles as one removal unit.
-function group(nodes) {
-  const map = new Map(nodes.map(n => [n.key, n]));
-  let next = 0; const indices = new Map(), low = new Map(), stack = [], active = new Set(), components = [];
-  function visit(key) {
-    indices.set(key, next); low.set(key, next++); stack.push(key); active.add(key);
-    for (const dep of map.get(key).dependencies) {
-      if (!map.has(dep)) continue;
-      if (!indices.has(dep)) { visit(dep); low.set(key, Math.min(low.get(key), low.get(dep))); }
-      else if (active.has(dep)) low.set(key, Math.min(low.get(key), indices.get(dep)));
-    }
-    if (low.get(key) === indices.get(key)) {
-      const members = []; let k;
-      do { k = stack.pop(); active.delete(k); members.push(map.get(k)); } while (k !== key);
-      components.push({ key, nodes: members, dependencies: new Set(), users: [] });
-    }
-  }
-  for (const n of nodes) if (!indices.has(n.key)) visit(n.key);
-  const owner = new Map(components.flatMap(c => c.nodes.map(n => [n.key, c])));
-  const incoming = new Set();
-  for (const c of components) for (const n of c.nodes) for (const d of n.dependencies) {
-    const dep = owner.get(d);
-    if (dep && dep !== c) { c.dependencies.add(dep); incoming.add(dep); }
-  }
-  const tops = components.filter(c => !incoming.has(c));
-  for (const top of tops) {
-    const seen = new Set();
-    function walk(c) { if (seen.has(c)) return; seen.add(c); c.users.push(top.key); for (const d of c.dependencies) walk(d); }
-    walk(top);
-  }
-  return { groups: tops.map(top => ({ key: top.key, name: top.nodes.map(n => n.name).join(' + '),
-    tops: top.nodes, exclusive: components.filter(c => c !== top && c.users.length === 1 && c.users[0] === top.key).flatMap(c => c.nodes),
-    shared: components.filter(c => c.users.length > 1 && c.users.includes(top.key)).flatMap(c => c.nodes.map(n => n.key)),
-    cycle: top.nodes.length > 1 })), shared: components.filter(c => c.users.length > 1).map(c => ({ nodes: c.nodes, users: c.users })) };
-}
 function classify(mod, node, dependedOn, registries, overrides = {}) {
   const override = overrides[mod.id];
   const counts = registries ? ['items', 'blocks', 'entities'].map(k => (registries[k] || []).filter(id => id.startsWith(mod.id + ':')).length) : null;
@@ -75,4 +40,102 @@ function cost(nodes, timing) {
   const measured = ids.filter(id => timing.mods[id]);
   return { ms: measured.length ? measured.reduce((sum, id) => sum + timing.mods[id].ms, 0) : null, measured: measured.length, expected: ids.length };
 }
-module.exports = { connect, group, classify, cost };
+function familyModel(nodes, registries, overrides = {}) {
+  const byKey = new Map(nodes.map(n => [n.key, n]));
+  const dependedOn = new Set(nodes.flatMap(n => n.dependencies));
+  const classifications = new Map(nodes.map(n => [n.key, n.mods.map(m => classify(m, n, dependedOn.has(n.key), registries, overrides))]));
+  const isContent = n => classifications.get(n.key).some(c => c.kind === 'content' || c.kind === 'worldgen');
+  const isLibrary = n => classifications.get(n.key).length > 0 && classifications.get(n.key).every(c => c.kind === 'library/API');
+  const settings = n => n.mods.map(m => overrides[m.id]).find(Boolean) || {};
+  const contentUsers = new Map(nodes.map(n => [n.key, []]));
+  for (const n of nodes.filter(isContent)) for (const key of n.dependencies) {
+    const dependency = byKey.get(key);
+    if (dependency && isContent(dependency)) contentUsers.get(key).push(n);
+  }
+
+  // Natural roots are content bases with content users, but not add-ons of another
+  // content mod. Overrides cover suites whose metadata does not express that shape.
+  const naturalRoots = nodes.filter(n => isContent(n)
+    && contentUsers.get(n.key).length
+    && !n.dependencies.some(key => byKey.has(key) && isContent(byKey.get(key)))
+    && settings(n).familyRoot !== false);
+  const rootNodes = new Set([...naturalRoots, ...nodes.filter(n => settings(n).familyRoot === true)]);
+  const specs = new Map();
+  const ensure = (id, name) => {
+    if (!specs.has(id)) specs.set(id, { key: id, name, roots: new Set(), members: new Set(), libraries: [], shared: [] });
+    return specs.get(id);
+  };
+  const familyId = n => settings(n).family || n.mods[0]?.id || n.key;
+  for (const root of rootNodes) {
+    const id = familyId(root), option = settings(root);
+    const spec = ensure(id, option.familyName || root.name);
+    spec.roots.add(root.key); spec.members.add(root.key);
+  }
+  for (const n of nodes) {
+    const option = settings(n);
+    if (!option.family) continue;
+    const spec = ensure(option.family, option.familyName || option.family);
+    spec.members.add(n.key);
+    if (option.familyRoot === true) spec.roots.add(n.key);
+  }
+
+  const rootsByKey = new Map();
+  for (const spec of specs.values()) for (const key of spec.roots) rootsByKey.set(key, spec.key);
+  const reachableFamilies = (start, visiting = new Set()) => {
+    if (visiting.has(start.key)) return new Set();
+    const found = new Set(rootsByKey.has(start.key) ? [rootsByKey.get(start.key)] : []);
+    const next = new Set(visiting); next.add(start.key);
+    for (const key of start.dependencies) {
+      const dependency = byKey.get(key);
+      if (dependency) for (const id of reachableFamilies(dependency, next)) found.add(id);
+    }
+    return found;
+  };
+  for (const n of nodes.filter(isContent)) for (const id of reachableFamilies(n)) ensure(id, id).members.add(n.key);
+
+  const memberships = new Map(nodes.map(n => [n.key, new Set()]));
+  for (const spec of specs.values()) for (const key of spec.members) memberships.get(key)?.add(spec.key);
+  const dependencyClosure = starts => {
+    const seen = new Set(), pending = [...starts];
+    while (pending.length) {
+      const key = pending.pop();
+      const n = byKey.get(key);
+      if (!n) continue;
+      for (const dependency of n.dependencies) if (!seen.has(dependency)) { seen.add(dependency); pending.push(dependency); }
+    }
+    return seen;
+  };
+  const libraryOwners = new Map();
+  for (const spec of specs.values()) for (const key of dependencyClosure(spec.members)) {
+    const n = byKey.get(key);
+    if (n && isLibrary(n)) {
+      if (!libraryOwners.has(key)) libraryOwners.set(key, new Set());
+      libraryOwners.get(key).add(spec.key);
+    }
+  }
+  const outsideLibraries = new Set();
+  for (const n of nodes.filter(n => memberships.get(n.key).size === 0 && !isLibrary(n))) {
+    for (const key of dependencyClosure([n.key])) if (libraryOwners.has(key)) outsideLibraries.add(key);
+  }
+  const sharedLibraries = [];
+  for (const [key, owners] of libraryOwners) {
+    const n = byKey.get(key);
+    if (owners.size === 1 && !outsideLibraries.has(key)) specs.get([...owners][0]).libraries.push(n);
+    else {
+      sharedLibraries.push({ node: n, families: [...owners] });
+      for (const id of owners) specs.get(id).shared.push(key);
+    }
+  }
+  const assigned = new Set([...memberships].filter(([, ids]) => ids.size).map(([key]) => key));
+  for (const spec of specs.values()) for (const n of spec.libraries) assigned.add(n.key);
+  for (const item of sharedLibraries) assigned.add(item.node.key);
+  const families = [...specs.values()].map(spec => ({ ...spec,
+    roots: [...spec.roots].map(key => byKey.get(key)).filter(Boolean),
+    members: [...spec.members].map(key => byKey.get(key)).filter(Boolean),
+    libraries: spec.libraries.sort((a, b) => a.name.localeCompare(b.name)),
+    shared: spec.shared.map(key => byKey.get(key)).filter(Boolean) }))
+    .filter(f => f.roots.length).sort((a, b) => a.name.localeCompare(b.name));
+  return { families, sharedLibraries: sharedLibraries.sort((a, b) => a.node.name.localeCompare(b.node.name)),
+    ungrouped: nodes.filter(n => !assigned.has(n.key)).sort((a, b) => a.name.localeCompare(b.name)), memberships, classifications };
+}
+module.exports = { connect, classify, cost, familyModel };

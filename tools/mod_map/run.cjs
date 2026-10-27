@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const env = require('../server_smoke/env.cjs');
 const { inventory } = require('./inventory.cjs');
-const { connect, group, cost } = require('./model.cjs');
+const { connect, familyModel, cost } = require('./model.cjs');
 const { parseTiming } = require('./timing.cjs');
 const { render } = require('./page.cjs');
 const { capture } = require('./capture.cjs');
@@ -48,12 +48,13 @@ async function run(argv, { dryRun = false, log = console.log } = {}) {
   const timing = parseTiming(fs.readFileSync(path.join(evidence, 'trace.log'), 'utf8'));
   if (!Object.keys(timing.mods).length || timing.logToDoneSeconds === null) throw new Error('No paired TRACE measurements or Done marker; refusing an empty timing report');
   const registries = JSON.parse(fs.readFileSync(path.join(evidence, 'registries.json'), 'utf8'));
-  const data = { ...input, ...group(input.nodes), timing, registries, boot, identity, evidence, created: stamp };
-  const html = render(data, require('./overrides.json'));
+  const overrides = require('./overrides.json');
+  const data = { ...input, ...familyModel(input.nodes, registries, overrides), timing, registries, boot, identity, evidence, created: stamp };
+  const html = render(data, overrides);
   fs.mkdirSync(out, { recursive: true });
   fs.writeFileSync(path.join(out, `mod-map-${stamp}.html`), html);
   fs.writeFileSync(path.join(out, 'mod-map.html'), html);
-  const top = data.groups.map(g => ({ name: g.name, ...cost([...g.tops, ...g.exclusive], timing) })).sort((a, b) => (b.ms ?? -1) - (a.ms ?? -1)).slice(0, 10);
-  log(JSON.stringify({ html: path.join(out, 'mod-map.html'), evidence, bootSeconds: boot.wallSeconds, measuredMods: Object.keys(timing.mods).length, warnings: [...input.warnings, ...timing.warnings], top }, null, 2));
+  const families = data.families.map(f => ({ name: f.name, members: f.members.length, ...cost([...f.members, ...f.libraries], timing) }));
+  log(JSON.stringify({ html: path.join(out, 'mod-map.html'), evidence, bootSeconds: boot.wallSeconds, measuredMods: Object.keys(timing.mods).length, warnings: [...input.warnings, ...timing.warnings], families }, null, 2));
 }
 module.exports = { run };

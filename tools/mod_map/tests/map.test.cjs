@@ -2,10 +2,11 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { parseMods } = require('../toml.cjs');
-const { group, connect, classify, cost } = require('../model.cjs');
+const { connect, classify, cost, familyModel } = require('../model.cjs');
 const { parseTiming } = require('../timing.cjs');
 const { render } = require('../page.cjs');
 const node = (key, dependencies = []) => ({ key, name: key, mods: [{ id: key, name: key, description: 'A mod', dependencies: [] }], dependencies, bundled: [], side: 'both' });
+const registries = keys => ({ items: keys.map(key => key + ':item'), blocks: [], entities: [] });
 
 test('TOML multiple mods, quoted dependency table, comments and multiline descriptions', () => {
   const mods = parseMods(`[[mods]]
@@ -33,31 +34,38 @@ description = '''literal \\n text'''
   assert.equal(mods[1].description, 'literal \\n text');
   assert.throws(() => parseMods('[[mods]]\nmodId="x"\ndescription="""unfinished'), /Unterminated/);
 });
-test('transitive shared dependencies are not charged to tops; optional edges are excluded', () => {
-  const a = node('a', ['private', 'shared']), b = node('b', ['shared']);
-  a.mods[0].dependencies.push({ id: 'b', mandatory: false });
-  const nodes = [a, b, node('private', ['leaf']), node('leaf'), node('shared', ['base']), node('base')];
-  connect(nodes);
-  const result = group(nodes);
-  assert.deepEqual(result.groups.find(g => g.key === 'a').exclusive.map(n => n.key).sort(), ['leaf', 'private']);
-  assert.deepEqual(result.shared.flatMap(c => c.nodes.map(n => n.key)).sort(), ['base', 'shared']);
-  assert.equal(result.shared[0].users.length, 2);
-  assert.equal(result.groups.length, 2);
+test('connection resolves mandatory providers, excludes optional links and reports missing dependencies', () => {
+  const a = node('a');
+  a.mods[0].dependencies.push({ id: 'base', mandatory: true, side: 'BOTH' }, { id: 'optional', mandatory: false, side: 'BOTH' }, { id: 'missing', mandatory: true, side: 'CLIENT' });
+  const warnings = connect([a, node('base'), node('optional')]);
+  assert.deepEqual(a.dependencies, ['base']);
+  assert.deepEqual(a.optional, ['optional']);
+  assert.match(warnings[0], /missing mandatory/);
 });
-test('cycles form one top; a multi-mod jar is indivisible and missing dependencies are visible', () => {
-  const a = node('a', ['b']), b = node('b', ['a']);
-  a.mods.push({ id: 'extra', name: 'Extra', dependencies: [{ id: 'missing', mandatory: true, side: 'CLIENT' }] });
-  assert.match(connect([a, b])[0], /missing mandatory/);
-  const result = group([a, b]);
-  assert.equal(result.groups.length, 1); assert.equal(result.groups[0].cycle, true);
-  assert.equal(result.groups[0].tops.length, 2);
+test('family nests an add-on of an add-on under its immediate mandatory dependency', () => {
+  const nodes = [node('base'), node('addon', ['base']), node('nested', ['addon'])];
+  const model = familyModel(nodes, registries(['base', 'addon', 'nested']));
+  assert.equal(model.families.length, 1);
+  assert.equal(model.families[0].roots[0].key, 'base');
+  assert.deepEqual(model.families[0].members.map(n => n.key).sort(), ['addon', 'base', 'nested']);
+  const html = render({ nodes, ...model, timing: { mods: {}, warnings: [] }, registries: registries(['base', 'addon', 'nested']), boot: { wallSeconds: 1 }, warnings: [], identity: {}, pins: [], created: 'now' });
+  assert.ok(html.indexOf('base</strong>') < html.indexOf('addon</strong>'));
+  assert.ok(html.indexOf('addon</strong>') < html.indexOf('nested</strong>'));
 });
-test('embedded library with two providers stays shared and is counted once', () => {
-  const nodes = [node('a', ['embedded']), node('b', ['embedded']), { ...node('embedded'), embedded: true }];
-  const result = group(nodes);
-  assert.equal(result.shared.length, 1);
-  assert.deepEqual(result.shared[0].users.sort(), ['a', 'b']);
-  assert.equal(cost(result.groups[0].tops, { mods: { a: { ms: 10 }, embedded: { ms: 50 } } }).ms, 10);
+test('bridge add-on belongs to two families and is visibly marked shared in both', () => {
+  const nodes = [node('ars'), node('ae2'), node('ars-addon', ['ars']), node('ae2-addon', ['ae2']), node('bridge', ['ars', 'ae2'])];
+  const regs = registries(nodes.map(n => n.key));
+  const model = familyModel(nodes, regs);
+  assert.deepEqual([...model.memberships.get('bridge')].sort(), ['ae2', 'ars']);
+  assert.equal(model.families.filter(f => f.members.some(n => n.key === 'bridge')).length, 2);
+  const html = render({ nodes, ...model, timing: { mods: {}, warnings: [] }, registries: regs, boot: { wallSeconds: 1 }, warnings: [], identity: {}, pins: [], created: 'now' });
+  assert.match(html, /shared · also under ae2/);
+  assert.match(html, /shared · also under ars/);
+});
+test('library with content users never becomes a family root', () => {
+  const nodes = [node('framework'), node('one', ['framework']), node('two', ['framework'])];
+  const model = familyModel(nodes, registries(['one', 'two']), { framework: { kind: 'library/API', reason: 'fixture framework' } });
+  assert.equal(model.families.length, 0);
 });
 const line = (time, thread, message) => `[27Oct2026 ${time}] [${thread}/TRACE] [net.minecraftforge.fml.javafmlmod.FMLModContainer/LOADING]: ${message}`;
 test('TRACE pairs parallel workers, repeated event identities, midnight and unknown intervals', () => {
@@ -82,7 +90,7 @@ test('classification has evidence; unknown and client timing never become zero',
 });
 test('HTML escapes metadata and embeds controls without network resources', () => {
   const n = node('evil'); n.name = '<script>alert(1)</script>'; n.mods[0].description = '</script><script>bad()</script>';
-  const html = render({ nodes: [n], ...group([n]), timing: { mods: {}, warnings: [] }, registries: {}, boot: { wallSeconds: 1 }, warnings: [], identity: {}, pins: [], created: 'now' });
+  const html = render({ nodes: [n], ...familyModel([n], {}), timing: { mods: {}, warnings: [] }, registries: {}, boot: { wallSeconds: 1 }, warnings: [], identity: {}, pins: [], created: 'now' });
   assert.ok(html.includes('&lt;script&gt;alert(1)'));
   assert.ok(!html.includes('<script>bad()'));
   assert.ok(!/<(?:script|link|img)[^>]+(?:src|href)=/i.test(html));

@@ -26,7 +26,9 @@
   provider jars; multi-mod jars cannot be split by this report.
 - First capture (2026-10-27, Valhalla, copied older cached world): 48.993 s from
   JVM spawn to `Done`, 192 logged mod IDs with paired measurements and no unmatched
-  pairs. The heaviest top group was Steam 'n' Rails (4.352 s). These numbers describe
+  pairs. The original top-group page ranked Steam 'n' Rails at 4.352 s; the family
+  page rolls add-ons into their bases and can count a shared add-on in more than one
+  family while its page-wide total stays unique. These numbers describe
   that instrumented boot only. GeckoLib occurs externally and embedded: the map
   coalesces the ID for timing and retains provider provenance rather than counting
   two runtime mods. Witch Huts and Kotlin for Forge have no root Forge `mods.toml`;

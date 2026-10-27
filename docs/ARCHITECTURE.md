@@ -5,9 +5,11 @@
 `scripts/mod-map/build.ps1` wraps `tools/mod_map/build.mjs` with the standard
 owner log contract. `inventory.cjs` validates `.pw.toml` pins, reads Forge TOML
 through `toml.cjs`, and traverses declared jar-in-jar metadata. `model.cjs` builds
-the mandatory graph, condenses cycles and computes each top's exclusive and
-shared dependencies. Physical multi-mod jars remain indivisible; duplicate
-external/embedded mod IDs retain provider provenance and one timing attribution.
+the mandatory graph, detects content-family roots, follows nested add-ons into
+each applicable family, and separates family-exclusive from shared libraries.
+Player-facing suites whose metadata does not encode a base relationship use
+reasoned entries in `overrides.json`. Physical multi-mod jars remain indivisible;
+duplicate external/embedded mod IDs retain provider provenance and one timing attribution.
 
 `capture.cjs` reuses showcase's offline preparer and idle-host guard, pack-test's
 cached-world copy and registry collector, and server-smoke's JVM supervision and

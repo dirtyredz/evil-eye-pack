@@ -113,14 +113,17 @@ avoids changing ANU's shared stage/logging or triggering remote provisioning.
 It stops its JVM after `Done` and the registry snapshot. It does not run the full
 pack-test acceptance suite. `-Evidence` rejects mismatched index/jar pins.
 
-Top groups have no mandatory incoming dependencies. Multi-mod jars are indivisible;
-cycles are grouped. Exclusive dependencies nest under their top; shared dependencies
-list all transitive top users. Jar-in-jar metadata is traversed; embedded mods cannot
-be deleted separately. Optional dependencies are listed but do not create removal
-edges. Dependency roles are independent of kind: Create can be shared content.
-Kinds use side metadata, descriptions and live namespace registry counts, with
-reasoned corrections in `tools/mod_map/overrides.json`. Zero registrations plus
-mandatory users is a library heuristic, not a guarantee.
+Family roots are content mods with mandatory content add-ons. Add-ons follow
+mandatory dependencies transitively and nest under their immediate add-on or base;
+a bridge appears in every family it belongs to. Libraries used only by one family
+nest there, while libraries with family or outside users stay shared. Optional
+dependencies are displayed but never create membership. Suites whose metadata does
+not express the player-facing family (currently MineColonies and Macaw's) use
+reasoned data overrides rather than code special cases. Kinds use side metadata,
+descriptions and live namespace registry counts, with corrections in
+`tools/mod_map/overrides.json`. Zero registrations plus mandatory users is a library
+heuristic, not a guarantee. Family totals include shared add-ons in each applicable
+family; the page-wide attributed total de-duplicates every mod ID.
 
 Timing is the sum of paired Forge TRACE intervals for construction, subscriber
 registration and synchronous event dispatch before `Done`. It is partial elapsed
