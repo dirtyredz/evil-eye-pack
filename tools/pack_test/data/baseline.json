@@ -792,11 +792,6 @@
    "since": "2026-10-23"
   },
   {
-   "key": "acquisition|no-known-source|ironfurnaces:rainbow_coal|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): EventHandler.explosionEvent: when a BlockMillionFurnaceTile is destroyed in an explosion it is removed and a Rainbow Coal ItemEntity is spawned.",
-   "since": "2026-10-23"
-  },
-  {
    "key": "acquisition|no-known-source|mca:book_cult_0|",
    "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): TradeOffersMCA lists BOOK_CULT_0/1/2 as villager trades for the CULTIST profession; no recipe.",
    "since": "2026-10-23"
@@ -1214,96 +1209,6 @@
   {
    "key": "acquisition|no-known-source|refurbished_furniture:package|",
    "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): PackageItem is created by the mail/delivery system (DeliveryService, MessageSendPackage) when a player sends items through a Mail Box/Post Box, not by a recipe; lang key item.refurbished_furniture.package.",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsbase:smartwrench_select|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Alternate mode item of the Smart Wrench: SmartWrenchItem swaps between wrench and select mode on right-click in air (lang: Right-click on air to change mode); craftable only via rftoolsbase:smartwrench recipe.",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsbase:tablet_filled|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Produced by TabletItem.deriveNewItemstack when an ITabletSupport item (module/card) is placed into the Tablet GUI (TabletContainer) of an empty rftoolsbase:tablet (recipe tablet.json).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolscontrol:tablet_processor|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Tablet variant created through the RFTools Tablet GUI (rftoolsbase TabletItem.deriveNewItemstack) by inserting a Processor (rftoolscontrol:processor, recipe processor.json) into an empty tablet; ITabletSupport item.",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:attribute_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:biome_category_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:biome_controller_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:biome_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:block_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:feature_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:fluid_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:realized_dimension_tab|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): RealizedDimensionTab is produced by the Dimension Builder from an Empty Dimension Tab (recipe empty_dimension_tab.json) once the dimension is created; no recipe.",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:sky_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:structure_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:tag_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:terrain_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsdim:time_dimlet|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Filled DimletItem (DimletKey/DimletType): obtained from the rftoolsdim:dimlet_loot loot entry (DimletLootEntry in chests/hut_loot.json, EndermanLootModifier), and by converting an Empty Dimlet (empty_*_dimlet recipe) with absorbers/Dimlet Workbench/Enscriber (DimletRecipe serializer, DimletTools).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsutility:tablet_redstone|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Tablet variant created via the Tablet GUI (TabletItem.deriveNewItemstack) by inserting a redstone-related ITabletSupport item (e.g. redstone transmitter) into an empty tablet; no own recipe. [mechanism not fully confirmed]",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|rftoolsutility:tablet_screen|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Tablet variant created via the Tablet GUI (TabletItem.deriveNewItemstack) by inserting a screen block/module into an empty tablet; ScreenTabletItem opens the remote screen GUI.",
    "since": "2026-10-23"
   },
   {

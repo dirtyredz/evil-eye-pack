@@ -177,46 +177,6 @@ file = "config/adchimneys/Emitters/industrialforegoing$pitiful_generator.cfg"
 hash = "e5f545ff806133ab55b8fec106f557a86ed5f90da0ff71efcf0821f60b6f48d2"
 
 [[files]]
-file = "config/adchimneys/Emitters/ironfurnaces$copper_furnace.cfg"
-hash = "3d850efc154496dd0e2e19af6d0323fd43375adc792106e449da4428f2f3f4ac"
-
-[[files]]
-file = "config/adchimneys/Emitters/ironfurnaces$crystal_furnace.cfg"
-hash = "a7ed6768b5dd9316a7fd9b9c75d493259e987231bebe3abf8880ae10e6999bbe"
-
-[[files]]
-file = "config/adchimneys/Emitters/ironfurnaces$diamond_furnace.cfg"
-hash = "691ddcf6ee7c4e4c4b7fcb5f2c6a9a1046182f7ac3e7b0a345d3bdf984deb8a2"
-
-[[files]]
-file = "config/adchimneys/Emitters/ironfurnaces$emerald_furnace.cfg"
-hash = "3b5acb5598b6ab5509708970d127ae943e95f84de49c3b79f9d3e563c6efe4e7"
-
-[[files]]
-file = "config/adchimneys/Emitters/ironfurnaces$gold_furnace.cfg"
-hash = "bb1c9d334feb5930e435328d4c529850ddc8d53b28f35d4d3aae06b041acf751"
-
-[[files]]
-file = "config/adchimneys/Emitters/ironfurnaces$iron_furnace.cfg"
-hash = "c357d3ef3847436c637a3f90f3e7992a58e169764ed3724251d162a1caf4f1cf"
-
-[[files]]
-file = "config/adchimneys/Emitters/ironfurnaces$million_furnace.cfg"
-hash = "43632347fbb8d5f859d49baa6cd69592537f4dd1e396b4d4aa452adc8089b7db"
-
-[[files]]
-file = "config/adchimneys/Emitters/ironfurnaces$netherite_furnace.cfg"
-hash = "ac2e186552fdd391997f6c325441119dc73b5f14a9038736add1a969db4f7184"
-
-[[files]]
-file = "config/adchimneys/Emitters/ironfurnaces$obsidian_furnace.cfg"
-hash = "a44a22fdba615b0c233b0229aeae9f0501f6da0055c74f803f793cc325129dc2"
-
-[[files]]
-file = "config/adchimneys/Emitters/ironfurnaces$silver_furnace.cfg"
-hash = "d69906e3252308edbc358d7dfd42abb15a197b1375c95d6e10befcf447afece3"
-
-[[files]]
 file = "config/adchimneys/Emitters/jumbofurnace$jumbo_furnace.cfg"
 hash = "5c18a1ff279eed71689fe81b93fb7f0b7121e17fb229b0547cba2bf93306e87d"
 
@@ -1549,10 +1509,6 @@ file = "config/chloride-client.toml"
 hash = "bc8dbcde3097831c4a131cdb2b20ddad2ce68af7d59620a7582a88ba810ff133"
 
 [[files]]
-file = "config/chunky/config.json"
-hash = "c7384a22595488f79f3125b22cc175eb729267267807a084479419349797abc8"
-
-[[files]]
 file = "config/citadel-common.toml"
 hash = "0a41518641bbb4133fc61b934e8663ae5271ffd8190a281e5b35d1efd97fb3e3"
 
@@ -1563,10 +1519,6 @@ hash = "600046b205e20aa3a2ff5af8a66a202c00a97b1c27a6c0675211dbe11d4c0b5f"
 [[files]]
 file = "config/colorfulhearts.toml"
 hash = "2d138398c8d200fde46d582b593bc9d7ac10014ae9e0e0306d23a56c77cbcfca"
-
-[[files]]
-file = "config/commoncapabilities-common.toml"
-hash = "5085a7b6590e09ec312cfe823ccfaf82b6b718201dac9bcdb9452f8610c80797"
 
 [[files]]
 file = "config/connectivity.json"
@@ -1658,7 +1610,7 @@ hash = "7f24c23660df62deb15a473cb07689bc3471f75ec9ef933ac8933a7421033ed2"
 
 [[files]]
 file = "config/emi-curation/creative.json"
-hash = "4f71ecce73d6acda9d390bc2369796a360842f02208f4a28d943c5667c4b1815"
+hash = "d32208672d13f6042f5ef1f2d849f423cecd0b526b5ee50340d649096d67fa75"
 
 [[files]]
 file = "config/emi-curation/decor.json"
@@ -1678,7 +1630,7 @@ hash = "4f8d780084c3aa515dfa2cc5e90f169193cffbbe207fb2f1e131d3ed93ca55d5"
 
 [[files]]
 file = "config/emi-curation/rules.json"
-hash = "5f9ad2755f3d9721b687419eb8190fa118e4c480d4cd90753eef1e83dd6431a3"
+hash = "1d7b831bdd0fd1dd58ffd9c9cf4b2b61bc36b1a53e856f92e6c40a0ae08bc432"
 
 [[files]]
 file = "config/emi.css"
@@ -2089,14 +2041,6 @@ file = "config/inventoryprofilesnext/inventoryprofiles.json"
 hash = "c27c1715562be5e5c38ebaa2eb716e857c4d7c8d2325eeac061d4e3737c2b79e"
 
 [[files]]
-file = "config/ironfurnaces-client.toml"
-hash = "c33be44a1325f186ad01c9addc3e9ed998b3e06cd3b55648605bcca8e067eab3"
-
-[[files]]
-file = "config/ironfurnaces.toml"
-hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-
-[[files]]
 file = "config/jade/hide-blocks.json"
 hash = "6f6658b4a600c154e8bceb74fbfd887c9cb159ae389b1c87d29bd90f21ce5b0a"
 
@@ -2110,11 +2054,11 @@ hash = "77988e32fc0dd347d8343d31c4315766d6f0d424d54308e0189ca205a83788a3"
 
 [[files]]
 file = "config/jade/plugins.json"
-hash = "b2a38bf73a2686a63f1739eac06bf35c36a713630b47319c81aefda480cdc1e3"
+hash = "67b4a5d6105bb389c324f404f348240fdcca723f9c4f1f4fa8db947783a2c2ae"
 
 [[files]]
 file = "config/jade/sort-order.json"
-hash = "92c1a8325f98d766feae64bb8ea8ab6b43a974ad9426d43d40312355290c6147"
+hash = "3a05b1f6f987ae14fc79cae844c01900357b4225417722e926b37a66ce8a97ff"
 
 [[files]]
 file = "config/letmedespawn.json"
@@ -2127,10 +2071,6 @@ hash = "f26672542348ed68d5ffdfed8671bbe421a8520dc11ee520a375837fc5738d8a"
 [[files]]
 file = "config/lithium.properties"
 hash = "b87ee52fdc722ce1497e7ff55fdbd0660fc9df40c8f2f8167465cab55a388f0d"
-
-[[files]]
-file = "config/mcjtylib-client.toml"
-hash = "c67b58b8a4feec2e100ea7094f53ed7d84df6a768d14b5697bf0dface831b120"
 
 [[files]]
 file = "config/metadata.json"
@@ -2197,18 +2137,6 @@ file = "config/resourcepackoverrides.json"
 hash = "c8965efbed3141ab8ad17b7f273f6874bb81a55ae925c675a16267fff7811157"
 
 [[files]]
-file = "config/rftoolsbuilder-client.toml"
-hash = "88df54645d123f2e7f8f902af25432659f00ada56ca8bd48c4ccbfa84e5df5a3"
-
-[[files]]
-file = "config/rftoolsdim-common.toml"
-hash = "b6d49c80930619aae0e9b89dfc0e2b83ba572e00cb111eeecf157b544f3ca9cf"
-
-[[files]]
-file = "config/rftoolsutility-client.toml"
-hash = "478dc80d8689ce55146db25e43bd842d32363c0eca00a83ff1f7007e43e46b64"
-
-[[files]]
 file = "config/shetiphiancore-client.toml"
 hash = "f078f6987c3712446ca08971ed1d18c2fcf954a402f12e7d39a858b874c5fad3"
 
@@ -2255,10 +2183,6 @@ hash = "4e6431a22ba69caefb0fff565ab3386fabd16b7708edb4ea8545f95b2a04474a"
 [[files]]
 file = "config/terrablender.toml"
 hash = "c73292a81a8409d74edb12b0bb9226bda03f39e11afc8abfe6bff52cc30ef480"
-
-[[files]]
-file = "config/tesseract-common.toml"
-hash = "d826374acfde84a681ad8c85ac89e19552d73b2fe8740c0f62a7b350bc8233e4"
 
 [[files]]
 file = "config/toolbelt-client.toml"
@@ -2358,7 +2282,7 @@ hash = "29c12c8b9c71b426585b7cf4bd761919e0495d19ed91a31c41cffde91eedf34b"
 
 [[files]]
 file = "kubejs/assets/emi/index/stacks/dedup.json"
-hash = "e5577fca78dfd771e1b6bd97ffd6041508d21e19b1246239173917b713196c12"
+hash = "edc2fbac1d4aec7d5008302b58b43a7b87025e8cbc7c6064095f83fe697c1fbc"
 
 [[files]]
 file = "kubejs/assets/emi_curation/lang/en_us.json"
@@ -2462,7 +2386,7 @@ hash = "1d9e34eb05d4ac28ce58c4dabb1276f78189491aefebba23ef9dbe067cd10ac8"
 
 [[files]]
 file = "kubejs/config/dedup.json"
-hash = "78230068e99817c52f4f5399e285d29c23a2649fb30371a2621190d8083f2d94"
+hash = "15925c03461e0c95dc517610f86e9a8bb1f98a1c4c899a7852b27067e822231d"
 
 [[files]]
 file = "kubejs/config/dedup_sources.json"
@@ -4113,11 +4037,6 @@ hash = "d45de601e97a45920d5b22f954243dd9cb3bd8cb54167fc09dd9aefec41e8fcf"
 metafile = true
 
 [[files]]
-file = "mods/charging-gadgets.pw.toml"
-hash = "f5cb29abad0f88ca25bf862f1e012acaeacccd3b7bca2790e8a8a6a3606ab1fc"
-metafile = true
-
-[[files]]
 file = "mods/chimes.pw.toml"
 hash = "c3af28b2f1c49476b026443f36bcbde377443381af551b31a0bf65097795bacd"
 metafile = true
@@ -4125,11 +4044,6 @@ metafile = true
 [[files]]
 file = "mods/chloride.pw.toml"
 hash = "d79ea108e2df8e7fe6a76e6cf5a46f3945e972e94ca023e208d603bd43d86e97"
-metafile = true
-
-[[files]]
-file = "mods/chunky-pregenerator-forge.pw.toml"
-hash = "7d3fded0a343b2953e2a77fd1d2ed7abc547d7008f5b1b842546f28b8df1b802"
 metafile = true
 
 [[files]]
@@ -4160,11 +4074,6 @@ metafile = true
 [[files]]
 file = "mods/colorful-hearts.pw.toml"
 hash = "a24c070e0d9c218c4d286c10d6a77fb845708a1bbd13ca5aa882453674047cbd"
-metafile = true
-
-[[files]]
-file = "mods/common-capabilities.pw.toml"
-hash = "5bdc976d64496e58cbc5e6b3f1afcccaa31f8dd4029c7cf47c3bb1fc15b1a84f"
 metafile = true
 
 [[files]]
@@ -4543,11 +4452,6 @@ hash = "4aba12c2a18205fe6d25d1af817ee8c0baa580a74048cb30c659f6be66f31d2e"
 metafile = true
 
 [[files]]
-file = "mods/iron-furnaces.pw.toml"
-hash = "8a29668768e271e497991b609c4783da72c80f583e554f88a8751ec1d2fcc1d5"
-metafile = true
-
-[[files]]
 file = "mods/jade.pw.toml"
 hash = "a2277a000bcab08a8e0939dae7c8ef3b1db5327e2fa7bd37919e4e2f1b3c174d"
 metafile = true
@@ -4660,11 +4564,6 @@ metafile = true
 [[files]]
 file = "mods/macaws-windows.pw.toml"
 hash = "8ee3776430187fb4d69278e645e10fefb7fe7342caee0a5861479ce25956713a"
-metafile = true
-
-[[files]]
-file = "mods/mcjtylib.pw.toml"
-hash = "af8f318a6fc619a28f9b54de40fafbd9c461196fa0b9f6313f46cd0e4e314ec2"
 metafile = true
 
 [[files]]
@@ -4788,31 +4687,6 @@ hash = "33c1012df4c3267ee9e70509001739908b2f2c72ae0b2728a750b3516644aa2c"
 metafile = true
 
 [[files]]
-file = "mods/rftools-base.pw.toml"
-hash = "066a8f7a272e6287dd862cbf075d6d0605bb910b398cefa2a3e72520b5fbd22c"
-metafile = true
-
-[[files]]
-file = "mods/rftools-builder.pw.toml"
-hash = "4bdc07342fa14aa993fda98ca62fea35a154c131e81a9bb0abfc91ba019ed3c4"
-metafile = true
-
-[[files]]
-file = "mods/rftools-control.pw.toml"
-hash = "1586600d4b34711e8b0b028367f3054feb80b5cf1b317783ef9e4cd5d77ccf1b"
-metafile = true
-
-[[files]]
-file = "mods/rftools-dimensions.pw.toml"
-hash = "1766e7bc57bc09d8cea252d499fab2a0e15f1cff21779e527dc20a13b4d34977"
-metafile = true
-
-[[files]]
-file = "mods/rftools-utility.pw.toml"
-hash = "1b09c6e3c956052fac45229894f612722c9fd5efe045671e99f0e02335c22da8"
-metafile = true
-
-[[files]]
 file = "mods/rhino.pw.toml"
 hash = "5b92406160d9ea8a61ddf111caaecb7f6283678e2c40b08b72dce3eeaf20dc96"
 metafile = true
@@ -4863,11 +4737,6 @@ hash = "3b6a410f7162ae60d9ac6e125a5aa92b5ac95a9f461850101c12404235271996"
 metafile = true
 
 [[files]]
-file = "mods/supermartijn642s-config-lib.pw.toml"
-hash = "3eede8a7ebafb69840153ff51dbc879b0232799e90a834ab6d71274b1316179f"
-metafile = true
-
-[[files]]
 file = "mods/supermartijn642s-core-lib.pw.toml"
 hash = "ff328f3c9b28ce50357ae7acf98e8d13c4fa0293c874ac49ba31e7c58f3763ca"
 metafile = true
@@ -4885,11 +4754,6 @@ metafile = true
 [[files]]
 file = "mods/terralith.pw.toml"
 hash = "b0978cb7ae7b79c5be89b323ca1bd038f693ff6d11c43dfcbd63953964149af2"
-metafile = true
-
-[[files]]
-file = "mods/tesseract.pw.toml"
-hash = "0188496a2cffbd5a1aad3fa0429d646487bd685aa2b109c2c649aff675c91a6c"
 metafile = true
 
 [[files]]

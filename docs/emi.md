@@ -22,12 +22,11 @@ curation and the CLEAN/ALL button.
 ### Curation and the button
 
 - CLEAN (the default after every launch and logout) hides these from the index:
-  - 1,105 explicit item IDs: 20 creative-only, 708 Ender IO glass, 361 colour variants and 16 MineColonies eggs;
+  - 1,104 explicit item IDs: 19 creative-only, 708 Ender IO glass, 361 colour variants and 16 MineColonies eggs;
   - every ID containing `spawn_egg`;
   - the whole `dramaticdoors` namespace;
   - every Filled Soul Vial and Broken Spawner, except exactly one canonical Zombie stack of each;
-  - every RFTools Utility syringe carrying a `mobId` tag (one per mob); the plain syringe stays (`hideWhenNbtHasKey` in `rules.json`).
-- NBT rules in `rules.json`: `nbtExceptions` hides every stack of an ID except those whose NBT equals `keepWhenNbtEquals`; `hideWhenNbtHasKey` hides a stack of an ID when its NBT has *any* listed key (the value is never inspected). An ID may appear in only one NBT rule across both types; a repeat fails compile with `duplicate nbt exception id` within the keep rules or `duplicate nbt rule id` for the hide-key rules, including cross-type repeats. Both compile into one internal `nbtRules` map; the authored JSON format is unchanged.
+- NBT rules in `rules.json`: `nbtExceptions` hides every stack of an ID except those whose NBT equals `keepWhenNbtEquals`; `hideWhenNbtHasKey` hides a stack of an ID when its NBT has *any* listed key (the value is never inspected); none ship since RFTools left on 2026-10-28. An ID may appear in only one NBT rule across both types; a repeat fails compile with `duplicate nbt exception id` within the keep rules or `duplicate nbt rule id` for the hide-key rules, including cross-type repeats. Both compile into one internal `nbtRules` map; the authored JSON format is unchanged.
 - CLEAN also hides recipe displays the way REI's "filter displays" option did. A display is hidden when some input or output has *all* of its alternatives hidden. Catalysts and empty slots never hide a display.
 - [Duplicate cleanup](duplicate-cleanup.md) removes the retired mods and permanently removes the remaining duplicate stacks from EMI via `kubejs/assets/emi/index/stacks/dedup.json`. CLEAN/ALL still controls cosmetic curation; ALL does not restore retired duplicates.
 - **EMI: ALL** restores EMI's ordinary index and its complete recipe set without an EMI reload. Recipes, items and EMI's own hidden-stack settings, favorites and config are never written.
@@ -122,13 +121,12 @@ Record the results in [emi-coverage.md](emi-coverage.md).
    - plain, `_e` and `_d` Ender IO glass;
    - Empty Soul Vial and Powered Spawner;
    - **exactly two** Zombie examples (one vial, one broken spawner);
-   - the plain RFTools syringe is the only syringe.
 3. Toggle repeatedly, both with an empty search and with a search typed. ALL must bring back the hidden items and their recipe displays. CLEAN must hide them again. There should be no "EMI reloading" step.
 4. Check the display rule in CLEAN. A recipe whose only input or output is hidden disappears. A recipe where a hidden item is only one alternative, or only a catalyst, stays. ALL shows everything.
 5. Check every row of the coverage table. Pay most attention to:
    - MineColonies workers, Productive Bees, Ender IO machines and Create processing;
    - AE2: is Certus Growth information present?;
-   - Ars, HammerMicroblocks, RFTools and JEP workstations.
+   - Ars, HammerMicroblocks and JEP workstations.
 6. Test recipe transfer (the `+` fill button), Polymorph recipe selection, clickable recipe arrows, favorites, fluids and NBT ingredients.
 7. Test these screens and situations: inventory, chest, crafting table, an AE2 terminal, Curios, GUI scale 2/3/auto, window resize, the CRAFTABLES page, and Ctrl+O. The button must never cover a control.
 8a. Mods menu: click **Mods ▾**. Every installed mod that adds items must be listed A-Z by its name (spot-check Applied Energistics 2, Create, Supplementaries, Handcrafted and any newly added mod); libraries with no items (Architectury, GeckoLib, Balm) must not appear. Pick a mod: the search bar must read `@<modid>` and the index must show only that mod's items. Pick it again: the search empties. Pick another mod, then **Clear**. Page with **Next >** and **< Prev** (both wrap, the menu stays open, the search is untouched). Open the menu and click elsewhere, then open it and press Esc: the search is unchanged and Esc does not close the inventory. Check the button hides with Ctrl+O, and the dropdown never covers the CLEAN or DECOR buttons or leaves the window, at GUI scale 2, 3 and auto and after resizing the window. Then put `"hide": ["ae2"]` in `mods.json`, rehash, relaunch: AE2 is gone from the menu but its items stay in the index.

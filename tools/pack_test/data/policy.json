@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "removedMods": ["alltheores", "allthecompressed", "almostunified", "simplecorelib", "enhancedcelestials", "dataanchor", "corgilib", "corgikubejscompat"],
+  "removedMods": ["alltheores", "allthecompressed", "almostunified", "simplecorelib", "enhancedcelestials", "dataanchor", "corgilib", "corgikubejscompat", "commoncapabilities", "rftoolsbase", "rftoolsbuilder", "rftoolscontrol", "rftoolsdim", "rftoolsutility", "mcjtylib", "ironfurnaces", "chunky", "charginggadgets", "tesseract", "supermartijn642configlib"],
   "requiredMods": ["hourglass"],
   "curatedLists": ["creative.json", "minecolonies-eggs.json"],
   "exclude": {
@@ -8,7 +8,7 @@
       { "re": "_spawn_egg$|:spawn_egg_", "reason": "spawn eggs are creative-only" },
       { "re": "^minecraft:(command_block|chain_command_block|repeating_command_block|command_block_minecart|structure_block|structure_void|jigsaw|barrier|light|debug_stick|knowledge_book|petrified_oak_slab|bedrock|end_portal_frame|budding_amethyst|reinforced_deepslate|spawner|farmland|dirt_path|frogspawn|player_head|chorus_plant|infested_[a-z_]+|suspicious_(sand|gravel))$", "reason": "vanilla technical or creative-only block/item (no survival source by design)" },
       { "re": "_bucket$", "reason": "filled in the world from a fluid source or by bucketing a mob; bucket filling is Java interaction with no data trail" },
-      { "re": "debug|_icon$|icon_item|advancement_tab_icon|_inventory$|_hand$|fancy_item|effect_item|placeable_item|test_machine|dimensional_carver_shard_\\d+|_placeable$|enderface_|wrapped_generic_stack|^citadel:|^structurize:|_projectile$|villager_editor|^rftoolsdim:admin_dimlet|^hammermicroblocks:microblock$", "reason": "model, icon, debug or technical item that players never hold (render variants, GUI icons, admin tools)" },
+      { "re": "debug|_icon$|icon_item|advancement_tab_icon|_inventory$|_hand$|fancy_item|effect_item|placeable_item|test_machine|dimensional_carver_shard_\\d+|_placeable$|enderface_|wrapped_generic_stack|^citadel:|^structurize:|_projectile$|villager_editor|^hammermicroblocks:microblock$", "reason": "model, icon, debug or technical item that players never hold (render variants, GUI icons, admin tools)" },
       { "re": ":potted_", "reason": "flower-pot block: made by putting a plant into a pot in the world, never an item" },
       { "re": "^dramaticdoors:", "reason": "Dramatic Doors registers a short/tall door for every wood and metal it supports whether or not that mod is installed; only installed materials have recipes (mod_loaded conditions). The EMI curation hides the namespace (config/emi-curation/rules.json)" }
     ],

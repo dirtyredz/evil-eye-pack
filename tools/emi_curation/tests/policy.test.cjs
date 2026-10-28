@@ -25,8 +25,8 @@ test('resource id parts preserve namespace, nested paths and colonless fallback'
   }
 });
 
-test('loads the shipped curation: 1,105 explicit ids plus rules', () => {
-  assert.equal(policy.itemIdCount, 1105);
+test('loads the shipped curation: 1,104 explicit ids plus rules', () => {
+  assert.equal(policy.itemIdCount, 1104);
   assert.deepEqual([...policy.idContains], ['spawn_egg']);
   assert.equal(policy.namespaces.dramaticdoors, true);
   assert.equal(policy.displayFiltering, true);
@@ -90,15 +90,6 @@ test('exactly one canonical Zombie Filled Soul Vial and Broken Spawner stay visi
     assert.equal(hidden(id, { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zombie', Health: { $nbt: 'float', value: 20 } } } } }), true);
     assert.equal(hidden(id, { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zombie' } } }, display: {} }), true);
   }
-});
-
-test('RFTools syringes: plain stays visible, every mob-filled variant is hidden', () => {
-  const id = 'rftoolsutility:syringe';
-  assert.equal(hidden(id), false);
-  assert.equal(hidden(id, {}), false);
-  assert.equal(hidden(id, { mobId: 'minecraft:zombie' }), true);
-  assert.equal(hidden(id, { mobId: 'minecraft:creeper', level: { $nbt: 'int', value: 3 } }), true);
-  assert.equal(hidden('rftoolsutility:other_item', { mobId: 'minecraft:zombie' }), false);
 });
 
 test('nbtEquals is structural and order-independent', () => {

@@ -78,20 +78,14 @@ parts, and others.
 | HammerLib 20.1.50 | | `JeiHammerLib` | | Bridge | |
 | HammerMicroblocks 20.1.13 | | `JEIHammerMicroblocks` | | Bridge | |
 | Ice and Fire 2.1.13 | | `IceAndFireJEIPlugin` | | Bridge | |
-| Iron Furnaces 4.1.8 | | `IronFurnacesJEIPlugin` | | Bridge | |
 | Jade 11.13.3 | | `JEICompat` | | Bridge. Verify tooltips. | |
 | KubeJS 2001.6.5 | | `integration.forge.jei.JEIPlugin` | `REIForgePluginStub` | Bridge. The curation scripts use Java interop, not a plugin. | |
 | L_Ender's Cataclysm 1.28 | | `LEnderCataclysmJEIPlugin` | | Bridge | |
-| McJtyLib 8.0.8 | | `JeiCompatibility` | | Bridge (RFTools helpers) | |
 | MineColonies 1.1.452 | | `core.compatibility.jei.JEIPlugin` | | Bridge. Check worker categories. | |
 | ModernFix 5.27.83 | | `JEIRuntimeCapturer` | | Runtime hook, not recipes | |
 | Patchouli 85 | | `PatchouliJeiPlugin` | | Bridge | |
 | Polymorph 0.49.11 | | `PolymorphJeiPlugin` | | Bridge. Test recipe choice and transfer. | |
 | Productive Bees 12.6.0 | | `ProductiveBeesJeiPlugin` | | Bridge. Check bee subtypes and categories. | |
-| RFTools Base 5.0.7 | | `RFToolsBaseJeiPlugin` | | Bridge | |
-| RFTools Control 7.0.4 | | `RFToolsControlJeiPlugin` | | Bridge | |
-| RFTools Dimensions 11.0.11 | | `compat.JeiCompatibility` | | Bridge. Verify dimlets. | |
-| RFTools Utility 6.0.7 | | `RFToolsUtilityJeiPlugin` | | Bridge | |
 | Steam 'n' Rails 1.7.3 | | `RailwaysJeiPlugin` | | Bridge | |
 | Stylish Effects 8.0.4 | | `StylishEffectsJeiPlugin` | `ForgeStylishEffectsReiPlugin` | JEI path. Verify the screen exclusions. | |
 | Supplementaries 3.1.44 | `EMICompat` | `JEICompat` | `REICompat` | Native EMI (since 3.x; 2.5.21 used the JEI path) | |

@@ -2,6 +2,33 @@
 
 Newest first.
 
+## 2026-10-28 - Pack trim: remove twelve unused mods
+
+The owner went through the mod list to cut load time and picked these for
+removal: Common Capabilities 2.9.11; the RFTools family (Base 5.0.7, Builder
+6.0.10, Control 7.0.4, Dimensions 11.0.11, Utility 6.0.7) and McJtyLib 8.0.8;
+Iron Furnaces 4.1.8; Chunky 1.3.146; Charging Gadgets 1.11.0; Tesseract 1.0.38
+and SuperMartijn642's Config Lib 1.1.8, which only Tesseract required.
+SuperMartijn642's Core Lib stays: Additional Lanterns and Connected Glass need it.
+
+Why: load time (about 2.4 s for RFTools, 0.46 s for Tesseract, 0.24 s for Iron
+Furnaces, the rest under 0.1 s each) and the owner's choice. The 2026-10-28 scan
+of every jar in Evil Eye Local found no other mod declaring any of them as a
+dependency. Their configs (including the ten Advanced Chimneys `ironfurnaces$*`
+emitters), the Jade Tesseract plugin entries, their dedup hidden-only entries
+and hidden reasons, the EMI curation creative screen and syringe rule, and their
+pack-test baseline findings are removed. The pack test now lists all twelve mod
+ids in `removedMods`, so a shipped reference to any of them is reported.
+
+Consequence for existing worlds: placed RFTools machines, iron furnaces,
+chargers and tesseracts disappear with their contents; back up and empty them
+first. The Stable world's `data/RFToolsDimensions.dat` becomes inert (it has no
+RFTools dimension folders). Chunks Chunky already generated stay.
+
+Kept after checking: Polymorph (it resolves 770 recipe conflicts), the Hammer
+mods (HammerMicroblocks calls HammerMultipart directly) and Entity Culling /
+3D Skin Layers (TRansition and TRender are bundled inside them).
+
 ## 2026-10-27 - Remove Enhanced Celestials and lengthen days
 
 Remove Enhanced Celestials 5.0.3.2 and its now-orphaned mandatory dependencies

@@ -93,10 +93,6 @@
   "ars_nouveau": {
     "mob_jar": true
   },
-  "tesseract": {
-    "tesseract": true,
-    "remove_default": true
-  },
   "hammerlib": {
     "root": true
   },

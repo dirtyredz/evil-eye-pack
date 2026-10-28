@@ -30,16 +30,7 @@
       }
     }
   ],
-  "hideWhenNbtHasKey": [
-    {
-      "ids": [
-        "rftoolsutility:syringe"
-      ],
-      "keys": [
-        "mobId"
-      ]
-    }
-  ],
+  "hideWhenNbtHasKey": [],
   "displayFiltering": {
     "clean": true
   }

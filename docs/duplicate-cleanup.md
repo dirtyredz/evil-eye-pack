@@ -39,7 +39,7 @@ compatibility recipes with their original IDs and KubeJS cooking defaults. These
   registered copies. Existing Cluttered saplings can still grow its tree, and mod-specific
   interactions with old placed blocks can still produce their registered variants.
 - Refurbished Furniture's wrench operates electrical links (confirmed in its pinned
-  WrenchItem bytecode). AE2, Ender IO, RFTools and Extreme Reactors tools retain their
+  WrenchItem bytecode). AE2, Ender IO and Extreme Reactors tools retain their
   machine-specific functions. Create's rope pulley is a machine, not another placeable rope.
 - Refurbished Furniture has no registered milk item in 1.0.20 (its milk is a fluid/lang
   entry). No dangling item reference or fake replacement is shipped. Its knife/board remain
