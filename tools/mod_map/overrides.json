@@ -20,5 +20,14 @@
   "mcwstairs": { "family": "macaws", "familyName": "Macaw's", "familyRoot": true, "reason": "Macaw's peer suite shares branding rather than mandatory content edges" },
   "mcwtrpdoors": { "family": "macaws", "familyName": "Macaw's", "familyRoot": true, "reason": "Macaw's peer suite shares branding rather than mandatory content edges" },
   "mcwwindows": { "family": "macaws", "familyName": "Macaw's", "familyRoot": true, "reason": "Macaw's peer suite shares branding rather than mandatory content edges" },
-  "terrablender": { "kind": "library/API", "reason": "World-generation framework used by biome mods; never a player-facing family root" }
+  "terrablender": { "kind": "library/API", "reason": "World-generation framework used by biome mods; never a player-facing family root" },
+  "inventoryprofilesnext": { "reason": "Inventory Profiles Next is the player-facing owner of libIPN and its Kotlin language loader" },
+  "libipn": { "kind": "library/API", "reason": "Client library used by Inventory Profiles Next" },
+  "kotlinforforge": { "kind": "library/API", "reason": "Language loader selected by mods.toml modLoader=kotlinforforge" },
+  "transition": { "kind": "library/API", "reason": "Jar-in-jar library owned by Entity Culling and 3D Skin Layers" },
+  "trender": { "kind": "library/API", "reason": "Jar-in-jar rendering library owned by Entity Culling and 3D Skin Layers" },
+  "hammermicroblocks": { "dependencies": ["hammermultipart"], "reason": "Calls org/zeith/multipart/api classes without declaring HammerMultipart" },
+  "attributefix": { "packWideFix": "Lifts Minecraft's attribute caps for the whole pack.", "reason": "Pack-wide behavior; no mod declares it" },
+  "yeetusexperimentus": { "packWideFix": "Hides the experimental-settings warning screen for pack worlds.", "reason": "Pack-wide behavior; no mod declares it" },
+  "polymorph": { "packWideFix": "Resolves 770 recipe conflicts found by jobs/2026-10-28-recipe-conflicts.", "reason": "Pack-wide behavior; no mod declares it" }
 }

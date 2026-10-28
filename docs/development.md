@@ -126,6 +126,15 @@ descriptions and live namespace registry counts, with corrections in
 heuristic, not a guarantee. Family totals include shared add-ons in each applicable
 family; the page-wide attributed total de-duplicates every mod ID.
 
+Each mod row stays on one line: the first `mods.toml` description sentence is
+trimmed to 120 characters and ellipsized as muted text, with the displayed text
+also available as a tooltip. A badge shows direct mandatory users (named on
+hover), a pack-wide-fix reason, or that nothing depends on the mod; another badge
+names its non-Forge/Minecraft requirements. Custom `modLoader` values are
+mandatory edges. Shared jar-in-jar libraries stay under every owning parent and
+are labelled as bundled, not independently removable. Confirmed undeclared code
+edges and pack-wide-fix reasons live in `overrides.json`, not source special cases.
+
 Every family and standalone mod is assigned to a top-level purpose category by
 `tools/mod_map/categories.json`; unknown future IDs remain visible under Other /
 Uncategorised. Category totals de-duplicate shared members and libraries within

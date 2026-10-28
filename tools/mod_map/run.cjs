@@ -28,8 +28,9 @@ async function run(argv, { dryRun = false, log = console.log } = {}) {
   }
   const checked = verify(root);
   if (checked.problems.length) throw new Error(checked.problems.join('\n'));
+  const overrides = require('./overrides.json');
   const input = inventory(root, [opts.mods || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods', path.join(cache, 'mods')]);
-  input.warnings.push(...connect(input.nodes));
+  input.warnings.push(...connect(input.nodes, overrides));
   log(`Validated ${input.pins.length} pinned jars; output ${out}`);
   if (dryRun) { log('DRY RUN: would capture one local offline boot (or reuse --evidence), then write timestamped and latest HTML. No boot or artifact writes.'); return; }
   const stamp = new Date().toISOString().replace(/[:.]/g, '-');
@@ -49,7 +50,6 @@ async function run(argv, { dryRun = false, log = console.log } = {}) {
   const timing = parseTiming(fs.readFileSync(path.join(evidence, 'trace.log'), 'utf8'));
   if (!Object.keys(timing.mods).length || timing.logToDoneSeconds === null) throw new Error('No paired TRACE measurements or Done marker; refusing an empty timing report');
   const registries = JSON.parse(fs.readFileSync(path.join(evidence, 'registries.json'), 'utf8'));
-  const overrides = require('./overrides.json');
   const categoryMapping = require('./categories.json');
   const data = { ...input, ...familyModel(input.nodes, registries, overrides), timing, registries, boot, identity, evidence, created: stamp };
   data.categories = categorize(data, categoryMapping, data.nodes, timing, cost);

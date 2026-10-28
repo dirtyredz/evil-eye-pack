@@ -5,7 +5,8 @@ const { parseMods } = require('../toml.cjs');
 const { connect, classify, cost, familyModel } = require('../model.cjs');
 const { categorize, FALLBACK_CATEGORY } = require('../categories.cjs');
 const { parseTiming } = require('../timing.cjs');
-const { render } = require('../page.cjs');
+const { render, shortDescription } = require('../page.cjs');
+const overrides = require('../overrides.json');
 const node = (key, dependencies = []) => ({ key, name: key, mods: [{ id: key, name: key, description: 'A mod', dependencies: [] }], dependencies, bundled: [], side: 'both' });
 const registries = keys => ({ items: keys.map(key => key + ':item'), blocks: [], entities: [] });
 
@@ -35,6 +36,14 @@ description = '''literal \\n text'''
   assert.equal(mods[1].description, 'literal \\n text');
   assert.throws(() => parseMods('[[mods]]\nmodId="x"\ndescription="""unfinished'), /Unterminated/);
 });
+test('custom mods.toml modLoader creates a mandatory Kotlin for Forge edge', () => {
+  const [mod] = parseMods('modLoader="kotlinforforge"\n[[mods]]\nmodId="inventoryprofilesnext"\ndisplayName="Inventory Profiles Next"');
+  assert.deepEqual(mod.dependencies, [{ id: 'kotlinforforge', mandatory: true, side: 'BOTH', range: '', source: 'modLoader' }]);
+  const ipn = node('ipn'); ipn.mods = [mod];
+  const kotlin = node('kotlin'); kotlin.mods[0].id = 'kotlinforforge';
+  connect([ipn, kotlin]);
+  assert.deepEqual(ipn.dependencies, ['kotlin']);
+});
 test('connection resolves mandatory providers, excludes optional links and reports missing dependencies', () => {
   const a = node('a');
   a.mods[0].dependencies.push({ id: 'base', mandatory: true, side: 'BOTH' }, { id: 'optional', mandatory: false, side: 'BOTH' }, { id: 'missing', mandatory: true, side: 'CLIENT' });
@@ -42,6 +51,12 @@ test('connection resolves mandatory providers, excludes optional links and repor
   assert.deepEqual(a.dependencies, ['base']);
   assert.deepEqual(a.optional, ['optional']);
   assert.match(warnings[0], /missing mandatory/);
+});
+test('hand-kept override adds HammerMicroblocks undeclared HammerMultipart dependency', () => {
+  const microblocks = node('microblocks'); microblocks.mods[0].id = 'hammermicroblocks';
+  const multipart = node('multipart'); multipart.mods[0].id = 'hammermultipart';
+  connect([microblocks, multipart], overrides);
+  assert.deepEqual(microblocks.dependencies, ['multipart']);
 });
 test('family nests an add-on of an add-on under its immediate mandatory dependency', () => {
   const nodes = [node('base'), node('addon', ['base']), node('nested', ['addon'])];
@@ -142,4 +157,35 @@ test('HTML escapes metadata and embeds controls without network resources', () =
   assert.ok(!html.includes('<script>bad()'));
   assert.ok(!/<(?:script|link|img)[^>]+(?:src|href)=/i.test(html));
   assert.ok(html.includes('not measured'));
+});
+test('bundled jar libraries nest under both owners and cannot be shown as separate trims', () => {
+  const skin = node('skinlayers3d', ['bundled:trender']); skin.name = '3D Skin Layers';
+  const culling = node('entityculling', ['bundled:trender']); culling.name = 'Entity Culling';
+  const trender = node('bundled:trender');
+  trender.name = 'TRender'; trender.embedded = true; trender.providers = [skin.key, culling.key];
+  trender.mods[0].id = 'trender'; trender.mods[0].name = 'TRender';
+  const nodes = [skin, culling, trender];
+  const regs = registries(['skinlayers3d', 'entityculling']);
+  const model = familyModel(nodes, regs, overrides);
+  assert.ok(!model.ungrouped.includes(trender));
+  assert.ok(!model.unusedLibraries.includes(trender));
+  const html = render({ nodes, ...model, timing: { mods: {}, warnings: [] }, registries: regs, boot: { wallSeconds: 1 }, warnings: [], identity: {}, pins: [], created: 'now' }, overrides);
+  assert.equal((html.match(/TRender<\/strong>/g) || []).length, 2);
+  assert.equal((html.match(/bundled, can't remove separately/g) || []).length, 2);
+});
+test('compact rows show first-sentence descriptions and dependency or pack-wide badges', () => {
+  assert.equal(shortDescription('First sentence. Second sentence is omitted.'), 'First sentence.');
+  assert.equal(shortDescription('x'.repeat(130)).length, 120);
+  const base = node('base'); base.name = 'Base';
+  const user = node('user', ['base']); user.mods[0].description = 'First sentence. Second sentence.';
+  const fix = node('fix'); fix.mods[0].id = 'attributefix';
+  const nodes = [base, user, fix];
+  const regs = registries(['base', 'user']);
+  const model = familyModel(nodes, regs, overrides);
+  const html = render({ nodes, ...model, timing: { mods: {}, warnings: [] }, registries: regs, boot: { wallSeconds: 1 }, warnings: [], identity: {}, pins: [], created: 'now' }, overrides);
+  assert.match(html, /used by 1/);
+  assert.match(html, /needs: Base/);
+  assert.match(html, /pack-wide fix/);
+  assert.match(html, />First sentence\.<\/span>/);
+  assert.doesNotMatch(html, /Second sentence/);
 });

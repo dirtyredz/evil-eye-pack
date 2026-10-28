@@ -40,13 +40,20 @@ function decode(s) {
 }
 function parseMods(text) {
   const rows = tables(text);
+  const loader = rows[0].values.modLoader;
   return rows.filter(r => r.table === 'mods').map(r => {
     if (!r.values.modId) throw new Error('mods.toml entry without modId');
+    const dependencies = rows.filter(d => d.table === 'dependencies.' + r.values.modId).map(d => ({
+      id: d.values.modId, mandatory: d.values.mandatory === true, side: d.values.side || 'BOTH', range: d.values.versionRange || ''
+    }));
+    // A custom Forge language loader is a runtime dependency even though Forge
+    // expresses it at the document root instead of in [[dependencies.*]].
+    if (loader && !['javafml', 'lowcodefml'].includes(loader) && !dependencies.some(d => d.id === loader)) {
+      dependencies.push({ id: loader, mandatory: true, side: 'BOTH', range: '', source: 'modLoader' });
+    }
     return { id: r.values.modId, name: r.values.displayName || r.values.modId,
       description: String(r.values.description || '').replace(/\s+/g, ' ').trim().slice(0, 240),
-      dependencies: rows.filter(d => d.table === 'dependencies.' + r.values.modId).map(d => ({
-        id: d.values.modId, mandatory: d.values.mandatory === true, side: d.values.side || 'BOTH', range: d.values.versionRange || ''
-      })) };
+      dependencies };
   });
 }
 module.exports = { tables, parseMods };

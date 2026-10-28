@@ -4,11 +4,14 @@
 
 `scripts/mod-map/build.ps1` wraps `tools/mod_map/build.mjs` with the standard
 owner log contract. `inventory.cjs` validates `.pw.toml` pins, reads Forge TOML
-through `toml.cjs`, and traverses declared jar-in-jar metadata. `model.cjs` builds
+through `toml.cjs`, treats a custom `modLoader` as a dependency, and traverses
+declared jar-in-jar metadata. Wrapper jars whose only Forge metadata is in their
+sole embedded archive remain the physical removal unit. `model.cjs` builds
 the mandatory graph, detects content-family roots, follows nested add-ons into
 each applicable family, and separates family-exclusive from shared libraries.
 Player-facing suites whose metadata does not encode a base relationship use
-reasoned entries in `overrides.json`. Physical multi-mod jars remain indivisible;
+reasoned entries in `overrides.json`; the same hand-kept file records confirmed
+undeclared dependencies and pack-wide fixes. Physical multi-mod jars remain indivisible;
 duplicate external/embedded mod IDs retain provider provenance and one timing attribution.
 `categories.cjs` places each family and standalone mod through the checked-in
 `categories.json` map, with an explicit Other / Uncategorised fallback. Category
@@ -19,7 +22,8 @@ family tree remains responsible for showing libraries beneath each user.
 cached-world copy and registry collector, and server-smoke's JVM supervision and
 shutdown. Only the disposable server gets a narrow Forge TRACE logger and the
 registry snapshot callback. `timing.cjs` pairs boundaries before `Done`;
-`page.cjs` renders the graph with inline styles/controls. `run.cjs` owns artifact
+`page.cjs` renders compact one-line mod rows with first-sentence descriptions,
+used-by/needs badges and inline styles/controls. `run.cjs` owns artifact
 placement, input identity checks and saved-evidence replay. No installed jar,
 input cache or instance is changed. [Development](development.md#mod-map) covers
 commands and [Gotchas](GOTCHAS.md#mod-map-timing) defines the timing limits.

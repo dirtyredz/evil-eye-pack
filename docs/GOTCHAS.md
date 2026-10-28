@@ -20,8 +20,11 @@
   cached world is copied, never modified in place; its different mod-set provenance
   remains visible. This avoids fresh spawn generation but can produce missing-mod
   warnings. A missing exact cache without `-World` fails before starting Java.
-- Mandatory dependency graphs do not capture KubeJS recipes, optional integration
-  code or saved-world requirements (notably Terralith). A nested dependency is a
+- Mandatory dependency graphs do not generally capture KubeJS recipes, optional
+  integration code or saved-world requirements (notably Terralith). The mod map's
+  checked-in overrides record only confirmed exceptions such as HammerMicroblocks'
+  undeclared HammerMultipart calls and the documented pack-wide fixes. A nested
+  dependency is a
   removal candidate, not proof it is safe to delete. Embedded mods remain inside
   provider jars; multi-mod jars cannot be split by this report.
 - First capture (2026-10-27, Valhalla, copied older cached world): 48.993 s from

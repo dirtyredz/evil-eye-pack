@@ -60,6 +60,18 @@ function inventory(root, dirs) {
     for (const n of nodes) n.dependencies = n.dependencies.map(d => d === key ? external.key : d);
     bundles.delete(key);
   }
+  // Some language-loader distributions are wrapper jars whose only Forge
+  // metadata lives in their sole nested archive. Keep the physical jar as the
+  // removal unit so dependants nest the installed jar, not an orphan wrapper.
+  for (const [key, bundle] of bundles) {
+    if (bundle.providers.length !== 1) continue;
+    const host = nodes.find(n => n.key === bundle.providers[0]);
+    if (!host || host.mods.length || !host.dependencies.includes(key)) continue;
+    host.mods.push(...bundle.mods);
+    host.dependencies = [...new Set([...host.dependencies.filter(d => d !== key), ...bundle.dependencies])];
+    warnings.push(host.name + ': Forge metadata is embedded; represented by the physical wrapper jar');
+    bundles.delete(key);
+  }
   return { nodes: [...nodes, ...bundles.values()], pins, warnings };
 }
 module.exports = { inspectJar, inventory };
