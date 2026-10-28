@@ -2,12 +2,14 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const env = require('../server_smoke/env.cjs');
-const { inventory } = require('./inventory.cjs');
-const { connect, familyModel, cost } = require('./model.cjs');
-const { categorize } = require('./categories.cjs');
-const { parseTiming } = require('./timing.cjs');
-const { render } = require('./page.cjs');
-const { capture } = require('./capture.cjs');
+const { inventory } = require('./inventory/inventory.cjs');
+const { connect } = require('./model/graph.cjs');
+const { familyModel } = require('./model/families.cjs');
+const { cost } = require('./model/cost.cjs');
+const { categorize } = require('./model/categories.cjs');
+const { parseTiming } = require('./capture/timing.cjs');
+const { capture } = require('./capture/capture.cjs');
+const { render } = require('./page/document.cjs');
 const { verify } = require('../packwiz/verify_hashes.cjs');
 const { runMeta, checkDestination } = require('../pack_test/session/run_meta.cjs');
 const { execFileSync } = require('node:child_process');
@@ -28,8 +30,8 @@ async function run(argv, { dryRun = false, log = console.log } = {}) {
   }
   const checked = verify(root);
   if (checked.problems.length) throw new Error(checked.problems.join('\n'));
-  const overrides = require('./overrides.json');
-  const input = inventory(root, [opts.mods || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods', path.join(cache, 'mods')]);
+  const overrides = require('./model/overrides.json');
+  const input = inventory(root, [opts.mods || env.LOCAL_MODS, path.join(cache, 'mods')]);
   input.warnings.push(...connect(input.nodes, overrides));
   log(`Validated ${input.pins.length} pinned jars; output ${out}`);
   if (dryRun) { log('DRY RUN: would capture one local offline boot (or reuse --evidence), then write timestamped and latest HTML. No boot or artifact writes.'); return; }
@@ -50,10 +52,10 @@ async function run(argv, { dryRun = false, log = console.log } = {}) {
   const timing = parseTiming(fs.readFileSync(path.join(evidence, 'trace.log'), 'utf8'));
   if (!Object.keys(timing.mods).length || timing.logToDoneSeconds === null) throw new Error('No paired TRACE measurements or Done marker; refusing an empty timing report');
   const registries = JSON.parse(fs.readFileSync(path.join(evidence, 'registries.json'), 'utf8'));
-  const categoryMapping = require('./categories.json');
+  const categoryMapping = require('./model/categories.json');
   const data = { ...input, ...familyModel(input.nodes, registries, overrides), timing, registries, boot, identity, evidence, created: stamp };
-  data.categories = categorize(data, categoryMapping, data.nodes, timing, cost);
-  const html = render(data, overrides);
+  data.categories = categorize(data, categoryMapping, data.nodes, timing);
+  const html = render(data);
   fs.mkdirSync(out, { recursive: true });
   fs.writeFileSync(path.join(out, `mod-map-${stamp}.html`), html);
   fs.writeFileSync(path.join(out, 'mod-map.html'), html);

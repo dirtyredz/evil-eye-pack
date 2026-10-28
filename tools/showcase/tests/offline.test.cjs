@@ -4,8 +4,8 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { inventory } = require('../offline.cjs');
-const { sections, logGroups, waitForServer } = require('../check.cjs');
+const { inventory, prepare } = require('../offline.cjs');
+const { sections, logGroups } = require('../check.cjs');
 
 test('every shipped section has a committed headless check', () => {
   assert.ok(sections(path.resolve(__dirname, '../../..')).includes('contraption_storage'));
@@ -17,7 +17,7 @@ test('offline inventory verifies server pins and never needs client-only jars', 
   const bytes = Buffer.from('fixture'), hash = crypto.createHash('sha256').update(bytes).digest('hex');
   fs.writeFileSync(path.join(root, 'index.toml'), 'hash-format = "sha256"\n' + ['server', 'client'].map(n => '\n[[files]]\nfile = "mods/' + n + '.pw.toml"\nhash = "unused"\nmetafile = true\n').join(''));
   for (const n of ['server', 'client']) fs.writeFileSync(path.join(root, 'mods', n + '.pw.toml'), 'name = "fixture"\nfilename = "' + n + '.jar"\nside = "' + (n === 'client' ? 'client' : 'both') + '"\n[download]\nhash-format = "sha256"\nhash = "' + hash + '"\nurl = "https://invalid.test/never-downloaded"\n');
-  assert.throws(() => inventory(root, cache), /Missing offline input/);
+  assert.throws(() => inventory(root, cache), /Missing pinned jar/);
   fs.writeFileSync(path.join(cache, 'mods/server.jar'), bytes);
   assert.equal(inventory(root, cache).length, 1);
   fs.writeFileSync(path.join(cache, 'mods/server.jar'), 'wrong');
@@ -37,15 +37,20 @@ test('log comparison removes only run locations and Java object identities, reta
   assert.notDeepEqual(logGroups(a, 'C:/runs/baseline/server'), logGroups(b.replace('example.toml', 'different.toml'), 'C:/runs/check/server'));
 });
 
-test('host guard waits through busy and inconclusive process inventories; only an observed idle host passes', async () => {
-  let now = 0, calls = 0;
-  const responses = [{ code: 0, out: 'another JVM' }, { code: -1, out: 'timed out' }, { code: 0, out: '' }];
-  await waitForServer({ run: async () => { calls++; return responses.shift(); } }, { now: () => now, wait: async n => { now += n; }, log: () => {} });
-  assert.equal(calls, 3); assert.equal(now, 120000);
-});
-
-test('host guard fails closed after its bounded wait or cancellation', async () => {
-  let now = 0;
-  await assert.rejects(waitForServer({ run: async () => ({ code: -1, out: 'unavailable' }) }, { now: () => now, wait: async n => { now += n; }, log: () => {}, budgetMs: 60000 }), /Host unavailable/);
-  await assert.rejects(waitForServer({ cancelled: true }), /Interrupted/);
+test('prepare writes the flat showcase world by default and the ordinary world on request', t => {
+  const root = fs.mkdtempSync(path.join(__dirname, 'showcase-test-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const cache = path.join(root, 'cache'); fs.mkdirSync(path.join(cache, 'libraries'), { recursive: true });
+  fs.writeFileSync(path.join(root, 'index.toml'), 'hash-format = "sha256"\n\n[[files]]\nfile = "config/a.toml"\nhash = "unused"\n');
+  fs.mkdirSync(path.join(root, 'config')); fs.writeFileSync(path.join(root, 'config/a.toml'), 'a = 1\n');
+  const options = { seed: '1', port: 25000, heap: '1G' };
+  const properties = name => fs.readFileSync(path.join(root, name, 'server.properties'), 'utf8');
+  prepare(root, cache, path.join(root, 'showcase'), options);
+  prepare(root, cache, path.join(root, 'ordinary'), { ...options, profile: 'ordinary' });
+  assert.match(properties('showcase'), /^level-type=minecraft:flat$/m);
+  assert.match(properties('showcase'), /^spawn-monsters=false$/m);
+  assert.doesNotMatch(properties('ordinary'), /level-type|generate-structures|spawn-(monsters|animals|npcs)/);
+  assert.match(properties('ordinary'), /^level-seed=1$/m);
+  assert.ok(fs.existsSync(path.join(root, 'ordinary/config/a.toml')));
+  assert.throws(() => prepare(root, cache, path.join(root, 'bad'), { ...options, profile: 'nether' }), /Unknown server profile/);
 });

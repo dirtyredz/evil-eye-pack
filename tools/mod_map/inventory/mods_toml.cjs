@@ -1,6 +1,8 @@
 'use strict';
-// Read the scalar fields in Forge mods.toml. Unrelated arrays/inline tables are
-// ignored; quoted strings, comments and multiline descriptions are tokenized.
+// Forge META-INF/mods.toml reader, scoped to that file only: packwiz metafiles
+// (.pw.toml) are read through packwiz/pack_index.cjs readTable. Reads scalar
+// fields per table; unrelated arrays/inline tables are ignored, while quoted
+// strings, comments and multiline descriptions are tokenized.
 function tables(text) {
   const rows = [{ table: '', values: {} }];
   let row = rows[0];
@@ -56,4 +58,4 @@ function parseMods(text) {
       dependencies };
   });
 }
-module.exports = { tables, parseMods };
+module.exports = { parseMods };

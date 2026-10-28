@@ -1,10 +1,10 @@
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
-const crypto = require('node:crypto');
-const { listEntries, readEntry } = require('../data_io/zip_reader.cjs');
-const { readMetafileDownload, readMetafileName } = require('../packwiz/pack_index.cjs');
-const { parseMods, tables } = require('./toml.cjs');
+const { listEntries, readEntry } = require('../../data_io/zip_reader.cjs');
+const { readMetafileName, readMetafileSide } = require('../../packwiz/pack_index.cjs');
+const { resolvePinnedJar } = require('../../packwiz/pinned_jar.cjs');
+const { parseMods } = require('./mods_toml.cjs');
 
 function inspectJar(bytes, source, visit, depth = 0) {
   if (depth > 8) throw new Error('Nested jar depth exceeded: ' + source);
@@ -23,17 +23,8 @@ function inventory(root, dirs) {
   const nodes = [], pins = [], warnings = [], bundles = new Map();
   for (const file of fs.readdirSync(path.join(root, 'mods')).filter(f => f.endsWith('.pw.toml')).sort()) {
     const text = fs.readFileSync(path.join(root, 'mods', file), 'utf8');
-    const pin = readMetafileDownload(text), name = readMetafileName(text);
-    const side = tables(text)[0].values.side || 'both';
-    if (!pin.filename || /[\\/]/.test(pin.filename)) throw new Error('Invalid filename in ' + file);
-    let bytes, source;
-    for (const dir of dirs) {
-      const candidate = path.join(dir, pin.filename);
-      if (!fs.existsSync(candidate)) continue;
-      const b = fs.readFileSync(candidate);
-      if (crypto.createHash(pin.hashFormat).update(b).digest('hex') === pin.hash) { bytes = b; source = candidate; break; }
-    }
-    if (!bytes) throw new Error('Missing pinned jar (no download attempted): ' + pin.filename);
+    const name = readMetafileName(text), side = readMetafileSide(text);
+    const { bytes, path: source, ...pin } = resolvePinnedJar(text, dirs, 'mods/' + file);
     const node = { key: pin.filename, name, side, source, mods: [], bundled: [], dependencies: [] };
     inspectJar(bytes, pin.filename, entry => {
       if (entry.bundled) node.bundled.push(entry.source);

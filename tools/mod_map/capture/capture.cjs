@@ -2,14 +2,14 @@
 // Instrument an offline disposable copy; the existing smoke owns the JVM lifecycle.
 const fs = require('node:fs');
 const path = require('node:path');
-const env = require('../server_smoke/env.cjs');
-const procs = require('../server_smoke/procs.cjs');
-const { boot } = require('../server_smoke/boot.cjs');
-const { prepare } = require('../showcase/offline.cjs');
-const { waitForServer } = require('../showcase/check.cjs');
-const { localLock } = require('../pack_test/session/lock.cjs');
-const { worldKey, restoreWorld } = require('../pack_test/session/world_cache.cjs');
-const { WORLD } = require('../pack_test/stage_runtime.cjs');
+const env = require('../../server_smoke/env.cjs');
+const procs = require('../../server_smoke/procs.cjs');
+const { boot } = require('../../server_smoke/boot.cjs');
+const { prepare } = require('../../showcase/offline.cjs');
+const { waitForServer } = require('../../server_smoke/host_wait.cjs');
+const { localLock } = require('../../pack_test/session/lock.cjs');
+const { worldKey, restoreWorld } = require('../../pack_test/session/world_cache.cjs');
+const { WORLD } = require('../../pack_test/stage_runtime.cjs');
 
 const LOG_CONFIG = `<?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN"><Appenders>
@@ -28,10 +28,8 @@ async function capture(root, cache, run, log, worldSource) {
   const server = path.join(run, 'server');
   try {
     lock = localLock(path.join(env.ARTIFACTS, 'mod-map/server.lock'), { owner: run });
-    prepare(root, cache, server, { seed: '20261020', port: 25611, heap: '6G' });
-    // Undo showcase-only flat-world properties; this report measures the ordinary pack.
-    const properties = path.join(server, 'server.properties');
-    fs.writeFileSync(properties, fs.readFileSync(properties, 'utf8').split('\n').filter(l => !/^(level-type|generate-structures|spawn-monsters|spawn-animals|spawn-npcs)=/.test(l)).join('\n'));
+    // The ordinary world profile: this report measures the pack, not the flat showcase world.
+    prepare(root, cache, server, { seed: '20261020', port: 25611, heap: '6G', profile: 'ordinary' });
     const key = worldKey(server, '20261020');
     const reused = restoreWorld(path.join(env.ARTIFACTS, 'pack-test/cache/worlds'), key, server);
     if (!reused) {

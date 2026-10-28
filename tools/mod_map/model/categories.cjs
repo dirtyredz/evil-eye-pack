@@ -1,4 +1,8 @@
 'use strict';
+// Top-level purpose categories: categories.json maps a family or standalone mod ID to one
+// category; anything unmapped stays visible under the fallback.
+const { cost } = require('./cost.cjs');
+const { isLibrary } = require('./classify.cjs');
 
 const CATEGORY_NAMES = [
   'Cosmetic & Decoration',
@@ -19,9 +23,8 @@ const entryKey = entry => entry.type === 'family'
   ? entry.value.key
   : entry.value.mods[0]?.id || entry.value.key;
 
-function categorize({ families, ungrouped, classifications }, mapping, nodes, timing, cost) {
+function categorize({ families, ungrouped, classifications }, mapping, nodes, timing) {
   const byKey = new Map(nodes.map(node => [node.key, node]));
-  const isLibrary = node => classifications.get(node.key)?.every(value => value.kind === 'library/API');
   const entries = [
     ...families.map(value => ({ type: 'family', value })),
     ...ungrouped.map(value => ({ type: 'standalone', value }))
@@ -43,7 +46,7 @@ function categorize({ families, ungrouped, classifications }, mapping, nodes, ti
       : [entry.value]));
     const libraries = uniqueNodes(categoryEntries.flatMap(entry => entry.type === 'family'
       ? entry.value.libraries
-      : entry.value.dependencies.map(key => byKey.get(key)).filter(node => node && isLibrary(node))));
+      : entry.value.dependencies.map(key => byKey.get(key)).filter(node => node && isLibrary(classifications, node))));
     const attributedNodes = uniqueNodes([...memberNodes, ...libraries]);
     return {
       name,

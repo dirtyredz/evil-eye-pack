@@ -1,6 +1,8 @@
 'use strict';
 // Pair exact Forge TRACE boundaries by mod + thread + phase/event identity.
 // Never infer a duration from neighbouring log messages or count missing data as zero.
+const { DONE_RE } = require('../../server_smoke/log_report.cjs');
+
 function parseTiming(text) {
   const pending = new Map(), mods = {}, warnings = [];
   let first = null, done = null;
@@ -12,7 +14,7 @@ function parseTiming(text) {
     const time = Date.UTC(+match[3], month, +match[1], h, m, Math.floor(s), Math.round((s % 1) * 1000));
     if (first === null) first = time;
     const msg = match[6];
-    if (msg.includes('Done (')) { done = time; break; }
+    if (DONE_RE.test(msg)) { done = time; break; }
     if (!line.includes('net.minecraftforge.fml.javafmlmod.FMLModContainer/')) continue;
     let p, start, id, phase;
     if ((p = /^(Loading|Loaded) mod instance (\S+) of type /.exec(msg))) {

@@ -4,8 +4,8 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { zip } = require('../../malware_guard/tests/fixtures.cjs');
-const { inspectJar, inventory } = require('../inventory.cjs');
+const { zip } = require('../../../malware_guard/tests/fixtures.cjs');
+const { inspectJar, inventory } = require('../../inventory/inventory.cjs');
 const toml = id => `[[mods]]\nmodId="${id}"\ndisplayName="${id}"\n`;
 test('only declared jarjar archives are traversed; multi-mod jars preserve both IDs', () => {
   const bytes = zip([
@@ -20,7 +20,7 @@ test('only declared jarjar archives are traversed; multi-mod jars preserve both 
   assert.throws(() => inspectJar(zip([['META-INF/jarjar/metadata.json', '{"jars":[{"path":"missing.jar"}]}']]), 'x', () => {}), /Missing declared/);
 });
 test('inventory accepts only pinned bytes, falls back to cache, and coalesces embedded/external IDs', t => {
-  const base = path.resolve(__dirname, '../../../.tmp/tests'); fs.mkdirSync(base, { recursive: true });
+  const base = path.resolve(__dirname, '../../../../.tmp/tests'); fs.mkdirSync(base, { recursive: true });
   const root = fs.mkdtempSync(path.join(base, 'mod-map-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   for (const dir of ['mods', 'installed', 'cache']) fs.mkdirSync(path.join(root, dir));
@@ -36,10 +36,10 @@ test('inventory accepts only pinned bytes, falls back to cache, and coalesces em
   assert.equal(input.nodes.length, 2);
   assert.deepEqual(input.nodes.find(n => n.key === 'host.jar').dependencies, ['lib.jar']);
   assert.match(input.warnings[0], /represented once/);
-  assert.throws(() => inventory(root, [path.join(root, 'installed')]), /Missing pinned jar/);
+  assert.throws(() => inventory(root, [path.join(root, 'installed')]), /Cached jar differs from pin/);
 });
 test('wrapper jar with only embedded Forge metadata remains the physical dependency unit', t => {
-  const base = path.resolve(__dirname, '../../../.tmp/tests'); fs.mkdirSync(base, { recursive: true });
+  const base = path.resolve(__dirname, '../../../../.tmp/tests'); fs.mkdirSync(base, { recursive: true });
   const root = fs.mkdtempSync(path.join(base, 'mod-map-wrapper-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   for (const dir of ['mods', 'cache']) fs.mkdirSync(path.join(root, dir));

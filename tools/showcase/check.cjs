@@ -2,9 +2,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
-const { setTimeout: sleep } = require('node:timers/promises');
 const { boot } = require('../server_smoke/boot.cjs');
 const procs = require('../server_smoke/procs.cjs');
+const { waitForServer } = require('../server_smoke/host_wait.cjs');
 const env = require('../server_smoke/env.cjs');
 const { verify } = require('../packwiz/verify_hashes.cjs');
 const { localLock } = require('../pack_test/session/lock.cjs');
@@ -28,18 +28,6 @@ function logGroups(text, serverDir) {
     const key = normalize(line.replace(/@[0-9a-f]{1,8}\b/gi, '@<identity>')); groups[key] = (groups[key] || 0) + 1;
   }
   return groups;
-}
-async function waitForServer(scope, { now = Date.now, wait = sleep, log = console.log, budgetMs = 45 * 60000 } = {}) {
-  const deadline = now() + budgetMs;
-  for (;;) {
-    if (scope.cancelled) throw new Error('Interrupted while waiting for the host');
-    const r = await scope.run('powershell.exe', ['-NoProfile', '-NonInteractive', '-Command', "Get-CimInstance Win32_Process | Where-Object { $_.Name -match '^javaw?\\.exe$' -and $_.CommandLine -match 'forge|minecraft|BootstrapLauncher' } | Select-Object ProcessId,@{Name='CommandLine';Expression={$_.CommandLine.Substring(0,[Math]::Min(250,$_.CommandLine.Length))}} | ConvertTo-Json -Compress"], { timeoutMs: 60000 });
-    if (r.code === 0 && !r.out.trim()) return;
-    const reason = r.code === 0 ? 'Another Minecraft JVM is running: ' : 'Could not inspect running servers: ';
-    if (now() >= deadline) throw new Error('Host unavailable after 45 minutes. ' + reason + r.out.slice(0, 500));
-    log('Waiting. ' + reason + r.out.trim().slice(0, 500));
-    await wait(Math.min(60000, deadline - now()));
-  }
 }
 async function main(argv) {
   const root = path.resolve(__dirname, '../..');
@@ -104,4 +92,4 @@ async function main(argv) {
   }
 }
 if (require.main === module) main(process.argv.slice(2)).then(code => { process.exitCode = code; }).catch(e => { console.error(e.stack); process.exitCode = 2; });
-module.exports = { sections, logGroups, waitForServer };
+module.exports = { sections, logGroups };

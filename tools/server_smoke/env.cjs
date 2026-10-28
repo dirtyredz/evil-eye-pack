@@ -11,6 +11,8 @@ module.exports = {
   JAVA: e.SMOKE_JAVA || 'C:/Users/dirty/MultiMC/jdk-17_windows-x64_bin/jdk-17.0.10/bin/java.exe',
   JCMD: e.SMOKE_JCMD || 'C:/Users/dirty/MultiMC/jdk-17_windows-x64_bin/jdk-17.0.10/bin/jcmd.exe',
   BOOTSTRAP: e.SMOKE_BOOTSTRAP_JAR || 'C:/Users/dirty/MultiMC/packwiz/packwiz-installer-bootstrap.jar',
+  // The owner's Evil Eye Local instance mods folder: read-only pinned-jar input for scanners.
+  LOCAL_MODS: e.SMOKE_LOCAL_MODS || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods',
   INSTALLER_JAR_SOURCES: [e.SMOKE_INSTALLER_JAR || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/packwiz-installer.jar'],
   ARTIFACTS: e.SMOKE_ARTIFACTS || 'C:/Users/dirty/projects/artifacts/evil-eye-pack'
 };

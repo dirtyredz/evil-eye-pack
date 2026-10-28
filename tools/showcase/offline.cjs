@@ -2,9 +2,16 @@
 // Prepare an isolated, exact server install using cached bytes only. Never runs an installer.
 const fs = require('node:fs');
 const path = require('node:path');
-const crypto = require('node:crypto');
-const { parseIndex, readMetafileDownload } = require('../packwiz/pack_index.cjs');
+const { parseIndex, readMetafileSide } = require('../packwiz/pack_index.cjs');
+const { resolvePinnedJar } = require('../packwiz/pinned_jar.cjs');
 const { makeRunServer } = require('../pack_test/session/prepare.cjs');
+
+// World profiles: the showcase builds on an empty flat world; `ordinary` keeps the pack's
+// normal world generation (used when measuring the pack itself, e.g. the mod map).
+const PROFILES = {
+  showcase: 'level-type=minecraft:flat\ngenerate-structures=false\nspawn-monsters=false\nspawn-animals=false\nspawn-npcs=false\n',
+  ordinary: ''
+};
 
 function inventory(root, cache) {
   const index = parseIndex(fs.readFileSync(path.join(root, 'index.toml'), 'utf8'));
@@ -12,19 +19,15 @@ function inventory(root, cache) {
   for (const f of index.files) {
     if (!f.metafile) { files.push({ from: path.join(root, f.file), rel: f.file }); continue; }
     const text = fs.readFileSync(path.join(root, f.file), 'utf8');
-    if (/^side = "client"$/m.test(text)) continue;
-    const m = readMetafileDownload(text);
-    const rel = path.posix.join(path.posix.dirname(f.file), m.filename);
-    if (!m.filename || /[\\/]/.test(m.filename)) throw new Error('Invalid filename: ' + f.file);
-    const from = path.join(cache, rel);
-    if (!fs.existsSync(from)) throw new Error('Missing offline input (no download attempted): ' + from);
-    const hash = crypto.createHash(m.hashFormat).update(fs.readFileSync(from)).digest('hex');
-    if (hash !== m.hash) throw new Error('Cached input differs from pin: ' + rel);
-    files.push({ from, rel, hash, hashFormat: m.hashFormat });
+    if (readMetafileSide(text) === 'client') continue;
+    const dir = path.posix.dirname(f.file);
+    const jar = resolvePinnedJar(text, [path.join(cache, dir)], f.file);
+    files.push({ from: jar.path, rel: path.posix.join(dir, jar.filename), hash: jar.hash, hashFormat: jar.hashFormat });
   }
   return files;
 }
-function prepare(root, cache, server, options) {
+function prepare(root, cache, server, { profile = 'showcase', ...options }) {
+  if (!Object.hasOwn(PROFILES, profile)) throw new Error('Unknown server profile: ' + profile);
   if (fs.existsSync(server)) throw new Error('Refusing to reuse run server: ' + server);
   const files = inventory(root, cache);
   if (!fs.existsSync(path.join(cache, 'libraries'))) throw new Error('Missing cached Forge libraries: ' + cache);
@@ -41,7 +44,7 @@ function prepare(root, cache, server, options) {
     fs.mkdirSync(path.dirname(dest), { recursive: true });
     fs.copyFileSync(f.from, dest);
   }
-  fs.appendFileSync(path.join(server, 'server.properties'), 'level-type=minecraft:flat\ngenerate-structures=false\nspawn-monsters=false\nspawn-animals=false\nspawn-npcs=false\n');
+  fs.appendFileSync(path.join(server, 'server.properties'), PROFILES[profile]);
   return files.filter(f => f.hash).map(({ rel, hash, hashFormat }) => ({ rel, hash, hashFormat }));
 }
-module.exports = { inventory, prepare };
+module.exports = { inventory, prepare, PROFILES };

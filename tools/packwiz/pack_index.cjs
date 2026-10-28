@@ -195,6 +195,10 @@ function readCurseForge(text) {
 function readMetafileName(text) {
   return readTable(text, null, ['name']).name || '';
 }
+/** A metafile's top-level `side` ("client", "server" or "both"); packwiz's default is "both". */
+function readMetafileSide(text) {
+  return readTable(text, null, ['side']).side || 'both';
+}
 
 /** Whether a repo-relative path is a packwiz metafile (flagged `metafile = true` in the index). */
 function isMetafile(rel) {
@@ -220,5 +224,5 @@ function comparePaths(a, b) {
 
 module.exports = {
   BUILTIN_IGNORES, isTextPath, textProblems, globToRegExp, parseIgnore, loadIgnore, isIgnored,
-  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, readMetafileName, readCurseForge, readTable, isMetafile, listRepoFiles, publishableFiles, comparePaths,
+  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, readMetafileName, readMetafileSide, readCurseForge, readTable, isMetafile, listRepoFiles, publishableFiles, comparePaths,
 };

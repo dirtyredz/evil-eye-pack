@@ -16,7 +16,7 @@ test('offline page controls filter descriptions/shared users, sort and expand vi
   const document = { querySelector: selector => els[selector], querySelectorAll: selector => ({
     '.category .entry': [a, b], '.category': [category], '.category-body': [body], '.category, .category .entry': [category, a, b]
   })[selector] };
-  vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../page.js'), 'utf8'), { document });
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../../page/page.js'), 'utf8'), { document });
   els['#sort'].handlers.change({ target: { value: 'cost' } });
   assert.equal(body.children[0], b);
   els['#sort'].handlers.change({ target: { value: 'name' } });
