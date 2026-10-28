@@ -2,6 +2,35 @@
 
 Newest first.
 
+## 2026-10-28 - Mod map measurement and tooling choices
+
+Recorded at the mod map's structure review, for choices made while building it.
+
+- **Own `mods.toml` reader, scoped to that file.** `tools/mod_map/inventory/mods_toml.cjs`
+  reads only Forge `META-INF/mods.toml` scalars (quoted strings, comments,
+  multiline descriptions, `[[dependencies.<id>]]` tables). The repo stays
+  dependency-free, and `mods.toml` is written by hundreds of authors, unlike the
+  packwiz-written metafiles. Packwiz `.pw.toml` files are read only through
+  `packwiz/pack_index.cjs` `readTable` (now including `readMetafileSide`).
+  Rejected: a general TOML package (a dependency for one shape) and stretching
+  `readTable` to multiline/single-quoted strings (it is deliberately strict).
+- **Per-mod timing from FML TRACE through a custom log4j config.** Forge DEBUG
+  has no paired per-mod durations; the `FMLModContainer` TRACE pairs do (see
+  [Gotchas](GOTCHAS.md#mod-map-timing)). Only the disposable capture server gets
+  `mod-map-log4j.xml`, which routes that one logger to its own file. Rejected:
+  global TRACE (log volume and overhead), Java agents or profilers (a new runtime
+  dependency, and they measure CPU, not the load phases the owner removes mods for).
+- **Reuse a cached world with different provenance.** When no world exists for
+  the exact mod set and seed, `-World` copies an older cached world into the
+  disposable server and records its different mod-set origin. It avoids paying
+  fresh spawn generation inside the measured window; the missing-mod warnings it
+  can cause are kept visible. It is never modified in place, and without it the
+  run fails before Java starts.
+- **Vendored script templates.** `scripts/owner/owner-run.ps1` (owner-run 1.0.0)
+  and `tools/script-run/script-run.mjs` (script-run 1.1.0) are verbatim copies
+  of `~/.claude/templates/scripts/`, so the repo works on any checkout without the
+  harness. They are updated by re-copying the template, never edited locally.
+
 ## 2026-10-28 - Pack trim: remove twelve unused mods
 
 The owner went through the mod list to cut load time and picked these for

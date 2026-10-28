@@ -48,7 +48,15 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |   |-- scanning/
     |   `-- tests/
     |-- mod_map/
+    |   |-- capture/
+    |   |-- inventory/
+    |   |-- model/
+    |   |-- page/
     |   `-- tests/
+    |       |-- capture/
+    |       |-- inventory/
+    |       |-- model/
+    |       `-- page/
     |-- pack_test/
     |   |-- checks/
     |   |   `-- security/
@@ -96,12 +104,15 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
 - `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte hashing (`hashBytes`, `sha256`).
-- `tools/mod_map/` — offline pinned-jar inventory/TOML parsing, mandatory dependency graph, player-facing family grouping and top-level purpose categories, paired Forge TRACE timing, one-boot capture using existing smoke supervision, and self-contained HTML rendering. `tests/` uses injected fixtures; `overrides.json` holds reasoned kind/family corrections, undeclared dependencies and pack-wide-fix reasons for metadata edge cases, while `categories.json` assigns family or standalone-mod IDs to the displayed category.
-- `scripts/mod-map/build.ps1` — owner entry point; `scripts/owner/owner-run.ps1` is the verbatim owner-run 1.0.0 template. `tools/script-run/` holds the verbatim Node script-run 1.1.0 template and tests from `~/.claude/templates/scripts/`. Logs live in ignored `.tmp/`; scripts and logs are packwiz-excluded.
+- `tools/mod_map/` — offline mod map. `build.mjs` (entry) and `run.cjs` (orchestration, artifact guards, saved-evidence replay) at the top; `inventory/` pinned-jar inventory and the `mods.toml`-only reader; `model/` dependency graph, classification, cost, families, categories and their checked-in data (`overrides.json` reasoned kind/family corrections, undeclared dependencies and pack-wide fixes; `categories.json` family/standalone ID → category); `capture/` the one-boot instrumented capture and TRACE timing; `page/` the pure view, HTML builders, document shell, CSS and browser controls. `tests/` mirrors those folders; `tests/fixtures.cjs` is a shared helper outside the `*/*.test.cjs` glob.
+- `scripts/` — owner-run PowerShell entry points, one `scripts/<area>/<verb>.ps1` per owner command; Node tooling sits underneath in `tools/`. Scripts and their logs (ignored `.tmp/`) are packwiz-excluded.
+- `scripts/mod-map/` — `build.ps1`, the mod map owner entry point (wraps `tools/mod_map/build.mjs`).
+- `scripts/owner/` — `owner-run.ps1`, the verbatim owner-run 1.0.0 template every owner script dot-sources (logging, OK/FAILED line).
+- `tools/script-run/` — the verbatim Node script-run 1.1.0 template (`script-run.mjs`) and its test from `~/.claude/templates/scripts/`; Node entry points such as `tools/mod_map/build.mjs` run through it.
 - `tools/malware_guard/` — offline content scanner, instance drift and metadata source/known-bad gate; opt-in cached Modrinth status, approval CLI, `data/` policies and synthetic `tests/`. Local reports/cache are ignored under `.local/`.
 - `tools/dedup/` — pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions; `hidden_reasons.json` holds the reason for every `hiddenOnly` id (see docs/development.md "Known exceptions registry").
 - `tools/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
-- `tools/malware_guard/tests/`, `tools/packwiz/tests/`, `tools/server_smoke/tests/`, `tools/pack_test/tests/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs`)
+- `tools/malware_guard/tests/`, `tools/packwiz/tests/`, `tools/server_smoke/tests/`, `tools/pack_test/tests/`, `tools/showcase/tests/`, `tools/mod_map/tests/`, `tools/script-run/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs tools/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
 - `tools/showcase/` — offline headless runner, probe lifecycle, assertion helpers, shared terrain and registry-wide command checks; `checks/` holds section behaviour checks and `tests/` the focused Node VM/runner tests.
 - `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its environment, setup, boot, process, watchdog, verdict and log-analysis modules, and known boot noise
@@ -123,7 +134,12 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `kubejs/server_scripts/showcase/rigs/create_contraption.js` | Create descriptor validation, glue boundary/entity policy, motor zeroing, bearing teardown, collision preparation and lever control; legacy record compatibility |
 | `kubejs/server_scripts/showcase/entities.js` | entity policy for clearing: discard ordinary, block on player/tamed/named |
 | `kubejs/server_scripts/showcase/controls.js`, `command.js` | record-only rig tick dispatch and op-only command tree |
-| `tools/showcase/check.cjs`, `offline.cjs` | one-boot CLI, process guard, reports/log comparison; pinned offline server preparation using existing pack-test/server-smoke modules |
+| `tools/showcase/check.cjs`, `offline.cjs` | one-boot CLI, reports/log comparison; pinned offline server preparation (pins through `packwiz/pinned_jar.cjs`) with a `showcase` (flat, no spawns) or `ordinary` world profile, using existing pack-test/server-smoke modules |
+| `tools/mod_map/run.cjs`, `build.mjs` | mod map orchestration: options, artifact and read-only-input guards, saved-evidence identity checks, inventory → model → capture/timing → page; `build.mjs` runs it through script-run |
+| `tools/mod_map/inventory/` (`inventory.cjs`, `mods_toml.cjs`) | pinned jars → nodes with declared jar-in-jar traversal and bundle reconciliation; the Forge `mods.toml`-only scalar reader (metafiles use `pack_index` `readTable`) |
+| `tools/mod_map/model/` (`graph.cjs`, `classify.cjs`, `cost.cjs`, `families.cjs`, `categories.cjs`) | mandatory edges to physical jars; per-mod kind with evidence and the one `isLibrary(classifications, node)`; measured cost per unique mod ID; families by root selection, content membership and library ownership; purpose categories from `categories.json` |
+| `tools/mod_map/capture/` (`capture.cjs`, `timing.cjs`) | one local offline boot with a narrow FML TRACE log4j config and a registry snapshot; pairing TRACE intervals before `DONE_RE` |
+| `tools/mod_map/page/` (`view.cjs`, `html.cjs`, `document.cjs`, `page.css`, `page.js`) | pure view derivation (ranking, trees, cards) over finished data; escaped HTML fragments; the self-contained document shell; styles and browser-only controls |
 | `tools/showcase/harness.js`, `helpers.js` | probe sequencing/lifecycle/completion; `makeHelpers` supplies fixture access and plan/volume assertions |
 | `tools/showcase/command_forms.js`, `terrain.js`, `checks/*.js`, `tests/*.cjs` | one registry-wide command check per boot; shared hostile terrain checks; section-specific behaviour checks and focused Node tests |
 | `tools/malware_guard/cli.cjs` | `scan`, `drift`, `gate`, explicit online `status` and hash-based `approve`; applies approvals once to raw reports before JSON output and exits 0/1/2 |
@@ -136,7 +152,8 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `tools/pack_test/checks/security/malware.cjs` | read raw or legacy evidence and apply current approvals once into the offline malware section |
 | `kubejs/server_scripts/dedup.js` | applies authored dedup policy and generated recipe/tag cleanup; hand-written server recipes go in a script named for the concern, not dedup.js |
 | `kubejs/server_scripts/uranium.js` | hand-written Alex's Caves / Create crushed-uranium → yellorium smelting and blasting recipes |
-| `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (`readTable` reads string tables and numeric CurseForge IDs; metafile name/download readers share the model), `isMetafile`, `.packwizignore`, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
+| `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (`readTable` reads string tables and numeric CurseForge IDs; metafile name/download/side readers share the model), `isMetafile`, `.packwizignore`, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
+| `tools/packwiz/pinned_jar.cjs` | `resolvePinnedJar(metafileText, dirs)`: the one pinned-jar lookup (safe filename, ordered folders, hash-verified bytes, fail closed, never downloads); used by showcase preparation and the mod map |
 | `tools/packwiz/rehash.cjs` | rebuild `index.toml` membership and hashes, then `pack.toml`'s index hash |
 | `tools/packwiz/verify_hashes.cjs` | check the hash chain, index membership and optionally jar hashes |
 | `tools/packwiz/serve.cjs` | serve the containing checkout on `127.0.0.1` over HTTP (not used by MultiMC: local instances install from the file path) |
@@ -168,10 +185,11 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `tools/emi_curation/tests/session.test.cjs`, `button.test.cjs`, `mods_menu.test.cjs`, `decor.test.cjs`, `decor_local.test.cjs` (shared world: `support/decor_world.cjs`), `interop.test.cjs` | session lifecycle and views; button placement and listeners; Mods menu behaviour, auto list, paging and pure logic; DECOR rules, toggle, persistence and button; Java list-copy handling |
 | `tools/emi_curation/tests/policy.test.cjs`, `class_filter.test.cjs`, `emi_config.test.cjs` | policy rules (including the real curation lists), class filter, EMI config |
 | `tools/server_smoke/smoke.cjs` | CLI: argument parsing, orchestration (setup, `--drop`, boot, or `--analyze` of a finished run) and printing the verdict |
-| `tools/server_smoke/env.cjs` | the machine environment: java, packwiz bootstrap and installer jars, artifacts root, Forge version and URL; each overridable by a `SMOKE_*` env var |
+| `tools/server_smoke/env.cjs` | the machine environment: java, packwiz bootstrap and installer jars, the Evil Eye Local mods folder (`LOCAL_MODS`), artifacts root, Forge version and URL; each overridable by a `SMOKE_*` env var |
 | `tools/server_smoke/setup.cjs`, `procs.cjs` | cached Forge server install, `packwiz-installer -s server` install, `level-seed` (`--seed`, `readRunSeed`), `dropMods` (each install takes an optional process scope); hidden child processes: `procs.scope()` owns what it starts (`start`, bounded `run`, `killAll`), plus tree kill, JVM priority and CPU time (`setPriority`, `cpuSeconds`) |
 | `tools/server_smoke/boot.cjs` | boot supervisor: spawn hidden, tee the console, raise JVM priority, wait for `Done (` (line-buffered) or a crash report under the progress watchdog; with `complete()`, keep waiting after Done for the caller's own completion (bounded by `completeTimeout`); `finally` stop and cleanup |
 | `tools/server_smoke/cpu_sampler.cjs`, `shutdown.cjs` | one-in-flight CPU sampling with last-growth time; ending a boot: `stop` with grace, bounded jcmd thread dump, tree kill, scope cleanup, bounded log close |
+| `tools/server_smoke/host_wait.cjs` | `waitForServer`: fail-closed wait (bounded, cancellable) until no other Minecraft JVM runs on the host; used by showcase checks and the mod map capture |
 | `tools/server_smoke/watchdog.cjs` | pure watchdog decision (log silent AND CPU flat, hard cap) and CPU-per-wall starvation test |
 | `tools/server_smoke/verdict.cjs` | pure PASS/STALL/HOST STARVED/FAIL decision (worldgen-stall classification) and crash-report parsing (mod name and failure message) |
 | `tools/server_smoke/log_report.cjs`, `known_noise.json` | pure log grouping: errors and exceptions by signature, known boot noise vs new; the `DONE_RE` and `SPAWN_RE` regexes |

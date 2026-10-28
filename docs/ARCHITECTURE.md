@@ -3,30 +3,41 @@
 ## Mod map
 
 `scripts/mod-map/build.ps1` wraps `tools/mod_map/build.mjs` with the standard
-owner log contract. `inventory.cjs` validates `.pw.toml` pins, reads Forge TOML
-through `toml.cjs`, treats a custom `modLoader` as a dependency, and traverses
-declared jar-in-jar metadata. Wrapper jars whose only Forge metadata is in their
-sole embedded archive remain the physical removal unit. `model.cjs` builds
-the mandatory graph, detects content-family roots, follows nested add-ons into
-each applicable family, and separates family-exclusive from shared libraries.
-Player-facing suites whose metadata does not encode a base relationship use
-reasoned entries in `overrides.json`; the same hand-kept file records confirmed
-undeclared dependencies and pack-wide fixes. Physical multi-mod jars remain indivisible;
-duplicate external/embedded mod IDs retain provider provenance and one timing attribution.
-`categories.cjs` places each family and standalone mod through the checked-in
-`categories.json` map, with an explicit Other / Uncategorised fallback. Category
-timing de-duplicates member and library nodes within the category; the existing
-family tree remains responsible for showing libraries beneath each user.
+owner log contract; `run.cjs` orchestrates the pipeline below and owns artifact
+placement, input identity checks and saved-evidence replay.
 
-`capture.cjs` reuses showcase's offline preparer and idle-host guard, pack-test's
-cached-world copy and registry collector, and server-smoke's JVM supervision and
-shutdown. Only the disposable server gets a narrow Forge TRACE logger and the
-registry snapshot callback. `timing.cjs` pairs boundaries before `Done`;
-`page.cjs` renders compact one-line mod rows with first-sentence descriptions,
-used-by/needs badges and inline styles/controls. `run.cjs` owns artifact
-placement, input identity checks and saved-evidence replay. No installed jar,
-input cache or instance is changed. [Development](development.md#mod-map) covers
-commands and [Gotchas](GOTCHAS.md#mod-map-timing) defines the timing limits.
+- `inventory/` — `inventory.cjs` resolves each `.pw.toml` pin through
+  `packwiz/pinned_jar.cjs` (shared with showcase preparation), reads Forge
+  metadata through `mods_toml.cjs` (a `mods.toml`-only reader; metafiles go
+  through `pack_index` `readTable`), treats a custom `modLoader` as a
+  dependency, and traverses declared jar-in-jar metadata. Wrapper jars whose only
+  Forge metadata is in their sole embedded archive remain the physical removal
+  unit, and physical multi-mod jars stay indivisible; duplicate
+  external/embedded mod IDs keep provider provenance and one
+  timing attribution.
+- `model/` — one job per module: `graph.cjs` connects mandatory mod-ID
+  dependencies to physical jars; `classify.cjs` gives each mod a kind with
+  evidence and owns the one `isLibrary`; `cost.cjs` sums measured TRACE time
+  per unique mod ID; `families.cjs` builds families in three steps (root
+  selection, content membership, library ownership); `categories.cjs` places
+  each family and standalone mod through `categories.json`, with an explicit
+  Other / Uncategorised fallback and per-category de-duplicated timing.
+  `overrides.json` holds reasoned kind/family corrections, undeclared
+  dependencies and pack-wide fixes.
+- `capture/` — `capture.cjs` prepares the disposable server through showcase's
+  offline preparer with the `ordinary` world profile, waits on
+  `server_smoke/host_wait.cjs`, reuses pack-test's cached-world copy and
+  registry collector and server-smoke's JVM supervision. Only that server gets a
+  narrow Forge TRACE logger and the registry snapshot callback. `timing.cjs`
+  pairs boundaries before the server `DONE_RE` marker.
+- `page/` — `render` is a pure view over finished data (`classifications`,
+  `categories` and the family model); it never classifies or categorizes.
+  `view.cjs` derives ranking, family trees and cards, `html.cjs` builds escaped
+  fragments (compact one-line rows, used-by/needs badges), and `document.cjs`
+  is the shell embedding `page.css` and `page.js`.
+
+No installed jar, input cache or instance is changed. [Development](development.md#mod-map)
+covers commands and [Gotchas](GOTCHAS.md#mod-map-timing) defines the timing limits.
 
 ## Showcases
 

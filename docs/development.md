@@ -122,7 +122,7 @@ dependencies are displayed but never create membership. Suites whose metadata do
 not express the player-facing family (currently MineColonies and Macaw's) use
 reasoned data overrides rather than code special cases. Kinds use side metadata,
 descriptions and live namespace registry counts, with corrections in
-`tools/mod_map/overrides.json`. Zero registrations plus mandatory users is a library
+`tools/mod_map/model/overrides.json`. Zero registrations plus mandatory users is a library
 heuristic, not a guarantee. Family totals include shared add-ons in each applicable
 family; the page-wide attributed total de-duplicates every mod ID.
 
@@ -136,7 +136,7 @@ are labelled as bundled, not independently removable. Confirmed undeclared code
 edges and pack-wide-fix reasons live in `overrides.json`, not source special cases.
 
 Every family and standalone mod is assigned to a top-level purpose category by
-`tools/mod_map/categories.json`; unknown future IDs remain visible under Other /
+`tools/mod_map/model/categories.json`; unknown future IDs remain visible under Other /
 Uncategorised. Category totals de-duplicate shared members and libraries within
 that category. The compact page starts with both category and family rows collapsed,
 and keeps mandatory libraries nested beneath their users.
@@ -149,7 +149,7 @@ and client-only costs remain unmeasured. See [timing caveats](GOTCHAS.md#mod-map
 Focused fast gate (no build or lint command exists for this Node-only tooling):
 
 ```powershell
-node --test tools/mod_map/tests/*.cjs tools/script-run/*.test.mjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs
+node --test tools/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/server_smoke/tests/*.cjs tools/showcase/tests/*.cjs tools/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs
 node tools/packwiz/rehash.cjs --dry-run
 node tools/packwiz/verify_hashes.cjs
 git diff --check
