@@ -6,8 +6,8 @@ const { parseIndex, readMetafileSide } = require('../packwiz/pack_index.cjs');
 const { resolvePinnedJar } = require('../packwiz/pinned_jar.cjs');
 const { makeRunServer } = require('../pack_test/session/prepare.cjs');
 
-// World profiles: the showcase builds on an empty flat world; `ordinary` keeps the pack's
-// normal world generation (used when measuring the pack itself, e.g. the mod map).
+// The showcase builds on an empty flat world; `ordinary` keeps the pack's normal world
+// generation for callers that exercise the pack itself, such as mod-map capture.
 const PROFILES = {
   showcase: 'level-type=minecraft:flat\ngenerate-structures=false\nspawn-monsters=false\nspawn-animals=false\nspawn-npcs=false\n',
   ordinary: ''
@@ -26,6 +26,7 @@ function inventory(root, cache) {
   }
   return files;
 }
+
 function prepare(root, cache, server, { profile = 'showcase', ...options }) {
   if (!Object.hasOwn(PROFILES, profile)) throw new Error('Unknown server profile: ' + profile);
   if (fs.existsSync(server)) throw new Error('Refusing to reuse run server: ' + server);
@@ -47,4 +48,5 @@ function prepare(root, cache, server, { profile = 'showcase', ...options }) {
   fs.appendFileSync(path.join(server, 'server.properties'), PROFILES[profile]);
   return files.filter(f => f.hash).map(({ rel, hash, hashFormat }) => ({ rel, hash, hashFormat }));
 }
+
 module.exports = { inventory, prepare, PROFILES };

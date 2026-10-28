@@ -134,7 +134,8 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `kubejs/server_scripts/showcase/rigs/create_contraption.js` | Create descriptor validation, glue boundary/entity policy, motor zeroing, bearing teardown, collision preparation and lever control; legacy record compatibility |
 | `kubejs/server_scripts/showcase/entities.js` | entity policy for clearing: discard ordinary, block on player/tamed/named |
 | `kubejs/server_scripts/showcase/controls.js`, `command.js` | record-only rig tick dispatch and op-only command tree |
-| `tools/showcase/check.cjs`, `offline.cjs` | one-boot CLI, reports/log comparison; pinned offline server preparation (pins through `packwiz/pinned_jar.cjs`) with a `showcase` (flat, no spawns) or `ordinary` world profile, using existing pack-test/server-smoke modules |
+| `tools/showcase/check.cjs` | one-boot showcase CLI and reports/log comparison; uses the neutral offline-server preparer with the flat `showcase` profile |
+| `tools/server_smoke/offline_server.cjs` | pinned offline server preparation (through `packwiz/pinned_jar.cjs`) with `showcase` (flat, no spawns) and `ordinary` world profiles; shared by showcase and mod-map capture using existing pack-test setup |
 | `tools/mod_map/run.cjs`, `build.mjs` | mod map orchestration: options, artifact and read-only-input guards, saved-evidence identity checks, inventory → model → capture/timing → page; `build.mjs` runs it through script-run |
 | `tools/mod_map/inventory/` (`inventory.cjs`, `mods_toml.cjs`) | pinned jars → nodes with declared jar-in-jar traversal and bundle reconciliation; the Forge `mods.toml`-only scalar reader (metafiles use `pack_index` `readTable`) |
 | `tools/mod_map/model/` (`graph.cjs`, `classify.cjs`, `cost.cjs`, `families.cjs`, `categories.cjs`) | mandatory edges to physical jars; per-mod kind with evidence and the one `isLibrary(classifications, node)`; measured cost per unique mod ID; families by root selection, content membership and library ownership; purpose categories from `categories.json` |
@@ -153,7 +154,7 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `kubejs/server_scripts/dedup.js` | applies authored dedup policy and generated recipe/tag cleanup; hand-written server recipes go in a script named for the concern, not dedup.js |
 | `kubejs/server_scripts/uranium.js` | hand-written Alex's Caves / Create crushed-uranium → yellorium smelting and blasting recipes |
 | `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (`readTable` reads string tables and numeric CurseForge IDs; metafile name/download/side readers share the model), `isMetafile`, `.packwizignore`, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
-| `tools/packwiz/pinned_jar.cjs` | `resolvePinnedJar(metafileText, dirs)`: the one pinned-jar lookup (safe filename, ordered folders, hash-verified bytes, fail closed, never downloads); used by showcase preparation and the mod map |
+| `tools/packwiz/pinned_jar.cjs` | `resolvePinnedJar(metafileText, dirs)`: the one pinned-jar lookup (safe filename, ordered folders, hash-verified bytes, fail closed, never downloads); used by offline server preparation and the mod map inventory |
 | `tools/packwiz/rehash.cjs` | rebuild `index.toml` membership and hashes, then `pack.toml`'s index hash |
 | `tools/packwiz/verify_hashes.cjs` | check the hash chain, index membership and optionally jar hashes |
 | `tools/packwiz/serve.cjs` | serve the containing checkout on `127.0.0.1` over HTTP (not used by MultiMC: local instances install from the file path) |

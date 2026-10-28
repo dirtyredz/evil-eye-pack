@@ -7,7 +7,7 @@ owner log contract; `run.cjs` orchestrates the pipeline below and owns artifact
 placement, input identity checks and saved-evidence replay.
 
 - `inventory/` — `inventory.cjs` resolves each `.pw.toml` pin through
-  `packwiz/pinned_jar.cjs` (shared with showcase preparation), reads Forge
+  `packwiz/pinned_jar.cjs` (shared with offline server preparation), reads Forge
   metadata through `mods_toml.cjs` (a `mods.toml`-only reader; metafiles go
   through `pack_index` `readTable`), treats a custom `modLoader` as a
   dependency, and traverses declared jar-in-jar metadata. Wrapper jars whose only
@@ -24,8 +24,8 @@ placement, input identity checks and saved-evidence replay.
   Other / Uncategorised fallback and per-category de-duplicated timing.
   `overrides.json` holds reasoned kind/family corrections, undeclared
   dependencies and pack-wide fixes.
-- `capture/` — `capture.cjs` prepares the disposable server through showcase's
-  offline preparer with the `ordinary` world profile, waits on
+- `capture/` — `capture.cjs` prepares the disposable server through
+  `server_smoke/offline_server.cjs` with the `ordinary` world profile, waits on
   `server_smoke/host_wait.cjs`, reuses pack-test's cached-world copy and
   registry collector and server-smoke's JVM supervision. Only that server gets a
   narrow Forge TRACE logger and the registry snapshot callback. `timing.cjs`
@@ -59,8 +59,9 @@ adapter handles old motor-only records by reading existing glue when starting;
 a rebuild stores the complete descriptor. Missing rig implementations skip ticks.
 
 `tools/showcase/check.cjs` discovers matching checks and sequences them in one
-dedicated server. Offline preparation validates pinned cached bytes and reuses
-pack-test server-copy/evidence modules; server-smoke owns watchdog and shutdown.
+dedicated server. `tools/server_smoke/offline_server.cjs` validates pinned cached
+bytes, applies the flat `showcase` profile and reuses pack-test server-copy/evidence
+modules; server-smoke also owns watchdog and shutdown.
 The injected harness sequences checks and records lifecycle/completion;
 `helpers.js` owns fixture access and assertions. Domain checks live in
 `checks/<section>.js`; `command_forms.js` runs once afterward against all registry

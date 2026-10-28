@@ -10,7 +10,7 @@ const { verify } = require('../packwiz/verify_hashes.cjs');
 const { localLock } = require('../pack_test/session/lock.cjs');
 const { checkDestination, runMeta } = require('../pack_test/session/run_meta.cjs');
 const { collectEvidence } = require('../pack_test/session/execute.cjs');
-const { prepare } = require('./offline.cjs');
+const { prepare } = require('../server_smoke/offline_server.cjs');
 const { normalize } = require('../server_smoke/log_report.cjs');
 
 function sections(root) {
