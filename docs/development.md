@@ -106,7 +106,8 @@ Jar discovery searches Evil Eye Local and the pack-test staged server, accepting
 only bytes matching this checkout's `.pw.toml` hashes. `-Mods` and `-Cache`
 override those read-only inputs. Missing pins fail rather than silently dropping
 mods. The full client inventory is mapped; only server-compatible jars are booted.
-The local offline mode reuses showcase preparation, pack-test world copying and
+The local offline mode reuses the shared offline-server preparer
+(`tools/server_smoke/offline_server.cjs`), pack-test world copying and
 registry collection, and server-smoke supervision. It waits for an idle Minecraft
 JVM slot (up to 45 minutes) and takes a mod-map lock. This explicit local capture
 avoids changing ANU's shared stage/logging or triggering remote provisioning.
