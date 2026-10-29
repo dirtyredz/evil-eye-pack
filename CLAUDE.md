@@ -4,7 +4,8 @@
 - Every pack-file edit: save as UTF-8 LF, then `node tools/packwiz/rehash.cjs` and `node tools/packwiz/verify_hashes.cjs`. Never copy `index.toml`/`pack.toml` between branches; rehash each branch on its own.
 - Nothing reaches the Stable instance until `main` is pushed. Test unpushed changes only in **Evil Eye Local** or a trial instance (they install from the checkout on launch: rehash, then Launch), never in Stable.
 - Dispatch artifacts go in `C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/<YYYY-MM-DD-task>/`: `--prompt-file`, `--output-file` and shell redirections included. Never write job files into `projects/` or the repo.
-- Experiments live in linked worktrees under `C:/Users/dirty/projects/worktrees/evil-eye-pack/`. Move them only with `git worktree move`.
+- Experiments live in linked worktrees under `C:/Users/dirty/projects/.worktrees/evil-eye-pack/<branch>/` (the only home the harness permits). Move them only with `git worktree move`.
+- The NeoForge 1.21.1 migration lives on branch `migration/neoforge-1.21.1` with its own **Evil Eye NeoForge Trial** instance; see `docs/neoforge-migration.md`.
 - Stop any `serve.cjs` you start (MultiMC no longer needs one).
 
 <!-- docket:agent-snippet begin v2 -->

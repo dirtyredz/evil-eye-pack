@@ -8,10 +8,11 @@ and how to test a change in the game before it is pushed.
 | Path (under `C:/Users/dirty/`) | Responsibility |
 |---|---|
 | `projects/evil-eye-pack/` | Main checkout (`main`). Pack files keep their layout. |
-| `projects/worktrees/evil-eye-pack/<name>/` | Linked worktrees for isolated experiments and implementation branches. |
+| `projects/.worktrees/evil-eye-pack/<branch>/` | Linked worktrees for isolated experiments and implementation branches (the harness blocks `git worktree add` anywhere else). |
 | `projects/artifacts/evil-eye-pack/jobs/<date-task>/` | Dispatch prompts, plans, reports and their `.events.jsonl` / `.job.json` / `.stderr.log` sidecars. |
 | `MultiMC/instances/Evil Eye Stable/` | Display name **Evil Eye (Stable)**. The owner's real worlds. Installs published `main`. |
 | `MultiMC/instances/Evil Eye Local/` | Disposable copy of Stable (no saves). Installs the main checkout from its `pack.toml` file path. |
+| `MultiMC/instances/Evil Eye NeoForge Trial/` | Fresh NeoForge 1.21.1 trial (no saves). Java 21 at `C:/Tools/evil-eye-pack/temurin-21`. Installs the `migration/neoforge-1.21.1` worktree. See [NeoForge migration](neoforge-migration.md). |
 | `MultiMC/packwiz/packwiz-installer-bootstrap.jar` | Shared installer bootstrap used by every instance. |
 | `MultiMC/backups/evil-eye/<instance>/<timestamp>/` | Instance backups (`instance/`, `launcher/`, `SHA256SUMS.txt`). Older `MultiMC/backups/Evil Eye 2026-10-11/` is kept as is. |
 
@@ -31,6 +32,7 @@ directly on every launch (verified headless 2026-10-11: full install, exit 0), s
 |---|---|---|
 | Evil Eye (Stable) | `https://raw.githubusercontent.com/dirtyredz/evil-eye-pack/main/pack.toml` | GitHub (after a push) |
 | Evil Eye Local | `C:/Users/dirty/projects/evil-eye-pack/pack.toml` | the main checkout on disk |
+| Evil Eye NeoForge Trial | `C:/Users/dirty/projects/.worktrees/evil-eye-pack/migration/neoforge-1.21.1/pack.toml` | the migration worktree on disk |
 
 Each test instance's path belongs to one checkout; never point an instance at another checkout's `pack.toml`.
 `tools/packwiz/serve.cjs` is no longer needed for MultiMC (kept as a tool for serving a checkout over HTTP).
@@ -327,7 +329,7 @@ Every dispatch gets its own `projects/artifacts/evil-eye-pack/jobs/<YYYY-MM-DD-t
 
 ## Worktrees
 
-- Create: `git worktree add ../worktrees/evil-eye-pack/<name> -b <branch>` from the main checkout.
+- Create: `git worktree add ../.worktrees/evil-eye-pack/<branch> -b <branch>` from the main checkout.
 - Move: only `git worktree move <old> <new>`. Stop its server first. Never move it in Explorer
   and never `git worktree prune` during recovery.
 - Retire: archive results, keep a branch or tag, then `git worktree remove` a clean worktree.
@@ -342,7 +344,7 @@ Every dispatch gets its own `projects/artifacts/evil-eye-pack/jobs/<YYYY-MM-DD-t
   back the two launcher files.
 - Undo the 2026-10-11 rename: close MultiMC, rename `Evil Eye Stable` back to `Evil Eye Dev1`,
   restore its `instance.cfg` and `multimc.cfg` from the backup.
-- Undo the worktree move: `git worktree move ../worktrees/evil-eye-pack/emi-trial ../evil-eye-pack-emi`.
+- Undo the 2026-10-11 worktree move: `git worktree move ../worktrees/evil-eye-pack/emi-trial ../evil-eye-pack-emi` (that historical worktree predates the `.worktrees` home).
 
 ## Acceptance checklist (manual, owner)
 
