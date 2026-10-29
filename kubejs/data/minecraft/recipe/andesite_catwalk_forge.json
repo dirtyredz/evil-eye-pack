@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "create:andesite_bars"
+    },
+    "p": {
+      "tag": "c:plates/andesite_alloy"
+    }
+  },
+  "pattern": [
+    " p ",
+    "pBp",
+    " p "
+  ],
+  "result": {
+    "count": 4,
+    "id": "createdeco:andesite_catwalk"
+  }
+}

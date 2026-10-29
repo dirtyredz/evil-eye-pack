@@ -1,0 +1,177 @@
+{
+ "note": "Dedup policy changes made while re-pointing to NeoForge 1.21.1 (2026-10-29), checked against the verified target jars.",
+ "droppedHiddenOnly": {
+  "reason": "No longer registered by the target builds (no item model in the pinned 1.21.1 jars): nothing to hide.",
+  "ids": [
+   "bigreactors:blutonium_dust",
+   "bigreactors:cyanite_dust",
+   "bigreactors:graphite_dust",
+   "bigreactors:inanite_dust",
+   "bigreactors:insanite_dust",
+   "bigreactors:ludicrite_dust",
+   "bigreactors:magentite_dust",
+   "bigreactors:ridiculite_dust",
+   "bigreactors:yellorium_dust",
+   "enderio:powdered_cobalt",
+   "mca:jeweler_workbench",
+   "storagedrawers:connection_key_both",
+   "storagedrawers:connection_key_input",
+   "storagedrawers:connection_key_none",
+   "storagedrawers:connection_key_output",
+   "storagedrawers:keyring_connection",
+   "storagedrawers:keyring_connection_both",
+   "storagedrawers:keyring_connection_input",
+   "storagedrawers:keyring_connection_none",
+   "storagedrawers:keyring_connection_output"
+  ],
+  "previousReasons": {
+   "bigreactors:blutonium_dust": {
+    "class": "unobtainable-absent-mod",
+    "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+    "date": "2026-10-23",
+    "source": "commit 4e899fd"
+   },
+   "bigreactors:cyanite_dust": {
+    "class": "unobtainable-absent-mod",
+    "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+    "date": "2026-10-23",
+    "source": "commit 4e899fd"
+   },
+   "bigreactors:graphite_dust": {
+    "class": "unobtainable-absent-mod",
+    "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+    "date": "2026-10-23",
+    "source": "commit 4e899fd"
+   },
+   "bigreactors:inanite_dust": {
+    "class": "unobtainable-absent-mod",
+    "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+    "date": "2026-10-23",
+    "source": "commit 4e899fd"
+   },
+   "bigreactors:insanite_dust": {
+    "class": "unobtainable-absent-mod",
+    "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+    "date": "2026-10-23",
+    "source": "commit 4e899fd"
+   },
+   "bigreactors:ludicrite_dust": {
+    "class": "unobtainable-absent-mod",
+    "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+    "date": "2026-10-23",
+    "source": "commit 4e899fd"
+   },
+   "bigreactors:magentite_dust": {
+    "class": "unobtainable-absent-mod",
+    "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+    "date": "2026-10-23",
+    "source": "commit 4e899fd"
+   },
+   "bigreactors:ridiculite_dust": {
+    "class": "unobtainable-absent-mod",
+    "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+    "date": "2026-10-23",
+    "source": "commit 4e899fd"
+   },
+   "bigreactors:yellorium_dust": {
+    "class": "unobtainable-absent-mod",
+    "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+    "date": "2026-10-23",
+    "source": "commit 4e899fd"
+   },
+   "enderio:powdered_cobalt": {
+    "class": "unobtainable-absent-mod",
+    "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
+    "date": "2026-10-23",
+    "source": "commit 4e899fd"
+   },
+   "mca:jeweler_workbench": {
+    "class": "unobtainable",
+    "evidence": "BlocksMCA.JEWELER_WORKBENCH has blockstate and lang but no recipe, no block loot table and no trade or structure referencing it; only a storage_blocks tag lists it. Nothing in this build produces it. (data/mca/recipes (none); loot_tables/blocks (none); tags/blocks/storage_blocks.json; BlocksMCA.class; medium)",
+    "date": "2026-10-23",
+    "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+   },
+   "storagedrawers:connection_key_both": {
+    "class": "creative-technical",
+    "evidence": "ModItems registers a per-ConnectionMode render-state item of ItemConnectionKey (connection_key_none/input/output/both) used only for model selection; the real craftable item is storagedrawers:connection_key (drawer_key + hopper). (core/ModItems.class CONNECTION_KEY_*; ModCreativeTabs EXCLUDE_ITEMS_CREATIVE_TAB; recipes/connection_key.json; medium)",
+    "date": "2026-10-23",
+    "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+   },
+   "storagedrawers:connection_key_input": {
+    "class": "creative-technical",
+    "evidence": "ModItems registers a per-ConnectionMode render-state item of ItemConnectionKey (connection_key_none/input/output/both) used only for model selection; the real craftable item is storagedrawers:connection_key (drawer_key + hopper). (core/ModItems.class CONNECTION_KEY_*; ModCreativeTabs EXCLUDE_ITEMS_CREATIVE_TAB; recipes/connection_key.json; medium)",
+    "date": "2026-10-23",
+    "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+   },
+   "storagedrawers:connection_key_none": {
+    "class": "creative-technical",
+    "evidence": "ModItems registers a per-ConnectionMode render-state item of ItemConnectionKey (connection_key_none/input/output/both) used only for model selection; the real craftable item is storagedrawers:connection_key (drawer_key + hopper). (core/ModItems.class CONNECTION_KEY_*; ModCreativeTabs EXCLUDE_ITEMS_CREATIVE_TAB; recipes/connection_key.json; medium)",
+    "date": "2026-10-23",
+    "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+   },
+   "storagedrawers:connection_key_output": {
+    "class": "creative-technical",
+    "evidence": "ModItems registers a per-ConnectionMode render-state item of ItemConnectionKey (connection_key_none/input/output/both) used only for model selection; the real craftable item is storagedrawers:connection_key (drawer_key + hopper). (core/ModItems.class CONNECTION_KEY_*; ModCreativeTabs EXCLUDE_ITEMS_CREATIVE_TAB; recipes/connection_key.json; medium)",
+    "date": "2026-10-23",
+    "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+   },
+   "storagedrawers:keyring_connection": {
+    "class": "creative-technical",
+    "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+    "date": "2026-10-23",
+    "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+   },
+   "storagedrawers:keyring_connection_both": {
+    "class": "creative-technical",
+    "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+    "date": "2026-10-23",
+    "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+   },
+   "storagedrawers:keyring_connection_input": {
+    "class": "creative-technical",
+    "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+    "date": "2026-10-23",
+    "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+   },
+   "storagedrawers:keyring_connection_none": {
+    "class": "creative-technical",
+    "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+    "date": "2026-10-23",
+    "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+   },
+   "storagedrawers:keyring_connection_output": {
+    "class": "creative-technical",
+    "evidence": "Render-state item for ItemKeyring showing the active key type (ItemKeyring.getActiveKey/rotateKeyring); only the plain storagedrawers:keyring is craftable via the KeyringRecipe special recipe. (item/ItemKeyring.class; core/recipe/KeyringRecipe.class; recipes/keyring.json (type storagedrawers:keyring); medium)",
+    "date": "2026-10-23",
+    "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+   }
+  }
+ },
+ "droppedReplacements": {
+  "reason": "Source item no longer exists in Create Deco 2.1.3 for 1.21.1.",
+  "replacements": {
+   "createdeco:copper_door": "create:copper_door"
+  }
+ },
+ "translatedTags": {
+  "reason": "Forge 1.20 forge: material tags translated to the NeoForge 1.21 c: tags the target recipes use (each target verified to be referenced by pinned-jar data).",
+  "map": {
+   "forge:ingots/steel": "c:ingots/steel",
+   "forge:dusts/ender": "c:dusts/ender_pearl",
+   "forge:dusts/ender_pearl": "c:dusts/ender_pearl",
+   "forge:raw_materials/uranium": "c:raw_materials/uranium",
+   "forge:storage_blocks/gold": "c:storage_blocks/gold"
+  }
+ },
+ "allowedGroups": {
+  "forge:storage_blocks/honeycombs": "now c:storage_blocks/honeycombs (same Productive Bees reason)",
+  "forge:ingots/brick": "dropped: Supplementaries 1.21.1 tags ash brick as c:bricks/ash and c:bricks, not as an ingot brick",
+  "forge:raw_materials/uranium": "parked with Alex's Caves (deferred/dedup.json)",
+  "forge:ores/iron": "parked with Alex's Caves (deferred/dedup.json)"
+ },
+ "handwrittenOverrides": {
+  "kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/**": "Translated to recipe/sandpaper_polishing/** (268 files; results item -> id), same ids; Dragons Plus 1.11.9 generators stay off in config. Every non-vanilla id checked against the target jars.",
+  "kubejs/data/ars_elemental/recipes/quartz_crush.json": "Removed: Ars Elemental 0.7.10.4 for 1.21.1 ships no quartz_crush recipe, so there is no broken nether_quartz output left to fix.",
+  "kubejs/data/supplementaries/recipes/spiky_bomb_2.json": "Removed: Supplementaries 1.21-2.x has no spiky bomb item; its plain bomb recipe already uses c:ingots/iron."
+ }
+}

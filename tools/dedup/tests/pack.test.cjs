@@ -26,7 +26,7 @@ test('HammerLib gears are disabled at recipe and tag sources; BHC code drops sta
 
 test('Dark Steel fills the empty steel ingot tag for Extreme Reactors; BOP willow door stays out of trapdoor tags', () => {
   const sources = json('kubejs/config/dedup_sources.json').itemTags;
-  assert.deepEqual(sources['forge:ingots/steel'], ['enderio:dark_steel_ingot']);
+  assert.deepEqual(sources['c:ingots/steel'], ['enderio:dark_steel_ingot']);
   for (const tag of ['minecraft:trapdoors', 'minecraft:wooden_trapdoors']) {
     assert.equal(sources[tag].includes('biomesoplenty:willow_door'), false, tag);
     assert.ok(sources[tag].includes('biomesoplenty:willow_trapdoor'), tag);

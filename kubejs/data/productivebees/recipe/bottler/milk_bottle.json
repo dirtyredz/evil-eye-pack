@@ -1,0 +1,13 @@
+{
+  "type": "productivebees:bottler",
+  "fluid": {
+    "fluid": "minecraft:milk",
+    "amount": 250
+  },
+  "ingredient": {
+    "item": "minecraft:glass_bottle"
+  },
+  "result": {
+    "id": "farmersdelight:milk_bottle"
+  }
+}

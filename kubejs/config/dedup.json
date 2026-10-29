@@ -33,7 +33,6 @@
     "createdeco:brass_bars": "create:brass_bars",
     "createdeco:brass_door": "create:brass_door",
     "createdeco:copper_bars": "create:copper_bars",
-    "createdeco:copper_door": "create:copper_door",
     "createdeco:industrial_iron_window": "create:industrial_iron_window",
     "createdeco:industrial_iron_window_pane": "create:industrial_iron_window_pane"
   },
@@ -53,17 +52,7 @@
     "create:crushed_raw_aluminum",
     "create:crushed_raw_osmium",
     "create:crushed_raw_platinum",
-    "bigreactors:blutonium_dust",
-    "bigreactors:cyanite_dust",
-    "bigreactors:graphite_dust",
-    "bigreactors:inanite_dust",
-    "bigreactors:insanite_dust",
-    "bigreactors:ludicrite_dust",
-    "bigreactors:magentite_dust",
-    "bigreactors:ridiculite_dust",
-    "bigreactors:yellorium_dust",
     "bigreactors:reinforced_reactorfluidport_mekanism_passive",
-    "enderio:powdered_cobalt",
     "enderio:powdered_tin",
     "create:chromatic_compound",
     "create:refined_radiance",
@@ -147,22 +136,12 @@
     "doggytalents:locator_orb_ka",
     "doggytalents:locator_orb_moku",
     "doggytalents:locator_orb_sui",
-    "mca:jeweler_workbench",
     "minecolonies:santa_hat",
     "minecolonies:scan_analyzer",
     "productivebees:adv_breed_all_bees",
     "productivebees:adv_breed_bee",
     "productivebees:invisible_redstone_block",
-    "storagedrawers:connection_key_both",
-    "storagedrawers:connection_key_input",
-    "storagedrawers:connection_key_none",
-    "storagedrawers:connection_key_output",
     "storagedrawers:detached_drawer_full",
-    "storagedrawers:keyring_connection",
-    "storagedrawers:keyring_connection_both",
-    "storagedrawers:keyring_connection_input",
-    "storagedrawers:keyring_connection_none",
-    "storagedrawers:keyring_connection_output",
     "storagedrawers:keyring_drawer",
     "storagedrawers:keyring_personal",
     "storagedrawers:keyring_personal_cofh",
@@ -225,21 +204,18 @@
     }
   },
   "tagRemovals": {
-    "forge:storage_blocks/gold": [
+    "c:storage_blocks/gold": [
       "cluttered:chiseled_gold_block"
     ]
   },
   "extraItemTags": {
-    "forge:ingots/steel": [
+    "c:ingots/steel": [
       "enderio:dark_steel_ingot"
     ],
-    "forge:dusts/ender": [
+    "c:dusts/ender_pearl": [
       "ae2:ender_dust"
     ],
-    "forge:dusts/ender_pearl": [
-      "ae2:ender_dust"
-    ],
-    "forge:raw_materials/uranium": [
+    "c:raw_materials/uranium": [
       "bigreactors:raw_yellorium"
     ]
   }

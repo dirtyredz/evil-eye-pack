@@ -9,6 +9,7 @@ const vm = require('node:vm');
 const { root, scan, resolveTags, duplicateGroups, defaultJarDirs } = require('../catalog.cjs');
 const { plan } = require('../overrides.cjs');
 const { compareAllowances } = require('../guard.cjs');
+const { classify } = require('../../data_io/resource_layout.cjs');
 const read = f => JSON.parse(fs.readFileSync(path.join(root, f), 'utf8'));
 const policy = read('kubejs/config/dedup.json');
 const catalog = scan(defaultJarDirs());
@@ -58,7 +59,7 @@ test('no effective loot item entry can produce a retired copy, including unquali
     Object.values(value).forEach(child => inspect(child, file));
   }
   for (const [file, json] of catalog.data) {
-    if (file.includes('/loot_tables/')) inspect(planned.overrides.has('kubejs/' + file) ? read('kubejs/' + file) : json, file);
+    if (classify(file)?.kind === 'loot_tables') inspect(planned.overrides.has('kubejs/' + file) ? read('kubejs/' + file) : json, file);
   }
   assert.ok(checked > 1000);
 });
@@ -77,8 +78,6 @@ test('recipe and tag events remove producers and code-driven loot candidates', (
   recipeHandlers.forEach(fn => fn(event));
   assert.deepEqual(removedRecipes.filter(r => r.id).map(r => r.id), sources.removeRecipes);
   assert.deepEqual(addedRecipes, [
-    { id: 'kubejs:uranium_ingot', type: 'smelting', output: 'bigreactors:yellorium_ingot', input: 'alexscaves:uranium' },
-    { id: 'kubejs:uranium_ingot_blasting', type: 'blasting', output: 'bigreactors:yellorium_ingot', input: 'alexscaves:uranium' },
     { id: 'kubejs:crushed_uranium_ingot', type: 'smelting', output: 'bigreactors:yellorium_ingot', input: 'create:crushed_raw_uranium' },
     { id: 'kubejs:crushed_uranium_ingot_blasting', type: 'blasting', output: 'bigreactors:yellorium_ingot', input: 'create:crushed_raw_uranium' }
   ]);
@@ -93,8 +92,9 @@ test('recipe and tag events remove producers and code-driven loot candidates', (
   assert.deepEqual(removed, [...retired]);
   assert.deepEqual(untagged, policy.tagRemovals);
   assert.deepEqual(added, sources.itemTags);
-  assert.ok(added['forge:wither_bones'].includes('iceandfire:witherbone'));
-  assert.ok(added['forge:nuggets/copper'].includes('create:copper_nugget'));
+  // Temporary policy while Ice and Fire is deferred: BHC's wither bone survives and nothing names the port.
+  assert.equal(retired.has('bhc:wither_bone'), false);
+  assert.doesNotMatch(JSON.stringify({ added, removed, sources }), /iceandfire:/);
 });
 
 test('every shipped file is free of removed namespace references; deposit survivors stay explicit', () => {
@@ -105,7 +105,7 @@ test('every shipped file is free of removed namespace references; deposit surviv
       assert.doesNotMatch(fs.readFileSync(file, 'utf8'), /(?:alltheores|allthecompressed|almostunified):/, file);
     }
   }
-  for (const [deposit, ore] of Object.entries({ zinc: 'create:zinc_ore', silver: 'iceandfire:silver_ore', uranium: 'bigreactors:yellorite_ore', sapphire: 'iceandfire:sapphire_ore', gold: 'minecraft:gold_ore' })) {
+  for (const [deposit, ore] of Object.entries({ zinc: 'create:zinc_ore', uranium: 'bigreactors:yellorite_ore', gold: 'minecraft:gold_ore' })) {
     assert.ok(fs.readFileSync(path.join(root, 'config/adlods/Deposits', deposit + '.cfg'), 'utf8').includes(ore), deposit);
   }
   for (const deposit of ['aluminum', 'iridium', 'lead', 'nickel', 'osmium', 'platinum', 'ruby', 'tin']) {

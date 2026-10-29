@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "create:brass_bars"
+    },
+    "p": {
+      "tag": "c:plates/brass"
+    }
+  },
+  "pattern": [
+    "ppp",
+    "B B",
+    "B B"
+  ],
+  "result": {
+    "count": 8,
+    "id": "createdeco:brass_catwalk_railing"
+  }
+}
