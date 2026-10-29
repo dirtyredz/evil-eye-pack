@@ -1,7 +1,7 @@
 // priority: 100
 // Shared guarded error reporting for the EMI curation callbacks. Nothing in this
-// package may throw into Forge's event bus or into EMI: an uncaught exception in a
-// Forge listener hard-crashes the client without a crash report.
+// package may throw into NeoForge's event bus or into EMI: an uncaught exception in a
+// NeoForge listener hard-crashes the client without a crash report.
 
 (function (ns) {
   var counts = {}

@@ -77,15 +77,19 @@ function loadScripts(env, names) {
     global: env.global,
     Java: env.Java,
     ClientEvents: env.ClientEvents,
+    NativeEvents: env.NativeEvents,
     JsonIO: env.JsonIO || makeJsonIO(null, new Map(), {}),
     Platform: env.Platform || { isLoaded: () => false, getInfo: () => null },
     console: makeConsole(env.logs || []),
   };
   const context = vm.createContext(sandbox);
-  for (const f of files) {
-    const file = path.join(SCRIPT_DIR, f.endsWith('.js') ? f : f + '.js');
-    vm.runInContext(fs.readFileSync(file, 'utf8'), context, { filename: file });
-  }
+  if (env.lockGlobal) env.lockGlobal(true);
+  try {
+    for (const f of files) {
+      const file = path.join(SCRIPT_DIR, f.endsWith('.js') ? f : f + '.js');
+      vm.runInContext(fs.readFileSync(file, 'utf8'), context, { filename: file });
+    }
+  } finally { if (env.lockGlobal) env.lockGlobal(false); }
   return sandbox;
 }
 
@@ -96,13 +100,26 @@ function loadScripts(env, names) {
 function boot(opts) {
   const fx = (opts && opts.fixture) || fixture();
   const world = F.createWorld(fx.spec);
-  const g = {};
+  // `global` as KubeJS 2101 gives it to client scripts: startup_scripts/globals.js already made
+  // emiCuration, and a client script setting any top-level value throws.
+  let locked = false;
+  const g = new Proxy({ emiCuration: {} }, {
+    set(target, key, value) {
+      if (locked) throw new Error('KubeJS 2101: client scripts cannot set global.' + String(key));
+      target[key] = value; return true;
+    }
+  });
+  const nativeEvents = {
+    // KubeJS 2101 NativeEvents listeners are reloadable: a script load starts from none.
+    onEvent: (cls, fn) => world.counters.listeners.push({ cls: String(cls).replace(/^net\.neoforged\.neoforge\.client\.event\./, ''), fn })
+  };
   const ctx = { world, fx, g, events: null, files: new Map((opts && opts.files) || []), io: { failWrites: false }, logs: [], loadedMods: new Set(['minecraft', 'ae2', 'create', 'enderio', 'dramaticdoors']),
     modNames: { minecraft: 'Minecraft', ae2: 'Applied Energistics 2', enderio: 'Ender IO', create: 'Create', dramaticdoors: 'Dramatic Doors' } };
   ctx.load = (jsonIO) => {
     ctx.events = F.clientEvents();
+    world.counters.listeners.length = 0;
     loadScripts({
-      global: g, Java: world.Java, ClientEvents: ctx.events.api, JsonIO: makeJsonIO(jsonIO, ctx.files, ctx.io), logs: ctx.logs,
+      global: g, Java: world.Java, ClientEvents: ctx.events.api, NativeEvents: nativeEvents, lockGlobal: (on) => { locked = on; }, JsonIO: makeJsonIO(jsonIO, ctx.files, ctx.io), logs: ctx.logs,
       Platform: {
         isLoaded: (id) => ctx.loadedMods.has(id),
         getInfo: (id) => (ctx.loadedMods.has(id) ? { getName: () => ctx.modNames[id] || id } : null),

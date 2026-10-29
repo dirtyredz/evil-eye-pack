@@ -107,23 +107,24 @@ test('placement avoids the container, EMI buttons and sidebar panels', () => {
   assert.ok(narrow.x >= 0 && narrow.x + narrow.w <= 170);
 });
 
-test('forgeHooks.registerOnce: one listener per hook, dispatch through the reloadable table, throws are logged', () => {
+test('nativeHooks.register: one NativeEvents listener per hook, dropped on reload, dispatch through the reloadable table, throws are logged', () => {
   const c = boot();
-  c.world.classes.EvA = 'EvA'; c.world.classes.EvB = 'EvB';
   const before = c.world.counters.listeners.length;
   const calls = [];
-  const H = () => c.ns().forgeHooks;
-  const hooks = [{ event: 'EvA', handler: 'a', label: 'a' }, { event: 'EvB', handler: 'b', label: 'b' }];
+  const H = () => c.ns().nativeHooks;
+  assert.equal(H().EVENTS, 'net.neoforged.neoforge.client.event.');
+  const hooks = [{ event: H().EVENTS + 'EvA', handler: 'a', label: 'a' }, { event: H().EVENTS + 'EvB', handler: 'b', label: 'b' }];
   c.ns().testTable = { a: (e) => calls.push(['old', e]), b: () => { throw new Error('boom'); } };
-  H().registerOnce('testFlag', 'testTable', hooks);
-  H().registerOnce('testFlag', 'testTable', hooks);
-  assert.equal(c.world.counters.listeners.length, before + 2, 'second call registers nothing');
+  H().register('testTable', hooks);
+  assert.equal(c.world.counters.listeners.length, before + 2);
   c.ns().testTable = { a: (e) => calls.push(['new', e]), b: () => { throw new Error('boom'); } };
   c.world.fireEvent('EvA', 1);
   assert.deepEqual(calls, [['new', 1]], 'the replaced handler runs');
   const errs = c.logs.length;
   c.world.fireEvent('EvB', 2);
-  assert.ok(c.logs.slice(errs).some((l) => l[0] === 'error' && /EMI curation \(b listener\): .*boom/.test(l[1])));
+  assert.ok(c.logs.slice(errs).some((l) => l[0] === 'error' && /EMI curation [(]b listener[)]: .*boom/.test(l[1])));
+  c.load();
+  assert.equal(c.world.counters.listeners.length, before, 'a script reload starts again from the listeners the scripts register');
 });
 
 test('interop.isContainerScreen and literal', () => {

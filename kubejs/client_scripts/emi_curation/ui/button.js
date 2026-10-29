@@ -1,5 +1,5 @@
 // priority: 50
-// CLEAN/ALL toolbar button. Place before Mods and DECOR (Forge listener order).
+// CLEAN/ALL toolbar button. Place before Mods and DECOR (NeoForge listener registration order).
 (function (ns) {
   ns.makeScreenButton({
     name: ns.placement.CLEAN,

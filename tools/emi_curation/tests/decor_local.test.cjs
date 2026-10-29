@@ -300,7 +300,7 @@ test('the startup script registers a GUI-context D key in the "EMI Curation" cat
   class KeyMapping { constructor(...a) { calls.push(a); } }
   const classes = {
     'net.minecraft.client.KeyMapping': KeyMapping,
-    'net.minecraftforge.client.settings.KeyConflictContext': { GUI: 'GUI' },
+    'net.neoforged.neoforge.client.settings.KeyConflictContext': { GUI: 'GUI' },
     'com.mojang.blaze3d.platform.InputConstants$Type': { KEYSYM: 'KEYSYM' },
   };
   const g = {};
@@ -308,7 +308,7 @@ test('the startup script registers a GUI-context D key in the "EMI Curation" cat
     global: g, console: { error: () => { throw new Error('unexpected console.error'); } },
     Platform: { isClientEnvironment: () => true },
     Java: { loadClass: (n) => classes[n] },
-    ForgeModEvents: { onEvent: (cls, fn) => { assert.equal(cls, 'net.minecraftforge.client.event.RegisterKeyMappingsEvent'); handler = fn; } },
+    NativeEvents: { onEvent: (cls, fn) => { assert.equal(cls, 'net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent'); handler = fn; } },
   };
   vm.runInNewContext(fs.readFileSync(file, 'utf8'), sandbox);
   handler({ register: (k) => { registered = k; } });
@@ -318,6 +318,6 @@ test('the startup script registers a GUI-context D key in the "EMI Curation" cat
   assert.ok(lang['key.emi_curation.mark_decor'] && lang['key.categories.emi_curation'], 'both lang keys exist');
   // A dedicated server never touches the client-only classes.
   let touched = false;
-  vm.runInNewContext(fs.readFileSync(file, 'utf8'), Object.assign({}, sandbox, { Platform: { isClientEnvironment: () => false }, ForgeModEvents: { onEvent: () => { touched = true; } } }));
+  vm.runInNewContext(fs.readFileSync(file, 'utf8'), Object.assign({}, sandbox, { Platform: { isClientEnvironment: () => false }, NativeEvents: { onEvent: () => { touched = true; } } }));
   assert.equal(touched, false);
 });

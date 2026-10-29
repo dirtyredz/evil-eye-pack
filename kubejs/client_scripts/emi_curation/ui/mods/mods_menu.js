@@ -12,7 +12,7 @@
 // set with EmiScreenManager.search.setValue(...): EditBox.setValue runs the widget's
 // responder, which is what makes EMI refilter (the same path as typing).
 //
-// Forge listeners survive /kubejs reload, so they are registered once and dispatch
+// NeoForge listeners are re-registered on every load through NativeEvents (reloadable) and dispatch
 // through global.emiCuration.modsMenuHandlers, which every reload replaces.
 
 (function (ns) {
@@ -218,7 +218,7 @@
     }
   }
 
-  // ---- Forge event handlers ----
+  // ---- NeoForge event handlers ----
 
   function onScreenInit(e) {
     var screen = e.getScreen()
@@ -267,7 +267,7 @@
   // While the menu is open and the mouse is over it, the screen and EMI underneath still
   // think they are hovered. Both the container's and EMI's tooltips go through
   // GuiGraphics.renderTooltipInternal (EMI's DrawContextAccessor.drawTooltip invokes it),
-  // where Forge posts RenderTooltipEvent.Pre; cancelling that event drops the tooltip.
+  // where NeoForge posts RenderTooltipEvent.Pre; cancelling that event drops the tooltip.
   function onTooltip(e) {
     var u = ui()
     if (!u.open || !u.mouse || rowAt(u, u.mouse.x, u.mouse.y) < 0) return
@@ -314,9 +314,9 @@
     choose: function (modid) { ns.diag.guard('mods choose', function () { choose(modid) }) }
   }
 
-  // ForgeEvents is startup-only: register on the Forge bus directly, exactly once.
-  var EV = 'net.minecraftforge.client.event.'
-  ns.forgeHooks.registerOnce('emiCurationModsListeners', 'modsMenuHandlers', [
+  // Reloadable NeoForge listeners through NativeEvents (ui/native_hooks.js).
+  var EV = ns.nativeHooks.EVENTS
+  ns.nativeHooks.register('modsMenuHandlers', [
     { event: EV + 'ScreenEvent$Init$Post', handler: 'screenInit', label: 'mods screenInit' },
     { event: EV + 'ScreenEvent$Render$Pre', handler: 'screenRender', label: 'mods screenRender' },
     { event: EV + 'ScreenEvent$Render$Post', handler: 'screenPost', label: 'mods screenPost' },

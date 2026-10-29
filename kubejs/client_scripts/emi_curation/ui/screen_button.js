@@ -1,14 +1,14 @@
 // priority: 54
-// Shared CLEAN/DECOR widget lifecycle. Widgets and Forge listeners survive script reloads;
-// callbacks dispatch through the current handler table, and all Java callbacks are guarded.
+// Shared CLEAN/DECOR widget lifecycle. Widgets survive script reloads; NeoForge listeners are re-registered
+// on each load (NativeEvents is reloadable). Callbacks dispatch through the current handler table, and all
+// Java callbacks are guarded.
 
 (function (ns) {
   function makeScreenButton(opts) {
-    // Preserve the existing global keys so listeners and widgets survive reloads.
+    // Preserve the existing keys so widgets survive reloads.
     var clean = opts.name === ns.placement.CLEAN
     var state = clean ? 'ui' : opts.name + 'Ui'
     var handlers = clean ? 'handlers' : opts.name + 'Handlers'
-    var flag = 'emiCuration' + (clean ? 'Forge' : opts.name.charAt(0).toUpperCase() + opts.name.slice(1)) + 'Listeners'
     function ui() { return ns[state] || (ns[state] = { button: null, screen: null }) }
 
     function chooseRect(ctx) {
@@ -74,8 +74,8 @@
         })
       }
     }
-    var EV = 'net.minecraftforge.client.event.'
-    ns.forgeHooks.registerOnce(flag, handlers, [
+    var EV = ns.nativeHooks.EVENTS
+    ns.nativeHooks.register(handlers, [
       { event: EV + 'ScreenEvent$Init$Post', handler: 'screenInit', label: opts.name + ' init' },
       { event: EV + 'ScreenEvent$Render$Pre', handler: 'screenRender', label: opts.name + ' render' }
     ])

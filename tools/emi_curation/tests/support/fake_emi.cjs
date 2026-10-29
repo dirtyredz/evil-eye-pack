@@ -286,16 +286,6 @@ function createWorld(spec) {
     'dev.emi.emi.screen.EmiScreenManager': EmiScreenManager,
     'dev.emi.emi.search.EmiSearch': EmiSearch,
     'dev.emi.emi.config.EmiConfig': EmiConfig,
-    'net.minecraftforge.common.MinecraftForge': {
-      EVENT_BUS: { addListener: (prio, recv, cls, fn) => counters.listeners.push({ cls, fn }) },
-    },
-    'net.minecraftforge.eventbus.api.EventPriority': { NORMAL: 'NORMAL' },
-    'net.minecraftforge.client.event.ScreenEvent$Init$Post': 'ScreenEvent$Init$Post',
-    'net.minecraftforge.client.event.ScreenEvent$Render$Pre': 'ScreenEvent$Render$Pre',
-    'net.minecraftforge.client.event.RenderTooltipEvent$Pre': 'RenderTooltipEvent$Pre',
-    'net.minecraftforge.client.event.ScreenEvent$Render$Post': 'ScreenEvent$Render$Post',
-    'net.minecraftforge.client.event.ScreenEvent$MouseButtonPressed$Pre': 'ScreenEvent$MouseButtonPressed$Pre',
-    'net.minecraftforge.client.event.ScreenEvent$KeyPressed$Pre': 'ScreenEvent$KeyPressed$Pre',
   };
 
   const world = {

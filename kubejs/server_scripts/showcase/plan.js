@@ -1,7 +1,10 @@
 // priority: 30
 // Pure, bounded plans. Coordinates are east/up/south; labels face the north entrance.
 ;(function () {
-  var ns = global.evilEyeShowcase = { sections: {}, rigs: {}, FLOOR: 'minecraft:stone_bricks' }
+  // The namespace object is created by startup_scripts/globals.js (KubeJS 2101: only startup scripts set
+  // values on `global`); each load resets its parts.
+  var ns = global.evilEyeShowcase || (global.evilEyeShowcase = {})
+  ns.sections = {}; ns.rigs = {}; ns.FLOOR = 'minecraft:stone_bricks'
   ns.rigHook = function (descriptor, method, args) {
     var rig = descriptor && ns.rigs[descriptor.type]
     if (rig && rig[method]) return rig[method].apply(rig, [descriptor].concat(args || []))

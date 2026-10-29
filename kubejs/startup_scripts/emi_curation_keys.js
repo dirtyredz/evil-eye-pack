@@ -1,19 +1,19 @@
 // Registers the "EMI Curation" key mapping used by client_scripts/emi_curation/ui/decor_mark.js.
 //
-// Forge accepts key mappings only from RegisterKeyMappingsEvent on the mod event bus, which fires
+// NeoForge accepts key mappings only from RegisterKeyMappingsEvent on the mod event bus, which fires
 // once while the game starts, so this must be a startup script (a change needs a full restart, not
-// /kubejs reload). The mapping is handed to the client scripts through `global`, which every
-// script type shares. Default key D, active only while a screen is open (GUI conflict context), so
-// it never clashes with walking right; EMI, JEI and the vanilla screens use no plain D.
-// Rebind it under Options > Controls > "EMI Curation".
+// /kubejs reload). KubeJS 2101 routes mod-bus events through NativeEvents as well. The mapping is
+// handed to the client scripts through `global` (only startup scripts may set it). Default key D,
+// active only while a screen is open (GUI conflict context), so it never clashes with walking right;
+// EMI, JEI and the vanilla screens use no plain D. Rebind it under Options > Controls > "EMI Curation".
 
 (function () {
   try {
     if (!Platform.isClientEnvironment()) return
-    ForgeModEvents.onEvent('net.minecraftforge.client.event.RegisterKeyMappingsEvent', function (event) {
+    NativeEvents.onEvent('net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent', function (event) {
       try {
         var KeyMapping = Java.loadClass('net.minecraft.client.KeyMapping')
-        var Context = Java.loadClass('net.minecraftforge.client.settings.KeyConflictContext')
+        var Context = Java.loadClass('net.neoforged.neoforge.client.settings.KeyConflictContext')
         var Type = Java.loadClass('com.mojang.blaze3d.platform.InputConstants$Type')
         var GLFW_KEY_D = 68
         var key = new KeyMapping('key.emi_curation.mark_decor', Context.GUI, Type.KEYSYM, GLFW_KEY_D, 'key.categories.emi_curation')

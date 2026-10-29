@@ -4,11 +4,11 @@
 // item's whole mod. The marks are saved by decor_local.js (config/emi-curation/decor-local.json)
 // and the index is rebuilt at once through session.refreshDecor() after decorState.mark().
 //
-// The KeyMapping itself is created by startup_scripts/emi_curation_keys.js (Forge only accepts
+// The KeyMapping itself is created by startup_scripts/emi_curation_keys.js (NeoForge only accepts
 // key mappings during startup) and handed over as global.emiCurationDecorKey. Without it this
 // script does nothing and logs the gap once.
 //
-// The key is read from Forge's ScreenEvent.KeyPressed.Pre on every screen and is consumed only
+// The key is read from NeoForge's ScreenEvent.KeyPressed.Pre on every screen and is consumed only
 // when something is hovered and no text field has focus, so typing "d" in a search box and
 // pressing D over empty space behave as before.
 
@@ -126,7 +126,7 @@
     keyPressed: function (e) { ns.diag.guard('decor mark key', function () { onKeyPressed(e) }) }
   }
 
-  ns.forgeHooks.registerOnce('emiCurationDecorMarkListeners', 'decorMarkHandlers', [
-    { event: 'net.minecraftforge.client.event.ScreenEvent$KeyPressed$Pre', handler: 'keyPressed', label: 'decor mark' }
+  ns.nativeHooks.register('decorMarkHandlers', [
+    { event: ns.nativeHooks.EVENTS + 'ScreenEvent$KeyPressed$Pre', handler: 'keyPressed', label: 'decor mark' }
   ])
 })(global.emiCuration || (global.emiCuration = {}))

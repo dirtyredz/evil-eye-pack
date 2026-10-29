@@ -67,9 +67,10 @@
   }
   function finish(ctx) {
     var p = ctx.p, level = ctx.level, pos = ctx.pos, xyz = ctx.xyz
-    var Caps = Java.loadClass('net.minecraftforge.common.capabilities.ForgeCapabilities')
+    // NeoForge block capabilities are looked up on the level.
+    var Caps = Java.loadClass('net.neoforged.neoforge.capabilities.Capabilities')
     p.fills.forEach(function (fill) {
-      var be = level.getBlockEntity(pos(fill.x, fill.y, fill.z)), handler = be.getCapability(Caps.ITEM_HANDLER).orElse(null)
+      var be = level.getBlockEntity(pos(fill.x, fill.y, fill.z)), handler = level.getCapability(Caps.ItemHandler.BLOCK, pos(fill.x, fill.y, fill.z), null)
       if (handler === null) throw new Error('Missing inventory at ' + xyz(fill.x, fill.y, fill.z))
       fill.items.forEach(function (item) {
         var stack = Item.of(item[0], item[1])

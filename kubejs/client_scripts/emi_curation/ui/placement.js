@@ -5,7 +5,7 @@
 // bottom-left config/tree buttons and every visible EMI sidebar panel.
 //
 // EmiScreenManager.search is a static field built at (0, 0), and EMI only positions it in
-// addWidgets, which its Screen.init mixin runs at the RETURN of init, i.e. after Forge's
+// addWidgets, which its Screen.init mixin runs at the RETURN of init, i.e. after NeoForge's
 // ScreenEvent.Init.Post. So a placement made at Init.Post reads a stale rectangle; the
 // per-frame placement is what puts it right (see searchPlaced).
 
