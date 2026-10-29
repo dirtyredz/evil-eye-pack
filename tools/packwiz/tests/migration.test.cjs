@@ -122,7 +122,7 @@ test('closure: missing, out of range, wrong loader, duplicate providers, client-
 });
 
 test('rendered metafiles keep packwiz layout for real pack files of each source', () => {
-  for (const f of ['mods/balm.pw.toml', 'mods/additional-lanterns.pw.toml', 'mods/flatworldfix.pw.toml']) {
+  for (const f of ['mods/balm.pw.toml', 'mods/additional-lanterns.pw.toml', 'mods/culllessleaves-neoforge.pw.toml']) {
     const text = fs.readFileSync(path.join(REPO, f), 'utf8');
     const o = oldIdentity(REPO, f);
     const t = { ...o, sha1: o.hash, sha256: o.hash, sha512: o.hash };
@@ -199,7 +199,12 @@ test('the committed target lock covers this checkout exactly while its source is
   const file = path.join(REPO, 'tools/packwiz/migration/target-lock.json');
   if (!fs.existsSync(file)) return t.skip('no lock yet');
   const lock = JSON.parse(fs.readFileSync(file, 'utf8'));
-  if (lock.source.fingerprint !== fingerprint(REPO)) return t.skip('lock already applied or source changed; check with migrate.mjs check');
+  if (lock.source.fingerprint !== fingerprint(REPO)) {
+    // Applied (Phase 5 onward): the checkout must be exactly the lock's target state.
+    assert.deepEqual(require('../migration/repoint.cjs').appliedDifferences(REPO, lock), []);
+    assert.equal(fs.readFileSync(file, 'utf8'), serialize(lock));
+    return;
+  }
   const sources = sourceMetafiles(REPO);
   assert.deepEqual(validate(lock, sources), []);
   assert.equal(lock.entries.filter(e => e.action !== 'add' && e.metafile.startsWith('mods/')).length, sources.filter(s => s.startsWith('mods/')).length);

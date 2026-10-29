@@ -1,13 +1,13 @@
 name = "Friendly Furnishings"
-filename = "friendly_furnishings-1.0.0-forge-1.20.1.jar"
+filename = "friendly_furnishings-1.0.0-neoforge-1.21.1.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/aDcZtiDN/versions/L9vcwlHv/friendly_furnishings-1.0.0-forge-1.20.1.jar"
-hash-format = "sha1"
-hash = "2fc27d787b945f75ecfae90ce1301871ca792815"
+url = "https://cdn.modrinth.com/data/aDcZtiDN/versions/51jPJnSJ/friendly_furnishings-1.0.0-neoforge-1.21.1.jar"
+hash-format = "sha512"
+hash = "7f60acff7deaefc0d581d2ff57a4d3ea40baf6d2cb1e1becb765c41ddf9309d475f168777a15dc6efbd0b23ef6873f194542e5c61e6c6deb00e5f1f1c3f3430c"
 
 [update]
 [update.modrinth]
 mod-id = "aDcZtiDN"
-version = "L9vcwlHv"
+version = "51jPJnSJ"

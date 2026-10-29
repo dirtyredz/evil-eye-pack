@@ -14,7 +14,7 @@ const { SCHEMA, fingerprint, serialize, sourceMetafiles, validate } = require('.
 const { planEntries } = require('./resolve.cjs');
 const { client, resolveSelector, resolveInstaller } = require('./fetch.cjs');
 const { checkClosure } = require('./dependencies.cjs');
-const { plan, apply } = require('./repoint.cjs');
+const { plan, apply, appliedDifferences } = require('./repoint.cjs');
 
 const ROOT = path.resolve(__dirname, '../../..');
 const HERE = __dirname;
@@ -131,8 +131,10 @@ function report(log, lock, errors, closure, missing = []) {
 
 function check(o, log) {
   const lock = readJson(o.lock);
-  const errors = validate(lock, sourceMetafiles(o.root));
-  if (lock.source?.fingerprint !== fingerprint(o.root)) errors.push('stale lock: source fingerprint differs from this checkout');
+  // Before apply the checkout must be the lock's source; after apply it must be exactly the lock's target.
+  const applied = lock.source?.fingerprint !== fingerprint(o.root);
+  const errors = applied ? appliedDifferences(o.root, lock) : validate(lock, sourceMetafiles(o.root));
+  log(applied ? 'checkout is past the lock source: checking it is exactly the applied target state' : 'checkout is the lock source');
   const { entries, missing } = closureInput(lock, o.cache);
   missing.push(...verifyPacks(lock, o.cache));
   const rt = lock.runtime;

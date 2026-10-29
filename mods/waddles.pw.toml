@@ -1,13 +1,13 @@
 name = "Waddles"
-filename = "Waddles-1.20.1-0.9.4.jar"
+filename = "Waddles-neoforge-1.21-0.11.1.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "f226f517ef8fce8b8e97e228ba4d17f0f933172e"
+hash = "909b526f594c0d85602fac0407dc23e74a39d127"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 4618308
+file-id = 5511073
 project-id = 251767

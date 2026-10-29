@@ -37,6 +37,26 @@ function plan(root, lock) {
   if (errors.length) throw new Error(`lock is invalid:\n  ${errors.join('\n  ')}`);
   const actual = fingerprint(root);
   if (actual !== lock.source.fingerprint) throw new Error(`stale lock: source fingerprint ${actual} != lock ${lock.source.fingerprint}`);
+  return changeSet(root, lock);
+}
+
+// The source metafiles a lock was built from.
+const lockSources = (lock) => lock.entries.filter((e) => e.action !== 'add').map((e) => e.metafile);
+
+// After apply: what still differs between this checkout and the lock's target state (pending writes or
+// deletes, plus metafiles the lock does not know). [] means the lock is exactly applied.
+function appliedDifferences(root, lock) {
+  const errors = validate(lock, lockSources(lock));
+  if (errors.length) return errors.map((e) => `lock is invalid: ${e}`);
+  const c = changeSet(root, lock);
+  const out = [...c.writes.map((w) => `${w.rel}: differs from the lock`), ...c.deletes.map((d) => `${d}: should be removed`)];
+  const known = new Set(lock.entries.filter((e) => e.target).map((e) => e.target.metafile));
+  for (const rel of sourceMetafiles(root)) if (!known.has(rel)) out.push(`${rel}: not in the lock`);
+  return out.sort();
+}
+
+// Writes and deletes that bring the checkout to the lock's target state (no validation).
+function changeSet(root, lock) {
   const writes = [], deletes = [], summary = {};
   for (const e of lock.entries) {
     summary[e.action] = (summary[e.action] || 0) + 1;
@@ -46,7 +66,7 @@ function plan(root, lock) {
       if (!fs.existsSync(abs) || fs.readFileSync(abs, 'utf8') !== text) writes.push({ rel: e.target.metafile, text });
     }
     // defer and drop remove the metafile; replace removes the old one when the target has a new name.
-    if (e.action !== 'add' && (!e.target || e.target.metafile !== e.metafile)) deletes.push(e.metafile);
+    if (e.action !== 'add' && (!e.target || e.target.metafile !== e.metafile) && fs.existsSync(path.join(root, e.metafile))) deletes.push(e.metafile);
   }
   const packText = fs.readFileSync(path.join(root, 'pack.toml'), 'utf8');
   const nextPack = renderVersions(packText, lock.runtime);
@@ -82,4 +102,4 @@ function apply(root, changes, { fsImpl = fs } = {}) {
   }
 }
 
-module.exports = { renderMetafile, renderVersions, plan, apply };
+module.exports = { renderMetafile, renderVersions, plan, changeSet, appliedDifferences, apply };

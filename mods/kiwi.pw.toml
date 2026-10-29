@@ -1,13 +1,13 @@
 name = "Kiwi"
-filename = "Kiwi-1.20.1-Forge-11.10.3.jar"
+filename = "Kiwi-1.21.1-NeoForge-15.8.7.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/ufdDoWPd/versions/NSxwah05/Kiwi-1.20.1-Forge-11.10.3.jar"
-hash-format = "sha1"
-hash = "286ddd999fef46144da34bda0215a3376d858930"
+url = "https://cdn.modrinth.com/data/ufdDoWPd/versions/tfwJWC8g/Kiwi-1.21.1-NeoForge-15.8.7.jar"
+hash-format = "sha512"
+hash = "d01c347febcb3d77bbfd2f44f38a80afbf4cf0b72a2aaa5d1875a38cbcd78be5a263fae4f63685256ea29c5f5f5d0f1c46892e2c78c4c1204863415dec9f4151"
 
 [update]
 [update.modrinth]
 mod-id = "ufdDoWPd"
-version = "NSxwah05"
+version = "tfwJWC8g"

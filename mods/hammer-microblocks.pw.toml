@@ -1,13 +1,13 @@
 name = "HammerMicroblocks"
-filename = "HammerMicroblocks-1.20.1-20.1.13.jar"
+filename = "HammerMicroblocks-1.21-21.0.2.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "0e08ed3191bb84100abf221aacb46f647309589a"
+hash = "444a75746d5e914e381e5c362b2b284a84d452cc"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 5549331
+file-id = 8355227
 project-id = 267263

@@ -1,13 +1,13 @@
 name = "Chimes"
-filename = "Chimes-v2.1.1-1.20.1-Forge.jar"
+filename = "Chimes-v2.1.1-1.21.1-NeoForge.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "16acabbde469a13d7d0bb348b5173785c81858f3"
+hash = "991e81741231b73b2cd3cbe9ab41e73cbe99d7be"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 7529012
+file-id = 7573270
 project-id = 350464

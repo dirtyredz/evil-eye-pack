@@ -1,13 +1,13 @@
 name = "Simply Graves"
-filename = "simplygraves-1.20.1-1.0.5-build.4.jar"
+filename = "simplygraves-1.1.4+mc1.21-b23.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "4a35eed637a459f7626a26675e959b72cc8a913e"
+hash = "be3fb426c6ff694464156483753eb82896b3c54c"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 4657188
+file-id = 5552933
 project-id = 620112

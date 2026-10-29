@@ -1,13 +1,13 @@
 name = "Companion"
-filename = "Companion-1.20.1-Forge-5.4.1.jar"
+filename = "Companion-1.21.1-NeoForge-6.3.0.jar"
 side = "both"
 
 [download]
-url = "https://cdn.modrinth.com/data/4w0EzGRW/versions/O9wod42p/Companion-1.20.1-Forge-5.4.1.jar"
-hash-format = "sha1"
-hash = "524aff12184888e07e1e3289d5d845c331d4f432"
+url = "https://cdn.modrinth.com/data/4w0EzGRW/versions/PfXPQBGy/Companion-1.21.1-NeoForge-6.3.0.jar"
+hash-format = "sha512"
+hash = "bdc3b9d19c3650366404a6c4e0959b19ce9759a0861b5df05262eaf9af3ae6b0ed931dfe62b9cf61fe2b92f21bd9ea320822512af8cd27636edcc0010b2ddc7c"
 
 [update]
 [update.modrinth]
 mod-id = "4w0EzGRW"
-version = "O9wod42p"
+version = "PfXPQBGy"

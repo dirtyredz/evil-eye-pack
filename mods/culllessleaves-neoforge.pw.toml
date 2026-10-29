@@ -1,0 +1,8 @@
+name = "Cull Less Leaves (NeoForge port)"
+filename = "culllessleaves-neoforge-1.21.1-1.4.3.jar"
+side = "client"
+
+[download]
+url = "https://github.com/Nergan/cull-less-leaves-for-neoforge-mod/releases/download/minecraft-1.21.1-neoforge/culllessleaves-neoforge-1.21.1-1.4.3.jar"
+hash-format = "sha256"
+hash = "b56eef6a9d6e7d23ba12d7545ef023cda9bd6dff6c03587b449706673e3500f1"

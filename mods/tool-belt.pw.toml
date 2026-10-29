@@ -1,13 +1,13 @@
 name = "Tool Belt"
-filename = "ToolBelt-1.20-1.20.0.jar"
+filename = "ToolBelt-1.21.1-2.2.10.jar"
 side = "both"
 
 [download]
 hash-format = "sha1"
-hash = "38010bc1cdd90aa7c3f29fb9800ea459dd47c369"
+hash = "96862e5d8df67d63b749fc15d18262f3736d1828"
 mode = "metadata:curseforge"
 
 [update]
 [update.curseforge]
-file-id = 4581167
+file-id = 8309722
 project-id = 260262
