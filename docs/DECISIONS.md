@@ -2,6 +2,41 @@
 
 Newest first.
 
+## 2026-10-29 - NeoForge 1.21.1 migration: isolation, lock and runtime-aware testing
+
+Branch `migration/neoforge-1.21.1` only; `main`/Stable stay on Forge. Status and commands:
+`docs/neoforge-migration.md`.
+
+- **Separate trial instance with explicit Java 21.** A fresh `Evil Eye NeoForge Trial`
+  (MultiMC components set in `mmc-pack.json`; packwiz never sets the loader), with portable
+  Temurin 21 at `C:/Tools/evil-eye-pack/temurin-21`. Rejected: reusing Local (shares the
+  main checkout's feed) and the machine-installed Microsoft JDK 21 (not checksum-verified, not
+  ours to rely on).
+- **A reviewed, hash-verified lock before any pack edit.** `tools/packwiz/migration/target-lock.json`
+  records every source metafile exactly once with old identity, exact target file, publisher
+  checks, sha1/sha256/sha512 and the jar's declared dependencies. It is generated from the survey
+  plus `dispositions.json`, the reviewed decisions. Applying it is a separate step (Phase 5),
+  refused if the source fingerprint changed. Rejected: re-pointing from `availability.csv` (no
+  download identities or hashes) and hand-editing 180 metafiles.
+- **Seven owned ports are `defer`, never replacements.** Dank Recipe Transfer, Roundwood, Ars
+  Instrumentum, Alex's Mobs, Alex's Caves, Ice and Fire and FlatWorldFix. FlatWorldFix is kept
+  and ported (owner, 2026-10-29) instead of swapped for Give Me My Flat World.
+- **Dependency closure mirrors FML, including its leniency.** Maven ComparableVersion semantics,
+  plus FancyModLoader 1.21.1's `VersionSupportMatrix`: on 1.21.1 a failing minecraft/neoforge range
+  is retried with 1.21 / 21.0.166, so `[1.21,1.21.1)` mods load. No other leniency; exceptions
+  need a recorded waiver.
+- **Evidenced swaps and drops.** Radium Reforged is dropped because Create 6.0.10 declares it
+  incompatible. Embeddium is dropped for Sodium, which Iris requires. MemoryLeakFix is dropped
+  (ModernFix stays). Prickle, Lithostitched, Lionfish API and Sodium are added as declared
+  required dependencies. JEI, EMI, Polymorph and Dank Storage stay provisional until minecraft-mods
+  confirms what the ports build against.
+- **One runtime identity keys everything.** `pack.toml [versions]` → `server_smoke/runtime.cjs`
+  `id`. Loader bases, stages, world caches and ANU lanes are keyed by it and stamped with
+  `runtime.json`; cross-runtime reuse is refused. World keys hash jar bytes and world-shaping
+  config, not filenames. The Forge ANU lane keeps its paths, so `main`'s runs resync nothing.
+  Rejected: one shared stage that is rebuilt on every loader switch (slow, and a half-built stage
+  could still be booted).
+
 ## 2026-10-28 - Mod map measurement and tooling choices
 
 Recorded at the mod map's structure review, for choices made while building it.

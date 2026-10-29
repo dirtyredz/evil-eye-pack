@@ -9,19 +9,23 @@ re-sent by the next run. The repo copy of this file is `tools/pack_test/remote/a
 
 {{INSTALLED}}
 
-The machine PATH, JAVA_HOME and Defender exclusions are untouched; the agent gets Java through its job
-file (SMOKE_JAVA/SMOKE_JCMD set inside the Node process only).
+The machine PATH, JAVA_HOME and Defender exclusions are untouched; the agent gets the Java its run's
+runtime needs (17 for Forge 1.20.1, 21 for NeoForge 1.21.1) through its job file, and the boot verifies it.
 
 ## Layout
 
-- `stage\server\` - the staged Forge server and `-s server` pack install, synced incrementally from
+- `stage\server\` - the Forge lane's staged server and `-s server` pack install, synced incrementally from
   Valhalla (`.sync-manifest.json` = what was sent; delete it to force a full resend).
-- `tools\` - the pack-test code (`tools/server_smoke`, `tools/pack_test`, `tools/emi_coverage`), resent
-  every run.
+- `tools\` - the Forge lane's pack-test code (`tools/server_smoke`, `tools/pack_test`, `tools/emi_coverage`,
+  `tools/dedup`, `tools/data_io`), resent every run.
+- `lanes\<runtime id>\` - any other runtime (the NeoForge migration, `neoforge-1.21.1-21.1.265`) has its own
+  `stage\server\`, `cache\worlds\` and `tools\` here; it never touches the Forge lane. Every lane shares
+  the one `lock\`.
 - `runs\<run-id>\` - one run: `job.json`, `agent.log`, `status.json`, `evidence\` (probe payloads, logs,
   crash reports). The throwaway server copy `server\` is deleted when the boot ends. Old runs can be
   deleted at any time.
-- `cache\worlds\<key>\` - a generated world reused by later runs with the same mods and seed.
+- `cache\worlds\<key>\` - a generated world reused by later runs with the same runtime, seed, profile, jar
+  bytes and world-shaping config; `runtime.json` beside it records the runtime it was generated under.
 - `lock\owner.json` - single-job lock with an immutable acquisition ID (`claimId`) and a heartbeat (stale after 10 minutes without a refresh).
 - `incoming\`, `downloads\` - transfer and installer leftovers; safe to delete.
 

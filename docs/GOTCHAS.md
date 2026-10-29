@@ -151,6 +151,28 @@
 - **Acquisition is evidence, not proof.** Items obtained by trades, Java-coded drops or in-world conversion (waxing, stripping, filling a bucket, bucketing a mob) have no data trail; they need a reasoned exclusion in `data/policy.json` or a baseline entry. A block whose loot table only drops itself is reported as `unverified-source` (info), not a failure.
 - **KubeJS can crash at mod construction with a `ConcurrentModificationException`** in `ScriptManager.load` (seen once in three boots on 2026-10-23, Valhalla). It is a startup race, not the probe (server scripts load later): `ScriptManager.load` line 192 walks the root registry's key set while another mod's constructor (parallel mod loading) adds a registry. The identified writer, CorgiLib, and its CorgiKubeJSCompat workaround were removed with Enhanced Celestials on 2026-10-27. If the crash recurs with another writer, KubeJS build.26 has no setting for it; `fml.toml` `maxThreads = 1` would serialise construction at a launch-time cost (Docket `dk-e9c3d82d`). The run reports it as an invalid run (exit 2). Rerun.
 
+## NeoForge migration (`tools/packwiz/migration/`, runtime)
+
+- **Many NeoForge 1.21.1 jars declare `minecraft [1.21,1.21.1)` and still load.** FML 1.21.1's
+  `VersionSupportMatrix` retries minecraft/neoforge ranges with 1.21 / 21.0.166 on 1.21.1. A plain
+  Maven check would reject JEI, Iris, Iron Chests and others; `dependencies.cjs` mirrors exactly this rule.
+- **Maven versions are not dotted numbers.** A hyphen opens a sublist that ranks below a number at the
+  same position: `1.21.1-3.7.2` > `1.21-2.20.0`, and `1.21` < `1.21z` < `1.21.1`. Use
+  `compareVersions` (ported ComparableVersion), never a split on `.`.
+- **Modrinth-generated datapack mods write `mods = [ { modId = ... } ]`** (an inline-table array), not
+  `[[mods]]`. `data_io/mod_metadata.cjs` reads both; a reader that misses it sees a jar with no mods.
+- **CurseForge publishes no file hash without an API key.** The lock checks the site API's file length and,
+  when the CDN ETag is a plain MD5 (69 of 100 files on 2026-10-29), that MD5. Multipart ETags give length
+  only. Bytes come from the site's own download redirect, never a constructed CDN URL.
+- **Do not `require()` a CLI to check it loads.** `server_smoke/smoke.cjs` (and other entry points) run
+  `main()` on load. A load check started a real Forge install on 2026-10-29. Use the tests.
+- **`runtime.json` is the authority for reuse.** Bases, stages, run servers and cached worlds without the
+  matching stamp are rebuilt or refused. The first run after this change reinstalls the Forge base under
+  `loader-base/forge-1.20.1-47.4.10` and rebuilds `pack-test/stage/forge-1.20.1-47.4.10/server`, once.
+- **The dedup cached-jar test reads Evil Eye Local's mods.** On 2026-10-29 Local lacked
+  `hourglass-1.20-1.2.1.1.jar`, so `tools/dedup/tests/installed.test.cjs` failed with "Missing cached jar".
+  That is an environment gap; relaunching Local installs the jar.
+
 ## Worktrees
 
 - Move a linked worktree only with `git worktree move`. An Explorer move breaks the `.git` file link and the main repo's `worktrees/` record; `git worktree prune` would then delete the record.

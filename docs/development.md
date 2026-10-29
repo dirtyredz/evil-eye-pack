@@ -51,7 +51,8 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs
+node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs tools/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs
+# NeoForge migration lock (offline): node tools/packwiz/migrate.mjs check  (see neoforge-migration.md)
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
 # node tools/dedup/generate.cjs "C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods"
@@ -238,7 +239,7 @@ and includes them in `report.json`; do not repeat those ids in `policy.json` exc
 ## Pack test (agents' acceptance command)
 
 `node tools/pack_test/run.cjs` verifies a pack change without anyone playing. It checks the hash chain,
-boots the checkout **once** on a hidden Forge dedicated server (no client, no window, `127.0.0.1` only,
+boots the checkout **once** on a hidden dedicated server of the runtime its `pack.toml` declares (Forge or NeoForge; see [NeoForge migration](neoforge-migration.md)) (no client, no window, `127.0.0.1` only,
 offline) with a KubeJS probe injected into that throwaway server only, stops every process it started,
 and writes `report.json` + `summary.txt` into its run folder. Run it after any pack-file change (after
 `rehash.cjs` and `verify_hashes.cjs`), and read `summary.txt`.
@@ -283,16 +284,21 @@ and writes `report.json` + `summary.txt` into its run folder. Run it after any p
 
 ANU is the spare LAN PC (`ssh anu`, fallback `ssh anu-byname`). The pack test owns `G:\evil-eye-pack-ci\`
 (README there explains layout, manual stop and clean-up) and `C:\Tools\evil-eye-pack\` (portable Node 22
-and Temurin JDK 17, SHA-256-verified; `node tools/pack_test/remote/provision.cjs` installs them and is
+and Temurin JDKs 17 and 21 side by side, SHA-256-verified; `node tools/pack_test/remote/provision.cjs` installs them and is
 idempotent; `run.cjs` calls it when they are missing). The machine PATH, JAVA_HOME and Defender are never
 changed.
 
-- Valhalla stages the pack (`artifacts/.../pack-test/stage/server`, incremental `packwiz -s server`),
-  syncs only new or changed files to `G:\evil-eye-pack-ci\stage\server` (one tar over scp), resends the
-  tool code, and starts `remote/agent.cjs` detached through `Win32_Process.Create` at BelowNormal (it
+- Valhalla stages the pack (`artifacts/.../pack-test/stage/<runtime id>/server`, incremental `packwiz -s server`; a stage stamped for another runtime is rebuilt),
+  syncs only new or changed files to the runtime's ANU lane (one tar over scp), resends the
+  tool code to that lane, and starts `remote/agent.cjs` detached through `Win32_Process.Create` at BelowNormal (it
   survives the SSH session; Java inherits the priority).
-- Two pack tests never overlap: a heartbeat lock in `G:\evil-eye-pack-ci\lock\` (stale after 10 min); a
-  second run finds it held and falls back to Valhalla immediately.
+- **Runtime lanes.** Forge keeps `G:\evil-eye-pack-ci\stage\server`, `cache\worlds` and `tools`; any other
+  runtime (the NeoForge migration) gets `lanes\<runtime id>\{stage\server,cache\worlds,tools}`
+  (`remote/config.cjs` `lane()`), so a migration job never reuses or overwrites Forge's stage, worlds or
+  code. The job file carries the runtime descriptor and that runtime's Java; the agent's boot verifies both.
+- Two pack tests never overlap, whatever their runtime: one shared heartbeat lock in
+  `G:\evil-eye-pack-ci\lock\` (stale after 10 min); a second run finds it held and falls back to Valhalla
+  immediately.
 - **Sharing with another project (owner ruling 2026-10-23).** While `G:\mods-ci\lock` is held by a live
   process, the run checks twice (before the sync, and again just before launching the agent) that ANU has
   room: free physical RAM >= 8 GB and the mean of 5 one-second CPU readings < 50%. If so it runs beside
@@ -314,7 +320,7 @@ changed.
 
 ## Server compatibility smoke (agents)
 
-`node tools/server_smoke/smoke.cjs [--pack <pack.toml>] [--out <dir>] [--drop oculus]` boots the checkout headless on a Forge 47.4.10 dedicated server (`-s server` install, nogui, hidden, localhost:25599, offline, fresh world; about 2.5 min on an idle host, 9+ min on a busy one, see GOTCHAS) and prints PASS/FAIL, time to `Done (`, crash causes and error groups (known noise vs new). Agents use this to check pack compatibility; the owner verifies in game. It never opens a window or touches MultiMC. Cache and runs live under the artifacts root in `server-smoke/` (pass `--out` to put a run in a job folder). Java, the packwiz jars, the artifacts root and the Forge version are all defined in `tools/server_smoke/env.cjs` (override with `SMOKE_JAVA`, `SMOKE_BOOTSTRAP_JAR`, `SMOKE_INSTALLER_JAR`, `SMOKE_ARTIFACTS`, `SMOKE_FORGE_VERSION`, `SMOKE_FORGE_URL`). `--seed <n>` (default `20261020`) sets `level-seed` so boots are repeatable; the seed is printed in the PASS/FAIL/STALL header and on every failure. A random seed made two of four boots stall in "Preparing spawn area". A timeout inside that phase with no crash and no new errors is reported as `STALL` (exit 3, "WORLDGEN STALL ... seed N"), not a pack FAIL: retry with another `--seed`. On such a timeout the smoke also saves a `jcmd Thread.print` to `stall-threads.txt` in the run dir (`SMOKE_JCMD` overrides the jcmd path). The wall-clock timeout is gone: a progress watchdog samples the JVM's CPU time every `--sample` s (default 10) and stops the boot only when the log is silent AND CPU is flat for `--silent` s (default 180), with `--timeout` (default 1800 s) as a hard cap. Right after spawn the server JVM (the spawned `java.exe` itself, no wrapper) is raised to `--priority` (default `AboveNormal`; `Idle|BelowNormal|Normal|AboveNormal|High|none`) because Windows starves it while the host is busy. The header prints `JVM CPU` seconds, wall seconds and priority. A non-finishing boot with no crash and no new errors where the JVM averaged under `--starved` cores (default 0.25) per wall second is labelled `HOST STARVED` (exit 4), distinct from `STALL` (worldgen, exit 3) and `FAIL`: retry on an idle host or with `--priority High`. `--drop` deletes installed jars from the throwaway server only, to find the next offender; `--analyze <run dir>` re-reports a finished run.
+`node tools/server_smoke/smoke.cjs [--pack <pack.toml>] [--out <dir>] [--drop oculus]` boots the checkout headless on the dedicated server its `pack.toml` declares (Forge 47.4.10 on `main`, NeoForge 21.1.265 on the migration branch; `-s server` install, nogui, hidden, localhost:25599, offline, fresh world; about 2.5 min on an idle host, 9+ min on a busy one, see GOTCHAS) and prints PASS/FAIL, time to `Done (`, crash causes and error groups (known noise vs new). Agents use this to check pack compatibility; the owner verifies in game. It never opens a window or touches MultiMC. Cache and runs live under the artifacts root in `server-smoke/` (pass `--out` to put a run in a job folder). The loader and its version come from `pack.toml` through `tools/server_smoke/runtime.cjs`, which also picks the Java major (17 for 1.20.1, 21 for 1.21.1) and verifies the executable is that major before any install or boot. Java per major, the packwiz jars and the artifacts root are defined in `tools/server_smoke/env.cjs` (override with `SMOKE_JAVA_17`, `SMOKE_JCMD_17`, `SMOKE_JAVA_21`, `SMOKE_JCMD_21`, `SMOKE_BOOTSTRAP_JAR`, `SMOKE_INSTALLER_JAR`, `SMOKE_INSTALLER_URL` (checksum still verified), `SMOKE_ARTIFACTS`). `--seed <n>` (default `20261020`) sets `level-seed` so boots are repeatable; the seed is printed in the PASS/FAIL/STALL header and on every failure. A random seed made two of four boots stall in "Preparing spawn area". A timeout inside that phase with no crash and no new errors is reported as `STALL` (exit 3, "WORLDGEN STALL ... seed N"), not a pack FAIL: retry with another `--seed`. On such a timeout the smoke also saves a `jcmd Thread.print` to `stall-threads.txt` in the run dir (`SMOKE_JCMD_<major>` overrides the jcmd path). The wall-clock timeout is gone: a progress watchdog samples the JVM's CPU time every `--sample` s (default 10) and stops the boot only when the log is silent AND CPU is flat for `--silent` s (default 180), with `--timeout` (default 1800 s) as a hard cap. Right after spawn the server JVM (the spawned `java.exe` itself, no wrapper) is raised to `--priority` (default `AboveNormal`; `Idle|BelowNormal|Normal|AboveNormal|High|none`) because Windows starves it while the host is busy. The header prints `JVM CPU` seconds, wall seconds and priority. A non-finishing boot with no crash and no new errors where the JVM averaged under `--starved` cores (default 0.25) per wall second is labelled `HOST STARVED` (exit 4), distinct from `STALL` (worldgen, exit 3) and `FAIL`: retry on an idle host or with `--priority High`. `--drop` deletes installed jars from the throwaway server only, to find the next offender; `--analyze <run dir>` re-reports a finished run.
 
 ## Custom mods
 

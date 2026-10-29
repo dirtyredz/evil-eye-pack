@@ -77,9 +77,11 @@ booting on ANU. Commands, options and artifact locations are in
 The [EMI architecture](emi.md) covers the separate client subsystem.
 
 1. **Verify and stage on Valhalla.** Create an artifact run directory and record the
-   checkout identity, pack/index hashes, seed and probe token. Verify the hash chain,
-   take the local stage lock, then incrementally install the server-side pack over
-   the cached Forge base. The stage is never booted. Scan its installed resources
+   checkout identity, pack/index hashes, seed, probe token and the runtime descriptor
+   (`server_smoke/runtime.cjs`: loader, versions, Java major, id from `pack.toml`).
+   Verify the hash chain and the runtime's Java, take the local stage lock, then
+   incrementally install the server-side pack over the cached per-runtime loader base
+   into that runtime's stage (stamped `runtime.json`; a mismatched stage is rebuilt). The stage is never booted. Scan its installed resources
    and shipped configs into `evidence/resources.json`, and copy the pack policies
    into `evidence/pack-config/` before choosing the boot target.
 2. **Choose local or ANU.** `--local` goes straight to local execution. Otherwise,
@@ -90,16 +92,18 @@ The [EMI architecture](emi.md) covers the separate client subsystem.
    readable load data, at least 8 GB free RAM and mean CPU below 50% by default.
    The neighbour's lock and queue are read only. Provisioning, sync and other thrown
    setup errors invalidate the run; they are not blanket fallback conditions.
-3. **Sync and launch on ANU.** Manifest-diff tar/scp sync updates the staged server
-   (excluding runtime state) and tool code (excluding tests). Once synced, release
-   the local stage lock. Upload `job.json` with the input token, lease, runtime paths
+3. **Sync and launch on ANU.** Manifest-diff tar/scp sync updates the runtime lane's
+   staged server (excluding runtime state) and tool code (excluding tests); non-Forge
+   runtimes use their own `lanes/<id>` directories under the one shared lease. Once synced, release
+   the local stage lock. Upload `job.json` with the input token, lease, runtime descriptor, lane paths, the runtime's Java
    and boot options; start the detached Node agent at BelowNormal. The agent writes
    `status.json` (`running` then `done` or `error`) and uses the same execution path
    as a local run. Valhalla polls status; failures after launch remain failures.
 4. **Boot and probe.** Make a per-run server copy, hard-linking mod jars when possible,
-   restore a world cached by mod set and seed unless a fresh world was requested,
+   restore a world cached by runtime, seed, profile, jar bytes and world-shaping config
+   (refused across runtimes) unless a fresh world was requested,
    and inject KubeJS probes only into that copy. The hidden, offline, loopback-only
-   Forge server must reach `Done` and produce a manifest with this run's token.
+   server (its `runtime.json` must match the job's runtime) must reach `Done` and produce a manifest with this run's token.
    The probe writes live registries, final tags, recipes and real FakePlayer craft
    results, with the manifest last. The supervisor bounds boot/probe time and stops
    its processes; evidence collection includes payloads, logs, crash reports and
