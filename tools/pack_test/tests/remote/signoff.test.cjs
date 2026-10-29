@@ -12,6 +12,10 @@ const { killScript } = require('../../remote/scripts.cjs');
 const { lockScript, refreshDirLock } = require('../../remote/lease/dir_lock.cjs');
 const { makeRunServer } = require('../../session/prepare.cjs');
 const { STAGE_RUNTIME } = require('../../stage_runtime.cjs');
+const { describe: runtimeOf } = require('../../../server_smoke/runtime.cjs');
+const cfg = require('../../remote/config.cjs');
+const { javaFor } = require('../../remote/provision.cjs');
+const NEO = runtimeOf({ loader: 'neoforge', minecraft: '1.21.1', loaderVersion: '21.1.265' });
 
 const tmp = (p) => fs.mkdtempSync(path.join(os.tmpdir(), p));
 const win = { skip: process.platform !== 'win32' };
@@ -40,7 +44,7 @@ function fakeAnu(scripts) {
       if (s.includes('ALIVE=')) return { code: 0, out: 'ALIVE=True\n{"state":"done","boot":{"ok":1},"world":{}}' };
       return { code: 0, out: '' };
     },
-    must: async (s) => (s.includes('Win32_Process') ? 'PID 4242' : ''),
+    must: async (s) => { if (s.includes('Win32_Process')) { scripts.push(s); return 'PID 4242'; } return ''; },
     scpTo: async () => ({ code: 0, out: '' })
   };
   return {
@@ -61,12 +65,20 @@ test('the abort callback is disarmed once the ANU agent reaches a terminal state
   const { runOnAnu, restore } = loadRunOnAnu(fakeAnu(scripts));
   try {
     const r = await runOnAnu({
-      stageDir: runDir, runDir, input: {}, seed: '1', port: 1, heap: '1G', boot: { timeout: 10, probeTimeout: 10 }, freshWorld: false,
+      runtime: NEO, stageDir: runDir, runDir, input: {}, seed: '1', port: 1, heap: '1G', boot: { timeout: 10, probeTimeout: 10 }, freshWorld: false,
       scope: {}, log: () => {}, pollMs: 1,
       onAbort: (fn) => { const d = reg.register(fn); armedWhileRunning = reg.size(); return d; }
     });
     assert.deepEqual(r.boot, { ok: 1 });
-    assert.equal(JSON.parse(fs.readFileSync(path.join(runDir, 'job.json'), 'utf8')).lease.claimId, 'test-claim');
+    const job = JSON.parse(fs.readFileSync(path.join(runDir, 'job.json'), 'utf8'));
+    assert.equal(job.lease.claimId, 'test-claim');
+    // The serialized job carries the runtime and the migration lane's own dirs; the lease lock is shared.
+    assert.deepEqual(job.runtime, NEO);
+    assert.equal(job.stageDir, cfg.lane(NEO).STAGE);
+    assert.equal(job.worldCache, cfg.lane(NEO).WORLDS);
+    assert.equal(job.lock, cfg.LOCK);
+    assert.equal(job.java, javaFor(21).java);
+    assert.ok(scripts.some((s) => s.includes(cfg.lane(NEO).CODE) && s.includes('agent.cjs')), 'the agent starts from the lane code');
     assert.equal(armedWhileRunning, 1);
     assert.equal(reg.size(), 0, 'registry empty after the terminal state');
     const before = scripts.length;
@@ -108,7 +120,7 @@ test('local copies and remote sync exclude the same stage runtime paths', async 
       assert.equal(fs.existsSync(path.join(serverDir, name)), false);
       assert.equal(fs.readFileSync(path.join(serverDir, `${name}-kept`), 'utf8'), 'kept');
     }
-    await runOnAnu({ stageDir, runDir, input: {}, boot: { timeout: 10, probeTimeout: 10 }, scope: {}, log() {}, pollMs: 1 });
+    await runOnAnu({ runtime: NEO, stageDir, runDir, input: {}, boot: { timeout: 10, probeTimeout: 10 }, scope: {}, log() {}, pollMs: 1 });
     assert.equal(stageSyncs, 1);
   } finally { restore(); fs.rmSync(root, { recursive: true, force: true }); }
 });

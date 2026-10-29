@@ -2,6 +2,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const env = require('../server_smoke/env.cjs');
+const { readRuntime } = require('../server_smoke/runtime.cjs');
+const { stageDirFor } = require('../pack_test/stage_runtime.cjs');
 const { inventory } = require('./inventory/inventory.cjs');
 const { connect } = require('./model/graph.cjs');
 const { familyModel } = require('./model/families.cjs');
@@ -21,7 +23,7 @@ async function run(argv, { dryRun = false, log = console.log } = {}) {
   }
   const root = path.resolve(__dirname, '../..');
   const out = opts.out || path.join(env.ARTIFACTS, 'mod-map');
-  const cache = opts.cache || path.join(env.ARTIFACTS, 'pack-test/stage/server');
+  const cache = opts.cache || stageDirFor(env.ARTIFACTS, readRuntime(path.join(root, 'pack.toml')));
   const checkouts = execFileSync('git', ['worktree', 'list', '--porcelain'], { cwd: root, encoding: 'utf8', windowsHide: true }).split(/\r?\n/).filter(l => l.startsWith('worktree ')).map(l => l.slice(9));
   checkDestination(out, { artifacts: env.ARTIFACTS, checkouts });
   for (const source of [cache, opts.mods, opts.world, opts.evidence].filter(Boolean)) {

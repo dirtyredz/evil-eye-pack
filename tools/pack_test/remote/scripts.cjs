@@ -6,9 +6,10 @@ const { nodeExe } = require('./provision.cjs');
 
 // Win32_Process.Create: the agent is not a child of sshd, so it survives the session; BelowNormal is
 // inherited by the Java server it starts.
-const launchScript = (jobFile) => `
+// codeDir: the run lane's synced tool code (config.lane(runtime).CODE).
+const launchScript = (jobFile, codeDir) => `
 $si = New-CimInstance -ClassName Win32_ProcessStartup -ClientOnly -Property @{ PriorityClass = [uint32]16384; ShowWindow = [uint16]0 }
-$cmd = '"' + ${q(nodeExe)} + '" "' + ${q(`${cfg.CODE}\\pack_test\\remote\\agent.cjs`)} + '" "' + ${q(jobFile)} + '"'
+$cmd = '"' + ${q(nodeExe)} + '" "' + ${q(`${codeDir}\\pack_test\\remote\\agent.cjs`)} + '" "' + ${q(jobFile)} + '"'
 $r = Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{ CommandLine = $cmd; CurrentDirectory = ${q(cfg.ROOT)}; ProcessStartupInformation = $si }
 if ($r.ReturnValue -ne 0) { throw "Win32_Process.Create returned $($r.ReturnValue)" }
 Write-Output "PID $($r.ProcessId)"`;

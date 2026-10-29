@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-// Automated pack test: ONE hidden Forge dedicated-server boot of this checkout (no client, no window),
+// Automated pack test: ONE hidden dedicated-server boot (Forge or NeoForge, as pack.toml declares) of this checkout (no client, no window),
 // a KubeJS probe injected into the throwaway server only, then recipe, reference, acquisition, machine,
 // crafting, duplicate-material and log checks against data/baseline.json.
 //
@@ -16,6 +16,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const env = require('../server_smoke/env.cjs');
+const { readRuntime, javaPaths, checkJava, identity } = require('../server_smoke/runtime.cjs');
+const { stageDirFor } = require('./stage_runtime.cjs');
 const procs = require('../server_smoke/procs.cjs');
 const { verify } = require('../packwiz/verify_hashes.cjs');
 const prep = require('./session/prepare.cjs');
@@ -74,16 +76,20 @@ async function main() {
   try {
     const v = verify(path.dirname(o.pack));
     if (v.problems.length) throw new Error(`pack hash chain does not verify: ${v.problems.slice(0, 3).join('; ')}`);
-    const stageRoot = `${env.ARTIFACTS}/pack-test/stage`;
+    const runtime = readRuntime(o.pack);
+    const { java, jcmd } = javaPaths(runtime, env.JAVAS);
+    checkJava(java, runtime);
+    run.runtime = identity(runtime);
+    log(`runtime ${runtime.id} (Java ${runtime.java})`);
     lock = localLock(`${env.ARTIFACTS}/pack-test/stage.lock`);
     let t = Date.now();
-    const stageDir = await prep.ensureStage(path.join(stageRoot, 'server'), { cache: `${env.ARTIFACTS}/server-smoke/cache`, java: env.JAVA, pack: o.pack, log, scope, seed: o.seed, port: o.port, heap: o.heap });
+    const stageDir = await prep.ensureStage(stageDirFor(env.ARTIFACTS, runtime), { cache: `${env.ARTIFACTS}/server-smoke/cache`, runtime, java, pack: o.pack, log, scope, seed: o.seed, port: o.port, heap: o.heap });
     run.timings.stage = (Date.now() - t) / 1000;
     t = Date.now();
     writeResourceScan(stageDir, path.join(runDir, 'evidence'), data);
     writeMalwareEvidence(stageDir, path.join(runDir, 'evidence'), { root: path.dirname(o.pack), instance: o.instance });
     run.timings.scan = (Date.now() - t) / 1000;
-    await runTarget({ options: o, stageDir, runDir, run, worldCache: `${env.ARTIFACTS}/pack-test/cache/worlds`, java: env.JAVA, jcmd: env.JCMD, scope,
+    await runTarget({ options: o, runtime, stageDir, runDir, run, worldCache: `${env.ARTIFACTS}/pack-test/cache/worlds`, java, jcmd, scope,
       onAbort: aborts.register, onSynced: () => { if (lock) { lock.release(); lock = null; } } }, log);
   } catch (e) {
     run.errors.push(`setup/boot: ${e.message}`);

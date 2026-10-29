@@ -6,6 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const procs = require('./procs.cjs');
 const env = require('./env.cjs');
+const runtimes = require('./runtime.cjs');
 const { DONE_RE } = require('./log_report.cjs');
 const { watchdog } = require('./watchdog.cjs');
 const { cpuSampler } = require('./cpu_sampler.cjs');
@@ -27,7 +28,9 @@ function lineWatcher(re) {
 // o: { priority, sample, silent, timeout } plus, for callers that need more than Done:
 //   complete(): true once the caller's own completion is observed (checked after Done),
 //   completeTimeout: seconds allowed after Done for complete() to become true.
-// deps (tests): { scope, java, jcmd, forge, now, wait, readCpu, setPriority, killTree }.
+// deps: { runtime, java, jcmd } from the caller (the runtime must match the run dir's runtime.json; Java
+// defaults to the runtime's configured JDK and is verified to be the major the runtime needs);
+// tests also inject { scope, checkJava, now, wait, readCpu, setPriority, killTree }.
 async function boot(runDir, o, log, deps = {}) {
   const scope = deps.scope || procs.scope();
   const now = deps.now || Date.now;
@@ -35,8 +38,14 @@ async function boot(runDir, o, log, deps = {}) {
   const killTree = deps.killTree || procs.killTree;
   const readCpu = deps.readCpu || ((pid) => procs.cpuSeconds(pid, scope));
   const setPriority = deps.setPriority || ((pid, pr) => procs.setPriority(pid, pr, scope));
-  const argsFile = `libraries/net/minecraftforge/forge/${deps.forge || env.FORGE}/win_args.txt`;
-  const p = scope.start(deps.java || env.JAVA, ['@user_jvm_args.txt', `@${argsFile}`, 'nogui'], { cwd: runDir, stdio: ['pipe', 'pipe', 'pipe'] });
+  const stamp = runtimes.readStamp(runDir);
+  const runtime = deps.runtime || (stamp && runtimes.describe(stamp));
+  if (!runtime) throw new Error(`No runtime for ${runDir}: pass deps.runtime or prepare the dir with a runtime.json`);
+  runtimes.assertStamp(runDir, runtime, 'run server');
+  const java = deps.java || runtimes.javaPaths(runtime, env.JAVAS).java;
+  const jcmd = deps.jcmd || runtimes.javaPaths(runtime, env.JAVAS).jcmd;
+  (deps.checkJava || runtimes.checkJava)(java, runtime);
+  const p = scope.start(java, ['@user_jvm_args.txt', `@${runtime.argsFile}`, 'nogui'], { cwd: runDir, stdio: ['pipe', 'pipe', 'pipe'] });
   const out = fs.createWriteStream(path.join(runDir, 'console.log'));
   const sawDone = lineWatcher(DONE_RE);
   const t0 = now();
@@ -83,7 +92,7 @@ async function boot(runDir, o, log, deps = {}) {
       if (doneAt !== null && !crashedAt) log(completed ? 'complete; sending stop' : completeTimedOut ? `completion not seen ${o.completeTimeout}s after Done; sending stop` : 'Done reached; sending stop');
       else log(timedOut ? `${stopReason === 'silent' ? `no log output and no JVM CPU growth for ${o.silent}s` : `hard cap ${o.timeout}s`}; killing process tree` : crashedAt ? 'crash report written; killing process tree' : 'stopping; killing process tree');
     }
-    const dump = timedOut ? async () => { await sampler.final(); await threadDump(p.pid, runDir, log, { scope, jcmd: deps.jcmd || env.JCMD }); } : null;
+    const dump = timedOut ? async () => { await sampler.final(); await threadDump(p.pid, runDir, log, { scope, jcmd }); } : null;
     const ended = await stopServer(p, () => exited !== null, { graceful: doneAt !== null && !crashedAt && !timedOut, dump, scope, killTree, wait, now, log });
     await closeStream(out);
     result = {

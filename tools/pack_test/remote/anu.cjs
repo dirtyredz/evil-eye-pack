@@ -11,7 +11,7 @@ const path = require('node:path');
 const cfg = require('./config.cjs');
 const { connect, q } = require('./ssh.cjs');
 const { syncDir } = require('./sync.cjs');
-const { ensureProvisioned, javaExe, jcmdExe } = require('./provision.cjs');
+const { ensureProvisioned, javaFor } = require('./provision.cjs');
 const { probeScript, parseProbe, decide } = require('./capacity.cjs');
 const { acquire, releaseScript } = require('./lease/dir_lock.cjs');
 const { launchScript, statusScript, killScript } = require('./scripts.cjs');
@@ -35,9 +35,21 @@ async function checkCapacity(ssh, log) {
 // neighbour's job (the local default, AboveNormal, does not apply here).
 const anuBoot = (boot) => ({ ...boot, priority: 'BelowNormal' });
 
-// o: { stageDir, runDir, input, seed, port, heap, boot, freshWorld, scope, log, onAbort, onSynced }
+// The serialized job the agent runs: the runtime descriptor travels explicitly with the lane's stage and
+// world cache, the remote Java for that runtime's major and the one shared lease lock.
+function buildJob(o, { runId, lease }) {
+  const lane = cfg.lane(o.runtime);
+  const remoteJava = javaFor(o.runtime.java);
+  return {
+    runId, lease, runtime: o.runtime, stageDir: lane.STAGE, worldCache: lane.WORLDS, lock: cfg.LOCK, input: o.input, seed: o.seed, port: o.port, heap: o.heap,
+    boot: anuBoot(o.boot), freshWorld: o.freshWorld, java: remoteJava.java, jcmd: remoteJava.jcmd
+  };
+}
+
+// o: { runtime, stageDir, runDir, input, seed, port, heap, boot, freshWorld, scope, log, onAbort, onSynced }
 async function runOnAnu(o) {
   const { scope, log } = o;
+  const lane = cfg.lane(o.runtime); // per-runtime stage, world cache and tool code; the lock stays shared
   const timings = {};
   let t = Date.now();
   const ssh = await connect(scope);
@@ -55,24 +67,21 @@ async function runOnAnu(o) {
     const early = await checkCapacity(ssh, log); // cheap early exit before the sync
     if (early.mode === 'fallback') return { fallback: early.reason };
     t = Date.now();
-    const st = await syncDir(ssh, scope, o.stageDir, cfg.STAGE, { incoming: cfg.INCOMING, skip: isStageRuntime, log, label: 'stage' });
-    for (const d of CODE_DIRS) await syncDir(ssh, scope, path.join(TOOLS_DIR, d), `${cfg.CODE}\\${d}`, { incoming: cfg.INCOMING, skip: (r) => /^tests(\/|$)/.test(r), log, label: `tools-${d}` });
+    const st = await syncDir(ssh, scope, o.stageDir, lane.STAGE, { incoming: cfg.INCOMING, skip: isStageRuntime, log, label: 'stage' });
+    for (const d of CODE_DIRS) await syncDir(ssh, scope, path.join(TOOLS_DIR, d), `${lane.CODE}\\${d}`, { incoming: cfg.INCOMING, skip: (r) => /^tests(\/|$)/.test(r), log, label: `tools-${d}` });
     timings.sync = (Date.now() - t) / 1000;
     if (o.onSynced) o.onSynced(); // the local stage may change again now
     log(`synced stage (${st.changed} changed, ${st.removed} removed, ${(st.bytes / 1048576).toFixed(1)} MiB) in ${Math.round(timings.sync)} s`);
     const verdict = await checkCapacity(ssh, log); // authoritative: just before starting
     if (verdict.mode === 'fallback') return { fallback: verdict.reason };
     const shared = verdict.mode === 'shared' ? { job: verdict.neighbour, freeGb: verdict.freeGb, cpuPct: verdict.cpuPct } : null;
-    const job = {
-      runId, lease: lock.lease, stageDir: cfg.STAGE, worldCache: cfg.WORLDS, lock: cfg.LOCK, input: o.input, seed: o.seed, port: o.port, heap: o.heap,
-      boot: anuBoot(o.boot), freshWorld: o.freshWorld, java: javaExe, jcmd: jcmdExe
-    };
+    const job = buildJob(o, { runId, lease: lock.lease });
     const jobLocal = path.join(o.runDir, 'job.json');
     fs.writeFileSync(jobLocal, JSON.stringify(job, null, 1));
     await ssh.must(`New-Item -ItemType Directory -Force ${q(remoteRun)} | Out-Null`);
     const up = await ssh.scpTo(jobLocal, `${remoteRun}\\job.json`);
     if (up.code !== 0) throw new Error(`job upload failed: ${up.out.slice(0, 300)}`);
-    const launched = await ssh.must(launchScript(`${remoteRun}\\job.json`));
+    const launched = await ssh.must(launchScript(`${remoteRun}\\job.json`, lane.CODE));
     agentPid = Number((launched.match(/PID (\d+)/) || [])[1]);
     if (!agentPid) throw new Error(`agent did not start: ${launched.slice(0, 300)}`);
     const killAgent = () => ssh.ps(killScript(agentPid, `${remoteRun}\\job.json`), { timeoutMs: 30000 });
@@ -107,4 +116,4 @@ async function runOnAnu(o) {
   }
 }
 
-module.exports = { runOnAnu, anuBoot };
+module.exports = { runOnAnu, anuBoot, buildJob };

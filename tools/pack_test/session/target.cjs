@@ -5,10 +5,10 @@ const path = require('node:path');
 const { execute } = require('./execute.cjs');
 const { starvedBoot, starvedText } = require('../verdict/mode.cjs');
 
-async function runTarget({ options: o, stageDir, runDir, run, worldCache, java, jcmd, scope, onAbort, onSynced }, log, { executeImpl = execute, runOnAnuImpl } = {}) {
+async function runTarget({ options: o, runtime, stageDir, runDir, run, worldCache, java, jcmd, scope, onAbort, onSynced }, log, { executeImpl = execute, runOnAnuImpl } = {}) {
   const bootOpts = { priority: o.priority, sample: o.sample, silent: o.silent, timeout: o.timeout, probeTimeout: o.probeTimeout };
   const runLocal = async () => {
-    const r = await executeImpl({ stageDir, runDir, worldCache, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, keepServer: o.keepServer, java, jcmd, scope }, log);
+    const r = await executeImpl({ runtime, stageDir, runDir, worldCache, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, keepServer: o.keepServer, java, jcmd, scope }, log);
     Object.assign(run, { target: 'local', boot: r.boot, world: r.world });
     Object.assign(run.timings, r.timings);
   };
@@ -16,7 +16,7 @@ async function runTarget({ options: o, stageDir, runDir, run, worldCache, java, 
   if (!o.local) {
     const runOnAnu = runOnAnuImpl || require('../remote/anu.cjs').runOnAnu;
     run.target = 'anu';
-    remote = await runOnAnu({ stageDir, runDir, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, scope, log, onAbort, onSynced });
+    remote = await runOnAnu({ runtime, stageDir, runDir, input: run.input, seed: o.seed, port: o.port, heap: o.heap, boot: bootOpts, freshWorld: o.freshWorld, scope, log, onAbort, onSynced });
     if (remote.fallback) { run.fallback = remote.fallback; run.target = 'local'; log(`ANU not used: ${remote.fallback}; running on this machine`); }
   }
   if (remote && !remote.fallback) {

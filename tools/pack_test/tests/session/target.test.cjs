@@ -1,4 +1,5 @@
 'use strict';
+const RUNTIME = { id: 'neoforge-1.21.1-21.1.265', java: 21 };
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -34,9 +35,10 @@ for (const scenario of [
         fs.writeFileSync(path.join(runDir, 'evidence', name, 'old'), 'old');
       }
       fs.writeFileSync(path.join(runDir, 'evidence/resources.json'), '{}');
-      await runTarget({ options: { local: scenario.local, seed: '1', priority: 'AboveNormal', keepServer: true }, stageDir: 'stage', runDir, run, worldCache: 'worlds', java: 'local/java', jcmd: 'local/jcmd', scope: {}, onAbort, onSynced }, () => {}, {
+      await runTarget({ options: { local: scenario.local, seed: '1', priority: 'AboveNormal', keepServer: true }, runtime: RUNTIME, stageDir: 'stage', runDir, run, worldCache: 'worlds', java: 'local/java', jcmd: 'local/jcmd', scope: {}, onAbort, onSynced }, () => {}, {
         runOnAnuImpl: async (o) => {
           calls.push('anu');
+          assert.equal(o.runtime, RUNTIME, 'the runtime is carried to ANU');
           assert.equal(o.input, run.input);
           assert.equal(o.onAbort, onAbort);
           assert.equal(o.onSynced, onSynced);
@@ -44,6 +46,7 @@ for (const scenario of [
         },
         executeImpl: async (o) => {
           calls.push('local');
+          assert.equal(o.runtime, RUNTIME, 'the runtime is carried to the local execute');
           assert.equal(o.worldCache, 'worlds');
           assert.equal(o.java, 'local/java');
           assert.equal(o.jcmd, 'local/jcmd');

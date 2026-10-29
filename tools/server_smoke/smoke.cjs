@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 const { readJson } = require('../data_io/files.cjs');
-// Headless server compatibility smoke: boots the pack on a Forge 1.20.1 dedicated server.
+// Headless server compatibility smoke: boots the pack on the dedicated server its pack.toml declares
+// (Forge or NeoForge, with the Java that runtime needs; see runtime.cjs).
 // Usage: node tools/server_smoke/smoke.cjs [--pack pack.toml] [--timeout 1800]  hard cap, seconds
 //        [--silent 180]  stop when the log is silent AND JVM CPU is flat this many seconds
 //        [--priority AboveNormal]  JVM priority class (Idle|BelowNormal|Normal|AboveNormal|High|none)
@@ -14,8 +15,9 @@ const { readJson } = require('../data_io/files.cjs');
 // Nothing here may show a window: nogui, windowsHide, piped stdio, no launcher, no client.
 const fs = require('node:fs');
 const path = require('node:path');
-const { ARTIFACTS, JAVA } = require('./env.cjs');
-const { ensureForgeBase, prepareRunDir, readRunSeed, installPack, dropMods } = require('./setup.cjs');
+const { ARTIFACTS, JAVAS } = require('./env.cjs');
+const { readRuntime, javaPaths, checkJava } = require('./runtime.cjs');
+const { ensureLoaderBase, prepareRunDir, readRunSeed, installPack, dropMods } = require('./setup.cjs');
 const { analyze } = require('./log_report.cjs');
 const { boot } = require('./boot.cjs');
 const { DEFAULT_STARVED_CORES } = require('./watchdog.cjs');
@@ -51,12 +53,16 @@ async function main() {
   const runDir = path.join(o.out, `run-${new Date().toISOString().replace(/[:.]/g, '-')}`);
   let result;
   try {
-    const base = await ensureForgeBase(o.cache, JAVA, log);
+    const runtime = readRuntime(o.pack);
+    const { java, jcmd } = javaPaths(runtime, JAVAS);
+    checkJava(java, runtime);
+    log(`runtime ${runtime.id} (Java ${runtime.java}: ${java})`);
+    const base = await ensureLoaderBase(o.cache, runtime, java, log);
     prepareRunDir(base, runDir, o.port, o.heap, o.seed);
-    await installPack(runDir, o.pack, JAVA, o.cache, log);
+    await installPack(runDir, o.pack, java, o.cache, log);
     dropMods(runDir, o.drop.split(',').filter(Boolean), log);
     log(`mods installed: ${fs.readdirSync(path.join(runDir, 'mods')).filter((f) => f.endsWith('.jar')).length}`);
-    result = await boot(runDir, o, log);
+    result = await boot(runDir, o, log, { runtime, java, jcmd });
   } catch (e) {
     console.log(`FAIL (setup): ${e.message}`);
     process.exitCode = 2;

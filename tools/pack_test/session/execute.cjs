@@ -29,15 +29,17 @@ function collectEvidence(serverDir, evidenceDir) {
   }
 }
 
-// o: { stageDir, runDir, worldCache, input, seed, port, heap, boot: {priority, sample, silent, timeout, probeTimeout},
-//      keepServer, java, jcmd, scope, bootImpl (tests) }. Returns { boot, world: {key, reused, saved}, timings }.
+// o: { runtime, stageDir, runDir, worldCache, input, seed, port, heap, boot: {priority, sample, silent, timeout, probeTimeout},
+//      keepServer, java, jcmd, scope, bootImpl (tests) }. runtime is the pack's descriptor, carried explicitly
+//      (local run or ANU job) and verified against the server's runtime.json by boot(). Returns { boot, world: {key, reused, saved}, timings }.
 async function execute(o, log) {
   const serverDir = path.join(o.runDir, 'server');
   const evidenceDir = path.join(o.runDir, 'evidence');
+  if (!o.runtime) throw new Error('execute needs the run runtime descriptor');
   const timings = {};
   let t = Date.now();
   makeRunServer(o.stageDir, serverDir, o);
-  const key = worldKey(o.stageDir, o.seed);
+  const key = worldKey(o.stageDir, o.seed, o.runtime);
   const reused = !o.freshWorld && restoreWorld(o.worldCache, key, serverDir);
   injectProbe(serverDir, o.input);
   timings.copy = (Date.now() - t) / 1000;
@@ -47,7 +49,7 @@ async function execute(o, log) {
   let result;
   try {
     result = await (o.bootImpl || boot)(serverDir, { ...o.boot, complete: () => manifestReady(outDir, o.input.token), completeTimeout: o.boot.probeTimeout }, log,
-      { scope: o.scope, java: o.java, jcmd: o.jcmd });
+      { scope: o.scope, java: o.java, jcmd: o.jcmd, runtime: o.runtime, checkJava: o.checkJava });
   } finally {
     timings.boot = (Date.now() - t) / 1000;
     collectEvidence(serverDir, evidenceDir);

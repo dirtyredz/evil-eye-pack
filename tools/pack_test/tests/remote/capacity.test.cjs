@@ -71,7 +71,7 @@ test('the probe only reads a neighbour: no write, delete or lock-taking command 
 test('on ANU the server always runs at BelowNormal, whatever the local priority; the agent launches at BelowNormal', () => {
   assert.equal(anuBoot({ priority: 'AboveNormal', timeout: 1 }).priority, 'BelowNormal');
   assert.equal(anuBoot({ priority: 'AboveNormal', timeout: 1 }).timeout, 1);
-  assert.match(launchScript('x.json'), /PriorityClass = \[uint32\]16384/); // BELOW_NORMAL_PRIORITY_CLASS
+  assert.match(launchScript('x.json', 'G:\code'), /PriorityClass = \[uint32\]16384/); // BELOW_NORMAL_PRIORITY_CLASS
 });
 
 test('mode labels: anu (alone), anu (shared with <job>), local (fallback: <reason>)', () => {

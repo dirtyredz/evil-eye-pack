@@ -1,33 +1,60 @@
 'use strict';
-// Builds the throwaway server dir: cached Forge install + packwiz `-s server` install.
+// Builds the throwaway server dir: cached loader install (Forge or NeoForge, per the pack's runtime
+// descriptor from runtime.cjs) + packwiz `-s server` install.
 const fs = require('node:fs');
 const path = require('node:path');
+const crypto = require('node:crypto');
 const procs = require('./procs.cjs');
+const { writeStamp, readStamp, assertStamp } = require('./runtime.cjs');
 
-const { FORGE, FORGE_URL, BOOTSTRAP, INSTALLER_JAR_SOURCES } = require('./env.cjs');
+const { BOOTSTRAP, INSTALLER_JAR_SOURCES, INSTALLER_URL } = require('./env.cjs');
 
-async function download(url, dest) {
-  const res = await fetch(url);
+async function fetchBytes(url, http) {
+  const res = await http(url);
   if (!res.ok) throw new Error(`GET ${url} -> ${res.status}`);
-  fs.writeFileSync(dest, Buffer.from(await res.arrayBuffer()));
+  return Buffer.from(await res.arrayBuffer());
 }
 
-// Forge server installed once into <cache>/forge-base; its libraries are reused by every run.
-// scope: an optional procs.scope() that owns the installer process (defaults to the shared one).
-async function ensureForgeBase(cache, java, log, scope = procs) {
-  const base = path.join(cache, 'forge-base');
-  const argsFile = path.join(base, 'libraries/net/minecraftforge/forge', FORGE, 'win_args.txt');
-  if (fs.existsSync(argsFile)) return base;
+// The installer jar, verified against the loader Maven's published checksum (sha1 for Forge, sha256
+// for NeoForge). The verified checksum is kept in a sidecar so later installs verify it offline.
+async function verifiedInstaller(cache, runtime, log, http = fetch) {
+  const url = INSTALLER_URL || runtime.installerUrl;
+  const installer = path.join(cache, path.basename(runtime.installerUrl));
+  const sidecar = `${installer}.${runtime.checksum}`;
+  const digest = (b) => crypto.createHash(runtime.checksum).update(b).digest('hex');
+  let want = fs.existsSync(sidecar) ? fs.readFileSync(sidecar, 'utf8').trim() : null;
+  if (!want) want = (await fetchBytes(`${runtime.installerUrl}.${runtime.checksum}`, http)).toString('utf8').trim().split(/\s+/)[0];
+  if (fs.existsSync(installer) && digest(fs.readFileSync(installer)) !== want) fs.rmSync(installer);
+  if (!fs.existsSync(installer)) {
+    log(`downloading ${url}`);
+    const bytes = await fetchBytes(url, http);
+    if (digest(bytes) !== want) throw new Error(`${runtime.loader} installer checksum mismatch for ${url}`);
+    fs.mkdirSync(cache, { recursive: true });
+    fs.writeFileSync(installer, bytes);
+  }
+  fs.writeFileSync(sidecar, `${want}\n`);
+  return installer;
+}
+
+// The loader server installed once into <cache>/loader-base/<runtime id>; its libraries are reused by
+// every run. A base stamped for another runtime is never reused. scope: an optional procs.scope() that
+// owns the installer process (defaults to the shared one). deps.http: injected fetch (tests).
+async function ensureLoaderBase(cache, runtime, java, log, scope = procs, deps = {}) {
+  const base = path.join(cache, 'loader-base', runtime.id);
+  const argsFile = path.join(base, runtime.argsFile);
+  if (fs.existsSync(argsFile) && readStamp(base)) { assertStamp(base, runtime, 'loader base'); return base; }
   fs.mkdirSync(base, { recursive: true });
-  const installer = path.join(cache, `forge-${FORGE}-installer.jar`);
-  if (!fs.existsSync(installer)) { log(`downloading ${FORGE_URL}`); await download(FORGE_URL, installer); }
-  log('installing Forge server (first run only)');
+  const installer = await verifiedInstaller(cache, runtime, log, deps.http);
+  log(`installing the ${runtime.id} server (first run for this runtime only)`);
   const r = await scope.run(java, ['-jar', installer, '--installServer', base], { cwd: base });
-  fs.writeFileSync(path.join(cache, 'forge-install.log'), r.out);
-  if (!fs.existsSync(argsFile)) throw new Error(`Forge install failed (see ${path.join(cache, 'forge-install.log')})`);
+  const installLog = path.join(cache, `${runtime.id}-install.log`);
+  fs.writeFileSync(installLog, r.out);
+  if (!fs.existsSync(argsFile)) throw new Error(`${runtime.loader} install failed (see ${installLog})`);
+  writeStamp(base, runtime);
   return base;
 }
 
+// The run dir carries the base's runtime stamp (runtime.json) so the boot and any reuse verify it.
 function prepareRunDir(base, runDir, port, heap, seed) {
   fs.mkdirSync(runDir, { recursive: true });
   fs.cpSync(path.join(base, 'libraries'), path.join(runDir, 'libraries'), { recursive: true });
@@ -40,6 +67,8 @@ function prepareRunDir(base, runDir, port, heap, seed) {
     'enable-rcon=false', 'enable-query=false', 'max-tick-time=-1', 'motd=server-smoke', ''
   ].join('\n'));
   fs.writeFileSync(path.join(runDir, 'user_jvm_args.txt'), `-Xmx${heap}\n-Xms1G\n`);
+  const stamp = readStamp(base);
+  if (stamp) fs.writeFileSync(path.join(runDir, 'runtime.json'), JSON.stringify(stamp, null, 1) + '\n');
 }
 
 // The level-seed a run was started with, or null when the run has no server.properties or no seed line.
@@ -74,4 +103,4 @@ function dropMods(runDir, terms, log) {
   }
 }
 
-module.exports = { ensureForgeBase, prepareRunDir, readRunSeed, installPack, dropMods };
+module.exports = { ensureLoaderBase, verifiedInstaller, prepareRunDir, readRunSeed, installPack, dropMods };

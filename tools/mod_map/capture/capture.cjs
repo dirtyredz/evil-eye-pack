@@ -9,6 +9,7 @@ const { prepare } = require('../../server_smoke/offline_server.cjs');
 const { waitForServer } = require('../../server_smoke/host_wait.cjs');
 const { localLock } = require('../../pack_test/session/lock.cjs');
 const { worldKey, restoreWorld } = require('../../pack_test/session/world_cache.cjs');
+const { readRuntime, readStamp } = require('../../server_smoke/runtime.cjs');
 const { WORLD } = require('../../pack_test/stage_runtime.cjs');
 
 const LOG_CONFIG = `<?xml version="1.0" encoding="UTF-8"?>
@@ -29,8 +30,8 @@ async function capture(root, cache, run, log, worldSource) {
   try {
     lock = localLock(path.join(env.ARTIFACTS, 'mod-map/server.lock'), { owner: run });
     // The ordinary world profile: this report measures the pack, not the flat showcase world.
-    prepare(root, cache, server, { seed: '20261020', port: 25611, heap: '6G', profile: 'ordinary' });
-    const key = worldKey(server, '20261020');
+    prepare(root, cache, server, { seed: '20261020', port: 25611, heap: '6G', profile: 'ordinary', runtime: readRuntime(path.join(root, 'pack.toml')) });
+    const key = worldKey(server, '20261020', readStamp(server));
     const reused = restoreWorld(path.join(env.ARTIFACTS, 'pack-test/cache/worlds'), key, server);
     if (!reused) {
       if (!worldSource || !fs.existsSync(path.join(worldSource, 'level.dat'))) throw new Error('No matching cached world. Supply --world <cached world directory>; it is copied read-only, and its different mod-set provenance is recorded.');

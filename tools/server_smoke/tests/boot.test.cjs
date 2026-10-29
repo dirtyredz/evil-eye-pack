@@ -8,21 +8,26 @@ const { EventEmitter } = require('node:events');
 const { PassThrough, Writable } = require('node:stream');
 const procs = require('../procs.cjs');
 const { boot, lineWatcher } = require('../boot.cjs');
+const runtimes = require('../runtime.cjs');
+const NEO = runtimes.describe({ loader: 'neoforge', minecraft: '1.21.1', loaderVersion: '21.1.265' });
 
 const DONE = 'Done (1.5s)! For help, type "help"\n';
 
 // steps: [atMs after start, fn(child)]. opts.ignoreStop: child does not exit on 'stop'.
 async function run(o, steps, opts = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'boot-test-'));
+  runtimes.writeStamp(dir, NEO);
   const clock = { t: 1000 };
   const start = clock.t;
   const writes = [];
   const killedTrees = [];
   const spawned = [];
+  const spawnedArgs = [];
   let main;
   const mk = () => Object.assign(new EventEmitter(), { pid: 500 + spawned.length, stdout: new PassThrough(), stderr: new PassThrough() });
   const spawnImpl = (exe, args) => {
     spawned.push(exe);
+    if (exe === 'java') spawnedArgs.push(args);
     const c = mk();
     if (exe !== 'java') {
       setImmediate(() => { c.stdout.write('thread dump'); setImmediate(() => c.emit('close', 0)); });
@@ -42,7 +47,7 @@ async function run(o, steps, opts = {}) {
     await new Promise((r) => setImmediate(r));
   };
   const deps = {
-    scope: procs.scope({ spawnImpl, killImpl: () => {} }), java: 'java', jcmd: 'jcmd', forge: 'x',
+    scope: procs.scope({ spawnImpl, killImpl: () => {} }), java: 'java', jcmd: 'jcmd', runtime: NEO, checkJava: () => {},
     now: () => clock.t, wait, readCpu: opts.readCpu || (async () => clock.t / 1000),
     setPriority: async () => ({ ok: true, skipped: true }),
     killTree: (pid) => { killedTrees.push(pid); if (opts.exitOnKill) main.emit('exit', 1); },
@@ -50,7 +55,7 @@ async function run(o, steps, opts = {}) {
   const base = { sample: 1, silent: 3600, timeout: 7200 };
   try {
     const result = await boot(dir, { ...base, ...o }, () => {}, deps);
-    return { result, writes, killedTrees, spawned, dir, consoleLog: fs.readFileSync(path.join(dir, 'console.log'), 'utf8'), dumpExists: fs.existsSync(path.join(dir, 'stall-threads.txt')) };
+    return { result, writes, killedTrees, spawned, spawnedArgs, dir, consoleLog: fs.readFileSync(path.join(dir, 'console.log'), 'utf8'), dumpExists: fs.existsSync(path.join(dir, 'stall-threads.txt')) };
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 }
 const out = (s) => (c) => c.stdout.write(s);
@@ -130,4 +135,18 @@ test('console.log holds the child output', async () => {
   const r = await run({}, [[500, out('hello\n')], [1000, out(DONE)]]);
   assert.match(r.consoleLog, /hello/);
   assert.match(r.consoleLog, /Done \(1\.5s\)!/);
+});
+
+test('boot launches the runtime argument file and refuses a mismatched server or the wrong Java', async () => {
+  const r = await run({}, [[10, out(DONE)]]);
+  assert.deepEqual(r.spawnedArgs[0], ['@user_jvm_args.txt', '@libraries/net/neoforged/neoforge/21.1.265/win_args.txt', 'nogui']);
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'boot-test-'));
+  try {
+    const forge = runtimes.describe({ loader: 'forge', minecraft: '1.20.1', loaderVersion: '47.4.10' });
+    runtimes.writeStamp(dir, forge);
+    await assert.rejects(boot(dir, {}, () => {}, { runtime: NEO, java: 'java', checkJava: () => {} }), /was built for forge-1\.20\.1-47\.4\.10/);
+    await assert.rejects(boot(dir, {}, () => {}, { runtime: forge, java: 'java', checkJava: (j, rt) => { throw new Error(`Wrong Java for ${rt.id}`); } }), /Wrong Java/);
+    fs.rmSync(path.join(dir, 'runtime.json'));
+    await assert.rejects(boot(dir, {}, () => {}, { java: 'java', checkJava: () => {} }), /No runtime/);
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });

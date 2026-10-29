@@ -6,6 +6,8 @@ const { boot } = require('../server_smoke/boot.cjs');
 const procs = require('../server_smoke/procs.cjs');
 const { waitForServer } = require('../server_smoke/host_wait.cjs');
 const env = require('../server_smoke/env.cjs');
+const { readRuntime } = require('../server_smoke/runtime.cjs');
+const { stageDirFor } = require('../pack_test/stage_runtime.cjs');
 const { verify } = require('../packwiz/verify_hashes.cjs');
 const { localLock } = require('../pack_test/session/lock.cjs');
 const { checkDestination, runMeta } = require('../pack_test/session/run_meta.cjs');
@@ -35,7 +37,7 @@ async function main(argv) {
   const baseline = option('--baseline-ref');
   const selected = argv[0] === '--all' ? sections(root) : [argv[0]];
   if (!baseline && selected.some(n => !sections(root).includes(n))) throw new Error('Usage: node tools/showcase/check.cjs <section|--all> [--cache <prepared server>] [--out <new run dir>] [--compare <baseline run dir>]');
-  const cache = path.resolve(option('--cache') || process.env.SHOWCASE_CACHE || path.join(env.ARTIFACTS, 'pack-test/stage/server'));
+  const cache = path.resolve(option('--cache') || process.env.SHOWCASE_CACHE || stageDirFor(env.ARTIFACTS, readRuntime(path.join(root, 'pack.toml'))));
   const out = path.resolve(option('--out') || path.join(env.ARTIFACTS, 'showcase', 'run-' + Date.now()));
   const checkouts = execFileSync('git', ['worktree', 'list', '--porcelain'], { cwd: root, windowsHide: true, encoding: 'utf8' }).split(/\r?\n/).filter(l => l.startsWith('worktree ')).map(l => l.slice(9));
   checkDestination(out, { artifacts: env.ARTIFACTS, checkouts });
@@ -59,7 +61,7 @@ async function main(argv) {
     const verified = verify(packRoot);
     if (verified.problems.length) throw new Error(verified.problems.join('\n'));
     const server = path.join(out, 'server');
-    const pins = prepare(packRoot, cache, server, { seed: '20261020', port: 25609, heap: '6G' });
+    const pins = prepare(packRoot, cache, server, { seed: '20261020', port: 25609, heap: '6G', runtime: readRuntime(path.join(packRoot, 'pack.toml')) });
     fs.writeFileSync(path.join(out, 'inputs.json'), JSON.stringify({ ...runMeta(path.join(root, 'pack.toml')), root: packRoot, baseline, indexHash: verified.indexHash, selected, pins }, null, 2));
     if (!baseline) {
       const dest = path.join(server, 'kubejs/server_scripts/showcase_check'); fs.mkdirSync(dest, { recursive: true });

@@ -5,6 +5,7 @@ const path = require('node:path');
 const { parseIndex, readMetafileSide } = require('../packwiz/pack_index.cjs');
 const { resolvePinnedJar } = require('../packwiz/pinned_jar.cjs');
 const { makeRunServer } = require('../pack_test/session/prepare.cjs');
+const { assertStamp } = require('./runtime.cjs');
 
 // The showcase builds on an empty flat world; `ordinary` keeps the pack's normal world
 // generation for callers that exercise the pack itself, such as mod-map capture.
@@ -27,11 +28,13 @@ function inventory(root, cache) {
   return files;
 }
 
-function prepare(root, cache, server, { profile = 'showcase', ...options }) {
+// options.runtime: the pack's runtime descriptor; when given, the cache must be stamped for it.
+function prepare(root, cache, server, { profile = 'showcase', runtime, ...options }) {
   if (!Object.hasOwn(PROFILES, profile)) throw new Error('Unknown server profile: ' + profile);
   if (fs.existsSync(server)) throw new Error('Refusing to reuse run server: ' + server);
   const files = inventory(root, cache);
-  if (!fs.existsSync(path.join(cache, 'libraries'))) throw new Error('Missing cached Forge libraries: ' + cache);
+  if (!fs.existsSync(path.join(cache, 'libraries'))) throw new Error('Missing cached loader libraries: ' + cache);
+  if (runtime) assertStamp(cache, runtime, 'staged server');
   makeRunServer(cache, server, options);
   // Only delete explicit children of the new disposable copy. No cached path is ever mutated.
   for (const dir of ['mods', 'kubejs', 'config', 'defaultconfigs', 'resourcepacks', 'shaderpacks']) {
