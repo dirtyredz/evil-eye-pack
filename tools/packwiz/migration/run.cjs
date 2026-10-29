@@ -126,6 +126,7 @@ function report(log, lock, errors, closure, missing = []) {
   for (const e of errors) log(`INVALID ${e}`);
   for (const m of missing) log(`MISSING ${m}`);
   for (const e of closure.errors) log(`DEPENDENCY ${e}`);
+  for (const w of closure.warnings) log(`WARNING ${w}`);
   log(`validation errors ${errors.length}, missing artifacts ${missing.length}, dependency errors ${closure.errors.length}, warnings ${closure.warnings.length}`);
 }
 

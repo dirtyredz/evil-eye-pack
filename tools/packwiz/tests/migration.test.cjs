@@ -211,3 +211,13 @@ test('the committed target lock covers this checkout exactly while its source is
   assert.equal(lock.closure.errors, 0);
   assert.equal(fs.readFileSync(file, 'utf8'), serialize(lock), 'the lock is stored in its canonical serialization');
 });
+
+test('a bundled Forge-metadata game library is ignored like NeoForge ignores it; other bundled Forge jars warn', () => {
+  const lib = { source: 'host.jar!lib.jar', loader: 'forge', bundled: true, modType: 'GAMELIBRARY', mods: [mod('mixinsquared', '0.3.7', [dep('forge', 'required', '[47,)')])] };
+  const odd = { ...lib, source: 'host.jar!odd.jar', modType: null, mods: [mod('odd', '1')] };
+  const r = checkClosure([{ key: 'mods/host', side: 'both', units: [unit([mod('host', '1')]), lib] }], rt);
+  assert.deepEqual([r.errors, r.warnings], [[], []]);
+  assert.equal(r.providers.has('mixinsquared'), false, 'NeoForge does not register a mods.toml mod id');
+  const w = checkClosure([{ key: 'mods/host', side: 'both', units: [unit([mod('host', '1')]), odd] }], rt);
+  assert.match(w.warnings[0], /bundled host\.jar!odd\.jar carries Forge-only metadata/);
+});

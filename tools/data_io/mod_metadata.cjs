@@ -144,11 +144,14 @@ function readJarMods(bytes, source = 'jar', depth = 0) {
   const entries = listEntries(bytes);
   const read = name => { const e = entries.find(x => x.name === name); return e && readEntry(bytes, e, { maxSize: 128 * 1024 * 1024 }); };
   const manifest = read('META-INF/MANIFEST.MF');
-  const version = manifest ? manifestVersion(manifest.toString('utf8')) : null;
+  const manifestText = manifest ? manifest.toString('utf8') : '';
+  const version = manifest ? manifestVersion(manifestText) : null;
+  // FMLModType: GAMELIBRARY / LIBRARY jars are loaded as libraries; their mods.toml is not a mod.
+  const modType = (/^FMLModType:\s*(\S+)\s*$/m.exec(manifestText) || [])[1] || null;
   const neo = read(METADATA.neoforge);
   const forge = neo ? null : read(METADATA.forge);
   const toml = neo || forge;
-  const out = [{ source, loader: neo ? 'neoforge' : forge ? 'forge' : null, version,
+  const out = [{ source, loader: neo ? 'neoforge' : forge ? 'forge' : null, version, modType,
     mods: toml ? parseMods(toml.toString('utf8'), { version }) : [], bundled: depth > 0 }];
   const metadata = read('META-INF/jarjar/metadata.json');
   if (metadata) for (const jar of JSON.parse(metadata.toString('utf8')).jars || []) {

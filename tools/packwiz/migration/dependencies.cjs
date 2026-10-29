@@ -120,7 +120,12 @@ function checkClosure(entries, runtime, { waivers = {} } = {}) {
     if (outer.loader === 'forge') errors.push(`${e.key}: Forge-only metadata (META-INF/mods.toml without neoforge.mods.toml)`);
     if (!e.units.some(u => u.mods.length)) errors.push(`${e.key}: no NeoForge mod metadata in the jar or its declared jar-in-jar`);
     for (const u of e.units) {
-      if (u.bundled && u.loader === 'forge') warnings.push(`${e.key}: bundled ${u.source} carries Forge-only metadata`);
+      // NeoForge never reads META-INF/mods.toml: a bundled Forge-metadata jar provides no mod IDs. A library
+      // (FMLModType GAMELIBRARY/LIBRARY) is expected to look like that; anything else is worth a warning.
+      if (u.bundled && u.loader === 'forge') {
+        if (!/^(GAMELIBRARY|LIBRARY)$/.test(u.modType || '')) warnings.push(`${e.key}: bundled ${u.source} carries Forge-only metadata`);
+        continue;
+      }
       for (const m of u.mods) {
         if (!providers.has(m.id)) providers.set(m.id, []);
         providers.get(m.id).push({ key: e.key, version: m.version, bundled: u.bundled, side: e.side });
@@ -135,7 +140,7 @@ function checkClosure(entries, runtime, { waivers = {} } = {}) {
     if (builtins.has(id)) return builtins.get(id);
     return (providers.get(id) || []).filter(p => side === 'client' || p.side !== 'client').map(p => p.version);
   };
-  for (const e of entries) for (const u of e.units) for (const m of u.mods) for (const d of m.dependencies) {
+  for (const e of entries) for (const u of e.units.filter((x) => !(x.bundled && x.loader === 'forge'))) for (const m of u.mods) for (const d of m.dependencies) {
     const tag = `${m.id} -> ${d.id}`;
     const where = `${e.key}${u.bundled ? ` (${u.source})` : ''}: ${m.id} ${d.type} ${d.id} ${d.range || '*'}`;
     const serverSide = e.side !== 'client' && String(d.side).toUpperCase() !== 'CLIENT';
