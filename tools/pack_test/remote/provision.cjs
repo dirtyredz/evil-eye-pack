@@ -45,7 +45,8 @@ const javaInstall = (m) => {
 Write-Output ("JAVA${m} " + (Get-Content -Raw (Join-Path ${q(dir)} 'SHA256.txt')).Trim())`;
 };
 
-const INSTALL = `
+// Shared by every step: folders and the checksum helper.
+const PRELUDE = `
 $tools = ${q(cfg.TOOLS)}; $root = ${q(cfg.ROOT)}; $dl = Join-Path $root 'downloads'
 New-Item -ItemType Directory -Force $tools, $dl, (Join-Path $root 'runs'), (Join-Path $root 'stage'), (Join-Path $root 'cache\\worlds'), (Join-Path $root 'incoming') | Out-Null
 function Verify($file, $expected) {
@@ -53,7 +54,9 @@ function Verify($file, $expected) {
   if ($actual -ne $expected.ToLower()) { Remove-Item -Force $file; throw "checksum mismatch for $file : $actual != $expected" }
   return $actual
 }
-if (-not (Test-Path ${q(nodeExe)})) {
+`;
+
+const NODE_INSTALL = `if (-not (Test-Path ${q(nodeExe)})) {
   $zip = Join-Path $dl 'node.zip'
   Invoke-WebRequest -UseBasicParsing -Uri ${q(cfg.NODE.url)} -OutFile $zip
   $sums = (Invoke-WebRequest -UseBasicParsing -Uri ${q(cfg.NODE.sums)}).Content
@@ -62,13 +65,17 @@ if (-not (Test-Path ${q(nodeExe)})) {
   tar -xf $zip -C $tools; if ($LASTEXITCODE -ne 0) { throw "node unzip failed" }
   Set-Content -Encoding ascii -LiteralPath (Join-Path ${q(cfg.NODE.dir)} 'SHA256.txt') -Value "${path.basename(cfg.NODE.url)} $sha"
 }
-Write-Output ("NODE " + (& ${q(nodeExe)} --version) + " | " + (Get-Content -Raw (Join-Path ${q(cfg.NODE.dir)} 'SHA256.txt')).Trim())
-${MAJORS.map(javaInstall).join('\n')}
-`;
+Write-Output ("NODE " + (& ${q(nodeExe)} --version) + " | " + (Get-Content -Raw (Join-Path ${q(cfg.NODE.dir)} 'SHA256.txt')).Trim())`;
+
+// One remote command per tool: Windows OpenSSH runs commands through cmd.exe, whose 8191-character line
+// limit truncates a long -EncodedCommand (UTF-16 base64 roughly triples the script) mid-statement.
+const INSTALL_STEPS = [NODE_INSTALL, ...MAJORS.map(javaInstall)].map((step) => PRELUDE + step + '\n');
+const INSTALL = INSTALL_STEPS.join('\n');
 
 async function provision(ssh, scope, log) {
   log(`provisioning ANU (portable Node, JDK ${MAJORS.join(' and ')}, folders, README)`);
-  const out = await ssh.must(INSTALL, { timeoutMs: 1800000 });
+  let out = '';
+  for (const step of INSTALL_STEPS) out += (await ssh.must(step, { timeoutMs: 1800000 })) + '\n';
   const lines = out.split(/\r?\n/).filter((l) => /^(NODE|JAVA\d+) /.test(l));
   const field = (tag) => (lines.find((l) => l.startsWith(`${tag} `)) || '').slice(tag.length + 1);
   const installed = [
@@ -93,7 +100,7 @@ async function ensureProvisioned(ssh, scope, log) {
   return true;
 }
 
-module.exports = { ensureProvisioned, provision, isProvisioned, nodeExe, javaFor, MAJORS, INSTALL };
+module.exports = { ensureProvisioned, provision, isProvisioned, nodeExe, javaFor, MAJORS, INSTALL, INSTALL_STEPS };
 
 if (require.main === module) {
   const procs = require('../../server_smoke/procs.cjs');

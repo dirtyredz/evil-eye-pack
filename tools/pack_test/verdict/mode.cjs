@@ -3,9 +3,10 @@
 const { isStarved } = require('../../server_smoke/watchdog.cjs');
 
 // run: { target, fallback, shared, local }. One of: anu (alone), anu (shared with <job>),
-// local (fallback: <reason>), local (--local).
+// local (fallback: <reason>), local (--local), or not started (setup failed first).
 function modeLabel(run) {
   if (run.target === 'anu') return run.shared ? `anu (shared with ${run.shared.job})` : 'anu (alone)';
+  if (run.target === 'none') return 'not started (setup failed before a target was chosen)';
   return run.fallback ? `local (fallback: ${run.fallback})` : 'local (--local)';
 }
 

@@ -69,7 +69,7 @@ async function main() {
   };
   process.once('SIGINT', onSignal);
   process.once('SIGTERM', onSignal);
-  const run = { schema: 1, meta: runMeta(o.pack), seed: o.seed, target: 'local', fallback: null, errors: [], timings: {}, input: { token: `${path.basename(runDir)}-${process.pid}`, crafts: data.crafts.crafts.map((c) => ({ name: c.name, recipe: c.recipe, grid: c.grid.map((g) => g || '') })) } };
+  const run = { schema: 1, meta: runMeta(o.pack), seed: o.seed, target: o.local ? 'local' : 'none', fallback: null, errors: [], timings: {}, input: { token: `${path.basename(runDir)}-${process.pid}`, crafts: data.crafts.crafts.map((c) => ({ name: c.name, recipe: c.recipe, grid: c.grid.map((g) => g || '') })) } };
   const save = () => fs.writeFileSync(path.join(runDir, 'run.json'), JSON.stringify(run, null, 1));
   const t0 = Date.now();
   let lock = null;

@@ -5,12 +5,18 @@ const cfg = require('./config.cjs');
 
 const OPTS = ['-o', 'BatchMode=yes', '-o', 'ConnectTimeout=8', '-o', 'ServerAliveInterval=15', '-o', 'ServerAliveCountMax=4'];
 
+const MAX_COMMAND = 8000;
 const encode = (script) => Buffer.from(`$ProgressPreference='SilentlyContinue'; $ErrorActionPreference='Stop'\n${script}`, 'utf16le').toString('base64');
 
 function client(scope, host = cfg.HOST) {
   // Runs a PowerShell script on ANU. Resolves { code, out }; code -1 on timeout or spawn failure.
-  const ps = (script, { timeoutMs = 120000 } = {}) =>
-    scope.run('ssh', [...OPTS, host, `powershell -NoProfile -NonInteractive -EncodedCommand ${encode(script)}`], { timeoutMs });
+  // cmd.exe (Windows OpenSSH's shell) truncates lines past 8191 characters, so refuse rather than send
+  // half a script.
+  const ps = (script, { timeoutMs = 120000 } = {}) => {
+    const line = `powershell -NoProfile -NonInteractive -EncodedCommand ${encode(script)}`;
+    if (line.length > MAX_COMMAND) throw new Error(`remote command is ${line.length} characters; cmd.exe truncates past ${MAX_COMMAND}. Split the script.`);
+    return scope.run('ssh', [...OPTS, host, line], { timeoutMs });
+  };
   const remotePath = (p) => `${host}:${p.replace(/\\/g, '/')}`;
   const scpTo = (local, remote, { timeoutMs = 1800000 } = {}) => scope.run('scp', [...OPTS, '-q', local, remotePath(remote)], { timeoutMs });
   const scpFrom = (remote, local, { timeoutMs = 1800000 } = {}) => scope.run('scp', [...OPTS, '-q', remotePath(remote), local], { timeoutMs });
@@ -36,4 +42,4 @@ async function connect(scope) {
 // PowerShell single-quoted literal.
 const q = (s) => `'${String(s).replace(/'/g, "''")}'`;
 
-module.exports = { client, connect, encode, q };
+module.exports = { client, connect, encode, q, MAX_COMMAND };

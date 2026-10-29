@@ -37,3 +37,10 @@ test('ANU provisions a checksum-verified JDK per major side by side, never touch
   assert.equal((provision.INSTALL.match(/\$sha = Verify \$zip \$pkg\.binary\.package\.checksum/g) || []).length, 2, 'each JDK zip is verified');
   assert.doesNotMatch(provision.INSTALL, /JAVA_HOME|SetEnvironmentVariable|\$env:Path/i);
 });
+
+test('every provisioning step fits the remote command line; oversized scripts are refused', async () => {
+  const { encode, MAX_COMMAND, client } = require('../../remote/ssh.cjs');
+  for (const step of provision.INSTALL_STEPS) assert.ok(('powershell -NoProfile -NonInteractive -EncodedCommand ' + encode(step)).length <= MAX_COMMAND);
+  const c = client({ run: async () => ({ code: 0, out: '' }) });
+  assert.throws(() => c.ps('x'.repeat(4000)), /cmd.exe truncates/);
+});

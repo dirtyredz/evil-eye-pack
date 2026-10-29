@@ -79,6 +79,7 @@ test('mode labels: anu (alone), anu (shared with <job>), local (fallback: <reaso
   assert.equal(modeLabel({ target: 'anu', shared: { job: 'HerbalWitch-m12' } }), 'anu (shared with HerbalWitch-m12)');
   assert.equal(modeLabel({ target: 'local', fallback: 'ANU unreachable over SSH' }), 'local (fallback: ANU unreachable over SSH)');
   assert.equal(modeLabel({ target: 'local', fallback: null }), 'local (--local)');
+  assert.equal(modeLabel({ target: 'none', fallback: null }), 'not started (setup failed before a target was chosen)');
 });
 
 test('a boot that never finished with almost no JVM CPU is starved and names the neighbour', () => {
