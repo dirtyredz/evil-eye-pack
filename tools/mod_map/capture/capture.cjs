@@ -11,13 +11,14 @@ const { localLock } = require('../../pack_test/session/lock.cjs');
 const { worldKey, restoreWorld } = require('../../pack_test/session/world_cache.cjs');
 const { readRuntime, readStamp } = require('../../server_smoke/runtime.cjs');
 const { WORLD } = require('../../pack_test/stage_runtime.cjs');
+const { FML_LOGGERS } = require('./timing.cjs');
 
 const LOG_CONFIG = `<?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN"><Appenders>
 <Console name="Console" target="SYSTEM_OUT"><PatternLayout pattern="[%d{ddMMMyyyy HH:mm:ss.SSS}] [%t/%level] [%logger/%marker]: %msg%n"/></Console>
 <File name="Trace" fileName="logs/mod-map-trace.log"><PatternLayout pattern="[%d{ddMMMyyyy HH:mm:ss.SSS}] [%t/%level] [%logger/%marker]: %msg%n"/></File>
 </Appenders><Loggers>
-<Logger name="net.minecraftforge.fml.javafmlmod.FMLModContainer" level="trace" additivity="false"><AppenderRef ref="Trace"/></Logger>
+${FML_LOGGERS.map(name => `<Logger name="${name}" level="trace" additivity="false"><AppenderRef ref="Trace"/></Logger>`).join('\n')}
 <Root level="info"><AppenderRef ref="Console"/><AppenderRef ref="Trace"/></Root>
 </Loggers></Configuration>`;
 

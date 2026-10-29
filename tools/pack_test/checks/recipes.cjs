@@ -6,6 +6,7 @@
 //   j: the ingredient's toJson() text; n: matching stacks; empty: Ingredient.isEmpty();
 //   barrier: every match is the "Empty Tag" barrier placeholder Forge substitutes for an empty tag.
 const { evaluateAll } = require('./conditions.cjs');
+const { conditionType } = require('../../data_io/resource_layout.cjs');
 const { isBeeOutput } = require('./bees.cjs');
 const { ingredientRefs, declaredOutputRefs } = require('../recipe_json.cjs');
 const { makeFinding, sectionResult } = require('../verdict/finding.cjs');
@@ -50,7 +51,7 @@ function fallbackTags(resources) {
   const tags = new Map();
   const walk = (c, outputs) => {
     if (!c || typeof c !== 'object') return;
-    const t = String(c.type || '').replace(/^forge:/, '');
+    const t = conditionType(c);
     if (t === 'tag_empty') { if (!tags.has(c.tag)) tags.set(c.tag, new Set()); outputs.forEach((o) => tags.get(c.tag).add(o)); }
     else if (t === 'and' || t === 'or') (c.values || []).forEach((v) => walk(v, outputs));
   };

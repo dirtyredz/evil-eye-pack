@@ -1,7 +1,7 @@
 // priority: -12
 // Shared stress check: a showcase must build first time on hostile ground. Every section's check
-// calls global.evilEyeShowcaseTerrain(h) once, then continues from a cleared, flat plot.
-global.evilEyeShowcaseTerrain = function (h) {
+// calls global.evilEyeShowcaseCheck.terrain(h) once, then continues from a cleared, flat plot.
+global.evilEyeShowcaseCheck.terrain = function (h) {
   var o = h.origin, plan = h.plan, level = h.level, check = h.check
   var AABB = Java.loadClass('net.minecraft.world.phys.AABB')
   var before = h.shell()

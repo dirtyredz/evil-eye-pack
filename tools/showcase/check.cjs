@@ -66,7 +66,10 @@ async function main(argv) {
     if (!baseline) {
       const dest = path.join(server, 'kubejs/server_scripts/showcase_check'); fs.mkdirSync(dest, { recursive: true });
       for (const file of ['harness.js', 'helpers.js', 'command_forms.js', 'terrain.js', ...selected.map(n => 'checks/' + n + '.js')]) fs.copyFileSync(path.join(__dirname, file), path.join(dest, path.basename(file)));
-      fs.writeFileSync(path.join(dest, 'selection.js'), '// priority: -15\nglobal.evilEyeShowcaseCheckSelection = ' + JSON.stringify(selected) + '\n');
+      fs.writeFileSync(path.join(dest, 'selection.js'), '// priority: -15\nglobal.evilEyeShowcaseCheck.selection = ' + JSON.stringify(selected) + '\n');
+      // KubeJS 2101: only startup scripts may set globals, so the shared check object is made there.
+      const startup = path.join(server, 'kubejs/startup_scripts/showcase_check'); fs.mkdirSync(startup, { recursive: true });
+      fs.copyFileSync(path.join(__dirname, 'startup_globals.js'), path.join(startup, 'startup_globals.js'));
     }
     const consoleFile = path.join(server, 'console.log');
     const readLog = () => fs.existsSync(consoleFile) ? fs.readFileSync(consoleFile, 'utf8') : '';

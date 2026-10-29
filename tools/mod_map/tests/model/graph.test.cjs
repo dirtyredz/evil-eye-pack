@@ -27,3 +27,12 @@ test('hand-kept override adds HammerMicroblocks undeclared HammerMultipart depen
   connect([microblocks, multipart], overrides);
   assert.deepEqual(microblocks.dependencies, ['multipart']);
 });
+test('NeoForge dependency types: required links, optional stays optional, incompatible/discouraged are conflicts, neoforge is the platform', () => {
+  const [mod] = parseMods('[[mods]]\nmodId="a"\n[[dependencies.a]]\nmodId="neoforge"\ntype="required"\n[[dependencies.a]]\nmodId="base"\ntype="required"\n[[dependencies.a]]\nmodId="opt"\ntype="optional"\n[[dependencies.a]]\nmodId="bad"\ntype="incompatible"\n[[dependencies.a]]\nmodId="meh"\ntype="discouraged"\n');
+  const a = node('a'); a.mods = [mod];
+  const warnings = connect([a, node('base'), node('opt'), node('bad')]);
+  assert.deepEqual(a.dependencies, ['base']);
+  assert.deepEqual(a.optional, ['opt']);
+  assert.deepEqual(a.conflicts, [{ id: 'bad', type: 'incompatible' }, { id: 'meh', type: 'discouraged' }]);
+  assert.deepEqual(warnings, []);
+});

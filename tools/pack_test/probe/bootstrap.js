@@ -4,7 +4,8 @@
 // writing pack_test/out/<section>.json and, last of all, pack_test/out/manifest.json with the run token.
 // A section that throws is recorded as failed in the manifest; nothing is rethrown into the server.
 ;(function () {
-  var ns = (global.packTest = global.packTest || {})
+  // global.packTest is created by startup_globals.js (KubeJS 2101 only lets startup scripts set globals).
+  var ns = global.packTest || (global.packTest = {})
   var OUT = 'pack_test/out/'
   var SCHEMA = 1
   var CRAFT_DEADLINE_TICKS = 1200

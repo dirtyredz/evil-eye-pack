@@ -92,6 +92,8 @@ test('removed-namespace mentions are recorded', () => withDirs((root) => {
 test('writeResourceScan saves raw resources, shipped mentions and the selected pack policy files', () => withDirs((root) => {
   const stage = path.join(root, 'stage'), evidence = path.join(root, 'evidence');
   put(stage, 'kubejs/data/x/recipes/r.json', { type: 't', ingredient: { item: 'oldmod:thing' } });
+  put(stage, 'kubejs/data/x/loot_tables/blocks/b.json', { pools: [] });
+  put(stage, 'kubejs/data/x/tags/items/t.json', { values: ['x:one'] });
   put(stage, 'config/example.toml', 'item = "oldmod:thing"');
   put(stage, 'kubejs/config/dedup.json', { hiddenOnly: [] });
   put(stage, 'kubejs/config/dedup_sources.json', { removeRecipes: [] });
@@ -103,4 +105,26 @@ test('writeResourceScan saves raw resources, shipped mentions and the selected p
   assert.ok(resources.shipped.some((s) => s.file === 'config/example.toml' && s.refs.includes('oldmod:thing')));
   assert.deepEqual(fs.readdirSync(path.join(evidence, 'pack-config')).sort(), ['dedup.json', 'dedup_sources.json', 'selected.json']);
   assert.deepEqual(JSON.parse(fs.readFileSync(path.join(evidence, 'pack-config/selected.json'), 'utf8')), { items: ['x:one'] });
+}));
+
+test('1.21 singular data folders and neoforge:conditions are scanned like the 1.20 layout', () => withDirs((root) => {
+  const dir = path.join(root, 'kubejs/data');
+  put(root, 'kubejs/data/x/recipe/r.json', { type: 'minecraft:crafting_shaped', 'neoforge:conditions': [{ type: 'neoforge:mod_loaded', modid: 'create' }], result: { id: 'x:out', count: 2 } });
+  put(root, 'kubejs/data/x/loot_table/blocks/b.json', { pools: [{ entries: [{ type: 'minecraft:item', name: 'x:drop' }] }] });
+  put(root, 'kubejs/data/c/tags/item/ingots/steel.json', { values: ['x:steel'] });
+  put(root, 'kubejs/data/c/tags/block/ores.json', { values: ['x:ore'] });
+  put(root, 'kubejs/data/x/neoforge/biome_modifier/m.json', { type: 'neoforge:add_features', features: 'x:f' });
+  const ev = scanResources([{ kind: 'dir', name: 'kubejs', file: dir }]);
+  assert.deepEqual(ev.recipes['x:r'].conditions, [{ type: 'neoforge:mod_loaded', modid: 'create' }]);
+  assert.deepEqual(ev.recipes['x:r'].outputs, ['x:out']);
+  assert.deepEqual(ev.loot['x:blocks/b'].items, ['x:drop']);
+  assert.deepEqual(ev.tags.items['c:ingots/steel'].values.map((v) => v.id), ['x:steel']);
+  assert.deepEqual(Object.keys(ev.tags.blocks), ['c:ores']);
+  assert.deepEqual(ev.layouts, ['1.21']);
+}));
+
+test('an empty raw scan fails visibly instead of passing as clean', () => withDirs((root) => {
+  const stage = path.join(root, 'stage');
+  put(stage, 'kubejs/data/x/recipez/r.json', { type: 't' });
+  assert.throws(() => writeResourceScan(stage, path.join(root, 'evidence'), { policy: { removedMods: [], curatedLists: [] } }), /found no recipes, loot, item tags.*refusing an empty scan/);
 }));

@@ -1,7 +1,9 @@
 'use strict';
 const { retiredIds } = require('./policy.cjs');
-// Data-only patches for custom serializers, preserving counts, chances and conditions.
-// No inventory conversion or registry remapping.
+const { classify } = require('../data_io/resource_layout.cjs');
+// Data-only patches for custom serializers, preserving counts, chances, conditions and components.
+// No inventory conversion or registry remapping. Works on either data layout: an override keeps the
+// source file's own path (1.20 `recipes/` or 1.21 `recipe/`) under kubejs/.
 function replace(value, replacements) {
   if (typeof value === 'string') return replacements[value] || value;
   if (Array.isArray(value)) return value.map(v => replace(v, replacements));
@@ -12,17 +14,18 @@ function plan(data, policy, blocks = new Set()) {
   const overrides = new Map(), removeRecipes = [], itemTags = {}, blockTags = {};
   const removed = new Set(retiredIds(policy));
   for (const [file, original] of data) {
-    const recipe = file.match(/^data\/([^/]+)\/recipes\/(.+)\.json$/);
-    if (recipe) {
+    const at = classify(file);
+    if (!at) continue;
+    if (at.kind === 'recipes') {
       const output = JSON.stringify(original.result || original.output || original.results || original.outputs || '');
       if (policy.removeOutputs.some(id => output.includes('"' + id + '"'))) {
-        removeRecipes.push(recipe[1] + ':' + recipe[2]);
+        removeRecipes.push(at.id);
         continue;
       }
       const rewritten = replace(original, policy.replacements);
       if (JSON.stringify(original) !== JSON.stringify(rewritten)) overrides.set('kubejs/' + file, rewritten);
     }
-    if (file.includes('/loot_tables/')) {
+    if (at.kind === 'loot_tables') {
       // Change only item entries; block-state predicates still refer to the original block.
       function loot(value) {
         if (Array.isArray(value)) return value.map(loot);
@@ -34,11 +37,10 @@ function plan(data, policy, blocks = new Set()) {
       const rewritten = loot(original);
       if (JSON.stringify(original) !== JSON.stringify(rewritten)) overrides.set('kubejs/' + file, rewritten);
     }
-    const tag = file.match(/^data\/([^/]+)\/tags\/(items|blocks)\/(.+)\.json$/);
-    if (tag) {
+    if (at.kind === 'tags/items' || at.kind === 'tags/blocks') {
       const targets = original.values.map(v => typeof v === 'string' ? v : v.id)
         .filter(v => removed.has(v) && policy.replacements[v]).map(v => policy.replacements[v]);
-      if (targets.length) (tag[2] === 'items' ? itemTags : blockTags)[tag[1] + ':' + tag[3]] = [...new Set(targets)];
+      if (targets.length) (at.kind === 'tags/items' ? itemTags : blockTags)[at.id] = [...new Set(targets)];
     }
   }
   for (const [tag, ids] of Object.entries(policy.extraItemTags)) itemTags[tag] = [...new Set([...(itemTags[tag] || []), ...ids])];

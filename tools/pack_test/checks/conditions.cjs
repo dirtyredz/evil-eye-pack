@@ -1,11 +1,13 @@
 'use strict';
-// Evaluates Forge 1.20.1 data conditions against the live state the probe captured.
+// Evaluates Forge 1.20 and NeoForge 1.21 data conditions (forge:/neoforge: types, same fields) against
+// the live state the probe captured.
+const { conditionType } = require('../../data_io/resource_layout.cjs');
 // state: { mods: Set, items: Set, itemTags: Map<tag, string[]> }.
 // Returns { value: true|false|null (unknown condition), emptyTags: [tags whose emptiness made it false] }.
 
 function evaluate(cond, state) {
   if (!cond || typeof cond !== 'object') return { value: null, emptyTags: [] };
-  const type = String(cond.type || '').replace(/^forge:/, '');
+  const type = conditionType(cond);
   switch (type) {
     case 'true': return { value: true, emptyTags: [] };
     case 'false': return { value: false, emptyTags: [] };

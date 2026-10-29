@@ -4,20 +4,29 @@
 // with a normal result-slot click, then record the recipe used, the stack taken and what is left in the grid.
 // Each fixture gets a fresh menu and an emptied inventory.
 ;(function () {
-  var ns = (global.packTest = global.packTest || {})
+  // global.packTest is created by startup_globals.js (KubeJS 2101 only lets startup scripts set globals).
+  var ns = global.packTest || (global.packTest = {})
   var SETTLE_TICKS = 2
   var MAX_WAIT_TICKS = 60
 
+  // 1.20 stacks carry NBT; 1.21 stacks carry a data-component patch (recorded in the same `nbt` field,
+  // as the component patch's string form, so fixtures compare one optional extra-data string).
   function stackInfo(s) {
     if (!s || s.isEmpty()) return null
-    var nbt = s.getNbt()
-    return { id: String(s.getId()), count: s.getCount(), nbt: nbt ? String(nbt) : undefined }
+    var extra = null
+    if (typeof s.getComponentsPatch === 'function') { var p = s.getComponentsPatch(); extra = p && !p.isEmpty() ? p : null } else extra = s.getNbt()
+    return { id: String(s.getId()), count: s.getCount(), nbt: extra ? String(extra) : undefined }
+  }
+
+  // NeoForge's FakePlayerFactory moved package; try the 1.21 name first.
+  function fakePlayers() {
+    try { return Java.loadClass('net.neoforged.neoforge.common.util.FakePlayerFactory') } catch (e) { return Java.loadClass('net.minecraftforge.common.util.FakePlayerFactory') }
   }
 
   // fixtures: [{ name, recipe, grid: [9 ids, '' for an empty slot] }] (no nulls: KubeJS's JSON lists cannot
   // hold them). done(results) runs on the server thread.
   function run(server, fixtures, done) {
-    var FPF = Java.loadClass('net.minecraftforge.common.util.FakePlayerFactory')
+    var FPF = fakePlayers()
     var CM = Java.loadClass('net.minecraft.world.inventory.CraftingMenu')
     var CLA = Java.loadClass('net.minecraft.world.inventory.ContainerLevelAccess')
     var BP = Java.loadClass('net.minecraft.core.BlockPos')
@@ -56,7 +65,7 @@
         var r = { name: fx.name, ok: true, waitedTicks: waited }
         try {
           var used = menu.getSlot(0).container.getRecipeUsed()
-          r.recipe = used ? String(used.getId()) : null
+          r.recipe = used ? String(typeof used.id === 'function' ? used.id() : used.getId()) : null // 1.21: RecipeHolder
           r.offered = stackInfo(menu.getSlot(0).getItem())
           menu.clicked(0, 0, ClickType.PICKUP, player)
           r.result = stackInfo(menu.getCarried())

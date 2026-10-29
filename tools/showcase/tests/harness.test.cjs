@@ -9,12 +9,12 @@ const production = f => fs.readFileSync(path.join(__dirname, '../../../kubejs/se
 
 test('extracted helpers use configured floor, relative coordinates and real command source', () => {
   class Pos { constructor(x, y, z) { Object.assign(this, { x, y, z }); } }
-  const ctx = vm.createContext({ global: { evilEyeShowcase: { FLOOR: 'fixture:floor' } }, Java: { loadClass: n => n.endsWith('.BlockPos') ? Pos : { ITEM_HANDLER: 'item' } } });
+  const ctx = vm.createContext({ global: { evilEyeShowcase: { FLOOR: 'fixture:floor' }, evilEyeShowcaseCheck: {} }, Java: { loadClass: n => { if (n.startsWith('net.neoforged.')) throw new Error('no NeoForge'); return n.endsWith('.BlockPos') ? Pos : { ITEM_HANDLER: 'item' }; } } });
   vm.runInContext(script('helpers.js'), ctx);
   const origin = { x: 10, y: 20, z: 30 }, checks = [], commands = [], states = new Map();
   const source = {}, handler = { getSlots: () => 1, getStackInSlot: () => ({ getId: () => 'fixture:item', getCount: () => 7 }) };
-  const be = { getCapability: c => { assert.equal(c, 'item'); return { orElse: () => handler }; }, saveWithFullMetadata: () => 'nbt' };
-  const h = ctx.global.evilEyeShowcaseMakeHelpers({ origin, name: 'fixture', source, plan: { width: 1, depth: 1, height: 1, blocks: [], fills: [] },
+  const be = { getCapability: (c, face) => { assert.equal(c, 'item'); assert.equal(face, null); return { orElse: () => handler }; }, saveWithFullMetadata: () => 'nbt' };
+  const h = ctx.global.evilEyeShowcaseCheck.makeHelpers({ origin, name: 'fixture', source, plan: { width: 1, depth: 1, height: 1, blocks: [], fills: [] },
     check: (ok, message) => { checks.push(message); assert.ok(ok, message); },
     level: { getBlockEntity: () => be, getBlockState: p => states.get([p.x, p.y, p.z].join()) || (p.y === 19 ? 'fixture:floor' : 'minecraft:air') },
     server: { runCommandSilent: s => commands.push(s), getCommands: () => ({ performPrefixedCommand: (who, s) => { assert.equal(who, source); commands.push(s); return 1; } }) },
@@ -32,7 +32,7 @@ test('shared command forms cover several registry sections with distinct row ori
   class Vec2 { constructor(x, y) { this.x = x; this.y = y; } }
   let execute;
   const node = () => ({ requires() { return this; }, then() { return this; }, suggests() { return this; }, executes(fn) { execute = fn; return this; } });
-  const ctx = vm.createContext({ global: {}, console: { info() {} }, Text: { of: x => x },
+  const ctx = vm.createContext({ global: { evilEyeShowcaseCheck: {} }, console: { info() {} }, Text: { of: x => x },
     Java: { loadClass: n => n.endsWith('.Vec3') ? Vec3 : n.endsWith('.Vec2') ? Vec2 : { greedyString: () => '', getString: c => c.args } },
     ServerEvents: { commandRegistry: fn => fn({ commands: { literal: node, argument: node }, register() {} }) },
   });
@@ -49,7 +49,7 @@ test('shared command forms cover several registry sections with distinct row ori
   vm.runInContext(production('command.js'), ctx);
   const source = (at = new Vec3(0, 0, 0), permission = 2) => ({ getPosition: () => at, getRotation: () => ({ y: 0 }), withPosition: p => source(p, permission), withRotation() { return this; }, withPermission: p => source(at, p), hasPermission: n => permission >= n, sendSuccess() {}, sendFailure() {} });
   const server = { createCommandSourceStack: () => source(), getCommands: () => ({ performPrefixedCommand: (who, text) => who.hasPermission(2) ? execute({ source: who, args: text.slice('evileye showcase'.length) }) : 0 }) };
-  ctx.global.evilEyeShowcaseMakeHelpers = h => {
+  ctx.global.evilEyeShowcaseCheck.makeHelpers = h => {
     const key = [h.origin.x, h.origin.y, h.origin.z].join();
     return Object.assign(h, { prepareTerrain() {}, shell: () => 'outside',
       invoke: who => server.getCommands().performPrefixedCommand(who, 'evileye showcase ' + h.name),
@@ -59,7 +59,7 @@ test('shared command forms cover several registry sections with distinct row ori
   };
   vm.runInContext(script('command_forms.js'), ctx);
   let done = 0;
-  ctx.global.evilEyeShowcaseCommandForms({ server, level: {}, check: (ok, message) => { assertions.push(message); assert.ok(ok, message); }, later: (ticks, fn) => fn(), done: () => done++ });
+  ctx.global.evilEyeShowcaseCheck.commandForms({ server, level: {}, check: (ok, message) => { assertions.push(message); assert.ok(ok, message); }, later: (ticks, fn) => fn(), done: () => done++ });
   assert.equal(done, 1); assert.equal(verified.length, 6); assert.equal(cleared.length, 6); assert.deepEqual(records, {});
   assert.equal(assertions.filter(x => x.startsWith('permission level 1')).length, 3);
 });
@@ -68,15 +68,29 @@ test('harness calls the shared command check exactly once after selected section
   let loaded, complete = 0; const visited = [];
   class Vector { constructor() {} }
   const source = { withPosition() { return this; }, withRotation() { return this; }, withPermission() { return this; } };
-  const globals = { evilEyeShowcase: { sections: {} }, evilEyeShowcaseCheckSelection: ['alpha', 'beta'], evilEyeShowcaseChecks: {},
-    evilEyeShowcaseMakeHelpers: h => Object.assign(h, { cmd() {}, prepareTerrain() {} }),
-    evilEyeShowcaseCommandForms: h => { visited.push('shared'); h.done(); } };
-  for (const name of globals.evilEyeShowcaseCheckSelection) {
+  const globals = { evilEyeShowcase: { sections: {} }, evilEyeShowcaseCheck: { selection: ['alpha', 'beta'], checks: {},
+    makeHelpers: h => Object.assign(h, { cmd() {}, prepareTerrain() {} }),
+    commandForms: h => { visited.push('shared'); h.done(); } } };
+  for (const name of globals.evilEyeShowcaseCheck.selection) {
     globals.evilEyeShowcase.sections[name] = () => ({ width: 3 });
-    globals.evilEyeShowcaseChecks[name] = h => { visited.push(name); h.done(); };
+    globals.evilEyeShowcaseCheck.checks[name] = h => { visited.push(name); h.done(); };
   }
   const ctx = vm.createContext({ global: globals, Java: { loadClass: () => Vector }, ServerEvents: { loaded: fn => { loaded = fn; } }, console: { info: s => { if (s.startsWith('SHOWCASE_CHECK COMPLETE')) complete++; } } });
   vm.runInContext(script('harness.js'), ctx);
   loaded({ server: { overworld: () => ({}), createCommandSourceStack: () => source, scheduleInTicks: (ticks, fn) => fn() } });
   assert.deepEqual(visited, ['alpha', 'beta', 'shared']); assert.equal(complete, 1);
+});
+
+test('helpers look up NeoForge block capabilities on the level when NeoForge is present', () => {
+  class Pos { constructor(x, y, z) { Object.assign(this, { x, y, z }); } }
+  const handler = { getSlots: () => 0 };
+  const ItemHandler = { BLOCK: 'neo-item-block' };
+  const ctx = vm.createContext({ global: { evilEyeShowcase: { FLOOR: 'fixture:floor' }, evilEyeShowcaseCheck: {} }, Java: { loadClass: n => (n.endsWith('.BlockPos') ? Pos : n.endsWith('.Capabilities') ? { ItemHandler } : null) } });
+  vm.runInContext(script('helpers.js'), ctx);
+  const seen = [];
+  const h = ctx.global.evilEyeShowcaseCheck.makeHelpers({ origin: { x: 1, y: 2, z: 3 }, name: 'n', source: {}, plan: { width: 1, depth: 1, height: 1, blocks: [], fills: [] }, check() {},
+    level: { getCapability: (cap, pos, face) => { seen.push([cap, pos.x, face]); return face === 'up' ? null : handler; } }, server: {} });
+  assert.equal(h.handler(0, 0, 0), handler);
+  assert.equal(h.itemHandler(0, 0, 0, 'up'), null);
+  assert.deepEqual(seen, [['neo-item-block', 1, null], ['neo-item-block', 1, 'up']]);
 });

@@ -1,6 +1,6 @@
 // priority: -6
 // One registry-wide command contract per run, independent of the selected section checks.
-global.evilEyeShowcaseCommandForms = function (h) {
+global.evilEyeShowcaseCheck.commandForms = function (h) {
   var ns = global.evilEyeShowcase, names = Object.keys(ns.sections).sort(), check = h.check
   var Vec3 = Java.loadClass('net.minecraft.world.phys.Vec3'), Vec2 = Java.loadClass('net.minecraft.world.phys.Vec2')
   var plans = names.map(function (name) { return ns.sections[name]() })
@@ -9,7 +9,7 @@ global.evilEyeShowcaseCommandForms = function (h) {
   function run(text, who) { return h.server.getCommands().performPrefixedCommand(who || source, text) }
   var fixtures = names.map(function (name, i) {
     var o = layout.origins[i]
-    return global.evilEyeShowcaseMakeHelpers({ server: h.server, level: h.level, name: name, plan: plans[i], origin: o, check: check,
+    return global.evilEyeShowcaseCheck.makeHelpers({ server: h.server, level: h.level, name: name, plan: plans[i], origin: o, check: check,
       source: source.withPosition(new Vec3(o.x + Math.floor(plans[i].width / 2), o.y, o.z - 4)) })
   })
   fixtures.forEach(function (f) { f.prepareTerrain() })

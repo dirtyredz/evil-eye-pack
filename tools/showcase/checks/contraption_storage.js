@@ -1,6 +1,6 @@
 // priority: -10
-global.evilEyeShowcaseChecks = global.evilEyeShowcaseChecks || {}
-global.evilEyeShowcaseChecks.contraption_storage = function (h) {
+global.evilEyeShowcaseCheck.checks = global.evilEyeShowcaseCheck.checks || {}
+global.evilEyeShowcaseCheck.checks.contraption_storage = function (h) {
   var check = h.check, later = h.later, amount = h.amount, level = h.level
   var Direction = Java.loadClass('net.minecraft.core.Direction'), AABB = Java.loadClass('net.minecraft.world.phys.AABB')
   var before = h.shell(), plan = h.plan
@@ -14,7 +14,7 @@ global.evilEyeShowcaseChecks.contraption_storage = function (h) {
     return count
   }
   // First-time build on hostile terrain (hill, tree, water, hole, mobs); leaves a cleared plot.
-  global.evilEyeShowcaseTerrain(h)
+  global.evilEyeShowcaseCheck.terrain(h)
   check(h.invoke() === 1, 'level 2 builds through real command')
   h.verifyPlan()
   check(glueCount() === 1, 'exactly one glue entity')
@@ -24,7 +24,7 @@ global.evilEyeShowcaseChecks.contraption_storage = function (h) {
     if (String(level.getBlockState(h.pos(f.x, f.y, f.z))).indexOf('storagedrawers:') < 0) return
     check(h.handler(f.x, f.y, f.z) !== null, 'unsided drawer handler ' + [f.x, f.y, f.z])
     check(h.be(f.x, f.y, f.z).getDrawerAttributes().isShowingQuantity(), 'drawer quantity display enabled ' + [f.x, f.y, f.z])
-    faces.forEach(function (face) { check(h.be(f.x, f.y, f.z).getCapability(h.caps.ITEM_HANDLER, face).isPresent(), 'sided drawer handler ' + [f.x, f.y, f.z] + ' ' + face) })
+    faces.forEach(function (face) { check(h.itemHandler(f.x, f.y, f.z, face) !== null, 'sided drawer handler ' + [f.x, f.y, f.z] + ' ' + face) })
   })
   check(amount(h.handler(17, 0, 8), 'minecraft:iron_nugget') === 162, 'placed compacting conversion: 18 ingots = 162 nuggets')
   check(h.invoke() === 1, 'second invocation succeeds at same origin')

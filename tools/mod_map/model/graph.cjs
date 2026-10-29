@@ -10,11 +10,13 @@ function connect(nodes, overrides = {}) {
   for (const n of nodes) {
     const deps = new Set(n.dependencies);
     n.optional = [];
+    n.conflicts = []; // NeoForge incompatible/discouraged declarations: never membership, never optional
     for (const m of n.mods) {
       const declared = m.dependencies;
       const kept = (overrides[m.id]?.dependencies || []).map(id => ({ id, mandatory: true, side: 'BOTH', range: '', source: 'override' }));
       for (const d of [...declared, ...kept]) {
-        if (['minecraft', 'forge'].includes(d.id)) continue;
+        if (['minecraft', 'forge', 'neoforge'].includes(d.id)) continue; // the platform, never a mod node
+        if (d.type === 'incompatible' || d.type === 'discouraged') { n.conflicts.push({ id: d.id, type: d.type }); continue; }
         if (!d.mandatory) { n.optional.push(d.id); continue; }
         const providers = byId.get(d.id) || [];
         if (!providers.length) warnings.push(m.id + ': missing mandatory dependency ' + d.id + ' (' + d.side + ')');

@@ -2,6 +2,7 @@
 // Pair exact Forge TRACE boundaries by mod + thread + phase/event identity.
 // Never infer a duration from neighbouring log messages or count missing data as zero.
 const { DONE_RE } = require('../../server_smoke/log_report.cjs');
+const FML_LOGGERS = ['net.minecraftforge.fml.javafmlmod.FMLModContainer', 'net.neoforged.fml.javafmlmod.FMLModContainer'];
 
 function parseTiming(text) {
   const pending = new Map(), mods = {}, warnings = [];
@@ -15,7 +16,9 @@ function parseTiming(text) {
     if (first === null) first = time;
     const msg = match[6];
     if (DONE_RE.test(msg)) { done = time; break; }
-    if (!line.includes('net.minecraftforge.fml.javafmlmod.FMLModContainer/')) continue;
+    // Forge's and NeoForge's FML mod container loggers. NeoForge's TRACE wording is unverified until a
+    // capture runs on it; lines that do not match stay unpaired, so those mods remain "unmeasured".
+    if (!FML_LOGGERS.some(l => line.includes(l + '/'))) continue;
     let p, start, id, phase;
     if ((p = /^(Loading|Loaded) mod instance (\S+) of type /.exec(msg))) {
       start = p[1] === 'Loading'; id = p[2]; phase = 'constructor';
@@ -39,4 +42,4 @@ function parseTiming(text) {
   for (const key of pending.keys()) warnings.push('Unmatched start: ' + key);
   return { mods, warnings, logToDoneSeconds: done !== null ? (done - first) / 1000 : null };
 }
-module.exports = { parseTiming };
+module.exports = { FML_LOGGERS, parseTiming };

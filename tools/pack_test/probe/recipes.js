@@ -4,7 +4,8 @@
 // json is the effective recipe JSON KubeJS saw in its recipe event (after data overrides and removals),
 // kept for non-vanilla serializers so nested and probabilistic outputs can be checked offline.
 ;(function () {
-  var ns = (global.packTest = global.packTest || {})
+  // global.packTest is created by startup_globals.js (KubeJS 2101 only lets startup scripts set globals).
+  var ns = global.packTest || (global.packTest = {})
   var BR = Java.loadClass('net.minecraft.core.registries.BuiltInRegistries')
   var eventJson = {}
 
@@ -28,8 +29,16 @@
     return o
   }
 
-  function describe(r, typeId, registryAccess) {
-    var out = { id: String(r.getId()), type: typeId, ser: String(r.getType()), special: false, ings: [], out: null, outCount: 0 }
+  // 1.21 managers hand out RecipeHolder (id() + value()); 1.20 hands out the Recipe itself.
+  function unwrap(entry) {
+    if (entry && typeof entry.value === 'function' && typeof entry.id === 'function') return { r: entry.value(), id: String(entry.id()) }
+    return { r: entry, id: String(entry.getId()) }
+  }
+
+  function describe(entry, typeId, registryAccess) {
+    var u = unwrap(entry)
+    var r = u.r
+    var out = { id: u.id, type: typeId, ser: String(r.getType()), special: false, ings: [], out: null, outCount: 0 }
     try { out.special = !!r.isSpecial() } catch (e) { /* keep false */ }
     try {
       var ings = r.getIngredients()

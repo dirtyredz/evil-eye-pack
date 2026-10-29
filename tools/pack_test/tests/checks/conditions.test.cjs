@@ -63,3 +63,9 @@ test('evaluateAll is an implicit AND', () => {
   assert.equal(evaluateAll([], state).value, true);
   assert.equal(evaluateAll(undefined, state).value, true);
 });
+
+test('NeoForge 1.21 condition types evaluate like their Forge 1.20 counterparts', () => {
+  assert.equal(evaluate({ type: 'neoforge:mod_loaded', modid: 'create' }, state).value, evaluate(modLoaded('create'), state).value);
+  assert.equal(evaluateAll([{ type: 'neoforge:not', value: { type: 'neoforge:false' } }, { type: 'neoforge:and', values: [{ type: 'neoforge:true' }] }], state).value, true);
+  assert.equal(evaluate({ type: 'neoforge:unknown_thing' }, state).value, null);
+});

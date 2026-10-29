@@ -4,7 +4,8 @@
 // loaded loot tables, and every item/block/fluid tag's final members.
 // Rhino rules: Java collections are read through toArray() or size()/get(i), never for...of.
 ;(function () {
-  var ns = (global.packTest = global.packTest || {})
+  // global.packTest is created by startup_globals.js (KubeJS 2101 only lets startup scripts set globals).
+  var ns = global.packTest || (global.packTest = {})
   var BR = Java.loadClass('net.minecraft.core.registries.BuiltInRegistries')
 
   function keys(registry) {
@@ -45,9 +46,16 @@
     return out
   }
 
+  // 1.21: loot tables are a reloadable registry; 1.20: the LootDataManager's TABLE keys.
   function lootTables(server) {
-    var LDT = Java.loadClass('net.minecraft.world.level.storage.loot.LootDataType')
-    var a = server.getLootData().getKeys(LDT.TABLE).toArray()
+    var a
+    if (typeof server.reloadableRegistries === 'function') {
+      var Registries = Java.loadClass('net.minecraft.core.registries.Registries')
+      a = server.reloadableRegistries().getKeys(Registries.LOOT_TABLE).toArray()
+    } else {
+      var LDT = Java.loadClass('net.minecraft.world.level.storage.loot.LootDataType')
+      a = server.getLootData().getKeys(LDT.TABLE).toArray()
+    }
     var out = []
     for (var i = 0; i < a.length; i++) out.push(String(a[i]))
     out.sort()

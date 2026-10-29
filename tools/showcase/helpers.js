@@ -1,12 +1,21 @@
 // priority: -5
 // Fixture access and assertions shared by section and command-form checks.
-global.evilEyeShowcaseMakeHelpers = function makeHelpers(h) {
+global.evilEyeShowcaseCheck.makeHelpers = function makeHelpers(h) {
   var server = h.server, level = h.level, plan = h.plan, o = h.origin, source = h.source, name = h.name
-  var BP = Java.loadClass('net.minecraft.core.BlockPos'), Caps = Java.loadClass('net.minecraftforge.common.capabilities.ForgeCapabilities')
-  h.BP = BP; h.caps = Caps
+  var BP = Java.loadClass('net.minecraft.core.BlockPos')
+  // NeoForge 1.21 block capabilities are looked up on the level; Forge 1.20 asks the block entity.
+  var NeoCaps = null, Caps = null
+  try { NeoCaps = Java.loadClass('net.neoforged.neoforge.capabilities.Capabilities') } catch (e) { Caps = Java.loadClass('net.minecraftforge.common.capabilities.ForgeCapabilities') }
+  h.BP = BP
   h.pos = function (x, y, z) { return new BP(o.x + x, o.y + y, o.z + z) }
   h.be = function (x, y, z) { return level.getBlockEntity(h.pos(x, y, z)) }
-  h.handler = function (x, y, z) { var be = h.be(x, y, z); return be ? be.getCapability(Caps.ITEM_HANDLER).orElse(null) : null }
+  // The item handler at a plot position (optionally for one face), or null.
+  h.itemHandler = function (x, y, z, face) {
+    if (NeoCaps) return level.getCapability(NeoCaps.ItemHandler.BLOCK, h.pos(x, y, z), face || null) || null
+    var be = h.be(x, y, z)
+    return be ? be.getCapability(Caps.ITEM_HANDLER, face || null).orElse(null) : null
+  }
+  h.handler = function (x, y, z) { return h.itemHandler(x, y, z) }
   h.amount = function (handler, id) { var n = 0; for (var i = 0; i < handler.getSlots(); i++) { var s = handler.getStackInSlot(i); if (String(s.getId()) === id) n += s.getCount() } return n }
   h.cmd = function (s) { return server.runCommandSilent(s) }
   h.set = function (x, y, z, state) { return h.cmd('setblock ' + (o.x + x) + ' ' + (o.y + y) + ' ' + (o.z + z) + ' ' + state) }

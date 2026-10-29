@@ -25,3 +25,14 @@ test('only the server Done marker ends the measured window', () => {
   assert.equal(t.logToDoneSeconds, null);
   assert.equal(t.mods.a.ms, 900);
 });
+
+test('NeoForge FML container lines pair like Forge ones; the capture config enables both loggers', () => {
+  const { parseTiming } = require('../../capture/timing.cjs');
+  const { LOG_CONFIG } = require('../../capture/capture.cjs');
+  const line = (t, msg) => `[29Oct2026 10:00:${t}] [modloading-worker-0/TRACE] [net.neoforged.fml.javafmlmod.FMLModContainer/LOADING]: ${msg}`;
+  const r = parseTiming([line('00.000', 'Loading mod instance neo of type x.Neo'), line('01.500', 'Loaded mod instance neo of type x.Neo'),
+    '[29Oct2026 10:00:02.000] [Server thread/INFO] [minecraft/DedicatedServer]: Done (2.0s)! For help, type "help"'].join('\n'));
+  assert.equal(r.mods.neo.ms, 1500);
+  assert.match(LOG_CONFIG, /net\.neoforged\.fml\.javafmlmod\.FMLModContainer/);
+  assert.match(LOG_CONFIG, /net\.minecraftforge\.fml\.javafmlmod\.FMLModContainer/);
+});
