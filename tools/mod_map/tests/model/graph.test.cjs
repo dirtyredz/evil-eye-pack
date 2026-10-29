@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { parseMods } = require('../../inventory/mods_toml.cjs');
+const { parseMods } = require('../../../data_io/mod_metadata.cjs');
 const { connect } = require('../../model/graph.cjs');
 const overrides = require('../../model/overrides.json');
 const { node } = require('../fixtures.cjs');

@@ -1,23 +1,13 @@
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
-const { listEntries, readEntry } = require('../../data_io/zip_reader.cjs');
 const { readMetafileName, readMetafileSide } = require('../../packwiz/pack_index.cjs');
 const { resolvePinnedJar } = require('../../packwiz/pinned_jar.cjs');
-const { parseMods } = require('./mods_toml.cjs');
+const { readJarMods } = require('../../data_io/mod_metadata.cjs');
 
-function inspectJar(bytes, source, visit, depth = 0) {
-  if (depth > 8) throw new Error('Nested jar depth exceeded: ' + source);
-  const entries = listEntries(bytes);
-  const read = name => { const e = entries.find(e => e.name === name); return e && readEntry(bytes, e, { maxSize: 128 * 1024 * 1024 }); };
-  const toml = read('META-INF/mods.toml');
-  visit({ source, mods: toml ? parseMods(toml.toString('utf8')) : [], bundled: depth > 0 });
-  const metadata = read('META-INF/jarjar/metadata.json');
-  if (metadata) for (const jar of JSON.parse(metadata.toString('utf8')).jars || []) {
-    const nested = read(jar.path);
-    if (!nested) throw new Error('Missing declared jar-in-jar: ' + jar.path);
-    inspectJar(nested, source + '!' + jar.path, visit, depth + 1);
-  }
+// Each declared unit (outer jar, then its jar-in-jar entries) through the shared metadata reader.
+function inspectJar(bytes, source, visit) {
+  for (const unit of readJarMods(bytes, source)) visit({ source: unit.source, mods: unit.mods, bundled: unit.bundled });
 }
 function inventory(root, dirs) {
   const nodes = [], pins = [], warnings = [], bundles = new Map();
@@ -38,7 +28,7 @@ function inventory(root, dirs) {
         node.dependencies.push(key);
       } else node.mods.push(...entry.mods);
     });
-    if (!node.mods.length) warnings.push(name + ': no Forge mods.toml; jar retained as a standalone unit');
+    if (!node.mods.length) warnings.push(name + ': no Forge/NeoForge mods.toml; jar retained as a standalone unit');
     nodes.push(node); pins.push({ filename: pin.filename, hash: pin.hash, hashFormat: pin.hashFormat });
   }
   // A mod offered both externally and inside another jar is one loaded mod ID,

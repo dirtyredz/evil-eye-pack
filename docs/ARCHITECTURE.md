@@ -7,9 +7,10 @@ owner log contract; `run.cjs` orchestrates the pipeline below and owns artifact
 placement, input identity checks and saved-evidence replay.
 
 - `inventory/` — `inventory.cjs` resolves each `.pw.toml` pin through
-  `packwiz/pinned_jar.cjs` (shared with offline server preparation), reads Forge
-  metadata through `mods_toml.cjs` (a `mods.toml`-only reader; metafiles go
-  through `pack_index` `readTable`), treats a custom `modLoader` as a
+  `packwiz/pinned_jar.cjs` (shared with offline server preparation), reads Forge and
+  NeoForge metadata through `data_io/mod_metadata.cjs` (the shared
+  `mods.toml`/`neoforge.mods.toml` reader; metafiles go through `pack_index`
+  `readTable`), treats a custom `modLoader` as a
   dependency, and traverses declared jar-in-jar metadata. Wrapper jars whose only
   Forge metadata is in their sole embedded archive remain the physical removal
   unit, and physical multi-mod jars stay indivisible; duplicate

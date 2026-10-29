@@ -6,8 +6,9 @@ Newest first.
 
 Recorded at the mod map's structure review, for choices made while building it.
 
-- **Own `mods.toml` reader, scoped to that file.** `tools/mod_map/inventory/mods_toml.cjs`
-  reads only Forge `META-INF/mods.toml` scalars (quoted strings, comments,
+- **Own `mods.toml` reader, scoped to that file.** Now `tools/data_io/mod_metadata.cjs`
+  (moved 2026-10-29 for the NeoForge migration, which shares it; it also reads
+  `neoforge.mods.toml` and NeoForge dependency `type`). Originally it read only Forge `META-INF/mods.toml` scalars (quoted strings, comments,
   multiline descriptions, `[[dependencies.<id>]]` tables). The repo stays
   dependency-free, and `mods.toml` is written by hundreds of authors, unlike the
   packwiz-written metafiles. Packwiz `.pw.toml` files are read only through
