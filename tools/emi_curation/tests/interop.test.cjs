@@ -113,3 +113,18 @@ test('reloaded hiding code starts a fresh classification cache for the same regi
   }
   assert.equal(idReads, 2);
 });
+
+test('1.21 EMI stacks: the data-component patch is encoded through its codec for the curation rules', () => {
+  const c = boot();
+  const encoded = { 'enderio:stored_entity': { entity: { id: 'minecraft:zombie' } } };
+  c.world.classes['net.minecraft.nbt.NbtOps'] = { INSTANCE: 'nbt-ops' };
+  c.world.classes['net.minecraft.core.component.DataComponentPatch'] = { CODEC: { encodeStart: (ops, patch) => {
+    assert.equal(ops, 'nbt-ops');
+    return { result: () => ({ isPresent: () => true, get: () => F.tag(patch.value) }) };
+  } } };
+  const stack = { getId: () => 'enderio:filled_soul_vial', getKey: () => new F.Item('enderio:filled_soul_vial'),
+    getComponentChanges: () => ({ isEmpty: () => false, value: encoded }) };
+  assert.deepEqual(JSON.parse(JSON.stringify(c.ns().interop.describe(stack).nbt())), encoded);
+  const empty = { ...stack, getComponentChanges: () => ({ isEmpty: () => true }) };
+  assert.equal(c.ns().interop.describe(empty).nbt(), null);
+});

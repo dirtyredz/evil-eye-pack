@@ -106,12 +106,23 @@
     return { $nbt: 'tag' + id, value: String(tag.getAsString()) }
   }
 
+  // The stack's extra data as an NBT tag: on 1.21 EMI stacks carry a data-component patch, encoded here
+  // with its own codec (keys are component ids such as "enderio:stored_entity"); 1.20 stacks carry NBT.
+  // This is the one place item components are translated for the curation rules.
+  function extraData(stack) {
+    if (typeof stack.getComponentChanges !== 'function') return stack.getNbt()
+    var patch = stack.getComponentChanges()
+    if (!patch || patch.isEmpty()) return null
+    var encoded = cls('net.minecraft.core.component.DataComponentPatch').CODEC.encodeStart(cls('net.minecraft.nbt.NbtOps').INSTANCE, patch).result()
+    return encoded.isPresent() ? encoded.get() : null
+  }
+
   // EmiStack -> { id, isItem, nbt() } for ns.policy.isStackHidden.
   function describe(stack) {
     return {
       id: String(stack.getId()),
       isItem: isItemKey(stack),
-      nbt: function () { return toPlainNbt(stack.getNbt()) }
+      nbt: function () { return toPlainNbt(extraData(stack)) }
     }
   }
 

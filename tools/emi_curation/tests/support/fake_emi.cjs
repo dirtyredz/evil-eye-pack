@@ -326,6 +326,6 @@ function clientEvents() {
 
 module.exports = {
   fakeGraphics,
-  JList, OpaqueList, opaque, Item, Fluid, Block, EmiStack, EMPTY_STACK, ingredient, Recipe, Manager,
+  JList, OpaqueList, opaque, Item, Fluid, Block, EmiStack, EMPTY_STACK, ingredient, Recipe, Manager, tag,
   Screen, AbstractContainerScreen, CreativeModeInventoryScreen, EditBox, createWorld, clientEvents,
 };
