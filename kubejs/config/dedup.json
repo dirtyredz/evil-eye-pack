@@ -1,10 +1,8 @@
 {
   "replacements": {
     "enderio:silicon": "ae2:silicon",
-    "iceandfire:copper_nugget": "create:copper_nugget",
     "enderio:powdered_obsidian": "create:powdered_obsidian",
     "enderio:powdered_ender_pearl": "ae2:ender_dust",
-    "bhc:wither_bone": "iceandfire:witherbone",
     "createdeco:zinc_sheet": "createaddition:zinc_sheet",
     "refurbished_furniture:wheat_flour": "create:wheat_flour",
     "refurbished_furniture:dough": "farmersdelight:wheat_dough",
@@ -72,15 +70,6 @@
     "create:shadow_steel",
     "create:crushed_raw_quicksilver",
     "ae2:matrix_frame",
-    "alexscaves:dinosaur_train",
-    "alexscaves:disc_fragment_fusion",
-    "alexscaves:volcanic_core",
-    "alexsmobs:ender_residue",
-    "alexsmobs:halo",
-    "alexsmobs:poison_bottle",
-    "alexsmobs:red_sand_circle",
-    "alexsmobs:sand_circle",
-    "alexsmobs:terrapin_egg",
     "ars_elemental:air_caster_tome",
     "ars_elemental:mermaid_rock",
     "ars_nouveau:music_disc_aria_biblio",
@@ -158,10 +147,6 @@
     "doggytalents:locator_orb_ka",
     "doggytalents:locator_orb_moku",
     "doggytalents:locator_orb_sui",
-    "iceandfire:dread_spawner",
-    "iceandfire:egginice",
-    "iceandfire:hippogryph_egg",
-    "iceandfire:fishing_spear",
     "mca:jeweler_workbench",
     "minecolonies:santa_hat",
     "minecolonies:scan_analyzer",
@@ -247,9 +232,6 @@
   "extraItemTags": {
     "forge:ingots/steel": [
       "enderio:dark_steel_ingot"
-    ],
-    "forge:wither_bones": [
-      "iceandfire:witherbone"
     ],
     "forge:dusts/ender": [
       "ae2:ender_dust"

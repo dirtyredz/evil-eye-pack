@@ -26,10 +26,10 @@ test('pack mod metafiles match the removed and required mod policy', () => {
 
 test('Hourglass is pinned for both sides with the intended day, night and sleep policy', () => {
   const meta = read('mods/hourglass.pw.toml');
-  assert.match(meta, /^filename = "hourglass-1\.20-1\.2\.1\.1\.jar"$/m);
+  assert.match(meta, /^filename = "hourglass-1\.21-1\.3\.0\.0-beta1\.jar"$/m);
   assert.match(meta, /^side = "both"$/m);
-  assert.match(meta, /^mod-id = "1ZqmoFFP"$/m);
-  assert.match(meta, /^version = "G7VDa3zX"$/m);
+  assert.match(meta, /^project-id = 511172$/m);
+  assert.match(meta, /^file-id = 8624077$/m);
 
   const config = read('defaultconfigs/hourglass-server.toml');
   assert.match(config, /^\s*daySpeed = 0\.5$/m);
