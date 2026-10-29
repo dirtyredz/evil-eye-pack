@@ -55,7 +55,9 @@ node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/p
 # NeoForge migration lock (offline): node tools/packwiz/migrate.mjs check  (see neoforge-migration.md)
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
-# node tools/dedup/generate.cjs "C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods"
+# node tools/dedup/generate.cjs [--dry-run] <pinned jar folder>   (main: Evil Eye Local mods; migration branch:
+#   C:/Users/dirty/projects/artifacts/evil-eye-pack/migration/neoforge-1.21.1/cache/mods). It removes only
+#   its own stale outputs (tools/dedup/generated.json); the dedup tests pick the folder from pack.toml.
 node tools/packwiz/rehash.cjs --dry-run      # a second run after rehash must show +0 -0 ~0
 node tools/packwiz/verify_hashes.cjs
 git diff --check

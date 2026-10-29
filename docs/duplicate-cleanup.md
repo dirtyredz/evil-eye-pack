@@ -17,7 +17,7 @@ swap, unpacking window or registry remap. The old migration implementation remai
 | Metal dusts | Ender IO | AllTheOres removed |
 | Silicon / ender dust | AE2 | Ender IO SAG outputs and downstream inputs rewritten; counts/chances retained |
 | Obsidian dust | Create | Ender IO SAG output rewritten |
-| Wither bone | Ice and Fire | BHC's Java drop stays disabled by its existing zero drop rate; survivor supplies the canister ingredient tag |
+| Wither bone | Ice and Fire | BHC's Java drop stays disabled by its existing zero drop rate; survivor supplies the canister ingredient tag. **NeoForge migration branch:** Ice and Fire is deferred, so `bhc:wither_bone` survives and BHC's drop rate is back at 0.15 until the port returns (`tools/packwiz/migration/deferred/dedup.json`) |
 | Wheat flour / dough / milk bottle | Create / Farmer's Delight / Farmer's Delight | Refurbished flour/dough recipes removed, pizzas rewritten; Create dough outputs and uses rewritten; Productive Bees bottler and bottle consumers rewritten |
 | Willow wood family (17 registered duplicates) | Biomes O' Plenty | Cluttered recipes removed, furniture inputs and sapling-chest/block drops rewritten |
 | Andesite/brass/copper bars and doors; industrial iron windows/panes | Create | Eight Create Deco producers removed, consumers/loot/tags rewritten |

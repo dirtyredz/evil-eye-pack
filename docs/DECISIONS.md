@@ -2,6 +2,34 @@
 
 Newest first.
 
+## 2026-10-29 - NeoForge 1.21.1 migration: data tooling, activation, KubeJS 2101 and configs
+
+Branch `migration/neoforge-1.21.1` (Phases 4–5). Status and open checks: `docs/neoforge-migration.md`.
+
+- **One versioned data-layout recognizer** (`tools/data_io/resource_layout.cjs`). Evidence keeps the
+  1.20 kind names, so checks and baselines stay comparable across versions. Rejected: a global
+  `forge:` → `c:` rewrite. Tags are translated one by one and only where target data uses them
+  (`tools/dedup/migration-1.21.json`).
+- **The dedup generator owns its outputs** (`tools/dedup/generated.json`). Stale generated files are
+  deleted on regeneration only when unmodified; hand-written overrides are never touched. The
+  manifest was bootstrapped by byte-matching a Forge regeneration (96 owned files).
+- **Pins frozen with minecraft-mods** (NeoForge 21.1.265, JEI 19.70.0.464, EMI 1.1.24, Polymorph
+  1.2.0, Dank Storage 20), then the lock was applied by script. `migrate check` now verifies the
+  applied state.
+- **Deferred ports are parked, not deleted.** Their configs and data move to
+  `tools/packwiz/migration/deferred/<port>/` at their original paths. Inert id lists stay in place.
+  Temporary policy: `bhc:wither_bone` survives and BHC's drop rate returns to 0.15. Alex's Caves'
+  uranium recipes are suspended while Create's stay.
+- **KubeJS 2101 globals.** Only startup scripts may set `global` values, so `startup_scripts/globals.js`
+  creates the namespaces and other scripts extend them. NeoForge listeners go through reloadable
+  `NativeEvents` (`ui/native_hooks.js`), which drops the Forge-era once-per-launch flag. Item
+  components are translated for the EMI curation only in `java_interop.js` (codec-encoded component
+  patch). The EMI adapter boundary stays a deliberate tradeoff.
+- **Configs:** a recorded treatment per file (`config-decisions.json`). Obsolete loader and renderer
+  files are removed, and Oculus settings move to `iris.properties`. Everything else is carried
+  unchanged and reconciled with generated target defaults at the first target boot, because no boot
+  was allowed in this phase. Configs are never claimed migrated without that boot.
+
 ## 2026-10-29 - NeoForge 1.21.1 migration: isolation, lock and runtime-aware testing
 
 Branch `migration/neoforge-1.21.1` only; `main`/Stable stay on Forge. Status and commands:

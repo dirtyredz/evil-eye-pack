@@ -173,6 +173,20 @@
   `hourglass-1.20-1.2.1.1.jar`, so `tools/dedup/tests/installed.test.cjs` failed with "Missing cached jar".
   That is an environment gap; relaunching Local installs the jar.
 
+## KubeJS 2101 (NeoForge migration branch)
+
+- **Only startup scripts may set values on `global`.** A client or server script doing `global.x = ...`
+  fails. `startup_scripts/globals.js` creates `global.emiCuration` and `global.evilEyeShowcase`, and
+  everything else adds properties to those objects. The test-only probes and showcase checks inject
+  their own `startup_*.js`. The EMI test harness throws on a top-level `global` write. That nested
+  property writes are allowed is inferred from the 7.0 notes and is unverified until the first boot.
+- **Native listeners are reloadable** (`NativeEvents.onEvent(className, fn)`). Do not add once-per-launch
+  guards. `NativeModEvents`/`ForgeModEvents` are gone, and mod-bus events also go through `NativeEvents`.
+- **The class filter lives in the jar** (`kubejs.classfilter.txt`). `tools/emi_curation/tests/class_filter.test.cjs`
+  reads it from the pinned KubeJS. `net.neoforged` is allowed, `net.neoforged.fml` denied.
+- **1.21 stacks have components, not NBT.** Use the component patch (`getComponentsPatch`,
+  EMI `getComponentChanges`); `getNbt()` does not exist.
+
 ## Worktrees
 
 - Move a linked worktree only with `git worktree move`. An Explorer move breaks the `.git` file link and the main repo's `worktrees/` record; `git worktree prune` would then delete the record.

@@ -74,6 +74,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |   `-- verdict/
     |-- packwiz/
     |   |-- migration/
+    |   |   `-- deferred/
     |   `-- tests/
     |-- server_smoke/
     |   `-- tests/
@@ -96,7 +97,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter
 - `kubejs/client_scripts/emi_curation/ui/` — the CLEAN/ALL button, the DECOR button, the mark-as-decor key handler and shared UI infrastructure (placement, Forge listener registration). KubeJS loads subfolders and sorts the whole pack by priority, so folders do not change load order.
 - `kubejs/client_scripts/emi_curation/ui/mods/` — Mods dropdown, source entries, layout, list policy and text drawing.
-- `kubejs/startup_scripts/` — `emi_curation_keys.js` registers the "EMI Curation" key mapping (startup-only in Forge); `kubejs/assets/emi_curation/lang/` names it
+- `kubejs/startup_scripts/` — `globals.js` creates the shared `global.emiCuration` and `global.evilEyeShowcase` namespaces (KubeJS 2101 lets only startup scripts set `global` values); `emi_curation_keys.js` registers the "EMI Curation" key mapping through `NativeEvents` (mod-bus, startup only); `kubejs/assets/emi_curation/lang/` names it
 - `kubejs/server_scripts/showcase/` — bounded plans, multi-section layout, plot records, staged construction, entity policy, control dispatch and commands; `sections/` holds pure content factories, and `rigs/` owns section-specific validation and world mechanics.
 - `kubejs/server_scripts/dedup.js` — permanent duplicate recipe/tag cleanup; no stack conversion. Survivor choices: `docs/duplicate-cleanup.md`.
 - `kubejs/config/dedup.json` — authored duplicate policy; the generator never writes this input.
@@ -177,7 +178,7 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `emi_curation/hiding.js` (65) | the single home of hide decisions: `configure({ policy, getMaster })` (called once by `session.js`), then pack policy per stack (the single classification cache holds verdicts per registry key; DECOR is decided in `decor_state.js`, never here) and REI-style display hiding (adds EMI's user-hidden set and the master-index key set, built and cached here) |
 | `emi_curation/decor/decor_state.js` (62) | the single home of DECOR state: loads `decor.json` and `decor-local.json`, holds the local-marks holder, the per-key classification cache and tag-set reset behind one `invalidate()`, `isHidden(stack)`, the SHOWN/HIDDEN mode override (`flip`/`setOverride`/`resetMode`, in `global.emiCuration.decorMode`), `label()` and `mark(id, wholeMod)`. Never feeds recipe displays. |
 | `emi_curation/session.js` (60) | CLEAN/ALL state in `global`, loads the policy (and calls `decorState.load`), configures `hiding.js`, combines CLEAN/ALL x DECOR into the index view key, EMI generation tracking, tick → sync → apply with restore on failure, reload/logout handling, event registration |
-| `emi_curation/ui/forge_hooks.js` (58) | `registerOnce(flag, table, hooks)`: add Forge listeners once per launch, dispatching through a reloadable `global.emiCuration[table]` handler table; handler errors are logged, never rethrown. Used by `button.js`, `mods_menu.js`, `decor_button.js` and `decor_mark.js`; `session.js` uses `ClientEvents`, not Forge listeners. |
+| `emi_curation/ui/native_hooks.js` (58) | `register(table, hooks)`: NeoForge listeners through KubeJS 2101's reloadable `NativeEvents` (no once-per-launch guard; client scripts may not set `global` values), dispatching through a reloadable `global.emiCuration[table]` handler table; handler errors are logged, never rethrown. `EVENTS` is the NeoForge client event package. Used by `screen_button.js`, `mods_menu.js` and `decor_mark.js`; `session.js` uses `ClientEvents`. |
 | `emi_curation/ui/emi_screen.js` (57) | the one adapter over `EmiScreenManager`'s screen state: `searchWidget`, `searchFocused`, `hoveredEmiStack(x, y)`, `panelAt(x, y)`. Used by `placement.js`, `mods_menu.js` and `decor_mark.js`. |
 | `emi_curation/ui/placement.js` (55) | shared button placement from EMI's search bounds: pure `chooseRect`, `searchPlaced`, live `layoutContext`/`usableLayout`; toolbar rect registry (`register`, `rect`, `rects`), with live visible rects published by each widget |
 | `emi_curation/ui/screen_button.js` (54) | `makeScreenButton`: shared CLEAN/DECOR widget holder, placement, label, guarded press/refresh and reloadable Forge handler registration; called by the button configs at their original priorities |
@@ -220,13 +221,18 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `tools/data_io/zip_reader.cjs` | dependency-free ZIP entry listing and decompression; shared by coverage and jar traversal |
 | `tools/data_io/walk.cjs` | ordered jar traversal, optional jarjar recursion, caller-owned selection and parsing |
 | `tools/data_io/files.cjs` | strict JSON file reading (`readJson`) and byte SHA-256 (`sha256`) |
+| `tools/data_io/resource_layout.cjs` | versioned data-path recognition: 1.20 plural and 1.21 singular folders (`recipe/`, `loot_table/`, `tags/item|block|fluid`, `neoforge/biome_modifier`) to one canonical kind, `dataPath`, and `neoforge:conditions`/`conditions` plus loader-neutral condition types; shared by the pack-test raw scan and dedup |
 | `tools/dedup/policy.cjs` | ordered retired ids for Node consumers; shipped KubeJS mirror pinned by `tests/policy.test.cjs` |
+| `tools/dedup/generated_files.cjs`, `generated.json` | generator ownership: the manifest of every file the generator wrote with its sha256; a regeneration deletes only unmodified owned outputs it no longer produces, so hand-written data and hand-edited outputs survive |
+| `tools/dedup/migration-1.21.json` | the dedup policy changes made for the NeoForge 1.21.1 target (dropped ids, translated `forge:` → `c:` tags, allowed groups, hand-written override dispositions) |
+| `tools/packwiz/migration/config-decisions.json` | per-config migration treatment (carry, preserve-intent, regenerate at first target boot) and the removed/replaced files; enforced by `tests/config_decisions.test.cjs` |
+| `tools/packwiz/migration/deferred/` | unshipped parking for the seven deferred ports: their configs and data at original paths, port-dependent dedup policy and pack-test baseline entries, and the restore steps (`README.md`) |
 
 [Architecture](docs/ARCHITECTURE.md) maps the automated pack-test flow;
 [EMI](docs/emi.md) is the architecture doc for the EMI subsystem.
 
 KubeJS loads client scripts in descending `// priority:` order. Each script adds one
-namespace to `global.emiCuration`. Only `session.js` (through `ClientEvents`), `ui/button.js`, `ui/mods/mods_menu.js`, `ui/decor_button.js` and `ui/decor_mark.js` (through `ui/forge_hooks.js`) register event
+namespace to `global.emiCuration`. Only `session.js` (through `ClientEvents`), `ui/button.js`, `ui/mods/mods_menu.js`, `ui/decor_button.js` and `ui/decor_mark.js` (through `ui/native_hooks.js`) register event
 handlers.
 
 ## Dependencies

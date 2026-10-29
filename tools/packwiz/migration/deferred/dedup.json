@@ -105,7 +105,8 @@
   ]
  },
  "temporary": {
-  "bhc:wither_bone": "Survives while Ice and Fire is deferred (its witherbone was the survivor); BHC drops and recipes provide it again. On restore, re-add the replacement bhc:wither_bone -> iceandfire:witherbone."
+  "bhc:wither_bone": "Survives while Ice and Fire is deferred (its witherbone was the survivor); BHC drops and recipes provide it again. On restore, re-add the replacement bhc:wither_bone -> iceandfire:witherbone.",
+  "config/bhc-common.toml boneDropRate": "0.15 (the pack's original value before 08d8aa1) while Ice and Fire is deferred, so wither skeletons drop bhc:wither_bone again; set back to 0.0 when iceandfire:witherbone returns as the survivor."
  },
  "allowedGroups": {
   "forge:raw_materials/uranium": {

@@ -13,8 +13,8 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 | 1 Isolate worktree, instance and evidence | dk-00608fcb | done 2026-10-29 |
 | 2 Resolve and lock target artifacts | dk-1254cf3d | done 2026-10-29 (lock and tool; re-point proven by dry run only) |
 | 3 Runtime-aware testing | dk-b28c4c95 | done 2026-10-29 (fast gate; first real NeoForge install/boot is Phase 6) |
-| 4 Data scanners and metadata | — | todo |
-| 5 Activate pins, swaps, configs (`migrate.mjs apply --write`) | — | todo |
+| 4 Data scanners and metadata | dk-2978dc2f | done 2026-10-29 (fixtures; real target evidence arrives in Phase 6) |
+| 5 Activate pins, swaps, configs, KubeJS 2101, dedup | dk-960e6d58 | done 2026-10-29 (static; first-boot checks listed below) |
 | 6 First clean target boot | — | todo |
 | 7 Interstellaris stack | — | todo |
 | 8 Seven owned ports | — | todo |
@@ -32,8 +32,9 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 | Migration jobs | `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-*/` |
 | Verified target artifacts | `artifacts/evil-eye-pack/migration/neoforge-1.21.1/cache/{mods,resourcepacks,shaderpacks,installers}/` |
 
-**Do not launch the trial instance before Phase 5.** Until then the worktree's `pack.toml`
-still pins Forge 1.20.1 content, and the install would put 1.20.1 jars into a NeoForge instance.
+Since Phase 5 the worktree's `pack.toml` is the NeoForge 1.21.1 target, so the trial instance would
+install it. No boot or client launch has happened yet. The first target boot is Phase 6, coordinated
+with minecraft-mods for the machine.
 
 Pushing the migration branch is safe for Stable: Stable's prelaunch reads `main`'s raw
 `pack.toml` URL. Push only the migration ref; never `main`.
@@ -107,3 +108,49 @@ GitHub release pin.
 
 See plan Phase 10. Every criterion there is required. Temporary absences, a successful boot on
 its own, or a world saved without its content never satisfy it.
+
+## Data tooling (Phase 4)
+
+`tools/data_io/resource_layout.cjs` recognizes both data layouts for the pack-test raw scan and
+dedup. The raw scan reads the NeoForge universal jar and refuses an empty scan, and conditions
+accept `neoforge:conditions` and `neoforge:` types. Probes and showcase checks work on both
+runtimes: RecipeHolder, the reloadable loot-table registry, NeoForge FakePlayerFactory, component
+patches, level capabilities, and startup-script globals. The mod map treats `neoforge` as the
+platform, records incompatible and discouraged entries as conflicts, and enables NeoForge's FML
+TRACE logger. The NeoForge TRACE wording is unverified, so timings stay "unmeasured" if it differs.
+The malware guard scans NeoForge jars the same way, and approvals stay bound to the exact hash.
+
+## Activation (Phase 5)
+
+- **Lock applied** with `node tools/packwiz/migrate.mjs apply --write`, then rehash.
+  `migrate.mjs check` now verifies that the checkout matches the applied target exactly, and
+  `verify_hashes.cjs --jars <cache>/mods` checks all 176 jars.
+- **Swaps** came from the lock: Iris + Sodium, the Steam 'n' Rails port and the CullLessLeaves port;
+  MemoryLeakFix, Embeddium and Radium were dropped. Oculus, Embeddium, Radium and MemoryLeakFix are
+  now `removedMods` in pack-test policy.
+- **Supplementaries' Forge-tagged jar-in-jar** is MixinSquared's single Forge-family artifact with
+  `FMLModType: GAMELIBRARY`. NeoForge loads it as a game library and never reads its
+  `mods.toml`, so it is expected, and the closure check no longer warns about it (0 warnings).
+- **Deferred ports** are parked in `tools/packwiz/migration/deferred/`; its README has the restore
+  steps.
+- **KubeJS 2101 / EMI curation:** `startup_scripts/globals.js` creates the globals, listeners go
+  through `NativeEvents` (`ui/native_hooks.js`), the key mapping uses NeoForge classes, and
+  components are translated in `java_interop.js`.
+- **Configs:** `tools/packwiz/migration/config-decisions.json`.
+- **Dedup** was regenerated against the verified target jars: 82 overrides, 25 removed recipes and
+  86 stale 1.20 outputs deleted. The Dragons Plus static sanding recipes (268) moved to the 1.21
+  layout. Policy changes are recorded in `tools/dedup/migration-1.21.json`.
+
+### Checks only the first target boot or launch can settle (Phase 6)
+
+- **KubeJS 2101 behaviour:** that nested property writes on startup-created globals are allowed;
+  `NativeEvents.onEvent` with a class-name string; `JsonIO.read` shape; `removeAllTagsFrom` and
+  the recipe-event calls in `dedup.js`/`uranium.js`.
+- **Configs:** each `regenerate` config against the target's generated defaults (renamed or removed
+  keys reviewed, intent reapplied); client-only defaults at the owner's first launch.
+- **EMI curation:** Ender IO's soul vial and broken spawner keep rule (`rules.json`
+  `keepWhenNbtEquals`) still describes the 1.20 `BlockEntityTag` NBT. It must be rewritten for the
+  1.21 `enderio:stored_entity` component layout seen in game. Until then the zombie vial and spawner
+  are hidden in CLEAN.
+- **Showcase and probes:** level capabilities, RecipeHolder and loot registry access in a live
+  server.

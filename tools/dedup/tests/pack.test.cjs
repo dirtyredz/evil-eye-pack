@@ -21,7 +21,8 @@ test('HammerLib gears are disabled at recipe and tag sources; BHC code drops sta
     assert.equal(Object.values(recipes.active).find(group => id in group)[id], false, id);
     assert.equal(tags.tags['minecraft:item']['forge:gears/' + material][id], false, id);
   }
-  assert.match(fs.readFileSync(path.join(root, 'config/bhc-common.toml'), 'utf8'), /boneDropRate = 0\.0/);
+  // Ice and Fire is deferred: BHC's own wither bone drop is the temporary acquisition path (deferred/dedup.json).
+  assert.match(fs.readFileSync(path.join(root, 'config/bhc-common.toml'), 'utf8'), /boneDropRate = 0\.15$/m);
 });
 
 test('Dark Steel fills the empty steel ingot tag for Extreme Reactors; BOP willow door stays out of trapdoor tags', () => {
