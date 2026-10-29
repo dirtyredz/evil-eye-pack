@@ -76,3 +76,10 @@ test('jar reader prefers neoforge.mods.toml, substitutes the manifest version an
   assert.equal(forgeOnly[0].loader, 'forge');
   assert.equal(readJarMods(zip([['a.txt', 'x']]), 'plain.jar')[0].loader, null);
 });
+
+test('arrays of inline mod tables (Modrinth-generated datapack mods) are read like [[mods]]', () => {
+  const mods = parseMods("modLoader = 'javafml'\nauthors = ['a, b']\nmods = [\n\t{ modId = 'mr_huts', version = '1.3.0', displayName = 'Huts, Epic', description = 'Replaces { braces }' },\n\t{ modId = \"second\" },\n]\n");
+  assert.deepEqual(mods.map(m => [m.id, m.version, m.name]), [['mr_huts', '1.3.0', 'Huts, Epic'], ['second', null, 'second']]);
+  assert.equal(mods[0].description, 'Replaces { braces }');
+  assert.throws(() => parseMods('mods = [\n{ modId = "x" }\n'), /Unterminated TOML array/);
+});

@@ -22,6 +22,15 @@ function tables(text) {
     const kv = /^\s*([\w-]+)\s*=\s*(.*)$/.exec(lines[i]);
     if (!kv) continue;
     let raw = kv[2], value;
+    // An array of inline tables (`mods = [ { modId = 'x', ... }, ]`, as Modrinth's generated
+    // datapack mods write it) becomes one row per table, exactly like [[mods]].
+    if (raw.trimStart().startsWith('[') && /^\[\s*(\{|$)/.test(raw.trim())) {
+      while (bracketDepth(raw) > 0 && i + 1 < lines.length) raw += '\n' + lines[++i];
+      if (bracketDepth(raw) > 0) throw new Error('Unterminated TOML array');
+      const table = (row.table ? row.table + '.' : '') + kv[1];
+      for (const body of inlineTables(raw)) rows.push({ table, values: inlineValues(body) });
+      continue;
+    }
     const triple = raw.startsWith('"""') ? '"""' : raw.startsWith("'''") ? "'''" : null;
     if (triple) {
       raw = raw.slice(3);
@@ -42,6 +51,50 @@ function tables(text) {
     row.values[kv[1]] = value;
   }
   return rows;
+}
+// Walks text outside quoted strings and comments, calling visit(char, index).
+function scan(text, visit) {
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === '"' || c === "'") {
+      let j = i + 1;
+      for (; j < text.length && text[j] !== c; j++) if (c === '"' && text[j] === '\\') j++;
+      i = j; continue;
+    }
+    if (c === '#') { while (i < text.length && text[i] !== '\n') i++; continue; }
+    visit(c, i);
+  }
+}
+function bracketDepth(text) {
+  let depth = 0;
+  scan(text, c => { if (c === '[' || c === '{') depth++; else if (c === ']' || c === '}') depth--; });
+  return depth;
+}
+function inlineTables(text) {
+  const out = []; let depth = 0, start = -1;
+  scan(text, (c, i) => {
+    if (c === '{') { if (depth++ === 0) start = i + 1; } else if (c === '}' && --depth === 0) out.push(text.slice(start, i));
+  });
+  return out;
+}
+// `k = 'v', k2 = true` scalars of one inline table; nested values are ignored like elsewhere.
+function inlineValues(body) {
+  const parts = []; let start = 0, depth = 0;
+  scan(body, (c, i) => {
+    if (c === '[' || c === '{') depth++; else if (c === ']' || c === '}') depth--;
+    else if (c === ',' && depth === 0) { parts.push(body.slice(start, i)); start = i + 1; }
+  });
+  parts.push(body.slice(start));
+  const values = {};
+  for (const part of parts) {
+    const kv = /^\s*([\w-]+)\s*=\s*([\s\S]*?)\s*$/.exec(part);
+    if (!kv) continue;
+    const raw = kv[2];
+    if (raw[0] === '"' && raw.endsWith('"')) values[kv[1]] = decode(raw.slice(1, -1));
+    else if (raw[0] === "'" && raw.endsWith("'")) values[kv[1]] = raw.slice(1, -1);
+    else if (raw === 'true' || raw === 'false') values[kv[1]] = raw === 'true';
+  }
+  return values;
 }
 function decode(s) {
   return s.replace(/\\\r?\n\s*/g, '').replace(/\\(u[\da-fA-F]{4}|U[\da-fA-F]{8}|[btnfr"\\])/g, (_, c) =>

@@ -1,0 +1,158 @@
+{
+ "schema": 1,
+ "runtime": {
+  "minecraft": "1.21.1",
+  "loader": "neoforge",
+  "loaderVersion": "21.1.265",
+  "java": 21
+ },
+ "provisional": [
+  "mods/jei.pw.toml",
+  "mods/emi.pw.toml",
+  "mods/polymorph.pw.toml",
+  "mods/dank-storage.pw.toml"
+ ],
+ "provisionalReason": "The minecraft-mods ports build against these; versions stay provisional until the port programme confirms them.",
+ "entries": {
+  "mods/alexs-caves.pw.toml": {
+   "action": "defer",
+   "reason": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+  },
+  "mods/alexs-mobs.pw.toml": {
+   "action": "defer",
+   "reason": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+  },
+  "mods/ars-instrumentum.pw.toml": {
+   "action": "defer",
+   "reason": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+  },
+  "mods/ice-and-fire-dragons.pw.toml": {
+   "action": "defer",
+   "reason": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+  },
+  "mods/dank-recipe-transfer.pw.toml": {
+   "action": "defer",
+   "reason": "Owner's own mod, ported in minecraft-mods (seven-port programme). Direct GitHub release pin returns with the port."
+  },
+  "mods/roundwood.pw.toml": {
+   "action": "defer",
+   "reason": "Owner's own mod, ported in minecraft-mods (seven-port programme). Direct GitHub release pin returns with the port."
+  },
+  "mods/flatworldfix.pw.toml": {
+   "action": "defer",
+   "reason": "Owner's own mod, kept and ported in minecraft-mods (seven-port programme) rather than swapped for Give Me My Flat World."
+  },
+  "mods/project-1029454.pw.toml": {
+   "action": "drop",
+   "reason": "MemoryLeakFix (misnamed metafile): no NeoForge 1.21.1 build; ModernFix, retained, covers the modern memory fixes (plan Phase 5)."
+  },
+  "mods/embeddium.pw.toml": {
+   "action": "drop",
+   "reason": "Superseded by Sodium, the renderer Iris requires on NeoForge; Embeddium and Sodium cannot be installed together."
+  },
+  "mods/oculus.pw.toml": {
+   "action": "replace",
+   "metafile": "mods/iris.pw.toml",
+   "name": "Iris Shaders",
+   "side": "client",
+   "target": {
+    "source": "modrinth",
+    "project": "YL57xq9U",
+    "version": "KduFYu4t"
+   },
+   "reason": "Oculus has no NeoForge 1.21.1 build; Iris 1.8.14-beta.1 is the supported NeoForge shader loader (survey replacement)."
+  },
+  "mods/create-steam-n-rails.pw.toml": {
+   "action": "replace",
+   "metafile": "mods/steam-n-rails-neoforge.pw.toml",
+   "name": "Create: Steam 'n' Rails (NeoForge port)",
+   "target": {
+    "source": "curseforge",
+    "project": "1414670",
+    "file": "8522154"
+   },
+   "reason": "Official project has no NeoForge 1.21.1 build; unofficial NeoForge port 0.3.0-beta.2 (survey replacement), vetted against Create's version by the dependency check."
+  },
+  "mods/culllessleaves-reforged.pw.toml": {
+   "action": "replace",
+   "metafile": "mods/culllessleaves-neoforge.pw.toml",
+   "name": "Cull Less Leaves (NeoForge port)",
+   "side": "client",
+   "target": {
+    "source": "direct",
+    "url": "https://github.com/Nergan/cull-less-leaves-for-neoforge-mod/releases/download/minecraft-1.21.1-neoforge/culllessleaves-neoforge-1.21.1-1.4.3.jar",
+    "sha256": "b56eef6a9d6e7d23ba12d7545ef023cda9bd6dff6c03587b449706673e3500f1"
+   },
+   "reason": "Reforged has no NeoForge 1.21.1 build; the NeoForge port 1.4.3 (survey replacement) requires Kotlin for Forge, already in the pack. Pinned by sha256 because the release tag name is not versioned."
+  },
+  "mods/hourglass.pw.toml": {
+   "action": "repoint",
+   "target": {
+    "source": "curseforge",
+    "project": "511172",
+    "file": "8624077"
+   },
+   "reason": "Modrinth metadata lacks the 1.21.1 tag; the exact NeoForge 1.21.1 file is on CurseForge (survey cross-check)."
+  },
+  "mods/ranged-pumps.pw.toml": {
+   "action": "repoint",
+   "target": {
+    "source": "curseforge",
+    "project": "247496",
+    "file": "5508029"
+   },
+   "reason": "Modrinth only tags 1.21; CurseForge tags the same file for 1.21.1 (survey cross-check)."
+  },
+  "mods/radium-reforged.pw.toml": {
+   "action": "drop",
+   "reason": "Create 6.0.10's neoforge.mods.toml declares radium incompatible (FML refuses to load both); Create is core content. Revisit if a later Create build lifts it."
+  }
+ },
+ "additions": [
+  {
+   "metafile": "mods/sodium.pw.toml",
+   "name": "Sodium",
+   "side": "client",
+   "target": {
+    "source": "modrinth",
+    "project": "AANobbMI",
+    "version": "uMOpc5uV"
+   },
+   "reason": "Required by Iris 1.8.14-beta.1 (its Modrinth dependency pins this version); replaces Embeddium."
+  },
+  {
+   "metafile": "mods/prickle.pw.toml",
+   "name": "Prickle",
+   "side": "both",
+   "target": {
+    "source": "modrinth",
+    "project": "aaRl8GiW",
+    "version": "EE1FHDyD"
+   },
+   "reason": "Required by AttributeFix and Enchantment Descriptions ([21.1,21.2)); Darkhax config library split out for 1.21."
+  },
+  {
+   "metafile": "mods/lithostitched.pw.toml",
+   "name": "Lithostitched",
+   "side": "both",
+   "target": {
+    "source": "modrinth",
+    "project": "XaDC71GB",
+    "version": "cZu4cHY3"
+   },
+   "reason": "Required by Terralith ([1.7.7,)) on 1.21.1."
+  },
+  {
+   "metafile": "mods/lionfish-api.pw.toml",
+   "name": "Lionfish API",
+   "side": "both",
+   "target": {
+    "source": "modrinth",
+    "project": "FoVacERa",
+    "version": "fTRMVgyZ"
+   },
+   "reason": "Required by L_Ender's Cataclysm (declares 3.1); 3.1 is the newest NeoForge 1.21.1 release."
+  }
+ ],
+ "waivers": {}
+}
