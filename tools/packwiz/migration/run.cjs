@@ -102,7 +102,7 @@ async function resolve(o, log) {
     schema: SCHEMA,
     runtime: { ...rt, installer: { url: installer.url, sha256: installer.sha256, size: installer.size } },
     source: { fingerprint: fingerprint(o.root), metafiles: sourceMetafiles(o.root).length },
-    provisionalReason: dispositions.provisionalReason,
+    frozen: dispositions.frozen,
     entries
   };
   const errors = validate(lock, sourceMetafiles(o.root));

@@ -74,11 +74,11 @@ The closure has 0 errors and 1 warning: Supplementaries bundles a Forge-tagged M
 in its jar-in-jar. 22 kept mods are on a beta-channel file. The installer is
 `neoforge-21.1.265-installer.jar`, sha256 `a547ccc3…d1a2`, checked against Maven's `.sha256`.
 
-**Provisional pins** are not frozen until minecraft-mods confirms what the ports build against:
+**Frozen pins (agreed with minecraft-mods 2026-10-29):** NeoForge 21.1.265 and
 JEI `jei-1.21.1-neoforge-19.70.0.464.jar` (beta), EMI `emi-1.1.24+1.21.1+neoforge.jar`,
 Polymorph `polymorph-neoforge-1.2.0+1.21.1.jar` (beta) and Dank Storage
 `dankstorage-neoforge-1.21.1-20.jar`. The ports' stated targets are NeoForge 21.1.265, JEI
-19.70.0.464 and Polymorph 1.2.0, so these match.
+19.70.0.464 and Polymorph 1.2.0; the lock records the agreement under `frozen`.
 
 ## Runtime-aware testing (Phase 3)
 

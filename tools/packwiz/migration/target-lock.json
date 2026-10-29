@@ -2792,7 +2792,7 @@
     "side": "both",
     "source": "curseforge"
    },
-   "provisional": true,
+   "provisional": false,
    "rationale": "survey-selected exact NeoForge 1.21.1 file",
    "target": {
     "channel": "release",
@@ -3119,7 +3119,7 @@
     "url": "https://cdn.modrinth.com/data/fRiHVvU7/versions/Axuu9I9R/emi-1.1.24%2B1.20.1%2Bforge.jar",
     "version": "Axuu9I9R"
    },
-   "provisional": true,
+   "provisional": false,
    "rationale": "survey-selected exact NeoForge 1.21.1 file",
    "target": {
     "channel": "release",
@@ -4909,7 +4909,7 @@
     "side": "both",
     "source": "curseforge"
    },
-   "provisional": true,
+   "provisional": false,
    "rationale": "survey-selected exact NeoForge 1.21.1 file",
    "target": {
     "channel": "beta",
@@ -6478,7 +6478,7 @@
     "side": "both",
     "source": "curseforge"
    },
-   "provisional": true,
+   "provisional": false,
    "rationale": "survey-selected exact NeoForge 1.21.1 file",
    "target": {
     "channel": "beta",
@@ -8424,7 +8424,16 @@
    }
   }
  ],
- "provisionalReason": "The minecraft-mods ports build against these; versions stay provisional until the port programme confirms them.",
+ "frozen": {
+  "date": "2026-10-29",
+  "entries": [
+   "mods/jei.pw.toml",
+   "mods/emi.pw.toml",
+   "mods/polymorph.pw.toml",
+   "mods/dank-storage.pw.toml"
+  ],
+  "reason": "Agreed with minecraft-mods: the seven ports build against NeoForge 21.1.265, JEI 19.70.0.464, EMI 1.1.24, Polymorph 1.2.0 and Dank Storage 20."
+ },
  "runtime": {
   "installer": {
    "sha256": "a547ccc30a80a675d1c61d04b55d10c45c39a86971e09731482c50a24399d1a2",
