@@ -56,7 +56,7 @@ async function trialBoot({root,cache,job,name,targets,restart=false,coverage=nul
     let evidence=path.join(job,name+'-'+label),attempt=1;
     while(fs.existsSync(evidence))evidence=path.join(job,name+'-'+label+'-'+(++attempt));
     output(evidence,job);fs.mkdirSync(evidence,{recursive:false});
-    for(const rel of ['console.log','world-trial-registries.json','world-trial-complete.json','world-trial-players.json'])if(fs.existsSync(path.join(server,rel)))fs.copyFileSync(path.join(server,rel),path.join(evidence,rel));
+    for(const rel of ['console.log','world-trial-registries.json','world-trial-complete.json','world-trial-players.json','world-trial-colony.json'])if(fs.existsSync(path.join(server,rel)))fs.copyFileSync(path.join(server,rel),path.join(evidence,rel));
     for(const rel of ['logs','crash-reports'])if(fs.existsSync(path.join(server,rel)))copy(path.join(server,rel),path.join(evidence,rel),job);
     fs.writeFileSync(path.join(evidence,'boot.json'),JSON.stringify({...result,token,targets:targets.length,coverage},null,2)+'\n');
     if(!result.completed||result.crashed||result.killed||result.wallSeconds===null)throw new Error('Boot failed: '+path.join(evidence,'boot.json'));
