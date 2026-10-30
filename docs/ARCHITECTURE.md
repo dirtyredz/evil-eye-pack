@@ -217,5 +217,9 @@ the initial owner-supplied list has slugs/names only and records that limitation
 
 Private migration pins: `tools/packwiz/local_source.cjs` verifies hash-addressed cache bytes and
 creates the temporary loopback installer overlay; `install_local.cjs` is the dedicated trial
-prelaunch wrapper. Server smoke and pack-test staging share the same overlay. Public delivery
-is separate (dk-85261627); see [NeoForge migration](neoforge-migration.md).
+prelaunch wrapper. Server smoke and pack-test staging share the same overlay. The owner Trial route
+uses `trial_install.cjs`: all hash-verified cached artifacts become ordinary index files in
+a temporary local pack. The cached installer copies and tracks them without any URL or server;
+installed artifact hashes are checked before Trial prelaunch is updated. Stable and Local
+are refused. The owner-only local delivery ruling supersedes dk-85261627; future cutover
+reuses this route with its own explicit authorization. See [NeoForge migration](neoforge-migration.md).

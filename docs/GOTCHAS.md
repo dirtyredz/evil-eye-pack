@@ -308,10 +308,13 @@
 
 - Brigadier rejects trailing text after a finished literal/word argument (`/evileye showcase x ` gave "Incorrect argument for command"), and a bare node without `.executes` says "Unknown or incomplete command". The showcase command therefore takes one greedy string and parses it in script.
 
-- **Private migration pins need the local installer wrapper.** The cached packwiz installer rejects
-  `file:///` download URLs. `metadata:local` intentionally has no download URL: use the gitignored
-  loopback overlay through `tools/packwiz/install_local.cjs` for a dedicated trial, or the normal
-  pack-test/server-smoke staging path. Missing or changed cache bytes fail before installation.
+- **Private migration pins need an installer wrapper.** The cached packwiz installer rejects
+  `file:///` download URLs and does not recognize `metadata:local`; copying jars beside those
+  metafiles is insufficient. The owner Trial script instead indexes verified cached jars as
+  ordinary files in a temporary local pack, so packwiz copies and tracks them without a host.
+  Its prelaunch must keep using `scripts/migration/trial-walkthrough.ps1`; the raw checkout
+  metadata is not installer-compatible. Pack-test/server-smoke retain the loopback overlay.
+  Missing or changed cache bytes fail before installation.
 
 ## Ice and Fire CE config format
 

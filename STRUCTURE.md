@@ -33,6 +33,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |-- resourcepacks/
 |-- shaderpacks/
 |-- scripts/
+|   |-- migration/
 |   |-- mod-map/
 |   `-- owner/
 `-- tools/
@@ -117,6 +118,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `tools/mod_map/` — offline mod map. `build.mjs` (entry) and `run.cjs` (orchestration, artifact guards, saved-evidence replay) at the top; `inventory/` pinned-jar inventory and the `mods.toml`-only reader; `model/` dependency graph, classification, cost, families, categories and their checked-in data (`overrides.json` reasoned kind/family corrections, undeclared dependencies and pack-wide fixes; `categories.json` family/standalone ID → category); `capture/` the one-boot instrumented capture and TRACE timing; `page/` the pure view, HTML builders, document shell, CSS and browser controls. `tests/` mirrors those folders; `tests/fixtures.cjs` is a shared helper outside the `*/*.test.cjs` glob.
 - `scripts/` — owner-run PowerShell entry points, one `scripts/<area>/<verb>.ps1` per owner command; Node tooling sits underneath in `tools/`. Scripts and their logs (ignored `.tmp/`) are packwiz-excluded.
 - `scripts/mod-map/` — `build.ps1`, the mod map owner entry point (wraps `tools/mod_map/build.mjs`).
+- `scripts/migration/` — `trial-walkthrough.ps1`, the offline owner installer for Evil Eye NeoForge Trial.
 - `scripts/owner/` — `owner-run.ps1`, the verbatim owner-run 1.0.0 template every owner script dot-sources (logging, OK/FAILED line).
 - `tools/script-run/` — the verbatim Node script-run 1.1.0 template (`script-run.mjs`) and its test from `~/.claude/templates/scripts/`; Node entry points such as `tools/mod_map/build.mjs` run through it.
 - `tools/malware_guard/` — offline content scanner, instance drift and metadata source/known-bad gate; opt-in cached Modrinth status, approval CLI, `data/` policies and synthetic `tests/`. Local reports/cache are ignored under `.local/`.
@@ -167,6 +169,7 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `kubejs/server_scripts/tag_compat.js` | item tag aliases for mods that name tags the 1.21.1 target lacks (Create: Interiors `c:<colour>_dyes`, Create's item `#minecraft:convertable_to_mud`) |
 | `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (`readTable` reads string tables and numeric CurseForge IDs; metafile name/download/side readers share the model), `isMetafile`, `.packwizignore`, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
 | `tools/packwiz/pinned_jar.cjs` | `resolvePinnedJar(metafileText, dirs)`: the one pinned-jar lookup (safe filename, ordered folders, hash-verified bytes, fail closed, never downloads); used by offline server preparation and the mod map inventory |
+| `tools/packwiz/trial_install.cjs` | Trial-only local-copy installer: verifies cache pins, indexes artifacts as ordinary local files in a temporary pack, runs the cached headless installer, verifies installed hashes and sets Trial prelaunch; no host or downloads |
 | `tools/packwiz/rehash.cjs` | rebuild `index.toml` membership and hashes, then `pack.toml`'s index hash |
 | `tools/packwiz/migrate.mjs`, `migration/run.cjs` | NeoForge migration CLI through script-run: `resolve` (build the lock), `check` (offline lock/cache/closure verification), `apply` (re-point; dry run unless `--write`) |
 | `tools/packwiz/migration/resolve.cjs` | survey + dispositions + source metafiles → one selector per entry (never guesses a file) |
