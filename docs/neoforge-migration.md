@@ -155,7 +155,8 @@ plus `run-<time>/`).
 | 4 | probe incomplete | the runtime probe's top-level `global` write is refused by KubeJS 2101, and the refusal aborts `ServerEvents.loaded` despite try/catch; removed |
 | 5 | Done, 153 new findings | round 2: other-version data folders, 1.21 `loot_table` `value`, Ender IO component rule, HammerLib stone gear, smokestack policy, baseline review |
 | 6 | **PASS** (exit 0) | clean shutdown, all probes token-matched; post-boot configs captured for reconciliation |
-| 7 | see the final report | verification after config reconciliation and loot-condition gating |
+| 7 | **PASS** | after config reconciliation (401 configs unchanged by the mods, 0 dropped keys) and loot-condition gating |
+| 8 | **PASS** | final verification with the settled runtime probe (cached world: Done in 2.7 s server time, 58 s wall) |
 
 **KubeJS 2101 assumptions, observed live** (runtime probe and boot 4):
 - A client or server script setting a top-level `global` value is refused, and the error aborts the
