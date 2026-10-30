@@ -210,8 +210,9 @@
   entity summoned into a not-yet-loaded chunk is stored but invisible to `getEntities` (the harness now loads
   the area 20 ticks ahead); `saveWithFullMetadata` needs the registry provider; sign lines are saved as JSON
   strings; Mekanism machines refuse automated insertion at placement (prefill through their `items` NBT).
-  Plots must be at least 24 x 22 x 6 for the shared hostile-terrain fixture. The storage section still fails
-  one PSI count on NeoForge (dk-54d65c18), which stops `--all` before later sections.
+  Plots must be at least 24 x 22 x 6 for the shared hostile-terrain fixture. The storage fixture must physically power its hoppers during exact-count checks: setting
+  `enabled=false` without redstone is undone by neighbour updates. The apparent missing diamond
+  was in the output hopper (dk-54d65c18), with all 48 diamonds conserved.
 - **Sable logs every reload** for physics entries naming unregistered blocks, and its loader ignores
   `neoforge:conditions`, so a gated `kubejs/data` override cannot silence one (boot 6).
 - **Interstellaris gates crafting on research** (a `CraftingMenu` redirect on `setRecipeUsed`) and turns off

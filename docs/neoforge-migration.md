@@ -280,8 +280,8 @@ failure, and the Create contraption showcase runs with Sable present (below).
 
 **Showcase runs (local, flat world):** `mekanism_machines` 106/106 and `interstellaris_space` 128/128 pass, each
 with the flat-world check (FlatWorldFix keeps Superflat flat with Terralith) and the 384 command-form assertions
-across all three sections (`jobs/2026-10-30-neoforge-phase7/showcase-mek-14`, `showcase-is-8`). The storage section
-stops at one PSI count (dk-54d65c18), so `--all` is not green yet.
+across all three sections (`jobs/2026-10-30-neoforge-phase7/showcase-mek-14`, `showcase-is-8`). The initial storage failure (dk-54d65c18) was later traced to an unpowered hopper
+pause in the harness; the diamond was in the output hopper, not lost (see the private-port job evidence).
 
 **Interstellaris facts:** it gates crafting and its Fabrication Unit on per-player research
 (`ResearchHelper.canUseRecipe`), and disables Mekanism's teleporters (dk-aef6fa66). Sable's Rapier natives are an
@@ -322,3 +322,13 @@ Acceptance: `step1-boots/run-2026-10-30T05-30-39-317Z` **ANU PASS** (Done 87.606
 probe complete, exit 0). Full fast gate 495/495 before final staging checks; final touched suites
 pass, including hash verification after install and smoke process-scope ownership. `migrate check`
 has zero missing artifacts, dependency errors or warnings. Main/Stable/Local evidence unchanged.
+
+Storage investigation: `storage-diagnostic` reproduced 31 mounted diamonds and found the 32nd
+in the output hopper. Total 48 (mounted plus input chain) conserved. No Dank dock or DRT transfer
+was involved. The harness now powers both hoppers during exact accounting; its rebuild removes
+that temporary power before automatic flow. No jar change or skipped assertion.
+
+Step 2 acceptance: `showcase-all-arrival` **PASS 1277/1277** (storage 657, Interstellaris 128,
+Mekanism 106, flat-world 2, command forms 384), no skipped assertions. The first full run also
+exposed same-tick destination tracking after planet teleport; bounded later-tick arrival checks
+fix that harness race. `step2-boots/run-2026-10-30T05-42-34-529Z` **ANU PASS**.

@@ -30,9 +30,11 @@ global.evilEyeShowcaseCheck.checks.contraption_storage = function (h) {
   check(h.invoke() === 1, 'second invocation succeeds at same origin')
   h.verifyPlan(); check(glueCount() === 1, 'idempotent rebuild replaces glue instead of duplicating')
   check(plotEntities().size() === 1, 'rebuild produces no dropped item entities')
-  // Pause hoppers for exact per-inventory PSI accounting; the real automatic circuit runs next.
-  h.set(14, 4, 16, 'minecraft:hopper[facing=down,enabled=false]')
-  h.set(14, 2, 16, 'minecraft:hopper[facing=down,enabled=false]')
+  // A commanded enabled=false is reset by neighbour updates when the hopper has no redstone
+  // power. Physically power both during exact PSI accounting; the next rebuild clears these
+  // temporary blocks and restores the real automatic circuit.
+  h.set(15, 4, 16, 'minecraft:redstone_block')
+  h.set(15, 2, 16, 'minecraft:redstone_block')
   later(80, function () {
     var bearing = h.be(8, 2, 16), motor = h.be(8, 0, 16)
     check(motor.generatedSpeed.getValue() === 0 && bearing.getMovedContraption() === null, 'motor OFF and unassembled for 80 ticks')
@@ -47,6 +49,21 @@ global.evilEyeShowcaseCheck.checks.contraption_storage = function (h) {
       check(level.getBlockState(h.pos(9, 3, 16)).isAir() && level.getBlockState(h.pos(10, 3, 16)).isAir() && level.getBlockState(h.pos(11, 3, 16)).isAir(), 'all three storage blocks captured from world')
       check(h.be(14, 3, 16).canTransfer(), 'PSI docks automatically')
       var psi = h.handler(14, 3, 16), cases = [['standard drawer', 'minecraft:diamond', 32], ['compacting drawer', 'minecraft:iron_ingot', 18], ['iron chest', 'minecraft:emerald', 32]]
+      console.info('SHOWCASE_STORAGE_ACCOUNTING ' + JSON.stringify({
+        mountedDiamond: amount(all, 'minecraft:diamond'),
+        inputDiamond: amount(h.handler(14, 5, 16), 'minecraft:diamond'),
+        inputHopperDiamond: amount(h.handler(14, 4, 16), 'minecraft:diamond'),
+        outputHopperDiamond: amount(h.handler(14, 2, 16), 'minecraft:diamond'),
+        outputDiamond: amount(h.handler(14, 1, 16), 'minecraft:diamond'),
+        inputHopperState: String(level.getBlockState(h.pos(14, 4, 16))),
+        outputHopperState: String(level.getBlockState(h.pos(14, 2, 16)))
+      }))
+      check(String(level.getBlockState(h.pos(14, 4, 16))).indexOf('enabled=false') >= 0 &&
+        String(level.getBlockState(h.pos(14, 2, 16))).indexOf('enabled=false') >= 0, 'both accounting hoppers stay powered off after PSI docking')
+      check(amount(h.handler(14, 5, 16), 'minecraft:diamond') === 16 &&
+        amount(h.handler(14, 4, 16), 'minecraft:diamond') === 0 &&
+        amount(h.handler(14, 2, 16), 'minecraft:diamond') === 0 &&
+        amount(h.handler(14, 1, 16), 'minecraft:diamond') === 0, 'paused automation leaves all input diamonds and no transferred diamonds')
       cases.forEach(function (test) {
         var slot = -1
         for (var i = 0; i < psi.getSlots(); i++) if (String(psi.getStackInSlot(i).getId()) === test[1]) { slot = i; break }

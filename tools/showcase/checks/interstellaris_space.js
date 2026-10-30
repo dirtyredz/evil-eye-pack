@@ -19,20 +19,31 @@ global.evilEyeShowcaseCheck.checks.interstellaris_space = function (h) {
   later(20, function () {
   // Movement between bodies: the planet dimensions exist, generate terrain, and accept a traveller.
   ;['moon', 'mars', 'venus', 'enceladus', 'io'].forEach(function (name) { check(dimension(name) !== null, 'Interstellaris dimension loaded: ' + name) })
-  ;['moon', 'mars'].forEach(function (name) {
+  function travel(index) {
+    if (index === 2) { physics(); return }
+    var name = ['moon', 'mars'][index]
     var target = dimension(name)
     var top = target.getHeight(Heightmap.WORLD_SURFACE, 8, 8)
     var ground = String(target.getBlockState(new h.BP(8, top - 1, 8)))
     check(top > target.getMinBuildHeight() && ground.indexOf('air') < 0, name + ' generates solid ground (top ' + top + ': ' + ground + ')')
     h.cmd('summon minecraft:armor_stand ' + (o.x + 2) + ' ' + (o.y + 1) + ' ' + (o.z + 2) + ' {NoGravity:1b,Tags:["evileye_traveller"]}')
     check(h.run('execute in interstellaris:' + name + ' run tp @e[type=minecraft:armor_stand,tag=evileye_traveller] 8 ' + (top + 2) + ' 8') === 1, 'traveller teleported to ' + name)
-    var there = target.getEntities(null, new (Java.loadClass('net.minecraft.world.phys.AABB'))(0, top - 4, 0, 16, top + 8, 16))
-    var found = 0
-    for (var i = 0; i < there.size(); i++) if (there.get(i).getTags().contains('evileye_traveller')) found++
-    check(found === 1, 'traveller arrived in the ' + name + ' dimension')
-    h.cmd('kill @e[type=minecraft:armor_stand,tag=evileye_traveller]')
-    h.cmd('execute in interstellaris:' + name + ' run forceload remove 0 0')
-  })
+    // Dimension transfer can return success before the destination entity tracker exposes the
+    // traveller, especially when this section follows the longer storage run in --all.
+    var attempts = 0
+    later(1, function arrival() {
+      var there = target.getEntities(null, new (Java.loadClass('net.minecraft.world.phys.AABB'))(0, top - 4, 0, 16, top + 8, 16))
+      var found = 0
+      for (var i = 0; i < there.size(); i++) if (there.get(i).getTags().contains('evileye_traveller')) found++
+      if (found === 0 && ++attempts < 20) { later(1, arrival); return }
+      check(found === 1, 'traveller arrived in the ' + name + ' dimension')
+      h.cmd('kill @e[type=minecraft:armor_stand,tag=evileye_traveller]')
+      h.cmd('execute in interstellaris:' + name + ' run forceload remove 0 0')
+      travel(index + 1)
+    })
+  }
+  travel(0)
+  function physics() {
   // Sable assembly and physics: the floating pad becomes a sub-level.
   var px = o.x + 11, py = o.y + 4, pz = o.z + 10
   check(h.run('sable assemble area ' + px + ' ' + py + ' ' + pz + ' ' + (px + 2) + ' ' + py + ' ' + (pz + 2)) >= 1, 'sable assemble area captures the pad')
@@ -53,5 +64,6 @@ global.evilEyeShowcaseCheck.checks.interstellaris_space = function (h) {
       h.done()
     })
   })
+  }
   })
 }

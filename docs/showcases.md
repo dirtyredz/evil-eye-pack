@@ -193,3 +193,9 @@ belongs in a future section.
 5. Update this coverage table and [FEATURES](FEATURES.md), plus architecture/gotchas
    if contracts change. Rehash, run the fast gate and the section headlessly,
    inspect every assertion and log comparison, then hand off client-only checks.
+
+NeoForge fixture details (2026-10-30): exact storage accounting uses temporary redstone power
+to pause both hoppers; setting `enabled=false` alone is undone by neighbour updates. The next
+rebuild restores automatic flow. Planet travel waits at most 20 ticks for destination entity
+tracking after a successful teleport. Full `--all` acceptance: 1277/1277 assertions in
+`jobs/2026-10-30-alexsmobs-pin/showcase-all-arrival`; diamond investigation: dk-54d65c18.
