@@ -51,10 +51,10 @@
    "action": "repoint",
    "target": {
     "source": "direct",
-    "url": "https://github.com/dirtyredz/dank-recipe-transfer/releases/download/neoforge-1.21.1-v0.2.0/dank_recipe_transfer-1.21.1-neoforge-0.2.0.jar",
-    "sha256": "3753e67929faa0c7aaf549bd2c562984ccbc04abeefd2788c559c1cf82180275"
+    "url": "https://github.com/dirtyredz/dank-recipe-transfer/releases/download/neoforge-1.21.1-v0.2.1/dank_recipe_transfer-1.21.1-neoforge-0.2.1.jar",
+    "sha256": "9921f8fd09c0a84da8305492ecdcf2f028f22007a8785563b043278030fcb8ef"
    },
-   "reason": "Owner's port (minecraft-mods), first of the seven: 0.2.0 prerelease built from dbb718a (fork of 1.20.1 233d9fd), same mod id, against the frozen NeoForge 21.1.265, Dank Storage 20, JEI 19.70.0.464 and EMI 1.1.24. Direct GitHub release pin, sha256 checked against the release digest; no update table."
+   "reason": "Owner's port (minecraft-mods), first of the seven: 0.2.1 prerelease built from 6605b8d fixes the client-only JEI recipe-transfer verifier failure in 0.2.0; same mod id and frozen NeoForge/Dank Storage/viewer targets. Direct GitHub release pin, sha256 checked against the release digest; no update table."
   },
   "mods/roundwood.pw.toml": {
    "action": "repoint",
@@ -73,6 +73,15 @@
     "sha256": "90a6da8856f1a633ed3d2354b1b1624265de3684740f37c5d50923e4a853b996"
    },
    "reason": "Owner's port (minecraft-mods), third of the seven: FlatWorldFix 1.0.0 for NeoForge 1.21.1, built from 26b2fd2 (fork of 1.20.1 f872a37), mod id unchanged. Kept and ported rather than swapped for Give Me My Flat World. Direct GitHub release pin, sha256 checked against the release digest; no update table."
+  },
+  "mods/jade.pw.toml": {
+   "action": "repoint",
+   "target": {
+    "source": "modrinth",
+    "project": "nvQzSEkH",
+    "version": "43sRR8f6"
+   },
+   "reason": "Jade 15.10.3 is the last 1.21.1 build compatible with Thirst Was Taken 2.1.5's mandatory FluidView redirect."
   },
   "mods/project-1029454.pw.toml": {
    "action": "drop",

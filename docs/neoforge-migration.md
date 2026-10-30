@@ -93,29 +93,29 @@ Polymorph `polymorph-neoforge-1.2.0+1.21.1.jar` (beta) and Dank Storage
 run the [client mixin audit](development.md#client-mixin-audit-neoforge-1211) on the
 exact pinned candidate before any owner launch. Require exit 0, a completed nonempty
 CLIENT sweep and no diagnostic exclusions. Server success alone cannot qualify client
-mixins. Keep dk-d4a36381 open until the orchestrator observes the fixed DRT 0.2.1 pin
-passing this check; DRT 0.2.0 is the negative acceptance fixture.
+mixins. DRT 0.2.0 remains the negative acceptance fixture; DRT 0.2.1 passed the complete
+pin sweep and dk-d4a36381 is closed.
 
 The initial strict audit also exposed a Thirst/Jade injection failure and unresolved
 missing/unapplied targets. Jade is pinned back to 15.10.3, whose `FluidView.readDefault`
 bytecode matches Thirst 2.1.5; the six bootstrap-layer targets and 14 absent optional/no-op
-targets have exact reasoned entries in `tools/client_mixin/allowlist.json`. One real warning
-remains: Steam 'n' Rails targets the pre-1.21 Controls-screen package (dk-2d33cee0), so the
-DRT-excluded check still correctly fails. Evidence is under
-`jobs/2026-10-31-client-mixin-triage/`.
+targets have exact reasoned entries in `tools/client_mixin/allowlist.json`. Steam 'n' Rails
+still targets the pre-1.21 Controls-screen package; the owner accepted that non-crashing
+cosmetic behavior loss as an exact `known-minor` exception while dk-2d33cee0 remains open.
+Triage evidence is under `jobs/2026-10-31-client-mixin-triage/`.
 
 Observed on Valhalla (2026-10-31 brief; JVM time excludes staging/host waits):
 
 | Inputs | Target sweep | Result | JVM time |
 |---|---|---|---|
-| Current pins, DRT 0.2.0 | 266 configs / 1819 targets | FAIL: DRT `VerifyError`, Thirst/Jade injection error, missing/unapplied targets | 265.649 s |
-| Same pins excluding only DRT | 265 configs / 1818 targets | FAIL: DRT error absent; Thirst/Jade, 15 missing-target warnings and 7 unapplied targets remain | 245.498 s |
+| Pre-triage pins, DRT 0.2.0 | 266 configs / 1819 targets | FAIL: DRT `VerifyError`, Thirst/Jade injection error, missing/unapplied targets | 265.649 s |
+| Pre-triage pins excluding only DRT | 265 configs / 1818 targets | FAIL: DRT error absent; Thirst/Jade, 15 missing-target warnings and 7 unapplied targets remain | 245.498 s |
+| Final pins, DRT 0.2.1 + Jade 15.10.3 | 266 configs / 1819 targets | **PASS**: all targets verified; 15 exact reviewed missing targets and six exact reviewed bootstrap targets | 230.161 s |
 
-The requested DRT-excluded **PASS is not established**. Both sweeps completed; neither
-is green. Logs/reports are in `current-pins-final/` and `without-drt/` beneath that job.
-The real JVM verifier fixture and Node fast gate pass. No visible game window was opened.
-ANU was not run; the custom launch target has no display requirement, but needs copied
-client libraries including Windows natives and the same private pins.
+Final evidence is `jobs/2026-10-31-drt-021/client-audit-all-pins/`: verdict exit 0,
+no verifier/mixin/injection errors and no failed target. The fresh-world ANU pack test
+`run-2026-10-30T18-10-55-205Z` also passed alone (Done 89.206 s, probe complete,
+zero new findings). No visible game window was opened.
 
 `pack.toml [versions]` decides the runtime (`tools/server_smoke/runtime.cjs`). Each loader runtime
 has its own loader base, local stage, cached worlds and ANU lane:
@@ -171,7 +171,7 @@ Restoration history is in `tools/packwiz/migration/deferred/README.md`.
 
 | Port | Pin | Integrated |
 |---|---|---|
-| Dank Recipe Transfer | 0.2.0 prerelease, `dank_recipe_transfer-1.21.1-neoforge-0.2.0.jar`, sha256 `3753e679…0275` | 2026-10-30 (parked nothing; malware guard clean) |
+| Dank Recipe Transfer | 0.2.1 prerelease, `dank_recipe_transfer-1.21.1-neoforge-0.2.1.jar`, sha256 `9921f8fd…b8ef` (built from 6605b8d) | 2026-10-31 (replaces 0.2.0's client verifier failure; parked nothing; malware guard clean) |
 | Roundwood | 0.17.0 prerelease, `roundwood-1.21.1-neoforge-0.17.0.jar`, sha256 `b6877267…c006` (built from 5e8988e) | 2026-10-30 (parked nothing; ids unchanged so `decor.json` stays; malware guard clean) |
 | FlatWorldFix | 1.0.0, `flatworldfix-1.21.1-neoforge-1.0.0.jar`, sha256 `90a6da88…b996` (built from 26b2fd2) | 2026-10-30 (parked nothing; malware guard clean). First run against Terralith 1.21.1: every showcase boot now checks four far Superflat columns (`tools/showcase/flat_world.js`) |
 | Ars Instrumentum | 5.0.0 (public LGPL fork), `ars_instrumentum-1.21.1-neoforge-5.0.0.jar`, sha256 `6d62964a…fb4e` (built from dc29a50) | 2026-10-30 (client config restored; needs Ars Nouveau ≥ 5.13.3; malware guard clean) |

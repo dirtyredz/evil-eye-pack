@@ -23,7 +23,8 @@ valid bytecode, missing targets, absent optional method types and no static init
 The Node supervisor requires a nonempty completed CLIENT report and zero process/verifier/
 mixin errors. It compares missing and unhandled findings with `allowlist.json` by exact
 mod/config/mixin/target fields; each reviewed match has a reason, while any changed or new
-finding fails. Failed transformations and incomplete evidence cannot be allow-listed.
+finding fails. Accepted cosmetic behavior loss is separately tagged `known-minor` with a
+Docket id. Failed transformations and incomplete evidence cannot be allow-listed.
 Timeout or absent completion is incomplete evidence. Inputs are read-only; all libraries,
 mods, configs, logs and compiler outputs are copied into a new artifact run. The host guard
 waits for the Minecraft JVM slot and the process scope stops owned children.

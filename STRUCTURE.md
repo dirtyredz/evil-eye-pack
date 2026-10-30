@@ -116,7 +116,8 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte hashing (`hashBytes`, `sha256`).
 - `tools/client_mixin/` — offline CLIENT mixin audit: `stage.cjs` copies pinned pack files and cached
     client libraries, `run.cjs` compiles and supervises the bounded JVM, `verdict.cjs` rejects incomplete
-    evidence, and `allowlist.json` records exact reviewed harmless findings with reasons.
+    evidence, and `allowlist.json` records exact reviewed findings with reasons and separately tagged
+    Docket-backed known-minor exceptions.
     `probe/ClientMixinLaunch.java` uses NeoForge's production client discovery and transformer without
     entering Minecraft's main method; `tests/` covers staging arguments, allow-list validation and verdicts.
 - `tools/world_trial/` — guarded independent snapshots (`copy.cjs`, `snapshot.cjs`), offline

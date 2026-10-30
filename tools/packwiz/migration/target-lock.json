@@ -2837,7 +2837,7 @@
     "url": "https://github.com/dirtyredz/dank-recipe-transfer/releases/download/v0.1.0/dank_recipe_transfer-1.20.1-0.1.0.jar"
    },
    "provisional": false,
-   "rationale": "Owner's port (minecraft-mods), first of the seven: 0.2.0 prerelease built from dbb718a (fork of 1.20.1 233d9fd), same mod id, against the frozen NeoForge 21.1.265, Dank Storage 20, JEI 19.70.0.464 and EMI 1.1.24. Direct GitHub release pin, sha256 checked against the release digest; no update table.",
+   "rationale": "Owner's port (minecraft-mods), first of the seven: 0.2.1 prerelease built from 6605b8d fixes the client-only JEI recipe-transfer verifier failure in 0.2.0; same mod id and frozen NeoForge/Dank Storage/viewer targets. Direct GitHub release pin, sha256 checked against the release digest; no update table.",
    "target": {
     "channel": "beta",
     "declares": [
@@ -2848,25 +2848,25 @@
      "dank_recipe_transfer required minecraft [1.21.1,1.21.2)",
      "dank_recipe_transfer required neoforge [21.1.265,21.2)"
     ],
-    "filename": "dank_recipe_transfer-1.21.1-neoforge-0.2.0.jar",
+    "filename": "dank_recipe_transfer-1.21.1-neoforge-0.2.1.jar",
     "loader": "neoforge",
     "metafile": "mods/dank-recipe-transfer.pw.toml",
     "mods": [
-     "dank_recipe_transfer@0.2.0"
+     "dank_recipe_transfer@0.2.1"
     ],
     "name": "Dank Recipe Transfer",
     "publisher": {
-     "sha256": "3753e67929faa0c7aaf549bd2c562984ccbc04abeefd2788c559c1cf82180275",
-     "size": 117693
+     "sha256": "9921f8fd09c0a84da8305492ecdcf2f028f22007a8785563b043278030fcb8ef",
+     "size": 117603
     },
-    "sha1": "207d0f7af6d6bbc394310825cea1241e0dc60509",
-    "sha256": "3753e67929faa0c7aaf549bd2c562984ccbc04abeefd2788c559c1cf82180275",
-    "sha512": "f86ea7775c242c557ea5bd8dbf2823e9185b9ba06226a28c13ad6824be6e8398f3fcd8390e34fe5a79b89a3d2b705cc7fbd2ebf10523f35b5f553ca93da9dba3",
+    "sha1": "6b877a1268acee2564ab871a77691b2e687626b7",
+    "sha256": "9921f8fd09c0a84da8305492ecdcf2f028f22007a8785563b043278030fcb8ef",
+    "sha512": "f26b8705495a9cf9074a72a352753ef391fa055413ab56b0083f6079c2e795d85ffd9991c3bfd4565c4e1ee9672ad81c5a74fb8d4ec39280f7c9b602a380b120",
     "side": "both",
-    "size": 117693,
+    "size": 117603,
     "source": "direct",
-    "url": "https://github.com/dirtyredz/dank-recipe-transfer/releases/download/neoforge-1.21.1-v0.2.0/dank_recipe_transfer-1.21.1-neoforge-0.2.0.jar",
-    "versionNumber": "neoforge-1.21.1-v0.2.0"
+    "url": "https://github.com/dirtyredz/dank-recipe-transfer/releases/download/neoforge-1.21.1-v0.2.1/dank_recipe_transfer-1.21.1-neoforge-0.2.1.jar",
+    "versionNumber": "neoforge-1.21.1-v0.2.1"
    }
   },
   {
@@ -3667,6 +3667,7 @@
   {
    "action": "add",
    "metafile": "mods/evileye-migration.pw.toml",
+   "old": null,
    "provisional": false,
    "rationale": "Private local migration bridge built from minecraft-mods bd5f1ce (dev.4 colony banner fix). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover.",
    "target": {
@@ -5076,7 +5077,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "Jade 15.10.3 is the last 1.21.1 build compatible with Thirst Was Taken 2.1.5's mandatory FluidView redirect",
+   "rationale": "Jade 15.10.3 is the last 1.21.1 build compatible with Thirst Was Taken 2.1.5's mandatory FluidView redirect.",
    "target": {
     "channel": "release",
     "declares": [

@@ -22,6 +22,8 @@
   `tools/client_mixin/allowlist.json`; there is no blanket exemption. Bootstrap-layer
   classes can link successfully without traversing the game transformer, so the final
   unhandled-target check plus exact baseline prevents new blind spots from passing.
+  A deliberately accepted behavior loss must be marked `known-minor` with its Docket id;
+  Railways' Controls-screen cosmetic issue is the sole current example (dk-2d33cee0).
 
 ## Copied-world conversion
 

@@ -4835,7 +4835,7 @@ metafile = true
 
 [[files]]
 file = "mods/dank-recipe-transfer.pw.toml"
-hash = "2c3078af0d8ea3d743ba6ddf5ac6596de9fbe402c41cfb8aa00ea16cf2dc0210"
+hash = "aab66e8e8f3c15ba950c6f7aed932631164f0befd67afe27de7cf5f420e6df8a"
 metafile = true
 
 [[files]]

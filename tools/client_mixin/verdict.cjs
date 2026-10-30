@@ -18,7 +18,7 @@ function verdict(result, allowlist = { missingTargets: [], unhandled: [] }) {
   const allowedMissingTargets = [], newMissingTargets = [];
   for (const finding of missingTargets) {
     const allowed = allowedMissingKeys.get(key(finding, ['mod', 'config', 'mixin', 'target']));
-    (allowed ? allowedMissingTargets : newMissingTargets).push(allowed ? { ...finding, reason: allowed.reason } : finding);
+    (allowed ? allowedMissingTargets : newMissingTargets).push(allowed ? { ...finding, ...allowed } : finding);
   }
   const allowedUnhandled = [], newUnhandled = [];
   for (const group of unhandled) for (const target of group.targets) {

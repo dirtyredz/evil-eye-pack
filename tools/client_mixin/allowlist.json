@@ -43,6 +43,14 @@
       "reason": "Optional Tough As Nails interoperability; Tough As Nails is not installed in this pack."
     },
     {
+      "mod": "railways",
+      "config": "railways-common.mixins.json",
+      "mixin": "client.MixinKeyBindsListKeyEntry",
+      "target": "net.minecraft.client.gui.screens.controls.KeyBindsList$KeyEntry",
+      "reason": "Known minor cosmetic issue accepted by the orchestrator on 2026-10-31: Railways keybinds may appear conflicting on the Controls screen; this is not a crash risk. Re-check on a new Railways build.",
+      "known-minor": "dk-2d33cee0"
+    },
+    {
       "mod": "create_connected",
       "config": "create_connected.mixins.json",
       "mixin": "compat.CopycatBlockMixin",

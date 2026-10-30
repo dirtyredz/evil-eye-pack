@@ -22,6 +22,9 @@ function loadAllowlist(file) {
       if (typeof entry.reason !== 'string' || entry.reason.trim().length < 20) {
         throw Error(`Client-mixin allow-list ${kind}[${index}] needs a specific reason`);
       }
+      if ('known-minor' in entry && (kind !== 'missingTargets' || !/^dk-[0-9a-f]{8}$/.test(entry['known-minor']))) {
+        throw Error(`Client-mixin allow-list ${kind}[${index}] known-minor must be a Docket id`);
+      }
       const id = key(entry, fields);
       if (seen.has(id)) throw Error(`Duplicate client-mixin allow-list ${kind} entry: ${id.replaceAll('\0', ' / ')}`);
       seen.add(id);

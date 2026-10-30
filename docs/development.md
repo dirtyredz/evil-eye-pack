@@ -93,9 +93,11 @@ All owned processes stop on completion or interruption.
 
 `tools/client_mixin/allowlist.json` contains exact, reviewed exceptions for harmless
 missing optional-compat targets and bootstrap/loader classes that cannot revisit the
-game transformer during this pre-main sweep. Every entry includes a reason. A changed
-mod, config, mixin or target is a new failure; verifier/injection errors and failed
-transforms are never allow-listed. Do not add broad patterns or lost behaviour to it.
+game transformer during this pre-main sweep. The one owner-accepted cosmetic behavior
+loss is separately marked `"known-minor": "dk-2d33cee0"`; that marker must be a Docket
+reference. Every entry includes a reason. A changed mod, config, mixin or target is a
+new failure; verifier/injection errors and failed transforms are never allow-listed.
+Do not add broad patterns or unrecorded behavior loss to it.
 
 For differential diagnosis only, append `--exclude <exact-pinned-jar-filename>` to a
 second run with a fresh output path. Exclusions are recorded and never qualify the

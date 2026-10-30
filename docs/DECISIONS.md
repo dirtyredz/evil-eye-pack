@@ -2,6 +2,16 @@
 
 Newest first.
 
+## 2026-10-31 - Accept Railways Controls warning as a known minor issue
+
+- Accept Steam 'n' Rails' stale `client.MixinKeyBindsListKeyEntry` target as a known
+  minor cosmetic issue for the NeoForge 1.21.1 owner trial. Railways keybinds may be
+  shown as conflicting with one another on the Controls screen; this is not a crash risk.
+- Keep the exception exact and separate from harmless optional/bootstrap findings:
+  `tools/client_mixin/allowlist.json` marks only that mod/config/mixin/target tuple with
+  `"known-minor": "dk-2d33cee0"`. Any changed or additional finding still fails.
+- Leave dk-2d33cee0 open and re-check it when a new Railways build is available.
+
 ## 2026-10-31 - Phase 9 acceptance and private delivery
 
 - The owner accepts Polymorph SelectedRecipe reset as a transient preference reset,
