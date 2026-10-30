@@ -53,7 +53,9 @@ async function trialBoot({root,cache,job,name,targets,restart=false,coverage=nul
     const stopRequest=path.join(server,'world-trial-stop-request');
     if(fs.existsSync(stopRequest))throw new Error('Remove the previous stop request before a new boot');
     const result=await boot(server,{priority:'AboveNormal',sample:10,silent:180,timeout:3600,completeTimeout:3000,complete:()=>fs.existsSync(stopRequest)||(fs.existsSync(complete)&&JSON.parse(fs.readFileSync(complete,'utf8')).token===token)},console.log,{scope});
-    const evidence=path.join(job,name+'-'+label);output(evidence,job);fs.mkdirSync(evidence,{recursive:false});
+    let evidence=path.join(job,name+'-'+label),attempt=1;
+    while(fs.existsSync(evidence))evidence=path.join(job,name+'-'+label+'-'+(++attempt));
+    output(evidence,job);fs.mkdirSync(evidence,{recursive:false});
     for(const rel of ['console.log','world-trial-registries.json','world-trial-complete.json','world-trial-players.json'])if(fs.existsSync(path.join(server,rel)))fs.copyFileSync(path.join(server,rel),path.join(evidence,rel));
     for(const rel of ['logs','crash-reports'])if(fs.existsSync(path.join(server,rel)))copy(path.join(server,rel),path.join(evidence,rel),job);
     fs.writeFileSync(path.join(evidence,'boot.json'),JSON.stringify({...result,token,targets:targets.length,coverage},null,2)+'\n');

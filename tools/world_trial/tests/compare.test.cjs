@@ -25,3 +25,12 @@ test('mod-owned camouflage and cell payload fields cannot silently disappear',()
   const b=structuredClone(a);delete b.blockEntities[0].nbt.Camouflage;
   assert.equal(compare(a,b).verdict,'LOSS');
 });
+test('I&F numeric variants compare to verified CE names without hiding actual variant loss',()=>{
+  const a=empty();a.entities=[{id:'iceandfire:fire_dragon',uuid:'u',nbt:{Variant:2,AgeTicks:24000,Gender:1}}];
+  const b=structuredClone(a);b.entities[0].nbt.Variant='bronze';
+  assert.equal(compare(a,b).verdict,'PASS');assert.equal(compare(a,b).differences[0].classification,'explained');
+  b.entities[0].nbt.Variant='red';assert.equal(compare(a,b).verdict,'LOSS');
+});
+test('compound key order is not semantic loss',()=>{
+  const a=empty();a.data['data/dank.dat']={owner:'u',count:7};const b=empty();b.data['data/dank.dat']={count:7,owner:'u'};assert.equal(compare(a,b).verdict,'PASS');
+});

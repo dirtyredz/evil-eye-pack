@@ -3,7 +3,9 @@
 // Never equate an unchanged opaque file with a successful live storage-access check.
 function semantics(inv) {
   const data=inv.data;
-  const players=Object.fromEntries(Object.entries(data).filter(([f])=>f.startsWith('playerdata/')).map(([f,p])=>[f,{uuid:p.UUID,inventory:p.Inventory,enderChest:p.EnderItems,curios:p.ForgeCaps?.['curios:inventory']??p['neoforge:attachments']?.['curios:inventory'],attachments:p.ForgeCaps??p['neoforge:attachments'],position:p.Pos,dimension:p.Dimension}]));
+  const playerRecords=Object.entries(data).filter(([f])=>f.startsWith('playerdata/'));
+  if(data['level.dat']?.Data?.Player)playerRecords.push(['level.dat#Data.Player',data['level.dat'].Data.Player]);
+  const players=Object.fromEntries(playerRecords.map(([f,p])=>[f,{uuid:p.UUID,inventory:p.Inventory,enderChest:p.EnderItems,curios:p.ForgeCaps?.['curios:inventory']??p['neoforge:attachments']?.['curios:inventory'],attachments:p.ForgeCaps??p['neoforge:attachments'],position:p.Pos,dimension:p.Dimension}]));
   const colonies=Object.fromEntries(Object.entries(data).filter(([f])=>/minecolonies\/.*colony\d+\.dat$/.test(f)).map(([f,c])=>[f,{id:c.id,owner:c.owner,ownerid:c.ownerid,owners:c.owners,center:c.center,buildings:c.buildingManager?.buildings,citizens:c.citizenManager?.citizens,requests:c.requestManager,work:c.work}]));
   const dank=Object.fromEntries(Object.entries(data).filter(([f])=>/data\/dankstorage\//.test(f)).map(([f,d])=>{
     const c=d.data?.contents??d.contents??d;

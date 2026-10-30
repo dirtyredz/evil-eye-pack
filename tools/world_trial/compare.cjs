@@ -1,14 +1,18 @@
 'use strict';
 // Conservative differences remain LOSS until reviewed with explicit evidence, never inferred expected.
-const { json }=require('./inventory.cjs');
+const {isDeepStrictEqual}=require('node:util');
+// Stable beta-5 Entity{Fire,Ice,Lightning}Dragon#getVariantName bytecode; see GOTCHAS.
+const VARIANTS={fire:['red','green','bronze','gray'],ice:['blue','white','sapphire','silver'],lightning:['electric','amythest','copper','black']};
+function variant(id,value){const type=/^iceandfire:(fire|ice|lightning)_dragon$/.exec(id);return type&&Number.isInteger(value)?VARIANTS[type[1]][value]??value:value;}
 function compare(before,after,{registries,expected={}}={}) {
   const differences=[];
-  function diff(kind,key,a,b) {
-    if(json(a)===json(b))return;
+  function diff(kind,key,a,b,explanation=null) {
+    if(isDeepStrictEqual(a,b))return;
     const rule=expected[kind+'|'+key];
-    differences.push({kind,key,before:a??null,after:b??null,classification:rule?'expected':'LOSS',reason:rule||'unexplained semantic difference'});
+    differences.push({kind,key,before:a??null,after:b??null,classification:explanation?'explained':rule?'expected':'LOSS',reason:explanation||rule||'unexplained semantic difference'});
   }
   for(const [side,inv]of [['before',before],['after',after]])if(inv.errors.length)diff('incomplete',side,[],inv.errors);
+  for(const [key,value]of Object.entries(before.terrain||{}))diff('terrain encoding',key,value,after.terrain?.[key]);
   for(const kind of ['blocks','biomes'])for(const key of Object.keys(before[kind])) {
     // Palette membership is a reference count, not a biome volume count.
     if(kind==='biomes') {if(!after[kind][key])diff(kind,key,true,false);}
@@ -19,11 +23,12 @@ function compare(before,after,{registries,expected={}}={}) {
     const map=new Map(after[kind].map(e=>[key(e),e]));
     for(const e of before[kind]) {
       const next=map.get(key(e));if(!next){diff(kind,key(e),e,null);continue;}
-      if(/_dragon$/.test(e.id))for(const field of ['Variant','AgeTicks','Gender','Owner','UUID','CustomName','Items'])diff('dragon',key(e)+'|'+field,e.nbt[field],next.nbt[field]);
+      if(/_dragon$/.test(e.id))for(const field of ['Variant','AgeTicks','Gender','Owner','UUID','CustomName','Items'])diff('dragon',key(e)+'|'+field,e.nbt[field],next.nbt[field],field==='Variant'&&variant(e.id,e.nbt[field])===variant(next.id,next.nbt[field])?'Stable numeric dragon variant becomes its equivalent CE name':null);
       for(const field of ['Owner','OwnerUUID','UUID','CustomName','Items','Inventory','ForgeCaps','neoforge:attachments'])diff(kind,key(e)+'|'+field,e.nbt[field],next.nbt[field]);
       // Unknown mod-owned fields are not assumed disposable (Roundwood camouflage, AE2 keys,
       // Ars spell payloads, locks and attachments). Review tick/codec deltas explicitly.
-      diff(kind+' payload',key(e),e.nbt,next.nbt);
+      const payload=x=>/^iceandfire:.*_dragon$/.test(x.id)?{...x.nbt,Variant:variant(x.id,x.nbt.Variant)}:x.nbt;
+      diff(kind+' payload',key(e),payload(e),payload(next));
     }
   }
   // Per-location stack totals expose discarded inventories; retain payloads for component review.

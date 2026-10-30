@@ -1,5 +1,22 @@
 # Gotchas
 
+## Copied-world conversion
+
+- I&F beta-5 stores dragon `Variant` as an integer; CE saves a name. Stable's pinned
+  `EntityFireDragon#getVariantName` maps 0–3 to red/green/bronze/gray; ice maps to
+  blue/white/sapphire/silver; lightning maps to electric/amythest/copper/black. The
+  world-trial comparator recognizes these verified names. Age, gender and UUID must
+  still match. Evidence: `jobs/2026-10-30-world-trial/losses/*-dragon-bytecode.txt`.
+- Region files can contain pending entities in partially generated terrain as well as
+  current entities in `entities/*.mca`. This save has 26 current wild dragons and one
+  pending terrain dragon. Keep those populations separate when comparing generation.
+- Dank `ExtendedCount` is authoritative; its legacy byte `Count` can be negative after
+  wrapping. Experience-orb entities also carry `Count`, but are not item stacks.
+- KubeJS exposes level dimension and entity UUID as properties. PlayerList's single-player
+  `save` is protected and `getPlayers()` is unmodifiable. The world probe uses the public
+  `remove(player)` logout path, verified in pinned bytecode to invoke save first, for
+  original-UUID stand-in players. It never adds them to the active player list.
+
 ## Mod map timing
 
 - Forge 47.4.10 DEBUG logs expose container creation and aggregate deferred queues,
