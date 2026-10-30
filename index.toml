@@ -701,6 +701,10 @@ file = "config/ars_elemental/glyph_watery_grave.toml"
 hash = "00fb52a45b1d60a3b590621519a1759be651f0b36eccdbc8b01f28deb83abaaa"
 
 [[files]]
+file = "config/ars_instrumentum-client.toml"
+hash = "f85c85191bf0fc66c2d4f58c239c0440c27a3554dd023f8b7653fe3286255a03"
+
+[[files]]
 file = "config/ars_nouveau-client.toml"
 hash = "49fca67e5ae2e3658c5ff7f5c63f0f3482aae56f86c7f0ef0194523d135762d7"
 
@@ -3825,6 +3829,11 @@ metafile = true
 [[files]]
 file = "mods/ars-energistique.pw.toml"
 hash = "77c22c9c5acc1be0907e043a198e7c068823c6da58c566caac7110975dcf96cd"
+metafile = true
+
+[[files]]
+file = "mods/ars-instrumentum.pw.toml"
+hash = "2ab231262c861ee68cd5e7bab60bf5f552857b705fdedb13e8735637126de3cb"
 metafile = true
 
 [[files]]

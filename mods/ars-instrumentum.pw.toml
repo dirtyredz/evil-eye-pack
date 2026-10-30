@@ -1,0 +1,8 @@
+name = "Ars Instrumentum"
+filename = "ars_instrumentum-1.21.1-neoforge-5.0.0.jar"
+side = "both"
+
+[download]
+url = "https://github.com/dirtyredz/ArsInstrumentum/releases/download/neoforge-1.21.1-v5.0.0/ars_instrumentum-1.21.1-neoforge-5.0.0.jar"
+hash-format = "sha256"
+hash = "6d62964a6227a266798d0a17fd5c8281a938d027e060f5415799ede2b37cfb4e"

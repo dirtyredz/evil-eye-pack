@@ -710,7 +710,7 @@
    }
   },
   {
-   "action": "defer",
+   "action": "repoint",
    "metafile": "mods/ars-instrumentum.pw.toml",
    "old": {
     "file": "5047343",
@@ -723,7 +723,33 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+   "rationale": "Owner's port (minecraft-mods, public LGPL fork), fourth of the seven: Ars Instrumentum 5.0.0 built from dc29a50; mod id and all 9 registry / 43 recipe-data ids of 4.1.0 kept. Requires Ars Nouveau [5.13.3,) and Curios. Direct GitHub release pin, sha256 = release digest; no update table.",
+   "target": {
+    "channel": "release",
+    "declares": [
+     "ars_instrumentum required ars_nouveau [5.13.3,)",
+     "ars_instrumentum required minecraft [1.21.1,1.21.2)"
+    ],
+    "filename": "ars_instrumentum-1.21.1-neoforge-5.0.0.jar",
+    "loader": "neoforge",
+    "metafile": "mods/ars-instrumentum.pw.toml",
+    "mods": [
+     "ars_instrumentum@5.0.0"
+    ],
+    "name": "Ars Instrumentum",
+    "publisher": {
+     "sha256": "6d62964a6227a266798d0a17fd5c8281a938d027e060f5415799ede2b37cfb4e",
+     "size": 154745
+    },
+    "sha1": "f688bf266c736299fae14ec487080415f4412c5e",
+    "sha256": "6d62964a6227a266798d0a17fd5c8281a938d027e060f5415799ede2b37cfb4e",
+    "sha512": "e144c23abe6e13c8a847093ba4e6452bb43196bd4a32d7fb41b6895574a52e0156f456768f168a08f78a227ba9dda726fa631c74f52a1c27baddcab861139332",
+    "side": "both",
+    "size": 154745,
+    "source": "direct",
+    "url": "https://github.com/dirtyredz/ArsInstrumentum/releases/download/neoforge-1.21.1-v5.0.0/ars_instrumentum-1.21.1-neoforge-5.0.0.jar",
+    "versionNumber": "neoforge-1.21.1-v5.0.0"
+   }
   },
   {
    "action": "repoint",

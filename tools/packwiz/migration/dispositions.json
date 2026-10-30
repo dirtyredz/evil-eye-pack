@@ -17,8 +17,13 @@
    "reason": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
   },
   "mods/ars-instrumentum.pw.toml": {
-   "action": "defer",
-   "reason": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+   "action": "repoint",
+   "target": {
+    "source": "direct",
+    "url": "https://github.com/dirtyredz/ArsInstrumentum/releases/download/neoforge-1.21.1-v5.0.0/ars_instrumentum-1.21.1-neoforge-5.0.0.jar",
+    "sha256": "6d62964a6227a266798d0a17fd5c8281a938d027e060f5415799ede2b37cfb4e"
+   },
+   "reason": "Owner's port (minecraft-mods, public LGPL fork), fourth of the seven: Ars Instrumentum 5.0.0 built from dc29a50; mod id and all 9 registry / 43 recipe-data ids of 4.1.0 kept. Requires Ars Nouveau [5.13.3,) and Curios. Direct GitHub release pin, sha256 = release digest; no update table."
   },
   "mods/ice-and-fire-dragons.pw.toml": {
    "action": "defer",

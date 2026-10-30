@@ -8,7 +8,7 @@ The owned ports (minecraft-mods) without a NeoForge 1.21.1 build yet have `defer
 |---|---|
 | Alex's Caves (`alexscaves/`) | `config/alexscaves-*.toml`, `config/alexscaves_biome_generation/`, the Dragons Plus sandpaper override for its chocolate block, the original `kubejs/server_scripts/uranium.js` (its uranium → yellorium recipes) |
 | Alex's Mobs (`alexsmobs/`) | `config/alexsmobs.toml`, `config/alexsmobs/` spawn and mob configs |
-| Ars Instrumentum (`ars_instrumentum/`) | `config/ars_instrumentum-client.toml` |
+| Ars Instrumentum | restored 2026-10-30 (5.0.0 pin; `config/ars_instrumentum-client.toml` moved back) |
 | Ice and Fire (`iceandfire/`) | `config/iceandfire-*.toml`, `config/iceandfire/` biome lists, the generated `kubejs/data/iceandfire/` copper overrides, ADLods `sapphire.cfg` and `silver.cfg` (Ice and Fire ores only) |
 | Dank Recipe Transfer, Roundwood, FlatWorldFix | restored 2026-10-30 (0.2.0, 0.17.0 and 1.0.0 pins; they parked nothing) |
 
