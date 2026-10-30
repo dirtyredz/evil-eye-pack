@@ -2,16 +2,31 @@
 
 Newest first.
 
+## 2026-10-31 - Phase 9 acceptance and private delivery
+
+- The owner accepts Polymorph SelectedRecipe reset as a transient preference reset,
+  agreed with minecraft-mods. It is recorded, not classified as LOSS.
+- For this gate the domain audits are authoritative. Raw full-comparison differences
+  overlap fields and encodings; they are not counts of deleted objects. Remaining
+  unqualified categories become owner walk-through checks, not Phase 9 blockers.
+- The owner is currently the only player. Private Alex's Mobs, Alex's Caves, Ice and
+  Fire and evileye_migration jars stay local on Valhalla; no public repository or
+  download host. Prefer hash-verified direct copies if the installer can coexist;
+  otherwise use the existing temporary loopback overlay and document why.
+
 ## 2026-10-30 - Evil Eye World Migration bridge
 
-- Pin evileye_migration 0.1.0-dev.1 privately by SHA-256 and size, using the same
-  local-source route as the Alex forks. Built from minecraft-mods 8b30349; no public URL.
+- Pin evileye_migration 0.1.0-dev.4 privately by SHA-256 and size, using the same
+  local-source route as the Alex forks. Built from minecraft-mods bd5f1ce; no public URL.
 - Require it in pack-test. The malware metadata gate validates its lock identity; the
   supplied jar scan has zero findings. Migration owns legacy mod-state conversions,
   including Curios, Dank links, Ender IO, Supplementaries, Ars and MineColonies.
-- Keep the mod installed until the entire legacy world has been loaded and saved.
-  Unvisited legacy chunks convert on first load; one successful trial is not grounds
-  to remove the bridge. Never convert the only copy or downgrade a converted save.
+- Keep the mod installed until every chunk, player (including offline players),
+  colony and Dank store has been loaded and saved, and its pending lists
+  (`evileye_migration:smelter_items` / refunds) are drained. Dev.5 convert-all/status
+  commands are planned for cutover. Unvisited state converts on first load; one
+  successful trial is not grounds to remove the bridge. Never convert the only
+  copy or downgrade a converted save.
 
 ## 2026-10-30 - Ice and Fire CE and the final port follow-ups
 

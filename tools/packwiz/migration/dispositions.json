@@ -258,11 +258,11 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.1.jar",
-    "sha256": "dc072b8969960a5e3aac49016a48c9912ee558ee598d3415c8185a78968460a8",
-    "size": 41182
+    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.4.jar",
+    "sha256": "bc150d3a9af7a102de2a39614f7f2a4458465c6f65f4f22a9b20b97e88f4a262",
+    "size": 52329
    },
-   "reason": "Private local migration bridge built from minecraft-mods 8b30349. Keep installed until the entire legacy world has been loaded and saved; unvisited chunks migrate on first load."
+   "reason": "Private local migration bridge built from minecraft-mods bd5f1ce (dev.4 colony banner fix). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover."
   }
  ],
  "waivers": {},
