@@ -122,6 +122,7 @@
 - Local instances install straight from the checkout's files (no server) and never rehash. Rehash and verify before every local install, and do not edit files while an install is reading them.
 - **A "Failed file downloads" dialog listing a few random files is usually a download timeout, not a pack defect.** The installer fetches many files in parallel over HTTP/2 with a short stream timeout and two retries, so a large sync (such as a merge adding ~60 files) can leave a few with `SocketTimeoutException`; which ones varies per run. It writes no log file (`MultiMC-0.log` only says "PreLaunchCommand succeeded"). Relaunch: it re-fetches only the missing files. Suspect the pack only if `verify_hashes.cjs` fails or the same file fails again (2026-10-22: ETF, Modern UI and `cosarmorinventory.png` all succeeded on relaunch).
 - MultiMC's instance ID is the **folder name**; the display name is `name=` in `instance.cfg`. Renaming the display name does not rename the folder. Rename folders only with MultiMC closed, and update `SelectedInstance` in `multimc.cfg`.
+- **MultiMC `instance.cfg` eats backslashes; owner launch paths must not wait on JVMs.** Its INI reader treats backslashes as escapes, so every value tooling writes must use forward-slash paths and remain unchanged by backslash unescaping. Owner client pre-launch/install commands run immediately even when unrelated Java processes exist; the one-Minecraft-JVM host wait belongs only to agent headless server boots.
 
 ## Mod updates and removals
 

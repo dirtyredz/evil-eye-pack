@@ -12,6 +12,24 @@ const env = require('../server_smoke/env.cjs');
 const ROOT = path.resolve(__dirname, '../..');
 const INSTANCE = 'C:/Users/dirty/MultiMC/instances/Evil Eye NeoForge Trial/.minecraft';
 
+function instanceCfgValue(value) {
+  if (typeof value !== 'string' || /[\r\n]/.test(value)) throw Error('Unsafe instance.cfg value');
+  return value.replaceAll('\\', '/');
+}
+
+function setInstanceCfgValue(text, key, value) {
+  if (!/^[A-Za-z][A-Za-z0-9]*$/.test(key)) throw Error('Unsafe instance.cfg key');
+  const line = new RegExp(`^${key}=[^\\r\\n]*$`, 'm');
+  if (!line.test(text)) throw Error(`Missing Trial ${key}`);
+  return text.replace(line, `${key}=${instanceCfgValue(value)}`);
+}
+
+function trialPreLaunchCommand(root, cache) {
+  const script = path.join(root, 'scripts/migration/trial-walkthrough.ps1');
+  if ([script, cache].some(s => /["\r\n]/.test(s))) throw Error('Unsafe launcher argument');
+  return instanceCfgValue(`powershell.exe -NoProfile -ExecutionPolicy Bypass -File "${script}" -Cache "${cache}"`);
+}
+
 function trialInstance(instance) {
   if (path.resolve(instance).toLowerCase() !== path.resolve(INSTANCE).toLowerCase()) throw Error('Only Evil Eye NeoForge Trial is allowed');
   noLinks(instance);
@@ -78,7 +96,7 @@ async function main(argv) {
   for (const f of files) noLinks(path.join(instance, f.file));
   console.log(`Verified ${files.length} local files; destination ${instance}; no host or downloads.`);
   if (dryRun) { console.log('Dry run: would install local files and set this Trial prelaunch to the same command.'); return; }
-  // Refuse concurrent instances before launching the one headless installer JVM.
+  // This is the owner's client pre-launch path. It must not wait on unrelated JVMs.
   const scope = require('../server_smoke/procs.cjs').scope();
   const stop = () => scope.killAll();
   process.once('SIGINT', stop); process.once('SIGTERM', stop);
@@ -86,7 +104,6 @@ async function main(argv) {
   fs.mkdirSync(scratch, { recursive: true });
   const run = fs.mkdtempSync(path.join(scratch, 'trial-install-'));
   try {
-    await require('../server_smoke/host_wait.cjs').waitForServer(scope);
     const pack = writePack(ROOT, path.join(run, 'pack'), files);
     const result = await scope.run(env.JAVAS[21].java, ['-jar', env.BOOTSTRAP, '--bootstrap-main-jar', installer, '--bootstrap-no-update', '-g', '-s', 'client', pack], { cwd: instance, timeoutMs: 120000 });
     fs.writeFileSync(path.join(instance, 'packwiz-install.log'), result.out);
@@ -100,11 +117,8 @@ async function main(argv) {
     const logs = path.join(ROOT, '.tmp/owner-runs'); fs.mkdirSync(logs, { recursive: true });
     const backup = path.join(logs, 'trial-instance-before.cfg');
     if (!fs.existsSync(backup)) fs.writeFileSync(backup, original, { flag: 'wx' });
-    const script = path.join(ROOT, 'scripts/migration/trial-walkthrough.ps1');
-    if ([script, cache].some(s => /["\r\n]/.test(s))) throw Error('Unsafe launcher argument');
-    const command = `powershell.exe -NoProfile -ExecutionPolicy Bypass -File "${script}" -Cache "${cache}"`;
-    if (!/^PreLaunchCommand=.*$/m.test(original)) throw Error('Missing Trial PreLaunchCommand');
-    fs.writeFileSync(cfg, original.replace(/^PreLaunchCommand=[^\r\n]*/m, 'PreLaunchCommand=' + command));
+    const command = trialPreLaunchCommand(ROOT, cache);
+    fs.writeFileSync(cfg, setInstanceCfgValue(original, 'PreLaunchCommand', command));
     console.log('Private jars verified. Launch Evil Eye NeoForge Trial in MultiMC; no client was started.');
   } finally {
     scope.killAll(); process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop);
@@ -113,4 +127,4 @@ async function main(argv) {
   }
 }
 if (require.main === module) main(process.argv.slice(2)).catch(e => { console.error(e.stack); process.exitCode = 1; });
-module.exports = { prepareFiles, writePack, trialInstance };
+module.exports = { instanceCfgValue, setInstanceCfgValue, trialPreLaunchCommand, prepareFiles, writePack, trialInstance };

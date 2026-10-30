@@ -6,7 +6,29 @@ const path = require('node:path');
 const { sha256 } = require('../../data_io/files.cjs');
 const P = require('../pack_index.cjs');
 const { renderMetafile } = require('../migration/repoint.cjs');
-const { prepareFiles, writePack, trialInstance } = require('../trial_install.cjs');
+const { instanceCfgValue, setInstanceCfgValue, trialPreLaunchCommand, prepareFiles, writePack, trialInstance } = require('../trial_install.cjs');
+
+function multimcBackslashUnescape(value) {
+  return value.replace(/\\(.)/g, '$1');
+}
+
+test('Trial instance.cfg values use forward slashes and survive MultiMC unescaping', () => {
+  const root = 'C:\\Users\\dirty\\projects\\.worktrees\\evil-eye-pack\\migration\\neoforge-1.21.1';
+  const cache = 'C:\\Users\\dirty\\projects\\artifacts\\evil-eye-pack\\jobs\\2026-10-31-world-trial-final\\cache';
+  const command = trialPreLaunchCommand(root, cache);
+  const changed = setInstanceCfgValue('name=Trial\nPreLaunchCommand=old\niconKey=default\n', 'PreLaunchCommand', command);
+  const value = changed.match(/^PreLaunchCommand=(.*)$/m)[1];
+  assert.doesNotMatch(value, /\\/);
+  assert.equal(multimcBackslashUnescape(value), value);
+  assert.equal(value, 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:/Users/dirty/projects/.worktrees/evil-eye-pack/migration/neoforge-1.21.1/scripts/migration/trial-walkthrough.ps1" -Cache "C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache"');
+  assert.equal(changed, `name=Trial\nPreLaunchCommand=${value}\niconKey=default\n`);
+  assert.equal(instanceCfgValue('C:\\one\\two'), 'C:/one/two');
+});
+
+test('Trial install path never waits for other JVMs', () => {
+  const source = fs.readFileSync(path.resolve(__dirname, '../trial_install.cjs'), 'utf8');
+  assert.doesNotMatch(source, /host_wait|waitForServer/);
+});
 
 test('offline trial indexes verified private bytes as ordinary installer-owned files', t => {
   const scratch = path.resolve(__dirname, '../../../.tmp');
