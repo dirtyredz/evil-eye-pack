@@ -18,6 +18,7 @@
   "exclude": {
     "patterns": [
       { "re": "_spawn_egg$|:spawn_egg_", "reason": "spawn eggs are creative-only" },
+      { "re": "^roundwood:([a-z_]+_round_(door|trim|window)|window_trim)$", "reason": "Roundwood 0.17.0 legacy per-material blocks, kept registered so 1.20 worlds load; their loot tables drop the generic round_door/round_trim/round_window with the appearance copied, so new copies are never made (2026-10-30, jar loot_table/blocks/acacia_round_door.json)" },
       { "re": "^minecraft:(command_block|chain_command_block|repeating_command_block|command_block_minecart|structure_block|structure_void|jigsaw|barrier|light|debug_stick|knowledge_book|petrified_oak_slab|bedrock|end_portal_frame|budding_amethyst|reinforced_deepslate|spawner|farmland|dirt_path|frogspawn|player_head|chorus_plant|infested_[a-z_]+|suspicious_(sand|gravel))$", "reason": "vanilla technical or creative-only block/item (no survival source by design)" },
       { "re": "^railways:smokestack_(coalburner|long|oilburner|streamlined|woodburner)_(brass|copper|iron)(_cap_(brass|copper|steel))?$", "reason": "Steam 'n' Rails NeoForge port 0.3.0-beta.2: smokestack body and cap material styles are applied to a placed smokestack in the world (StyledSmokeStackBlock), only the base smokestacks have recipes (reviewed 2026-10-30)" },
       { "re": "_bucket$", "reason": "filled in the world from a fluid source or by bucketing a mob; bucket filling is Java interaction with no data trail" },
