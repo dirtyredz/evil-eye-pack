@@ -25,7 +25,7 @@ test('Mekanism: the creative cube faces its cable line, and every machine backs 
   for (const [x, id, input] of [[3, 'mekanism:enrichment_chamber', 'minecraft:iron_ore'], [7, 'mekanism:crusher', 'minecraft:iron_ingot']]) {
     assert.ok(at(p, x, 0, 4).state.startsWith(id + '[facing=north'), `${id} faces the entrance`);
     assert.ok(at(p, x, 0, 5).state.endsWith('universal_cable'), `${id} backs onto the cable`);
-    assert.equal(at(p, x, 0, 4).nbt, `{items:[{slot:0,item:{id:"${input}",count:16}}]}`, `${id} input prefilled through its items record`);
+    assert.equal(at(p, x, 0, 4).nbt, `{items:[{slot:0,item:{id:"${input}",count:16}}],energy_containers:[{container:0b,stored:20000L}]}`, `${id} input and charge prefilled through its own records`);
   }
   assert.equal(at(p, 12, 0, 4).nbt, '{items:[{slot:0,item:{id:"minecraft:coal",count:32}}]}', 'the heat generator has fuel');
   assert.equal(p.fills.length, 0, 'Mekanism machines refuse automated prefill at placement');

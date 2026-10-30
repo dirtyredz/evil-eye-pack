@@ -8,6 +8,7 @@ global.evilEyeShowcaseCheck.flatWorld = function (h) {
   var Heightmap = Java.loadClass('net.minecraft.world.level.levelgen.Heightmap$Types')
   var columns = [[0, 0], [1536, -2048], [-3072, 4096], [6000, 6000]], tops = [], wrong = []
   columns.forEach(function (c) {
+    level.getChunk(c[0] >> 4, c[1] >> 4) // generate the column (getHeight alone reads an empty chunk)
     var top = level.getHeight(Heightmap.WORLD_SURFACE, c[0], c[1])
     tops.push(top)
     var layers = [top - 1, top - 2, top - 3, top - 4].map(function (y) { return String(level.getBlockState(new BP(c[0], y, c[1]))) })

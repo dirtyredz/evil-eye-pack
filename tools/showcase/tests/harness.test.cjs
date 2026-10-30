@@ -115,6 +115,7 @@ test('the flat-world check reports non-flat columns and differing heights', () =
   vm.runInContext(script('flat_world.js'), ctx);
   const results = [];
   const level = (terralithAt) => ({
+    getChunk: () => null,
     getHeight: (t, x) => (x === terralithAt ? 90 : -60),
     getBlockState: (p) => ({ toString: () => (p.x === terralithAt ? 'Block{minecraft:stone}' : ['Block{minecraft:grass_block}', 'Block{minecraft:dirt}', 'Block{minecraft:dirt}', 'Block{minecraft:bedrock}'][-61 - p.y]) }),
     getBiome: (p) => ({ unwrapKey: () => ({ get: () => ({ location: () => (p.x === terralithAt ? 'terralith:alpine_highlands' : 'minecraft:plains') }) }) })

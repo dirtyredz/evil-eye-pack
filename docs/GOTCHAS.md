@@ -202,6 +202,16 @@
 - **Minecraft 1.21 `Commands.performPrefixedCommand` returns nothing.** A check reading `=== 1` from it always
   fails. Showcase checks read the result through the source's `CommandResultCallback`
   (`global.evilEyeShowcaseCheck.runCommand`, `h.run`), which also accepts Forge 1.20's integer return.
+- **A command issued inside another command is only queued on 1.21.** The showcase's `/setblock` calls inside
+  `/evileye showcase` ran after it returned, so every build refused at its first sign; construction now places
+  blocks with `level.setBlock` and merges block-entity NBT itself. Queued commands also report into the outer
+  source's result callback.
+- **Showcase checks on 1.21 (first live run, 2026-10-30):** `forceload` takes effect on a later tick, and an
+  entity summoned into a not-yet-loaded chunk is stored but invisible to `getEntities` (the harness now loads
+  the area 20 ticks ahead); `saveWithFullMetadata` needs the registry provider; sign lines are saved as JSON
+  strings; Mekanism machines refuse automated insertion at placement (prefill through their `items` NBT).
+  Plots must be at least 24 x 22 x 6 for the shared hostile-terrain fixture. The storage section still fails
+  one PSI count on NeoForge (dk-54d65c18), which stops `--all` before later sections.
 - **Sable logs every reload** for physics entries naming unregistered blocks, and its loader ignores
   `neoforge:conditions`, so a gated `kubejs/data` override cannot silence one (boot 6).
 - **Interstellaris gates crafting on research** (a `CraftingMenu` redirect on `setRecipeUsed`) and turns off

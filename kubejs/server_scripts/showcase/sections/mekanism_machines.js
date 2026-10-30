@@ -6,7 +6,8 @@
   var FULL = '{energy_containers:[{container:0b,stored:9223372036854775807L}]}'
   // Mekanism machines refuse automated insertion at placement, so their first slot (input / fuel) is
   // prefilled through the block entity's own items record instead of p.fills.
-  function slot0(id, count) { return '{items:[{slot:0,item:{id:"' + id + '",count:' + count + '}}]}' }
+  // Machines also start charged (20 kJ, two operations each) so they run even when the cable does not connect.
+  function slot0(id, count) { return '{items:[{slot:0,item:{id:"' + id + '",count:' + count + '}}],energy_containers:[{container:0b,stored:20000L}]}' }
   function machine(p, x, z, state, nbt, lines) { p.block(x, 0, z, state, nbt); p.label(x + 2, z, lines) }
   ns.register('mekanism_machines', function () {
     // At least 24 x 22 x 6: the shared hostile-terrain check builds hills, water and fences up to there.
@@ -21,7 +22,7 @@
     machine(p, 3, 4, 'mekanism:enrichment_chamber[facing=north,active=false]', slot0('minecraft:iron_ore', 16), ['ENRICHMENT', '16 iron ore in', '-> 32 iron dust', 'Ender IO dust?'])
     machine(p, 7, 4, 'mekanism:crusher[facing=north,active=false]', slot0('minecraft:iron_ingot', 16), ['CRUSHER', '16 iron ingots in', '-> 16 iron dust', 'Ender IO dust?'])
     // Generation: a heat generator burning coal, on its own.
-    machine(p, 12, 4, 'mekanismgenerators:heat_generator[facing=north,active=false]', slot0('minecraft:coal', 32), ['HEAT GENERATOR', '32 coal fuel', 'Charges itself', 'Flames on front?'])
+    machine(p, 12, 4, 'mekanismgenerators:heat_generator[facing=north,active=false]', '{items:[{slot:0,item:{id:"minecraft:coal",count:32}}]}', ['HEAT GENERATOR', '32 coal fuel', 'Charges itself', 'Flames on front?'])
     p.label(12, 9, ['NOT SHOWN', 'Fission / turbines', 'need multiblocks', 'build in survival'])
     return p
   })

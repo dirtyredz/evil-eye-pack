@@ -76,8 +76,8 @@ docked; rerun to replenish after the circuit empties the inventories.
 ## Mekanism and Interstellaris sections (NeoForge branch)
 
 `mekanism_machines` (24 × 22 × 6): a creative energy cube (placed full; a command-placed cube starts empty)
-feeds a universal cable along the backs of an enrichment chamber (16 iron ore) and a crusher (16 iron ingots);
-both make Ender IO iron dust, the dedup survivor. A heat generator with 32 coal stands apart. Fission,
+and a universal cable along the backs of an enrichment chamber (16 iron ore) and a crusher (16 iron ingots),
+both pre-charged with two operations' energy; both make Ender IO iron dust, the dedup survivor. A heat generator with 32 coal stands apart. Fission,
 turbines and other multiblocks are not built.
 
 `interstellaris_space` (24 × 22 × 8): titanium, platinum, silver and tungsten ore under their metal blocks,
@@ -121,7 +121,8 @@ node tools/showcase/check.cjs --baseline-ref main --out <baseline-directory>
 node tools/showcase/check.cjs contraption_storage --out <new-directory> --compare <baseline-directory>
 ```
 
-The shared `command_forms.js` check runs once after the selected section checks,
+Every boot also runs `flat_world.js` once (FlatWorldFix vs Terralith: four far Superflat columns keep the
+default layers, plains and one height). The shared `command_forms.js` check runs once after the selected section checks,
 building and clearing every registered section in a separate row. Its expected
 record count and per-section origins come from the registry and `ns.layout`; even
 a single-section run exercises the complete command tree. `helpers.js` supplies
@@ -145,8 +146,8 @@ completion always fail.
 
 | Section | Headless assertions | Owner's eyes |
 |---|---|---|
-| `mekanism_machines` | Hostile-terrain build; full plan; creative cube placed full; cable powers both machines; enrichment chamber and crusher output Ender IO iron dust and never Mekanism dust; ore consumed; heat generator burns coal into stored energy; cube stays full; running rebuild resets contents; clear; exterior shell unchanged | Machine fronts animate, cable glow, generator flames |
-| `interstellaris_space` | Hostile-terrain build; full plan; the Moon, Mars, Venus, Enceladus and Io dimensions load; Moon and Mars generate solid ground and receive a teleported traveller; `/sable assemble area` captures the pad, the sub-level falls from pad height onto the floor (server physics), `/sable sub_level remove` removes it; rebuild; clear; exterior shell unchanged | Ore/metal textures, the falling pad's rendering (Sable with Sodium/Iris), rockets and travel |
+| `mekanism_machines` | Hostile-terrain build; full plan; creative cube placed full; machine inputs and charge prefilled from block-entity NBT; enrichment chamber and crusher output Ender IO iron dust and never Mekanism dust; ore consumed; heat generator burns coal into stored energy; cube stays full; running rebuild resets contents; clear; exterior shell unchanged (106 assertions, `jobs/2026-10-30-neoforge-phase7/showcase-mek-14`). Cable transport is not asserted: command-placed Mekanism blocks expose no sided energy (dk-1a3141d6) | Whether a player-placed cube powers the cable; machine fronts animate; generator flames |
+| `interstellaris_space` | Hostile-terrain build; full plan; the Moon, Mars, Venus, Enceladus and Io dimensions load; Moon and Mars generate solid ground (Moon: lunar regolith) and receive a teleported traveller; `/sable assemble area` captures the pad into exactly one sub-level that stays alive for 100 ticks of server physics; rebuild; clear; exterior shell unchanged (128 assertions, `showcase-is-8`) | The pad falling (Sable's position selectors matched nothing headless), ore/metal textures, rockets and travel |
 | `contraption_storage` | First build on hostile terrain (hill, tree, water, floor hole, chest, fence) with an unnamed mob and item removed, a named mob refused without any change, a mob outside untouched and the exterior shell identical (shared `tools/showcase/terrain.js`); all blocks/states/prefills and complete floor/air volume; quantity flag; one glue and no dropped items; exterior shell; all six sided + unsided drawer handlers; idle motor; lever start/stop; five-block/three-inventory assembly; PSI docking; exact insert/extract per inventory; compacting ratios; disassembly preservation; automatic input/output hopper circuit; rotation; idle/active rebuild; clear | Drawer icons/counts at 8/24/48 blocks and front/back views; moving fronts; opening moving drawer/chest menus |
 
 The exterior snapshot covers all faces immediately outside the volume, including

@@ -3706,7 +3706,7 @@ hash = "312b19b8dc39d36cf0b4d578715288356eee928637d1973e2c3c92b1220b1b80"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/construction.js"
-hash = "ebec8b33dd42e260af1fade6ccd621a1e8f0513e5be358d67056af267abcec96"
+hash = "29eb164d3c0d1a561a9b7fe424077f55ea9232c36b909c9e3ef12d4fa448de81"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/controls.js"
@@ -3738,7 +3738,7 @@ hash = "176bea491b57fa5a8e8382fb7215ee6bc0bb8b30d7f20bf059e35904d1d2822f"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/mekanism_machines.js"
-hash = "33c7d70737561cb2c38ac1fda5336006f9d3a71d33f8875ce0e414ecee245494"
+hash = "33e6957a449382ce4ac4dec1a7c48e175152417661f6c96087d25c76e7144479"
 
 [[files]]
 file = "kubejs/server_scripts/tag_compat.js"

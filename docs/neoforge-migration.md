@@ -275,6 +275,11 @@ ModernFix, Chloride). Interstellaris' `CraftingMenu` redirect (research gate on 
 (`getRecipeFor`) touch different calls; the crafting probe passes. Runtime: boots 5 and 7 logged no mixin
 failure, and the Create contraption showcase runs with Sable present (below).
 
+**Showcase runs (local, flat world):** `mekanism_machines` 106/106 and `interstellaris_space` 128/128 pass, each
+with the flat-world check (FlatWorldFix keeps Superflat flat with Terralith) and the 384 command-form assertions
+across all three sections (`jobs/2026-10-30-neoforge-phase7/showcase-mek-14`, `showcase-is-8`). The storage section
+stops at one PSI count (dk-54d65c18), so `--all` is not green yet.
+
 **Interstellaris facts:** it gates crafting and its Fabrication Unit on per-player research
 (`ResearchHelper.canUseRecipe`), and disables Mekanism's teleporters (dk-aef6fa66). Sable's Rapier natives are an
 LZ4 archive the malware guard cannot open (dk-59b7f4a1).
