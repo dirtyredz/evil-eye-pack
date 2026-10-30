@@ -1,0 +1,13 @@
+name = "Interstellaris"
+filename = "Interstellaris-0.6.1-beta-neoforge-1.21.1.jar"
+side = "both"
+
+[download]
+hash-format = "sha1"
+hash = "ca8270fd3f88441a815380992bf9dcc1c86e0424"
+mode = "metadata:curseforge"
+
+[update]
+[update.curseforge]
+file-id = 9345861
+project-id = 1726656

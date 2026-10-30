@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "createaddition:gold_wire"
+    },
+    "H": {
+      "item": "mekanism:hdpe_sheet"
+    },
+    "U": {
+      "item": "mekanism:ultimate_control_circuit"
+    }
+  },
+  "pattern": [
+    "GUG",
+    "UHU",
+    "GUG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "interstellaris:computing_circuit"
+  }
+}

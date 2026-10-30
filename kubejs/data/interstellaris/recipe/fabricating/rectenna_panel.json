@@ -1,0 +1,34 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 120,
+  "ingredients": [
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "interstellaris:aluminum_plate"
+      }
+    },
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "createaddition:gold_wire"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "interstellaris:silicon_wafer"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "interstellaris:precursor_alloy"
+      }
+    }
+  ],
+  "processing_time": 300,
+  "result": {
+    "count": 16,
+    "id": "interstellaris:rectenna_panel"
+  }
+}

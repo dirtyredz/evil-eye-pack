@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Machine recipe types (Create, Ender IO, Extreme Reactors; Mekanism since 2026-10-30): a floor of ~90% of the 2026-10-29 NeoForge 1.21.1 count fails a run; any other count change is reported as info. Assertions spot-check key recipes and tags. enderio:grinding_ball was dropped: Ender IO 8 registers the type but ships no recipes of it.",
+  "description": "Machine recipe types (Create, Ender IO, Extreme Reactors; Mekanism and Interstellaris since 2026-10-30): a floor of ~90% of the 2026-10-29 NeoForge 1.21.1 count fails a run; any other count change is reported as info. Assertions spot-check key recipes and tags. enderio:grinding_ball was dropped: Ender IO 8 registers the type but ships no recipes of it.",
   "types": {
     "bigreactors:fluidizer": {
       "min": 18,
@@ -125,6 +125,18 @@
     "mekanism:purifying": {
       "min": 25,
       "observed": 28
+    },
+    "interstellaris:fabricating": {
+      "min": 88,
+      "observed": 98
+    },
+    "interstellaris:pressing": {
+      "min": 16,
+      "observed": 18
+    },
+    "interstellaris:vacuum_arc_smelting": {
+      "min": 34,
+      "observed": 38
     }
   },
   "assertions": [
@@ -190,6 +202,10 @@
     {
       "kind": "recipe-loaded",
       "id": "mekanism:processing/steel/enriched_iron_to_dust"
+    },
+    {
+      "kind": "recipe-loaded",
+      "id": "interstellaris:pressing/iron_plate"
     }
   ]
 }

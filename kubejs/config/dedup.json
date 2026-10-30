@@ -49,7 +49,11 @@
     "mekanism:block_raw_uranium": "bigreactors:raw_yellorium_block",
     "mekanism:block_uranium": "bigreactors:yellorium_block",
     "mekanism:uranium_ore": "bigreactors:yellorite_ore",
-    "mekanism:deepslate_uranium_ore": "bigreactors:deepslate_yellorite_ore"
+    "mekanism:deepslate_uranium_ore": "bigreactors:deepslate_yellorite_ore",
+    "interstellaris:iron_plate": "create:iron_sheet",
+    "interstellaris:gold_plate": "create:golden_sheet",
+    "interstellaris:gold_wire": "createaddition:gold_wire",
+    "interstellaris:silicon": "ae2:silicon"
   },
   "disabled": [
     "hammerlib:gears/wooden",

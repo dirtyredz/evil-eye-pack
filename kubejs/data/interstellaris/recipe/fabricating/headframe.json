@@ -1,0 +1,22 @@
+{
+  "type": "interstellaris:fabricating",
+  "ingredients": [
+    {
+      "count": 5,
+      "ingredient": {
+        "item": "mekanism:ingot_steel"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "create:iron_sheet"
+      }
+    }
+  ],
+  "processing_time": 100,
+  "result": {
+    "count": 4,
+    "id": "interstellaris:headframe"
+  }
+}

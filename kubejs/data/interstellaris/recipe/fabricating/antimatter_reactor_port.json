@@ -1,0 +1,27 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 1000,
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "interstellaris:antimatter_reactor_casing"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "interstellaris:atx_computing_circuit"
+      }
+    },
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "createaddition:gold_wire"
+      }
+    }
+  ],
+  "processing_time": 400,
+  "result": {
+    "count": 1,
+    "id": "interstellaris:antimatter_reactor_port"
+  }
+}

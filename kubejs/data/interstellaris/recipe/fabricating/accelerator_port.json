@@ -1,0 +1,28 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 400,
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "interstellaris:accelerator_cladding"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "interstellaris:superconducting_coax"
+      }
+    },
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "createaddition:gold_wire"
+      }
+    }
+  ],
+  "processing_time": 300,
+  "result": {
+    "count": 1,
+    "id": "interstellaris:accelerator_port"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 120,
+  "ingredients": [
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "interstellaris:accelerator_cladding"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "minecraft:glowstone_dust"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "createaddition:gold_wire"
+      }
+    }
+  ],
+  "result": {
+    "count": 8,
+    "id": "interstellaris:accelerator_light"
+  }
+}

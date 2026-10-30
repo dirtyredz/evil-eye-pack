@@ -1,0 +1,33 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 60,
+  "ingredients": [
+    {
+      "count": 5,
+      "ingredient": {
+        "item": "interstellaris:silicon_wafer"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "create:golden_sheet"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "createaddition:gold_wire"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "interstellaris:computing_circuit"
+      }
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "interstellaris:xt_computing_circuit"
+  }
+}

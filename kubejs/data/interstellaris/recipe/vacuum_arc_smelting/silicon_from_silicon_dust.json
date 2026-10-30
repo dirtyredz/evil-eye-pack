@@ -1,0 +1,17 @@
+{
+  "type": "interstellaris:vacuum_arc_smelting",
+  "energy_per_tick": 60,
+  "ingredients": [
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "interstellaris:silicon_dust"
+      }
+    }
+  ],
+  "processing_time": 100,
+  "result": {
+    "count": 1,
+    "id": "ae2:silicon"
+  }
+}

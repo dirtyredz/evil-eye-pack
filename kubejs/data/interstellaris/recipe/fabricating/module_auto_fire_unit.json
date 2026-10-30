@@ -1,0 +1,33 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 120,
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "mekanism:module_base"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "interstellaris:tantalum_capacitor"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "createaddition:gold_wire"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "interstellaris:at_computing_circuit"
+      }
+    }
+  ],
+  "processing_time": 300,
+  "result": {
+    "count": 1,
+    "id": "interstellaris:module_auto_fire_unit"
+  }
+}

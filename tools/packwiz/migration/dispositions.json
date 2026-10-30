@@ -185,6 +185,17 @@
     "version": "fg9dTRz9"
    },
    "reason": "Plan Phase 7, second in dependency order: Sable 2.0.6 (moving-sublevel physics; bundles Veil 4.3.2, Sable Companion 1.6.0 and its Rapier physics library), inside Interstellaris 0.6.1's range 2.0.5-2.0.x. Declares Sodium >= 0.8.12-alpha.2 (pack: 0.8.13) and is incompatible with ScalableLux (absent)."
+  },
+  {
+   "metafile": "mods/interstellaris.pw.toml",
+   "name": "Interstellaris",
+   "side": "both",
+   "target": {
+    "source": "curseforge",
+    "project": "1726656",
+    "file": "9345861"
+   },
+   "reason": "Plan Phase 7, last in dependency order: Interstellaris 0.6.1 beta (2026-10-27, WIP space mod; full release estimated Q2 2027). Requires Mekanism + Generators [10.7.19,10.8) and Sable [2.0.5,2.1), both pinned; CurseForge only (no Modrinth project)."
   }
  ],
  "waivers": {},

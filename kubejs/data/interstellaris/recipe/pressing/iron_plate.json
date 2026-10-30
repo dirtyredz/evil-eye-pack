@@ -1,0 +1,16 @@
+{
+  "type": "interstellaris:pressing",
+  "ingredients": [
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "minecraft:iron_ingot"
+      }
+    }
+  ],
+  "processing_time": 100,
+  "result": {
+    "count": 1,
+    "id": "create:iron_sheet"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "interstellaris:fabricating",
+  "ingredients": [
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "create:golden_sheet"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:stone"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "minecraft:stick"
+      }
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:bell"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 120,
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "mekanism:module_base"
+      }
+    },
+    {
+      "count": 4,
+      "ingredient": {
+        "item": "interstellaris:niobium_titanium_wire"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "interstellaris:tantalum_capacitor"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "createaddition:gold_wire"
+      }
+    }
+  ],
+  "processing_time": 300,
+  "result": {
+    "count": 1,
+    "id": "interstellaris:module_beam_amplifier_unit"
+  }
+}

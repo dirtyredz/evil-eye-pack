@@ -1,0 +1,41 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 200,
+  "ingredients": [
+    {
+      "count": 1024,
+      "ingredient": {
+        "item": "minecraft:glass"
+      }
+    },
+    {
+      "count": 128,
+      "ingredient": {
+        "item": "create:golden_sheet"
+      }
+    },
+    {
+      "count": 64,
+      "ingredient": {
+        "item": "interstellaris:platinum_plate"
+      }
+    },
+    {
+      "count": 128,
+      "ingredient": {
+        "item": "interstellaris:silicon_wafer"
+      }
+    },
+    {
+      "count": 128,
+      "ingredient": {
+        "item": "interstellaris:titanium_plate"
+      }
+    }
+  ],
+  "processing_time": 2400,
+  "result": {
+    "count": 1,
+    "id": "interstellaris:primary_mirror"
+  }
+}

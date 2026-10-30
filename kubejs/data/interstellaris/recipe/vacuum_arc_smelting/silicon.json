@@ -1,0 +1,20 @@
+{
+  "type": "interstellaris:vacuum_arc_smelting",
+  "energy_per_tick": 60,
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "minecraft:quartz"
+      }
+    },
+    {
+      "ingredient": {
+        "tag": "minecraft:coals"
+      }
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "ae2:silicon"
+  }
+}

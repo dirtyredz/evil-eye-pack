@@ -1,0 +1,24 @@
+{
+  "type": "mekanism:reaction",
+  "chemical_input": {
+    "amount": 200,
+    "chemical": "interstellaris:trichlorosilane"
+  },
+  "chemical_output": {
+    "amount": 50,
+    "id": "mekanism:hydrogen_chloride"
+  },
+  "duration": 100,
+  "fluid_input": {
+    "amount": 100,
+    "fluid": "minecraft:water"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "ae2:silicon"
+  },
+  "item_output": {
+    "count": 2,
+    "id": "interstellaris:polysilicon"
+  }
+}

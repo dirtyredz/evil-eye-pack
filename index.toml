@@ -1666,7 +1666,7 @@ hash = "29c12c8b9c71b426585b7cf4bd761919e0495d19ed91a31c41cffde91eedf34b"
 
 [[files]]
 file = "kubejs/assets/emi/index/stacks/dedup.json"
-hash = "f08dc163dab33fe277463c3b590d7997d48d255fe06b27557a09461e3fe69f03"
+hash = "157f917f6de75c0cbb8a160a911b1a6856c374ef082e7bab734c7016441b8e83"
 
 [[files]]
 file = "kubejs/assets/emi_curation/lang/en_us.json"
@@ -1770,7 +1770,7 @@ hash = "fe4b5696211a9d5af0b3da7b7a187559692979d71a6cd4f70658d13bd19dc60b"
 
 [[files]]
 file = "kubejs/config/dedup.json"
-hash = "a3a17c0494ed504058c6970c15de345ad24a441b699cf9632d57c4a27bdaa4dc"
+hash = "98d83f0260a3507660fb9e4528ea0123c77c6562dbbc27beea1f3c890e5f1a2b"
 
 [[files]]
 file = "kubejs/config/dedup_sources.json"
@@ -3189,6 +3189,154 @@ file = "kubejs/data/interiors/recipe/wall_table.json"
 hash = "9fd7b5b550e8f688db00e1ba6aeeaedb00a2985cdae2baa683bcbb5d61e5dae3"
 
 [[files]]
+file = "kubejs/data/interstellaris/recipe/computing_circuit.json"
+hash = "d723f58b138cd5a9f5a750eccc7631f144bc2db1104b26b7303856530287a9c6"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/dissolution/silicon_tetrafluoride.json"
+hash = "6f09dea02fba686ce5b1272fda7eafd897ea88a69515673d5cc890564d2f4b71"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/dissolution/trichlorosilane.json"
+hash = "8d670c1b7b92523b11f43602da4fe3b042ee369ba497788a50c127173a63de21"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/accelerator_light.json"
+hash = "61f4863d3ef2796c2a0766cce3a9634217a67f5c7e1ddee293fcf529988828a7"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/accelerator_port.json"
+hash = "407ee6913b66e8db5c1f0b6a0694369800a9c931559fadc134e948bbacd0931d"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/anomaly_detector.json"
+hash = "8f022d6e87285e79c0b3b8d2ad7f7777a052408f5bda03e40ee9a86ce15251bb"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/antimatter_reactor_port.json"
+hash = "f3bfde016f22a8fba927ef8830a66de0ff8f9dbd1154f99a8299722ce04e6e22"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/atx_computing_circuit.json"
+hash = "926dbeb491761862fde09173753e9ac1396dbf80a6317cd14720fa7090b43f6b"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/bell.json"
+hash = "9cf23f0aa9a09daef7aa0c9af5a34c3d8cec5cb737b1b4a3b55a34b7c50c5aed"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/communication_payload.json"
+hash = "eba43713d1dea77850f0e11106b8ba5e0da1eafb16a3864348593f63120b9d44"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/headframe.json"
+hash = "04759973291cec315b786da57058c7873ebc39277b1b8a8778da99a18638dd19"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/launch_tower.json"
+hash = "5caf3e13affe489b72a0bf69a599ca65763b78b1464091ddf9e31c56d9aded89"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/module_auto_fire_unit.json"
+hash = "f621fc3c16114456eba904bff5eacc694b255c78171743084d4d760b1291e446"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/module_beam_amplifier_unit.json"
+hash = "50aff51a6253030f46c7308c0d9e4f79ace4d460cdda0f01943ed47cc003d0c6"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/module_cutting_beam_unit.json"
+hash = "55785d6dc5e4d091fdf10c8014bef4e2418114e453e8d85c29575c7e3fe7ecac"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/module_tesla_arc_unit.json"
+hash = "572a961ff8679a6d93cf47a93586a922b6ad2738050431f40ed1eb6cab718c22"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/module_thermal_regulation_unit.json"
+hash = "553b9a7f7f3ba6ea896f8d482b0c0a42fb351abf7511bea082b763837141c7e3"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/nanites.json"
+hash = "6ef3e7139add51b80a9bd863e716cbdebc0f00df8b6497886475776cb8f807a3"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/navigation_payload.json"
+hash = "f866dd9cd2a1c4485bec2645f01e77c59f39f937a00afd2cd2daf829c6557cae"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/observation_payload.json"
+hash = "2520c81b4927250a67c9d19a003116dc33c50722a307c13eabc992aeb35645d5"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/primary_mirror.json"
+hash = "7d386cdffb3239e85c75a7f47d34d7c28587f4dab62f285b45bd2ea5d4aefbac"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/quantum_computer.json"
+hash = "ff923d75d8cf097b1388c71bb276af1f0630ffa55d3a0f03e63f7f0208c9bea1"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/quantum_computer_port.json"
+hash = "f9c0e370d34309058d25f8977e4c7c0244275846c127c06872ea6bd63f089632"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/qubit_chip.json"
+hash = "7babb99cd616cf10eb847279a344cbfdd32604e30ac35f3b84a06d349794990b"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/rectenna_controller.json"
+hash = "fa66d714dd5ac0c08f6928ff5afff33856fc16ebf477db83344e2f73e649b0c3"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/rectenna_panel.json"
+hash = "95b399f4a74a8caabd445f4682c119dd561c48e024d3dc9abccf1c20edbd9495"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/rectenna_port.json"
+hash = "3b83d167bb067b3086405c911beb9826c6be12abd6c5d005aef9a103c41d8a60"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/space_observation_antenna.json"
+hash = "b913ab96119da20e8a938ad4ec178aea254e7b9c9b56a06824b2fb70c83ae0cc"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/space_suit_helmet.json"
+hash = "c56b10c8a8817ca3fa515ce9ca70929fd7a84b6aabdeae5f54dd29db74440838"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/telescope_payload.json"
+hash = "42bf5052f1ba7544d7191c0e57f59550e2af9fb417d7c59c302272ea98df5dfd"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/fabricating/xt_computing_circuit.json"
+hash = "2ffc71795b99345def8352f396547c8d8c14f7ec0385e63550a31c66cabaf634"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/gold_wire.json"
+hash = "0d1c9992fad363645c9fe37dda3ce7fb8915f6bfcaeb715b0b7aaa550b98dca6"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/pressing/gold_plate.json"
+hash = "0a386681400938bfb470942f9663bcdb83f85919865ed95131dae74bbcb763a2"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/pressing/iron_plate.json"
+hash = "46b74c69f65ab6f3c4bebfb7d6cf35d95fe5873b65c19b3fe1194b03cf77e1ac"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/reaction/polysilicon.json"
+hash = "d4af6020c92823227e2b4fb90405ea132a8618e5626e22f18bfcdb26abd4461d"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/vacuum_arc_smelting/silicon.json"
+hash = "f82f6ebdfae79eab7e5f852c4530e50039bd292b5a232d658b4fb34eee5526a4"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/vacuum_arc_smelting/silicon_from_silicon_dust.json"
+hash = "625af895d37d04ff25da939702f33c42227ba88617e90b968c5cc6cda3c68687"
+
+[[files]]
 file = "kubejs/data/mca/loot_table/blocks/cobblestone_slanted_headstone.json"
 hash = "02d81a9cbf3aaeed89fe7b1f5ae81486c60bb724799223000bb9c99b6416e5c9"
 
@@ -4104,6 +4252,11 @@ metafile = true
 [[files]]
 file = "mods/interiors.pw.toml"
 hash = "e7e6b3effe3022cf1fdb900c857111fdcbfd6b385c2d5bd28c914efaed436ecb"
+metafile = true
+
+[[files]]
+file = "mods/interstellaris.pw.toml"
+hash = "46f53402a118741ba1591e5131277713db803edf6db9baec747ee1a9d6da6e9e"
 metafile = true
 
 [[files]]

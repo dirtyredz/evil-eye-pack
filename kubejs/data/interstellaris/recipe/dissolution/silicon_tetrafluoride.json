@@ -1,0 +1,16 @@
+{
+  "type": "mekanism:dissolution",
+  "chemical_input": {
+    "amount": 1,
+    "chemical": "mekanism:hydrofluoric_acid"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "ae2:silicon"
+  },
+  "output": {
+    "amount": 200,
+    "id": "interstellaris:silicon_tetrafluoride"
+  },
+  "per_tick_usage": true
+}

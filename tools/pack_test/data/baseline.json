@@ -1107,26 +1107,6 @@
    "since": "2026-10-30"
   },
   {
-   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_platinum|#c:raw_materials/platinum",
-   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_silver|#c:raw_materials/silver",
-   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_titanium|#c:raw_materials/titanium",
-   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_tungsten|#c:raw_materials/tungsten",
-   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
-   "since": "2026-10-30"
-  },
-  {
    "key": "references|removed-mod-reference|productivebees:bee_conversion/rftoolsbase/dimensional_shard_bee|rftoolsbase:infused_diamond",
    "reason": "Productive Bees RFTools compat recipes are gated by mod_loaded rftoolsbase conditions; never active.",
    "since": "2026-10-30"
@@ -1274,11 +1254,6 @@
   {
    "key": "acquisition|no-known-source|cataclysm:urchin_spike|",
    "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): L_Ender's Cataclysm boss, structure or altar item placed or dropped in code. Data references: -.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "acquisition|no-known-source|create:crushed_raw_silver|",
-   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Create compat crushed silver for mods that add silver; no silver ore is in the pack while Ice and Fire is deferred. Data references: create/tags/item/crushed_raw_materials.json ; create/recipe/splashing/thermal/crushed_raw_silver.json ; create/recipe/splashing/oreganized/crushed_raw_silver.json ; create/recipe/splashing/ic2/crushed_raw_silver.json.",
    "since": "2026-10-30"
   },
   {

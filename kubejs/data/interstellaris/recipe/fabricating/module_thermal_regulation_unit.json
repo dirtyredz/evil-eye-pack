@@ -1,0 +1,28 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 80,
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "mekanism:module_base"
+      }
+    },
+    {
+      "count": 5,
+      "ingredient": {
+        "item": "mekanism:hdpe_sheet"
+      }
+    },
+    {
+      "count": 5,
+      "ingredient": {
+        "item": "createaddition:gold_wire"
+      }
+    }
+  ],
+  "processing_time": 300,
+  "result": {
+    "count": 1,
+    "id": "interstellaris:module_thermal_regulation_unit"
+  }
+}

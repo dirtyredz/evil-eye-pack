@@ -1,0 +1,35 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 2000,
+  "ingredients": [
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "interstellaris:qubit_chip"
+      }
+    },
+    {
+      "count": 16,
+      "ingredient": {
+        "item": "interstellaris:superconducting_coax"
+      }
+    },
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "interstellaris:ai_computing_circuit"
+      }
+    },
+    {
+      "count": 8,
+      "ingredient": {
+        "item": "create:golden_sheet"
+      }
+    }
+  ],
+  "processing_time": 2400,
+  "result": {
+    "count": 1,
+    "id": "interstellaris:quantum_computer"
+  }
+}

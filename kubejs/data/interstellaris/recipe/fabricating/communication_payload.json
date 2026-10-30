@@ -1,0 +1,41 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 80,
+  "ingredients": [
+    {
+      "count": 128,
+      "ingredient": {
+        "item": "interstellaris:aluminum_plate"
+      }
+    },
+    {
+      "count": 96,
+      "ingredient": {
+        "item": "createaddition:gold_wire"
+      }
+    },
+    {
+      "count": 96,
+      "ingredient": {
+        "item": "interstellaris:silver_wire"
+      }
+    },
+    {
+      "count": 32,
+      "ingredient": {
+        "item": "minecraft:lightning_rod"
+      }
+    },
+    {
+      "count": 12,
+      "ingredient": {
+        "item": "interstellaris:at_computing_circuit"
+      }
+    }
+  ],
+  "processing_time": 300,
+  "result": {
+    "count": 1,
+    "id": "interstellaris:communication_payload"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "type": "interstellaris:fabricating",
+  "energy_per_tick": 200,
+  "ingredients": [
+    {
+      "ingredient": {
+        "item": "interstellaris:silicon_28_wafer"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "interstellaris:tantalum_ingot"
+      }
+    },
+    {
+      "ingredient": {
+        "item": "interstellaris:aluminum_ingot"
+      }
+    },
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "createaddition:gold_wire"
+      }
+    }
+  ],
+  "processing_time": 400,
+  "result": {
+    "count": 1,
+    "id": "interstellaris:qubit_chip"
+  }
+}
