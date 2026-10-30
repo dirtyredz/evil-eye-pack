@@ -251,6 +251,18 @@
     "file": "7738312"
    },
    "reason": "Ice and Fire CE 2.1.4 dependency; exact file and SHA-256 supplied by minecraft-mods (2026-10-30)."
+  },
+  {
+   "metafile": "mods/evileye-migration.pw.toml",
+   "name": "Evil Eye World Migration",
+   "side": "both",
+   "target": {
+    "source": "local",
+    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.1.jar",
+    "sha256": "dc072b8969960a5e3aac49016a48c9912ee558ee598d3415c8185a78968460a8",
+    "size": 41182
+   },
+   "reason": "Private local migration bridge built from minecraft-mods 8b30349. Keep installed until the entire legacy world has been loaded and saved; unvisited chunks migrate on first load."
   }
  ],
  "waivers": {},

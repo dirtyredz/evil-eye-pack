@@ -2,6 +2,17 @@
 
 Newest first.
 
+## 2026-10-30 - Evil Eye World Migration bridge
+
+- Pin evileye_migration 0.1.0-dev.1 privately by SHA-256 and size, using the same
+  local-source route as the Alex forks. Built from minecraft-mods 8b30349; no public URL.
+- Require it in pack-test. The malware metadata gate validates its lock identity; the
+  supplied jar scan has zero findings. Migration owns legacy mod-state conversions,
+  including Curios, Dank links, Ender IO, Supplementaries, Ars and MineColonies.
+- Keep the mod installed until the entire legacy world has been loaded and saved.
+  Unvisited legacy chunks convert on first load; one successful trial is not grounds
+  to remove the bridge. Never convert the only copy or downgrade a converted save.
+
 ## 2026-10-30 - Ice and Fire CE and the final port follow-ups
 
 - The owner designated CE dreadwood leaves and sapling unfinished creative-only content.
