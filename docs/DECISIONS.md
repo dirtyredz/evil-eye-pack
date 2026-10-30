@@ -2,6 +2,19 @@
 
 Newest first.
 
+## 2026-10-30 - NeoForge 1.21.1 migration: first clean boot
+
+- **Fix the evidence, then baseline only what is reviewed.** Seven ANU boots, one evidenced cause
+  at a time (`docs/neoforge-migration.md`). Pack-side fixes come first: tag aliases, HammerLib `c:`
+  config, the CEI data map, the Ender IO rule and the stone gear. Tooling learned the 1.21 data
+  rules: ignored other-version folders, loot `value`, own load conditions, `transitional_item`.
+  The rest of the findings are baselined one by one, with a reason tied to jar evidence. No crash,
+  missing probe or broad migration category is baselined.
+- **HammerLib's stone gear returns.** True dedup removes duplicates, and the stone gear has none on
+  1.21.1. HammerMicroblocks saws need `#c:gears/stone`.
+- **Configs ship the mods' own write-back**, as the Create 6 update did: no shipped value was reset, so
+  adopting the 1.21.1 files keeps intent and stops every launch rewriting them.
+
 ## 2026-10-29 - NeoForge 1.21.1 migration: data tooling, activation, KubeJS 2101 and configs
 
 Branch `migration/neoforge-1.21.1` (Phases 4–5). Status and open checks: `docs/neoforge-migration.md`.

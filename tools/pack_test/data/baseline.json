@@ -1147,26 +1147,6 @@
    "since": "2026-10-30"
   },
   {
-   "key": "references|loot-not-loaded|supplementaries:blocks/candle_holder_cupric|supplementaries-1.21.1-4.0.2-neoforge.jar",
-   "reason": "Supplementaries ships loot tables for compat candle holders (cupric/ender/soul/spectacle) it registers only with their compat mods; not registered here, so not loaded.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "references|loot-not-loaded|supplementaries:blocks/candle_holder_ender|supplementaries-1.21.1-4.0.2-neoforge.jar",
-   "reason": "Supplementaries ships loot tables for compat candle holders (cupric/ender/soul/spectacle) it registers only with their compat mods; not registered here, so not loaded.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "references|loot-not-loaded|supplementaries:blocks/candle_holder_soul|supplementaries-1.21.1-4.0.2-neoforge.jar",
-   "reason": "Supplementaries ships loot tables for compat candle holders (cupric/ender/soul/spectacle) it registers only with their compat mods; not registered here, so not loaded.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "references|loot-not-loaded|supplementaries:blocks/candle_holder_spectacle|supplementaries-1.21.1-4.0.2-neoforge.jar",
-   "reason": "Supplementaries ships loot tables for compat candle holders (cupric/ender/soul/spectacle) it registers only with their compat mods; not registered here, so not loaded.",
-   "since": "2026-10-30"
-  },
-  {
    "key": "references|removed-mod-reference|productivebees:bee_conversion/rftoolsbase/dimensional_shard_bee|rftoolsbase:infused_diamond",
    "reason": "Productive Bees RFTools compat recipes are gated by mod_loaded rftoolsbase conditions; never active.",
    "since": "2026-10-30"

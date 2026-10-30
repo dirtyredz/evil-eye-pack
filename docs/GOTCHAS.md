@@ -173,13 +173,30 @@
   `hourglass-1.20-1.2.1.1.jar`, so `tools/dedup/tests/installed.test.cjs` failed with "Missing cached jar".
   That is an environment gap; relaunching Local installs the jar.
 
+## NeoForge 1.21.1 first boots (2026-10-30)
+
+- **Windows OpenSSH runs remote commands through cmd.exe** (8191-character line limit). A
+  `-EncodedCommand` grows to about 2.7 times the script length, so long scripts are silently
+  truncated and fail with nonsense parse errors. `remote/ssh.cjs` refuses anything over 8000 characters.
+- **1.21 jars still ship 1.20 folders** (`loot_tables/`, `recipes/`, `tags/items`); the game ignores
+  them. The scan records them as `ignoredLayout`; do not chase them as "not loaded".
+- **1.21 data carries its own load conditions** (`neoforge:conditions` on loot tables, data maps and
+  recipes), and nested `minecraft:loot_table` entries name their table in `value`, not `name`.
+- **A probe that makes Rhino reflect mod Item classes** (`stack.getItem()` on every creative-tab stack)
+  logs RuntimeDistCleaner errors for client-only method signatures. Compare with `ItemStack.is(item)`.
+- **HammerLib adds its tags in code from `config/hammerlib/tags/`**, keyed by `c:` names on 1.21.
+  `forge:` keys are ignored, and the items keep their tags.
+- **Mods rewrite configs on load** with their new keys and comments. Ship the write-back (LF, no
+  trailing whitespace) rather than letting each instance rewrite the pack's copy every launch.
+
 ## KubeJS 2101 (NeoForge migration branch)
 
 - **Only startup scripts may set values on `global`.** A client or server script doing `global.x = ...`
-  fails. `startup_scripts/globals.js` creates `global.emiCuration` and `global.evilEyeShowcase`, and
-  everything else adds properties to those objects. The test-only probes and showcase checks inject
-  their own `startup_*.js`. The EMI test harness throws on a top-level `global` write. That nested
-  property writes are allowed is inferred from the 7.0 notes and is unverified until the first boot.
+  fails with "'global' cannot be assigned to in client or server scripts", and the error aborts the
+  whole event handler even inside try/catch (observed 2026-10-30). `startup_scripts/globals.js` creates
+  `global.emiCuration` and `global.evilEyeShowcase`, and everything else adds properties to those
+  objects (allowed, observed live). The test-only probes and showcase checks inject their own
+  `startup_*.js`, and the EMI test harness throws on a top-level `global` write.
 - **Native listeners are reloadable** (`NativeEvents.onEvent(className, fn)`). Do not add once-per-launch
   guards. `NativeModEvents`/`ForgeModEvents` are gone, and mod-bus events also go through `NativeEvents`.
 - **The class filter lives in the jar** (`kubejs.classfilter.txt`). `tools/emi_curation/tests/class_filter.test.cjs`

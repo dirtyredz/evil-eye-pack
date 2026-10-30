@@ -15,7 +15,7 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 | 3 Runtime-aware testing | dk-b28c4c95 | done 2026-10-29 (fast gate; first real NeoForge install/boot is Phase 6) |
 | 4 Data scanners and metadata | dk-2978dc2f | done 2026-10-29 (fixtures; real target evidence arrives in Phase 6) |
 | 5 Activate pins, swaps, configs, KubeJS 2101, dedup | dk-960e6d58 | done 2026-10-29 (static; first-boot checks listed below) |
-| 6 First clean target boot | — | todo |
+| 6 First clean target boot | dk-626ee53d | done 2026-10-30 (ANU pack test PASS; see below) |
 | 7 Interstellaris stack | — | todo |
 | 8 Seven owned ports | — | todo |
 | 9 World conversion on a copy | — | todo |
@@ -141,16 +141,55 @@ The malware guard scans NeoForge jars the same way, and approvals stay bound to 
   86 stale 1.20 outputs deleted. The Dragons Plus static sanding recipes (268) moved to the 1.21
   layout. Policy changes are recorded in `tools/dedup/migration-1.21.json`.
 
-### Checks only the first target boot or launch can settle (Phase 6)
+## First clean boot (Phase 6)
 
-- **KubeJS 2101 behaviour:** that nested property writes on startup-created globals are allowed;
-  `NativeEvents.onEvent` with a class-name string; `JsonIO.read` shape; `removeAllTagsFrom` and
-  the recipe-event calls in `dedup.js`/`uranium.js`.
-- **Configs:** each `regenerate` config against the target's generated defaults (renamed or removed
-  keys reviewed, intent reapplied); client-only defaults at the owner's first launch.
-- **EMI curation:** Ender IO's soul vial and broken spawner keep rule (`rules.json`
-  `keepWhenNbtEquals`) still describes the 1.20 `BlockEntityTag` NBT. It must be rewritten for the
-  1.21 `enderio:stored_entity` component layout seen in game. Until then the zombie vial and spawner
-  are hidden in CLEAN.
-- **Showcase and probes:** level capabilities, RecipeHolder and loot registry access in a live
-  server.
+Every boot ran as an ANU pack test (`node tools/pack_test/run.cjs`, shared lease, BelowNormal, alone).
+Evidence for each is in `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-first-boot/` (`run<N>.log`
+plus `run-<time>/`).
+
+| Boot | Outcome | Cause found, fix |
+|---|---|---|
+| 1 | setup failed | four CurseForge downloads timed out in the stage install (transient); rerun |
+| 2 | setup failed | the two-JDK provisioning script went over cmd.exe's 8191-character limit on ANU; split per tool, and `ssh.ps` refuses oversized commands |
+| 3 | Done 79 s, probe complete, 344 new findings | first real target evidence; round-1 fixes (HammerLib `c:` tag config, dye and mud tag aliases, CEI XP-juice data map, machine floors, `transitional_item`, removed `ServerEvents.customCommand`, malware review, boot noise) |
+| 4 | probe incomplete | the runtime probe's top-level `global` write is refused by KubeJS 2101, and the refusal aborts `ServerEvents.loaded` despite try/catch; removed |
+| 5 | Done, 153 new findings | round 2: other-version data folders, 1.21 `loot_table` `value`, Ender IO component rule, HammerLib stone gear, smokestack policy, baseline review |
+| 6 | **PASS** (exit 0) | clean shutdown, all probes token-matched; post-boot configs captured for reconciliation |
+| 7 | see the final report | verification after config reconciliation and loot-condition gating |
+
+**KubeJS 2101 assumptions, observed live** (runtime probe and boot 4):
+- A client or server script setting a top-level `global` value is refused, and the error aborts the
+  whole handler.
+- Adding properties to objects that a startup script created on `global` works.
+- `NativeEvents.onEvent('<class name string>', fn)` registers and fires (checked with
+  `ServerAboutToStartEvent`).
+- `JsonIO.read` returns a JS object whose Java lists index and iterate.
+- The recipe and tag events in `dedup.js` and `uranium.js` work: 25 recipes removed, survivor tags
+  applied, and the machines and dedup checks pass.
+
+**Ender IO curation rule:** Ender IO 8 stores the captured entity in the `enderio:soul` component
+(`{entity_tag:{}, entity_type:"minecraft:zombie"}` on the creative broken spawner). `rules.json` now
+keeps exactly that.
+
+**Configs:** see the reconciliation note in `config-decisions.json`. No shipped value was reset.
+87 files now ship the 1.21.1 mods' own write-back (with our values kept). Three relocated
+default-only files were removed.
+
+**Data a mod ships in the other version's folder layout is never loaded.** The scan records it, and
+the references check reports it as info. On boot 6 that covered:
+- loot tables in MCA (26: villager and grave drops), Epic Witch Huts (10), Ars Nouveau (2), Waddles
+  and Citadel;
+- 8 Create: Interiors kelp-chair recipes;
+- Supplementaries and Extreme Reactors compat recipes;
+- a few block tags.
+
+These are upstream bugs, and the content is absent in game.
+
+### Owner checks only a client can do
+
+- **Rendering and shaders:** Iris + Sodium with Complementary Unbound (now `iris.properties`),
+  Chloride and Entity Culling.
+- **EMI curation:** CLEAN/ALL, DECOR and Mods buttons, the mark-as-decor key (default D), the zombie
+  soul vial and broken spawner shown in CLEAN, and `/kubejs reload` keeping state.
+- **Client-only configs** (`*-client.toml`, Default Options keys): a server never loads them.
+- **Visuals:** the showcase and storage transfers, which the headless checks cannot judge.
