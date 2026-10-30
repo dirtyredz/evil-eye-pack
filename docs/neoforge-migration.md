@@ -17,7 +17,7 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 | 5 Activate pins, swaps, configs, KubeJS 2101, dedup | dk-960e6d58 | done 2026-10-29 (static; first-boot checks listed below) |
 | 6 First clean target boot | dk-626ee53d | done 2026-10-30 (ANU pack test PASS; see below) |
 | 7 Interstellaris stack | dk-7bcd9303 | done 2026-10-30 (ANU boots green; showcase checks below) |
-| 8 Seven owned ports | — | todo |
+| 8 Seven owned ports | dk-279913bb | done 2026-10-30 (ANU and full showcase PASS; config/worldgen follow-ups below) |
 | 9 World conversion on a copy | — | todo |
 | 10 Qualify 100% and cutover | — | todo |
 
@@ -134,7 +134,7 @@ data therefore fails before any boot.
 
 ## Owned ports (all seven integrated)
 
-Seven mods had no NeoForge 1.21.1 build and are being ported by the owner in `minecraft-mods`:
+Seven mods had no NeoForge 1.21.1 build and were ported by the owner in `minecraft-mods`:
 Dank Recipe Transfer, Roundwood, Ars Instrumentum, Alex's Mobs, Alex's Caves, Ice and Fire, and
 FlatWorldFix. FlatWorldFix is kept and ported, not swapped for Give Me My Flat World. The lock
 initially recorded each one as `defer`. Phase 5 suspended their references. Public ports return
@@ -379,3 +379,12 @@ CE's new dreadwood leaves/sapling have no loot/acquisition data: exact reviewed 
 and **dk-ce8a67fc** retain that minecraft-mods handoff. The godly seeker is admin-only.
 The old amythest egg baseline follows the port's corrected amethyst ID; the dreadwood
 way sign follows Supplementaries' existing code-made compat signs.
+
+Final acceptance: `boots/run-2026-10-30T07-15-13-297Z` **ANU PASS**, Done 68.29 s wall,
+complete probes and zero new findings/log groups. `showcase-all-ready` **PASS 1279/1279**,
+no skipped assertions or script errors. Initial showcase failed its moon-arrival query even
+though the saved traveller was at the expected moon coordinates; the bounded entity-chunk
+readiness preflight fixes that race (see GOTCHAS). The space display uses I&F silver.
+Fast gate **504/504** (64 s), lock/hash/whitespace checks pass; `dk check` has zero errors
+and two pre-existing duplicate-rank warnings. `OK main, Stable and Local unchanged`.
+Final index SHA-256: `abb5dea6ca565c480feafa7fa9e068d84a9112c4290b97c7952dfa3d13e50cc6`.
