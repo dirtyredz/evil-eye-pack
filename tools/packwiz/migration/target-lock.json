@@ -317,7 +317,7 @@
    }
   },
   {
-   "action": "defer",
+   "action": "repoint",
    "metafile": "mods/alexs-caves.pw.toml",
    "old": {
     "file": "5848216",
@@ -330,10 +330,28 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+   "rationale": "Owner-authorised private fork; dev/trial-only hash-addressed local cache. No redistribution URL; family delivery remains dk-85261627.",
+   "target": {
+    "declares": [
+     "alexscaves required citadel [2.7.1,3.0)",
+     "alexscaves required minecraft [1.21.1,1.22)",
+     "alexscaves required neoforge [21.1.265,21.2)"
+    ],
+    "filename": "alexscaves-1.21.1-neoforge-2.0.2.jar",
+    "loader": "neoforge",
+    "metafile": "mods/alexs-caves.pw.toml",
+    "mods": [
+     "alexscaves@2.0.2"
+    ],
+    "name": "Alex's Caves",
+    "sha256": "2d7435f7228673a7dd1b38ea3154b5aeb7ed245a564d2eef07f96a40ae3d405c",
+    "side": "both",
+    "size": 74864451,
+    "source": "local"
+   }
   },
   {
-   "action": "defer",
+   "action": "repoint",
    "metafile": "mods/alexs-mobs.pw.toml",
    "old": {
     "file": "5698791",
@@ -346,7 +364,25 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+   "rationale": "Owner-authorised private fork; dev/trial-only hash-addressed local cache. No redistribution URL; family delivery remains dk-85261627.",
+   "target": {
+    "declares": [
+     "alexsmobs required citadel [2.7.1,3.0)",
+     "alexsmobs required minecraft [1.21.1,1.22)",
+     "alexsmobs required neoforge [21.1.265,)"
+    ],
+    "filename": "alexsmobs-1.21.1-neoforge-1.22.9.jar",
+    "loader": "neoforge",
+    "metafile": "mods/alexs-mobs.pw.toml",
+    "mods": [
+     "alexsmobs@1.22.9"
+    ],
+    "name": "Alex's Mobs",
+    "sha256": "dc89b99026104741dc57bafe742680c3fed3f226da4f833463fdf17f4d47fa21",
+    "side": "both",
+    "size": 26356566,
+    "source": "local"
+   }
   },
   {
    "action": "repoint",

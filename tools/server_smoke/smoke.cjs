@@ -22,6 +22,8 @@ const { analyze } = require('./log_report.cjs');
 const { boot } = require('./boot.cjs');
 const { DEFAULT_STARVED_CORES } = require('./watchdog.cjs');
 const { crashReports, crashCauses, decide, EXIT_CODES } = require('./verdict.cjs');
+const procs = require('./procs.cjs');
+const { waitForServer } = require('./host_wait.cjs');
 
 function parseArgs(argv) {
   const o = {
@@ -52,21 +54,28 @@ async function main() {
   fs.mkdirSync(o.cache, { recursive: true });
   const runDir = path.join(o.out, `run-${new Date().toISOString().replace(/[:.]/g, '-')}`);
   let result;
+  const scope = procs.scope();
+  const interrupt = () => scope.killAll();
+  process.once('SIGINT', interrupt); process.once('SIGTERM', interrupt);
   try {
     const runtime = readRuntime(o.pack);
     const { java, jcmd } = javaPaths(runtime, JAVAS);
     checkJava(java, runtime);
     log(`runtime ${runtime.id} (Java ${runtime.java}: ${java})`);
-    const base = await ensureLoaderBase(o.cache, runtime, java, log);
+    const base = await ensureLoaderBase(o.cache, runtime, java, log, scope);
     prepareRunDir(base, runDir, o.port, o.heap, o.seed);
-    await installPack(runDir, o.pack, java, o.cache, log);
+    await installPack(runDir, o.pack, java, o.cache, log, scope);
     dropMods(runDir, o.drop.split(',').filter(Boolean), log);
     log(`mods installed: ${fs.readdirSync(path.join(runDir, 'mods')).filter((f) => f.endsWith('.jar')).length}`);
-    result = await boot(runDir, o, log, { runtime, java, jcmd });
+    await waitForServer(scope, { log });
+    result = await boot(runDir, o, log, { runtime, java, jcmd, scope });
   } catch (e) {
     console.log(`FAIL (setup): ${e.message}`);
     process.exitCode = 2;
     return;
+  } finally {
+    scope.killAll();
+    process.removeListener('SIGINT', interrupt); process.removeListener('SIGTERM', interrupt);
   }
   report(o, runDir, result);
 }

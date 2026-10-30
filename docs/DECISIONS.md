@@ -2,6 +2,25 @@
 
 Newest first.
 
+## 2026-10-30 - Private Alex ports and uranium progression
+
+- Alex's Mobs 1.22.9 and Alex's Caves 2.0.2 are private forks. Commit only local-source pins
+  (SHA-256 and size), never jars or download URLs. The migration cache supplies verified bytes by
+  hash. A gitignored installer overlay serves them on loopback during dev/trial installation only;
+  the installer rejects file URLs. Family delivery remains dk-85261627.
+- Preserve the existing-world Alex's Caves radioactive uranium, shards, rods, block and radrock ore.
+  They are progression materials (radiation and Tremorzilla), not another generic metal ingot.
+  Restore their native block/shard/furnace recipes and the two raw-uranium-to-yellorium cooking
+  recipes. Extreme Reactors raw yellorium remains accepted by the uranium and rod recipes.
+- Keep Phase 7's Mekanism uranium replacement with Extreme Reactors yellorium and disabled uranium
+  worldgen. Remove Alex's Caves shards from the metal-nugget tag and its radioactive raw block
+  from the metal-storage-block tag; native recipes still use their exact item IDs. The raw uranium
+  tag retains the documented biome/progression exception. No stack conversion or unifier.
+- Alex's Caves sulfur dust is the existing-world survivor: retire Mekanism sulfur dust at recipe,
+  loot and tag sources, preserving Mekanism machine outputs through generated overrides.
+- Owner confirmed Mekanism steel remains the only steel; the Dark Steel stand-in stays retired.
+- Owner confirmed Interstellaris' default disabled Mekanism teleporters. Drop dk-aef6fa66; no override.
+
 ## 2026-10-30 - NeoForge 1.21.1 migration: the Interstellaris stack joins with true dedup
 
 - **Survivors are the items already in the owner's worlds.** Mekanism is new, so its copies retire:
@@ -27,7 +46,7 @@ Newest first.
   tungsten, aluminium) have no other provider and stay. Silver is revisited when Ice and Fire returns
   (dk-d2c9d23b).
 - **Interstellaris' own design is kept**: research-gated crafting and disabled Mekanism teleporters
-  (dk-aef6fa66 asks the owner). Its structure, Java-made and archaeology items are reasoned acquisition
+  (owner confirmed; dk-aef6fa66 dropped). Its structure, Java-made and archaeology items are reasoned acquisition
   exclusions, not fixes.
 - **Upstream data errors that only log are noise, not patches**, when a pack override cannot reach them:
   Sable's physics loader ignores `neoforge:conditions`, so Dragons Plus' entry for a block it registers only

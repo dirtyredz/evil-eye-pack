@@ -2,8 +2,8 @@
 id: dk-aef6fa66
 type: idea
 created: 2026-10-29
-status: todo
-since: 2026-10-29
+status: dropped
+since: 2026-10-30
 area: migration
 priority: P3
 rank: zzzzzzzzt

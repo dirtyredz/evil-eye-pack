@@ -8,7 +8,7 @@ const { sha256 } = require('../../data_io/files.cjs');
 
 const SCHEMA = 1;
 const ACTIONS = new Set(['retain', 'repoint', 'replace', 'defer', 'drop', 'add']);
-const SOURCES = new Set(['modrinth', 'curseforge', 'direct']);
+const SOURCES = new Set(['modrinth', 'curseforge', 'direct', 'local']);
 const SIDES = new Set(['client', 'server', 'both']);
 const FOLDERS = ['mods', 'resourcepacks', 'shaderpacks'];
 const HEX = { sha1: 40, sha256: 64, sha512: 128 };
@@ -76,9 +76,10 @@ function validate(lock, sources) {
     if (!SIDES.has(t.side)) errors.push(`${where}: invalid side ${t.side}`);
     if (!t.filename || /[\\/]/.test(t.filename)) errors.push(`${where}: invalid filename`);
     if (!t.name) errors.push(`${where}: no name`);
-    checkHash(errors, where, 'sha1', t.sha1);
+    if (t.source !== 'local') checkHash(errors, where, 'sha1', t.sha1);
     checkHash(errors, where, 'sha256', t.sha256);
-    if (!(t.size > 0)) errors.push(`${where}: no size`);
+    if (!Number.isSafeInteger(t.size) || t.size <= 0) errors.push(`${where}: no size`);
+    if (t.source === 'local' && ['url', 'project', 'version', 'file', 'sha1', 'sha512', 'publisher'].some(k => k in t)) errors.push(`${where}: local source records sha256 and size only, no URL or platform identity`);
     if (t.source === 'modrinth') {
       if (!t.project || !t.version || !/^https:\/\/cdn\.modrinth\.com\//.test(t.url || '')) errors.push(`${where}: modrinth target needs project, version and a CDN url`);
       checkHash(errors, where, 'sha512', t.sha512);

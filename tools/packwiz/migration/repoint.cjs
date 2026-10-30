@@ -16,6 +16,7 @@ function renderMetafile(t) {
   const lines = [`name = ${q(t.name)}`, `filename = ${q(t.filename)}`, `side = ${q(t.side)}`, '', '[download]'];
   if (t.source === 'modrinth') lines.push(`url = ${q(t.url)}`, 'hash-format = "sha512"', `hash = ${q(t.sha512)}`);
   else if (t.source === 'curseforge') lines.push('hash-format = "sha1"', `hash = ${q(t.sha1)}`, 'mode = "metadata:curseforge"');
+  else if (t.source === 'local') lines.push('mode = "metadata:local"', 'hash-format = "sha256"', `hash = ${q(t.sha256)}`);
   else lines.push(`url = ${q(t.url)}`, 'hash-format = "sha256"', `hash = ${q(t.sha256)}`);
   if (t.source === 'modrinth') lines.push('', '[update]', '[update.modrinth]', `mod-id = ${q(t.project)}`, `version = ${q(t.version)}`);
   if (t.source === 'curseforge') lines.push('', '[update]', '[update.curseforge]', `file-id = ${t.file}`, `project-id = ${t.project}`);

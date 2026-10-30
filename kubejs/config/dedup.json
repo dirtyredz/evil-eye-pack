@@ -53,7 +53,8 @@
     "interstellaris:iron_plate": "create:iron_sheet",
     "interstellaris:gold_plate": "create:golden_sheet",
     "interstellaris:gold_wire": "createaddition:gold_wire",
-    "interstellaris:silicon": "ae2:silicon"
+    "interstellaris:silicon": "ae2:silicon",
+    "mekanism:dust_sulfur": "alexscaves:sulfur_dust"
   },
   "disabled": [
     "hammerlib:gears/wooden",
@@ -175,7 +176,16 @@
     "storagedrawers:priority_key_n2",
     "storagedrawers:priority_key_p1",
     "storagedrawers:priority_key_p2",
-    "supplementaries:bubble_block"
+    "supplementaries:bubble_block",
+    "alexscaves:dinosaur_train",
+    "alexscaves:disc_fragment_fusion",
+    "alexscaves:volcanic_core",
+    "alexsmobs:ender_residue",
+    "alexsmobs:halo",
+    "alexsmobs:poison_bottle",
+    "alexsmobs:red_sand_circle",
+    "alexsmobs:sand_circle",
+    "alexsmobs:terrapin_egg"
   ],
   "removeOutputs": [
     "createdeco:zinc_sheet",
@@ -219,6 +229,12 @@
   "tagRemovals": {
     "c:storage_blocks/gold": [
       "cluttered:chiseled_gold_block"
+    ],
+    "c:nuggets/uranium": [
+      "alexscaves:uranium_shard"
+    ],
+    "c:storage_blocks/uranium": [
+      "alexscaves:block_of_uranium"
     ]
   },
   "extraItemTags": {
@@ -226,7 +242,15 @@
       "ae2:ender_dust"
     ],
     "c:raw_materials/uranium": [
+      "bigreactors:raw_yellorium",
+      "alexscaves:uranium"
+    ],
+    "alexscaves:uranium": [
+      "alexscaves:uranium",
       "bigreactors:raw_yellorium"
+    ],
+    "alexscaves:uranium_rod": [
+      "alexscaves:uranium_rod"
     ]
   }
 }

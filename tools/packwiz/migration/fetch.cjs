@@ -54,6 +54,15 @@ function expect(cond, msg) { if (!cond) throw new Error(msg); }
 // Resolve and verify one selector. tags: { minecraft, loader } that the platform must declare (mods).
 // Returns the lock target fields (minus name/side/metafile) and the cache path.
 async function resolveSelector(sel, { api, cacheDir, folder, tags }) {
+  if (sel.source === 'local') {
+    expect(/^[a-f0-9]{64}$/.test(sel.sha256) && Number.isSafeInteger(sel.size) && sel.size > 0, 'local selector needs sha256 and size');
+    expect(sel.filename && !/[\\/]/.test(sel.filename), 'local selector needs a safe filename');
+    expect(!['url', 'project', 'version', 'file'].some(k => k in sel), 'local selector must not expose a URL or platform identity');
+    const dest = path.join(cacheDir, folder, `${sel.sha256}.jar`);
+    const bytes = fs.readFileSync(dest);
+    expect(bytes.length === sel.size && hash('sha256', bytes) === sel.sha256, 'local cached artifact differs from pin');
+    return { fields: { source: 'local', filename: sel.filename, sha256: sel.sha256, size: sel.size }, cachePath: dest, bytes };
+  }
   if (sel.source === 'modrinth') {
     const v = await api.json(`mr-version-${sel.version}.json`, `https://api.modrinth.com/v2/version/${sel.version}`);
     expect(v.project_id === sel.project, `modrinth version ${sel.version} belongs to ${v.project_id}, not ${sel.project}`);

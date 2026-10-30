@@ -1,0 +1,8 @@
+name = "Alex's Mobs"
+filename = "alexsmobs-1.21.1-neoforge-1.22.9.jar"
+side = "both"
+
+[download]
+mode = "metadata:local"
+hash-format = "sha256"
+hash = "dc89b99026104741dc57bafe742680c3fed3f226da4f833463fdf17f4d47fa21"

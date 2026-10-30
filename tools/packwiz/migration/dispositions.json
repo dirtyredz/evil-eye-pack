@@ -9,12 +9,24 @@
  "provisional": [],
  "entries": {
   "mods/alexs-caves.pw.toml": {
-   "action": "defer",
-   "reason": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+   "action": "repoint",
+   "target": {
+    "source": "local",
+    "filename": "alexscaves-1.21.1-neoforge-2.0.2.jar",
+    "sha256": "2d7435f7228673a7dd1b38ea3154b5aeb7ed245a564d2eef07f96a40ae3d405c",
+    "size": 74864451
+   },
+   "reason": "Owner-authorised private fork; dev/trial-only hash-addressed local cache. No redistribution URL; family delivery remains dk-85261627."
   },
   "mods/alexs-mobs.pw.toml": {
-   "action": "defer",
-   "reason": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+   "action": "repoint",
+   "target": {
+    "source": "local",
+    "filename": "alexsmobs-1.21.1-neoforge-1.22.9.jar",
+    "sha256": "dc89b99026104741dc57bafe742680c3fed3f226da4f833463fdf17f4d47fa21",
+    "size": 26356566
+   },
+   "reason": "Owner-authorised private fork; dev/trial-only hash-addressed local cache. No redistribution URL; family delivery remains dk-85261627."
   },
   "mods/ars-instrumentum.pw.toml": {
    "action": "repoint",

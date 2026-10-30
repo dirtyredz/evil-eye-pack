@@ -5,75 +5,12 @@
   "bhc:wither_bone": "iceandfire:witherbone"
  },
  "hiddenOnly": [
-  "alexscaves:dinosaur_train",
-  "alexscaves:disc_fragment_fusion",
-  "alexscaves:volcanic_core",
-  "alexsmobs:ender_residue",
-  "alexsmobs:halo",
-  "alexsmobs:poison_bottle",
-  "alexsmobs:red_sand_circle",
-  "alexsmobs:sand_circle",
-  "alexsmobs:terrapin_egg",
   "iceandfire:dread_spawner",
   "iceandfire:egginice",
   "iceandfire:hippogryph_egg",
   "iceandfire:fishing_spear"
  ],
  "hiddenReasons": {
-  "alexscaves:dinosaur_train": {
-   "class": "creative-technical",
-   "evidence": "Advancement icon item only (advancement dinosaurs_minecart); registered in ACItemRegistry with no creative tab entry or recipe. (dinosaurs_minecart.json icon; absent from ACCreativeTabRegistry; no recipe/loot; medium)",
-   "date": "2026-10-23",
-   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
-  },
-  "alexscaves:disc_fragment_fusion": {
-   "class": "unobtainable",
-   "evidence": "Ingredient of recipe alexscaves:music_disc_fusion but no loot table, chest or entity code awards it; the Fusion disc itself is dropped by NucleeperEntity. (recipes/music_disc_fusion.json; NucleeperEntity refs MUSIC_DISC_FUSION; DISC_FRAGMENT_FUSION only in ACItemRegistry; medium)",
-   "date": "2026-10-23",
-   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
-  },
-  "alexscaves:volcanic_core": {
-   "class": "creative-technical",
-   "evidence": "World-gen only block placed by VolcanoStructurePiece; its block loot table is empty, so it drops nothing and exists as an item only in the creative tab. (loot_tables/blocks/volcanic_core.json is {}, VolcanoStructurePiece.class, ACCreativeTabRegistry; medium)",
-   "date": "2026-10-23",
-   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
-  },
-  "alexsmobs:ender_residue": {
-   "class": "creative-technical",
-   "evidence": "Block trail left by EntityVoidWorm; block loot table has empty pools so no item drops. (loot_tables/blocks/ender_residue.json pools [], EntityVoidWorm.class; medium)",
-   "date": "2026-10-23",
-   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
-  },
-  "alexsmobs:halo": {
-   "class": "creative-technical",
-   "evidence": "Render-only cosmetic item used by LayerGorillaItem/LayerKangarooArmor; no recipe, loot or mob drop reference. (LayerGorillaItem.class, LayerKangarooArmor.class, AMItemRegistry only; medium)",
-   "date": "2026-10-23",
-   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
-  },
-  "alexsmobs:poison_bottle": {
-   "class": "unobtainable",
-   "evidence": "Used only as a brewing ingredient in AMEffectRegistry (poison resistance potion); no recipe, loot or entity code found that produces it. (AMEffectRegistry.class and AMItemRegistry.class are the only refs; no data refs; low)",
-   "date": "2026-10-23",
-   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
-  },
-  "alexsmobs:red_sand_circle": {
-   "class": "creative-technical",
-   "evidence": "Decorative blocks placed by EntitySeaBear / ServerEvents (sea bear sand circles); block loot drops plain sand, not the item. (EntitySeaBear.class, ServerEvents.class, loot_tables/blocks/sand_circle.json drops minecraft:sand; medium)",
-   "date": "2026-10-23",
-   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
-  },
-  "alexsmobs:sand_circle": {
-   "class": "creative-technical",
-   "evidence": "Decorative blocks placed by EntitySeaBear / ServerEvents (sea bear sand circles); block loot drops plain sand, not the item. (EntitySeaBear.class, ServerEvents.class, loot_tables/blocks/sand_circle.json drops minecraft:sand; medium)",
-   "date": "2026-10-23",
-   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
-  },
-  "alexsmobs:terrapin_egg": {
-   "class": "creative-technical",
-   "evidence": "Block laid by EntityTerrapin (LayEggGoal) with TileEntityTerrapinEgg; its block loot table has empty pools, so no survival item. (loot_tables/blocks/terrapin_egg.json pools [], EntityTerrapin$LayEggGoal.class; medium)",
-   "date": "2026-10-23",
-   "source": "acquisition review 2026-10-23 (commit ac48f7b)"
-  },
   "iceandfire:dread_spawner": {
    "class": "creative-technical",
    "evidence": "BlockDreadSpawner/TileEntityDreadSpawner spawner block placed by worldgen (DreadRuinProcessor in dread ruins); block loot table is empty and there is no recipe, so players are never meant to hold it. (block/BlockDreadSpawner.class, world/gen/processor/DreadRuinProcessor.class; loot_tables/blocks/dread_spawner.json empty; high)",
@@ -108,21 +45,5 @@
   "bhc:wither_bone": "Survives while Ice and Fire is deferred (its witherbone was the survivor); BHC drops and recipes provide it again. On restore, re-add the replacement bhc:wither_bone -> iceandfire:witherbone.",
   "config/bhc-common.toml boneDropRate": "0.15 (the pack's original value before 08d8aa1) while Ice and Fire is deferred, so wither skeletons drop bhc:wither_bone again; set back to 0.0 when iceandfire:witherbone returns as the survivor."
  },
- "allowedGroups": {
-  "forge:raw_materials/uranium": {
-   "namespaces": [
-    "alexscaves",
-    "bigreactors"
-   ],
-   "reason": "Alex's Caves uranium retains biome and Tremorzilla mechanics; both raw materials feed its machines and smelt to yellorium."
-  },
-  "forge:ores/iron": {
-   "namespaces": [
-    "alexscaves",
-    "minecraft"
-   ],
-   "liveOnly": true,
-   "reason": "Alex's Caves galena iron ore is a stone-variant iron ore (a new ore block in the Magnetic Caves), not a duplicate material or producer to merge with vanilla iron. liveOnly: the group exists through forge:ores/iron -> #minecraft:iron_ores, and Forge's own tag is not in the cached-jar scan, so only the live pack test sees it."
-  }
- }
+ "allowedGroups": {}
 }

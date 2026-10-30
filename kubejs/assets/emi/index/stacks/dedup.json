@@ -54,6 +54,7 @@
     "item:interstellaris:gold_plate",
     "item:interstellaris:gold_wire",
     "item:interstellaris:silicon",
+    "item:mekanism:dust_sulfur",
     "item:hammerlib:gears/wooden",
     "item:hammerlib:gears/copper",
     "item:hammerlib:gears/iron",
@@ -171,6 +172,15 @@
     "item:storagedrawers:priority_key_n2",
     "item:storagedrawers:priority_key_p1",
     "item:storagedrawers:priority_key_p2",
-    "item:supplementaries:bubble_block"
+    "item:supplementaries:bubble_block",
+    "item:alexscaves:dinosaur_train",
+    "item:alexscaves:disc_fragment_fusion",
+    "item:alexscaves:volcanic_core",
+    "item:alexsmobs:ender_residue",
+    "item:alexsmobs:halo",
+    "item:alexsmobs:poison_bottle",
+    "item:alexsmobs:red_sand_circle",
+    "item:alexsmobs:sand_circle",
+    "item:alexsmobs:terrapin_egg"
   ]
 }

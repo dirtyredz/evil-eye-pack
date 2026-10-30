@@ -52,10 +52,10 @@ function closureInput(lock, cache) {
   const missing = [], entries = [];
   for (const e of lock.entries) {
     if (!e.target || !e.target.metafile.startsWith('mods/')) continue;
-    const file = path.join(cache, 'mods', e.target.filename);
+    const file = path.join(cache, 'mods', e.target.source === 'local' ? `${e.target.sha256}.jar` : e.target.filename);
     if (!fs.existsSync(file)) { missing.push(`${e.target.metafile}: cached artifact missing (${file})`); continue; }
     const bytes = fs.readFileSync(file);
-    if (sha256(bytes) !== e.target.sha256) { missing.push(`${e.target.metafile}: cached artifact differs from the lock`); continue; }
+    if (sha256(bytes) !== e.target.sha256 || bytes.length !== e.target.size) { missing.push(`${e.target.metafile}: cached artifact differs from the lock`); continue; }
     entries.push({ key: e.target.metafile, side: e.target.side, units: readJarMods(bytes, e.target.filename) });
   }
   return { entries, missing };

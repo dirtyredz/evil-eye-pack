@@ -78,3 +78,15 @@ group or namespace fails. Cached jars are required; it never downloads or silent
 The live server smoke must reach Done with zero KubeJS errors and no additional error groups
 relative to the supplied main baseline (15 existing Cozy Cafe, Thirst and AstikorCarts groups).
 The owner verifies existing-world behavior and EMI visually; agents never launch a client.
+
+### Alex ports restored (2026-10-30)
+
+Alex's Caves keeps its radioactive uranium, shard, rod, block and radrock ore, including native
+block/shard conversions and furnace recipes. These existing-world progression items are retained
+for radiation and Tremorzilla mechanics. Its raw uranium again smelts/blasts to yellorium via
+`uranium.js`; ER raw yellorium is accepted by `c:raw_materials/uranium` and `alexscaves:uranium`.
+`alexscaves:uranium_rod` retains its native rod. The shard and raw radioactive block no longer
+belong to metal nugget/storage tags. Mekanism uranium stays replaced by ER yellorium as in Phase 7.
+The biome-specific raw uranium exception is recorded in `allowed_groups.json`; it does not restore
+Mekanism's duplicate raw uranium. Mekanism sulfur dust now retires to Alex's Caves sulfur dust
+(the existing-world survivor), with generated machine-output overrides.

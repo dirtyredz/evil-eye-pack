@@ -254,3 +254,8 @@ Baseline review 2026-10-12. Remaining debt is filed in Docket (`docs/items/`, `d
 - The EMI views rely on public-but-internal EMI fields. A custom mod would avoid that but would need building and hosting. Rejected for now; see `docs/DECISIONS.md`.
 
 Last full review: 2026-10-12
+
+Private migration pins: `tools/packwiz/local_source.cjs` verifies hash-addressed cache bytes and
+creates the temporary loopback installer overlay; `install_local.cjs` is the dedicated trial
+prelaunch wrapper. Server smoke and pack-test staging share the same overlay. Public delivery
+is separate (dk-85261627); see [NeoForge migration](docs/neoforge-migration.md).

@@ -289,3 +289,8 @@
 - **Create: Storage Drawers Compat 1.1.0 has a global client renderer mixin.** `BlockEntityDrawersRendererMixin` returns false for `playerBehindBlock` and zero for the player-distance check without testing whether the drawer is mounted. This restores contraption icons but also changes those checks for stationary drawers. Its author tested Storage Drawers 12.14.3; the pack uses 12.15.1 within the declared `[12.0.0,13.0.0)` range. Headless tests do not verify client rendering.
 
 - Brigadier rejects trailing text after a finished literal/word argument (`/evileye showcase x ` gave "Incorrect argument for command"), and a bare node without `.executes` says "Unknown or incomplete command". The showcase command therefore takes one greedy string and parses it in script.
+
+- **Private migration pins need the local installer wrapper.** The cached packwiz installer rejects
+  `file:///` download URLs. `metadata:local` intentionally has no download URL: use the gitignored
+  loopback overlay through `tools/packwiz/install_local.cjs` for a dedicated trial, or the normal
+  pack-test/server-smoke staging path. Missing or changed cache bytes fail before installation.

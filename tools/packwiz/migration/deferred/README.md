@@ -6,8 +6,8 @@ The owned ports (minecraft-mods) without a NeoForge 1.21.1 build yet have `defer
 
 | Port | Parked here |
 |---|---|
-| Alex's Caves (`alexscaves/`) | `config/alexscaves-*.toml`, `config/alexscaves_biome_generation/`, the Dragons Plus sandpaper override for its chocolate block, the original `kubejs/server_scripts/uranium.js` (its uranium → yellorium recipes) |
-| Alex's Mobs (`alexsmobs/`) | `config/alexsmobs.toml`, `config/alexsmobs/` spawn and mob configs |
+| Alex's Caves | restored 2026-10-30 (private 2.0.2 local pin; configs, chocolate sanding, uranium recipes and policies) |
+| Alex's Mobs | restored 2026-10-30 (private 1.22.9 local pin; configs and policies) |
 | Ars Instrumentum | restored 2026-10-30 (5.0.0 pin; `config/ars_instrumentum-client.toml` moved back) |
 | Ice and Fire (`iceandfire/`) | `config/iceandfire-*.toml`, `config/iceandfire/` biome lists, the generated `kubejs/data/iceandfire/` copper overrides, ADLods `sapphire.cfg` and `silver.cfg` (Ice and Fire ores only) |
 | Dank Recipe Transfer, Roundwood, FlatWorldFix | restored 2026-10-30 (0.2.0, 0.17.0 and 1.0.0 pins; they parked nothing) |
@@ -27,3 +27,6 @@ target (GitHub release URL + sha256; no update table), run `node tools/packwiz/m
 the source from the commit the lock records) and `apply --write`, move its files
 back with `git mv`, merge its `dedup.json` and baseline entries back, undo its temporary policy, then
 regenerate dedup and rehash.
+
+Private forks use `local` SHA-256/size pins and a verified hash-addressed cache, never a release URL.
+See `docs/neoforge-migration.md` for the dev/trial installer overlay; family delivery is dk-85261627.

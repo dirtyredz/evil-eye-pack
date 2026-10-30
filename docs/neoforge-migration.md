@@ -146,8 +146,10 @@ GitHub release pin (`repoint` to a `direct` target; restore steps in `tools/pack
 | Roundwood | 0.17.0 prerelease, `roundwood-1.21.1-neoforge-0.17.0.jar`, sha256 `b6877267…c006` (built from 5e8988e) | 2026-10-30 (parked nothing; ids unchanged so `decor.json` stays; malware guard clean) |
 | FlatWorldFix | 1.0.0, `flatworldfix-1.21.1-neoforge-1.0.0.jar`, sha256 `90a6da88…b996` (built from 26b2fd2) | 2026-10-30 (parked nothing; malware guard clean). First run against Terralith 1.21.1: every showcase boot now checks four far Superflat columns (`tools/showcase/flat_world.js`) |
 | Ars Instrumentum | 5.0.0 (public LGPL fork), `ars_instrumentum-1.21.1-neoforge-5.0.0.jar`, sha256 `6d62964a…fb4e` (built from dc29a50) | 2026-10-30 (client config restored; needs Ars Nouveau ≥ 5.13.3; malware guard clean) |
+| Alex's Mobs | private 1.22.9, local SHA-256 `dc89b990?fa21` | 2026-10-30 (configs and hidden-item policy restored; Citadel 2.7.1 already locked; malware clean) |
+| Alex's Caves | private 2.0.2, local SHA-256 `2d7435f7?405c`, built from 881d907b | 2026-10-30 (configs, uranium progression, chocolate sanding and baseline restored; malware clean) |
 
-All four are `requiredMods` in pack-test policy. Alex's Mobs (private fork; design pending), Alex's Caves and Ice and Fire are still `defer`.
+Alex's Mobs and Alex's Caves join as private local-source pins (below). All six are `requiredMods`; only Ice and Fire remains `defer`.
 
 ## 100% checklist
 
@@ -284,3 +286,39 @@ stops at one PSI count (dk-54d65c18), so `--all` is not green yet.
 **Interstellaris facts:** it gates crafting and its Fabrication Unit on per-player research
 (`ResearchHelper.canUseRecipe`), and disables Mekanism's teleporters (dk-aef6fa66). Sable's Rapier natives are an
 LZ4 archive the malware guard cannot open (dk-59b7f4a1).
+
+## Private Alex ports (dev/trial only, 2026-10-30)
+
+Alex's Mobs 1.22.9 (SHA-256 `dc89b990?fa21`, 26356566 bytes) and Alex's Caves 2.0.2
+(`2d7435f7?405c`, 74864451 bytes; built from 881d907b) use lock source `local`.
+The lock and dispositions contain only hash/size artifact identities, never private URLs.
+`metadata:local` metafiles fail closed without our wrapper. Store supplied, verified bytes as
+`<migration cache>/mods/<sha256>.jar`; filename copies remain available to existing jar scanners.
+
+The installed packwiz version rejects `file:///` in a download: `Expected URL scheme 'http' or
+'https' but was 'file'` (isolated synthetic fixture, no client launched). `local_source.cjs` instead
+builds a gitignored `.tmp/private-pack-*` overlay, rehashes it, and serves only the locked bytes on
+`127.0.0.1` at an ephemeral port while packwiz runs. It closes the listener and removes the overlay
+even when installation fails. The tracked pack never contains those URLs. `server_smoke` and
+`pack_test` use this same route; ANU receives the already staged, verified jars.
+
+A dedicated trial belonging to this checkout can use
+`node tools/packwiz/install_local.cjs --instance <trial/.minecraft>` as its prelaunch step (Java 21,
+cached installer, both sides). Do not repoint the shared migration trial to this worktree. Stable
+and Local are refused. Final family delivery is **dk-85261627**, intentionally unsolved here.
+
+Both malware scans have zero findings (Mobs: 5106 files; Caves: 8189). Parked configs, curation
+reasons, acquisition baselines, chocolate sanding and uranium recipes are restored. Uranium and
+sulfur decisions are in DECISIONS and duplicate-cleanup. Evidence lives under
+`artifacts/evil-eye-pack/jobs/2026-10-30-alexsmobs-pin/`.
+
+First integration boot reached Done and completed all probes, with two empty-tag recipes and
+twelve added End Pirate/purpur blocks lacking acquisition. The pack now bridges `c:concrete`
+to `alexscaves:concrete` and mirrors the 29 cave-painting blocks into the item tag Supplementaries
+uses. The extra Mobs blocks have no producers in either data or class-reference inspection;
+reviewed per-item baselines and dk-e828975c retain that handoff to minecraft-mods. No jar patched.
+
+Acceptance: `step1-boots/run-2026-10-30T05-30-39-317Z` **ANU PASS** (Done 87.606 s wall,
+probe complete, exit 0). Full fast gate 495/495 before final staging checks; final touched suites
+pass, including hash verification after install and smoke process-scope ownership. `migrate check`
+has zero missing artifacts, dependency errors or warnings. Main/Stable/Local evidence unchanged.

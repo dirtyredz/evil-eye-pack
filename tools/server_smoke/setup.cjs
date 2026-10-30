@@ -4,7 +4,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const procs = require('./procs.cjs');
 const { writeStamp, readStamp, assertStamp } = require('./runtime.cjs');
 
 const { BOOTSTRAP, INSTALLER_JAR_SOURCES, INSTALLER_URL } = require('./env.cjs');
@@ -37,9 +36,9 @@ async function verifiedInstaller(cache, runtime, log, http = fetch) {
 }
 
 // The loader server installed once into <cache>/loader-base/<runtime id>; its libraries are reused by
-// every run. A base stamped for another runtime is never reused. scope: an optional procs.scope() that
-// owns the installer process (defaults to the shared one). deps.http: injected fetch (tests).
-async function ensureLoaderBase(cache, runtime, java, log, scope = procs, deps = {}) {
+// every run. A base stamped for another runtime is never reused. scope owns the installer process.
+// deps.http: injected fetch (tests).
+async function ensureLoaderBase(cache, runtime, java, log, scope, deps = {}) {
   const base = path.join(cache, 'loader-base', runtime.id);
   const argsFile = path.join(base, runtime.argsFile);
   if (fs.existsSync(argsFile) && readStamp(base)) { assertStamp(base, runtime, 'loader base'); return base; }
@@ -78,7 +77,8 @@ function readRunSeed(runDir) {
   return m ? m[1] : null;
 }
 
-async function installPack(runDir, packToml, java, cache, log, scope = procs) {
+async function installPack(runDir, packToml, java, cache, log, scope) {
+  const { withLocalPack, verifyInstalledLocal } = require('../packwiz/local_source.cjs');
   const cachedInstaller = path.join(cache, 'packwiz-installer.jar');
   if (!fs.existsSync(cachedInstaller)) {
     const src = INSTALLER_JAR_SOURCES.find((p) => fs.existsSync(p));
@@ -86,11 +86,13 @@ async function installPack(runDir, packToml, java, cache, log, scope = procs) {
   }
   const args = ['-jar', BOOTSTRAP];
   if (fs.existsSync(cachedInstaller)) args.push('--bootstrap-main-jar', cachedInstaller);
-  args.push('--bootstrap-no-update', '-g', '-s', 'server', packToml);
+  args.push('--bootstrap-no-update', '-g', '-s', 'server');
   log('packwiz install (-s server)');
-  const r = await scope.run(java, args, { cwd: runDir });
+  const r = await withLocalPack(packToml, require('./env.cjs').MIGRATION_MODS,
+    overlay => scope.run(java, [...args, overlay], { cwd: runDir }));
   fs.writeFileSync(path.join(runDir, 'packwiz-install.log'), r.out);
   if (r.code !== 0) throw new Error(`packwiz install exited ${r.code} (see ${path.join(runDir, 'packwiz-install.log')})`);
+  verifyInstalledLocal(path.dirname(path.resolve(packToml)), runDir, 'server');
 }
 
 // Deletes installed jars whose name contains a term, from the throwaway server only (to find the next offender).

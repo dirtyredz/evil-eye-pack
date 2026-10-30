@@ -58,20 +58,24 @@
     "supplementaries:wrench"
   ],
   "itemTags": {
-    "amendments:goes_in_tripwire_hook": [
+    "c:tools": [
       "create:wrench"
     ],
-    "minecraft:enchantable/durability": [
-      "create:wrench"
+    "c:dusts/sulfur": [
+      "alexscaves:sulfur_dust"
     ],
-    "c:silicon": [
-      "ae2:silicon"
+    "c:raw_materials/uranium": [
+      "bigreactors:raw_yellorium",
+      "alexscaves:uranium"
     ],
-    "c:tools/wrench": [
-      "create:wrench"
+    "c:storage_blocks/uranium": [
+      "bigreactors:yellorium_block"
     ],
-    "c:dusts/ender_pearl": [
-      "ae2:ender_dust"
+    "minecraft:fence_gates": [
+      "biomesoplenty:willow_fence_gate"
+    ],
+    "minecraft:hanging_signs": [
+      "biomesoplenty:willow_hanging_sign"
     ],
     "minecraft:leaves": [
       "biomesoplenty:willow_leaves"
@@ -88,29 +92,59 @@
       "biomesoplenty:stripped_willow_log",
       "biomesoplenty:stripped_willow_wood"
     ],
+    "minecraft:planks": [
+      "biomesoplenty:willow_planks"
+    ],
     "minecraft:saplings": [
       "biomesoplenty:willow_sapling"
+    ],
+    "minecraft:signs": [
+      "biomesoplenty:willow_sign"
     ],
     "minecraft:stairs": [
       "biomesoplenty:willow_stairs"
     ],
-    "minecraft:wooden_stairs": [
-      "biomesoplenty:willow_stairs"
+    "minecraft:wooden_buttons": [
+      "biomesoplenty:willow_button"
+    ],
+    "minecraft:wooden_doors": [
+      "biomesoplenty:willow_door"
+    ],
+    "minecraft:wooden_fences": [
+      "biomesoplenty:willow_fence"
+    ],
+    "minecraft:wooden_pressure_plates": [
+      "biomesoplenty:willow_pressure_plate"
     ],
     "minecraft:wooden_slabs": [
       "biomesoplenty:willow_slab"
     ],
-    "minecraft:wooden_doors": [
-      "biomesoplenty:willow_door"
+    "minecraft:wooden_stairs": [
+      "biomesoplenty:willow_stairs"
+    ],
+    "minecraft:wooden_trapdoors": [
+      "biomesoplenty:willow_trapdoor"
+    ],
+    "amendments:goes_in_tripwire_hook": [
+      "create:wrench"
+    ],
+    "minecraft:enchantable/durability": [
+      "create:wrench"
+    ],
+    "c:silicon": [
+      "ae2:silicon"
+    ],
+    "c:tools/wrench": [
+      "create:wrench"
+    ],
+    "c:dusts/ender_pearl": [
+      "ae2:ender_dust"
     ],
     "minecraft:trapdoors": [
       "biomesoplenty:willow_trapdoor"
     ],
     "minecraft:slabs": [
       "biomesoplenty:willow_slab"
-    ],
-    "minecraft:wooden_trapdoors": [
-      "biomesoplenty:willow_trapdoor"
     ],
     "minecraft:doors": [
       "biomesoplenty:willow_door",
@@ -120,29 +154,11 @@
     "minecraft:beacon_payment_items": [
       "bigreactors:yellorium_ingot"
     ],
-    "minecraft:wooden_pressure_plates": [
-      "biomesoplenty:willow_pressure_plate"
-    ],
     "minecraft:fences": [
-      "biomesoplenty:willow_fence"
-    ],
-    "minecraft:planks": [
-      "biomesoplenty:willow_planks"
-    ],
-    "minecraft:wooden_buttons": [
-      "biomesoplenty:willow_button"
-    ],
-    "minecraft:wooden_fences": [
       "biomesoplenty:willow_fence"
     ],
     "minecraft:buttons": [
       "biomesoplenty:willow_button"
-    ],
-    "minecraft:hanging_signs": [
-      "biomesoplenty:willow_hanging_sign"
-    ],
-    "minecraft:signs": [
-      "biomesoplenty:willow_sign"
     ],
     "cluttered:willow_log": [
       "biomesoplenty:willow_log",
@@ -155,9 +171,6 @@
       "biomesoplenty:willow_wood",
       "biomesoplenty:stripped_willow_log",
       "biomesoplenty:stripped_willow_wood"
-    ],
-    "minecraft:fence_gates": [
-      "biomesoplenty:willow_fence_gate"
     ],
     "c:plates/zinc": [
       "createaddition:zinc_sheet"
@@ -217,24 +230,15 @@
       "bigreactors:yellorite_ore",
       "bigreactors:deepslate_yellorite_ore"
     ],
-    "c:raw_materials/uranium": [
-      "bigreactors:raw_yellorium"
-    ],
     "c:storage_blocks/raw_uranium": [
       "bigreactors:raw_yellorium_block"
     ],
     "c:ropes": [
       "supplementaries:rope"
     ],
-    "c:tools": [
-      "create:wrench"
-    ],
     "c:ore_rates/singular": [
       "bigreactors:yellorite_ore",
       "bigreactors:deepslate_yellorite_ore"
-    ],
-    "c:storage_blocks/uranium": [
-      "bigreactors:yellorium_block"
     ],
     "c:milk/freshmilk": [
       "farmersdelight:milk_bottle"
@@ -257,6 +261,13 @@
     ],
     "supplementaries:statue_tools": [
       "create:wrench"
+    ],
+    "alexscaves:uranium": [
+      "alexscaves:uranium",
+      "bigreactors:raw_yellorium"
+    ],
+    "alexscaves:uranium_rod": [
+      "alexscaves:uranium_rod"
     ]
   },
   "blockTags": {
@@ -274,11 +285,75 @@
     "minecraft:climbable": [
       "supplementaries:rope"
     ],
-    "minecraft:slabs": [
-      "biomesoplenty:willow_slab"
+    "c:ores/uranium": [
+      "bigreactors:yellorite_ore",
+      "bigreactors:deepslate_yellorite_ore"
+    ],
+    "c:storage_blocks/uranium": [
+      "bigreactors:yellorium_block"
+    ],
+    "minecraft:ceiling_hanging_signs": [
+      "biomesoplenty:willow_hanging_sign"
+    ],
+    "minecraft:fence_gates": [
+      "biomesoplenty:willow_fence_gate"
+    ],
+    "minecraft:impermeable": [
+      "create:industrial_iron_window"
+    ],
+    "minecraft:leaves": [
+      "biomesoplenty:willow_leaves"
+    ],
+    "minecraft:logs": [
+      "biomesoplenty:willow_log",
+      "biomesoplenty:willow_wood",
+      "biomesoplenty:stripped_willow_log",
+      "biomesoplenty:stripped_willow_wood"
+    ],
+    "minecraft:logs_that_burn": [
+      "biomesoplenty:willow_log",
+      "biomesoplenty:willow_wood",
+      "biomesoplenty:stripped_willow_log",
+      "biomesoplenty:stripped_willow_wood"
+    ],
+    "minecraft:needs_stone_tool": [
+      "bigreactors:yellorite_ore",
+      "bigreactors:deepslate_yellorite_ore",
+      "bigreactors:yellorium_block",
+      "bigreactors:raw_yellorium_block"
+    ],
+    "minecraft:planks": [
+      "biomesoplenty:willow_planks"
+    ],
+    "minecraft:saplings": [
+      "biomesoplenty:willow_sapling"
     ],
     "minecraft:stairs": [
       "biomesoplenty:willow_stairs"
+    ],
+    "minecraft:standing_signs": [
+      "biomesoplenty:willow_sign"
+    ],
+    "minecraft:wooden_buttons": [
+      "biomesoplenty:willow_button"
+    ],
+    "minecraft:wooden_doors": [
+      "biomesoplenty:willow_door"
+    ],
+    "minecraft:wooden_fences": [
+      "biomesoplenty:willow_fence"
+    ],
+    "minecraft:wooden_pressure_plates": [
+      "biomesoplenty:willow_pressure_plate"
+    ],
+    "minecraft:wooden_slabs": [
+      "biomesoplenty:willow_slab"
+    ],
+    "minecraft:wooden_stairs": [
+      "biomesoplenty:willow_stairs"
+    ],
+    "minecraft:wooden_trapdoors": [
+      "biomesoplenty:willow_trapdoor"
     ],
     "minecraft:mineable/axe": [
       "biomesoplenty:stripped_willow_log",
@@ -297,52 +372,16 @@
       "biomesoplenty:willow_door",
       "biomesoplenty:willow_trapdoor"
     ],
-    "c:glass_blocks": [
-      "create:industrial_iron_window"
-    ],
-    "minecraft:leaves": [
-      "biomesoplenty:willow_leaves"
-    ],
-    "minecraft:logs": [
-      "biomesoplenty:willow_log",
-      "biomesoplenty:willow_wood",
-      "biomesoplenty:stripped_willow_log",
-      "biomesoplenty:stripped_willow_wood"
-    ],
-    "minecraft:logs_that_burn": [
-      "biomesoplenty:willow_log",
-      "biomesoplenty:willow_wood",
-      "biomesoplenty:stripped_willow_log",
-      "biomesoplenty:stripped_willow_wood"
-    ],
     "minecraft:mineable/hoe": [
       "biomesoplenty:willow_leaves"
     ],
-    "minecraft:needs_stone_tool": [
-      "bigreactors:yellorite_ore",
-      "bigreactors:deepslate_yellorite_ore",
-      "bigreactors:yellorium_block",
-      "bigreactors:raw_yellorium_block"
-    ],
-    "minecraft:saplings": [
-      "biomesoplenty:willow_sapling"
-    ],
-    "minecraft:wooden_stairs": [
-      "biomesoplenty:willow_stairs"
-    ],
-    "minecraft:wooden_slabs": [
+    "minecraft:slabs": [
       "biomesoplenty:willow_slab"
     ],
-    "minecraft:wooden_doors": [
-      "biomesoplenty:willow_door"
+    "c:glass_blocks": [
+      "create:industrial_iron_window"
     ],
     "minecraft:trapdoors": [
-      "biomesoplenty:willow_trapdoor"
-    ],
-    "minecraft:fence_gates": [
-      "biomesoplenty:willow_fence_gate"
-    ],
-    "minecraft:wooden_trapdoors": [
       "biomesoplenty:willow_trapdoor"
     ],
     "minecraft:doors": [
@@ -353,30 +392,12 @@
     "minecraft:fences": [
       "biomesoplenty:willow_fence"
     ],
-    "minecraft:planks": [
-      "biomesoplenty:willow_planks"
-    ],
-    "minecraft:wooden_buttons": [
-      "biomesoplenty:willow_button"
-    ],
-    "minecraft:wooden_fences": [
-      "biomesoplenty:willow_fence"
-    ],
     "minecraft:buttons": [
       "biomesoplenty:willow_button"
-    ],
-    "minecraft:standing_signs": [
-      "biomesoplenty:willow_sign"
     ],
     "minecraft:overworld_carver_replaceables": [
       "bigreactors:yellorite_ore",
       "bigreactors:deepslate_yellorite_ore"
-    ],
-    "minecraft:ceiling_hanging_signs": [
-      "biomesoplenty:willow_hanging_sign"
-    ],
-    "minecraft:wooden_pressure_plates": [
-      "biomesoplenty:willow_pressure_plate"
     ],
     "minecraft:all_hanging_signs": [
       "biomesoplenty:willow_hanging_sign"
@@ -393,9 +414,6 @@
     ],
     "c:glass_panes": [
       "create:industrial_iron_window_pane"
-    ],
-    "minecraft:impermeable": [
-      "create:industrial_iron_window"
     ],
     "create:fan_transparent": [
       "create:andesite_bars",
@@ -416,10 +434,6 @@
     "c:ores_in_ground/stone": [
       "bigreactors:yellorite_ore"
     ],
-    "c:ores/uranium": [
-      "bigreactors:yellorite_ore",
-      "bigreactors:deepslate_yellorite_ore"
-    ],
     "c:ropes": [
       "supplementaries:rope"
     ],
@@ -435,9 +449,6 @@
     ],
     "c:storage_blocks/raw_uranium": [
       "bigreactors:raw_yellorium_block"
-    ],
-    "c:storage_blocks/uranium": [
-      "bigreactors:yellorium_block"
     ],
     "minecraft:snaps_goat_horn": [
       "bigreactors:yellorite_ore",

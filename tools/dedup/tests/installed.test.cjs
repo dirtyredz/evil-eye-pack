@@ -17,6 +17,37 @@ const planned = plan(catalog.data, policy, catalog.blocks);
 const sources = read('kubejs/config/dedup_sources.json');
 const retired = new Set(retiredIds(policy));
 
+test('Alex uranium progression survives alongside yellorium and sulfur uses the existing-world survivor', () => {
+  const ids = ['uranium', 'uranium_shard', 'uranium_rod', 'block_of_uranium', 'radrock_uranium_ore'];
+  for (const id of ids) {
+    assert.ok(catalog.models.has('alexscaves:' + id));
+    assert.ok(!retired.has('alexscaves:' + id));
+  }
+  for (const id of ['uranium_from_block', 'uranium_from_shard', 'uranium_shard_from_uranium', 'uranium_rod',
+    'furnace/uranium_from_radrock_ore_blasting', 'furnace/uranium_from_radrock_ore_smelting',
+    'furnace/uranium_shard_blasting', 'furnace/uranium_shard_smelting']) {
+    assert.ok(catalog.data.has('data/alexscaves/recipe/' + id + '.json'), id);
+    assert.ok(!sources.removeRecipes.includes('alexscaves:' + id), id);
+  }
+  assert.ok(policy.extraItemTags['alexscaves:uranium'].includes('bigreactors:raw_yellorium'));
+  assert.deepEqual(policy.tagRemovals['c:nuggets/uranium'], ['alexscaves:uranium_shard']);
+  assert.deepEqual(policy.tagRemovals['c:storage_blocks/uranium'], ['alexscaves:block_of_uranium']);
+  assert.equal(policy.replacements['mekanism:dust_sulfur'], 'alexscaves:sulfur_dust');
+  const cooks = [];
+  const event = Object.fromEntries(['smelting', 'blasting'].map(kind => [kind, (out, input) => ({ id(id) { cooks.push({ kind, out, input, id }); } })]));
+  vm.runInNewContext(fs.readFileSync(path.join(root, 'kubejs/server_scripts/uranium.js'), 'utf8'), { ServerEvents: { recipes(fn) { fn(event); } } });
+  assert.equal(cooks.length, 2);
+  assert.ok(cooks.every(r => r.out === 'bigreactors:yellorium_ingot' && r.input === 'alexscaves:uranium'));
+});
+
+test('Alex recipe tag bridges preserve the pinned painting set and concrete colours', () => {
+  const paintings = catalog.data.get('data/alexscaves/tags/block/cave_paintings.json');
+  assert.equal(paintings.values.length, 29);
+  assert.deepEqual(read('kubejs/data/alexscaves/tags/item/cave_paintings.json'), paintings);
+  assert.deepEqual(read('kubejs/data/c/tags/item/concrete.json').values, ['#alexscaves:concrete']);
+  assert.equal(catalog.data.get('data/alexscaves/tags/item/concrete.json').values.length, 16);
+});
+
 test('all data overrides match pinned jars, preserving custom counts/chances/conditions', () => {
   assert.ok(planned.overrides.size > 0);
   for (const [file, expected] of planned.overrides) assert.deepEqual(read(file), expected, file);
