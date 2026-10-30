@@ -1,44 +1,76 @@
-
 [Smoke]
 	#Default smoke color in ARGB (Alpha, Red, Green, Blue) hex format (0xaarrggbb)
 	defaultColor = -1
 	#Maximum smoke particles amount per chimney
-	#Range: 1 ~ 100
+	# Default: 18
+	# Range: 1 ~ 100
 	maxAmount = 16
 	#Maximum smoke blow out distance
-	#Range: 0.0 ~ 20.0
+	# Default: 4.0
+	# Range: 0.0 ~ 20.0
 	maxIntencity = 4.0
 	#Maximum smoke particles scale
-	#Range: 1.0 ~ 10.0
+	# Default: 2.5
+	# Range: 1.0 ~ 10.0
 	maxScale = 2.5
 	#Maximum smoke particles render distance
-	#Range: 16 ~ 256
+	# Default: 128
+	# Range: 16 ~ 256
 	maxRenderDistance = 128
 	#Whether to replace vanilla smoke particles from a campfire or not
 	replaceVanillaCampfireSmoke = true
-
-[Paint]
-	#Whether a bucket of water is required to be in the player's inventory in order to paint
-	requiresWaterBucket = true
-	#Whether a dye is required to be in the player's inventory in order to paint
-	requiresDye = true
+	#Emit smoke particles from vanilla fire blocks
+	emitFromFireBlock = true
+	#Whether smoke causes poisoning to animals
+	poisonAnimals = true
+	#Whether smoke causes poisoning to hostile mobs
+	poisonHostileMobs = true
+	#Whether smoke causes poisoning to non-playable characters
+	poisonNPCs = true
+	#Whether smoke causes poisoning to players
+	poisonPlayers = true
 
 [Pipe]
 	#Number of pipes that can be placed(when holding pipe items in both hands) / broken(when crouching) at once
-	#Range: 1 ~ 128
+	# Default: 8
+	# Range: 1 ~ 128
 	maxPipesAtOnce = 8
 
 [Pump]
-	#If set to True, the redstone signal will turn the pump off instead of turning it on
-	invertedRedstoneSignal = false
+	#Power source required for the pump to operate
+	#Allowed Values: NONE, REDSTONE, FORGE_ENERGY, KINETIC_ENERGY
+	powerSource = "REDSTONE"
 
 	[Pump.ForgeEnergy]
-		#Whether Forge Energy is required or not
-		enabled = false
 		#Maximum amount of energy that can be held
-		#Range: 0 ~ 100000
+		# Default: 10000
+		# Range: 0 ~ 100000
 		capacity = 10000
 		#Amount of energy consumed per operation or second
-		#Range: 0 ~ 1000
+		# Default: 50
+		# Range: 0 ~ 1000
 		consumption = 50
 
+	[Pump.KineticEnergy]
+		#Minimal rotation speed in RPM required to activate the pump
+		# Default: 16
+		# Range: 1 ~ 256
+		minActivationSpeed = 16
+
+[Painting]
+	#These settings are shared between several mods and therefore located in forgeendertech-common.toml
+	"whereAreTheSettings?" = ["I've read the hint and understood"]
+
+[Chimney]
+	#Light occlusion strength for narrow chimneys. Higher values darken interiors
+	# Default: 5
+	# Range: 0 ~ 15
+	narrowChimneyLightDampening = 5
+	#Light occlusion strength for full-sized chimneys. Higher values darken interiors
+	# Default: 10
+	# Range: 0 ~ 15
+	fullSizedChimneyLightDampening = 10
+
+[Vent]
+	#These settings are shared between several mods and therefore located in forgeendertech-common.toml
+	"whereAreTheSettings?" = ["I've read the hint and understood"]

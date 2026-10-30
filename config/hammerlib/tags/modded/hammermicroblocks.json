@@ -1,11 +1,20 @@
 {
     "version": 1,
-    "tags": {"minecraft:item": {"c:tools/saw": {
-        "hammermicroblocks:netherite_saw": true,
-        "hammermicroblocks:granite_saw": true,
-        "hammermicroblocks:gold_saw": true,
-        "hammermicroblocks:iron_saw": true,
-        "hammermicroblocks:diamond_saw": true
-    }}},
+    "tags": {"minecraft:item": {
+        "minecraft:enchantable/durability": {
+            "hammermicroblocks:netherite_saw": true,
+            "hammermicroblocks:granite_saw": true,
+            "hammermicroblocks:gold_saw": true,
+            "hammermicroblocks:iron_saw": true,
+            "hammermicroblocks:diamond_saw": true
+        },
+        "c:tools/saw": {
+            "hammermicroblocks:netherite_saw": true,
+            "hammermicroblocks:granite_saw": true,
+            "hammermicroblocks:gold_saw": true,
+            "hammermicroblocks:iron_saw": true,
+            "hammermicroblocks:diamond_saw": true
+        }
+    }},
     "unregistered": {}
 }

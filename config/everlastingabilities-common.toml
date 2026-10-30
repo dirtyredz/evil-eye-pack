@@ -1,6 +1,3 @@
-
-[general]
-
 	[general.general]
 		#How many abilities should be dropped on player death.
 		dropAbilitiesOnPlayerDeath = 1
@@ -28,24 +25,11 @@
 		totemMaximumSpawnRarity = 1
 		#The maximum amount of abilities a player can have, -1 is infinite.
 		maxPlayerAbilities = -1
-
-[core]
-
-	[core.general]
-		#Set 'true' to enable development debug mode. This will result in a lower performance!
-		debug = false
-		#If mod compatibility loader should crash hard if errors occur in that process.
-		crashOnModCompatCrash = false
-		#If the recipe loader should crash when finding invalid recipes.
-		crashOnInvalidRecipe = false
-		#If an anonymous mod startup analytics request may be sent to our analytics service.
-		analytics = true
-		#If the version checker should be enabled.
-		versionChecker = true
+		#Id's of abilities that should be disabled. (ids: https://github.com/CyclopsMC/EverlastingAbilities/wiki/Ability-datapacks#default-abilities)
+		disabledAbilities = []
 
 	[core.ability_totem]
 		#This many totems combined in a crafting grid produces a new random totem (0 to disable)
 		totemCraftingCount = 3
 		#When combining totems, percentage chance of getting one higher rarity than normal.
 		totemCraftingRarityIncreasePercent = 15
-

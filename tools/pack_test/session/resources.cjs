@@ -108,7 +108,8 @@ function scanResources(sources, { removedNamespaces = [], minecraft = null } = {
       if (json && json.type === 'forge:conditional' && Array.isArray(json.recipes)) r.branches = json.recipes.map((b) => ({ conditions: b.conditions || [], type: b.recipe && b.recipe.type, outputs: declaredOutputs(b.recipe) }));
       ev.recipes[at.id] = r; // later (higher) sources win
     } else if (at.kind === 'loot_tables') {
-      ev.loot[at.id] = { source, type: json && json.type, ...lootRefs(json || {}) };
+      const conditions = dataConditions(json);
+      ev.loot[at.id] = { source, type: json && json.type, ...(conditions ? { conditions } : {}), ...lootRefs(json || {}) };
     } else if (at.kind.startsWith('tags/')) {
       const bucket = ev.tags[at.kind.slice(5)];
       const values = Array.isArray(json && json.values) ? json.values : [];

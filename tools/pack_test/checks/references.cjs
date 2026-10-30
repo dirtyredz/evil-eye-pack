@@ -5,6 +5,7 @@
 const { makeFinding, sectionResult } = require('../verdict/finding.cjs');
 
 const finding = makeFinding('references');
+const { evaluateAll } = require('./conditions.cjs');
 
 // Ids without a namespace mean minecraft:, as in the game.
 const qualify = (id) => (id.includes(':') ? id : `minecraft:${id}`);
@@ -51,6 +52,9 @@ function checkLoot(loot, live, findings, stats, logFailed = new Set()) {
     const missingItems = items.filter((i) => !live.items.has(i));
     if (!liveTables.has(id)) {
       if (logFailed.has(id)) continue;
+      // A table gated by its own load conditions (NeoForge 1.21: neoforge:conditions, e.g. mod_loaded for an
+      // absent compat mod) is correctly not loaded.
+      if (t.conditions && evaluateAll(t.conditions, { mods: live.mods || new Set(), items: live.items || new Set(), itemTags: live.itemTags || new Map() }).value === false) { stats.lootConditionalOff = (stats.lootConditionalOff || 0) + 1; continue; }
       // A table for compat content whose items were never registered (Steam 'n' Rails tracks for absent wood mods).
       if (missingItems.length && missingItems.length === items.length) { stats.lootOptionalCompat = (stats.lootOptionalCompat || 0) + 1; continue; }
       findings.push(finding('loot-not-loaded', id, t.source, 'loot table present in data but not loaded'));

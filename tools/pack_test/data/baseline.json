@@ -1147,11 +1147,6 @@
    "since": "2026-10-30"
   },
   {
-   "key": "references|loot-not-loaded|thirst:chests/abandoned_mineshaft_fr|ThirstWasTaken-1.21.1-2.1.5.jar",
-   "reason": "Thirst Was Taken chest tables name drinks from mods the pack does not ship; the table fails to load (see baseline log signature).",
-   "since": "2026-10-30"
-  },
-  {
    "key": "references|loot-not-loaded|supplementaries:blocks/candle_holder_cupric|supplementaries-1.21.1-4.0.2-neoforge.jar",
    "reason": "Supplementaries ships loot tables for compat candle holders (cupric/ender/soul/spectacle) it registers only with their compat mods; not registered here, so not loaded.",
    "since": "2026-10-30"
@@ -1577,96 +1572,5 @@
    "since": "2026-10-30"
   }
  ],
- "logSignatures": [
-  {
-   "signature": "com.google.gson.JsonSyntaxException: Expected name to be an item, was unknown string '<id>'",
-   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [mixin/]: Mixin config astikorcartsredux.mixins.json does not specify \"minVersion\" property",
-   "reason": "AstikorCarts Redux mixin config has no minVersion; logged at ERROR, harmless (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener/]: Couldn't parse data file <id> from <id>",
-   "reason": "Cozy Cafe's menu/vinery/kelp_cider.json is malformed upstream (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "com.google.gson.JsonParseException: com.google.gson.stream.MalformedJsonException: Use JsonReader.setLenient(true) to accept malformed JSON at line # column # path $.themes[#]",
-   "reason": "Cozy Cafe's menu/vinery/kelp_cider.json is malformed upstream (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "Caused by: com.google.gson.stream.MalformedJsonException: Use JsonReader.setLenient(true) to accept malformed JSON at line # column # path $.themes[#]",
-   "reason": "Cozy Cafe's menu/vinery/kelp_cider.json is malformed upstream (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/bastion_other_bc",
-   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/bastion_other_fr",
-   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/shipwreck_supply_bc",
-   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/shipwreck_supply_fr",
-   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/simple_dungeon_bc",
-   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/simple_dungeon_fr",
-   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/abandoned_mineshaft_fr",
-   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/abandoned_mineshaft_bc",
-   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/nether_bridge_fr",
-   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  },
-  {
-   "signature": "[ERROR] [net.minecraftforge.common.ForgeHooks/]: Couldn't parse element <id>:chests/nether_bridge_bc",
-   "reason": "Thirst Was Taken chest loot tables name Brewin' and Chewin' / Farmer's Respite drinks the pack does not ship; those tables fail to load (docs/GOTCHAS.md).",
-   "since": "2026-10-23",
-   "provenance": "jobs/2026-10-22-ato-retire-step1/smoke-main/run-2026-10-23T03-00-29-000Z (15-group baseline)"
-  }
- ]
+ "logSignatures": []
 }

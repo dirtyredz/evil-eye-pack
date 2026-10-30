@@ -3,6 +3,10 @@ defaultOption = true
 #Makes grave configuration op only.
 operatorOnly = false
 #Time delay until a grave becomes public, in seconds.
-#Range: > 0
+# Default: 3600
+# Range: > 0
 publicDelay = 3600
-
+#Delay before you can spawn another grave, in seconds.
+# Default: 0
+# Range: > 0
+graveCooldown = 0

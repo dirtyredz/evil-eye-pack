@@ -1,28 +1,120 @@
 {
  "schema": 1,
- "note": "Per-config treatment for the NeoForge 1.21.1 migration (plan Phase 5). Ordered rules: the first match decides. 'regenerate' files are carried unchanged now and reconciled against the target mod's generated defaults at the first target boot (Phase 6): renamed or removed keys are reviewed then, intended values reapplied. Client-only defaults that a server cannot generate wait for the owner's first launch. tools/packwiz/tests/config_decisions.test.cjs enforces full coverage.",
+ "note": "Per-config treatment for the NeoForge 1.21.1 migration (plan Phase 5). Ordered rules: the first match decides. 'regenerate' files were reconciled at the first clean target boot (Phase 6, pack-test boot 6, 2026-10-30): no shipped value was reset by a mod; 87 files where the 1.21.1 mods dropped obsolete keys or added new ones were replaced by the files those mods wrote back (our values kept), and no dropped key carried Evil Eye intent (each differed from the pack's initial defaults only where a mod had written its own default). Client-only defaults that a server cannot generate wait for the owner's first launch. tools/packwiz/tests/config_decisions.test.cjs enforces full coverage.",
  "rules": [
-  { "match": "config/emi-curation/", "treatment": "carry", "reason": "Authored EMI curation policy (rules, lists, DECOR, Mods menu); ids, tags and components are reconciled with the target registries at the first boot." },
-  { "match": "config/defaultoptions/", "treatment": "carry", "reason": "Default Options key choices (new instances only); key names are checked against the 1.21.1 client at the owner's first launch." },
-  { "match": "config/emi.css", "treatment": "carry", "reason": "EMI theme, unchanged across versions." },
-  { "match": "config/iris.properties", "treatment": "carry", "reason": "Renamed from oculus.properties (Oculus -> Iris; same keys, Oculus is an Iris fork): Complementary Unbound selected, shaders on." },
-  { "match": "config/adlods/", "treatment": "preserve-intent", "reason": "ADLods survivor deposits; ore ids and forge: tags are rechecked against target registries and c: tags at the first boot. Ice and Fire deposits are parked with the port." },
-  { "match": "config/hammerlib", "treatment": "preserve-intent", "reason": "HammerLib recipe/tag switches that keep duplicate materials off; reapplied to the 21.x schema." },
-  { "match": "config/bhc", "treatment": "preserve-intent", "reason": "Baubley Heart Canisters drops (wither bone acquisition path while Ice and Fire is deferred)." },
-  { "match": "config/create_dragons_plus", "treatment": "preserve-intent", "reason": "Deterministic Dragons Plus sanding." },
-  { "match": "defaultconfigs/hourglass-server.toml", "treatment": "preserve-intent", "reason": "Hourglass half-speed day, vanilla-speed night, vanilla sleep (pack_contract test)." },
-  { "match": "defaultconfigs/ftbessentials-server.snbt", "treatment": "preserve-intent", "reason": "FTB Essentials settings for new worlds." },
-  { "match": "config/", "treatment": "regenerate", "reason": "Mod config carried unchanged; reconciled with the target build's generated defaults at the first boot." }
+  {
+   "match": "config/emi-curation/",
+   "treatment": "carry",
+   "reason": "Authored EMI curation policy (rules, lists, DECOR, Mods menu); ids, tags and components are reconciled with the target registries at the first boot."
+  },
+  {
+   "match": "config/defaultoptions/",
+   "treatment": "carry",
+   "reason": "Default Options key choices (new instances only); key names are checked against the 1.21.1 client at the owner's first launch."
+  },
+  {
+   "match": "config/emi.css",
+   "treatment": "carry",
+   "reason": "EMI theme, unchanged across versions."
+  },
+  {
+   "match": "config/iris.properties",
+   "treatment": "carry",
+   "reason": "Renamed from oculus.properties (Oculus -> Iris; same keys, Oculus is an Iris fork): Complementary Unbound selected, shaders on."
+  },
+  {
+   "match": "config/adlods/",
+   "treatment": "preserve-intent",
+   "reason": "ADLods survivor deposits; ore ids and forge: tags are rechecked against target registries and c: tags at the first boot. Ice and Fire deposits are parked with the port."
+  },
+  {
+   "match": "config/hammerlib",
+   "treatment": "preserve-intent",
+   "reason": "HammerLib recipe/tag switches that keep duplicate materials off; reapplied to the 21.x schema."
+  },
+  {
+   "match": "config/bhc",
+   "treatment": "preserve-intent",
+   "reason": "Baubley Heart Canisters drops (wither bone acquisition path while Ice and Fire is deferred)."
+  },
+  {
+   "match": "config/create_dragons_plus",
+   "treatment": "preserve-intent",
+   "reason": "Deterministic Dragons Plus sanding."
+  },
+  {
+   "match": "defaultconfigs/hourglass-server.toml",
+   "treatment": "preserve-intent",
+   "reason": "Hourglass half-speed day, vanilla-speed night, vanilla sleep (pack_contract test)."
+  },
+  {
+   "match": "defaultconfigs/ftbessentials-server.snbt",
+   "treatment": "preserve-intent",
+   "reason": "FTB Essentials settings for new worlds."
+  },
+  {
+   "match": "config/",
+   "treatment": "regenerate",
+   "reason": "Mod config carried unchanged; reconciled with the target build's generated defaults at the first boot."
+  }
  ],
  "removed": [
-  { "file": "config/oculus.properties", "treatment": "replaced", "by": "config/iris.properties", "reason": "Oculus replaced by Iris." },
-  { "file": "config/embeddium-options.json", "treatment": "removed", "reason": "Embeddium replaced by Sodium, which generates sodium-options.json; the old file held defaults." },
-  { "file": "config/embeddium-mixins.properties", "treatment": "removed", "reason": "Embeddium mixin overrides; obsolete with Sodium." },
-  { "file": "config/embeddium-fingerprint.json", "treatment": "removed", "reason": "Embeddium renderer fingerprint cache; never shipped state." },
-  { "file": "config/lithium.properties", "treatment": "removed", "reason": "Radium Reforged dropped (Create 6.0.10 declares it incompatible); the file held only comments." },
-  { "file": "config/forge-client.toml", "treatment": "removed", "reason": "Forge client config, all defaults; NeoForge generates neoforge-client.toml." },
-  { "file": "config/fml.toml", "treatment": "removed", "reason": "Forge FML config, all defaults (Forge early-window keys); NeoForge's FML generates its own." },
-  { "file": "config/metadata.json", "treatment": "removed", "reason": "Stale FTB Unstable 1.20 Forge provenance from the pack's origin, not Evil Eye's." }
+  {
+   "file": "config/oculus.properties",
+   "treatment": "replaced",
+   "by": "config/iris.properties",
+   "reason": "Oculus replaced by Iris."
+  },
+  {
+   "file": "config/embeddium-options.json",
+   "treatment": "removed",
+   "reason": "Embeddium replaced by Sodium, which generates sodium-options.json; the old file held defaults."
+  },
+  {
+   "file": "config/embeddium-mixins.properties",
+   "treatment": "removed",
+   "reason": "Embeddium mixin overrides; obsolete with Sodium."
+  },
+  {
+   "file": "config/embeddium-fingerprint.json",
+   "treatment": "removed",
+   "reason": "Embeddium renderer fingerprint cache; never shipped state."
+  },
+  {
+   "file": "config/lithium.properties",
+   "treatment": "removed",
+   "reason": "Radium Reforged dropped (Create 6.0.10 declares it incompatible); the file held only comments."
+  },
+  {
+   "file": "config/forge-client.toml",
+   "treatment": "removed",
+   "reason": "Forge client config, all defaults; NeoForge generates neoforge-client.toml."
+  },
+  {
+   "file": "config/fml.toml",
+   "treatment": "removed",
+   "reason": "Forge FML config, all defaults (Forge early-window keys); NeoForge's FML generates its own."
+  },
+  {
+   "file": "config/metadata.json",
+   "treatment": "removed",
+   "reason": "Stale FTB Unstable 1.20 Forge provenance from the pack's origin, not Evil Eye's."
+  },
+  {
+   "file": "config/collective.json5",
+   "treatment": "removed",
+   "reason": "Serilum Collective moved its config to config/serilum/ on 1.21.1; the old file held defaults (pack-test boot 6 post-boot evidence)."
+  },
+  {
+   "file": "config/doubledoors.json5",
+   "treatment": "removed",
+   "reason": "Double Doors (Serilum) moved its config to config/serilum/ on 1.21.1; the old file held defaults."
+  },
+  {
+   "file": "config/letmedespawn.json",
+   "treatment": "removed",
+   "reason": "Let Me Despawn migrates letmedespawn.json to config/letmedespawn/letmedespawn.json5 on 1.21.1 and renames the old file .migrated; the old file held defaults."
+  }
  ],
  "deferred": "Configs of the seven owned ports are parked in tools/packwiz/migration/deferred/<port>/ (see its README)."
 }

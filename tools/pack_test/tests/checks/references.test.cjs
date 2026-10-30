@@ -77,3 +77,14 @@ test('malformed non-recipe resources fail; recipe ones are left to the recipe ch
   const r = checkReferences(res({ malformed: [{ kind: 'recipes', id: 'a:r', source: 's', error: 'e' }, { kind: 'loot_tables', id: 'a:l', source: 's', error: 'bad' }] }), mkLive());
   assert.deepEqual(codes(r), ['resource-malformed-json:fail']);
 });
+
+test('a loot table whose own neoforge:conditions are false is gated, not missing', () => {
+  const { checkReferences } = require('../../checks/references.cjs');
+  const live = { items: new Set(), blocks: new Set(), fluids: new Set(), itemTags: new Map(), blockTags: new Map(), fluidTags: new Map(), mods: new Set(['minecraft']), lootTables: new Set() };
+  const resources = { tags: { items: {}, blocks: {}, fluids: {} }, loot: {
+    'thirst:chests/x': { source: 't.jar', conditions: [{ type: 'neoforge:mod_loaded', modid: 'farmersrespite' }], items: [], tags: [], tables: [], blocks: [], opaque: [] },
+    'thirst:chests/y': { source: 't.jar', items: [], tags: [], tables: [], blocks: [], opaque: [] } }, malformed: [] };
+  const r = checkReferences(resources, live);
+  assert.deepEqual(r.findings.map((f) => f.subject), ['thirst:chests/y']);
+  assert.equal(r.stats.lootConditionalOff, 1);
+});
