@@ -151,6 +151,29 @@
     "version": "fTRMVgyZ"
    },
    "reason": "Required by L_Ender's Cataclysm (declares 3.1); 3.1 is the newest NeoForge 1.21.1 release."
+  },
+  {
+   "metafile": "mods/mekanism.pw.toml",
+   "name": "Mekanism",
+   "side": "both",
+   "target": {
+    "source": "modrinth",
+    "project": "Ce6I4WUE",
+    "version": "5KzzycBT",
+    "filename": "Mekanism-1.21.1-10.7.19.85.jar"
+   },
+   "reason": "Plan Phase 7 (Interstellaris stack), first in dependency order: Mekanism 10.7.19.85, inside Interstellaris 0.6.1's published range 10.7.19-10.7.x. The main jar, not the -api file."
+  },
+  {
+   "metafile": "mods/mekanism-generators.pw.toml",
+   "name": "Mekanism Generators",
+   "side": "both",
+   "target": {
+    "source": "modrinth",
+    "project": "OFVYKsAk",
+    "version": "a6gl7srE"
+   },
+   "reason": "Plan Phase 7: Mekanism Generators 10.7.19.85 (pairs with Mekanism 10.7.19.85, its Modrinth dependency); required by Interstellaris 0.6.1."
   }
  ],
  "waivers": {},

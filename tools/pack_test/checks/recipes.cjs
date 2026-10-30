@@ -15,7 +15,7 @@ const finding = makeFinding('recipes');
 
 function checkLive(recipes, reg, tags) {
   const findings = [];
-  const stats = { loaded: recipes.length, ingredients: 0, blankSlots: 0, customIngredients: 0, unsupportedOutputs: 0, beeOutputs: 0 };
+  const stats = { loaded: recipes.length, ingredients: 0, blankSlots: 0, customIngredients: 0, unsupportedOutputs: 0, beeOutputs: 0, chemicalOutputs: 0 };
   for (const r of recipes) {
     for (const ing of r.ings || []) {
       stats.ingredients += 1;
@@ -36,6 +36,7 @@ function checkLive(recipes, reg, tags) {
     for (const o of declaredOutputRefs(r.json)) if (!outs.has(o.id) || o.form === 'object') outs.set(o.id, o.form);
     for (const [o, form] of outs) {
       if (reg.items.has(o) || reg.fluids.has(o)) continue;
+      if (reg.chemicals && reg.chemicals.has(o)) { stats.chemicalOutputs += 1; continue; } // a Mekanism chemical stack, not an item
       if (form === 'string' && isBeeOutput(r, o, reg)) { stats.beeOutputs += 1; continue; } // a Productive Bees bee type, not an item
       if (form === 'object') findings.push(finding('output-unregistered', r.id, o, `${r.type}: output stack names an unregistered item`));
       else if (!reg.entities.has(o) && !reg.blocks.has(o)) findings.push(finding('output-unrecognized', r.id, o, `${r.type}: bare output id is no registered item, block, fluid or entity (may be a mod-specific id)`, 'info'));

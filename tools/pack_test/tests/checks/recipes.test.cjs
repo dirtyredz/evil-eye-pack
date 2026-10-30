@@ -93,3 +93,20 @@ test('fallbackTags maps tag -> outputs of recipes that need it empty', () => {
   assert.deepEqual([...m.get('forge:steel')].sort(), ['p:a', 'p:b']);
   assert.equal(m.size, 1);
 });
+
+test('checkLive: a Mekanism chemical output is no unregistered item; an unknown chemical still fails', () => {
+  const chem = { ...reg, chemicals: new Set(['mekanism:clean_iron']) };
+  const washing = (id) => rec({ id: 'mekanism:w', type: 'mekanism:washing', out: null, json: { type: 'mekanism:washing', output: { id, amount: 1 } } });
+  const ok = checkLive([washing('mekanism:clean_iron')], chem, new Map());
+  assert.deepEqual(ok.findings, []);
+  assert.equal(ok.stats.chemicalOutputs, 1);
+  assert.deepEqual(codes(checkLive([washing('mekanism:clean_gone')], chem, new Map()).findings), ['output-unregistered:fail']);
+});
+
+test('declared outputs include Mekanism main/secondary/item/chemical outputs, not fluid outputs', () => {
+  const sawing = { type: 'mekanism:sawing', main_output: { count: 2, id: 'biomesoplenty:dead_planks' }, secondary_chance: 0.5, secondary_output: { count: 1, id: 'mekanism:sawdust' } };
+  const reaction = { type: 'mekanism:reaction', item_output: { count: 1, id: 'mekanism:pellet_polonium' }, chemical_output: { amount: 1000, id: 'mekanism:spent_nuclear_waste' } };
+  assert.deepEqual(declaredOutputs(sawing), ['biomesoplenty:dead_planks', 'mekanism:sawdust']);
+  assert.deepEqual(declaredOutputs(reaction), ['mekanism:pellet_polonium', 'mekanism:spent_nuclear_waste']);
+  assert.deepEqual(declaredOutputs({ type: 'mekanism:separating', fluid_output: { amount: 1, id: 'minecraft:water' } }), []);
+});

@@ -1102,17 +1102,7 @@
    "since": "2026-10-30"
   },
   {
-   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_leaden|#c:raw_materials/lead",
-   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
-   "since": "2026-10-30"
-  },
-  {
    "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_nickel|#c:raw_materials/nickel",
-   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_osmium|#c:raw_materials/osmium",
    "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
    "since": "2026-10-30"
   },
@@ -1127,11 +1117,6 @@
    "since": "2026-10-30"
   },
   {
-   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_tin|#c:raw_materials/tin",
-   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
-   "since": "2026-10-30"
-  },
-  {
    "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_titanium|#c:raw_materials/titanium",
    "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
    "since": "2026-10-30"
@@ -1139,11 +1124,6 @@
   {
    "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_tungsten|#c:raw_materials/tungsten",
    "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "recipes|recipe-fallback-active|supplementaries:cannonball_2|#c:storage_blocks/lead",
-   "reason": "Supplementaries makes cannonballs from lead blocks only when some mod provides lead; the pack has none, so its iron recipe is the intended one.",
    "since": "2026-10-30"
   },
   {

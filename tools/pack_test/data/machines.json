@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Machine recipe types (Create, Ender IO, Extreme Reactors): a floor of ~90% of the 2026-10-29 NeoForge 1.21.1 count fails a run; any other count change is reported as info. Assertions spot-check key recipes and tags. enderio:grinding_ball was dropped: Ender IO 8 registers the type but ships no recipes of it.",
+  "description": "Machine recipe types (Create, Ender IO, Extreme Reactors; Mekanism since 2026-10-30): a floor of ~90% of the 2026-10-29 NeoForge 1.21.1 count fails a run; any other count change is reported as info. Assertions spot-check key recipes and tags. enderio:grinding_ball was dropped: Ender IO 8 registers the type but ships no recipes of it.",
   "types": {
     "bigreactors:fluidizer": {
       "min": 18,
@@ -109,14 +109,30 @@
     "enderio:weather_change": {
       "min": 2,
       "observed": 3
+    },
+    "mekanism:crushing": {
+      "min": 209,
+      "observed": 233
+    },
+    "mekanism:enriching": {
+      "min": 190,
+      "observed": 212
+    },
+    "mekanism:metallurgic_infusing": {
+      "min": 28,
+      "observed": 32
+    },
+    "mekanism:purifying": {
+      "min": 25,
+      "observed": 28
     }
   },
   "assertions": [
     {
       "kind": "tag-contains",
       "tag": "c:ingots/steel",
-      "item": "enderio:dark_steel_ingot",
-      "why": "Extreme Reactors' reinforced parts need a non-empty steel tag"
+      "item": "mekanism:ingot_steel",
+      "why": "Extreme Reactors' reinforced parts need a non-empty steel tag; Mekanism steel is the pack's one steel"
     },
     {
       "kind": "recipe-loaded",
@@ -170,6 +186,10 @@
       "id": "enderio:sag_milling/obsidian",
       "item": "create:powdered_obsidian",
       "why": "dedup survivor: Ender IO's powdered obsidian is replaced by Create's"
+    },
+    {
+      "kind": "recipe-loaded",
+      "id": "mekanism:processing/steel/enriched_iron_to_dust"
     }
   ]
 }

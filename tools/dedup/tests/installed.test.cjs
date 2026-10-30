@@ -67,7 +67,7 @@ test('no effective loot item entry can produce a retired copy, including unquali
 test('recipe and tag events remove producers and code-driven loot candidates', () => {
   const handlers = {};
   const recipeHandlers = [];
-  for (const script of ['dedup.js', 'uranium.js']) vm.runInNewContext(fs.readFileSync(path.join(root, 'kubejs/server_scripts', script), 'utf8'), {
+  for (const script of ['dedup.js']) vm.runInNewContext(fs.readFileSync(path.join(root, 'kubejs/server_scripts', script), 'utf8'), {
     JsonIO: { read }, ServerEvents: {
       recipes: fn => { recipeHandlers.push(fn); }, tags: (kind, fn) => { handlers[kind] = fn; }
     }
@@ -77,10 +77,9 @@ test('recipe and tag events remove producers and code-driven loot candidates', (
   for (const type of ['smelting', 'blasting']) event[type] = (output, input) => ({ id: id => addedRecipes.push({ id, type, output, input }) });
   recipeHandlers.forEach(fn => fn(event));
   assert.deepEqual(removedRecipes.filter(r => r.id).map(r => r.id), sources.removeRecipes);
-  assert.deepEqual(addedRecipes, [
-    { id: 'kubejs:crushed_uranium_ingot', type: 'smelting', output: 'bigreactors:yellorium_ingot', input: 'create:crushed_raw_uranium' },
-    { id: 'kubejs:crushed_uranium_ingot_blasting', type: 'blasting', output: 'bigreactors:yellorium_ingot', input: 'create:crushed_raw_uranium' }
-  ]);
+  // Create's own Mekanism-gated crushed-uranium smelting (rewritten to yellorium) replaced uranium.js (2026-10-30).
+  assert.deepEqual(addedRecipes, []);
+  assert.equal(planned.overrides.get('kubejs/data/create/recipe/smelting/ingot_uranium_compat_mekanism.json').result.id, 'bigreactors:yellorium_ingot');
   const blocks = [], blockAdditions = {};
   handlers.block({ removeAllTagsFrom: id => blocks.push(id), add: (tag, ids) => { blockAdditions[tag] = ids; } });
   assert.deepEqual(blocks, sources.blockTagRemovals);

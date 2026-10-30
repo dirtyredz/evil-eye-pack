@@ -28,9 +28,10 @@ test('HammerLib duplicate gears are disabled at recipe and tag sources; its ston
   assert.match(fs.readFileSync(path.join(root, 'config/bhc-common.toml'), 'utf8'), /boneDropRate = 0\.15$/m);
 });
 
-test('Dark Steel fills the empty steel ingot tag for Extreme Reactors; BOP willow door stays out of trapdoor tags', () => {
+test('Mekanism steel is the only steel (no Dark Steel stand-in); BOP willow door stays out of trapdoor tags', () => {
   const sources = json('kubejs/config/dedup_sources.json').itemTags;
-  assert.deepEqual(sources['c:ingots/steel'], ['enderio:dark_steel_ingot']);
+  assert.equal(Object.hasOwn(sources, 'c:ingots/steel'), false, 'Dark Steel is no longer tagged as steel');
+  assert.equal(Object.hasOwn(json('kubejs/config/dedup.json').extraItemTags, 'c:ingots/steel'), false);
   for (const tag of ['minecraft:trapdoors', 'minecraft:wooden_trapdoors']) {
     assert.equal(sources[tag].includes('biomesoplenty:willow_door'), false, tag);
     assert.ok(sources[tag].includes('biomesoplenty:willow_trapdoor'), tag);

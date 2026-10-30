@@ -1,7 +1,8 @@
 // priority: -10
 // Pack-test probe (injected into the throwaway test server only; never shipped).
 // Live registry and tag snapshots: items, blocks, fluids, entity types, recipe types, loaded mods,
-// loaded loot tables, and every item/block/fluid tag's final members.
+// loaded loot tables, mod registries whose ids recipes output (Mekanism chemicals), and every
+// item/block/fluid tag's final members.
 // Rhino rules: Java collections are read through toArray() or size()/get(i), never for...of.
 ;(function () {
   // global.packTest is created by startup_globals.js (KubeJS 2101 only lets startup scripts set globals).
@@ -33,6 +34,15 @@
       out[String(key.location())] = ids
     }
     return out
+  }
+
+  // Non-item recipe outputs that live in a mod registry: Mekanism's chemicals (gases, slurries, pigments).
+  // Absent registries give [] (the id is looked up on the root registry, never iterated).
+  var OUTPUT_REGISTRIES = { chemicals: 'mekanism:chemical' }
+  function modRegistry(id) {
+    var RL = Java.loadClass('net.minecraft.resources.ResourceLocation')
+    var registry = BR.REGISTRY.get(RL.parse(id))
+    return registry ? keys(registry) : []
   }
 
   function mods() {
@@ -68,6 +78,7 @@
         items: keys(BR.ITEM), blocks: keys(BR.BLOCK), fluids: keys(BR.FLUID), entities: keys(BR.ENTITY_TYPE),
         recipeTypes: keys(BR.RECIPE_TYPE), recipeSerializers: keys(BR.RECIPE_SERIALIZER), mods: mods(), lootTables: lootTables(server)
       }
+      for (var name in OUTPUT_REGISTRIES) data[name] = modRegistry(OUTPUT_REGISTRIES[name])
       return { data: data, count: data.items.length }
     },
     collectTags: function () {

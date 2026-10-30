@@ -207,7 +207,7 @@ plus `run-<time>/`).
 - `NativeEvents.onEvent('<class name string>', fn)` registers and fires (checked with
   `ServerAboutToStartEvent`).
 - `JsonIO.read` returns a JS object whose Java lists index and iterate.
-- The recipe and tag events in `dedup.js` and `uranium.js` work: 25 recipes removed, survivor tags
+- The recipe and tag events in `dedup.js` and `uranium.js` (removed in Phase 7) work: 25 recipes removed, survivor tags
   applied, and the machines and dedup checks pass.
 
 **Ender IO curation rule:** Ender IO 8 stores the captured entity in the `enderio:soul` component

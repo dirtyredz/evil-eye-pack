@@ -34,7 +34,22 @@
     "createdeco:brass_door": "create:brass_door",
     "createdeco:copper_bars": "create:copper_bars",
     "createdeco:industrial_iron_window": "create:industrial_iron_window",
-    "createdeco:industrial_iron_window_pane": "create:industrial_iron_window_pane"
+    "createdeco:industrial_iron_window_pane": "create:industrial_iron_window_pane",
+    "mekanism:dust_coal": "enderio:powdered_coal",
+    "mekanism:dust_copper": "enderio:powdered_copper",
+    "mekanism:dust_gold": "enderio:powdered_gold",
+    "mekanism:dust_iron": "enderio:powdered_iron",
+    "mekanism:dust_lapis_lazuli": "enderio:powdered_lapis_lazuli",
+    "mekanism:dust_quartz": "enderio:powdered_quartz",
+    "mekanism:dust_tin": "enderio:powdered_tin",
+    "mekanism:dust_obsidian": "create:powdered_obsidian",
+    "mekanism:dust_diamond": "createaddition:diamond_grit",
+    "mekanism:ingot_uranium": "bigreactors:yellorium_ingot",
+    "mekanism:raw_uranium": "bigreactors:raw_yellorium",
+    "mekanism:block_raw_uranium": "bigreactors:raw_yellorium_block",
+    "mekanism:block_uranium": "bigreactors:yellorium_block",
+    "mekanism:uranium_ore": "bigreactors:yellorite_ore",
+    "mekanism:deepslate_uranium_ore": "bigreactors:deepslate_yellorite_ore"
   },
   "disabled": [
     "hammerlib:gears/wooden",
@@ -45,14 +60,9 @@
     "hammerlib:gears/netherite"
   ],
   "hiddenOnly": [
-    "create:crushed_raw_tin",
-    "create:crushed_raw_lead",
     "create:crushed_raw_nickel",
     "create:crushed_raw_aluminum",
-    "create:crushed_raw_osmium",
     "create:crushed_raw_platinum",
-    "bigreactors:reinforced_reactorfluidport_mekanism_passive",
-    "enderio:powdered_tin",
     "create:chromatic_compound",
     "create:refined_radiance",
     "create:shadow_steel",
@@ -208,9 +218,6 @@
     ]
   },
   "extraItemTags": {
-    "c:ingots/steel": [
-      "enderio:dark_steel_ingot"
-    ],
     "c:dusts/ender_pearl": [
       "ae2:ender_dust"
     ],

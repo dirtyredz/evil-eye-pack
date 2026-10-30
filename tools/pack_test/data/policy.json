@@ -27,6 +27,7 @@
     ],
     "ids": {
       "create:handheld_worldshaper": "creative-only tool (Create gives it no recipe)",
+      "mekanism:bounding_block": "technical filler block Mekanism places around multiblock machines; never held",
       "ae2:flawless_budding_quartz": "unobtainable by design in AE2 (breaks down a stage when mined)",
       "minecraft:filled_map": "made by using an empty map in the world",
       "minecraft:written_book": "made by signing a book and quill",

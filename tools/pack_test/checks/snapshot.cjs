@@ -9,6 +9,7 @@ function snapshot(sections) {
   return {
     registries: {
       items: new Set(reg.items), blocks: new Set(reg.blocks), fluids: new Set(reg.fluids), entities: new Set(reg.entities),
+      chemicals: new Set(reg.chemicals || []),
       mods: new Set(Object.keys(reg.mods)), lootTables: new Set(reg.lootTables), modVersions: reg.mods, recipeTypes: reg.recipeTypes
     },
     itemTags: new Map(Object.entries(tags.items)),

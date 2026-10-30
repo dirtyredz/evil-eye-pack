@@ -9,10 +9,10 @@
       "expect": { "id": "create:andesite_alloy", "count": 1 }
     },
     {
-      "name": "er-reinforced-casing-dark-steel",
+      "name": "er-reinforced-casing-steel",
       "recipe": "bigreactors:reactor/reinforced/casing",
-      "why": "Extreme Reactors gates its reinforced parts on forge:ingots/steel; the pack fills that tag with Ender IO Dark Steel (docs/GOTCHAS.md)",
-      "grid": ["enderio:dark_steel_ingot", "bigreactors:graphite_ingot", "enderio:dark_steel_ingot", "bigreactors:graphite_ingot", "minecraft:iron_block", "bigreactors:graphite_ingot", "enderio:dark_steel_ingot", "bigreactors:graphite_ingot", "enderio:dark_steel_ingot"],
+      "why": "Extreme Reactors gates its reinforced parts on c:ingots/steel; since Mekanism (2026-10-30) that tag holds only Mekanism steel, the pack's one steel (docs/GOTCHAS.md)",
+      "grid": ["mekanism:ingot_steel", "bigreactors:graphite_ingot", "mekanism:ingot_steel", "bigreactors:graphite_ingot", "minecraft:iron_block", "bigreactors:graphite_ingot", "mekanism:ingot_steel", "bigreactors:graphite_ingot", "mekanism:ingot_steel"],
       "expect": { "id": "bigreactors:reinforced_reactorcasing", "count": 1 }
     },
     {

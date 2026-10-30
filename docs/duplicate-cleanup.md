@@ -28,8 +28,9 @@ The canonical explicit duplicate IDs are in [dedup.json](../kubejs/config/dedup.
 [dedup_sources.json](../kubejs/config/dedup_sources.json) records removed recipe IDs and
 inherited tags. `tools/dedup/overrides.cjs` computes the block-only strip list,
 derived from the scanned block loot tables and written by the generator as `dedup_sources.json` `blockTagRemovals` (`dedup.json` stays hand-authored); `dedup.js` reads it
-through KubeJS `JsonIO`. `server_scripts/uranium.js` owns the four uranium
-compatibility recipes with their original IDs and KubeJS cooking defaults. These are recipe/loot/tag rules, **not a stack conversion map**.
+through KubeJS `JsonIO`. Create's crushed-uranium smelting comes from Create's own Mekanism-gated
+compat recipes, rewritten to yellorium (`uranium.js` was removed on the migration branch, 2026-10-30;
+Alex's Caves' two uranium recipes return with its port). These are recipe/loot/tag rules, **not a stack conversion map**.
 
 ## Scope and deliberate exceptions
 

@@ -24,7 +24,11 @@
     "createdeco:brass_door",
     "createdeco:copper_bars",
     "createdeco:industrial_iron_window",
-    "createdeco:industrial_iron_window_pane"
+    "createdeco:industrial_iron_window_pane",
+    "mekanism:block_raw_uranium",
+    "mekanism:block_uranium",
+    "mekanism:uranium_ore",
+    "mekanism:deepslate_uranium_ore"
   ],
   "removeRecipes": [
     "cluttered:willow_button",
@@ -113,6 +117,9 @@
       "create:andesite_door",
       "create:brass_door"
     ],
+    "minecraft:beacon_payment_items": [
+      "bigreactors:yellorium_ingot"
+    ],
     "minecraft:wooden_pressure_plates": [
       "biomesoplenty:willow_pressure_plate"
     ],
@@ -167,14 +174,67 @@
     "c:foods/dough": [
       "farmersdelight:wheat_dough"
     ],
+    "c:ores_in_ground/deepslate": [
+      "bigreactors:deepslate_yellorite_ore"
+    ],
+    "c:ores_in_ground/stone": [
+      "bigreactors:yellorite_ore"
+    ],
     "c:dusts/obsidian": [
       "create:powdered_obsidian"
+    ],
+    "minecraft:piglin_loved": [
+      "enderio:powdered_gold"
+    ],
+    "c:dusts/diamond": [
+      "createaddition:diamond_grit"
+    ],
+    "c:dusts/lapis": [
+      "enderio:powdered_lapis_lazuli"
+    ],
+    "c:dusts/coal": [
+      "enderio:powdered_coal"
+    ],
+    "c:dusts/copper": [
+      "enderio:powdered_copper"
+    ],
+    "c:dusts/tin": [
+      "enderio:powdered_tin"
+    ],
+    "c:dusts/quartz": [
+      "enderio:powdered_quartz"
+    ],
+    "c:dusts/gold": [
+      "enderio:powdered_gold"
+    ],
+    "c:dusts/iron": [
+      "enderio:powdered_iron"
+    ],
+    "c:ingots/uranium": [
+      "bigreactors:yellorium_ingot"
+    ],
+    "c:ores/uranium": [
+      "bigreactors:yellorite_ore",
+      "bigreactors:deepslate_yellorite_ore"
+    ],
+    "c:raw_materials/uranium": [
+      "bigreactors:raw_yellorium"
+    ],
+    "c:storage_blocks/raw_uranium": [
+      "bigreactors:raw_yellorium_block"
     ],
     "c:ropes": [
       "supplementaries:rope"
     ],
     "c:tools": [
       "create:wrench"
+    ],
+    "c:ore_rates/singular": [
+      "bigreactors:yellorite_ore",
+      "bigreactors:deepslate_yellorite_ore"
+    ],
+    "c:storage_blocks/uranium": [
+      "bigreactors:yellorium_block"
     ],
     "c:milk/freshmilk": [
       "farmersdelight:milk_bottle"
@@ -197,12 +257,6 @@
     ],
     "supplementaries:statue_tools": [
       "create:wrench"
-    ],
-    "c:ingots/steel": [
-      "enderio:dark_steel_ingot"
-    ],
-    "c:raw_materials/uranium": [
-      "bigreactors:raw_yellorium"
     ]
   },
   "blockTags": {
@@ -211,7 +265,11 @@
       "create:brass_bars",
       "create:copper_bars",
       "create:andesite_door",
-      "create:brass_door"
+      "create:brass_door",
+      "bigreactors:yellorium_block",
+      "bigreactors:raw_yellorium_block",
+      "bigreactors:yellorite_ore",
+      "bigreactors:deepslate_yellorite_ore"
     ],
     "minecraft:climbable": [
       "supplementaries:rope"
@@ -260,6 +318,12 @@
     "minecraft:mineable/hoe": [
       "biomesoplenty:willow_leaves"
     ],
+    "minecraft:needs_stone_tool": [
+      "bigreactors:yellorite_ore",
+      "bigreactors:deepslate_yellorite_ore",
+      "bigreactors:yellorium_block",
+      "bigreactors:raw_yellorium_block"
+    ],
     "minecraft:saplings": [
       "biomesoplenty:willow_sapling"
     ],
@@ -304,6 +368,10 @@
     "minecraft:standing_signs": [
       "biomesoplenty:willow_sign"
     ],
+    "minecraft:overworld_carver_replaceables": [
+      "bigreactors:yellorite_ore",
+      "bigreactors:deepslate_yellorite_ore"
+    ],
     "minecraft:ceiling_hanging_signs": [
       "biomesoplenty:willow_hanging_sign"
     ],
@@ -339,6 +407,19 @@
       "create:brass_bars",
       "create:copper_bars"
     ],
+    "minecraft:beacon_base_blocks": [
+      "bigreactors:yellorium_block"
+    ],
+    "c:ores_in_ground/deepslate": [
+      "bigreactors:deepslate_yellorite_ore"
+    ],
+    "c:ores_in_ground/stone": [
+      "bigreactors:yellorite_ore"
+    ],
+    "c:ores/uranium": [
+      "bigreactors:yellorite_ore",
+      "bigreactors:deepslate_yellorite_ore"
+    ],
     "c:ropes": [
       "supplementaries:rope"
     ],
@@ -347,6 +428,20 @@
     ],
     "farmersdelight:straw_blocks": [
       "supplementaries:rope"
+    ],
+    "c:ore_rates/singular": [
+      "bigreactors:yellorite_ore",
+      "bigreactors:deepslate_yellorite_ore"
+    ],
+    "c:storage_blocks/raw_uranium": [
+      "bigreactors:raw_yellorium_block"
+    ],
+    "c:storage_blocks/uranium": [
+      "bigreactors:yellorium_block"
+    ],
+    "minecraft:snaps_goat_horn": [
+      "bigreactors:yellorite_ore",
+      "bigreactors:deepslate_yellorite_ore"
     ],
     "supplementaries:hang_from_ropes": [
       "supplementaries:rope"

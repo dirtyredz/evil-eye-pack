@@ -118,7 +118,7 @@
 
 - **AllTheOres/AllTheCompressed/Almost Unified were removed on 2026-10-23.** The owner abandoned migration after a partial in-game swap. Old stacks and blocks disappear; no remap or conversion remains. Keep Large Ore Deposits on explicit survivor IDs.
 - **Duplicate removal must cover custom serializers and code drops.** `tools/dedup/generate.cjs` preserves full pinned recipe/loot JSON; regenerate and run its tests when jars change. BHC wither bones are a Java drop (`boneDropRate = 0.0`), not a loot-table entry. Ice and Fire tag-selected nuggets need tag cleanup as well as loot overrides. HammerLib recipes and dynamic tags have separate switches. Refurbished Furniture's wrench has electrical-link behavior and cannot be replaced by Create's wrench.
-- **Extreme Reactors needs `forge:ingots/steel` non-empty.** Its reinforced parts are `forge:conditional` recipes gated on `tag_empty`; an empty tag silently switches them to iron-block `_alt` recipes and leaves 14 empty Patchouli pages. The pack tags Ender IO Dark Steel into it via `dedup.json` `extraItemTags`; if Ender IO is ever removed, the tag empties again.
+- **Extreme Reactors needs `forge:ingots/steel` non-empty.** Its reinforced parts are `forge:conditional` recipes gated on `tag_empty`; an empty tag silently switches them to iron-block `_alt` recipes and leaves 14 empty Patchouli pages. On `main` the pack tags Ender IO Dark Steel into it via `dedup.json` `extraItemTags`; on the NeoForge branch Mekanism's steel fills `c:ingots/steel` and the stand-in is gone, so removing Mekanism empties it again.
 - **Keymap changes need a regenerated check and a manual strip.** `config/defaultoptions/keybindings.txt` is read only for keys missing from `options.txt`. Mod keys are not unique across mods (Jetpack G/H, Dank I/O, AstikorCarts Z/R); after adding a mod, simulate the merged map (instance `options.txt` plus the keymap) for duplicates, and treat GUI-context keys (JEI, Xaero GUI) as non-clashes.
 - **Cluttered's jar mis-tags `cluttered:willow_door` as a trapdoor.** Duplicate replacement copies jar tags to the survivor, so `dedup.json` `tagFixes` corrects the target after mapping.
 - **Permanent duplicate hiding uses EMI native index removals** (`item:namespace:path`), so ALL cannot reveal retired copies. This is separate from reversible cosmetic curation. Registered copies can still exist in old inventories/creative; no runtime converter is installed.
@@ -193,6 +193,11 @@
   `forge:` keys are ignored, and the items keep their tags.
 - **Mods rewrite configs on load** with their new keys and comments. Ship the write-back (LF, no
   trailing whitespace) rather than letting each instance rewrite the pack's copy every launch.
+
+- **Mekanism recipe outputs are not all items.** Washing, dissolution, pigment, oxidizing and conversion
+  recipes output chemicals (`{ id, amount }`, same shape as an item stack), and machine item outputs use
+  `main_output`, `secondary_output` and `item_output`. The probe snapshots the `mekanism:chemical`
+  registry; the recipe check counts those as `chemicalOutputs`.
 
 ## KubeJS 2101 (NeoForge migration branch)
 

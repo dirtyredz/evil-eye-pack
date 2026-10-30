@@ -5954,6 +5954,83 @@
    }
   },
   {
+   "action": "add",
+   "metafile": "mods/mekanism-generators.pw.toml",
+   "old": null,
+   "provisional": false,
+   "rationale": "Plan Phase 7: Mekanism Generators 10.7.19.85 (pairs with Mekanism 10.7.19.85, its Modrinth dependency); required by Interstellaris 0.6.1.",
+   "target": {
+    "channel": "release",
+    "declares": [
+     "mekanismgenerators required mekanism [10.7.19]"
+    ],
+    "filename": "MekanismGenerators-1.21.1-10.7.19.85.jar",
+    "loader": "neoforge",
+    "metafile": "mods/mekanism-generators.pw.toml",
+    "mods": [
+     "mekanismgenerators@10.7.19"
+    ],
+    "name": "Mekanism Generators",
+    "project": "OFVYKsAk",
+    "publisher": {
+     "sha1": "44c4d8006597580ff7e4101b5a22f7b426cdcaf6",
+     "sha512": "6c3d5b7ea2f67f43c3d169c97de2855a7085f38019cf426e015ccc8ca9bc4f66e96b1cdf4a9afdc92bef7b2e236f16c81415ed5e48736805d5961d29525316d6",
+     "size": 1114598
+    },
+    "sha1": "44c4d8006597580ff7e4101b5a22f7b426cdcaf6",
+    "sha256": "0e5783b111e756f27b48c62b2f0e02fff750c77f7985ff809bfadc5f444ba4ac",
+    "sha512": "6c3d5b7ea2f67f43c3d169c97de2855a7085f38019cf426e015ccc8ca9bc4f66e96b1cdf4a9afdc92bef7b2e236f16c81415ed5e48736805d5961d29525316d6",
+    "side": "both",
+    "size": 1114598,
+    "source": "modrinth",
+    "url": "https://cdn.modrinth.com/data/OFVYKsAk/versions/a6gl7srE/MekanismGenerators-1.21.1-10.7.19.85.jar",
+    "version": "a6gl7srE",
+    "versionNumber": "10.7.19.85"
+   }
+  },
+  {
+   "action": "add",
+   "metafile": "mods/mekanism.pw.toml",
+   "old": null,
+   "provisional": false,
+   "rationale": "Plan Phase 7 (Interstellaris stack), first in dependency order: Mekanism 10.7.19.85, inside Interstellaris 0.6.1's published range 10.7.19-10.7.x. The main jar, not the -api file.",
+   "target": {
+    "channel": "release",
+    "declares": [
+     "mekanism incompatible appmek [,1.6.0-alpha.2]",
+     "mekanism incompatible enderio_conduits_modded [,6.0.24.351-nightly+d8261275]",
+     "mekanism incompatible fissionrecipe [,3.0.7]",
+     "mekanism incompatible jaopca [,5.0.1.2]",
+     "mekanism incompatible laserio [,1.9.9]",
+     "mekanism optional jei [19.19.0.219,)",
+     "mekanism required minecraft [1.21.1]",
+     "mekanism required neoforge [21.1.194,)"
+    ],
+    "filename": "Mekanism-1.21.1-10.7.19.85.jar",
+    "loader": "neoforge",
+    "metafile": "mods/mekanism.pw.toml",
+    "mods": [
+     "mekanism@10.7.19"
+    ],
+    "name": "Mekanism",
+    "project": "Ce6I4WUE",
+    "publisher": {
+     "sha1": "b78945c40cfe7640408f3fd1e44da385a8c8b805",
+     "sha512": "66745825330a98f3e4a5ea3a44aff8b00870f715c144edc38dd2f61b4240589600b58ae89efac3b54dbb5aa430b1059dac1a28fd71cac5cc9002bbeb5ba3f22b",
+     "size": 11976009
+    },
+    "sha1": "b78945c40cfe7640408f3fd1e44da385a8c8b805",
+    "sha256": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43",
+    "sha512": "66745825330a98f3e4a5ea3a44aff8b00870f715c144edc38dd2f61b4240589600b58ae89efac3b54dbb5aa430b1059dac1a28fd71cac5cc9002bbeb5ba3f22b",
+    "side": "both",
+    "size": 11976009,
+    "source": "modrinth",
+    "url": "https://cdn.modrinth.com/data/Ce6I4WUE/versions/5KzzycBT/Mekanism-1.21.1-10.7.19.85.jar",
+    "version": "5KzzycBT",
+    "versionNumber": "10.7.19.85"
+   }
+  },
+  {
    "action": "repoint",
    "metafile": "mods/minecolonies.pw.toml",
    "old": {

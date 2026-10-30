@@ -24,6 +24,8 @@ function ingredientRefs(j) {
 // sequenced-assembly transitionalItem counts, since players hold it mid-assembly), each with its form:
 // 'object' ({ item }/{ id } stacks, unambiguously items) or 'string' (a bare id, which some mods use for
 // non-item results such as Productive Bees' bee types).
+const TOP_LEVEL_OUTPUTS = ['result', 'results', 'output', 'outputs', 'transitionalItem', 'transitional_item',
+  'main_output', 'secondary_output', 'item_output', 'chemical_output', 'left_chemical_output', 'right_chemical_output'];
 function declaredOutputRefs(json) {
   const refs = new Map();
   const add = (id, form) => { if (!refs.has(id) || form === 'object') refs.set(id, form); };
@@ -36,8 +38,10 @@ function declaredOutputRefs(json) {
     else if (typeof v.id === 'string' && (v.count !== undefined || v.Count !== undefined || v.chance !== undefined || Object.keys(v).length <= 3)) add(v.id, 'object');
     for (const k of ['item', 'result', 'results', 'output', 'outputs']) if (v[k] && typeof v[k] === 'object') take(v[k]);
   };
-  // Create 6 (1.21) spells it transitional_item; Create 0.5 (1.20) transitionalItem.
-  if (json && typeof json === 'object') for (const k of ['result', 'results', 'output', 'outputs', 'transitionalItem', 'transitional_item']) if (json[k] !== undefined) take(json[k]);
+  // Create 6 (1.21) spells it transitional_item; Create 0.5 (1.20) transitionalItem. Mekanism machines name
+  // their item outputs main_/secondary_/item_output and their chemical outputs *chemical_output (checked
+  // against the chemical registry); fluid_output stays skipped like other fluids.
+  if (json && typeof json === 'object') for (const k of TOP_LEVEL_OUTPUTS) if (json[k] !== undefined) take(json[k]);
   return [...refs].map(([id, form]) => ({ id, form }));
 }
 

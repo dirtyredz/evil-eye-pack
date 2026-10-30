@@ -1,18 +1,6 @@
 {
  "schema": 1,
  "reasons": {
-  "create:crushed_raw_tin": {
-   "class": "duplicate-removed",
-   "evidence": "Unused Create crushed metal with no producer or consumer in the pack after the AllTheOres/Almost Unified retirement (docs/ato-retirement.md, commit 34f6dc2).",
-   "date": "2026-10-23",
-   "source": "commit 34f6dc2"
-  },
-  "create:crushed_raw_lead": {
-   "class": "duplicate-removed",
-   "evidence": "Unused Create crushed metal with no producer or consumer in the pack after the AllTheOres/Almost Unified retirement (docs/ato-retirement.md, commit 34f6dc2).",
-   "date": "2026-10-23",
-   "source": "commit 34f6dc2"
-  },
   "create:crushed_raw_nickel": {
    "class": "duplicate-removed",
    "evidence": "Unused Create crushed metal with no producer or consumer in the pack after the AllTheOres/Almost Unified retirement (docs/ato-retirement.md, commit 34f6dc2).",
@@ -25,29 +13,11 @@
    "date": "2026-10-23",
    "source": "commit 34f6dc2"
   },
-  "create:crushed_raw_osmium": {
-   "class": "duplicate-removed",
-   "evidence": "Unused Create crushed metal with no producer or consumer in the pack after the AllTheOres/Almost Unified retirement (docs/ato-retirement.md, commit 34f6dc2).",
-   "date": "2026-10-23",
-   "source": "commit 34f6dc2"
-  },
   "create:crushed_raw_platinum": {
    "class": "duplicate-removed",
    "evidence": "Unused Create crushed metal with no producer or consumer in the pack after the AllTheOres/Almost Unified retirement (docs/ato-retirement.md, commit 34f6dc2).",
    "date": "2026-10-23",
    "source": "commit 34f6dc2"
-  },
-  "bigreactors:reinforced_reactorfluidport_mekanism_passive": {
-   "class": "unobtainable-absent-mod",
-   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
-   "date": "2026-10-23",
-   "source": "commit 4e899fd"
-  },
-  "enderio:powdered_tin": {
-   "class": "unobtainable-absent-mod",
-   "evidence": "Orphan: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, allthemodium-gated recipes or quicksilver-tag-gated Create crushing, all unloaded because those mods or tags are absent; no loot or worldgen source (docs/DECISIONS.md \"Hidden orphans\").",
-   "date": "2026-10-23",
-   "source": "commit 4e899fd"
   },
   "create:chromatic_compound": {
    "class": "unobtainable-absent-mod",

@@ -2,6 +2,27 @@
 
 Newest first.
 
+## 2026-10-30 - NeoForge 1.21.1 migration: Mekanism joins with true dedup
+
+- **Survivors are the items already in the owner's worlds.** Mekanism is new, so its copies retire:
+  coal, copper, gold, iron, lapis, quartz and tin dusts go to Ender IO's `powdered_*`, obsidian dust to
+  Create, diamond dust to Create Crafts & Additions' grit. Mekanism's own processing recipes are
+  rewritten to output the survivors (dedup overrides), so its machines still work end to end.
+- **Uranium is Extreme Reactors' yellorium**, as on main (`c:raw_materials/uranium` already meant
+  yellorium). Mekanism's uranium ore, raw, raw block, ingot and block are replaced, and its uranium
+  worldgen is off (`config/Mekanism/world.toml`). Its fission chain reads `c:` uranium tags, which hold
+  yellorium. Mekanism's uranium dust and nugget stay: nothing else provides them.
+- **Mekanism steel is the pack's one steel.** The 2026-10-23 Dark Steel stand-in only filled an empty
+  `c:ingots/steel`; with real steel present it made Dark Steel and Mekanism steel interchangeable, which is
+  the unification this pack rejects. Dark Steel is again only an Ender IO alloy. Consequence: Extreme
+  Reactors' reinforced parts now need Mekanism steel. Rejected: keeping Dark Steel as steel (two steels in
+  one tag) or rewriting Mekanism's steel to Dark Steel (Mekanism has steel dust, nuggets and blocks with no
+  Dark Steel equivalents).
+- **Create's crushed tin, lead and osmium are no longer hidden.** Mekanism's ores give them producers
+  (Create's own compat crushing); Create's Mekanism-gated crushed-uranium smelting replaced `uranium.js`.
+- **Large Ore Deposits stays off for osmium, tin and lead** for now: Mekanism generates them itself, and
+  enabling deposits is a separate worldgen choice (open question in `docs/neoforge-migration.md`).
+
 ## 2026-10-30 - NeoForge 1.21.1 migration: first clean boot
 
 - **Fix the evidence, then baseline only what is reviewed.** Seven ANU boots, one evidenced cause
