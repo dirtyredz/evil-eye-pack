@@ -389,3 +389,35 @@ readiness preflight fixes that race (see GOTCHAS). The space display uses I&F si
 Fast gate **504/504** (64 s), lock/hash/whitespace checks pass; `dk check` has zero errors
 and two pre-existing duplicate-rank warnings. `OK main, Stable and Local unchanged`.
 Final index SHA-256: `abb5dea6ca565c480feafa7fa9e068d84a9112c4290b97c7952dfa3d13e50cc6`.
+
+## Stable world trial (2026-10-30): LOSS, cutover blocked
+
+Evidence: `jobs/2026-10-30-world-trial/world-trial-report.md` and
+`minecraft-mods-handoff.md`. The original and independent read-only snapshot have full
+SHA-256 manifests. Forge and NeoForge boot only separate working copies. The new
+`tools/world_trial/` CLI is documented in development; tests cover protected paths,
+independent copying, NBT, inventories, comparisons and bounded probes.
+
+The exact pinned Forge baseline completed 943 existing-chunk probes and stopped cleanly.
+NeoForge conversion and restart completed the same 866 overworld / 77 Nether probes,
+but both required termination after the shutdown grace period. Original-UUID player
+load/save probes preserve ordinary inventory/ender-chest slot IDs and counts; they expose
+lost Curios equipment and portable Dank frequency links. Four Dank backing stores retain
+9,312 serialized items, which does **not** prove those items are accessible.
+
+All 80 baseline starbuncle UUIDs are absent after conversion, including five named pets;
+79 entity-load exceptions identify Ars Nouveau's Starbuncle NBT reader (`Not a string`).
+An Ender IO primitive alloy smelter and its 20 coal disappear, as do four loaded
+Supplementaries signposts. Two unloaded signposts still reference the absent registry.
+All 26 wild dragon UUIDs, age and gender persist through restart; numeric variants map
+to the equivalent CE names. Colony identity, owner, four citizens and five level-one
+buildings persist, but request/work processing remains unqualified. No source AE2 cells,
+Roundwood blocks or Ars Instrumentum stacks exist to qualify those migrations.
+All 462,651 original silver positions were checked: 462,649 retain the exact I&F ID through
+restart. Two become smooth basalt in both Forge and NeoForge, an explained baseline
+change rather than a target-only remap; the strict positional comparison still exits 1.
+
+This is not a validated owner copy. No `converted-for-owner/` is supplied. **dk-d35aac75**
+tracks the migration blockers; **dk-064ce2a5** stays open until a fresh snapshot-based
+rerun passes. No jars were patched and no instance was modified. The fast Node gate
+passes 517/517; this does not override failed world acceptance.
