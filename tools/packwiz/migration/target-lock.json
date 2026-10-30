@@ -1,9 +1,7 @@
 {
  "closure": {
   "errors": 0,
-  "warnings": [
-   "mods/supplementaries.pw.toml: bundled supplementaries-1.21.1-4.0.2-neoforge.jar!META-INF/jarjar/mixinsquared-forge-0.3.7.jar carries Forge-only metadata"
-  ]
+  "warnings": []
  },
  "entries": [
   {
@@ -2765,7 +2763,7 @@
    }
   },
   {
-   "action": "defer",
+   "action": "repoint",
    "metafile": "mods/dank-recipe-transfer.pw.toml",
    "old": {
     "filename": "dank_recipe_transfer-1.20.1-0.1.0.jar",
@@ -2777,7 +2775,37 @@
     "url": "https://github.com/dirtyredz/dank-recipe-transfer/releases/download/v0.1.0/dank_recipe_transfer-1.20.1-0.1.0.jar"
    },
    "provisional": false,
-   "rationale": "Owner's own mod, ported in minecraft-mods (seven-port programme). Direct GitHub release pin returns with the port."
+   "rationale": "Owner's port (minecraft-mods), first of the seven: 0.2.0 prerelease built from dbb718a (fork of 1.20.1 233d9fd), same mod id, against the frozen NeoForge 21.1.265, Dank Storage 20, JEI 19.70.0.464 and EMI 1.1.24. Direct GitHub release pin, sha256 checked against the release digest; no update table.",
+   "target": {
+    "channel": "beta",
+    "declares": [
+     "dank_recipe_transfer optional emi [1.1.24,1.2) (client)",
+     "dank_recipe_transfer optional jei [19.70.0,20) (client)",
+     "dank_recipe_transfer optional polymorph [1.2.0,1.3)",
+     "dank_recipe_transfer required dankstorage [20,)",
+     "dank_recipe_transfer required minecraft [1.21.1,1.21.2)",
+     "dank_recipe_transfer required neoforge [21.1.265,21.2)"
+    ],
+    "filename": "dank_recipe_transfer-1.21.1-neoforge-0.2.0.jar",
+    "loader": "neoforge",
+    "metafile": "mods/dank-recipe-transfer.pw.toml",
+    "mods": [
+     "dank_recipe_transfer@0.2.0"
+    ],
+    "name": "Dank Recipe Transfer",
+    "publisher": {
+     "sha256": "3753e67929faa0c7aaf549bd2c562984ccbc04abeefd2788c559c1cf82180275",
+     "size": 117693
+    },
+    "sha1": "207d0f7af6d6bbc394310825cea1241e0dc60509",
+    "sha256": "3753e67929faa0c7aaf549bd2c562984ccbc04abeefd2788c559c1cf82180275",
+    "sha512": "f86ea7775c242c557ea5bd8dbf2823e9185b9ba06226a28c13ad6824be6e8398f3fcd8390e34fe5a79b89a3d2b705cc7fbd2ebf10523f35b5f553ca93da9dba3",
+    "side": "both",
+    "size": 117693,
+    "source": "direct",
+    "url": "https://github.com/dirtyredz/dank-recipe-transfer/releases/download/neoforge-1.21.1-v0.2.0/dank_recipe_transfer-1.21.1-neoforge-0.2.0.jar",
+    "versionNumber": "neoforge-1.21.1-v0.2.0"
+   }
   },
   {
    "action": "repoint",
@@ -8447,6 +8475,7 @@
  },
  "schema": 1,
  "source": {
+  "commit": "e99fd1fc09d0a8e518a98b6fc94f0484f73f00c8",
   "fingerprint": "82490b77fe0529e1d79828fa8528a8c681473df8c8ab6984ef7a61dfe7bbc1bc",
   "metafiles": 191
  }

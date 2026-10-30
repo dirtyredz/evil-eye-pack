@@ -221,3 +221,38 @@ test('a bundled Forge-metadata game library is ignored like NeoForge ignores it;
   const w = checkClosure([{ key: 'mods/host', side: 'both', units: [unit([mod('host', '1')]), odd] }], rt);
   assert.match(w.warnings[0], /bundled host\.jar!odd\.jar carries Forge-only metadata/);
 });
+
+test('after apply, an updated lock re-resolves from its recorded source commit and applies as an update', (t) => {
+  const { execFileSync } = require('node:child_process');
+  const { exportSource, sourceRoot } = require('../migration/source_tree.cjs');
+  const { planApplied } = require('../migration/repoint.cjs');
+  const root = fixturePack(t);
+  const git = (...a) => execFileSync('git', a, { cwd: root, stdio: 'pipe' });
+  git('init', '-q'); git('add', '.'); git('-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-qm', 'source');
+  const commit = String(git('rev-parse', 'HEAD')).trim();
+  const lock = lockOf([
+    { metafile: 'mods/a.pw.toml', action: 'repoint', old, target: target(), rationale: 'r' },
+    { metafile: 'mods/gone.pw.toml', action: 'defer', old, target: null, rationale: 'port' }
+  ], fingerprint(root));
+  lock.source.commit = commit;
+  apply(root, plan(root, lock));
+  // Resolving now reads the source from git, not the applied checkout.
+  const src = sourceRoot({ root, lock, scratch: path.join(tmp(t), 'src') });
+  assert.equal(src.commit, commit);
+  assert.equal(fingerprint(src.root), lock.source.fingerprint);
+  assert.deepEqual(sourceMetafiles(src.root), ['mods/a.pw.toml', 'mods/gone.pw.toml']);
+  assert.deepEqual(sourceRoot({ root: src.root, lock }), { root: src.root, commit: null }, 'a checkout that is still the source resolves in place');
+  assert.throws(() => sourceRoot({ root, lock: { ...lock, source: { fingerprint: 'x', commit } }, scratch: path.join(tmp(t), 's2') }), /not the lock's x/);
+  assert.throws(() => sourceRoot({ root, lock: { ...lock, source: { fingerprint: 'x' } } }), /records no source commit/);
+  exportSource(root, commit, path.join(tmp(t), 'again'));
+  // The port returns: defer becomes a direct pin; only that metafile is written on the applied checkout.
+  const ported = target({ metafile: 'mods/gone.pw.toml', source: 'direct', project: undefined, version: undefined, sha512: undefined,
+    url: 'https://github.com/o/r/releases/download/v1/g.jar', filename: 'g.jar' });
+  const updated = { ...lock, entries: [lock.entries[0], { ...lock.entries[1], action: 'repoint', target: ported }] };
+  const changes = planApplied(root, updated);
+  assert.deepEqual(changes.writes.map((w) => w.rel), ['mods/gone.pw.toml']);
+  assert.doesNotMatch(changes.writes[0].text, /\[update/);
+  assert.deepEqual(changes.deletes, []);
+  fs.writeFileSync(path.join(root, 'mods/stray.pw.toml'), 'x');
+  assert.throws(() => planApplied(root, updated), /does not account for:\n {2}mods\/stray\.pw\.toml/);
+});

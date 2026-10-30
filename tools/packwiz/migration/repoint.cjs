@@ -55,6 +55,18 @@ function appliedDifferences(root, lock) {
   return out.sort();
 }
 
+// An updated lock (a later disposition: a port pin, an addition) on an already-applied checkout. The lock
+// must be valid against its own sources, and every metafile present must be one the lock accounts for, so
+// nothing outside the lock is silently overwritten or kept.
+function planApplied(root, lock) {
+  const errors = validate(lock, lockSources(lock));
+  if (errors.length) throw new Error(`lock is invalid:\n  ${errors.join('\n  ')}`);
+  const known = new Set(lock.entries.flatMap((e) => [e.metafile, e.target?.metafile].filter(Boolean)));
+  const unknown = sourceMetafiles(root).filter((rel) => !known.has(rel));
+  if (unknown.length) throw new Error(`checkout has metafiles the lock does not account for:\n  ${unknown.join('\n  ')}`);
+  return changeSet(root, lock);
+}
+
 // Writes and deletes that bring the checkout to the lock's target state (no validation).
 function changeSet(root, lock) {
   const writes = [], deletes = [], summary = {};
@@ -102,4 +114,4 @@ function apply(root, changes, { fsImpl = fs } = {}) {
   }
 }
 
-module.exports = { renderMetafile, renderVersions, plan, changeSet, appliedDifferences, apply };
+module.exports = { renderMetafile, renderVersions, plan, planApplied, changeSet, appliedDifferences, apply };

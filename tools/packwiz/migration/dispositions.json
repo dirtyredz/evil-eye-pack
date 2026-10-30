@@ -25,8 +25,13 @@
    "reason": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
   },
   "mods/dank-recipe-transfer.pw.toml": {
-   "action": "defer",
-   "reason": "Owner's own mod, ported in minecraft-mods (seven-port programme). Direct GitHub release pin returns with the port."
+   "action": "repoint",
+   "target": {
+    "source": "direct",
+    "url": "https://github.com/dirtyredz/dank-recipe-transfer/releases/download/neoforge-1.21.1-v0.2.0/dank_recipe_transfer-1.21.1-neoforge-0.2.0.jar",
+    "sha256": "3753e67929faa0c7aaf549bd2c562984ccbc04abeefd2788c559c1cf82180275"
+   },
+   "reason": "Owner's port (minecraft-mods), first of the seven: 0.2.0 prerelease built from dbb718a (fork of 1.20.1 233d9fd), same mod id, against the frozen NeoForge 21.1.265, Dank Storage 20, JEI 19.70.0.464 and EMI 1.1.24. Direct GitHub release pin, sha256 checked against the release digest; no update table."
   },
   "mods/roundwood.pw.toml": {
    "action": "defer",

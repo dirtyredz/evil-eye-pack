@@ -3519,6 +3519,11 @@ hash = "40f94ed152df66c124c6eecb60bac36f330e6f4a54832868188544e0870dfb5e"
 metafile = true
 
 [[files]]
+file = "mods/dank-recipe-transfer.pw.toml"
+hash = "2c3078af0d8ea3d743ba6ddf5ac6596de9fbe402c41cfb8aa00ea16cf2dc0210"
+metafile = true
+
+[[files]]
 file = "mods/dank-storage.pw.toml"
 hash = "66532136ecc977fd404def815cd18254f5c619e126c1c2aabc5aded6e00f5e6b"
 metafile = true

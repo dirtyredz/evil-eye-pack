@@ -4,7 +4,9 @@
 //             metadata, check the dependency closure, write the lock and a report in the job folder
 //   check     validate the lock against this checkout, re-verify every cached artifact (complete
 //             inventory) and re-run the closure check, offline
-//   apply     plan the re-point from the lock; a dry run unless --write is given (dry run is the default)
+//   apply     plan the re-point from the lock; a dry run unless --write is given (dry run is the default).
+//             After the first apply it brings the already-applied checkout to an updated lock's target.
+// A resolve after apply reads the source metafiles from the commit the lock records (source_tree.cjs).
 const fs = require('node:fs');
 const path = require('node:path');
 const env = require('../../server_smoke/env.cjs');
@@ -14,7 +16,8 @@ const { SCHEMA, fingerprint, serialize, sourceMetafiles, validate } = require('.
 const { planEntries } = require('./resolve.cjs');
 const { client, resolveSelector, resolveInstaller } = require('./fetch.cjs');
 const { checkClosure } = require('./dependencies.cjs');
-const { plan, apply, appliedDifferences } = require('./repoint.cjs');
+const { plan, planApplied, apply, appliedDifferences } = require('./repoint.cjs');
+const { sourceRoot } = require('./source_tree.cjs');
 
 const ROOT = path.resolve(__dirname, '../../..');
 const HERE = __dirname;
@@ -34,6 +37,7 @@ function parse(argv) {
     if (k === 'write') { o.write = true; continue; }
     if (!(k in DEFAULTS) && k !== 'root') throw new Error(`unknown option ${rest[i]}`);
     o[k] = path.resolve(rest[++i]);
+    if (k === 'root') o.explicitRoot = o.root;
   }
   if (!['resolve', 'check', 'apply'].includes(command)) throw new Error('usage: migrate.mjs resolve|check|apply [--write] [--lock f] [--cache d] [--job d] [--survey f] [--dispositions f]');
   return { command, o };
@@ -70,6 +74,10 @@ function verifyPacks(lock, cache) {
 
 async function resolve(o, log) {
   const dispositions = readJson(o.dispositions);
+  const previous = fs.existsSync(o.lock) ? readJson(o.lock) : null;
+  const src = sourceRoot({ root: o.root, explicitRoot: o.explicitRoot, lock: previous, scratch: path.join(o.root, '.tmp', 'migration-source') });
+  if (src.commit) log(`checkout is past the lock source: resolving from source commit ${src.commit}`);
+  o = { ...o, root: src.root };
   const survey = readJson(o.survey);
   const rt = dispositions.runtime;
   const api = client({ rawDir: path.join(o.job, 'raw'), log });
@@ -101,7 +109,7 @@ async function resolve(o, log) {
   const lock = {
     schema: SCHEMA,
     runtime: { ...rt, installer: { url: installer.url, sha256: installer.sha256, size: installer.size } },
-    source: { fingerprint: fingerprint(o.root), metafiles: sourceMetafiles(o.root).length },
+    source: sourceRecord(o.root, previous, src.commit),
     frozen: dispositions.frozen,
     entries
   };
@@ -113,6 +121,13 @@ async function resolve(o, log) {
   fs.writeFileSync(path.join(o.job, 'resolve-report.json'), JSON.stringify({ validation: errors, closure: { errors: closure.errors, warnings: closure.warnings }, counts: counts(lock) }, null, 1) + '\n');
   report(log, lock, errors, closure);
   return errors.length || closure.errors.length ? 1 : 0;
+}
+
+// The source a lock was built from; its commit is kept while the fingerprint is unchanged.
+function sourceRecord(root, previous, commit) {
+  const fp = fingerprint(root);
+  const keep = commit || (previous?.source?.fingerprint === fp ? previous.source.commit : null);
+  return { fingerprint: fp, metafiles: sourceMetafiles(root).length, ...(keep ? { commit: keep } : {}) };
 }
 
 function counts(lock) {
@@ -146,7 +161,9 @@ function check(o, log) {
 
 function applyCommand(o, log, { dryRun }) {
   const lock = readJson(o.lock);
-  const changes = plan(o.root, lock);
+  const applied = lock.source?.fingerprint !== fingerprint(o.root);
+  if (applied) log('checkout is past the lock source: planning the update from the applied state');
+  const changes = applied ? planApplied(o.root, lock) : plan(o.root, lock);
   log(`re-point plan: ${changes.writes.length} write(s), ${changes.deletes.length} delete(s) ${JSON.stringify(changes.summary)}`);
   for (const w of changes.writes) log(`  write ${w.rel}`);
   for (const d of changes.deletes) log(`  delete ${d}`);

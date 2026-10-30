@@ -56,8 +56,14 @@ against what its publisher states, and the dependency closure is read from actua
 node tools/packwiz/migrate.mjs resolve   # fetch + verify (cached), read metadata, closure, write the lock
 node tools/packwiz/migrate.mjs check     # offline: lock vs checkout fingerprint, every cached byte, closure
 node tools/packwiz/migrate.mjs apply     # dry run (default): planned writes/deletes
-node tools/packwiz/migrate.mjs apply --write   # Phase 5 only, then rehash.cjs and verify_hashes.cjs
+node tools/packwiz/migrate.mjs apply --write   # then rehash.cjs and verify_hashes.cjs
 ```
+
+The lock records its source commit (`source.commit`, e99fd1f). After apply the checkout is the target,
+so a later `resolve` (a port pin, a Phase 7 addition) exports that commit's metafiles to
+`.tmp/migration-source/`, checks they reproduce the lock's fingerprint, and resolves from them; `apply`
+then writes only what the updated lock changes on the applied checkout, and refuses a metafile the lock
+does not account for. Re-resolving an unchanged disposition reproduces the lock byte for byte.
 
 Coverage on 2026-10-29: **191 source metafiles accounted for exactly once.** That is the 182 mods
 plus 6 resource packs and 3 shader packs, with 4 additions.
@@ -98,11 +104,17 @@ has its own loader base, local stage, cached worlds and ANU lane:
 
 ## Owned ports (deferred, never abandoned)
 
-Seven mods have no NeoForge 1.21.1 build and are being ported by the owner in `minecraft-mods`:
+Seven mods had no NeoForge 1.21.1 build and are being ported by the owner in `minecraft-mods`:
 Dank Recipe Transfer, Roundwood, Ars Instrumentum, Alex's Mobs, Alex's Caves, Ice and Fire, and
 FlatWorldFix. FlatWorldFix is kept and ported, not swapped for Give Me My Flat World. The lock
 records each one as `defer`. Phase 5 suspends their references, and each one returns as a direct
-GitHub release pin.
+GitHub release pin (`repoint` to a `direct` target; restore steps in `tools/packwiz/migration/deferred/README.md`).
+
+| Port | Pin | Integrated |
+|---|---|---|
+| Dank Recipe Transfer | 0.2.0 prerelease, `dank_recipe_transfer-1.21.1-neoforge-0.2.0.jar`, sha256 `3753e679…0275` | 2026-10-30 (parked nothing; malware guard clean) |
+
+The other six are still `defer`.
 
 ## 100% checklist
 
