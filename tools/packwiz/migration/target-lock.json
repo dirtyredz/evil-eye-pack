@@ -7147,6 +7147,58 @@
    "rationale": "Owner's own mod, ported in minecraft-mods (seven-port programme). Direct GitHub release pin returns with the port."
   },
   {
+   "action": "add",
+   "metafile": "mods/sable.pw.toml",
+   "old": null,
+   "provisional": false,
+   "rationale": "Plan Phase 7, second in dependency order: Sable 2.0.6 (moving-sublevel physics; bundles Veil 4.3.2, Sable Companion 1.6.0 and its Rapier physics library), inside Interstellaris 0.6.1's range 2.0.5-2.0.x. Declares Sodium >= 0.8.12-alpha.2 (pack: 0.8.13) and is incompatible with ScalableLux (absent).",
+   "target": {
+    "channel": "release",
+    "declares": [
+     "sable incompatible sablecompanion (1.6.0,)",
+     "sable incompatible scalablelux *",
+     "sable incompatible sodium (,0.8.12-alpha.2+mc1.21.1)",
+     "sable optional create [6.0.10,6.1.0) (client)",
+     "sable optional flywheel [1.0.6,) (client)",
+     "sable required minecraft [1.21.1]",
+     "sable required neoforge [21.1.228,)",
+     "sablecompanion required minecraft [1.21.1,)",
+     "sablecompanion required neoforge [21.1.80,)",
+     "veil incompatible celeritas *",
+     "veil incompatible embeddium *",
+     "veil incompatible rubidium *",
+     "veil optional imguimc [1.1.0,2.0.0)",
+     "veil optional minecraft [1.21.1,1.21.3]",
+     "veil optional neoforge [21.1.1,)",
+     "veil optional sodium [0.8.12-alpha.2+mc1.21.1,)"
+    ],
+    "filename": "sable-neoforge-1.21.1-2.0.6.jar",
+    "loader": "neoforge",
+    "metafile": "mods/sable.pw.toml",
+    "mods": [
+     "sable@2.0.6",
+     "sablecompanion@1.6.0 (bundled)",
+     "veil@4.3.2 (bundled)"
+    ],
+    "name": "Sable",
+    "project": "T9PomCSv",
+    "publisher": {
+     "sha1": "cf46f7e8c1511f170abcdbee739944f0540549bf",
+     "sha512": "76d293ce751a01cb9c095a3659b0a41e03e005480bc9d76dfdc73ec7c2eabf7923740c7b077921d42616673c496cd5143569f2085ddcebe174fd91d81e2a04b8",
+     "size": 12986135
+    },
+    "sha1": "cf46f7e8c1511f170abcdbee739944f0540549bf",
+    "sha256": "9c199157843bf953a47dff625fc5bb41c01a90538d35ad18e6996bbcb8a617c2",
+    "sha512": "76d293ce751a01cb9c095a3659b0a41e03e005480bc9d76dfdc73ec7c2eabf7923740c7b077921d42616673c496cd5143569f2085ddcebe174fd91d81e2a04b8",
+    "side": "both",
+    "size": 12986135,
+    "source": "modrinth",
+    "url": "https://cdn.modrinth.com/data/T9PomCSv/versions/fg9dTRz9/sable-neoforge-1.21.1-2.0.6.jar",
+    "version": "fg9dTRz9",
+    "versionNumber": "2.0.6+mc1.21.1"
+   }
+  },
+  {
    "action": "repoint",
    "metafile": "mods/searchables.pw.toml",
    "old": {

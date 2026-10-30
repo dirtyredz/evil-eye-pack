@@ -46,5 +46,9 @@
   {
     "pattern": "DataMapLoader.*enderio:xpjuice",
     "why": "NeoForge 1.21.1: Create: Enchantment Industry 2.5.4b's experience data map names Ender IO's 1.20 fluid id enderio:xpjuice; the pack adds the 1.21 id enderio:fluid_xp_juice_still in kubejs/data/create_enchantment_industry/data_maps/fluid/unit/experience.json"
+  },
+  {
+    "pattern": "sable.*Failed to apply tag physics properties. Unknown block: create_dragons_plus:levitite_fragile_fluid_tank",
+    "why": "NeoForge 1.21.1 + Sable 2.0.6 (2026-10-30): Create: Dragons Plus 1.11.9 ships a Sable physics_block_properties entry for its levitite fragile tank, a block it registers only with Create Simulated/Aeronautics (absent; its recipe is gated on them). Sable logs and skips the entry on every reload; Sable's loader ignores neoforge:conditions, so a gated override did not help (boot 6)"
   }
 ]
