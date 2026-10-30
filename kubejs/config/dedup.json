@@ -38,7 +38,6 @@
   },
   "disabled": [
     "hammerlib:gears/wooden",
-    "hammerlib:gears/stone",
     "hammerlib:gears/copper",
     "hammerlib:gears/iron",
     "hammerlib:gears/gold",

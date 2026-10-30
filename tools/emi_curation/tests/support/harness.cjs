@@ -129,7 +129,7 @@ function boot(opts) {
   ctx.tick = () => { for (const h of ctx.events.handlers.tick) h(); };
   ctx.logout = () => { for (const h of ctx.events.handlers.loggedOut) h(); };
   ctx.ns = () => g.emiCuration;
-  ctx.ids = (list) => list.a.map((x) => x.key.id + (x.nbt ? '#' + x.nbt.BlockEntityTag.EntityStorage.Entity.id : ''));
+  ctx.ids = (list) => list.a.map((x) => x.key.id + (x.nbt ? '#' + x.nbt['enderio:soul'].entity_type : ''));
   ctx.load(opts && opts.jsonIO);
   if (!(opts && opts.noReload)) { world.reload(); world.finishWorker(); }
   return ctx;

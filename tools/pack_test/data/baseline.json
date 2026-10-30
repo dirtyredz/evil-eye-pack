@@ -7,16 +7,6 @@
    "since": "2026-10-23"
   },
   {
-   "key": "recipes|recipe-missing|productivebees:create/mixing/create_enchantment_industry/honeycomb_hyper_experience|",
-   "reason": "Productive Bees' Create Enchantment Industry mixing recipe targets a hyper-experience fluid that CEI 2.5 no longer registers; the recipe is skipped silently. Upstream compat drift, harmless.",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "recipes|recipe-fallback-active|supplementaries:cannonball_2|#forge:storage_blocks/lead",
-   "reason": "Supplementaries makes cannonballs from lead blocks only when some mod provides lead; the pack has none since AllTheOres left, so its iron recipe is the intended one.",
-   "since": "2026-10-23"
-  },
-  {
    "key": "acquisition|no-known-source|ae2:crafting_pattern|",
    "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Encoded by the Pattern Encoding Terminal from an ae2:blank_pattern (EncodedPatternItem/PatternDetailsHelper); never a data recipe, the item exists only as the encoded NBT form.",
    "since": "2026-10-23"
@@ -102,16 +92,6 @@
    "since": "2026-10-23"
   },
   {
-   "key": "acquisition|no-known-source|ars_nouveau:amethyst_golem_charm|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Ritual of Awakening performed near Budding Amethyst spawns the golem and yields the charm; AmethystGolem entity returns the charm when killed/dispelled (lang page1.amethyst_golem_charm).",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|ars_nouveau:bookwyrm_charm|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): RitualAwakening augmented with Book and Quill produces Bookwyrm charms; EntityBookwyrm drops its charm on death/dispel.",
-   "since": "2026-10-23"
-  },
-  {
    "key": "acquisition|no-known-source|ars_nouveau:drygmy_shard|",
    "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Dropped by EntityDrygmy via code and appears in dungeon loot (DungeonLootTables DRYGMY_SHARD via loot_modifiers/dungeon_loot.json); also consumed by drygmy_charm/thread recipes.",
    "since": "2026-10-23"
@@ -157,11 +137,6 @@
    "since": "2026-10-23"
   },
   {
-   "key": "acquisition|no-known-source|ars_nouveau:spell_parchment|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Spell is written into a blank parchment in code (BlankParchmentItem, recipe spell_write; NBT variant of blank_parchment).",
-   "since": "2026-10-23"
-  },
-  {
    "key": "acquisition|no-known-source|ars_nouveau:whirlisprig_shards|",
    "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Dropped by Whirlisprig entity via code and in dungeon loot (DungeonLootTables WHIRLISPRIG_SHARDS).",
    "since": "2026-10-23"
@@ -169,11 +144,6 @@
   {
    "key": "acquisition|no-known-source|ars_nouveau:wilden_tribute|",
    "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Dropped by WildenChimera (boss) via code; used by archmage book upgrade, summon focus, reactive_4 recipes.",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|ars_nouveau:wixie_shards|",
-   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Added to structure/dungeon chests by the Ars dungeon_loot loot modifier (DungeonLootTables WIXIE_SHARD).",
    "since": "2026-10-23"
   },
   {
@@ -399,11 +369,6 @@
   {
    "key": "acquisition|no-known-source|doggytalents:uncooked_rice|",
    "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Output of the Rice Mill: RiceMillBlockEntity processes rice grains (RiceGrainsItem) into UNCOOKED_RICE in Java, with no data recipe for the output.",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|enderio:filled_soul_vial|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): SoulVialItem captures a living mob into an enderio:empty_soul_vial on use or via FillSoulVialDispenseBehavior, producing the filled vial with entity NBT.",
    "since": "2026-10-23"
   },
   {
@@ -1017,16 +982,6 @@
    "since": "2026-10-23"
   },
   {
-   "key": "acquisition|no-known-source|supplementaries:rope_arrow|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Special crafting recipe supplementaries:rope_arrow_create (arrow + rope) and rope_arrow_add (add rope to existing rope arrow), both dynamic serializers with no explicit ingredients in JSON.",
-   "since": "2026-10-23"
-  },
-  {
-   "key": "acquisition|no-known-source|supplementaries:trapped_present|",
-   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Dynamic recipe type supplementaries:trapped_present (present + trap ingredient, flag trapped_present) converts a Present into a Trapped Present.",
-   "since": "2026-10-23"
-  },
-  {
    "key": "acquisition|no-known-source|supplementaries:trapped_present_black|",
    "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Dyed trapped present via dynamic recipes supplementaries:trapped_present (trap conversion) and present_dye (coloring) on the base present.",
    "since": "2026-10-23"
@@ -1107,14 +1062,519 @@
    "since": "2026-10-23"
   },
   {
-   "key": "logs|tag-load-failed|#cataclysm:sunken_city_avoid|minecraft:monument",
-   "reason": "L_Ender's Cataclysm 1.28 ships a sunken_city_avoid tag naming minecraft:monument in a registry that has no such entry; the game drops that one placement tag. Upstream, harmless.",
-   "since": "2026-10-23"
+   "key": "recipes|recipe-missing|thirst:compat/create/cactus|",
+   "reason": "Thirst Was Taken 2.1.5 ships its Create compat recipes in the 1.20 stack format; the 1.21 parser rejects them (logged, known noise). Upstream.",
+   "since": "2026-10-30"
   },
   {
-   "key": "logs|data-parse-error|cozycafe:vinery/kelp_cider|cozycafe:menu/vinery/kelp_cider.json",
-   "reason": "Cozy Cafe's menu/vinery/kelp_cider.json is malformed upstream (docs/GOTCHAS.md, cozy-mods trial); only that menu entry is lost.",
-   "since": "2026-10-23"
+   "key": "recipes|recipe-missing|thirst:compat/create/terracotta_water_bowl|",
+   "reason": "Thirst Was Taken 2.1.5 ships its Create compat recipes in the 1.20 stack format; the 1.21 parser rejects them (logged, known noise). Upstream.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-parse-error|createdeco:placard|",
+   "reason": "Create Deco 2.1.3 placard recipe uses a bare {id} ingredient that the 1.21 shapeless parser rejects; upstream data bug, recipe absent.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/dusts/honeycomb_bismuth|#c:dusts/bismuth",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/dusts/honeycomb_niter|#c:dusts/niter",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/gems/honeycomb_cinnabar_dust|#c:dusts/cinnabar",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_aluminium|#c:raw_materials/aluminum",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_bismuth|#c:raw_materials/bismuth",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_leaden|#c:raw_materials/lead",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_nickel|#c:raw_materials/nickel",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_osmium|#c:raw_materials/osmium",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_platinum|#c:raw_materials/platinum",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_silver|#c:raw_materials/silver",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_tin|#c:raw_materials/tin",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_titanium|#c:raw_materials/titanium",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|productivebees:centrifuge/raw_materials/honeycomb_tungsten|#c:raw_materials/tungsten",
+   "reason": "Productive Bees centrifuges metal combs into the metal only when a mod provides it; no mod in the pack provides this metal, so its fallback (comb output) is the intended recipe.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "recipes|recipe-fallback-active|supplementaries:cannonball_2|#c:storage_blocks/lead",
+   "reason": "Supplementaries makes cannonballs from lead blocks only when some mod provides lead; the pack has none, so its iron recipe is the intended one.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "references|loot-not-loaded|thirst:chests/abandoned_mineshaft_fr|ThirstWasTaken-1.21.1-2.1.5.jar",
+   "reason": "Thirst Was Taken chest tables name drinks from mods the pack does not ship; the table fails to load (see baseline log signature).",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "references|loot-not-loaded|supplementaries:blocks/candle_holder_cupric|supplementaries-1.21.1-4.0.2-neoforge.jar",
+   "reason": "Supplementaries ships loot tables for compat candle holders (cupric/ender/soul/spectacle) it registers only with their compat mods; not registered here, so not loaded.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "references|loot-not-loaded|supplementaries:blocks/candle_holder_ender|supplementaries-1.21.1-4.0.2-neoforge.jar",
+   "reason": "Supplementaries ships loot tables for compat candle holders (cupric/ender/soul/spectacle) it registers only with their compat mods; not registered here, so not loaded.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "references|loot-not-loaded|supplementaries:blocks/candle_holder_soul|supplementaries-1.21.1-4.0.2-neoforge.jar",
+   "reason": "Supplementaries ships loot tables for compat candle holders (cupric/ender/soul/spectacle) it registers only with their compat mods; not registered here, so not loaded.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "references|loot-not-loaded|supplementaries:blocks/candle_holder_spectacle|supplementaries-1.21.1-4.0.2-neoforge.jar",
+   "reason": "Supplementaries ships loot tables for compat candle holders (cupric/ender/soul/spectacle) it registers only with their compat mods; not registered here, so not loaded.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "references|removed-mod-reference|productivebees:bee_conversion/rftoolsbase/dimensional_shard_bee|rftoolsbase:infused_diamond",
+   "reason": "Productive Bees RFTools compat recipes are gated by mod_loaded rftoolsbase conditions; never active.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "references|removed-mod-reference|productivebees:centrifuge/rftoolsbase/honeycomb_dimensional_shard|rftoolsbase:dimensionalshard",
+   "reason": "Productive Bees RFTools compat recipes are gated by mod_loaded rftoolsbase conditions; never active.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:cable_bus|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): AE2 cable bus is the placed multipart block behind every cable and part; players hold the cables and parts, never this item. Data references: minecraft/tags/block/mineable/pickaxe.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:creative_storage_cell|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): AE2 creative-only cell / placeholder item for unloaded content. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ae2:missing_content|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): AE2 creative-only cell / placeholder item for unloaded content. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:anima_caster_tome|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars caster tomes are inscribed in game (spell written onto a tome, Java); the tome recipes consume them. Data references: ars_elemental/recipe/tomes/skelehorse_tome.json ; minecraft/tags/item/bookshelf_books.json ; minecraft/tags/item/lectern_books.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:earth_caster_tome|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars caster tomes are inscribed in game (spell written onto a tome, Java); the tome recipes consume them. Data references: ars_elemental/recipe/tomes/camel_tome.json ; ars_elemental/recipe/tomes/flower_tome.json ; ars_elemental/recipe/tomes/magnet_tome.json ; minecraft/tags/item/bookshelf_books.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:fire_caster_tome|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars caster tomes are inscribed in game (spell written onto a tome, Java); the tome recipes consume them. Data references: ars_elemental/recipe/tomes/hellflare_tome.json ; ars_elemental/recipe/tomes/strider_tome.json ; minecraft/tags/item/bookshelf_books.json ; minecraft/tags/item/lectern_books.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:flashjack_familiar|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars Nouveau / Elemental familiar, glyph or event item granted in code (familiar binding, ritual, glyph unlock) rather than by data. Data references: ars_nouveau/tags/entity_type/familiar.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:flashjack_shards|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars Nouveau / Elemental familiar, glyph or event item granted in code (familiar binding, ritual, glyph unlock) rather than by data. Data references: ars_elemental/recipe/flashjack_charm.json ; ars_nouveau/tags/item/magic_shards.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:glyph_nullify_defense|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars Nouveau / Elemental familiar, glyph or event item granted in code (familiar binding, ritual, glyph unlock) rather than by data. Data references: ars_elemental/recipe/glyph_nullify_defense.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:manipulation_caster_tome|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars caster tomes are inscribed in game (spell written onto a tome, Java); the tome recipes consume them. Data references: ars_elemental/recipe/tomes/glassmaker_tome.json ; minecraft/tags/item/bookshelf_books.json ; minecraft/tags/item/lectern_books.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:rainbow_prism_lens|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars Nouveau / Elemental familiar, glyph or event item granted in code (familiar binding, ritual, glyph unlock) rather than by data. Data references: ars_nouveau/tags/item/spell_prism_lens.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_elemental:water_caster_tome|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars caster tomes are inscribed in game (spell written onto a tome, Java); the tome recipes consume them. Data references: ars_elemental/recipe/tomes/dolphin_tome.json ; ars_elemental/recipe/tomes/frostbite_tome.json ; ars_elemental/recipe/tomes/shrimp_pistol_tome.json ; minecraft/tags/item/bookshelf_books.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:alakarkinos_hat|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars Nouveau / Elemental familiar, glyph or event item granted in code (familiar binding, ritual, glyph unlock) rather than by data. Data references: sable/tags/block/super_light.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:alakarkinos_se|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars Nouveau / Elemental familiar, glyph or event item granted in code (familiar binding, ritual, glyph unlock) rather than by data. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:alakarkinos_token|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars Nouveau / Elemental familiar, glyph or event item granted in code (familiar binding, ritual, glyph unlock) rather than by data. Data references: ars_nouveau/recipe/alakarkinos_charm.json ; ars_nouveau/tags/item/magic_shards.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:caster_tome|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars caster tomes are inscribed in game (spell written onto a tome, Java); the tome recipes consume them. Data references: ars_elemental/recipe/tomes/camel_tome.json ; ars_elemental/recipe/tomes/dolphin_tome.json ; ars_elemental/recipe/tomes/flower_tome.json ; ars_elemental/recipe/tomes/frostbite_tome.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|ars_nouveau:planarium_projector|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Ars Nouveau / Elemental familiar, glyph or event item granted in code (familiar binding, ritual, glyph unlock) rather than by data. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|buildinggadgets2:redprint|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Building Gadgets 2 template copy item produced by the Template Manager in code. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:belt_of_monstrosity|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): L_Ender's Cataclysm boss, structure or altar item placed or dropped in code. Data references: curios/tags/item/waist.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:blood_clot|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): L_Ender's Cataclysm boss, structure or altar item placed or dropped in code. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:boss_respawner|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): L_Ender's Cataclysm boss, structure or altar item placed or dropped in code. Data references: cataclysm/tags/block/altar_destroy_immune.json ; cataclysm/tags/block/clawdian_immune.json ; cataclysm/tags/block/harbinger_immune.json ; cataclysm/tags/block/ignis_immune.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:cursed_tombstone|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): L_Ender's Cataclysm boss, structure or altar item placed or dropped in code. Data references: cataclysm/tags/block/altar_destroy_immune.json ; cataclysm/tags/block/clawdian_immune.json ; cataclysm/tags/block/ender_guardian_can_destroy.json ; cataclysm/tags/block/harbinger_immune.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:door_of_seal|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): L_Ender's Cataclysm boss, structure or altar item placed or dropped in code. Data references: cataclysm/tags/block/altar_destroy_immune.json ; cataclysm/tags/block/clawdian_immune.json ; cataclysm/tags/block/harbinger_immune.json ; cataclysm/tags/block/ignis_immune.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:khopesh|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): L_Ender's Cataclysm boss, structure or altar item placed or dropped in code. Data references: cataclysm/recipe/ancient_metal_nugget_from_smelting.json ; cataclysm/recipe/blasting/ancient_metal_nugget_from_blasting.json ; minecraft/tags/item/piglin_loved.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:music_disc_the_cataclysmfarer|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): L_Ender's Cataclysm boss, structure or altar item placed or dropped in code. Data references: minecraft/tags/item/music_discs.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:obsidian_fence|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): L_Ender's Cataclysm boss, structure or altar item placed or dropped in code. Data references: minecraft/tags/block/fences.json ; minecraft/tags/block/mineable/pickaxe.json ; minecraft/tags/block/needs_diamond_tool.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:polished_sandstone|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): L_Ender's Cataclysm boss, structure or altar item placed or dropped in code. Data references: minecraft/tags/block/mineable/pickaxe.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|cataclysm:urchin_spike|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): L_Ender's Cataclysm boss, structure or altar item placed or dropped in code. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|create:crushed_raw_silver|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Create compat crushed silver for mods that add silver; no silver ore is in the pack while Ice and Fire is deferred. Data references: create/tags/item/crushed_raw_materials.json ; create/recipe/splashing/thermal/crushed_raw_silver.json ; create/recipe/splashing/oreganized/crushed_raw_silver.json ; create/recipe/splashing/ic2/crushed_raw_silver.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|create_connected:charged_kinetic_battery|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Charged by a rotating kinetic battery in the world (Java); the charged item is only consumed by a recipe. Data references: create_connected/recipe/crafting/kinetics/kinetic_battery_from_charged.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:assistanthammer_diamond|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: minecolonies/crafterrecipes/blacksmith/assistanthammer_diamond.json ; minecolonies/compatibility/itemnbtmatching.json ; minecolonies/researches/technology/assistanthammers.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:assistanthammer_iron|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: minecolonies/crafterrecipes/blacksmith/assistanthammer_iron.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:borscht|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/borscht.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:drownedpiratearcheregg|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): MineColonies pirate spawn eggs; creative-only like every spawn egg. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:drownedpiratecaptainegg|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): MineColonies pirate spawn eggs; creative-only like every spawn egg. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:drownedpirateegg|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): MineColonies pirate spawn eggs; creative-only like every spawn egg. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:eggplant_dolma|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods/vegetable.json ; c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/eggplant_dolma.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:farmland|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): MineColonies farmland blocks are made in the world by the Farmer citizen (Java); no item recipe by design. Data references: structurize/tags/block/good_solid_for_placeholder.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:fish_dinner|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/fish_dinner.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:flatbread|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods/bread.json ; c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/pita_hummus.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:floodedfarmland|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): MineColonies farmland blocks are made in the world by the Farmer citizen (Java); no item recipe by design. Data references: structurize/tags/block/good_solid_for_placeholder.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:hand_pie|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods/candy.json ; c/tags/item/foods/bread.json ; c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:lamb_stew|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods/soup.json ; c/tags/item/foods/cooked_meat.json ; c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:large_milk_bottle|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: minecolonies/crafterrecipes/baker/cake_batter.json ; minecolonies/crafterrecipes/baker/milky_bread.json ; minecolonies/tags/item/cook_ingredient.json ; minecolonies/recipe/feta_cheese.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:lembas_scone|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods/bread.json ; c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/baker/lembas_scone.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:manchet_dough|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: minecolonies/crafterrecipes/baker/manchet_dough.json ; minecolonies/crafterrecipes/baker/manchet.json ; minecolonies/recipe/baked_manchet_bread_campfire_cooking.json ; minecolonies/recipe/baked_manchet_bread.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:mintchoco_cheesecake|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/baker/mintchoco_cheesecake.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:muffin_dough|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: minecolonies/crafterrecipes/baker/muffin.json ; minecolonies/crafterrecipes/baker/muffin_dough.json ; minecolonies/recipe/baked_muffin.json ; minecolonies/recipe/baked_muffin_smoking.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:mushroom_pizza|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/baker/mushroom_pizza.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:pita_hummus|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/pita_hummus.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:ramen|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/ramen.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:schnitzel|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/schnitzel.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:spicy_eggplant|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/spicy_eggplant.json ; minecolonies/tags/item/cook_product.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:steak_dinner|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/steak_dinner.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:stew_trencher|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods/bread.json ; c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/stew_trencher.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:stuffed_pepper|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods/vegetable.json ; c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/stuffed_pepper.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:stuffed_pita|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods/vegetable.json ; c/tags/item/foods/bread.json ; c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:sushi_roll|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/sushi_roll.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecolonies:tacos|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Made by a MineColonies citizen via a crafterrecipes entry (Java crafting by the colony), not a player recipe. Data references: c/tags/item/foods.json ; neoforge/data_maps/item/compostables.json ; minecolonies/crafterrecipes/chef/tacos.json ; minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecraft:armadillo_scute|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Armadillos shed scutes and drop them when brushed (Java); Productive Bees also adds a loot modifier. Data references: minecolonies/tags/item/leather.json ; minecolonies/compatibility/itemnbtmatching.json ; productivebees/loot_modifiers/armadillo_scute_wannabee.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecraft:flow_pottery_sherd|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Vanilla 1.21 trial-chamber sherds come from structure-placed decorated pots and vault rewards in structure data, not from a loot table the scan reads. Data references: minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecraft:guster_pottery_sherd|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Vanilla 1.21 trial-chamber sherds come from structure-placed decorated pots and vault rewards in structure data, not from a loot table the scan reads. Data references: minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecraft:nether_star|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Dropped in code by the Wither (WitherBoss), not by a loot table. Data references: aeinfinitybooster/recipe/dimension_card.json ; aeinfinitybooster/recipe/infinity_card.json ; ars_elemental/recipe/glyph_homing_projectile.json ; ars_elemental/recipe/glyph_nullify_defense.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecraft:scrape_pottery_sherd|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Vanilla 1.21 trial-chamber sherds come from structure-placed decorated pots and vault rewards in structure data, not from a loot table the scan reads. Data references: minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecraft:trial_spawner|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Vanilla trial-chamber blocks; creative-only (no survival source by design). Data references: minecolonies/compatibility/itemnbtmatching.json ; supplementaries/moonlight/map_marker/trial_spawner.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|minecraft:vault|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Vanilla trial-chamber blocks; creative-only (no survival source by design). Data references: minecolonies/compatibility/itemnbtmatching.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|moonlight:spawn_box|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Moonlight library technical block (no player source by design). Data references: minecraft/tags/block/dragon_immune.json ; minecraft/tags/block/wither_immune.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|productivebees:crimson_bee_nest|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Placed by Productive Bees worldgen features (crimson/warped fungus bees); nests drop only with Silk Touch in code. Data references: minecraft/tags/block/beehives.json ; minecraft/tags/block/mineable/axe.json ; productivebees/tags/block/nests/nether_nests.json ; productivebees/worldgen/configured_feature/crimson_fungus_bees.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|productivebees:sugarbag_nest|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Placed by Productive Bees jungle worldgen; Silk Touch drop in code. Data references: minecraft/tags/block/mineable/axe.json ; productivebees/tags/block/nests/sugarbag_nests.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|productivebees:warped_bee_nest|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Placed by Productive Bees worldgen features (crimson/warped fungus bees); nests drop only with Silk Touch in code. Data references: minecraft/tags/block/beehives.json ; minecraft/tags/block/mineable/axe.json ; productivebees/tags/block/nests/nether_nests.json ; productivebees/worldgen/configured_feature/warped_fungus_bees.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|productivebees:wither_skull_chip|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Produced by Productive Bees centrifuging (bee products resolved in Java). Data references: c/tags/item/fragments/wither_skull.json ; productivebees/recipe/wither_skull.json.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|productivelib:upgrade_pollen_sieve|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): ProductiveLib upgrade item made through Productive Bees machine code. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|sauce:source_jar_core|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Sauce (Ars add-on) multiblock source-jar parts formed in the world in code. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|sauce:source_jar_frame|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Sauce (Ars add-on) multiblock source-jar parts formed in the world in code. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|sauce:source_jar_valve|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Sauce (Ars add-on) multiblock source-jar parts formed in the world in code. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:biomesoplenty/way_sign_willow|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Supplementaries compat way signs for wood types registered by other mods; made by the sign post crafting handler in code. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:cataclysm/way_sign_chorus|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Supplementaries compat way signs for wood types registered by other mods; made by the sign post crafting handler in code. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:domum_ornamentum/way_sign_cactus|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Supplementaries compat way signs for wood types registered by other mods; made by the sign post crafting handler in code. Data references: -.",
+   "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|supplementaries:domum_ornamentum/way_sign_cactus_extra|",
+   "reason": "NeoForge 1.21.1 target (reviewed 2026-10-30 from the pinned jars): Supplementaries compat way signs for wood types registered by other mods; made by the sign post crafting handler in code. Data references: -.",
+   "since": "2026-10-30"
   }
  ],
  "logSignatures": [

@@ -17,7 +17,10 @@ function lootRefs(json) {
     const type = typeof e.type === 'string' ? e.type.replace(/^minecraft:/, '') : '';
     if (type === 'item' && typeof e.name === 'string') refs.items.add(e.name);
     else if (type === 'tag' && typeof e.name === 'string') refs.tags.add(e.name);
+    // 1.21 loot_table entries name the table in `value` (an id, or an inline table); 1.20 used `name`.
     else if (type === 'loot_table' && typeof e.name === 'string') refs.tables.add(e.name);
+    else if (type === 'loot_table' && typeof e.value === 'string') refs.tables.add(e.value);
+    else if (type === 'loot_table' && e.value && typeof e.value === 'object') (e.value.pools || []).forEach((p) => { (p.entries || []).forEach(entry); conditions(p.conditions); });
     else if (COMPOSITE.has(type)) (e.children || []).forEach(entry);
     else if (type !== 'empty') refs.opaque.add(e.type || '(no type)');
     conditions(e.conditions);

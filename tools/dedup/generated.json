@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "files": {
-    "kubejs/assets/emi/index/stacks/dedup.json": "8df013dfffa73a9e4d149f7957412a7d74e0f0cbfd5cdfa1227ccf3ccd9cfbb0",
+    "kubejs/assets/emi/index/stacks/dedup.json": "63eb75f089f1edcf49f0174c515023cfd3fe9a64ab68f9e0417963b1ff1429a4",
     "kubejs/config/dedup_sources.json": "41497c5c0cec5203a735ee220ec3a308e6afefbe1b5561b6d7e493c385644db7",
     "kubejs/data/cluttered/loot_table/blocks/flowering_willow_leaves.json": "994bc9e1b5f55d7ca522a356254672593b8d959e104ae7bdc18a78d52aa39097",
     "kubejs/data/cluttered/loot_table/blocks/potted_willow_sapling.json": "5b1076c8d3c531b2d2ffcd28ce762ac08dcd65c1f96e014255022c0ac4e1b889",

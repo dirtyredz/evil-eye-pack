@@ -139,3 +139,12 @@ test('on a 1.21 server, data in 1.20 plural folders is recorded as ignored, neve
   const forge = scanResources([{ kind: 'dir', name: 'kubejs', file: path.join(root, 'kubejs/data') }], { minecraft: '1.20.1' });
   assert.deepEqual(Object.keys(forge.loot), ['x:entities/old']);
 }));
+
+test('1.21 loot_table entries name their table in value (an id or an inline table)', () => {
+  const r = lootRefs({ pools: [{ entries: [
+    { type: 'minecraft:loot_table', value: 'minecraft:chests/trial_chambers/reward_rare' },
+    { type: 'minecraft:loot_table', value: { pools: [{ entries: [{ type: 'minecraft:item', name: 'x:inline' }] }] } },
+    { type: 'minecraft:loot_table', name: 'minecraft:old/style' }] }] });
+  assert.deepEqual(r.tables.sort(), ['minecraft:chests/trial_chambers/reward_rare', 'minecraft:old/style']);
+  assert.deepEqual(r.items, ['x:inline']);
+});

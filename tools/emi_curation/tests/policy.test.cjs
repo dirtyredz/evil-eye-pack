@@ -8,7 +8,7 @@ loadScripts(env, ['diagnostics', 'collections', 'policy']);
 const P = env.global.emiCuration.policy;
 const policy = P.load(readRepoText);
 
-const ZOMBIE = { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zombie' } } } };
+const ZOMBIE = { 'enderio:soul': { entity_tag: {}, entity_type: 'minecraft:zombie' } };
 const item = (id, nbt) => ({ id, isItem: true, nbt: () => (nbt === undefined ? null : nbt) });
 const hidden = (id, nbt) => P.isStackHidden(policy, item(id, nbt));
 
@@ -78,17 +78,16 @@ test('exactly one canonical Zombie Filled Soul Vial and Broken Spawner stay visi
   for (const id of ['enderio:filled_soul_vial', 'enderio:broken_spawner']) {
     assert.equal(hidden(id, ZOMBIE), false, id + ' zombie');
     // Key order in the stack's NBT must not matter.
-    const reordered = { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zombie' } } } };
+    const reordered = { 'enderio:soul': { entity_tag: {}, entity_type: 'minecraft:zombie' } };
     assert.equal(hidden(id, reordered), false);
     assert.equal(hidden(id), true, id + ' without NBT');
-    assert.equal(hidden(id, { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zombie_villager' } } } }), true);
-    assert.equal(hidden(id, { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zombie_horse' } } } }), true);
-    assert.equal(hidden(id, { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:skeleton' } } } }), true);
-    // Extra NBT (e.g. a captured zombie with health data) is not the canonical example.
-    assert.equal(hidden(id, { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zombie' },
-      MaxHealth: { $nbt: 'float', value: 20 } } } }), true);
-    assert.equal(hidden(id, { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zombie', Health: { $nbt: 'float', value: 20 } } } } }), true);
-    assert.equal(hidden(id, { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zombie' } } }, display: {} }), true);
+    assert.equal(hidden(id, { 'enderio:soul': { entity_tag: {}, entity_type: 'minecraft:zombie_villager' } }), true);
+    assert.equal(hidden(id, { 'enderio:soul': { entity_tag: {}, entity_type: 'minecraft:zombie_horse' } }), true);
+    assert.equal(hidden(id, { 'enderio:soul': { entity_tag: {}, entity_type: 'minecraft:skeleton' } }), true);
+    // Extra component data (a captured zombie with entity data, or another component) is not the canonical example.
+    assert.equal(hidden(id, { 'enderio:soul': { entity_tag: { Health: { $nbt: 'float', value: 20 } }, entity_type: 'minecraft:zombie' } }), true);
+    assert.equal(hidden(id, { 'enderio:soul': { entity_tag: {}, entity_type: 'minecraft:zombie', max_health: { $nbt: 'float', value: 20 } } }), true);
+    assert.equal(hidden(id, { 'enderio:soul': { entity_tag: {}, entity_type: 'minecraft:zombie' }, 'minecraft:custom_name': 'x' }), true);
   }
 });
 

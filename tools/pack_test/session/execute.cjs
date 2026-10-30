@@ -8,6 +8,7 @@ const { boot } = require('../../server_smoke/boot.cjs');
 const { manifestReady } = require('../verdict/protocol.cjs');
 const { makeRunServer, injectProbe } = require('./prepare.cjs');
 const { worldKey, restoreWorld, saveWorld } = require('./world_cache.cjs');
+const { WORLD } = require('../stage_runtime.cjs');
 
 // The files analysis needs, copied out of the server dir (relative source -> relative destination).
 const EVIDENCE = [
@@ -16,7 +17,11 @@ const EVIDENCE = [
   ['logs/kubejs/server.log', 'logs/kubejs-server.log'],
   ['console.log', 'logs/console.log'],
   ['crash-reports', 'crash-reports'],
-  ['stall-threads.txt', 'logs/stall-threads.txt']
+  ['stall-threads.txt', 'logs/stall-threads.txt'],
+  // Configs as the mods left them after loading (missing keys added, invalid values reset to defaults), so
+  // a pack's shipped configs can be reconciled against the running mods' own schema without another boot.
+  ['config', 'post-boot/config'],
+  [`${WORLD}/serverconfig`, 'post-boot/serverconfig']
 ];
 
 function collectEvidence(serverDir, evidenceDir) {

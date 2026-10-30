@@ -3,8 +3,8 @@
 
 const F = require('./fake_emi.cjs');
 
-const ZOMBIE = { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zombie' } } } };
-const VILLAGER = { BlockEntityTag: { EntityStorage: { Entity: { id: 'minecraft:zombie_villager' } } } };
+const ZOMBIE = { 'enderio:soul': { entity_tag: {}, entity_type: 'minecraft:zombie' } };
+const VILLAGER = { 'enderio:soul': { entity_tag: {}, entity_type: 'minecraft:zombie_villager' } };
 
 /** One fake EMI world: items, recipes, and the named stacks/recipes used by the tests. */
 function fixture() {

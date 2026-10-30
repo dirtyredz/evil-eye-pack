@@ -13,10 +13,13 @@ test('retired mods and migration layer are absent', () => {
     'tools/ato_retirement']) assert.equal(fs.existsSync(path.join(root, f)), false, f);
 });
 
-test('HammerLib gears are disabled at recipe and tag sources; BHC code drops stay off', () => {
+test('HammerLib duplicate gears are disabled at recipe and tag sources; its stone gear stays; BHC drops', () => {
   const recipes = json('config/hammerlib/recipes/modded/hammerlib.json');
   const tags = json('config/hammerlib/tags/modded/hammerlib.json');
-  for (const material of ['wooden', 'stone', 'copper', 'iron', 'gold', 'diamond', 'netherite']) {
+  // The stone gear has no duplicate on 1.21.1 and HammerMicroblocks' saws need #c:gears/stone (boot 5).
+  assert.equal(recipes.active['minecraft:crafting']['hammerlib:gears/stone'], true);
+  assert.equal(tags.tags['minecraft:item']['c:gears/stone']['hammerlib:gears/stone'], true);
+  for (const material of ['wooden', 'copper', 'iron', 'gold', 'diamond', 'netherite']) {
     const id = 'hammerlib:gears/' + material;
     assert.equal(Object.values(recipes.active).find(group => id in group)[id], false, id);
     assert.equal(tags.tags['minecraft:item']['c:gears/' + material][id], false, id);

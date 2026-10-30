@@ -13,7 +13,7 @@ swap, unpacking window or registry remap. The old migration implementation remai
 | Silver and sapphire | Ice and Fire | AllTheOres jar removed; Large Ore Deposits uses explicit I&F ores |
 | Uranium | Extreme Reactors yellorium | Explicit deposit ores; Alex's Caves raw uranium remains a biome-specific exception and smelts/blasts to yellorium; ER raw uranium also satisfies its machine tag |
 | Electrum, metal rods, zinc/electrum sheets, diamond grit | Crafts & Additions | AllTheOres removed; Create Deco zinc sheet recipe removed and internal plate tag supplied by Crafts & Additions |
-| Iron gears | Ender IO | All seven HammerLib gear recipes and dynamic tags disabled; no copper/gold/diamond gear replacements are needed |
+| Iron gears | Ender IO | HammerLib gear recipes and dynamic tags disabled except the stone gear, which has no duplicate and which HammerMicroblocks saws need (`#c:gears/stone`, NeoForge branch 2026-10-30); no copper/gold/diamond gear replacements are needed |
 | Metal dusts | Ender IO | AllTheOres removed |
 | Silicon / ender dust | AE2 | Ender IO SAG outputs and downstream inputs rewritten; counts/chances retained |
 | Obsidian dust | Create | Ender IO SAG output rewritten |

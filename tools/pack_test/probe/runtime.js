@@ -23,11 +23,16 @@
     var BR = Java.loadClass('net.minecraft.core.registries.BuiltInRegistries')
     Tabs.tryRebuildTabContents(server.getWorldData().enabledFeatures(), true, server.registryAccess())
     var tabs = BR.CREATIVE_MODE_TAB.stream().toList().toArray()
+    // Compare against the chosen Item objects with ItemStack.is: calling getItem() on every stack would make
+    // Rhino reflect each Item subclass, and client-only method signatures log dist errors (boot 5).
+    var RL = Java.loadClass('net.minecraft.resources.ResourceLocation')
+    var targets = STACK_IDS.map(function (id) { return { id: id, item: BR.ITEM.get(RL.parse(id)) } })
     for (var t = 0; t < tabs.length; t++) {
       var items = tabs[t].getDisplayItems().toArray()
       for (var i = 0; i < items.length; i++) {
-        var id = String(BR.ITEM.getKey(items[i].getItem()))
-        if (out[id] && out[id].length < 8) out[id].push(encode(items[i]))
+        for (var k = 0; k < targets.length; k++) {
+          if (items[i].is(targets[k].item) && out[targets[k].id].length < 8) out[targets[k].id].push(encode(items[i]))
+        }
       }
     }
     return out

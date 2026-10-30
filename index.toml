@@ -1210,7 +1210,7 @@ hash = "4f8d780084c3aa515dfa2cc5e90f169193cffbbe207fb2f1e131d3ed93ca55d5"
 
 [[files]]
 file = "config/emi-curation/rules.json"
-hash = "1d7b831bdd0fd1dd58ffd9c9cf4b2b61bc36b1a53e856f92e6c40a0ae08bc432"
+hash = "a83d09666b4fd7a358f62cb1f0a127e11f9ff39cb5153c79ae915a88ad4f9511"
 
 [[files]]
 file = "config/emi.css"
@@ -1402,7 +1402,7 @@ hash = "5da09bd4b707b7519df57aa98ebaa5df9005d23e127af37617e50bd845b43e4f"
 
 [[files]]
 file = "config/hammerlib/recipes/modded/hammerlib.json"
-hash = "fa9f138174e1342791719d667b6e0f01f8ca2efee2ea30d311021823f74fe734"
+hash = "bea14e423cda4f7cb19c41be225f9da4488896b6d8f4440a97facb20fdd209c7"
 
 [[files]]
 file = "config/hammerlib/recipes/modded/hammermicroblocks.json"
@@ -1414,7 +1414,7 @@ hash = "9ce1e21174fac3aad87c190482cf2a43ca2a29e16fda963bc97f4eb399c8d9d2"
 
 [[files]]
 file = "config/hammerlib/tags/modded/hammerlib.json"
-hash = "a50f8f87c05cf7e364f887164cf36e9e0996fa92c32ba64df27909193dcc5da1"
+hash = "a5083ec1f33ed28b9311da6c73917a69ad5e8539fede87ab2dad381e9d783552"
 
 [[files]]
 file = "config/hammerlib/tags/modded/hammermicroblocks.json"
@@ -1674,7 +1674,7 @@ hash = "29c12c8b9c71b426585b7cf4bd761919e0495d19ed91a31c41cffde91eedf34b"
 
 [[files]]
 file = "kubejs/assets/emi/index/stacks/dedup.json"
-hash = "8df013dfffa73a9e4d149f7957412a7d74e0f0cbfd5cdfa1227ccf3ccd9cfbb0"
+hash = "63eb75f089f1edcf49f0174c515023cfd3fe9a64ab68f9e0417963b1ff1429a4"
 
 [[files]]
 file = "kubejs/assets/emi_curation/lang/en_us.json"
@@ -1778,7 +1778,7 @@ hash = "fe4b5696211a9d5af0b3da7b7a187559692979d71a6cd4f70658d13bd19dc60b"
 
 [[files]]
 file = "kubejs/config/dedup.json"
-hash = "eb43862e91ef41d2fdc9d6cb3ce4d55dd5bd33d3b4f2219914cdd460879afffa"
+hash = "a81139ce858239815b69d402464dbe9567b75236241fc5262d2684667e4d4886"
 
 [[files]]
 file = "kubejs/config/dedup_sources.json"
@@ -3226,7 +3226,7 @@ hash = "f67008197a69ca92125d4734f5df10c6aca1d6f50f14c2efd101215aff7391aa"
 
 [[files]]
 file = "kubejs/server_scripts/tag_compat.js"
-hash = "4256b04896a977bd374c2c6dfb85e6bae86559266f9af3435c0100e21091e6de"
+hash = "ed46363bccd87a9482d8955cb5c95f362110ffbcd4cb3c7de4cfc60265d758b9"
 
 [[files]]
 file = "kubejs/server_scripts/uranium.js"

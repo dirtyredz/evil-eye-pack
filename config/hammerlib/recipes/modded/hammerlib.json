@@ -6,7 +6,7 @@
     },
     "minecraft:crafting": {
       "hammerlib:gears/wooden": false,
-      "hammerlib:gears/stone": false,
+      "hammerlib:gears/stone": true,
       "hammerlib:gears/copper": false,
       "hammerlib:gears/iron": false,
       "hammerlib:gears/gold": false,

@@ -21,7 +21,7 @@
         "hammerlib:gears/gold": false
       },
       "c:gears/stone": {
-        "hammerlib:gears/stone": false
+        "hammerlib:gears/stone": true
       },
       "c:gears/netherite": {
         "hammerlib:gears/netherite": false

@@ -20,12 +20,9 @@
         "enderio:broken_spawner"
       ],
       "keepWhenNbtEquals": {
-        "BlockEntityTag": {
-          "EntityStorage": {
-            "Entity": {
-              "id": "minecraft:zombie"
-            }
-          }
+        "enderio:soul": {
+          "entity_tag": {},
+          "entity_type": "minecraft:zombie"
         }
       }
     }
