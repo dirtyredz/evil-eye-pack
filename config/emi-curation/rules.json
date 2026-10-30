@@ -7,7 +7,8 @@
     "colours.json",
     "minecolonies-eggs.json",
     "roundwood-legacy.json",
-    "alexsmobs-creative.json"
+    "alexsmobs-creative.json",
+    "iceandfire-creative.json"
   ],
   "idContains": [
     "spawn_egg"

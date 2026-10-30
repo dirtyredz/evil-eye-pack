@@ -4,6 +4,9 @@ Newest first.
 
 ## 2026-10-30 - Ice and Fire CE and the final port follow-ups
 
+- The owner designated CE dreadwood leaves and sapling unfinished creative-only content.
+  `iceandfire-creative.json` hides both in CLEAN using the End Pirate item-list mechanism;
+  ALL restores them. No survival recipes or permanent removals are introduced (dk-ce8a67fc).
 - Ice and Fire CE 2.1.4 is a dev/trial local hash pin, alongside Alex's Caves r2. Uranus
   3.0-beta.1 and Jupiter 2.3.7 use normal CurseForge pins; all supplied hashes were checked.
 - Ice and Fire silver survives: the existing world contains about 460,000 I&F silver ore blocks.

@@ -1609,6 +1609,10 @@ file = "config/emi-curation/enderio-glass.json"
 hash = "a271188e84b47f8c6f324d42dcadc3c5d49cb8b5958ec03c44e91984e79842c7"
 
 [[files]]
+file = "config/emi-curation/iceandfire-creative.json"
+hash = "55794516b211e373b421e9d1f066e2ef70bb8de52a85f73efbf6a5c309e63df2"
+
+[[files]]
 file = "config/emi-curation/minecolonies-eggs.json"
 hash = "f4389ca4bd9e12f0fbb6ba8c271c35f77b32885e39962b5f53cfc75ac53cbe90"
 
@@ -1622,7 +1626,7 @@ hash = "e2e62dad2ddd4a70a10e51b7b892ba50702c99f4c0176ebbfabdeb39c37777af"
 
 [[files]]
 file = "config/emi-curation/rules.json"
-hash = "22924eea83c4808ce8970247f9918a3786124b70b2a5d941cc225c6ee672404c"
+hash = "fb0bb5ce37d2601efa55c297f13eec65b9866e012ebeebdb87adbc4887c63fae"
 
 [[files]]
 file = "config/emi.css"
