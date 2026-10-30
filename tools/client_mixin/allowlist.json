@@ -1,0 +1,134 @@
+{
+  "missingTargets": [
+    {
+      "mod": "hammerlib",
+      "config": "mixins.hammerlib.json",
+      "mixin": "bs.kubejs.RecipeEventJSMixin",
+      "target": "dev.latvian.mods.kubejs.recipe.RecipesEventJS",
+      "reason": "HammerLib's 21.0.17 injection method has an empty body; KubeJS 2101.7 removed this old event class, so no pack behaviour is lost."
+    },
+    {
+      "mod": "thirst",
+      "config": "thirst.mixins.json",
+      "mixin": "toughasnails.MixinEmptyCanteenItem",
+      "target": "toughasnails.item.EmptyCanteenItem",
+      "reason": "Optional Tough As Nails interoperability; Tough As Nails is not installed in this pack."
+    },
+    {
+      "mod": "thirst",
+      "config": "thirst.mixins.json",
+      "mixin": "toughasnails.MixinServerConfig",
+      "target": "toughasnails.config.ThirstConfig",
+      "reason": "Optional Tough As Nails interoperability; Tough As Nails is not installed in this pack."
+    },
+    {
+      "mod": "thirst",
+      "config": "thirst.mixins.json",
+      "mixin": "toughasnails.MixinThirstHandler",
+      "target": "toughasnails.thirst.ThirstHandler",
+      "reason": "Optional Tough As Nails interoperability; Tough As Nails is not installed in this pack."
+    },
+    {
+      "mod": "thirst",
+      "config": "thirst.mixins.json",
+      "mixin": "toughasnails.MixinThirstHelperImpl",
+      "target": "toughasnails.thirst.ThirstHelperImpl",
+      "reason": "Optional Tough As Nails interoperability; Tough As Nails is not installed in this pack."
+    },
+    {
+      "mod": "thirst",
+      "config": "thirst.mixins.json",
+      "mixin": "toughasnails.MixinTooltipHandler",
+      "target": "toughasnails.client.handler.TooltipHandler",
+      "reason": "Optional Tough As Nails interoperability; Tough As Nails is not installed in this pack."
+    },
+    {
+      "mod": "create_connected",
+      "config": "create_connected.mixins.json",
+      "mixin": "compat.CopycatBlockMixin",
+      "target": "com.copycatsplus.copycats.content.copycat.slab.CopycatSlabBlock",
+      "reason": "Optional Create: Copycats+ interoperability; Copycats+ is not installed in this pack."
+    },
+    {
+      "mod": "create_connected",
+      "config": "create_connected.mixins.json",
+      "mixin": "compat.CopycatBlockMixin",
+      "target": "com.copycatsplus.copycats.content.copycat.board.CopycatBoardBlock",
+      "reason": "Optional Create: Copycats+ interoperability; Copycats+ is not installed in this pack."
+    },
+    {
+      "mod": "create_connected",
+      "config": "create_connected.mixins.json",
+      "mixin": "linkedtransmitter.ThrottleLeverBlockMixin",
+      "target": "dev.simulated_team.simulated.content.blocks.throttle_lever.ThrottleLeverBlock",
+      "reason": "Optional Create: Simulated interoperability; Simulated is not installed in this pack."
+    },
+    {
+      "mod": "endertanks",
+      "config": "endertanks.neoforge.mixins.json",
+      "mixin": "ET_HideFluidBars_TheOneProbe",
+      "target": "mcjty.theoneprobe.apiimpl.providers.DefaultProbeInfoProvider",
+      "reason": "Optional The One Probe interoperability; the mod is absent and this config sets defaultRequire to zero."
+    },
+    {
+      "mod": "create_hypertube",
+      "config": "conflict_fix.mixins.json",
+      "mixin": "MixinBetterThirdPerson",
+      "target": "io.socol.betterthirdperson.api.CustomCamera",
+      "reason": "Optional Better Third Person conflict fix; Better Third Person is not installed and the mixin config is not required."
+    },
+    {
+      "mod": "inventoryprofilesnext",
+      "config": "mixins.ipnext.json",
+      "mixin": "MixinVirtualMouseHandler",
+      "target": "dev.isxander.controlify.virtualmouse.VirtualMouseHandler",
+      "reason": "Optional Controlify interoperability; Controlify is not installed in this pack."
+    },
+    {
+      "mod": "inventoryprofilesnext",
+      "config": "mixins.ipnext.json",
+      "mixin": "MixinTraderTileEntityBase",
+      "target": "de.maxhenkel.easyvillagers.blocks.tileentity.TraderTileentityBase",
+      "reason": "Optional Easy Villagers interoperability; Easy Villagers is not installed in this pack."
+    },
+    {
+      "mod": "createaddition",
+      "config": "createaddition.mixins.json",
+      "mixin": "DockingConnectorBEMixin",
+      "target": "dev.simulated_team.simulated.content.blocks.docking_connector.DockingConnectorBlockEntity",
+      "reason": "Optional Create: Simulated interoperability; Simulated is not installed in this pack."
+    }
+  ],
+  "unhandled": [
+    {
+      "config": "veil.fix.mixins.json",
+      "target": "org.joml.MemUtil$MemUtilUnsafe",
+      "reason": "JOML is an MC-BOOTSTRAP module loaded before the audit launch service; its class cannot revisit the game transformer during this pre-main sweep."
+    },
+    {
+      "config": "codecui.mixins.json",
+      "target": "com.mojang.serialization.codecs.RecordCodecBuilder$Instance",
+      "reason": "DataFixerUpper is an MC-BOOTSTRAP module loaded during NeoForge discovery before the audit can sweep game-transformer targets."
+    },
+    {
+      "config": "codecui.mixins.json",
+      "target": "com.mojang.serialization.codecs.RecordCodecBuilder",
+      "reason": "DataFixerUpper is an MC-BOOTSTRAP module loaded during NeoForge discovery before the audit can sweep game-transformer targets."
+    },
+    {
+      "config": "codecui-codec.mixins.json",
+      "target": "com.mojang.serialization.Codec",
+      "reason": "DataFixerUpper is an MC-BOOTSTRAP module loaded during NeoForge discovery before the audit can sweep game-transformer targets."
+    },
+    {
+      "config": "codecui-codec.mixins.json",
+      "target": "com.mojang.serialization.MapCodec",
+      "reason": "DataFixerUpper is an MC-BOOTSTRAP module loaded during NeoForge discovery before the audit can sweep game-transformer targets."
+    },
+    {
+      "config": "moonlight.mixins.json",
+      "target": "net.neoforged.fml.config.ConfigTracker",
+      "reason": "ConfigTracker belongs to the FML loader module and is loaded before the minecraft game-transformer launch service can sweep it."
+    }
+  ]
+}

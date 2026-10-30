@@ -91,6 +91,12 @@ method-signature type). Exit 0 requires a complete nonempty CLIENT target sweep;
 1 means detected failures; 2 means setup failure, timeout or incomplete evidence.
 All owned processes stop on completion or interruption.
 
+`tools/client_mixin/allowlist.json` contains exact, reviewed exceptions for harmless
+missing optional-compat targets and bootstrap/loader classes that cannot revisit the
+game transformer during this pre-main sweep. Every entry includes a reason. A changed
+mod, config, mixin or target is a new failure; verifier/injection errors and failed
+transforms are never allow-listed. Do not add broad patterns or lost behaviour to it.
+
 For differential diagnosis only, append `--exclude <exact-pinned-jar-filename>` to a
 second run with a fresh output path. Exclusions are recorded and never qualify the
 full pack. Use the same cache for both runs. Include `tools/client_mixin/tests/*.cjs`

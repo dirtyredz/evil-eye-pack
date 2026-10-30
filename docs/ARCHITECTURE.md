@@ -21,9 +21,12 @@ A real JVM fixture checks invalid method bytecode even in a class with no constr
 valid bytecode, missing targets, absent optional method types and no static initialization.
 
 The Node supervisor requires a nonempty completed CLIENT report and zero process/verifier/
-mixin errors. Timeout or absent completion is incomplete evidence. Inputs are read-only;
-all libraries, mods, configs, logs and compiler outputs are copied into a new artifact run.
-The host guard waits for the Minecraft JVM slot and the process scope stops owned children.
+mixin errors. It compares missing and unhandled findings with `allowlist.json` by exact
+mod/config/mixin/target fields; each reviewed match has a reason, while any changed or new
+finding fails. Failed transformations and incomplete evidence cannot be allow-listed.
+Timeout or absent completion is incomplete evidence. Inputs are read-only; all libraries,
+mods, configs, logs and compiler outputs are copied into a new artifact run. The host guard
+waits for the Minecraft JVM slot and the process scope stops owned children.
 
 ## World conversion trials
 

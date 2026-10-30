@@ -96,10 +96,13 @@ CLIENT sweep and no diagnostic exclusions. Server success alone cannot qualify c
 mixins. Keep dk-d4a36381 open until the orchestrator observes the fixed DRT 0.2.1 pin
 passing this check; DRT 0.2.0 is the negative acceptance fixture.
 
-The initial strict audit also exposes a Thirst/Jade injection failure and unresolved
-missing/unapplied targets. Replacing DRT alone is therefore not sufficient to close the
-gate. Evidence is under `jobs/2026-10-31-client-mixin-check/`; preserve these failures
-for follow-up rather than adding a broad baseline or weakening the verifier.
+The initial strict audit also exposed a Thirst/Jade injection failure and unresolved
+missing/unapplied targets. Jade is pinned back to 15.10.3, whose `FluidView.readDefault`
+bytecode matches Thirst 2.1.5; the six bootstrap-layer targets and 14 absent optional/no-op
+targets have exact reasoned entries in `tools/client_mixin/allowlist.json`. One real warning
+remains: Steam 'n' Rails targets the pre-1.21 Controls-screen package (dk-2d33cee0), so the
+DRT-excluded check still correctly fails. Evidence is under
+`jobs/2026-10-31-client-mixin-triage/`.
 
 Observed on Valhalla (2026-10-31 brief; JVM time excludes staging/host waits):
 

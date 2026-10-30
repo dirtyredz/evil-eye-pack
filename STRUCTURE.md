@@ -115,9 +115,10 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
 - `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte hashing (`hashBytes`, `sha256`).
 - `tools/client_mixin/` — offline CLIENT mixin audit: `stage.cjs` copies pinned pack files and cached
-  client libraries, `run.cjs` compiles and supervises the bounded JVM, `verdict.cjs` rejects incomplete
-  evidence. `probe/ClientMixinLaunch.java` uses NeoForge's production client discovery and transformer
-  without entering Minecraft's main method; `tests/` covers staging arguments and verdicts.
+    client libraries, `run.cjs` compiles and supervises the bounded JVM, `verdict.cjs` rejects incomplete
+    evidence, and `allowlist.json` records exact reviewed harmless findings with reasons.
+    `probe/ClientMixinLaunch.java` uses NeoForge's production client discovery and transformer without
+    entering Minecraft's main method; `tests/` covers staging arguments, allow-list validation and verdicts.
 - `tools/world_trial/` — guarded independent snapshots (`copy.cjs`, `snapshot.cjs`), offline
   NBT/region inventories (`nbt.cjs`, `inventory.cjs`, domain views in `semantics.cjs`), conservative semantic comparison
   (`compare.cjs`) and isolated headless boot/restart (`boot.cjs`, `probe/`). `run.cjs` is

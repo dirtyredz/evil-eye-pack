@@ -5076,32 +5076,34 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
+   "rationale": "Jade 15.10.3 is the last 1.21.1 build compatible with Thirst Was Taken 2.1.5's mandatory FluidView redirect",
    "target": {
     "channel": "release",
     "declares": [
      "jade required neoforge [21.0.143, )"
     ],
-    "file": "8591319",
-    "filename": "Jade-1.21.1-NeoForge-15.10.6.jar",
+    "filename": "Jade-1.21.1-NeoForge-15.10.3.jar",
     "loader": "neoforge",
     "metafile": "mods/jade.pw.toml",
     "mods": [
-     "jade@15.10.6+neoforge"
+     "jade@15.10.3+neoforge"
     ],
     "name": "Jade 🔍",
-    "project": "324717",
+    "project": "nvQzSEkH",
     "publisher": {
-     "md5": "67b89f182472859d1e478477716c9462",
-     "size": 726853
+     "sha1": "0c7e9b04e2481d26c9080dd5d32351490d1fed3a",
+     "sha512": "351926187c564d1f2bae2f084c77f80fe850dc90837153ef01506c049f16b02307196ed383ae25cd334530106aa741b12dd90f5e1b205439fde2b74d09274bc0",
+     "size": 725736
     },
-    "sha1": "88ee316e68900080b017f60c12162e2731924cf8",
-    "sha256": "276f1f65a20d04f536989c4f311949d770b52c440c23c2b904a08860f3c93810",
-    "sha512": "dad9755dce8d85d914fc4df2baa0211f13e5839a71c1925fdd01f69081a95e30a2934e6273f8b01f0169adebe7a9dae57a8d904de0c4cb36dc17369bb474f0f2",
+    "sha1": "0c7e9b04e2481d26c9080dd5d32351490d1fed3a",
+    "sha256": "7087a9672a208071e774571423793d499a56adc8dd09fabe36f8652a3bb9c418",
+    "sha512": "351926187c564d1f2bae2f084c77f80fe850dc90837153ef01506c049f16b02307196ed383ae25cd334530106aa741b12dd90f5e1b205439fde2b74d09274bc0",
     "side": "both",
-    "size": 726853,
-    "source": "curseforge",
-    "versionNumber": "[NeoForge 1.21.1] 15.10.6"
+    "size": 725736,
+    "source": "modrinth",
+    "url": "https://cdn.modrinth.com/data/nvQzSEkH/versions/43sRR8f6/Jade-1.21.1-NeoForge-15.10.3.jar",
+    "version": "43sRR8f6",
+    "versionNumber": "15.10.3+neoforge"
    }
   },
   {

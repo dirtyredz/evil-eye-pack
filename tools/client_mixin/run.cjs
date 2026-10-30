@@ -5,6 +5,7 @@ const { stage } = require('./stage.cjs');
 const { scope } = require('../server_smoke/procs.cjs');
 const { waitForServer } = require('../server_smoke/host_wait.cjs');
 const { verdict } = require('./verdict.cjs');
+const { loadAllowlist } = require('./allowlist.cjs');
 const { output, inside, noLinks } = require('../world_trial/copy.cjs');
 
 async function main(argv) {
@@ -14,6 +15,7 @@ async function main(argv) {
     options[argv[i].slice(2)] = argv[i+1];
   }
   const root = path.resolve(__dirname, '../..');
+  const allowlist = loadAllowlist(path.join(__dirname, 'allowlist.json'));
   if (!options.out || !options.cache) throw Error('--out and --cache are required');
   const out = path.resolve(options.out);
   const jobs = path.resolve(require('../server_smoke/env.cjs').ARTIFACTS, 'jobs');
@@ -61,7 +63,7 @@ async function main(argv) {
     fs.writeFileSync(path.join(out, 'console.log'), result.out);
     const summary = result.out.split(/\r?\n/).filter(l => /PACK_AUDIT (CLIENT|CONFIGS|FAILED|UNHANDLED|COMPLETE)|VerifyError|Bad type on operand stack|@Mixin target .* was not found/.test(l));
     console.log(summary.join('\n'));
-    const report = { ...verdict(result), jvmExit: result.code, seconds: (Date.now()-started)/1000, excluded: options.exclude || null };
+    const report = { ...verdict(result, allowlist), jvmExit: result.code, seconds: (Date.now()-started)/1000, excluded: options.exclude || null };
     fs.writeFileSync(path.join(out, 'report.json'), JSON.stringify(report, null, 2));
     console.log(`${['PASS', 'FAIL', 'INCOMPLETE'][report.code]} (exit ${report.code}, JVM ${result.code}); ${report.seconds}s; log: ${out}/console.log`);
     process.exitCode = report.code;

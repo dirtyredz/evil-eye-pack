@@ -14,12 +14,14 @@
   decision, so the cached Windows native jars are needed even without a display.
 - A diagnostic exclusion changes the mod set. It cannot qualify the full pinned pack for
   owner hand-off. Retain both input manifests and the unmodified-pin failure evidence.
-- The first complete sweep also found Thirst's `jade.MixinFluidView` redirect failing
-  with `(0/1) succeeded`, 15 explicit missing-target warnings and seven unapplied targets
-  across Veil, Thirst, CodecUI and Moonlight configs. Some missing targets are optional
-  integrations; others name present mods/vanilla classes. No blanket exemption exists.
-  Bootstrap-layer classes can link successfully without traversing the game transformer;
-  the final unhandled-target check prevents that from becoming a false pass.
+- The first complete sweep found Thirst's `jade.MixinFluidView` redirect failing with
+  `(0/1) succeeded`. Thirst 2.1.5 expects Jade's pre-DynamicOps `FluidView.readDefault`;
+  Jade 15.10.3 matches, while 15.10.6 does not. Thirst has no Jade version constraint or
+  compat toggle, so do not update Jade independently without rerunning this audit.
+- Missing and unhandled targets are reviewed only through the exact reasoned entries in
+  `tools/client_mixin/allowlist.json`; there is no blanket exemption. Bootstrap-layer
+  classes can link successfully without traversing the game transformer, so the final
+  unhandled-target check plus exact baseline prevents new blind spots from passing.
 
 ## Copied-world conversion
 
