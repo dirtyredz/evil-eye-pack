@@ -11,7 +11,6 @@
     var records = ns.records(server), key = ns.plotKey(level, o), owned = records[key], displaced = ns.displacedBy(records, level, p, o)
     function pos(x, y, z) { return new BP(o.x + x, o.y + y, o.z + z) }
     function xyz(x, y, z) { return (o.x + x) + ' ' + (o.y + y) + ' ' + (o.z + z) }
-    function command(s) { return server.getCommands().performPrefixedCommand(source.withSuppressedOutput(), s) }
     function refuse(s) { throw new Error(s + ' No blocks changed.') }
     // Only real impossibilities refuse: the plot is made where the player stands, never found.
     if (clearOnly && !owned) refuse('No showcase at this origin.')
@@ -29,7 +28,7 @@
     if (sweep.blocking.length) refuse('Cannot clear the plot ahead of you: ' + sweep.blocking.join('; ') + '. Move it out (or walk somewhere else) and run the command again.')
     Object.keys(ns.rigs).forEach(function (key) { var rig = ns.rigs[key]; if (rig.preflight) rig.preflight(sweep, box, refuse) })
     var floorState = Parser.parseForBlock(level.holderLookup(Registries.BLOCK), ns.FLOOR, true).blockState()
-    return { p: p, o: o, level: level, server: server, records: records, key: key, owned: owned, displaced: displaced, BP: BP, AABB: AABB, pos: pos, xyz: xyz, command: command, box: box, sweep: sweep, floorState: floorState }
+    return { p: p, o: o, level: level, server: server, records: records, key: key, owned: owned, displaced: displaced, BP: BP, AABB: AABB, pos: pos, xyz: xyz, box: box, sweep: sweep, floorState: floorState, Parser: Parser, Registries: Registries }
   }
   function teardown(ctx) {
     var p = ctx.p, level = ctx.level, pos = ctx.pos
@@ -57,11 +56,18 @@
       level.setBlock(pos(ax, -1, az), floorState, 50)
     }
   }
+  // Places like /setblock (flag 2, then a neighbour update; block-entity NBT merged over its defaults), but
+  // directly: a command run inside the /evileye command is only queued on Minecraft 1.21, and returns nothing.
   function place(ctx) {
-    var p = ctx.p, level = ctx.level, pos = ctx.pos, xyz = ctx.xyz, command = ctx.command
+    var p = ctx.p, level = ctx.level, pos = ctx.pos, lookup = level.holderLookup(ctx.Registries.BLOCK)
     for (var i = 0; i < p.blocks.length; i++) {
-      var block = p.blocks[i]
-      if (command('setblock ' + xyz(block.x, block.y, block.z) + ' ' + block.state + block.nbt) !== 1) throw new Error('Could not place ' + block.state)
+      var block = p.blocks[i], at = pos(block.x, block.y, block.z)
+      var parsed = ctx.Parser.parseForBlock(lookup, block.state + block.nbt, true), state = parsed.blockState()
+      if (!level.setBlock(at, state, 2)) throw new Error('Could not place ' + block.state)
+      var nbt = parsed.nbt(), be = nbt ? level.getBlockEntity(at) : null
+      if (nbt && !be) throw new Error('No block entity for NBT at ' + block.state)
+      if (be) { var tag = be.saveCustomOnly(level.registryAccess()); tag.merge(nbt); be.loadWithComponents(tag, level.registryAccess()); be.setChanged() }
+      level.blockUpdated(at, state.getBlock())
       ns.rigHook(p.rig, 'placed', [level, pos, block])
     }
   }

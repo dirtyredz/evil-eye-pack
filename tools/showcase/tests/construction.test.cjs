@@ -19,7 +19,9 @@ function fixture() {
     hasChunkAt: () => true, getWorldBorder: () => ({ getMinX: () => -30000000, getMaxX: () => 30000000, getMinZ: () => -30000000, getMaxZ: () => 30000000, isWithinBounds() { throw new Error('Rhino ambiguous overload'); } }), holderLookup: () => ({}),
     getBlockState: p => ({ isFaceSturdy: () => id(p) !== 'minecraft:air', isAir: () => id(p) === 'minecraft:air', canBeReplaced: () => false }),
     getFluidState: () => ({ isEmpty: () => true }), getBlockEntity: () => null,
-    setBlock: (p, state, flags) => { assert.equal(flags, 50); writes.push('bounded clear ' + key(p)); blocks.set(key(p), state); return true; },
+    // Flag 50 is the bounded clear; flag 2 is a plan placement (as /setblock places).
+    setBlock: (p, state, flags) => { assert.ok(flags === 50 || flags === 2, 'flags ' + flags); writes.push((flags === 50 ? 'bounded clear ' : 'place ') + key(p) + (flags === 2 ? ' ' + state : '')); blocks.set(key(p), String(state)); return true; },
+    blockUpdated: () => {}, registryAccess: () => ({}),
     getEntities: () => ({ size: () => entities.length, get: i => entities[i] }),
   };
   const server = {
@@ -38,7 +40,7 @@ function fixture() {
     if (name.endsWith('.BlockPos')) return Pos;
     if (name.endsWith('.AABB')) return Box;
     if (name.endsWith('.Blocks')) return { AIR: { defaultBlockState: () => 'minecraft:air' } };
-    if (name.endsWith('.BlockStateParser')) return { parseForBlock(lookup, state) { if (state === 'missing:block') throw new Error('Unknown block'); return { blockState: () => state }; } };
+    if (name.endsWith('.BlockStateParser')) return { parseForBlock(lookup, state) { if (state === 'missing:block') throw new Error('Unknown block'); return { blockState: () => ({ toString: () => state, getBlock: () => state }), nbt: () => null }; } };
     return {};
   } };
   const context = vm.createContext({ global: {}, Java: java });

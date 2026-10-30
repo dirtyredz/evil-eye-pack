@@ -7173,7 +7173,7 @@
    }
   },
   {
-   "action": "defer",
+   "action": "repoint",
    "metafile": "mods/roundwood.pw.toml",
    "old": {
     "filename": "roundwood-1.20.1-0.13.3.jar",
@@ -7185,7 +7185,35 @@
     "url": "https://github.com/dirtyredz/Roundwood/releases/download/v0.13.3/roundwood-1.20.1-0.13.3.jar"
    },
    "provisional": false,
-   "rationale": "Owner's own mod, ported in minecraft-mods (seven-port programme). Direct GitHub release pin returns with the port."
+   "rationale": "Owner's port (minecraft-mods), second of the seven: 0.17.0 prerelease built from 5e8988e (fork of 1.20.1 4a3bdfb; Stable baseline v0.13.3 = 4f4776e). Registry and blockstate ids unchanged; door-use packet protocol 2. Direct GitHub release pin, sha256 checked against the release digest; no update table.",
+   "target": {
+    "channel": "beta",
+    "declares": [
+     "roundwood optional emi [1.1.24,1.2) (client)",
+     "roundwood optional jei [19.70.0,20) (client)",
+     "roundwood required minecraft [1.21.1,1.21.2)",
+     "roundwood required neoforge [21.1.265,21.2)"
+    ],
+    "filename": "roundwood-1.21.1-neoforge-0.17.0.jar",
+    "loader": "neoforge",
+    "metafile": "mods/roundwood.pw.toml",
+    "mods": [
+     "roundwood@0.17.0"
+    ],
+    "name": "Roundwood",
+    "publisher": {
+     "sha256": "b6877267cdb2cabd49a4df4c1e88205c310e5026e857d2f16439bc648274c006",
+     "size": 1697942
+    },
+    "sha1": "e4b10c7e02192daefa2522d591af4a3537a01db4",
+    "sha256": "b6877267cdb2cabd49a4df4c1e88205c310e5026e857d2f16439bc648274c006",
+    "sha512": "f8707f4742e071e30e32d7f8f3d3c4670bc1bfea94009ec13c0a84f7acbda146734a762d8c8f8985a5b1209ff18a8e2b3e1c9cf5253b70e78645f03de0920ac2",
+    "side": "both",
+    "size": 1697942,
+    "source": "direct",
+    "url": "https://github.com/dirtyredz/Roundwood/releases/download/neoforge-1.21.1-v0.17.0/roundwood-1.21.1-neoforge-0.17.0.jar",
+    "versionNumber": "neoforge-1.21.1-v0.17.0"
+   }
   },
   {
    "action": "add",

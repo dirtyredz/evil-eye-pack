@@ -3706,7 +3706,7 @@ hash = "312b19b8dc39d36cf0b4d578715288356eee928637d1973e2c3c92b1220b1b80"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/construction.js"
-hash = "55ad7f1c3fa5f7a9940d37c7f22fc53d45e086b1697a32127f9dab31d63db7ad"
+hash = "ebec8b33dd42e260af1fade6ccd621a1e8f0513e5be358d67056af267abcec96"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/controls.js"
@@ -4530,6 +4530,11 @@ metafile = true
 [[files]]
 file = "mods/rhino.pw.toml"
 hash = "673de9cae75d2ad02796368939384de0d7238cf5c782975d71848a2187f753e7"
+metafile = true
+
+[[files]]
+file = "mods/roundwood.pw.toml"
+hash = "e5281c9f03a22d6ba76a466ca16491ac273f6655f738fd4f1a50caedad01c5ec"
 metafile = true
 
 [[files]]

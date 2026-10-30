@@ -34,8 +34,13 @@
    "reason": "Owner's port (minecraft-mods), first of the seven: 0.2.0 prerelease built from dbb718a (fork of 1.20.1 233d9fd), same mod id, against the frozen NeoForge 21.1.265, Dank Storage 20, JEI 19.70.0.464 and EMI 1.1.24. Direct GitHub release pin, sha256 checked against the release digest; no update table."
   },
   "mods/roundwood.pw.toml": {
-   "action": "defer",
-   "reason": "Owner's own mod, ported in minecraft-mods (seven-port programme). Direct GitHub release pin returns with the port."
+   "action": "repoint",
+   "target": {
+    "source": "direct",
+    "url": "https://github.com/dirtyredz/Roundwood/releases/download/neoforge-1.21.1-v0.17.0/roundwood-1.21.1-neoforge-0.17.0.jar",
+    "sha256": "b6877267cdb2cabd49a4df4c1e88205c310e5026e857d2f16439bc648274c006"
+   },
+   "reason": "Owner's port (minecraft-mods), second of the seven: 0.17.0 prerelease built from 5e8988e (fork of 1.20.1 4a3bdfb; Stable baseline v0.13.3 = 4f4776e). Registry and blockstate ids unchanged; door-use packet protocol 2. Direct GitHub release pin, sha256 checked against the release digest; no update table."
   },
   "mods/flatworldfix.pw.toml": {
    "action": "defer",
