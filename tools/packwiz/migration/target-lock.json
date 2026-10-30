@@ -3958,7 +3958,7 @@
    }
   },
   {
-   "action": "defer",
+   "action": "repoint",
    "metafile": "mods/flatworldfix.pw.toml",
    "old": {
     "filename": "flatworldfix-1.20.1-1.0.0.jar",
@@ -3970,7 +3970,33 @@
     "url": "https://github.com/dirtyredz/FlatWorldFix/releases/download/v1.0.0/flatworldfix-1.20.1-1.0.0.jar"
    },
    "provisional": false,
-   "rationale": "Owner's own mod, kept and ported in minecraft-mods (seven-port programme) rather than swapped for Give Me My Flat World."
+   "rationale": "Owner's port (minecraft-mods), third of the seven: FlatWorldFix 1.0.0 for NeoForge 1.21.1, built from 26b2fd2 (fork of 1.20.1 f872a37), mod id unchanged. Kept and ported rather than swapped for Give Me My Flat World. Direct GitHub release pin, sha256 checked against the release digest; no update table.",
+   "target": {
+    "channel": "release",
+    "declares": [
+     "flatworldfix required minecraft [1.21.1,1.21.2)",
+     "flatworldfix required neoforge [21.1.265,21.2)"
+    ],
+    "filename": "flatworldfix-1.21.1-neoforge-1.0.0.jar",
+    "loader": "neoforge",
+    "metafile": "mods/flatworldfix.pw.toml",
+    "mods": [
+     "flatworldfix@1.0.0"
+    ],
+    "name": "Flat World Fix",
+    "publisher": {
+     "sha256": "90a6da8856f1a633ed3d2354b1b1624265de3684740f37c5d50923e4a853b996",
+     "size": 12467
+    },
+    "sha1": "ccd73465f56b3f5390d5f036dc2501cb4476b829",
+    "sha256": "90a6da8856f1a633ed3d2354b1b1624265de3684740f37c5d50923e4a853b996",
+    "sha512": "c8c7fde3262d25306432ddff46d89ef8d1b2af7d65e69d4acaaacc32c6e03c96ca04117def99987e8511cc3b85b26103bbc508829c1ddbc790144fb2b70fc12e",
+    "side": "both",
+    "size": 12467,
+    "source": "direct",
+    "url": "https://github.com/dirtyredz/FlatWorldFix/releases/download/neoforge-1.21.1-v1.0.0/flatworldfix-1.21.1-neoforge-1.0.0.jar",
+    "versionNumber": "neoforge-1.21.1-v1.0.0"
+   }
   },
   {
    "action": "repoint",

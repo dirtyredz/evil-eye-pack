@@ -22,6 +22,8 @@ global.evilEyeShowcaseCheck.makeHelpers = function makeHelpers(h) {
   var NeoCaps = null, Caps = null
   try { NeoCaps = Java.loadClass('net.neoforged.neoforge.capabilities.Capabilities') } catch (e) { Caps = Java.loadClass('net.minecraftforge.common.capabilities.ForgeCapabilities') }
   h.BP = BP
+  // Full block-entity NBT: 1.21 needs the registry provider; Forge 1.20 takes no argument.
+  h.nbt = function (be) { try { return be.saveWithFullMetadata(level.registryAccess()) } catch (e) { return be.saveWithFullMetadata() } }
   h.pos = function (x, y, z) { return new BP(o.x + x, o.y + y, o.z + z) }
   h.be = function (x, y, z) { return level.getBlockEntity(h.pos(x, y, z)) }
   // The item handler at a plot position (optionally for one face), or null.
@@ -42,7 +44,7 @@ global.evilEyeShowcaseCheck.makeHelpers = function makeHelpers(h) {
     for (var x = -1; x <= plan.width; x++) for (var y = -2; y <= plan.height; y++) for (var z = -1; z <= plan.depth; z++) {
       if (x !== -1 && x !== plan.width && y !== -2 && y !== plan.height && z !== -1 && z !== plan.depth) continue
       var at = h.pos(x, y, z), be = level.getBlockEntity(at)
-      snapshot.push(String(level.getBlockState(at)) + (be ? String(be.saveWithFullMetadata()) : ''))
+      snapshot.push(String(level.getBlockState(at)) + (be ? String(h.nbt(be)) : ''))
     }
     return JSON.stringify(snapshot)
   }
@@ -52,12 +54,14 @@ global.evilEyeShowcaseCheck.makeHelpers = function makeHelpers(h) {
       var parts = b.state.split('['), properties = parts[1] ? parts[1].replace(']', '').split(',') : []
       h.check(state.indexOf(parts[0]) >= 0 && properties.every(function (p) { return state.indexOf(p) >= 0 }), 'block/state ' + [b.x, b.y, b.z] + ' ' + b.state)
       if (b.state.indexOf('oak_sign') >= 0) {
-        var actual = h.be(b.x, b.y, b.z).saveWithFullMetadata()
+        var actual = h.nbt(h.be(b.x, b.y, b.z))
         var expected = Java.loadClass('net.minecraft.nbt.TagParser').parseTag(b.nbt)
         var a = actual.getCompound('front_text').getList('messages', 8), e = expected.getCompound('front_text').getList('messages', 8)
         var match = a.size() === 4 && actual.getBoolean('is_waxed')
-        for (var line = 0; line < 4; line++) if (JSON.parse(String(a.getString(line))).text !== JSON.parse(String(e.getString(line))).text) match = false
-        h.check(match, 'exact waxed sign text ' + [b.x, b.y, b.z])
+        // 1.21 saves a plain line as a JSON string ("\"text\""), 1.20 as {"text": ...}; compare the text either way.
+        var line = function (list, i) { var v = JSON.parse(String(list.getString(i))); return typeof v === 'string' ? v : (v.text || '') }, got = []
+        for (var n = 0; n < 4; n++) { got.push(line(a, n)); if (got[n] !== line(e, n)) match = false }
+        h.check(match, 'exact waxed sign text ' + [b.x, b.y, b.z] + (match ? '' : ': ' + JSON.stringify(got) + ' waxed=' + actual.getBoolean('is_waxed')))
       }
     })
     plan.fills.forEach(function (f) { f.items.forEach(function (item) { h.check(h.amount(h.handler(f.x, f.y, f.z), item[0]) === item[1], 'prefill ' + [f.x, f.y, f.z] + ' ' + item[0] + '=' + item[1]) }) })
@@ -72,8 +76,11 @@ global.evilEyeShowcaseCheck.makeHelpers = function makeHelpers(h) {
     }
     h.check(!mismatch, (cleared ? 'cleared' : 'built') + ' complete volume matches plan and floor' + (mismatch ? ': ' + mismatch : ''))
   }
+  // Force-load the plot and a 16-block margin. Takes effect on a later tick: entities summoned into a chunk
+  // that is not yet entity-loaded on 1.21 are stored but invisible to getEntities (first NeoForge run).
+  h.loadArea = function () { h.cmd('forceload add ' + (o.x - 16) + ' ' + (o.z - 16) + ' ' + (o.x + plan.width + 16) + ' ' + (o.z + plan.depth + 16)) }
   h.prepareTerrain = function () {
-    h.cmd('forceload add ' + (o.x - 16) + ' ' + (o.z - 16) + ' ' + (o.x + plan.width + 16) + ' ' + (o.z + plan.depth + 16))
+    h.loadArea()
     h.cmd('fill ' + (o.x - 1) + ' ' + (o.y - 1) + ' ' + (o.z - 1) + ' ' + (o.x + plan.width) + ' ' + (o.y - 1) + ' ' + (o.z + plan.depth) + ' minecraft:dirt')
     h.cmd('fill ' + (o.x - 1) + ' ' + o.y + ' ' + (o.z - 1) + ' ' + (o.x + plan.width) + ' ' + (o.y + plan.height) + ' ' + (o.z + plan.depth) + ' minecraft:air')
   }

@@ -144,8 +144,9 @@ GitHub release pin (`repoint` to a `direct` target; restore steps in `tools/pack
 |---|---|---|
 | Dank Recipe Transfer | 0.2.0 prerelease, `dank_recipe_transfer-1.21.1-neoforge-0.2.0.jar`, sha256 `3753e679…0275` | 2026-10-30 (parked nothing; malware guard clean) |
 | Roundwood | 0.17.0 prerelease, `roundwood-1.21.1-neoforge-0.17.0.jar`, sha256 `b6877267…c006` (built from 5e8988e) | 2026-10-30 (parked nothing; ids unchanged so `decor.json` stays; malware guard clean) |
+| FlatWorldFix | 1.0.0, `flatworldfix-1.21.1-neoforge-1.0.0.jar`, sha256 `90a6da88…b996` (built from 26b2fd2) | 2026-10-30 (parked nothing; malware guard clean). First run against Terralith 1.21.1: every showcase boot now checks four far Superflat columns (`tools/showcase/flat_world.js`) |
 
-Both are `requiredMods` in pack-test policy. The other five are still `defer`.
+All three are `requiredMods` in pack-test policy. The other four (Ars Instrumentum, Alex's Mobs, Alex's Caves, Ice and Fire) are still `defer`.
 
 ## 100% checklist
 

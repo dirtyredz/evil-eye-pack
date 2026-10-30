@@ -10,8 +10,7 @@ The owned ports (minecraft-mods) without a NeoForge 1.21.1 build yet have `defer
 | Alex's Mobs (`alexsmobs/`) | `config/alexsmobs.toml`, `config/alexsmobs/` spawn and mob configs |
 | Ars Instrumentum (`ars_instrumentum/`) | `config/ars_instrumentum-client.toml` |
 | Ice and Fire (`iceandfire/`) | `config/iceandfire-*.toml`, `config/iceandfire/` biome lists, the generated `kubejs/data/iceandfire/` copper overrides, ADLods `sapphire.cfg` and `silver.cfg` (Ice and Fire ores only) |
-| FlatWorldFix | nothing beyond its metafile (shipped no configs or data) |
-| Dank Recipe Transfer, Roundwood | restored 2026-10-30 (0.2.0 and 0.17.0 pins; they parked nothing) |
+| Dank Recipe Transfer, Roundwood, FlatWorldFix | restored 2026-10-30 (0.2.0, 0.17.0 and 1.0.0 pins; they parked nothing) |
 
 Shared files:
 

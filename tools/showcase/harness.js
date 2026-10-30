@@ -21,6 +21,8 @@ ServerEvents.loaded(function (event) {
   }
   function next(index) {
     if (index === global.evilEyeShowcaseCheck.selection.length) {
+      // Once per boot: the flat showcase world itself proves FlatWorldFix against Terralith.
+      if (global.evilEyeShowcaseCheck.flatWorld) global.evilEyeShowcaseCheck.flatWorld(lifecycle('flat_world'))
       var shared = lifecycle('command_forms'); shared.done = function () { finish() }
       global.evilEyeShowcaseCheck.commandForms(shared)
       return
@@ -31,6 +33,7 @@ ServerEvents.loaded(function (event) {
     h.source = server.createCommandSourceStack().withPosition(new Vec3(o.x + Math.floor(plan.width / 2), o.y, o.z - 4)).withRotation(new Vec2(0, 0)).withPermission(2)
     global.evilEyeShowcaseCheck.makeHelpers(h)
     h.done = function () { next(index + 1) }
+    h.loadArea()
     h.later(20, function () {
       h.cmd('gamerule doMobSpawning false'); h.cmd('gamerule doDaylightCycle false'); h.cmd('weather clear')
       h.prepareTerrain()

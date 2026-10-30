@@ -50,7 +50,8 @@ global.evilEyeShowcaseCheck.checks.contraption_storage = function (h) {
       cases.forEach(function (test) {
         var slot = -1
         for (var i = 0; i < psi.getSlots(); i++) if (String(psi.getStackInSlot(i).getId()) === test[1]) { slot = i; break }
-        check(slot >= 0 && amount(all, test[1]) === test[2], test[0] + ' mounted prefill preserved')
+        var ids = []; for (var k = 0; k < psi.getSlots(); k++) ids.push(String(psi.getStackInSlot(k).getId()) + 'x' + psi.getStackInSlot(k).getCount())
+        check(slot >= 0 && amount(all, test[1]) === test[2], test[0] + ' mounted prefill preserved' + (slot >= 0 && amount(all, test[1]) === test[2] ? '' : ' (slot ' + slot + ', mounted ' + amount(all, test[1]) + ', PSI slots ' + ids.join(' ') + ')'))
         check(psi.insertItem(slot, Item.of(test[1], 11), false).isEmpty() && amount(all, test[1]) === test[2] + 11, test[0] + ' PSI inserts 11 into its occupied slot')
         var extracted = psi.extractItem(slot, 5, false)
         check(String(extracted.getId()) === test[1] && extracted.getCount() === 5 && amount(all, test[1]) === test[2] + 6, test[0] + ' PSI extracts 5 with exact remaining contents')

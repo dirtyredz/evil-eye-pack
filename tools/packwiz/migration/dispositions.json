@@ -43,8 +43,13 @@
    "reason": "Owner's port (minecraft-mods), second of the seven: 0.17.0 prerelease built from 5e8988e (fork of 1.20.1 4a3bdfb; Stable baseline v0.13.3 = 4f4776e). Registry and blockstate ids unchanged; door-use packet protocol 2. Direct GitHub release pin, sha256 checked against the release digest; no update table."
   },
   "mods/flatworldfix.pw.toml": {
-   "action": "defer",
-   "reason": "Owner's own mod, kept and ported in minecraft-mods (seven-port programme) rather than swapped for Give Me My Flat World."
+   "action": "repoint",
+   "target": {
+    "source": "direct",
+    "url": "https://github.com/dirtyredz/FlatWorldFix/releases/download/neoforge-1.21.1-v1.0.0/flatworldfix-1.21.1-neoforge-1.0.0.jar",
+    "sha256": "90a6da8856f1a633ed3d2354b1b1624265de3684740f37c5d50923e4a853b996"
+   },
+   "reason": "Owner's port (minecraft-mods), third of the seven: FlatWorldFix 1.0.0 for NeoForge 1.21.1, built from 26b2fd2 (fork of 1.20.1 f872a37), mod id unchanged. Kept and ported rather than swapped for Give Me My Flat World. Direct GitHub release pin, sha256 checked against the release digest; no update table."
   },
   "mods/project-1029454.pw.toml": {
    "action": "drop",

@@ -1,0 +1,8 @@
+name = "Flat World Fix"
+filename = "flatworldfix-1.21.1-neoforge-1.0.0.jar"
+side = "both"
+
+[download]
+url = "https://github.com/dirtyredz/FlatWorldFix/releases/download/neoforge-1.21.1-v1.0.0/flatworldfix-1.21.1-neoforge-1.0.0.jar"
+hash-format = "sha256"
+hash = "90a6da8856f1a633ed3d2354b1b1624265de3684740f37c5d50923e4a853b996"

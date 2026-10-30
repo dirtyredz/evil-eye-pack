@@ -27,7 +27,14 @@ global.evilEyeShowcaseCheck.terrain = function (h) {
   summon('minecraft:item', 10, 1, 10, '{Item:{id:"minecraft:dirt",Count:1b}}')
   summon('minecraft:cow', 14, 1, 3, '{NoAI:1b,CustomName:\'{"text":"Bessie"}\'}')
   summon('minecraft:slime', 3, 0, -6, '{NoAI:1b,Size:0}')
+  // Where every slime near the plot is, for a failure message (the outside one has to survive the build).
+  function slimes() {
+    var found = level.getEntities(null, new AABB(o.x - 16, o.y - 16, o.z - 24, o.x + plan.width + 16, o.y + 16, o.z + plan.depth + 16)), at = []
+    for (var i = 0; i < found.size(); i++) if (String(found.get(i).getType()) === 'minecraft:slime') at.push([found.get(i).getX() - o.x, found.get(i).getY() - o.y, found.get(i).getZ() - o.z].map(function (v) { return Math.round(v * 10) / 10 }).join(','))
+    return at.join(' ') || 'none'
+  }
   check(count('minecraft:slime', 0, 0, plan.width, plan.depth) === 1 && count('minecraft:item', 0, 0, plan.width, plan.depth) === 1, 'stress setup: mob and item inside the plot')
+  check(count('minecraft:slime', 0, -8, plan.width, -4) === 1, 'stress setup: a mob just outside the plot (slimes at ' + slimes() + ')')
   check(h.invoke() === 0, 'a named mob inside the plot is refused with a message, not removed')
   check(count('minecraft:slime', 0, 0, plan.width, plan.depth) === 1 && count('minecraft:cow', 0, 0, plan.width, plan.depth) === 1, 'refusal leaves every mob in place')
   check(String(level.getBlockState(h.pos(5, 4, 5))).indexOf('stone') >= 0 && h.be(1, 0, 1) !== null, 'refusal changes no blocks (hill and chest remain)')
@@ -36,7 +43,7 @@ global.evilEyeShowcaseCheck.terrain = function (h) {
   check(count('minecraft:cow', 0, 0, plan.width, plan.depth) === 0, 'named mob moved out of the plot')
   check(h.invoke() === 1, 'build succeeds on uneven, wet, tree-covered ground with a hole in the floor')
   check(count('minecraft:slime', 0, 0, plan.width, plan.depth) === 0 && count('minecraft:item', 0, 0, plan.width, plan.depth) === 0, 'unnamed mob and item inside the plot were removed')
-  check(count('minecraft:slime', 0, -8, plan.width, -4) === 1, 'a mob outside the plot is untouched')
+  check(count('minecraft:slime', 0, -8, plan.width, -4) === 1, 'a mob outside the plot is untouched (slimes at ' + slimes() + ')')
   h.verifyPlan()
   check(h.shell() === before, 'nothing outside the plot box changed (exterior shell identical)')
   check(h.invoke(null, true) === 1, 'clear after the stress build succeeds')

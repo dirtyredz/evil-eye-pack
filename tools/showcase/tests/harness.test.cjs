@@ -70,7 +70,7 @@ test('harness calls the shared command check exactly once after selected section
   class Vector { constructor() {} }
   const source = { withPosition() { return this; }, withRotation() { return this; }, withPermission() { return this; } };
   const globals = { evilEyeShowcase: { sections: {} }, evilEyeShowcaseCheck: { selection: ['alpha', 'beta'], checks: {},
-    makeHelpers: h => Object.assign(h, { cmd() {}, prepareTerrain() {} }),
+    makeHelpers: h => Object.assign(h, { cmd() {}, loadArea() {}, prepareTerrain() {} }),
     commandForms: h => { visited.push('shared'); h.done(); } } };
   for (const name of globals.evilEyeShowcaseCheck.selection) {
     globals.evilEyeShowcase.sections[name] = () => ({ width: 3 });
@@ -108,4 +108,19 @@ test('command results come from the 1.21 result callback, or from the 1.20 retur
   assert.equal(run({ getCommands: () => ({ performPrefixedCommand: () => undefined }) }, source(), 'x'), 0, 'no callback result counts as 0');
   // Forge 1.20: the integer is returned directly (and a source without withCallback still works).
   assert.equal(run({ getCommands: () => ({ performPrefixedCommand: () => 1 }) }, {}, 'evileye showcase'), 1);
+});
+
+test('the flat-world check reports non-flat columns and differing heights', () => {
+  const ctx = vm.createContext({ global: { evilEyeShowcaseCheck: {} }, Java: { loadClass: (n) => (n.endsWith('BlockPos') ? class { constructor(x, y, z) { Object.assign(this, { x, y, z }); } } : { WORLD_SURFACE: 'ws' }) } });
+  vm.runInContext(script('flat_world.js'), ctx);
+  const results = [];
+  const level = (terralithAt) => ({
+    getHeight: (t, x) => (x === terralithAt ? 90 : -60),
+    getBlockState: (p) => ({ toString: () => (p.x === terralithAt ? 'Block{minecraft:stone}' : ['Block{minecraft:grass_block}', 'Block{minecraft:dirt}', 'Block{minecraft:dirt}', 'Block{minecraft:bedrock}'][-61 - p.y]) }),
+    getBiome: (p) => ({ unwrapKey: () => ({ get: () => ({ location: () => (p.x === terralithAt ? 'terralith:alpine_highlands' : 'minecraft:plains') }) }) })
+  });
+  const run = (lv) => { results.length = 0; ctx.global.evilEyeShowcaseCheck.flatWorld({ level: lv, check: (ok, m) => results.push([ok, m]) }); return results.map((r) => r[0]); };
+  assert.deepEqual(run(level(null)), [true, true]);
+  assert.deepEqual(run(level(6000)), [false, false]);
+  assert.match(results[0][1], /6000,6000 top 90 minecraft:stone.*terralith:alpine_highlands/);
 });

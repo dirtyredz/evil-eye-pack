@@ -3734,11 +3734,11 @@ hash = "f67008197a69ca92125d4734f5df10c6aca1d6f50f14c2efd101215aff7391aa"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/interstellaris_space.js"
-hash = "f15354b010e459a9467c20dc009b0ca344609332e1f8bf9569c7d2b4d138d833"
+hash = "176bea491b57fa5a8e8382fb7215ee6bc0bb8b30d7f20bf059e35904d1d2822f"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/mekanism_machines.js"
-hash = "4d06580533987f3d03d0e47b2691dfcb3caa2ea02c899cb312edf8a7fca64294"
+hash = "33c7d70737561cb2c38ac1fda5336006f9d3a71d33f8875ce0e414ecee245494"
 
 [[files]]
 file = "kubejs/server_scripts/tag_compat.js"
@@ -4170,6 +4170,11 @@ metafile = true
 [[files]]
 file = "mods/flat-bedrock.pw.toml"
 hash = "d17382ebb5d2d2f7e56e9fbb71b4b9d7ec9a61134dec3de9ef8bfaab876c205a"
+metafile = true
+
+[[files]]
+file = "mods/flatworldfix.pw.toml"
+hash = "63fe6804583d195a3213ab38727e7d8ebdfaffb88da43a970ac640947d352d6b"
 metafile = true
 
 [[files]]

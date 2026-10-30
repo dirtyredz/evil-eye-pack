@@ -75,12 +75,12 @@ docked; rerun to replenish after the circuit empties the inventories.
 
 ## Mekanism and Interstellaris sections (NeoForge branch)
 
-`mekanism_machines` (16 × 12 × 5): a creative energy cube (placed full; a command-placed cube starts empty)
+`mekanism_machines` (24 × 22 × 6): a creative energy cube (placed full; a command-placed cube starts empty)
 feeds a universal cable along the backs of an enrichment chamber (16 iron ore) and a crusher (16 iron ingots);
 both make Ender IO iron dust, the dedup survivor. A heat generator with 32 coal stands apart. Fission,
 turbines and other multiblocks are not built.
 
-`interstellaris_space` (16 × 14 × 8): titanium, platinum, silver and tungsten ore under their metal blocks,
+`interstellaris_space` (24 × 22 × 8): titanium, platinum, silver and tungsten ore under their metal blocks,
 four planet ground blocks, and a 3 × 3 iron pad floating four blocks up. In game, run
 `/sable assemble area <corner> <corner>` on the pad to watch Sable turn it into a falling physics body.
 Rockets, the Fabrication Unit and multiblock machines need a player (research, launch) and are not built.

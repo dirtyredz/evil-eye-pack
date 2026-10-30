@@ -3,7 +3,8 @@
 ;(function () {
   var ns = global.evilEyeShowcase
   ns.register('interstellaris_space', function () {
-    var p = ns.plan(16, 14, 8)
+    // At least 24 x 22: the shared hostile-terrain check builds hills, water and fences up to there.
+    var p = ns.plan(24, 22, 8)
     p.label(1, 1, ['INTERSTELLARIS', 'Space + Sable', 'Walk south ->', 'Read each label'])
     p.block(0, 0, 0, 'minecraft:light[level=15]')
     // New metals: ores in the overworld, metal blocks from them.
