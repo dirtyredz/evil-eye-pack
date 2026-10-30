@@ -55,9 +55,19 @@ function prepareFiles(root, cache) {
     }
     if (paths.has(file.toLowerCase())) throw Error('Duplicate installed path: ' + file);
     paths.add(file.toLowerCase());
-    files.push({ file, hash: sha256(bytes), bytes });
+    files.push({ file, hash: sha256(bytes), bytes, preserve: f.preserve });
   }
   return files;
+}
+
+function verifyInstalledFiles(instance, files) {
+  for (const f of files) {
+    if (f.preserve) continue;
+    const installed = path.join(instance, f.file);
+    if (!fs.existsSync(installed) || sha256(fs.readFileSync(installed)) !== f.hash) {
+      throw Error('Installed artifact differs: ' + f.file);
+    }
+  }
 }
 
 function writePack(root, overlay, files) {
@@ -110,9 +120,7 @@ async function main(argv) {
     console.log(result.out);
     if (result.code !== 0) throw Error('Headless installer exit ' + result.code);
     verifyInstalledLocal(ROOT, instance, 'client');
-    for (const f of files.filter(f => /^(mods|resourcepacks|shaderpacks)\//.test(f.file))) {
-      if (sha256(fs.readFileSync(path.join(instance, f.file))) !== f.hash) throw Error('Installed artifact differs: ' + f.file);
-    }
+    verifyInstalledFiles(instance, files);
     // Preserve the original once, beside owner-run logs. Never change another instance.
     const logs = path.join(ROOT, '.tmp/owner-runs'); fs.mkdirSync(logs, { recursive: true });
     const backup = path.join(logs, 'trial-instance-before.cfg');
@@ -127,4 +135,4 @@ async function main(argv) {
   }
 }
 if (require.main === module) main(process.argv.slice(2)).catch(e => { console.error(e.stack); process.exitCode = 1; });
-module.exports = { instanceCfgValue, setInstanceCfgValue, trialPreLaunchCommand, prepareFiles, writePack, trialInstance };
+module.exports = { instanceCfgValue, setInstanceCfgValue, trialPreLaunchCommand, prepareFiles, writePack, verifyInstalledFiles, trialInstance };

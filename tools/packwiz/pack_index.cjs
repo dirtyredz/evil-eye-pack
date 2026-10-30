@@ -18,6 +18,34 @@ const TEXT_EXTENSIONS = new Set([
   '.yml', '.yaml', '.ini', '.conf', '.mcmeta', '.csv', '.lang', '.zs', '.xml',
 ]);
 
+// Pack defaults that become owner/game state after their first install. packwiz's
+// `preserve` flag writes these when absent, then leaves the installed bytes alone.
+const PRESERVE_PATHS = new Set([
+  'config/ae2/client.json',
+  'config/colorfulhearts.toml',
+  'config/cull-less-leaves.json',
+  'config/emi.css',
+  'config/enchdesc.json',
+  'config/entityculling.json',
+  'config/immediatelyfast.json',
+  'config/inventoryprofilesnext/inventoryprofiles.json',
+  'config/iris.properties',
+  'config/lightoverlay.properties',
+  'config/MouseTweaks.cfg',
+  'config/resourcepackoverrides.json',
+  'config/sidebar_buttons.json',
+  'config/xaerohud.txt',
+  'config/xaeropatreon.txt',
+]);
+
+function isPreservePath(rel) {
+  return PRESERVE_PATHS.has(rel) ||
+    /^shaderpacks\/[^/]+\.zip\.txt$/.test(rel) ||
+    /^config\/(?:.*\/)?[^/]+-client\.toml$/.test(rel) ||
+    /^config\/jade\/[^/]+\.json$/.test(rel) ||
+    /^config\/xaero\/(?:lib|minimap|world-map)\/(?:client\.cfg|profiles\/.*|default_radar_categories_client\.json)$/.test(rel);
+}
+
 
 function isTextPath(p) {
   return TEXT_EXTENSIONS.has(path.extname(p).toLowerCase());
@@ -94,7 +122,7 @@ function parseIndex(text) {
   lines.forEach((line, n) => {
     const where = 'index.toml:' + (n + 1);
     if (line === '') return;
-    if (line === '[[files]]') { cur = { file: null, hash: null, metafile: false, hashFormat: null }; index.files.push(cur); return; }
+    if (line === '[[files]]') { cur = { file: null, hash: null, metafile: false, preserve: false, hashFormat: null }; index.files.push(cur); return; }
     const m = /^([a-z-]+) = (.*)$/.exec(line);
     if (!m) throw new Error(where + ': unrecognized line ' + JSON.stringify(line));
     const [, key, value] = m;
@@ -107,6 +135,9 @@ function parseIndex(text) {
     else if (key === 'metafile') {
       if (value !== 'true' && value !== 'false') throw new Error(where + ': metafile must be a boolean');
       cur.metafile = value === 'true';
+    } else if (key === 'preserve') {
+      if (value !== 'true' && value !== 'false') throw new Error(where + ': preserve must be a boolean');
+      cur.preserve = value === 'true';
     } else throw new Error(where + ': unexpected key ' + key);
   });
   return index;
@@ -119,6 +150,7 @@ function formatIndex(index) {
     if (f.hashFormat) out += 'hash-format = ' + JSON.stringify(f.hashFormat) + '\n';
     out += 'hash = ' + JSON.stringify(f.hash) + '\n';
     if (f.metafile) out += 'metafile = true\n';
+    if (f.preserve) out += 'preserve = true\n';
   }
   return out;
 }
@@ -224,5 +256,5 @@ function comparePaths(a, b) {
 
 module.exports = {
   BUILTIN_IGNORES, isTextPath, textProblems, globToRegExp, parseIgnore, loadIgnore, isIgnored,
-  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, readMetafileName, readMetafileSide, readCurseForge, readTable, isMetafile, listRepoFiles, publishableFiles, comparePaths,
+  parseIndex, formatIndex, readPackIndexRef, setPackIndexHash, readMetafileDownload, readMetafileName, readMetafileSide, readCurseForge, readTable, isMetafile, isPreservePath, listRepoFiles, publishableFiles, comparePaths,
 };

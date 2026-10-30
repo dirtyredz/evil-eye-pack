@@ -83,6 +83,35 @@ test('isMetafile matches only top-level .pw.toml files under mods, shaderpacks, 
   assert.equal(P.isMetafile('mods/a.toml'), false);
 });
 
+test('preserve policy covers runtime-owned client settings but not authored defaults or mod jars', () => {
+  for (const rel of [
+    'shaderpacks/ComplementaryUnbound_r5.9.3.zip.txt',
+    'config/create-client.toml',
+    'config/enderio/base-client.toml',
+    'config/iris.properties',
+    'config/emi.css',
+    'config/jade/jade.json',
+    'config/xaero/minimap/profiles/default.cfg',
+  ]) assert.equal(P.isPreservePath(rel), true, rel);
+  for (const rel of ['mods/a.jar', 'config/create-common.toml', 'config/defaultoptions/keybindings.txt']) {
+    assert.equal(P.isPreservePath(rel), false, rel);
+  }
+});
+
+test('rehash writes and verifies preserve flags from policy', () => {
+  const { root, w } = makePack();
+  w('shaderpacks/example.zip.txt', 'profile=HIGH\n');
+  rehash(root);
+  const entry = P.parseIndex(fs.readFileSync(path.join(root, 'index.toml'), 'utf8')).files.find(f => f.file === 'shaderpacks/example.zip.txt');
+  assert.equal(entry.preserve, true);
+  assert.match(fs.readFileSync(path.join(root, 'index.toml'), 'utf8'), /preserve = true/);
+  assert.deepEqual(problems(root), []);
+  entry.preserve = false;
+  fs.writeFileSync(path.join(root, 'index.toml'), P.formatIndex({ hashFormat: 'sha256', files: P.parseIndex(fs.readFileSync(path.join(root, 'index.toml'), 'utf8')).files.map(f => f.file === entry.file ? entry : f) }));
+  fs.writeFileSync(path.join(root, 'pack.toml'), P.setPackIndexHash(fs.readFileSync(path.join(root, 'pack.toml'), 'utf8'), sha256(fs.readFileSync(path.join(root, 'index.toml')))));
+  assert.ok(problems(root).some(x => x.includes('index preserve flag is false but policy expects true')));
+});
+
 
 test('a wrong index metafile flag is detected in both directions', () => {
   const { root } = makePack();

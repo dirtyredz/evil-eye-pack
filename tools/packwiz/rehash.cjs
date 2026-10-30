@@ -24,7 +24,7 @@ function rehash(root, opts) {
   for (const rel of files) {
     const bytes = fs.readFileSync(path.join(root, rel));
     problems.push(...P.textProblems(rel, bytes));
-    entries.push({ file: rel, hash: sha256(bytes), metafile: P.isMetafile(rel), hashFormat: null });
+    entries.push({ file: rel, hash: sha256(bytes), metafile: P.isMetafile(rel), preserve: P.isPreservePath(rel), hashFormat: null });
   }
   if (problems.length) return { problems, written: false };
 

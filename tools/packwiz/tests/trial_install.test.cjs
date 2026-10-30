@@ -6,7 +6,7 @@ const path = require('node:path');
 const { sha256 } = require('../../data_io/files.cjs');
 const P = require('../pack_index.cjs');
 const { renderMetafile } = require('../migration/repoint.cjs');
-const { instanceCfgValue, setInstanceCfgValue, trialPreLaunchCommand, prepareFiles, writePack, trialInstance } = require('../trial_install.cjs');
+const { instanceCfgValue, setInstanceCfgValue, trialPreLaunchCommand, prepareFiles, writePack, verifyInstalledFiles, trialInstance } = require('../trial_install.cjs');
 
 function multimcBackslashUnescape(value) {
   return value.replace(/\\(.)/g, '$1');
@@ -65,4 +65,23 @@ test('trial destination rejects Stable, Local and other instances', () => {
   for (const name of ['Evil Eye Stable', 'Evil Eye Local', 'Other Trial']) {
     assert.throws(() => trialInstance(`C:/Users/dirty/MultiMC/instances/${name}/.minecraft`), /Only Evil Eye NeoForge Trial/);
   }
+});
+
+test('post-install verification ignores changed preserve files but rejects a tampered mod jar', t => {
+  const instance = fs.mkdtempSync(path.join(path.resolve(__dirname, '../../../.tmp'), 'trial-verify-'));
+  t.after(() => fs.rmSync(instance, { recursive: true, force: true }));
+  const files = [
+    { file: 'shaderpacks/example.zip.txt', bytes: Buffer.from('pack default'), preserve: true },
+    { file: 'mods/private.jar', bytes: Buffer.from('private jar'), preserve: false },
+    { file: 'config/managed.toml', bytes: Buffer.from('managed'), preserve: false },
+  ].map(f => ({ ...f, hash: sha256(f.bytes) }));
+  for (const f of files) {
+    const dest = path.join(instance, f.file);
+    fs.mkdirSync(path.dirname(dest), { recursive: true });
+    fs.writeFileSync(dest, f.bytes);
+  }
+  fs.writeFileSync(path.join(instance, files[0].file), 'owner changed shader settings');
+  assert.doesNotThrow(() => verifyInstalledFiles(instance, files));
+  fs.writeFileSync(path.join(instance, files[1].file), 'tampered');
+  assert.throws(() => verifyInstalledFiles(instance, files), /Installed artifact differs: mods\/private\.jar/);
 });

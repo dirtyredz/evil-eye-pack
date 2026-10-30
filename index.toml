@@ -7,10 +7,12 @@ hash = "2a52b6131e23f1f7ff30568f81067ddd44c4d7c804ed0c71288392b53389cfb9"
 [[files]]
 file = "config/MouseTweaks.cfg"
 hash = "4069ce1a439d8c37453c1b1e9f2037e0942674c7e48723a39b37eab245792ad4"
+preserve = true
 
 [[files]]
 file = "config/adchimneys-client.toml"
 hash = "49f87a4f3132ba06857b8d6293b60db84f715a2f704f90f86e4730eaa8bfae1f"
+preserve = true
 
 [[files]]
 file = "config/adchimneys-common.toml"
@@ -575,6 +577,7 @@ hash = "fb458918209e2754b8024d2319db21816f5715b484f7819b08c51561ab2462ef"
 [[files]]
 file = "config/ae2/client.json"
 hash = "b619879a13708f8c538f48daf422e3da01e9ed5ba267bea3e2e2129108ca3cda"
+preserve = true
 
 [[files]]
 file = "config/ae2/common.json"
@@ -587,6 +590,7 @@ hash = "d65113ea15e814463b1f477b0cebcc98dfe06a5d3f7100e3bacd414c7cb391ec"
 [[files]]
 file = "config/alexscaves-client.toml"
 hash = "4bb69eb59df9f85aedcc4cc9e2568b6692003983522900c7d61c77dc8b3f1457"
+preserve = true
 
 [[files]]
 file = "config/alexscaves-general.toml"
@@ -983,6 +987,7 @@ hash = "72126b26d7f3ae03b80df97dd103e0cec87d10829e86ac8b08da23abc7b318d8"
 [[files]]
 file = "config/appleskin-client.toml"
 hash = "28c6ad7570268b02ec6f73fb7c39c49ecf90f0697d0db9447899e8aa96285200"
+preserve = true
 
 [[files]]
 file = "config/ars_creo-common.toml"
@@ -991,6 +996,7 @@ hash = "c92169df182d9d3a54f36e82c7175c33445c716c7d6e73e6dfbd7e79158fcfc3"
 [[files]]
 file = "config/ars_elemental-client.toml"
 hash = "6ae5daef46d37499e15902fb416da5acfb396111ca96aa6e5a5ff50eb0df446c"
+preserve = true
 
 [[files]]
 file = "config/ars_elemental-common.toml"
@@ -1107,10 +1113,12 @@ hash = "00fb52a45b1d60a3b590621519a1759be651f0b36eccdbc8b01f28deb83abaaa"
 [[files]]
 file = "config/ars_instrumentum-client.toml"
 hash = "f85c85191bf0fc66c2d4f58c239c0440c27a3554dd023f8b7653fe3286255a03"
+preserve = true
 
 [[files]]
 file = "config/ars_nouveau-client.toml"
 hash = "49fca67e5ae2e3658c5ff7f5c63f0f3482aae56f86c7f0ef0194523d135762d7"
+preserve = true
 
 [[files]]
 file = "config/ars_nouveau-common.toml"
@@ -1459,6 +1467,7 @@ hash = "f24f7cede066400c657af13b1aff84e4920ac531bf24ab18cff1ef32fff72835"
 [[files]]
 file = "config/betteradvancements-client.toml"
 hash = "72d65e7e16a0067ea57b6f9275ade5245a0efcd151df0a21e26d4c820d068069"
+preserve = true
 
 [[files]]
 file = "config/bhc-common.toml"
@@ -1503,6 +1512,7 @@ hash = "5ecbc98e651aaafa8cb33efc7e10ac778d7f67692df7fb4510ddbcab00be08d1"
 [[files]]
 file = "config/chimes-client.toml"
 hash = "f6490e232ad3a88c373c00a54cbde2fcad3934d8d2a496196321ec83604c477f"
+preserve = true
 
 [[files]]
 file = "config/chimes-common.toml"
@@ -1511,6 +1521,7 @@ hash = "b0383111b410663758521048922292e264e216b7d79d4da1f8eb4cb0b5ab5652"
 [[files]]
 file = "config/chloride-client.toml"
 hash = "bc8dbcde3097831c4a131cdb2b20ddad2ce68af7d59620a7582a88ba810ff133"
+preserve = true
 
 [[files]]
 file = "config/citadel-common.toml"
@@ -1519,6 +1530,7 @@ hash = "0a41518641bbb4133fc61b934e8663ae5271ffd8190a281e5b35d1efd97fb3e3"
 [[files]]
 file = "config/colorfulhearts.toml"
 hash = "2d138398c8d200fde46d582b593bc9d7ac10014ae9e0e0306d23a56c77cbcfca"
+preserve = true
 
 [[files]]
 file = "config/connectivity.json"
@@ -1527,6 +1539,7 @@ hash = "d1f6a792a03e4b2ccec19ba00098db7d4c47fa3f3888b534cba2247a045cfd64"
 [[files]]
 file = "config/cosmeticarmorreworked-client.toml"
 hash = "000b9988ecbe8b294dc3577d1867b09954e237775b3a252af45df0b4cb2c591c"
+preserve = true
 
 [[files]]
 file = "config/cosmeticarmorreworked-common.toml"
@@ -1539,6 +1552,7 @@ hash = "c6347fa98fbcce48e5a5da63cfbffd7583a16daeea4642d4671e9f6cd28f7b20"
 [[files]]
 file = "config/create-client.toml"
 hash = "e08534fd349021a78c68ee3ace46bdbf2f8d28c50ed6a435431aa0cb2d047fee"
+preserve = true
 
 [[files]]
 file = "config/create-common.toml"
@@ -1563,6 +1577,7 @@ hash = "8fe09b83f2fe6bf9d547e99b8d883aef42bf3d9e2e6f5bd43ec3fcd4c7f756da"
 [[files]]
 file = "config/cull-less-leaves.json"
 hash = "c3b8e756d33118d8d26fb9ffcda8016c03370177d6ed4b4d5dee17bd7280dfb2"
+preserve = true
 
 [[files]]
 file = "config/cupboard.json"
@@ -1571,6 +1586,7 @@ hash = "42bbabc1f3eacb0e7ac159aeb9fa8ca5b72a3bdc1de008ee8e65a632b23d8fe0"
 [[files]]
 file = "config/curios-client.toml"
 hash = "20287210df8f37e8c27d539886667b1240fc4e02509317c966f807c81ed18847"
+preserve = true
 
 [[files]]
 file = "config/curios-common.toml"
@@ -1631,14 +1647,17 @@ hash = "fb0bb5ce37d2601efa55c297f13eec65b9866e012ebeebdb87adbc4887c63fae"
 [[files]]
 file = "config/emi.css"
 hash = "b949dd47d254d6f6721be9c59af63899d82390a8b019e83918b9ee9489acebac"
+preserve = true
 
 [[files]]
 file = "config/enchdesc.json"
 hash = "69e1df6089b71c3c2fe2c7cf6760937094fd22434111f527229a9fcea3f90bc5"
+preserve = true
 
 [[files]]
 file = "config/enderchests-client.toml"
 hash = "48558d9295f4a20fbeb4795bf264890094adaf7df1939d29589349f68099680f"
+preserve = true
 
 [[files]]
 file = "config/enderchests.toml"
@@ -1651,6 +1670,7 @@ hash = "be5a4f4a1b5049bfaad1c8892278d27d46f7a7452be6f83e2b58c054f35b70bf"
 [[files]]
 file = "config/enderio/base-client.toml"
 hash = "91330d6c548c114e55275ab2adb0b4ad51cdfa877359967e9b930f492546c310"
+preserve = true
 
 [[files]]
 file = "config/enderio/base-common.toml"
@@ -1659,6 +1679,7 @@ hash = "c9c6584f8411f1e6a18a5152085dd4bc30636c985c280ef4c39cda715586f701"
 [[files]]
 file = "config/enderio/machines-client.toml"
 hash = "bdbcf67bdb785fdbcc1bb43ac4b84985da3f629f6bfcef147d8306f5e119e6f8"
+preserve = true
 
 [[files]]
 file = "config/enderio/machines-common.toml"
@@ -1667,6 +1688,7 @@ hash = "c8702776e185eb45e519ef647e429bf3eb8f0befa445b9b0c03ffd77f07348cb"
 [[files]]
 file = "config/endertanks-client.toml"
 hash = "8b2ebcecfe7eff97951a4e1faf451cdfdba3de4082d7547bd90a278ffd703049"
+preserve = true
 
 [[files]]
 file = "config/endertanks.toml"
@@ -1675,6 +1697,7 @@ hash = "6922243aceed1df8b3c05df83a94b32844b80f4dce6dfd7a620111af80600636"
 [[files]]
 file = "config/entityculling.json"
 hash = "210dac4f095a64568e45ae48f5cf39a806ac7a89c85e3458e13e8538be670c83"
+preserve = true
 
 [[files]]
 file = "config/everlastingabilities-common.toml"
@@ -1707,6 +1730,7 @@ hash = "19fb61e7f13abbaa2a3054976d40ce314f5826f5c8f7fd279417a0244bad45b3"
 [[files]]
 file = "config/flywheel-client.toml"
 hash = "0a70d58a4a562c2aa2945a3883d35fa3a8e90d80eab9d6b2db3be6103f71b9b2"
+preserve = true
 
 [[files]]
 file = "config/forgeendertech-common.toml"
@@ -1847,6 +1871,7 @@ hash = "391e0cf41ff346b9414f56afdb8032abb1c64777a304807a8fa733b14bbb5978"
 [[files]]
 file = "config/iceandfire-client.toml"
 hash = "2951cb48c8ceb7c4ab70652af11efc6f7fdfa65237a718697c4282026cd5fa1e"
+preserve = true
 
 [[files]]
 file = "config/iceandfire-common.toml"
@@ -2027,6 +2052,7 @@ hash = "46fb4b80eb9d9667223509ea17aa4b5aa65851f3cb09c09886d6b9dde1a63601"
 [[files]]
 file = "config/immediatelyfast.json"
 hash = "519a9c3d2d687d4d95c44f2449e5d91acb2cf1e68ba19d07ec967d77e55150e2"
+preserve = true
 
 [[files]]
 file = "config/inventoryprofilesnext/integrationHints/dankstorage.json"
@@ -2035,30 +2061,37 @@ hash = "2279d8a3e195b3053f71bd1c7debc85ec8ea1fdc204833b59641c06d862aa99e"
 [[files]]
 file = "config/inventoryprofilesnext/inventoryprofiles.json"
 hash = "c27c1715562be5e5c38ebaa2eb716e857c4d7c8d2325eeac061d4e3737c2b79e"
+preserve = true
 
 [[files]]
 file = "config/iris.properties"
 hash = "b2537f6d620e4aaded8e285cbe9c9a9a05c4715b7bfe6967521b6712e6b109ac"
+preserve = true
 
 [[files]]
 file = "config/jade/hide-blocks.json"
 hash = "6f6658b4a600c154e8bceb74fbfd887c9cb159ae389b1c87d29bd90f21ce5b0a"
+preserve = true
 
 [[files]]
 file = "config/jade/hide-entities.json"
 hash = "38975f3f3c25a40c905172a9ccde5489946048173d6173967f37aadcf602455a"
+preserve = true
 
 [[files]]
 file = "config/jade/jade.json"
 hash = "77988e32fc0dd347d8343d31c4315766d6f0d424d54308e0189ca205a83788a3"
+preserve = true
 
 [[files]]
 file = "config/jade/plugins.json"
 hash = "67b4a5d6105bb389c324f404f348240fdcca723f9c4f1f4fa8db947783a2c2ae"
+preserve = true
 
 [[files]]
 file = "config/jade/sort-order.json"
 hash = "2bafa45d247e666d8249c8bdeb178fa202180fddc124482eea1e409c650bcfa0"
+preserve = true
 
 [[files]]
 file = "config/jupiter.json"
@@ -2067,10 +2100,12 @@ hash = "c89c0940d0252fe2b8bba72c4a243e35700491435acef7103e4f9a7e86f929c9"
 [[files]]
 file = "config/lightoverlay.properties"
 hash = "f26672542348ed68d5ffdfed8671bbe421a8520dc11ee520a375837fc5738d8a"
+preserve = true
 
 [[files]]
 file = "config/minecolonies-client.toml"
 hash = "596601175eb019db1557fd700a5103b7d526db950bde58567f371dfee5eb2d4b"
+preserve = true
 
 [[files]]
 file = "config/minecolonies-common.toml"
@@ -2079,6 +2114,7 @@ hash = "1359438cc3b094bb8952e6e7a790ddd444f700588398ab41f5bf90a09b62e755"
 [[files]]
 file = "config/modelfix-client.toml"
 hash = "733fe240095c7dab6dcfb69a49e4a28d250e3fa8235f4faa02d4dc98209ed275"
+preserve = true
 
 [[files]]
 file = "config/modernfix-common.toml"
@@ -2091,6 +2127,7 @@ hash = "cc9db08ca3f44714cf14117fb1772eed88c9cc3272fea6d17e657292c8799fe0"
 [[files]]
 file = "config/multibeds-client.toml"
 hash = "1012cda6fec49ebfb6985415b41ba485bf13a08543404678c21d10e4fba848d6"
+preserve = true
 
 [[files]]
 file = "config/multibeds.toml"
@@ -2099,6 +2136,7 @@ hash = "688ff39f5d31cea11dc0aeaa6c422ebacffc14897828290c7658a6e2f0a0e8f9"
 [[files]]
 file = "config/patchouli-client.toml"
 hash = "3b6236845f6a5ff8804487b63b0d74305b91316dc9a008362838607b0be3bd8e"
+preserve = true
 
 [[files]]
 file = "config/polymorph-integrations.toml"
@@ -2107,10 +2145,12 @@ hash = "47c2b8a65ca08ee0a73400bf6b8ccc0a831b4c220fa95097eff6216456fc511a"
 [[files]]
 file = "config/productivebees-client.toml"
 hash = "1606620842afcf1d1cf6520ab6deb31ac61c35764680751b945755acc477e407"
+preserve = true
 
 [[files]]
 file = "config/railways-client.toml"
 hash = "8cae295b5b058ab514fc03c54757db7ddf7f55d1e6d674e8a327b79734612d5c"
+preserve = true
 
 [[files]]
 file = "config/railways-common.toml"
@@ -2123,10 +2163,12 @@ hash = "c21921f03014bdd061fc83803277218093d6b7c0a6175dd931d2d46045701a5f"
 [[files]]
 file = "config/resourcepackoverrides.json"
 hash = "c8965efbed3141ab8ad17b7f273f6874bb81a55ae925c675a16267fff7811157"
+preserve = true
 
 [[files]]
 file = "config/shetiphiancore-client.toml"
 hash = "f078f6987c3712446ca08971ed1d18c2fcf954a402f12e7d39a858b874c5fad3"
+preserve = true
 
 [[files]]
 file = "config/shetiphiancore.toml"
@@ -2135,6 +2177,7 @@ hash = "28929b1112ea71c7244eb09449d37caf6afa4dd085fe1f637599e870e135cbae"
 [[files]]
 file = "config/sidebar_buttons.json"
 hash = "c15e8bc2e15de3248b51d2c7a582bb01a1235be123c24348c1393c6d9cefb137"
+preserve = true
 
 [[files]]
 file = "config/simplygraves-common.toml"
@@ -2143,6 +2186,7 @@ hash = "4e70b7fb3347f9f0aa501aa2c7154387d45a9dbe07e4aab4a2998e712c7bdfa4"
 [[files]]
 file = "config/storagedrawers-client.toml"
 hash = "4606fd89d7610fcc0c273dc120678348707554d46f3c3cb1ebfc0d680d32cfc9"
+preserve = true
 
 [[files]]
 file = "config/storagedrawers-common.toml"
@@ -2155,14 +2199,17 @@ hash = "9c40939aa9351b29445c03ac1faead973c46a9444fcb0e51e83aaacfe0073b4e"
 [[files]]
 file = "config/structurize-client.toml"
 hash = "5b91f3a160dfe1048f5e4446da09eb7cd903e640fe39fadb25fb0d6612b82360"
+preserve = true
 
 [[files]]
 file = "config/stylisheffects-client.toml"
 hash = "45f715cf421a021992356c6bcca7b313865af727d49cb4520d790cc2b0a07aec"
+preserve = true
 
 [[files]]
 file = "config/supplementaries-client.toml"
 hash = "343b149cbbf93127e06d66e9f38866e6ddb233ed7b8fffdd993a8c9818bb25fd"
+preserve = true
 
 [[files]]
 file = "config/supplementaries-common.toml"
@@ -2175,6 +2222,7 @@ hash = "2c248957470f6a15784cf06290597ce581049e77bfd757971cdae3c36bdf1217"
 [[files]]
 file = "config/toolbelt-client.toml"
 hash = "21308b8beaf47d04e5a237e2d926880d428c4168b1bbda145c251d8167c5a86e"
+preserve = true
 
 [[files]]
 file = "config/toolbelt-common.toml"
@@ -2195,6 +2243,7 @@ hash = "a0c9833c1ef96f9c7776bc98884eacef8aa58c47bdefb999b89756530705f5b9"
 [[files]]
 file = "config/xaero/lib/client.cfg"
 hash = "43ed9dbfa5b4d6f0f3d2e8c2ced17ad298164b22c68ff11d415257a39b074336"
+preserve = true
 
 [[files]]
 file = "config/xaero/lib/common.cfg"
@@ -2203,6 +2252,7 @@ hash = "98f698d96a6d21d830a455b4ad045b70516fa63c298021742d8499e7f0366cd2"
 [[files]]
 file = "config/xaero/lib/profiles/default.cfg"
 hash = "34ae854b17d896d7cb853bdc28c27231a3947e91cb9f0991f372846ee3c2a907"
+preserve = true
 
 [[files]]
 file = "config/xaero/lib/server_profiles/default.cfg"
@@ -2211,6 +2261,7 @@ hash = "d438aea41ca41e93697e059f523686935c0add482f6abe96b532bbf10c6ed80a"
 [[files]]
 file = "config/xaero/minimap/client.cfg"
 hash = "c0915eff5d1a7905cd1038d646eb9086fd1a29e2f637d53535e4da161de17b9f"
+preserve = true
 
 [[files]]
 file = "config/xaero/minimap/common.cfg"
@@ -2219,6 +2270,7 @@ hash = "2b49df024c03a369c62a303c72755e7fedeb4f4653ff53a12fd37bd83ccd4ed0"
 [[files]]
 file = "config/xaero/minimap/default_radar_categories_client.json"
 hash = "c63fa9862b71e4d7d39f0ba3c214ec8482c622d960574003eabe56dd021cbead"
+preserve = true
 
 [[files]]
 file = "config/xaero/minimap/default_radar_categories_server.json"
@@ -2227,10 +2279,12 @@ hash = "a4c652cafa7dea324e5f5cf3b1df46a84e54b6d4f877195857bce55a559c1cfd"
 [[files]]
 file = "config/xaero/minimap/profiles/default.cfg"
 hash = "f1ff62b22cfc97486d00e8bd3367a3207f0a8da235e7b365c5aa2a54e3f8dc25"
+preserve = true
 
 [[files]]
 file = "config/xaero/minimap/profiles/info_display_config/default.cfg.txt"
 hash = "184e654fa1fc8ad09943c97c4e65ab78acb5b3cfca22417a831513d1b6d9bbc6"
+preserve = true
 
 [[files]]
 file = "config/xaero/minimap/server_profiles/default.cfg"
@@ -2239,6 +2293,7 @@ hash = "d438aea41ca41e93697e059f523686935c0add482f6abe96b532bbf10c6ed80a"
 [[files]]
 file = "config/xaero/world-map/client.cfg"
 hash = "d0f079a8df083f6f60a0e0c1316a25fc841755a91bdcb2f86c66ead8e7d4d13d"
+preserve = true
 
 [[files]]
 file = "config/xaero/world-map/common.cfg"
@@ -2247,6 +2302,7 @@ hash = "0c229eb0daf85bd09af51f21eeeb99497a3bd50a825d5ab1ca695fb21bf6cf9d"
 [[files]]
 file = "config/xaero/world-map/profiles/default.cfg"
 hash = "5422abf9c83fedef6509144293fad20f588d4bb6ce0cf1af78cbcd2bcd0d2ccf"
+preserve = true
 
 [[files]]
 file = "config/xaero/world-map/server_profiles/default.cfg"
@@ -2255,10 +2311,12 @@ hash = "d438aea41ca41e93697e059f523686935c0add482f6abe96b532bbf10c6ed80a"
 [[files]]
 file = "config/xaerohud.txt"
 hash = "cece60604b8de5e978141c981c1ed85227c8f30697a513869012b06dd15fcf02"
+preserve = true
 
 [[files]]
 file = "config/xaeropatreon.txt"
 hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+preserve = true
 
 [[files]]
 file = "defaultconfigs/ftbessentials-server.snbt"
@@ -5527,10 +5585,12 @@ metafile = true
 [[files]]
 file = "shaderpacks/ComplementaryReimagined_r5.9.3.zip.txt"
 hash = "cdaca006ce7ab74386a7b4ff0bae276e3f685c8fa062b71d3f6ab1d5255639fb"
+preserve = true
 
 [[files]]
 file = "shaderpacks/ComplementaryUnbound_r5.9.3.zip.txt"
 hash = "4a25014a0018e933000f32d8973a27603065580869af907cd70348e5fd409057"
+preserve = true
 
 [[files]]
 file = "shaderpacks/complementary-reimagined.pw.toml"

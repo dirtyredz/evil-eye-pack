@@ -2,6 +2,20 @@
 
 Newest first.
 
+## 2026-10-31 - Preserve game-owned client settings after first install
+
+**Decision.** Index runtime-owned client preferences with packwiz `preserve = true`: shader option
+sidecars, `*-client.toml`, and the explicit EMI, Iris, Jade, Xaero and other client-setting files
+classified by `pack_index.cjs`. The pack supplies their initial defaults, but later installs do not
+overwrite the owner's or game's values. `options.txt`, Sodium and JEI outputs are already unshipped;
+Default Options' shipped keybinding input remains installer-managed. The Trial post-install gate hashes
+every non-preserve installed file, including every resolved mod jar and private local pin.
+
+**Why.** Packwiz Installer writes a preserved file when absent and leaves an existing copy alone. A
+hash assertion against the pack default after installation therefore contradicts installer semantics
+and made a legitimate Iris shader-options rewrite block launch. Pack policy and executable artifacts
+still need exact integrity checks; mutable preferences do not.
+
 ## 2026-10-31 - Accept Railways Controls warning as a known minor issue
 
 - Accept Steam 'n' Rails' stale `client.MixinKeyBindsListKeyEntry` target as a known

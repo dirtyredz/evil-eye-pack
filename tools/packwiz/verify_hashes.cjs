@@ -12,6 +12,7 @@ const { sha256 } = require('../data_io/files.cjs');
 //   - every publishable file that is not ignored is indexed;
 //   - indexed text files carry no BOM and no CR;
 //   - each entry's `metafile` flag agrees with the path (P.isMetafile);
+//   - each entry's `preserve` flag agrees with the owner/game-owned path policy;
 //   - every metafile has a concrete [download] hash, hash-format and source;
 //   - with --jars: each jar named by a metafile's `filename` hashes to its download hash.
 
@@ -53,6 +54,9 @@ function verify(root, opts) {
     problems.push(...P.textProblems(entry.file, bytes));
     if (entry.metafile !== P.isMetafile(entry.file)) {
       problems.push(entry.file + ': index metafile flag is ' + entry.metafile + ' but the path ' + (P.isMetafile(entry.file) ? 'is' : 'is not') + ' a metafile');
+    }
+    if (entry.preserve !== P.isPreservePath(entry.file)) {
+      problems.push(entry.file + ': index preserve flag is ' + entry.preserve + ' but policy expects ' + P.isPreservePath(entry.file));
     }
     if (entry.metafile) metafiles.push({ file: entry.file, text: bytes.toString('utf8') });
   }
