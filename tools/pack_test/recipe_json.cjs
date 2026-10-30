@@ -36,7 +36,8 @@ function declaredOutputRefs(json) {
     else if (typeof v.id === 'string' && (v.count !== undefined || v.Count !== undefined || v.chance !== undefined || Object.keys(v).length <= 3)) add(v.id, 'object');
     for (const k of ['item', 'result', 'results', 'output', 'outputs']) if (v[k] && typeof v[k] === 'object') take(v[k]);
   };
-  if (json && typeof json === 'object') for (const k of ['result', 'results', 'output', 'outputs', 'transitionalItem']) if (json[k] !== undefined) take(json[k]);
+  // Create 6 (1.21) spells it transitional_item; Create 0.5 (1.20) transitionalItem.
+  if (json && typeof json === 'object') for (const k of ['result', 'results', 'output', 'outputs', 'transitionalItem', 'transitional_item']) if (json[k] !== undefined) take(json[k]);
   return [...refs].map(([id, form]) => ({ id, form }));
 }
 

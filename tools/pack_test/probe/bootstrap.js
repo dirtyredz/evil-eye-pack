@@ -42,6 +42,7 @@
     section('registries', function () { return ns.registries.collect(server) }, manifest)
     section('tags', function () { return ns.registries.collectTags() }, manifest)
     section('recipes', function () { return ns.recipes.collect(server) }, manifest)
+    if (ns.runtime) section('runtime', function () { return ns.runtime.collect(server) }, manifest)
     var t0 = now()
     var finished = false
     function end(results, error) {
@@ -65,11 +66,6 @@
   // Registered here, after every pack script, so the captured JSON reflects the pack's own recipe changes.
   ServerEvents.recipes(function (event) {
     try { ns.recipes.capture(event) } catch (e) { console.error('[pack_test] recipe capture failed: ' + e) }
-  })
-  // Re-run on demand in a live test server: /kubejs custom_command pack_test
-  ServerEvents.customCommand('pack_test', function (event) {
-    ns.started = false
-    try { runAll(event.server) } catch (e) { console.error('[pack_test] probe failed: ' + e) }
   })
   ServerEvents.loaded(function (event) {
     try { runAll(event.server) } catch (e) { console.error('[pack_test] probe failed: ' + e) }

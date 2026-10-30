@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": {
+    "enderio:fluid_xp_juice_still": {
+      "neoforge:conditions": [
+        {
+          "type": "neoforge:mod_loaded",
+          "modid": "enderio"
+        }
+      ],
+      "neoforge:value": 20
+    }
+  }
+}

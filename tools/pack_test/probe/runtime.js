@@ -1,0 +1,49 @@
+// priority: -13
+// Pack-test probe (test server only). Evidence about the script runtime itself, so assumptions the pack's
+// scripts rely on are observed in a live server rather than inferred from docs:
+//   global: a server script adding a property to a startup-created object, and setting a top-level value
+//   nativeEvents: a NativeEvents listener registered with a class-name string (startup_globals.js) fired
+//   jsonIo: the shape JsonIO.read returns for a pack config
+//   stacks: encoded data components of chosen items' creative-tab stacks (for the EMI curation rules)
+;(function () {
+  var ns = global.packTest || (global.packTest = {})
+  var STACK_IDS = ['enderio:filled_soul_vial', 'enderio:broken_spawner']
+
+  function encode(stack) {
+    var Patch = Java.loadClass('net.minecraft.core.component.DataComponentPatch')
+    var NbtOps = Java.loadClass('net.minecraft.nbt.NbtOps')
+    var r = Patch.CODEC.encodeStart(NbtOps.INSTANCE, stack.getComponentsPatch()).result()
+    return r.isPresent() ? String(r.get()) : null
+  }
+
+  function stacks(server) {
+    var out = {}
+    STACK_IDS.forEach(function (id) { out[id] = [] })
+    var Tabs = Java.loadClass('net.minecraft.world.item.CreativeModeTabs')
+    var BR = Java.loadClass('net.minecraft.core.registries.BuiltInRegistries')
+    Tabs.tryRebuildTabContents(server.getWorldData().enabledFeatures(), true, server.registryAccess())
+    var tabs = BR.CREATIVE_MODE_TAB.stream().toList().toArray()
+    for (var t = 0; t < tabs.length; t++) {
+      var items = tabs[t].getDisplayItems().toArray()
+      for (var i = 0; i < items.length; i++) {
+        var id = String(BR.ITEM.getKey(items[i].getItem()))
+        if (out[id] && out[id].length < 8) out[id].push(encode(items[i]))
+      }
+    }
+    return out
+  }
+
+  function collect(server) {
+    var data = { global: {}, nativeEvents: ns.nativeEvents || null, jsonIo: {}, stacks: {} }
+    try { ns.nestedProbe = 1; data.global.nestedWrite = ns.nestedProbe === 1 ? 'allowed' : 'ignored' } catch (e) { data.global.nestedWrite = 'refused: ' + e }
+    try { global.packTestTopLevelProbe = 1; data.global.topLevelWrite = global.packTestTopLevelProbe === 1 ? 'allowed' : 'ignored' } catch (e) { data.global.topLevelWrite = 'refused: ' + String(e).slice(0, 200) }
+    try {
+      var j = JsonIO.read('kubejs/config/dedup.json')
+      data.jsonIo = { javaType: String(j && j.getClass ? j.getClass().getName() : typeof j), hiddenOnlyIsArray: Array.isArray(j.hiddenOnly), hiddenOnlyLength: j.hiddenOnly ? j.hiddenOnly.length : null, keys: Object.keys(j).length }
+    } catch (e) { data.jsonIo = { error: String(e).slice(0, 300) } }
+    try { data.stacks = stacks(server) } catch (e) { data.stacks = { error: String(e).slice(0, 300) } }
+    return { data: data, count: Object.keys(data.stacks).length }
+  }
+
+  ns.runtime = { collect: collect }
+})()

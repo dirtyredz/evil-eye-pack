@@ -19,7 +19,7 @@ test('HammerLib gears are disabled at recipe and tag sources; BHC code drops sta
   for (const material of ['wooden', 'stone', 'copper', 'iron', 'gold', 'diamond', 'netherite']) {
     const id = 'hammerlib:gears/' + material;
     assert.equal(Object.values(recipes.active).find(group => id in group)[id], false, id);
-    assert.equal(tags.tags['minecraft:item']['forge:gears/' + material][id], false, id);
+    assert.equal(tags.tags['minecraft:item']['c:gears/' + material][id], false, id);
   }
   // Ice and Fire is deferred: BHC's own wither bone drop is the temporary acquisition path (deferred/dedup.json).
   assert.match(fs.readFileSync(path.join(root, 'config/bhc-common.toml'), 'utf8'), /boneDropRate = 0\.15$/m);

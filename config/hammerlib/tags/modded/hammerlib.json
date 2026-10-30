@@ -2,28 +2,28 @@
   "version": 1,
   "tags": {
     "minecraft:item": {
-      "forge:gears/copper": {
+      "c:gears/copper": {
         "hammerlib:gears/copper": false
       },
-      "forge:gears/wooden": {
+      "c:gears/wooden": {
         "hammerlib:gears/wooden": false
       },
-      "forge:gears/iron": {
+      "c:gears/iron": {
         "hammerlib:gears/iron": false
       },
-      "forge:gears/diamond": {
+      "c:gears/diamond": {
         "hammerlib:gears/diamond": false
       },
-      "forge:tools/wrench": {
+      "c:tools/wrench": {
         "hammerlib:wrench": false
       },
-      "forge:gears/gold": {
+      "c:gears/gold": {
         "hammerlib:gears/gold": false
       },
-      "forge:gears/stone": {
+      "c:gears/stone": {
         "hammerlib:gears/stone": false
       },
-      "forge:gears/netherite": {
+      "c:gears/netherite": {
         "hammerlib:gears/netherite": false
       }
     },

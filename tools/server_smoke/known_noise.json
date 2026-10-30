@@ -1,8 +1,50 @@
 [
-  { "pattern": "TagLoader.*missing following references", "why": "datapack tags (alltheores, totw_modded, L_Enders_Cataclysm) list items/biomes from mods the pack does not ship" },
-  { "pattern": "RecipeManager.*Parsing error loading recipe", "why": "datapack recipes (alltheores, allthecompressed, dramaticdoors, productivebees) use mods/recipe types the pack does not ship, e.g. mekanism:*" },
-  { "pattern": "AdvancementManager.*Parsing error loading custom advancement|AdvancementList.*Couldn't load advancement", "why": "advancements referencing items from mods the pack does not ship" },
-  { "pattern": "RuntimeDistCleaner.*ClientLevel", "why": "Radium class analysis probes Minecolonies BlockHutTownHall on the server; logged, not fatal" },
-  { "pattern": "structurize.*---", "why": "Structurize complains about ModernFix's LazyDataFixer; harmless on boot" },
-  { "pattern": "HammerLib.*RegisterRecipesEvent", "why": "HammerLib's built-in test recipe extension fails to register; harmless" }
+  {
+    "pattern": "TagLoader.*missing following references",
+    "why": "datapack tags (alltheores, totw_modded, L_Enders_Cataclysm) list items/biomes from mods the pack does not ship"
+  },
+  {
+    "pattern": "RecipeManager.*Parsing error loading recipe",
+    "why": "datapack recipes (alltheores, allthecompressed, dramaticdoors, productivebees) use mods/recipe types the pack does not ship, e.g. mekanism:*"
+  },
+  {
+    "pattern": "AdvancementManager.*Parsing error loading custom advancement|AdvancementList.*Couldn't load advancement",
+    "why": "advancements referencing items from mods the pack does not ship"
+  },
+  {
+    "pattern": "RuntimeDistCleaner.*ClientLevel",
+    "why": "Radium class analysis probes Minecolonies BlockHutTownHall on the server; logged, not fatal"
+  },
+  {
+    "pattern": "structurize.*---",
+    "why": "Structurize complains about ModernFix's LazyDataFixer; harmless on boot"
+  },
+  {
+    "pattern": "HammerLib.*RegisterRecipesEvent",
+    "why": "HammerLib's built-in test recipe extension fails to register; harmless"
+  },
+  {
+    "pattern": "LootDataType.*Couldn't parse element ResourceKey.minecraft:root / minecraft:loot_table.:(railways|create_connected):.*Unknown registry key",
+    "why": "NeoForge 1.21.1 (2026-10-29): Steam 'n' Rails NeoForge port 0.3.0-beta.2 (246 tables: compat tracks/palettes) and Create: Connected 1.3.3 (16: dye-depot catalysts) ship loot tables for items they register only when the compat target is installed; vanilla logs and skips each table"
+  },
+  {
+    "pattern": "RuntimeDistCleaner.*net/minecraft/client/multiplayer/ClientPacketListener",
+    "why": "NeoForge 1.21.1: AstikorCarts Redux 1.2.4 lists its client mixins (ClientLevel, ClientPacketListener) in the common mixin config; on a dedicated server the targets are absent, Mixin skips them (WARN '@Mixin target ... was not found')"
+  },
+  {
+    "pattern": "RuntimeDistCleaner.*net/minecraft/client/RecipeBookCategories",
+    "why": "NeoForge 1.21.1: logged on the server thread right after the pack-test probe creates its FakePlayer/CraftingMenu; the load is refused and caught, and every probe craft passes (pack-test only, never in a player's server path we know of)"
+  },
+  {
+    "pattern": "Expected BEGIN_OBJECT but was NUMBER at line 1 column 4 path [$]",
+    "why": "NeoForge 1.21.1: FML VersionChecker (update check thread) received a non-object update JSON from one mod's update URL; network update notice only, no effect on loading"
+  },
+  {
+    "pattern": "RecipeManager.*Error parsing recipe (createdeco:placard|thirst:compat/create/(cactus|terracotta_water_bowl))",
+    "why": "NeoForge 1.21.1: upstream data still in 1.20 shape: Create Deco 2.1.3 placard uses a bare {id} ingredient; Thirst Was Taken 2.1.5 Create compat recipes use 1.20 item/fluid stack keys. Vanilla skips each recipe"
+  },
+  {
+    "pattern": "DataMapLoader.*enderio:xpjuice",
+    "why": "NeoForge 1.21.1: Create: Enchantment Industry 2.5.4b's experience data map names Ender IO's 1.20 fluid id enderio:xpjuice; the pack adds the 1.21 id enderio:fluid_xp_juice_still in kubejs/data/create_enchantment_industry/data_maps/fluid/unit/experience.json"
+  }
 ]

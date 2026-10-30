@@ -1,38 +1,38 @@
 {
   "schema": 1,
-  "description": "Machine recipe types (Create, Ender IO, Extreme Reactors): a floor of ~90% of the 2026-10-23 count fails a run; any other count change is reported as info. Assertions spot-check key recipes and tags.",
+  "description": "Machine recipe types (Create, Ender IO, Extreme Reactors): a floor of ~90% of the 2026-10-29 NeoForge 1.21.1 count fails a run; any other count change is reported as info. Assertions spot-check key recipes and tags. enderio:grinding_ball was dropped: Ender IO 8 registers the type but ships no recipes of it.",
   "types": {
     "bigreactors:fluidizer": {
       "min": 18,
       "observed": 20
     },
     "bigreactors:reprocessor": {
+      "min": 9,
+      "observed": 10
+    },
+    "create:compacting": {
+      "min": 12,
+      "observed": 14
+    },
+    "create:crushing": {
+      "min": 56,
+      "observed": 63
+    },
+    "create:cutting": {
+      "min": 430,
+      "observed": 478
+    },
+    "create:deploying": {
+      "min": 151,
+      "observed": 168
+    },
+    "create:emptying": {
       "min": 4,
       "observed": 5
     },
-    "create:compacting": {
-      "min": 15,
-      "observed": 17
-    },
-    "create:crushing": {
-      "min": 58,
-      "observed": 65
-    },
-    "create:cutting": {
-      "min": 450,
-      "observed": 500
-    },
-    "create:deploying": {
-      "min": 101,
-      "observed": 113
-    },
-    "create:emptying": {
-      "min": 5,
-      "observed": 6
-    },
     "create:filling": {
-      "min": 35,
-      "observed": 39
+      "min": 33,
+      "observed": 37
     },
     "create:haunting": {
       "min": 19,
@@ -43,74 +43,78 @@
       "observed": 65
     },
     "create:mechanical_crafting": {
-      "min": 129,
-      "observed": 144
+      "min": 130,
+      "observed": 145
     },
     "create:milling": {
       "min": 76,
       "observed": 85
     },
     "create:mixing": {
-      "min": 1050,
-      "observed": 1167
+      "min": 1010,
+      "observed": 1123
     },
     "create:pressing": {
       "min": 20,
       "observed": 23
     },
     "create:sandpaper_polishing": {
-      "min": 270,
-      "observed": 270
+      "min": 242,
+      "observed": 269
     },
     "create:sequenced_assembly": {
-      "min": 101,
-      "observed": 113
+      "min": 95,
+      "observed": 106
     },
     "create:splashing": {
-      "min": 33,
-      "observed": 37
+      "min": 31,
+      "observed": 35
     },
     "enderio:alloy_smelting": {
-      "min": 233,
-      "observed": 259
+      "min": 186,
+      "observed": 207
     },
     "enderio:enchanting": {
-      "min": 36,
-      "observed": 41
+      "min": 32,
+      "observed": 36
     },
     "enderio:fire_crafting": {
       "min": 1,
-      "observed": 1
-    },
-    "enderio:grinding_ball": {
-      "min": 9,
-      "observed": 10
+      "observed": 2
     },
     "enderio:painting": {
-      "min": 21,
-      "observed": 24
+      "min": 25,
+      "observed": 28
     },
     "enderio:sag_milling": {
-      "min": 58,
-      "observed": 65
+      "min": 64,
+      "observed": 72
     },
     "enderio:slicing": {
       "min": 4,
       "observed": 5
     },
     "enderio:soul_binding": {
-      "min": 9,
-      "observed": 11
+      "min": 19,
+      "observed": 22
     },
     "enderio:tank": {
       "min": 18,
       "observed": 21
+    },
+    "enderio:vat_fermenting": {
+      "min": 7,
+      "observed": 8
+    },
+    "enderio:weather_change": {
+      "min": 2,
+      "observed": 3
     }
   },
   "assertions": [
     {
       "kind": "tag-contains",
-      "tag": "forge:ingots/steel",
+      "tag": "c:ingots/steel",
       "item": "enderio:dark_steel_ingot",
       "why": "Extreme Reactors' reinforced parts need a non-empty steel tag"
     },
@@ -121,7 +125,7 @@
     {
       "kind": "recipe-uses-tag",
       "id": "bigreactors:reactor/reinforced/casing",
-      "tag": "forge:ingots/steel"
+      "tag": "c:ingots/steel"
     },
     {
       "kind": "recipe-not-loaded",

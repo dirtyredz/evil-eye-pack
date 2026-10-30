@@ -1414,11 +1414,11 @@ hash = "9ce1e21174fac3aad87c190482cf2a43ca2a29e16fda963bc97f4eb399c8d9d2"
 
 [[files]]
 file = "config/hammerlib/tags/modded/hammerlib.json"
-hash = "00116d7eea58e8f789448be064c756c7ae1eab3f0b434568d252d17cc979ef96"
+hash = "a50f8f87c05cf7e364f887164cf36e9e0996fa92c32ba64df27909193dcc5da1"
 
 [[files]]
 file = "config/hammerlib/tags/modded/hammermicroblocks.json"
-hash = "46410c50f11c6044f1b4013580428ced2a56c65077e61e294af7d0e91a04a24e"
+hash = "4bb51c9c47133299eed2bb2ad0f9dbc0ef12c95dab08756055a0013f13c3c5aa"
 
 [[files]]
 file = "config/hammerlib/tags/modded/minecraft.json"
@@ -3041,6 +3041,10 @@ file = "kubejs/data/create_dragons_plus/recipe/sandpaper_polishing/minecraft/wea
 hash = "08b57f1f8d562d69681a36ffcf23d6f719e5e7694b1287ddfe7ef6674bea85e7"
 
 [[files]]
+file = "kubejs/data/create_enchantment_industry/data_maps/fluid/unit/experience.json"
+hash = "efc503915d42b72e983b48892dc568af87dfd7f6648f27438bd9b3000c610caf"
+
+[[files]]
 file = "kubejs/data/createaddition/recipe/compacting/cake_base.json"
 hash = "3159b1e0dc88653b4d6a88e0b7f897e02cced7b24ea7a61078c1b8091858c18c"
 
@@ -3219,6 +3223,10 @@ hash = "49665c80b813b338096e28e054152188440d5f168f407856ffe86cf0dab1912d"
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/contraption_storage.js"
 hash = "f67008197a69ca92125d4734f5df10c6aca1d6f50f14c2efd101215aff7391aa"
+
+[[files]]
+file = "kubejs/server_scripts/tag_compat.js"
+hash = "4256b04896a977bd374c2c6dfb85e6bae86559266f9af3435c0100e21091e6de"
 
 [[files]]
 file = "kubejs/server_scripts/uranium.js"

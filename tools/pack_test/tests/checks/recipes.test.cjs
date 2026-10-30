@@ -20,6 +20,7 @@ test('declaredOutputRefs handles result objects, nested stacks, chances and stri
   assert.deepEqual(declaredOutputRefs({ result: 'bees:honey_bee' }), [{ id: 'bees:honey_bee', form: 'string' }]);
   assert.deepEqual(declaredOutputs({ outputs: [{ id: 'a:b', count: 1 }] }), ['a:b']);
   assert.deepEqual(declaredOutputs({ results: [{ fluid: 'a:w', amount: 1 }], transitionalItem: { item: 'c:mid' } }), ['c:mid']);
+  assert.deepEqual(declaredOutputs({ results: [{ id: 'r:track_wide' }], transitional_item: { id: 'r:track_incomplete' } }), ['r:track_wide', 'r:track_incomplete'], 'Create 6 (1.21) spelling');
   assert.deepEqual(declaredOutputs(null), []);
 });
 
