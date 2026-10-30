@@ -12,3 +12,17 @@ test('player probe loads and saves the original UUID and preserves read failures
     if(!fails){assert.equal(result.players[0].uuid,id);assert.equal(result.players[0].inventory[0].count,7);}
   }
 });
+
+test('portable Dank probe follows the actual item frequency to its backing inventory',()=>{
+  for(const missing of [false,true]) {
+    let handler,result;const id='original',saved=[];
+    const stack={isEmpty:()=>false,getId:()=>'dankstorage:dank_2',getCount:()=>1,getComponentsPatch:()=>({})};
+    const container={getContainerSize:()=>1,getItem:()=>stack};
+    const player={uuid:id,getInventory:()=>container,getEnderChestInventory:()=>({getContainerSize:()=>0}),getNbt:()=>''};
+    const server={overworld:()=>({}),getPlayerList:()=>({load:()=>{},remove:p=>saved.push(p)})};
+    const dank={getFrequency:s=>{assert.equal(s,stack);return missing?-1:3;},getInventoryFrom:(s,sv)=>{assert.equal(s,stack);assert.equal(sv,server);return missing?null:{items:{size:()=>1,get:()=>({isEmpty:()=>false,getId:()=>'minecraft:stone',getCount:()=>1040})}};}};
+    vm.runInNewContext(code,{ServerEvents:{loaded:f=>handler=f},JsonIO:{read:()=>({token:'t',players:[id]}),write:(_f,v)=>result=v},Java:{loadClass:n=>n.endsWith('DankItem')?dank:n.endsWith('FakePlayerFactory')?{get:()=>player}:n==='java.util.UUID'?{fromString:x=>x}:function(){}}});
+    handler({server});assert.equal(result.errors.length,missing?1:0);
+    if(!missing){assert.equal(result.players[0].inventory[0].dank.frequency,3);assert.equal(result.players[0].inventory[0].dank.total,1040);}
+  }
+});

@@ -17,6 +17,7 @@ NBT-to-component representation change still needs domain review.
 supervisor. Its private caches contain hash-verified pinned jars and copied loader libraries.
 Only the working server gets `probe/capture.js`: live registries, one existing forced chunk
 at a time, bounded entity-ticking readiness, save, stop, then a separately recorded restart.
+Saved citizen chunks are additionally held for 400 ticks before the normal sweep; a separate token-bound colony record reports native bindings and ticking readiness, including unsupported observations honestly. Portable Dank stacks resolve their real frequency through DankItem.getInventoryFrom and retain live slot totals in player evidence.
 Owner worlds never enter the ordinary generated-world caches. A complete probe and clean
 shutdown establish coverage, not preservation; semantic and log review remains mandatory.
 

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "removedMods": ["alltheores", "allthecompressed", "almostunified", "simplecorelib", "enhancedcelestials", "dataanchor", "corgilib", "corgikubejscompat", "commoncapabilities", "rftoolsbase", "rftoolsbuilder", "rftoolscontrol", "rftoolsdim", "rftoolsutility", "mcjtylib", "ironfurnaces", "chunky", "charginggadgets", "tesseract", "supermartijn642configlib", "oculus", "embeddium", "radium", "memoryleakfix"],
-  "requiredMods": ["hourglass", "dank_recipe_transfer", "roundwood", "flatworldfix", "ars_instrumentum", "alexsmobs", "alexscaves", "iceandfire", "uranus", "jupiter"],
+  "requiredMods": ["evileye_migration", "hourglass", "dank_recipe_transfer", "roundwood", "flatworldfix", "ars_instrumentum", "alexsmobs", "alexscaves", "iceandfire", "uranus", "jupiter"],
   "curatedLists": ["creative.json", "minecolonies-eggs.json", "alexsmobs-creative.json"],
   "ignoredLayout": {
     "loot_tables|ars_nouveau:entities/wilden_boss": "Empty table (no pools) in the 1.20 folder; an absent table also drops nothing, so nothing is lost (2026-10-30).",

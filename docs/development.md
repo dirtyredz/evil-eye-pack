@@ -106,6 +106,9 @@ all outputs must remain under `artifacts/evil-eye-pack/jobs/`. Never use an inst
   entity/block-entity type samples per dimension and terrain samples per region. It records
   that limit; an offline inventory includes more chunks than a live probe. A stand-in player
   exercises the actual player-data loader/saver under each original UUID, without network login.
+  Saved citizen chunks stay forced for 400 ticks before the sweep; `world-trial-colony.json`
+  records native bindings and ticking readiness. Player evidence includes live Dank frequency
+  resolution and slot totals. Missing live bindings remain an explicit walk-through requirement.
   To stop a responsive running trial early, create `world-trial-stop-request` inside its
   server directory; the supervisor sends `stop` and marks the probe incomplete.
 - `compare --before <inventory> --after <inventory> --registries <live registries> --out <job/comparison.json>`

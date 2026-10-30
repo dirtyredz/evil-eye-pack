@@ -18,7 +18,7 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 | 6 First clean target boot | dk-626ee53d | done 2026-10-30 (ANU pack test PASS; see below) |
 | 7 Interstellaris stack | dk-7bcd9303 | done 2026-10-30 (ANU boots green; showcase checks below) |
 | 8 Seven owned ports | dk-279913bb | done 2026-10-30 (ANU and full showcase PASS; config/worldgen follow-ups below) |
-| 9 World conversion on a copy | dk-064ce2a5 | in progress; isolated snapshot and offline tooling, runtime verdict pending |
+| 9 World conversion on a copy | dk-064ce2a5 | in progress; migration bridge re-run fixes shutdown/bindings, remaining flag loss blocks acceptance |
 | 10 Qualify 100% and cutover | — | todo |
 
 ## Isolation (Phase 1)
@@ -421,3 +421,25 @@ This is not a validated owner copy. No `converted-for-owner/` is supplied. **dk-
 tracks the migration blockers; **dk-064ce2a5** stays open until a fresh snapshot-based
 rerun passes. No jars were patched and no instance was modified. The fast Node gate
 passes 517/517; this does not override failed world acceptance.
+
+## Phase 9 authoritative re-run (2026-10-30)
+
+Job: `artifacts/evil-eye-pack/jobs/2026-10-30-world-trial-2/`. The private
+`evileye_migration` 0.1.0-dev.1 pin (minecraft-mods 8b30349, SHA-256
+`dc072b8969960a5e3aac49016a48c9912ee558ee598d3415c8185a78968460a8`)
+is required by pack-test. Keep it installed until every legacy chunk has been loaded and saved.
+
+The fresh-world ANU pack test passes. The new snapshot-based conversion and restart each visit all 943
+selected chunks and stop naturally (killed:false, crashed:false); both domain audits pass 67/68. A bounded 400-tick
+forced-chunk probe observes all four citizens bound to colony 1; portable Dank item
+lookups resolve all four backing stores (9,312 items total). The snapshot contains 79
+starbuncles; the earlier Forge baseline's 80th was newly generated in that baseline.
+
+Acceptance remains blocked: the legacy colony flag pattern list is discarded by the
+target BannerPatternLayers codec. One player's persisted Polymorph recipe selection also resets;
+full payload/terrain comparisons and multipart helper equivalence remain unqualified. The job's `minecraft-mods-handoff.md` records
+the exact values and decoder evidence. See `world-trial-report.md` for the final
+restart, semantic comparison, integrity evidence and owner walk-through checklist.
+Original/snapshot hashes and main/Stable/Local isolation pass; Stable has not changed since
+the snapshot. Fast gate: 520/520. Both Docket items remain open with claims released.
+Do not install diagnostic copies; no owner copy is validated while any LOSS remains.

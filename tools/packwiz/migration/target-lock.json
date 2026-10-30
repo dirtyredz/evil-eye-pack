@@ -3665,6 +3665,35 @@
    }
   },
   {
+   "action": "add",
+   "metafile": "mods/evileye-migration.pw.toml",
+   "provisional": false,
+   "rationale": "Private local migration bridge built from minecraft-mods 8b30349. Keep installed until the entire legacy world has been loaded and saved; unvisited chunks migrate on first load.",
+   "target": {
+    "declares": [
+     "evileye_migration optional ars_nouveau [5.13.3,5.14)",
+     "evileye_migration optional curios [9.5.1,9.6)",
+     "evileye_migration optional dankstorage [20,21)",
+     "evileye_migration optional enderio [8.2.12-beta,8.3)",
+     "evileye_migration optional minecolonies [1.1.1406-1.21.1-snapshot]",
+     "evileye_migration optional supplementaries [1.21.1-4.0.2,1.21.1-4.1)",
+     "evileye_migration required minecraft [1.21.1,1.21.2)",
+     "evileye_migration required neoforge [21.1.265,21.2)"
+    ],
+    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.1.jar",
+    "loader": "neoforge",
+    "metafile": "mods/evileye-migration.pw.toml",
+    "mods": [
+     "evileye_migration@0.1.0-dev.1"
+    ],
+    "name": "Evil Eye World Migration",
+    "sha256": "dc072b8969960a5e3aac49016a48c9912ee558ee598d3415c8185a78968460a8",
+    "side": "both",
+    "size": 41182,
+    "source": "local"
+   }
+  },
+  {
    "action": "repoint",
    "metafile": "mods/extreme-reactors.pw.toml",
    "old": {

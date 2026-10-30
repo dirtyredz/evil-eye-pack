@@ -20,6 +20,9 @@ function plan(inventory) {
     if(important||!regions.has(key)){add(t.dimension,t.x,t.z,important?'player/spawn':'region terrain sample');regions.add(key);}
   }
   const targets=[...selected.values()].sort((a,b)=>a.dimension.localeCompare(b.dimension)||a.x-b.x||a.z-b.z);
-  return {targets,totalCandidateChunks:inventory.targets.length,terrainSampling:'all stored stacks, named/owned entities, dragons, colony and player/spawn chunks; one sample per entity/block-entity type and dimension; one terrain sample per region'};
+  const citizens=(inventory.entities||[]).filter(e=>e.id==='minecolonies:citizen');
+  const colonyChunks=[...new Map(citizens.map(e=>[e.chunk.join(','),{x:e.chunk[0],z:e.chunk[1]}])).values()];
+  const colonies=[...new Set(citizens.map(e=>e.nbt.colony))].filter(Number.isInteger);
+  return {targets,colonyProbe:{chunks:colonyChunks,colonies,ticks:400},totalCandidateChunks:inventory.targets.length,terrainSampling:'all stored stacks, named/owned entities, dragons, colony and player/spawn chunks; one sample per entity/block-entity type and dimension; one terrain sample per region'};
 }
 module.exports={plan};
