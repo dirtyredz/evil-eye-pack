@@ -3668,7 +3668,7 @@
    "action": "add",
    "metafile": "mods/evileye-migration.pw.toml",
    "provisional": false,
-   "rationale": "Private local migration bridge built from minecraft-mods 8b30349. Keep installed until the entire legacy world has been loaded and saved; unvisited chunks migrate on first load.",
+   "rationale": "Private local migration bridge built from minecraft-mods bd5f1ce (dev.4 colony banner fix). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover.",
    "target": {
     "declares": [
      "evileye_migration optional ars_nouveau [5.13.3,5.14)",
@@ -3680,16 +3680,16 @@
      "evileye_migration required minecraft [1.21.1,1.21.2)",
      "evileye_migration required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.1.jar",
+    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.4.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-migration.pw.toml",
     "mods": [
-     "evileye_migration@0.1.0-dev.1"
+     "evileye_migration@0.1.0-dev.4"
     ],
     "name": "Evil Eye World Migration",
-    "sha256": "dc072b8969960a5e3aac49016a48c9912ee558ee598d3415c8185a78968460a8",
+    "sha256": "bc150d3a9af7a102de2a39614f7f2a4458465c6f65f4f22a9b20b97e88f4a262",
     "side": "both",
-    "size": 41182,
+    "size": 52329,
     "source": "local"
    }
   },

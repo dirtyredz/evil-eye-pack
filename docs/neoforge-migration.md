@@ -18,7 +18,7 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 | 6 First clean target boot | dk-626ee53d | done 2026-10-30 (ANU pack test PASS; see below) |
 | 7 Interstellaris stack | dk-7bcd9303 | done 2026-10-30 (ANU boots green; showcase checks below) |
 | 8 Seven owned ports | dk-279913bb | done 2026-10-30 (ANU and full showcase PASS; config/worldgen follow-ups below) |
-| 9 World conversion on a copy | dk-064ce2a5 | in progress; migration bridge re-run fixes shutdown/bindings, remaining flag loss blocks acceptance |
+| 9 World conversion on a copy | dk-064ce2a5 | done 2026-10-31 brief: dev.4 conversion/restart 68/68; owner Trial copy ready |
 | 10 Qualify 100% and cutover | — | todo |
 
 ## Isolation (Phase 1)
@@ -305,10 +305,14 @@ builds a gitignored `.tmp/private-pack-*` overlay, rehashes it, and serves only 
 even when installation fails. The tracked pack never contains those URLs. `server_smoke` and
 `pack_test` use this same route; ANU receives the already staged, verified jars.
 
-A dedicated trial belonging to this checkout can use
-`node tools/packwiz/install_local.cjs --instance <trial/.minecraft>` as its prelaunch step (Java 21,
-cached installer, both sides). Do not repoint the shared migration trial to this worktree. Stable
-and Local are refused. Final family delivery is **dk-85261627**, intentionally unsolved here.
+The owner-only local-delivery ruling (2026-10-31, dk-85261627) supersedes the earlier
+family-hosting question. The final Trial uses `scripts/migration/trial-walkthrough.ps1`:
+verified cache jars are ordinary files in a gitignored temporary pack, so packwiz copies
+them directly into the Trial and tracks them on subsequent launches. No host, public URL
+or download is needed. The wrapper sets only Trial prelaunch to repeat the same offline
+install, and removes its temporary pack afterwards. Stable and Local remain refused.
+Cutover reuses this local-copy route under its separate authorization. The old loopback
+wrapper remains available for server staging; the owner Trial does not need it.
 
 Both malware scans have zero findings (Mobs: 5106 files; Caves: 8189). Parked configs, curation
 reasons, acquisition baselines, chocolate sanding and uranium recipes are restored. Uranium and
@@ -422,7 +426,7 @@ tracks the migration blockers; **dk-064ce2a5** stays open until a fresh snapshot
 rerun passes. No jars were patched and no instance was modified. The fast Node gate
 passes 517/517; this does not override failed world acceptance.
 
-## Phase 9 authoritative re-run (2026-10-30)
+## Phase 9 previous re-run (2026-10-30; superseded below)
 
 Job: `artifacts/evil-eye-pack/jobs/2026-10-30-world-trial-2/`. The private
 `evileye_migration` 0.1.0-dev.1 pin (minecraft-mods 8b30349, SHA-256
@@ -443,3 +447,50 @@ restart, semantic comparison, integrity evidence and owner walk-through checklis
 Original/snapshot hashes and main/Stable/Local isolation pass; Stable has not changed since
 the snapshot. Fast gate: 520/520. Both Docket items remain open with claims released.
 Do not install diagnostic copies; no owner copy is validated while any LOSS remains.
+
+## Phase 9 final dev.4 check and owner walk-through (2026-10-31 brief)
+
+Evidence: `artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/` (machine timestamps
+are 2026-10-30). One new working copy of the immutable snapshot; Forge baseline reused
+read-only. Private bridge dev.4, minecraft-mods bd5f1ce, SHA-256
+`bc150d3a9af7a102de2a39614f7f2a4458465c6f65f4f22a9b20b97e88f4a262`, 52,329 bytes.
+
+Both conversion and restart pass **68/68** domain checks and visit **943/943** chunks.
+Both stop naturally (killed:false, crashed:false; 245.092 s / 163.575 s total). All four
+citizens bind live to colony 1; four Dank stores resolve 9,312 items. Flag conversion
+is exact: legacy WHITE BASE becomes `{color:"white",pattern:"minecraft:base"}` and persists.
+Both complete inventories cover 44,535 chunks with zero parser errors. Fast gate: **522/522**.
+
+Owner/orchestrator acceptance: Polymorph SelectedRecipe reset is transient, not LOSS.
+The domain audits are authoritative for this gate. Raw comparisons report 38,037 / 38,075
+source-to-target differences and 3,183 conversion-to-restart differences; these overlap
+fields/encodings, not deleted objects. Unqualified terrain/blocks, opaque entity and
+block-entity payloads, inventory/saved-data payloads, colony work/requests, and I&F multipart
+collision/damage remain owner checks. Rendering, EMI UI and Interstellaris travel require
+the client. No new client or full-tier test was run. Phase 10 remains owner qualification.
+
+Validated restart save: `C:/Users/dirty/MultiMC/instances/Evil Eye NeoForge Trial/.minecraft/saves/Evil Eye Converted (trial)/`.
+Its in-game title remains **New World**; the folder identifies the trial. Independent copy,
+463 files / 385,489,451 bytes, all copied hashes verified. Never downgrade this save.
+Run `powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/migration/trial-walkthrough.ps1`
+from this checkout with MultiMC closed (`-DryRun` checks inputs). Then open MultiMC and
+click Launch on **Evil Eye NeoForge Trial**.
+The script resolves from its own directory, logs under `.tmp/owner-runs/`, uses the complete
+job cache and sets only Trial's prelaunch to repeat the same install. After merge, run the
+script from the retained migration checkout to bind prelaunch there before retiring this worktree.
+
+Private delivery uses **direct local copying through packwiz**, with hash-verified jars
+listed as ordinary files in a temporary local pack. It supports the owner-only ruling without
+a loopback host; the cached installer's `metadata:local` parser cannot consume raw private
+metafiles. All other pinned artifacts also come from cache, so no internet download can occur.
+The temporary pack is removed after installation; the installer manifest tracks the jars.
+Dry runs (including from outside the checkout), a real full install and a repeat install
+all pass. The repeat reports "Modpack is already up to date!" and all four private hashes
+match. The first full install waited about 40 minutes for an unrelated GameTest JVM.
+The cutover will reuse this route; this script deliberately refuses Stable and Local.
+
+`walkthrough.md` in the evidence job is the one-screen coordinate checklist. Keep the bridge
+until every chunk/player (including offline), colony and Dank store has been loaded and saved,
+and pending `evileye_migration:smelter_items` / refunds lists drain. Dev.5 convert-all/status
+commands are planned for cutover. Original/snapshot content and main/Stable/Local isolation
+are rechecked for this job; no source, snapshot, Stable or Local was written or booted.

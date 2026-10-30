@@ -410,5 +410,9 @@ uses `node tools/packwiz/install_local.cjs --instance <trial/.minecraft>` before
 the pack and hash-addressed migration cache, installs through a temporary gitignored loopback
 overlay, verifies the installed private bytes, and removes the overlay/listener. Stable and Local
 are refused. Pack-test/server-smoke staging use the same mechanism. Never repoint another
-checkout's trial. This is dev/trial-only; family delivery remains dk-85261627. See
+checkout's trial. For the owner NeoForge Trial use `powershell.exe -NoProfile -ExecutionPolicy Bypass -File
+scripts/migration/trial-walkthrough.ps1` (add `-DryRun` to verify only). It uses a complete
+offline cache and ordinary local file entries, not the loopback route. It sets only Trial's
+prelaunch to repeat that install; no client is started. Logs are under `.tmp/owner-runs/`.
+The owner-only local delivery ruling closes the family-hosting question (dk-85261627). See
 [NeoForge migration](neoforge-migration.md#private-alex-ports-devtrial-only-2026-10-30).
