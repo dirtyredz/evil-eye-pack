@@ -1,7 +1,7 @@
 // priority: -13
 // Pack-test probe (test server only). Evidence about the script runtime itself, so assumptions the pack's
 // scripts rely on are observed in a live server rather than inferred from docs:
-//   global: a server script adding a property to a startup-created object, and setting a top-level value
+//   global: a server script adding a property to a startup-created object
 //   nativeEvents: a NativeEvents listener registered with a class-name string (startup_globals.js) fired
 //   jsonIo: the shape JsonIO.read returns for a pack config
 //   stacks: encoded data components of chosen items' creative-tab stacks (for the EMI curation rules)
@@ -36,7 +36,9 @@
   function collect(server) {
     var data = { global: {}, nativeEvents: ns.nativeEvents || null, jsonIo: {}, stacks: {} }
     try { ns.nestedProbe = 1; data.global.nestedWrite = ns.nestedProbe === 1 ? 'allowed' : 'ignored' } catch (e) { data.global.nestedWrite = 'refused: ' + e }
-    try { global.packTestTopLevelProbe = 1; data.global.topLevelWrite = global.packTestTopLevelProbe === 1 ? 'allowed' : 'ignored' } catch (e) { data.global.topLevelWrite = 'refused: ' + String(e).slice(0, 200) }
+    // A top-level write is not attempted: on KubeJS 2101 it aborts the whole ServerEvents.loaded handler
+    // ("'global' cannot be assigned to in client or server scripts", pack-test boot 4, 2026-10-29), which
+    // try/catch does not stop.
     try {
       var j = JsonIO.read('kubejs/config/dedup.json')
       data.jsonIo = { javaType: String(j && j.getClass ? j.getClass().getName() : typeof j), hiddenOnlyIsArray: Array.isArray(j.hiddenOnly), hiddenOnlyLength: j.hiddenOnly ? j.hiddenOnly.length : null, keys: Object.keys(j).length }

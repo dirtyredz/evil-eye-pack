@@ -11,7 +11,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { walkJar } = require('../../data_io/walk.cjs');
-const { classify, dataConditions } = require('../../data_io/resource_layout.cjs');
+const { classify, dataConditions, layoutFor } = require('../../data_io/resource_layout.cjs');
+const { readStamp } = require('../../server_smoke/runtime.cjs');
 const { packConfigFiles } = require('../verdict/policy.cjs');
 const { declaredOutputs } = require('../recipe_json.cjs');
 const { lootRefs, worldgenBlocks, parseLenient } = require('./extract.cjs');
@@ -80,13 +81,17 @@ function shippedMentions(serverDir, namespaces) {
   return out;
 }
 
-// Scans the sources and returns the evidence object (JSON-serialisable).
-function scanResources(sources, { removedNamespaces = [] } = {}) {
-  const ev = { schema: 1, sources: sources.map((s) => s.name), recipes: {}, loot: {}, tags: { items: {}, blocks: {}, fluids: {} }, worldgenBlocks: [], malformed: [], removedRefs: [] };
+// Scans the sources and returns the evidence object (JSON-serialisable). minecraft: the server's version;
+// data in the other version's folders (a 1.21 jar still shipping loot_tables/) is never loaded by that
+// game, so it is recorded in ignoredLayout instead of being treated as pack data.
+function scanResources(sources, { removedNamespaces = [], minecraft = null } = {}) {
+  const ev = { schema: 1, sources: sources.map((s) => s.name), recipes: {}, loot: {}, tags: { items: {}, blocks: {}, fluids: {} }, worldgenBlocks: [], malformed: [], removedRefs: [], ignoredLayout: [] };
+  const runtimeLayout = minecraft ? layoutFor(minecraft) : null;
   const wg = new Set();
   const layouts = new Set();
   const visit = (rel, text, source) => {
     const at = classify(rel, KINDS);
+    if (runtimeLayout && at.layout !== 'both' && at.layout !== runtimeLayout) { ev.ignoredLayout.push({ file: rel, source, kind: at.kind, id: at.id }); return; }
     layouts.add(at.layout);
     let json;
     try { json = parseLenient(text).json; } catch (e) {
@@ -136,7 +141,8 @@ function assertNonEmpty(ev) {
 // Raw resources, shipped-config mentions and the pack's own policy files, read from the staged server.
 function writeResourceScan(stageDir, evidenceDir, data) {
   fs.mkdirSync(path.join(evidenceDir, 'pack-config'), { recursive: true });
-  const ev = assertNonEmpty(scanResources(serverSources(stageDir), { removedNamespaces: data.policy.removedMods }));
+  const stamp = readStamp(stageDir);
+  const ev = assertNonEmpty(scanResources(serverSources(stageDir), { removedNamespaces: data.policy.removedMods, minecraft: stamp ? stamp.minecraft : null }));
   ev.shipped = shippedMentions(stageDir, data.policy.removedMods);
   fs.writeFileSync(path.join(evidenceDir, 'resources.json'), JSON.stringify(ev));
   for (const f of packConfigFiles(data.policy)) fs.copyFileSync(path.join(stageDir, f), path.join(evidenceDir, 'pack-config', path.basename(f)));

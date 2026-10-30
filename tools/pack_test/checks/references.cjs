@@ -94,6 +94,16 @@ function checkReferences(resources, live, { removed = [], required = [], shipped
     if (m.kind === 'recipes') continue; // reported by the recipe check
     findings.push(finding('resource-malformed-json', m.id, m.source, `${m.kind}: ${m.error}`));
   }
+  // A jar still shipping the other version's data folders: the game never loads those files (mob drops,
+  // block drops or recipes the mod meant to add are simply absent). One info finding per jar and kind.
+  const ignored = new Map();
+  for (const f of resources.ignoredLayout || []) {
+    const key = `${f.source}|${f.kind}`;
+    if (!ignored.has(key)) ignored.set(key, { source: f.source, kind: f.kind, ids: [] });
+    ignored.get(key).ids.push(f.id);
+  }
+  for (const g of ignored.values()) findings.push(finding('data-ignored-layout', g.source, g.kind, `${g.ids.length} ${g.kind} file(s) in the other Minecraft version's folder layout are never loaded (e.g. ${g.ids.slice(0, 3).join(', ')})`, 'info'));
+  stats.ignoredLayout = (resources.ignoredLayout || []).length;
   return sectionResult(findings, stats);
 }
 

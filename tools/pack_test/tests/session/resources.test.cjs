@@ -128,3 +128,14 @@ test('an empty raw scan fails visibly instead of passing as clean', () => withDi
   put(stage, 'kubejs/data/x/recipez/r.json', { type: 't' });
   assert.throws(() => writeResourceScan(stage, path.join(root, 'evidence'), { policy: { removedMods: [], curatedLists: [] } }), /found no recipes, loot, item tags.*refusing an empty scan/);
 }));
+
+test('on a 1.21 server, data in 1.20 plural folders is recorded as ignored, never treated as loaded data', () => withDirs((root) => {
+  put(root, 'kubejs/data/x/loot_tables/entities/old.json', { pools: [] });
+  put(root, 'kubejs/data/x/loot_table/entities/new.json', { pools: [] });
+  put(root, 'kubejs/data/x/worldgen/placed_feature/f.json', { feature: 'x:f' });
+  const ev = scanResources([{ kind: 'dir', name: 'kubejs', file: path.join(root, 'kubejs/data') }], { minecraft: '1.21.1' });
+  assert.deepEqual(Object.keys(ev.loot), ['x:entities/new']);
+  assert.deepEqual(ev.ignoredLayout.map((f) => f.id), ['x:entities/old']);
+  const forge = scanResources([{ kind: 'dir', name: 'kubejs', file: path.join(root, 'kubejs/data') }], { minecraft: '1.20.1' });
+  assert.deepEqual(Object.keys(forge.loot), ['x:entities/old']);
+}));
