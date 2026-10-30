@@ -7,11 +7,12 @@
     var p = ns.plan(24, 22, 8)
     p.label(1, 1, ['INTERSTELLARIS', 'Space + Sable', 'Walk south ->', 'Read each label'])
     p.block(0, 0, 0, 'minecraft:light[level=15]')
-    // New metals: ores in the overworld, metal blocks from them.
+    // Pack metals: silver uses the existing-world Ice and Fire survivor.
     var ores = ['titanium', 'platinum', 'silver', 'tungsten']
     for (var i = 0; i < ores.length; i++) {
-      p.block(1 + i * 2, 0, 4, 'interstellaris:' + ores[i] + '_ore')
-      p.block(1 + i * 2, 1, 4, 'interstellaris:' + ores[i] + '_block')
+      var owner = ores[i] === 'silver' ? 'iceandfire:' : 'interstellaris:'
+      p.block(1 + i * 2, 0, 4, owner + ores[i] + '_ore')
+      p.block(1 + i * 2, 1, 4, owner + ores[i] + '_block')
     }
     p.label(9, 4, ['NEW METALS', 'Ore below, block on top', 'Ti Pt Ag W', 'Textures OK?'])
     // Planet surfaces players reach by rocket.

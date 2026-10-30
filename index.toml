@@ -4502,7 +4502,7 @@ hash = "f67008197a69ca92125d4734f5df10c6aca1d6f50f14c2efd101215aff7391aa"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/interstellaris_space.js"
-hash = "176bea491b57fa5a8e8382fb7215ee6bc0bb8b30d7f20bf059e35904d1d2822f"
+hash = "b7b3692b57c5b5c4a553c1b627b5e330b0bf48e8082afaaee78d123b74b3a4cb"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/mekanism_machines.js"

@@ -80,7 +80,7 @@ and a universal cable along the backs of an enrichment chamber (16 iron ore) and
 both pre-charged with two operations' energy; both make Ender IO iron dust, the dedup survivor. A heat generator with 32 coal stands apart. Fission,
 turbines and other multiblocks are not built.
 
-`interstellaris_space` (24 × 22 × 8): titanium, platinum, silver and tungsten ore under their metal blocks,
+`interstellaris_space` (24 × 22 × 8): titanium, platinum, silver and tungsten ore under their metal blocks (silver uses the Ice and Fire survivor),
 four planet ground blocks, and a 3 × 3 iron pad floating four blocks up. In game, run
 `/sable assemble area <corner> <corner>` on the pad to watch Sable turn it into a falling physics body.
 Rockets, the Fabrication Unit and multiblock machines need a player (research, launch) and are not built.
@@ -199,3 +199,10 @@ to pause both hoppers; setting `enabled=false` alone is undone by neighbour upda
 rebuild restores automatic flow. Planet travel waits at most 20 ticks for destination entity
 tracking after a successful teleport. Full `--all` acceptance: 1277/1277 assertions in
 `jobs/2026-10-30-alexsmobs-pin/showcase-all-arrival`; diamond investigation: dk-54d65c18.
+
+Ice and Fire integration acceptance (2026-10-30): `jobs/2026-10-30-iaf-integration/showcase-all-ready`
+passes 1279/1279 (storage 657, space 130, Mekanism 106, flat-world 2, command forms 384).
+The space fixture waits for each destination to be entity-ticking before teleporting, then
+still checks exactly one traveller arrives. The first integration run had a successful teleport
+and the stand saved at moon (8.5, 93, 8.5), but its immediate destination query timed out.
+The readiness check adds two assertions, with bounded failure rather than skipped checks.

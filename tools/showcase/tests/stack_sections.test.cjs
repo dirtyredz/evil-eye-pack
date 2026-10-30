@@ -34,8 +34,8 @@ test('Mekanism: the creative cube faces its cable line, and every machine backs 
 test('Interstellaris: ore under each metal block, and a free-floating Sable pad with air beneath', () => {
   const ns = load(), p = ns.validate(ns.sections.interstellaris_space());
   for (const [i, metal] of ['titanium', 'platinum', 'silver', 'tungsten'].entries()) {
-    assert.equal(at(p, 1 + i * 2, 0, 4).state, `interstellaris:${metal}_ore`);
-    assert.equal(at(p, 1 + i * 2, 1, 4).state, `interstellaris:${metal}_block`);
+    assert.equal(at(p, 1 + i * 2, 0, 4).state, `${metal === 'silver' ? 'iceandfire' : 'interstellaris'}:${metal}_ore`);
+    assert.equal(at(p, 1 + i * 2, 1, 4).state, `${metal === 'silver' ? 'iceandfire' : 'interstellaris'}:${metal}_block`);
   }
   const pad = p.blocks.filter((b) => b.state === 'minecraft:iron_block');
   assert.equal(pad.length, 9);
@@ -50,7 +50,7 @@ test('every block the Phase 7 sections place is registered by a pinned jar (bloc
   for (const name of ['mekanism_machines', 'interstellaris_space']) for (const b of ns.sections[name]().blocks) wanted.add(b.state.split('[')[0]);
   const states = new Set();
   for (const jar of pinnedJars(defaultJarDirs())) {
-    if (!/^(Mekanism|Interstellaris)/.test(jar.filename)) continue;
+    if (!/^(Mekanism|Interstellaris|iceandfire)/.test(jar.filename)) continue;
     for (const e of listEntries(jar.bytes)) { const m = /^assets\/([^/]+)\/blockstates\/(.+)\.json$/.exec(e.name); if (m) states.add(`${m[1]}:${m[2]}`); }
   }
   const missing = [...wanted].filter((id) => !id.startsWith('minecraft:') && !states.has(id));

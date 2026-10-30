@@ -304,3 +304,10 @@ including griefing. First boot logs missing-config errors before writing default
 reconciled JSON plus `config/jupiter.json`. Legacy biome JSON filters also have no CE reader;
 CE uses biome tags and structure sets. Do not convert an old 1/N per-chunk spawn rate into
 a CE per-structure-candidate probability without accounting for spacing (dk-e7b276f4).
+
+- **Planet terrain loaded does not mean entity sections are ready.** A height lookup can load
+  moon terrain while the asynchronous destination tracker is still catching up. The showcase
+  now waits on `ServerLevel.isPositionEntityTicking(BlockPos)` before teleporting (up to 200
+  ticks), then retains its exact arrival assertion. Integration evidence: the failed run saved
+  the traveller in the correct moon region at (8.5, 93, 8.5); the readiness run passes all 1279
+  assertions (`jobs/2026-10-30-iaf-integration/showcase-all-ready`).
