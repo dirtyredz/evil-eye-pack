@@ -37,6 +37,9 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |   |-- mod-map/
 |   `-- owner/
 `-- tools/
+    |-- client_mixin/
+    |   |-- probe/
+    |   `-- tests/
     |-- data_io/
     |   `-- tests/
     |-- world_trial/
@@ -111,6 +114,10 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override. On the NeoForge branch it also restores 1.21-path copies of data mods ship only in 1.20 folders (MCA, Citadel, Waddles, Interiors, three block tags; see `docs/neoforge-migration.md`)
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
 - `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte hashing (`hashBytes`, `sha256`).
+- `tools/client_mixin/` — offline CLIENT mixin audit: `stage.cjs` copies pinned pack files and cached
+  client libraries, `run.cjs` compiles and supervises the bounded JVM, `verdict.cjs` rejects incomplete
+  evidence. `probe/ClientMixinLaunch.java` uses NeoForge's production client discovery and transformer
+  without entering Minecraft's main method; `tests/` covers staging arguments and verdicts.
 - `tools/world_trial/` — guarded independent snapshots (`copy.cjs`, `snapshot.cjs`), offline
   NBT/region inventories (`nbt.cjs`, `inventory.cjs`, domain views in `semantics.cjs`), conservative semantic comparison
   (`compare.cjs`) and isolated headless boot/restart (`boot.cjs`, `probe/`). `run.cjs` is
@@ -124,7 +131,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `tools/malware_guard/` — offline content scanner, instance drift and metadata source/known-bad gate; opt-in cached Modrinth status, approval CLI, `data/` policies and synthetic `tests/`. Local reports/cache are ignored under `.local/`.
 - `tools/dedup/` — pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions; `hidden_reasons.json` holds the reason for every `hiddenOnly` id (see docs/development.md "Known exceptions registry").
 - `tools/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
-- `tools/malware_guard/tests/`, `tools/packwiz/tests/`, `tools/server_smoke/tests/`, `tools/pack_test/tests/`, `tools/showcase/tests/`, `tools/mod_map/tests/`, `tools/script-run/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs tools/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs tools/world_trial/tests/*.cjs`)
+- `tools/malware_guard/tests/`, `tools/packwiz/tests/`, `tools/server_smoke/tests/`, `tools/pack_test/tests/`, `tools/showcase/tests/`, `tools/mod_map/tests/`, `tools/script-run/` — Node test suites, run together with the `tools/emi_curation/tests/` ones (`node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs tools/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs tools/world_trial/tests/*.cjs tools/client_mixin/tests/*.cjs`)
 - `tools/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
 - `tools/showcase/` — offline headless runner, probe lifecycle, assertion helpers, shared terrain and registry-wide command checks; `checks/` holds section behaviour checks and `tests/` the focused Node VM/runner tests.
 - `tools/server_smoke/` — unshipped: headless Forge server compatibility smoke (`smoke.cjs`), its environment, setup, boot, process, watchdog, verdict and log-analysis modules, and known boot noise

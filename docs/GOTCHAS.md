@@ -1,5 +1,26 @@
 # Gotchas
 
+## Client mixin verification
+
+- Dedicated-server acceptance never applies CLIENT-only mixins. DRT 0.2.0 demonstrated the
+  gap: its JEI injection produces a `VerifyError` only when `RecipeTransferManager` loads.
+- Loading a class can defer verification. The client audit reflects constructors with
+  `-Xverify:all`; it never initializes targets or calls Minecraft's main. Reflecting every
+  method also resolves optional method-signature APIs (Create's ComputerCraft integration),
+  producing false missing-class failures; constructor reflection avoids that extra resolution.
+  A startup log without a completed target sweep is not a pass.
+- NeoForge's client classpath needs the mapped Minecraft `client-srg` and `client-extra`
+  jars as well as its patched client jar. Sodium probes adapters before the early-window
+  decision, so the cached Windows native jars are needed even without a display.
+- A diagnostic exclusion changes the mod set. It cannot qualify the full pinned pack for
+  owner hand-off. Retain both input manifests and the unmodified-pin failure evidence.
+- The first complete sweep also found Thirst's `jade.MixinFluidView` redirect failing
+  with `(0/1) succeeded`, 15 explicit missing-target warnings and seven unapplied targets
+  across Veil, Thirst, CodecUI and Moonlight configs. Some missing targets are optional
+  integrations; others name present mods/vanilla classes. No blanket exemption exists.
+  Bootstrap-layer classes can link successfully without traversing the game transformer;
+  the final unhandled-target check prevents that from becoming a false pass.
+
 ## Copied-world conversion
 
 - I&F beta-5 stores dragon `Variant` as an integer; CE saves a name. Stable's pinned

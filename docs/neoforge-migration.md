@@ -89,6 +89,31 @@ Polymorph `polymorph-neoforge-1.2.0+1.21.1.jar` (beta) and Dank Storage
 
 ## Runtime-aware testing (Phase 3)
 
+**Pre-handoff gate:** in addition to the fast gate and dedicated-server acceptance,
+run the [client mixin audit](development.md#client-mixin-audit-neoforge-1211) on the
+exact pinned candidate before any owner launch. Require exit 0, a completed nonempty
+CLIENT sweep and no diagnostic exclusions. Server success alone cannot qualify client
+mixins. Keep dk-d4a36381 open until the orchestrator observes the fixed DRT 0.2.1 pin
+passing this check; DRT 0.2.0 is the negative acceptance fixture.
+
+The initial strict audit also exposes a Thirst/Jade injection failure and unresolved
+missing/unapplied targets. Replacing DRT alone is therefore not sufficient to close the
+gate. Evidence is under `jobs/2026-10-31-client-mixin-check/`; preserve these failures
+for follow-up rather than adding a broad baseline or weakening the verifier.
+
+Observed on Valhalla (2026-10-31 brief; JVM time excludes staging/host waits):
+
+| Inputs | Target sweep | Result | JVM time |
+|---|---|---|---|
+| Current pins, DRT 0.2.0 | 266 configs / 1819 targets | FAIL: DRT `VerifyError`, Thirst/Jade injection error, missing/unapplied targets | 265.649 s |
+| Same pins excluding only DRT | 265 configs / 1818 targets | FAIL: DRT error absent; Thirst/Jade, 15 missing-target warnings and 7 unapplied targets remain | 245.498 s |
+
+The requested DRT-excluded **PASS is not established**. Both sweeps completed; neither
+is green. Logs/reports are in `current-pins-final/` and `without-drt/` beneath that job.
+The real JVM verifier fixture and Node fast gate pass. No visible game window was opened.
+ANU was not run; the custom launch target has no display requirement, but needs copied
+client libraries including Windows natives and the same private pins.
+
 `pack.toml [versions]` decides the runtime (`tools/server_smoke/runtime.cjs`). Each loader runtime
 has its own loader base, local stage, cached worlds and ANU lane:
 

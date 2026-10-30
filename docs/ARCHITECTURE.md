@@ -1,5 +1,30 @@
 # Architecture
 
+## Client mixin audit
+
+`tools/client_mixin/run.cjs` stages an independent CLIENT classpath and the exact pack pins,
+then adds an unshipped ModLauncher launch service derived from NeoForge's production client
+handler. The custom launch target selects the dummy early-window provider and replaces
+Minecraft's main method with target verification. Sodium's adapter discovery still runs;
+cached native libraries are required, but no game window or OpenGL context is created by the
+audit entry point.
+
+Mixin prepares configurations with the production mod set, CLIENT side, plugins, access
+transformers and coremods. The probe enumerates the selected configurations' target sets,
+loads each target without static initialization and reflects its constructors to force
+JVM verification (`-Xverify:all`). It checks unhandled targets after the sweep. The small
+reflection adapter into Mixin's processor is specific to the locked Mixin/NeoForge versions;
+an API change fails the audit instead of silently reducing coverage. This verifies transformed
+classes, not client rendering, mod construction, resource reload or gameplay. Constructor
+reflection verifies all bytecode without resolving unrelated optional method-signature types.
+A real JVM fixture checks invalid method bytecode even in a class with no constructors,
+valid bytecode, missing targets, absent optional method types and no static initialization.
+
+The Node supervisor requires a nonempty completed CLIENT report and zero process/verifier/
+mixin errors. Timeout or absent completion is incomplete evidence. Inputs are read-only;
+all libraries, mods, configs, logs and compiler outputs are copied into a new artifact run.
+The host guard waits for the Minecraft JVM slot and the process scope stops owned children.
+
 ## World conversion trials
 
 `tools/world_trial/run.cjs` confines outputs to an artifact job. Copy guards reject protected

@@ -51,7 +51,7 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs tools/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs tools/world_trial/tests/*.cjs
+node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs tools/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs tools/world_trial/tests/*.cjs tools/client_mixin/tests/*.cjs
 # NeoForge migration lock (offline): node tools/packwiz/migrate.mjs check  (see neoforge-migration.md)
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
@@ -64,7 +64,42 @@ git diff --check
 git worktree list --porcelain
 ```
 
-Tooling needs Node 22. There is no packwiz CLI and no build step.
+Tooling needs Node 22. There is no packwiz CLI or pack build step; the client audit
+below also uses JDK 21 to compile its unshipped launch service.
+
+## Client mixin audit (NeoForge 1.21.1)
+
+Before handing a migration build to the owner, run the isolated client transformer check:
+
+```powershell
+node tools/client_mixin/run.cjs --out C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/<job>/client-audit --cache C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache
+node --test tools/client_mixin/tests/*.cjs
+```
+
+`--out` must be a new directory below the artifacts `jobs/` root (`SMOKE_ARTIFACTS`
+overrides the root on another host). `--cache` supplies a complete offline pack cache,
+including private pins. `--launcher` defaults to `C:/Users/dirty/MultiMC`: only its
+cached libraries and Minecraft metadata are read, never its instances. `--jdk` defaults
+to `C:/Tools/evil-eye-pack/temurin-21`; Java 21's compiler builds the small audit service
+using cached dependencies. Nothing downloads, launches MultiMC or opens a game window.
+
+The check waits up to 45 minutes for an idle Minecraft JVM slot, then bounds the audit
+at five minutes. It keeps `inputs.json`, `java.args`, `console.log`, `report.json` and
+the disposable game directory. `fixture.log` records the real JVM verifier regression
+(including an invalid method in a class without constructors and an absent optional
+method-signature type). Exit 0 requires a complete nonempty CLIENT target sweep;
+1 means detected failures; 2 means setup failure, timeout or incomplete evidence.
+All owned processes stop on completion or interruption.
+
+For differential diagnosis only, append `--exclude <exact-pinned-jar-filename>` to a
+second run with a fresh output path. Exclusions are recorded and never qualify the
+full pack. Use the same cache for both runs. Include `tools/client_mixin/tests/*.cjs`
+in the fast gate after changing this tool. The live fail/pass pair is its named
+acceptance check, separate from the dedicated-server acceptance suite.
+
+The entry point needs no display and can use the same staged inputs on headless
+Windows ANU with adjusted paths. ANU execution is not automatically dispatched or
+provisioned; a Valhalla result does not claim an observed ANU pass.
 
 For showcase changes, the focused fast gate is:
 
