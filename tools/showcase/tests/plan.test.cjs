@@ -74,8 +74,10 @@ test('registration gates the whole command tree at permission level two', () => 
   assert.equal(typeof nodes.args.execute, 'function');
   assert.equal(typeof nodes.args.suggest, 'function');
 });
+// Command-form tests pin their expectations to one section; other registered sections are layout-tested elsewhere.
+const only = (ns, name) => { for (const k of Object.keys(ns.sections)) if (k !== name) delete ns.sections[k]; return ns; };
 test('bare, named, clear, list and unknown forms (including trailing space) behave', () => {
-  const ns = load(), nodes = loadCommand(ns), calls = [];
+  const ns = only(load(), 'contraption_storage'), nodes = loadCommand(ns), calls = [];
   ns.build = (source, plan, origin, name, clear) => { calls.push({ origin, name, clear }); return { origin, removed: { total: 2, summary: '2 minecraft:slime' } }; };
   const source = fakeSource();
   assert.equal(nodes.showcase.execute({ source }), 1); assert.equal(calls.length, 1);
@@ -96,7 +98,7 @@ test('bare, named, clear, list and unknown forms (including trailing space) beha
   assert.match(source.log.fail[0], /unknown showcase "nope"\. Available: contraption_storage/);
 });
 test('several sections are laid side by side without overlap', () => {
-  const ns = load(), nodes = loadCommand(ns), calls = [];
+  const ns = only(load(), 'contraption_storage'), nodes = loadCommand(ns), calls = [];
   ns.register('zz_second', () => ns.plan(10, 12, 4));
   ns.build = (source, plan, origin, name) => { calls.push({ origin, name, plan }); return { origin, removed: { total: 0, summary: '' } }; };
   assert.equal(nodes.showcase.execute({ source: fakeSource() }), 1);
@@ -105,7 +107,7 @@ test('several sections are laid side by side without overlap', () => {
   assert.equal(calls[1].origin.z, calls[0].origin.z); assert.equal(calls[1].origin.y, calls[0].origin.y);
 });
 test('suggestions complete section names, list and clear', () => {
-  const ns = load(), nodes = loadCommand(ns);
+  const ns = only(load(), 'contraption_storage'), nodes = loadCommand(ns);
   const suggestions = remaining => { const got = []; const out = { suggest: s => got.push(s), buildFuture: () => got };
     nodes.args.suggest({}, { getRemaining: () => remaining, getStart: () => 0, createOffset: () => out }); return got; };
   assert.deepEqual(suggestions(''), ['list', 'clear', 'contraption_storage']);

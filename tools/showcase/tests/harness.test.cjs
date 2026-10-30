@@ -47,6 +47,7 @@ test('shared command forms cover several registry sections with distinct row ori
     return { removed: { total: 0, summary: '' } };
   };
   vm.runInContext(production('command.js'), ctx);
+  vm.runInContext(script('helpers.js'), ctx); // the real runCommand; makeHelpers is stubbed below
   const source = (at = new Vec3(0, 0, 0), permission = 2) => ({ getPosition: () => at, getRotation: () => ({ y: 0 }), withPosition: p => source(p, permission), withRotation() { return this; }, withPermission: p => source(at, p), hasPermission: n => permission >= n, sendSuccess() {}, sendFailure() {} });
   const server = { createCommandSourceStack: () => source(), getCommands: () => ({ performPrefixedCommand: (who, text) => who.hasPermission(2) ? execute({ source: who, args: text.slice('evileye showcase'.length) }) : 0 }) };
   ctx.global.evilEyeShowcaseCheck.makeHelpers = h => {
@@ -93,4 +94,18 @@ test('helpers look up NeoForge block capabilities on the level when NeoForge is 
   assert.equal(h.handler(0, 0, 0), handler);
   assert.equal(h.itemHandler(0, 0, 0, 'up'), null);
   assert.deepEqual(seen, [['neo-item-block', 1, null], ['neo-item-block', 1, 'up']]);
+});
+
+test('command results come from the 1.21 result callback, or from the 1.20 return value', () => {
+  const ctx = vm.createContext({ global: { evilEyeShowcaseCheck: {} } });
+  vm.runInContext(script('helpers.js'), ctx);
+  const run = ctx.global.evilEyeShowcaseCheck.runCommand;
+  // Minecraft 1.21: performPrefixedCommand returns nothing; the callback carries (success, value).
+  const source = (cb = null) => ({ withCallback: (fn) => source(fn), cb });
+  const modern = (value, success = true) => ({ getCommands: () => ({ performPrefixedCommand: (who) => { who.cb(success, value); } }) });
+  assert.equal(run(modern(3), source(), 'sable info @e'), 3);
+  assert.equal(run(modern(5, false), source(), 'x'), 0, 'a failed command counts as 0');
+  assert.equal(run({ getCommands: () => ({ performPrefixedCommand: () => undefined }) }, source(), 'x'), 0, 'no callback result counts as 0');
+  // Forge 1.20: the integer is returned directly (and a source without withCallback still works).
+  assert.equal(run({ getCommands: () => ({ performPrefixedCommand: () => 1 }) }, {}, 'evileye showcase'), 1);
 });

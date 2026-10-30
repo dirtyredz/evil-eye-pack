@@ -3733,6 +3733,14 @@ file = "kubejs/server_scripts/showcase/sections/contraption_storage.js"
 hash = "f67008197a69ca92125d4734f5df10c6aca1d6f50f14c2efd101215aff7391aa"
 
 [[files]]
+file = "kubejs/server_scripts/showcase/sections/interstellaris_space.js"
+hash = "f15354b010e459a9467c20dc009b0ca344609332e1f8bf9569c7d2b4d138d833"
+
+[[files]]
+file = "kubejs/server_scripts/showcase/sections/mekanism_machines.js"
+hash = "4d06580533987f3d03d0e47b2691dfcb3caa2ea02c899cb312edf8a7fca64294"
+
+[[files]]
 file = "kubejs/server_scripts/tag_compat.js"
 hash = "ed46363bccd87a9482d8955cb5c95f362110ffbcd4cb3c7de4cfc60265d758b9"
 

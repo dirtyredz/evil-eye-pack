@@ -16,7 +16,7 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 | 4 Data scanners and metadata | dk-2978dc2f | done 2026-10-29 (fixtures; real target evidence arrives in Phase 6) |
 | 5 Activate pins, swaps, configs, KubeJS 2101, dedup | dk-960e6d58 | done 2026-10-29 (static; first-boot checks listed below) |
 | 6 First clean target boot | dk-626ee53d | done 2026-10-30 (ANU pack test PASS; see below) |
-| 7 Interstellaris stack | — | todo |
+| 7 Interstellaris stack | dk-7bcd9303 | done 2026-10-30 (ANU boots green; showcase checks below) |
 | 8 Seven owned ports | — | todo |
 | 9 World conversion on a copy | — | todo |
 | 10 Qualify 100% and cutover | — | todo |
@@ -229,3 +229,50 @@ reported it as info; since 2026-10-30 it is restored or reasoned, and anything e
   soul vial and broken spawner shown in CLEAN, and `/kubejs reload` keeping state.
 - **Client-only configs** (`*-client.toml`, Default Options keys): a server never loads them.
 - **Visuals:** the showcase and storage transfers, which the headless checks cannot judge.
+
+## Interstellaris stack (Phase 7)
+
+Added in dependency order as lock `additions` (`dispositions.json`), each resolved, applied, malware-scanned and
+booted on ANU before the next. Evidence: `artifacts/evil-eye-pack/jobs/2026-10-30-neoforge-phase7/boots/`.
+
+| Boot | Change | Outcome |
+|---|---|---|
+| 1 | Dank Recipe Transfer 0.2.0 pin | PASS |
+| 2 | 1.20-layout data restored + guard | PASS (lost 0) |
+| 3 | Mekanism + Generators 10.7.19.85, no dedup yet (diagnostic) | 305 findings: 285 Mekanism chemical outputs the check read as items, 6 acquisition (Mekanism output keys), 14 duplicate groups |
+| 4 | Mekanism with dedup, chemical registry in the probe | PASS |
+| 5 | Sable 2.0.6 | one new error group (Dragons Plus physics entry for an unregistered block) |
+| 6 | a `neoforge:conditions` override for it | same error: Sable's loader ignores conditions; recorded as known noise. Re-analysis of boot 5 (same index hash as the commit) PASS |
+| 7 | Interstellaris 0.6.1 beta | 15 acquisition gaps (structure, Java-made, disabled teleporter), reasoned; re-analysis PASS |
+
+| Jar | Source | sha256 (lock) |
+|---|---|---|
+| `Mekanism-1.21.1-10.7.19.85.jar` | Modrinth Ce6I4WUE / 5KzzycBT (main jar, not `-api`) | `004dbc9f…4f43` |
+| `MekanismGenerators-1.21.1-10.7.19.85.jar` | Modrinth OFVYKsAk / a6gl7srE | `0e5783b1…4ba4ac` |
+| `sable-neoforge-1.21.1-2.0.6.jar` | Modrinth T9PomCSv / fg9dTRz9 (bundles Veil 4.3.2, Sable Companion 1.6.0, Rapier natives) | `9c199157…a617c2` |
+| `Interstellaris-0.6.1-beta-neoforge-1.21.1.jar` | CurseForge 1726656 / 9345861 (length + CDN MD5) | `61dee228…009644` |
+
+**Dedup** (see DECISIONS 2026-10-30): survivors are the items already in the owner's worlds. Mekanism dusts go to
+Ender IO/Create/CCA, uranium to Extreme Reactors' yellorium (Mekanism uranium worldgen off), Mekanism steel is
+the only steel (the Dark Steel stand-in is gone), Interstellaris' iron/gold plates, gold wire and silicon go to
+Create sheets, CCA gold wire and AE2 silicon. Create crushed tin/lead/osmium and ER's Mekanism fluid port are
+unhidden. Silver (Interstellaris vs Ice and Fire) waits for the port: dk-d2c9d23b.
+
+**Sable mixin triage.** Static: `jobs/2026-10-30-neoforge-phase7/tools/mixin-overlap.cjs` parses every pinned jar's
+mixin configs and annotations (3218 mixin classes, 530 in Sable/Veil/Companion/Interstellaris) and finds 160
+shared target classes. Only four same-method overlaps can actually clash (an `@Overwrite`, or two call-replacing
+injectors on the same call):
+
+| Target | Stack | Other | Verdict |
+|---|---|---|---|
+| `LevelRenderer#isSectionCompiled`, `#renderSectionLayer`, `#setupRender` (client) | Sable overwrite/redirect | Sodium overwrites | Sable ships separate vanilla and Sodium render paths and its mixin plugin picks one; it declares Sodium ≥ 0.8.12 (pack 0.8.13). Owner client check |
+| `PlayerList#broadcast` (server) | Sable overwrite | Ars Nouveau, Steam 'n' Rails head injects | Applied without error on every boot (PlayerList loads at server start) |
+
+The rest are injects that stack (Create, Iris, Sodium, Railways, Entity Model/Texture Features, ImmediatelyFast,
+ModernFix, Chloride). Interstellaris' `CraftingMenu` redirect (research gate on `setRecipeUsed`) and Polymorph's
+(`getRecipeFor`) touch different calls; the crafting probe passes. Runtime: boots 5 and 7 logged no mixin
+failure, and the Create contraption showcase runs with Sable present (below).
+
+**Interstellaris facts:** it gates crafting and its Fabrication Unit on per-player research
+(`ResearchHelper.canUseRecipe`), and disables Mekanism's teleporters (dk-aef6fa66). Sable's Rapier natives are an
+LZ4 archive the malware guard cannot open (dk-59b7f4a1).

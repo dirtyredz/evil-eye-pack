@@ -104,7 +104,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/config/dedup_sources.json` — generated recipe removals, survivor tags and block-tag removals derived from pinned jar block loot tables.
 - `kubejs/data/*/recipes/`, `kubejs/data/*/loot_tables/` — generated dedup overrides alongside hand-written data recipes.
 - `kubejs/assets/emi/index/stacks/dedup.json` — generated permanent EMI removals.
-- `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override
+- `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override. On the NeoForge branch it also restores 1.21-path copies of data mods ship only in 1.20 folders (MCA, Citadel, Waddles, Interiors, three block tags; see `docs/neoforge-migration.md`)
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
 - `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte hashing (`hashBytes`, `sha256`).
 - `tools/mod_map/` — offline mod map. `build.mjs` (entry) and `run.cjs` (orchestration, artifact guards, saved-evidence replay) at the top; `inventory/` pinned-jar inventory and the `mods.toml`-only reader; `model/` dependency graph, classification, cost, families, categories and their checked-in data (`overrides.json` reasoned kind/family corrections, undeclared dependencies and pack-wide fixes; `categories.json` family/standalone ID → category); `capture/` the one-boot instrumented capture and TRACE timing; `page/` the pure view, HTML builders, document shell, CSS and browser controls. `tests/` mirrors those folders; `tests/fixtures.cjs` is a shared helper outside the `*/*.test.cjs` glob.
@@ -154,6 +154,7 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `tools/malware_guard/drift.cjs`, `gate.cjs` | instance drift over the inventory expected map; source/hash validation, URL identities and known-bad matching |
 | `tools/malware_guard/policy.cjs`, `status.cjs`, `data/` | finding and owner approval kinds with shared keys and report application; separate injected HTTP/cache client; allowlist, owner-added hashes, known-bad projects, validated signature patterns and heuristic limits |
 | `tools/pack_test/session/security.cjs` | collect raw reports with explicit scan/gate/drift kinds before boot; write malware.json without policy |
+| `tools/pack_test/checks/ignored_layout.cjs` | sort mod data shipped only in the other Minecraft version's folders into covered / reasoned (policy `ignoredLayout`) / lost; used by the references check and the pinned-jar data test |
 | `tools/pack_test/checks/security/malware.cjs` | read raw or legacy evidence and apply current approvals once into the offline malware section |
 | `kubejs/server_scripts/dedup.js` | applies authored dedup policy and generated recipe/tag cleanup; hand-written server recipes go in a script named for the concern, not dedup.js |
 | `kubejs/server_scripts/tag_compat.js` | item tag aliases for mods that name tags the 1.21.1 target lacks (Create: Interiors `c:<colour>_dyes`, Create's item `#minecraft:convertable_to_mud`) |
@@ -165,7 +166,8 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `tools/packwiz/migration/fetch.cjs` | platform identity and publisher-verified bytes: Modrinth sha1/sha512, CurseForge length + CDN MD5 via the site's download redirect, GitHub asset sha256 digest, NeoForge Maven `.sha256`; raw API JSON cached in the job folder |
 | `tools/packwiz/migration/manifest.cjs` | the lock contract: source fingerprint, canonical serialization, exactly-once coverage and per-action/source validation |
 | `tools/packwiz/migration/dependencies.cjs` | Maven ComparableVersion ranges, FML's 1.21.1 VersionSupportMatrix, and the closure check (required/optional/incompatible/discouraged, sides, duplicate providers, Forge-only jars) |
-| `tools/packwiz/migration/repoint.cjs` | packwiz-layout metafile rendering, the full write/delete plan with `pack.toml [versions]`, all-or-nothing apply with rollback |
+| `tools/packwiz/migration/repoint.cjs` | packwiz-layout metafile rendering, the full write/delete plan with `pack.toml [versions]`, all-or-nothing apply with rollback; `planApplied` updates an already-applied checkout to a changed lock |
+| `tools/packwiz/migration/source_tree.cjs` | after apply, export the lock's recorded source commit (fingerprint-checked) so `resolve` re-reads the original metafiles |
 | `tools/packwiz/migration/{dispositions,target-lock}.json` | reviewed per-entry decisions, additions, provisional pins and waivers; the generated lock (unshipped: `tools/` is packwiz-ignored) |
 | `tools/packwiz/verify_hashes.cjs` | check the hash chain, index membership and optionally jar hashes |
 | `tools/packwiz/serve.cjs` | serve the containing checkout on `127.0.0.1` over HTTP (not used by MultiMC: local instances install from the file path) |

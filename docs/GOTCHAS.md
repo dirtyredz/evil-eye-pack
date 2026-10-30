@@ -199,6 +199,14 @@
   `main_output`, `secondary_output` and `item_output`. The probe snapshots the `mekanism:chemical`
   registry; the recipe check counts those as `chemicalOutputs`.
 
+- **Minecraft 1.21 `Commands.performPrefixedCommand` returns nothing.** A check reading `=== 1` from it always
+  fails. Showcase checks read the result through the source's `CommandResultCallback`
+  (`global.evilEyeShowcaseCheck.runCommand`, `h.run`), which also accepts Forge 1.20's integer return.
+- **Sable logs every reload** for physics entries naming unregistered blocks, and its loader ignores
+  `neoforge:conditions`, so a gated `kubejs/data` override cannot silence one (boot 6).
+- **Interstellaris gates crafting on research** (a `CraftingMenu` redirect on `setRecipeUsed`) and turns off
+  Mekanism's teleporter recipes. A missing craft in a fresh world may be research, not a broken recipe.
+
 ## KubeJS 2101 (NeoForge migration branch)
 
 - **Only startup scripts may set values on `global`.** A client or server script doing `global.x = ...`

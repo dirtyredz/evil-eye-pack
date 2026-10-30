@@ -73,6 +73,18 @@ and Create 6.0.8.
 The finite supply is deliberately drainable. Inspect the mounted fronts while
 docked; rerun to replenish after the circuit empties the inventories.
 
+## Mekanism and Interstellaris sections (NeoForge branch)
+
+`mekanism_machines` (16 × 12 × 5): a creative energy cube (placed full; a command-placed cube starts empty)
+feeds a universal cable along the backs of an enrichment chamber (16 iron ore) and a crusher (16 iron ingots);
+both make Ender IO iron dust, the dedup survivor. A heat generator with 32 coal stands apart. Fission,
+turbines and other multiblocks are not built.
+
+`interstellaris_space` (16 × 14 × 8): titanium, platinum, silver and tungsten ore under their metal blocks,
+four planet ground blocks, and a 3 × 3 iron pad floating four blocks up. In game, run
+`/sable assemble area <corner> <corner>` on the pad to watch Sable turn it into a falling physics body.
+Rockets, the Fabrication Unit and multiblock machines need a player (research, launch) and are not built.
+
 ## Roundwood native showcase
 
 Roundwood 0.13.3 owns `/roundwood showcase`; it is not an `/evileye` section.
@@ -133,6 +145,8 @@ completion always fail.
 
 | Section | Headless assertions | Owner's eyes |
 |---|---|---|
+| `mekanism_machines` | Hostile-terrain build; full plan; creative cube placed full; cable powers both machines; enrichment chamber and crusher output Ender IO iron dust and never Mekanism dust; ore consumed; heat generator burns coal into stored energy; cube stays full; running rebuild resets contents; clear; exterior shell unchanged | Machine fronts animate, cable glow, generator flames |
+| `interstellaris_space` | Hostile-terrain build; full plan; the Moon, Mars, Venus, Enceladus and Io dimensions load; Moon and Mars generate solid ground and receive a teleported traveller; `/sable assemble area` captures the pad, the sub-level falls from pad height onto the floor (server physics), `/sable sub_level remove` removes it; rebuild; clear; exterior shell unchanged | Ore/metal textures, the falling pad's rendering (Sable with Sodium/Iris), rockets and travel |
 | `contraption_storage` | First build on hostile terrain (hill, tree, water, floor hole, chest, fence) with an unnamed mob and item removed, a named mob refused without any change, a mob outside untouched and the exterior shell identical (shared `tools/showcase/terrain.js`); all blocks/states/prefills and complete floor/air volume; quantity flag; one glue and no dropped items; exterior shell; all six sided + unsided drawer handlers; idle motor; lever start/stop; five-block/three-inventory assembly; PSI docking; exact insert/extract per inventory; compacting ratios; disassembly preservation; automatic input/output hopper circuit; rotation; idle/active rebuild; clear | Drawer icons/counts at 8/24/48 blocks and front/back views; moving fronts; opening moving drawer/chest menus |
 
 The exterior snapshot covers all faces immediately outside the volume, including

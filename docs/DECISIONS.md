@@ -2,7 +2,7 @@
 
 Newest first.
 
-## 2026-10-30 - NeoForge 1.21.1 migration: Mekanism joins with true dedup
+## 2026-10-30 - NeoForge 1.21.1 migration: the Interstellaris stack joins with true dedup
 
 - **Survivors are the items already in the owner's worlds.** Mekanism is new, so its copies retire:
   coal, copper, gold, iron, lapis, quartz and tin dusts go to Ender IO's `powdered_*`, obsidian dust to
@@ -21,7 +21,19 @@ Newest first.
 - **Create's crushed tin, lead and osmium are no longer hidden.** Mekanism's ores give them producers
   (Create's own compat crushing); Create's Mekanism-gated crushed-uranium smelting replaced `uranium.js`.
 - **Large Ore Deposits stays off for osmium, tin and lead** for now: Mekanism generates them itself, and
-  enabling deposits is a separate worldgen choice (open question in `docs/neoforge-migration.md`).
+  enabling deposits is a separate worldgen choice (dk-67a5b4cf).
+- **Interstellaris' generic parts retire too**: iron and gold plates to Create's sheets, gold wire to Create
+  Crafts & Additions', silicon to AE2's (as Ender IO's was). Its own metals (titanium, platinum, silver,
+  tungsten, aluminium) have no other provider and stay. Silver is revisited when Ice and Fire returns
+  (dk-d2c9d23b).
+- **Interstellaris' own design is kept**: research-gated crafting and disabled Mekanism teleporters
+  (dk-aef6fa66 asks the owner). Its structure, Java-made and archaeology items are reasoned acquisition
+  exclusions, not fixes.
+- **Upstream data errors that only log are noise, not patches**, when a pack override cannot reach them:
+  Sable's physics loader ignores `neoforge:conditions`, so Dragons Plus' entry for a block it registers only
+  with Create Simulated stays a known-noise line.
+- **1.20-layout data a 1.21 jar ships is restored or reasoned, never ignored** (`kubejs/data`, policy
+  `ignoredLayout`); a fast-gate test checks every pinned jar so a new jar cannot silently lose content.
 
 ## 2026-10-30 - NeoForge 1.21.1 migration: first clean boot
 

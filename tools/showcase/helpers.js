@@ -1,5 +1,20 @@
 // priority: -5
 // Fixture access and assertions shared by section and command-form checks.
+// A command's integer result. Forge 1.20's performPrefixedCommand returns it; Minecraft 1.21's returns
+// nothing, so the result arrives through the source's CommandResultCallback (onResult(success, value)).
+global.evilEyeShowcaseCheck.runCommand = function (server, source, text) {
+  var out = { value: null }
+  var withResult = source
+  try {
+    withResult = source.withCallback(function () {
+      var a = arguments
+      out.value = a.length === 2 ? (a[0] ? a[1] : 0) : (a[1] ? a[2] : 0)
+    })
+  } catch (e) { withResult = source }
+  var returned = server.getCommands().performPrefixedCommand(withResult, text)
+  if (typeof returned === 'number') return returned
+  return out.value === null ? 0 : out.value
+}
 global.evilEyeShowcaseCheck.makeHelpers = function makeHelpers(h) {
   var server = h.server, level = h.level, plan = h.plan, o = h.origin, source = h.source, name = h.name
   var BP = Java.loadClass('net.minecraft.core.BlockPos')
@@ -19,7 +34,9 @@ global.evilEyeShowcaseCheck.makeHelpers = function makeHelpers(h) {
   h.amount = function (handler, id) { var n = 0; for (var i = 0; i < handler.getSlots(); i++) { var s = handler.getStackInSlot(i); if (String(s.getId()) === id) n += s.getCount() } return n }
   h.cmd = function (s) { return server.runCommandSilent(s) }
   h.set = function (x, y, z, state) { return h.cmd('setblock ' + (o.x + x) + ' ' + (o.y + y) + ' ' + (o.z + z) + ' ' + state) }
-  h.invoke = function (who, clear) { return server.getCommands().performPrefixedCommand(who || source, 'evileye showcase ' + (clear ? 'clear ' : '') + name) }
+  h.invoke = function (who, clear) { return global.evilEyeShowcaseCheck.runCommand(server, who || source, 'evileye showcase ' + (clear ? 'clear ' : '') + name) }
+  // An operator command's result (permission 4, output suppressed), e.g. a count returned by /sable info.
+  h.run = function (text) { return global.evilEyeShowcaseCheck.runCommand(server, server.createCommandSourceStack().withSuppressedOutput().withPermission(4), text) }
   h.shell = function () {
     var snapshot = []
     for (var x = -1; x <= plan.width; x++) for (var y = -2; y <= plan.height; y++) for (var z = -1; z <= plan.depth; z++) {

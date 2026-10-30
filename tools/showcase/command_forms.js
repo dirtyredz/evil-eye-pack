@@ -6,7 +6,7 @@ global.evilEyeShowcaseCheck.commandForms = function (h) {
   var plans = names.map(function (name) { return ns.sections[name]() })
   var source = h.server.createCommandSourceStack().withPosition(new Vec3(512, 240, 252)).withRotation(new Vec2(0, 0)).withPermission(2)
   var layout = ns.layout(plans, source)
-  function run(text, who) { return h.server.getCommands().performPrefixedCommand(who || source, text) }
+  function run(text, who) { return global.evilEyeShowcaseCheck.runCommand(h.server, who || source, text) }
   var fixtures = names.map(function (name, i) {
     var o = layout.origins[i]
     return global.evilEyeShowcaseCheck.makeHelpers({ server: h.server, level: h.level, name: name, plan: plans[i], origin: o, check: check,
