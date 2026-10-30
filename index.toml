@@ -1773,6 +1773,10 @@ file = "kubejs/config/dedup_sources.json"
 hash = "41497c5c0cec5203a735ee220ec3a308e6afefbe1b5561b6d7e493c385644db7"
 
 [[files]]
+file = "kubejs/data/citadel/loot_table/blocks/lectern.json"
+hash = "8cbf4a2f46da5a87da726a14ebb769cd5763b87f169508b9f096df480f4d1eb1"
+
+[[files]]
 file = "kubejs/data/cluttered/loot_table/blocks/flowering_willow_leaves.json"
 hash = "994bc9e1b5f55d7ca522a356254672593b8d959e104ae7bdc18a78d52aa39097"
 
@@ -3085,6 +3089,10 @@ file = "kubejs/data/createdeco/recipe/locked_brass_door.json"
 hash = "1c53a0cb30c8169b4d793b2c0b609748647bdee98b38c67b6f85a4eee761be62"
 
 [[files]]
+file = "kubejs/data/diagonalfences/tags/block/non_diagonal_fences.json"
+hash = "2abaf88259e91ea81d293ea7fc2a3eb076006fbfe76bc547ee1b2f8d3da067b7"
+
+[[files]]
 file = "kubejs/data/enderio/recipe/enderios.json"
 hash = "c172f6f542123454e56c7f8d94e7396e4a1136cf48c47a93200e77497de66889"
 
@@ -3133,6 +3141,146 @@ file = "kubejs/data/farmersdelight/recipe/safety_net.json"
 hash = "cc8203d52738500efe43768928dd70019ffb33e182c743182f371bae9d1da580"
 
 [[files]]
+file = "kubejs/data/ftbessentials/tags/block/ignore_rtp.json"
+hash = "d6991f0d3b801369eaee714887ef3f5a888d4f249a3e1dd06fd0ee9dc3f1c227"
+
+[[files]]
+file = "kubejs/data/interiors/recipe/kelp_chair.json"
+hash = "ada30f4655e72985de2aaf592a6c828c7d6175ee19f296835eb4a25e6696d174"
+
+[[files]]
+file = "kubejs/data/interiors/recipe/kelp_chair_from_seat.json"
+hash = "39a76dc3a7bf501c466036885ddd7e1755c8631a0e8074bba8ffdfdaa0fa1353"
+
+[[files]]
+file = "kubejs/data/interiors/recipe/kelp_floor_chair.json"
+hash = "5d64177edf0ada46d6108df4724b220005d699f098299cad3329b8d689709b31"
+
+[[files]]
+file = "kubejs/data/interiors/recipe/kelp_floor_chair_from_seat.json"
+hash = "4a23202aafa289648779c30da665a5413fa1052e061e47233eb054d1f07959e3"
+
+[[files]]
+file = "kubejs/data/interiors/recipe/kelp_seat.json"
+hash = "ea6d11cd4dfa6c40f1dc614d400e55df82038d3b14e88ec84908442db35d8f42"
+
+[[files]]
+file = "kubejs/data/interiors/recipe/seatwood_planks_arr_one.json"
+hash = "5400a810f2ae8f7ffcb204d3c3adaadeb8386769e489f2583ef7f411cf6fea21"
+
+[[files]]
+file = "kubejs/data/interiors/recipe/seatwood_planks_arr_two.json"
+hash = "e8a4f8af2543ef6c4bae2851fa5de0c243ee4dbd84397ddb1cb2daad03bf48f9"
+
+[[files]]
+file = "kubejs/data/interiors/recipe/wall_table.json"
+hash = "9fd7b5b550e8f688db00e1ba6aeeaedb00a2985cdae2baa683bcbb5d61e5dae3"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/cobblestone_slanted_headstone.json"
+hash = "02d81a9cbf3aaeed89fe7b1f5ae81486c60bb724799223000bb9c99b6416e5c9"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/cobblestone_upright_headstone.json"
+hash = "6d002daa9c4be59e8090baca6f81814229a83f515030b61c9fbcc2e0b025eab2"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/cross_headstone.json"
+hash = "5c79a4cdffcdaf128193580058824de1650b918ecae93e4a80d654e73c7b04e3"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/deepslate_slanted_headstone.json"
+hash = "a40bab03b8a1503fcfab41d9333480c4e239909318a5442fa2358b51fe729b17"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/deepslate_upright_headstone.json"
+hash = "40b4440124410e75b5d0233fdd2b045b02c04373b4ca2c8f22e18c24675255c9"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/golden_slanted_headstone.json"
+hash = "c2708a2a822e81fa82323287db386e261f7b3c83e338150c1ef89f9e58b36dc4"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/golden_upright_headstone.json"
+hash = "11cb66a19bea674fc0518f6433d18c90018d30156202b988661b26dacc8f7704"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/gravelling_headstone.json"
+hash = "b0eec5a3afedfc01632e778edda3ffe6bba9a45d114a85ec3ec1e5be3da05e04"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/rose_gold_block.json"
+hash = "92b72294ba5eba9bc6bb81e2e020cbf3e331c7b01316e76e668082fe7446d50b"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/slanted_headstone.json"
+hash = "52d63ca9cd272aced293f43b6975e1614443df08337709bfaa5119bf6588ba4f"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/upright_headstone.json"
+hash = "92f1ee006c15606f955b2ae604c8b60020d0edc43a8b25bdcd400e01ddf35cd0"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/wall_headstone.json"
+hash = "84d1a4d4417a0c3a14c1b0e8c6c91fb3738e36514a84379efb51e660950ae04e"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/wooden_slanted_headstone.json"
+hash = "0db39b6d58ebbaf0721968520b9572f959b6d1b711a7ef793283463b023ad2fa"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/blocks/wooden_upright_headstone.json"
+hash = "ee9155ab5f03aa743d4cca65249293c0e9c2c14797850d8db4e34245d92d0f73"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/books/blueprint.json"
+hash = "51e82618fb38f27a76b33636dbf78951cb56f2418b07e6f8e3926e4a4fdc5df8"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/books/death.json"
+hash = "942a7c9acd86dc085aab4bb690d937ed307bea281c117737279bfd82c2a8f52a"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/books/family.json"
+hash = "3abded89e983dee3a0703245316419cd5c9ac030f1641f524f7d5ce57a1b536a"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/books/infection.json"
+hash = "78d1e31837047889171e503456560fb27d18980c9a5db6b59cd283203cc78649"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/books/romance.json"
+hash = "2f92467e99cae59c1437153e8d354f630d73290947bd468068f3f0883ac98400"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/books/rose_gold.json"
+hash = "3ab306309e652a6a74c8a8671569a33638ccfb15fcf82055c576b3ccfd462a49"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/books/supporters.json"
+hash = "49200162cf3c37e563209b1fb159bb98778a0704835f86d2c7d3619879ea6eb9"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/entities/female_villager.json"
+hash = "934b58028a19c8ff0a1b28c16cab8806205bcafa3a45a90929ad1866dd83d351"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/entities/female_zombie_villager.json"
+hash = "1a89c9da0563390c827fa658de2a32c542740b66d03c6a017375e29a55a60800"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/entities/grim_reaper.json"
+hash = "934b58028a19c8ff0a1b28c16cab8806205bcafa3a45a90929ad1866dd83d351"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/entities/male_villager.json"
+hash = "934b58028a19c8ff0a1b28c16cab8806205bcafa3a45a90929ad1866dd83d351"
+
+[[files]]
+file = "kubejs/data/mca/loot_table/entities/male_zombie_villager.json"
+hash = "1a89c9da0563390c827fa658de2a32c542740b66d03c6a017375e29a55a60800"
+
+[[files]]
 file = "kubejs/data/minecraft/recipe/andesite_catwalk_forge.json"
 hash = "7840aec15a3204105bfe78f07b3c75e1736892c6e3e563b003bc6c97c1d0b7c1"
 
@@ -3175,6 +3323,14 @@ hash = "6d2ed9b7ebd7aacc481688fe30428a872654630a8749028407492806d064620e"
 [[files]]
 file = "kubejs/data/refurbished_furniture/recipe/combining/raw_vegetable_pizza.json"
 hash = "f756c7534fb44d2402d08db38525a82b62792546d57f58e086265fdc0628715c"
+
+[[files]]
+file = "kubejs/data/structurize/tags/block/null_placement.json"
+hash = "9ca5c8ef1e2c9a43c390f4c9f07fc3d61ebf49b180f1dbd9042e9b0aa35397d1"
+
+[[files]]
+file = "kubejs/data/waddles/loot_table/entities/adelie_penguin.json"
+hash = "badd3eff9a00e120d72df00c4c67497031174897deac84cdafdcd40e04921f7a"
 
 [[files]]
 file = "kubejs/server_scripts/dedup.js"

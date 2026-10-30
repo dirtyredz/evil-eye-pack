@@ -102,6 +102,36 @@ has its own loader base, local stage, cached worlds and ANU lane:
   `lanes\neoforge-1.21.1-21.1.265\{stage\server,cache\worlds,tools}`. The single `lock\` stays
   shared. Temurin 21 is provisioned beside 17 under `C:\Tools\evil-eye-pack\temurin-21`.
 
+## Upstream 1.20-layout data (restored 2026-10-30)
+
+Several 1.21.1 jars still ship data only in 1.20 folders (`loot_tables/`, `recipes/`, `tags/blocks/`), so the
+game never loads it. Of 77 such files on boot 8, Epic Witch Huts' 10 chest tables already have 1.21 twins in
+the same jar. The pack restores the rest that matter as 1.21 files under `kubejs/data/<ns>/`, translated
+where 1.21 changed the format (silk-touch `match_tool` → `predicates."minecraft:enchantments"`,
+`looting_enchant` → `enchanted_count_increase`, `copy_name` → `copy_components`, recipe `result.item`
+→ `result.id`):
+
+| Restored | Files | Effect |
+|---|---:|---|
+| MCA headstones, rose gold block, books, villager / zombie villager / Grim Reaper tables | 26 | graves drop themselves (silk touch) or cobblestone + bones/skulls; rose gold block drops itself |
+| Citadel `blocks/lectern` | 1 | its lectern drops a lectern, keeping a custom name |
+| Waddles `entities/adelie_penguin` | 1 | penguins drop cod (looting adds) |
+| Create: Interiors kelp seats/chairs, seatwood planks, wall table | 8 | the recipes exist again |
+| `ftbessentials:ignore_rtp`, `structurize:null_placement`, `diagonalfences:non_diagonal_fences` | 3 | block tags their code reads (RTP avoids leaves/bedrock, Structurize placement order, grass-topped walls stay straight) |
+
+Left out, with the reason in `tools/pack_test/data/policy.json` `ignoredLayout`: two empty Ars Nouveau tables,
+Dank Storage's empty `forge:wrenches`, Ender IO's `darksteel_upgrade` (no such serializer in Ender IO 8),
+Extreme Reactors' Thermal compat and `dry_ice` (Thermal and Powah absent), Supplementaries' Inspirations compat,
+and Macaw's Trapdoors' 16 family tags (no jar reads them). The translator was a one-off job tool
+(`jobs/2026-10-30-neoforge-phase7/tools/translate.cjs`); it covers only the constructs these files use.
+
+**Regression guard.** `tools/pack_test/checks/ignored_layout.cjs` sorts each other-layout file into covered
+(loot table or recipe twin from any source; for tags, which merge, only the same jar's twin or the pack's
+copy), accepted (policy reason, exact id or `<kind>|<ns>:*`) or lost. The references check fails on lost
+files after a boot, and `tools/pack_test/tests/data/ignored_layout.test.cjs` checks every pinned jar in the
+fast gate (it also fails on policy entries that no longer match anything). A new or updated jar with lost
+data therefore fails before any boot.
+
 ## Owned ports (deferred, never abandoned)
 
 Seven mods had no NeoForge 1.21.1 build and are being ported by the owner in `minecraft-mods`:
@@ -188,15 +218,8 @@ keeps exactly that.
 87 files now ship the 1.21.1 mods' own write-back (with our values kept). Three relocated
 default-only files were removed.
 
-**Data a mod ships in the other version's folder layout is never loaded.** The scan records it, and
-the references check reports it as info. On boot 6 that covered:
-- loot tables in MCA (26: villager and grave drops), Epic Witch Huts (10), Ars Nouveau (2), Waddles
-  and Citadel;
-- 8 Create: Interiors kelp-chair recipes;
-- Supplementaries and Extreme Reactors compat recipes;
-- a few block tags.
-
-These are upstream bugs, and the content is absent in game.
+**Data a mod ships in the other version's folder layout is never loaded.** The scan records it. Phase 6
+reported it as info; since 2026-10-30 it is restored or reasoned, and anything else fails (see Phase 7).
 
 ### Owner checks only a client can do
 

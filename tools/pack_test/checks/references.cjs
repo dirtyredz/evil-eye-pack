@@ -6,6 +6,7 @@ const { makeFinding, sectionResult } = require('../verdict/finding.cjs');
 
 const finding = makeFinding('references');
 const { evaluateAll } = require('./conditions.cjs');
+const { triageIgnoredLayout, groupBySource } = require('./ignored_layout.cjs');
 
 // Ids without a namespace mean minecraft:, as in the game.
 const qualify = (id) => (id.includes(':') ? id : `minecraft:${id}`);
@@ -82,9 +83,26 @@ function checkRequired(live, required, findings) {
   for (const m of required) if (!live.mods.has(m)) findings.push(finding('required-mod-missing', m, null, 'a pack-required mod did not load'));
 }
 
+// A jar still shipping the other version's data folders: the game never loads those files. Covered ones (a
+// twin in the running layout, from the mod or the pack's kubejs/data) and reasoned ones (policy ignoredLayout)
+// are info; the rest is content silently absent from the game, one failure per jar and kind.
+function checkIgnoredLayout(resources, accepted, findings, stats) {
+  const files = resources.ignoredLayout || [];
+  const present = ({ kind, id, source }) => {
+    if (kind === 'loot_tables') return !!resources.loot[id];
+    if (kind === 'recipes') return !!(resources.recipes || {})[id];
+    const tag = kind.startsWith('tags/') && (resources.tags[kind.slice(5)] || {})[id];
+    return !!tag && tag.values.some((v) => v.source === source || v.source === 'kubejs');
+  };
+  const t = triageIgnoredLayout(files, present, accepted);
+  for (const g of groupBySource(t.lost)) findings.push(finding('data-ignored-layout', g.source, g.kind, `${g.ids.length} ${g.kind} file(s) exist only in the other Minecraft version's folder layout and never load (e.g. ${g.ids.slice(0, 3).join(', ')}); ship a 1.21 equivalent in kubejs/data or give a reason in policy ignoredLayout`));
+  for (const g of groupBySource(t.accepted)) findings.push(finding('data-ignored-layout-accepted', g.source, g.kind, `${g.ids.length} ${g.kind} file(s) in the other layout are left out on purpose (policy ignoredLayout)`, 'info'));
+  Object.assign(stats, { ignoredLayout: files.length, ignoredLayoutCovered: t.covered.length, ignoredLayoutAccepted: t.accepted.length, ignoredLayoutLost: t.lost.length });
+}
+
 // live: { items, blocks, fluids, mods, lootTables (Sets), itemTags, blockTags, fluidTags (Maps) }.
 // shipped: [{ file, refs }]. logged: { droppedTags, failedLoot } (Sets) already reported by the log check.
-function checkReferences(resources, live, { removed = [], required = [], shipped = [], logged = {} } = {}) {
+function checkReferences(resources, live, { removed = [], required = [], shipped = [], logged = {}, ignoredLayout = {} } = {}) {
   const findings = [];
   const stats = {};
   const dropped = logged.droppedTags || new Set();
@@ -98,16 +116,7 @@ function checkReferences(resources, live, { removed = [], required = [], shipped
     if (m.kind === 'recipes') continue; // reported by the recipe check
     findings.push(finding('resource-malformed-json', m.id, m.source, `${m.kind}: ${m.error}`));
   }
-  // A jar still shipping the other version's data folders: the game never loads those files (mob drops,
-  // block drops or recipes the mod meant to add are simply absent). One info finding per jar and kind.
-  const ignored = new Map();
-  for (const f of resources.ignoredLayout || []) {
-    const key = `${f.source}|${f.kind}`;
-    if (!ignored.has(key)) ignored.set(key, { source: f.source, kind: f.kind, ids: [] });
-    ignored.get(key).ids.push(f.id);
-  }
-  for (const g of ignored.values()) findings.push(finding('data-ignored-layout', g.source, g.kind, `${g.ids.length} ${g.kind} file(s) in the other Minecraft version's folder layout are never loaded (e.g. ${g.ids.slice(0, 3).join(', ')})`, 'info'));
-  stats.ignoredLayout = (resources.ignoredLayout || []).length;
+  checkIgnoredLayout(resources, ignoredLayout, findings, stats);
   return sectionResult(findings, stats);
 }
 

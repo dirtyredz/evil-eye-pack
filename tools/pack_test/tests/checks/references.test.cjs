@@ -88,3 +88,39 @@ test('a loot table whose own neoforge:conditions are false is gated, not missing
   assert.deepEqual(r.findings.map((f) => f.subject), ['thirst:chests/y']);
   assert.equal(r.stats.lootConditionalOff, 1);
 });
+
+test('other-layout data fails unless restored, twinned or reasoned; tags count only their own jar or kubejs', () => {
+  const ignoredLayout = [
+    { source: 'mca.jar', kind: 'loot_tables', id: 'mca:blocks/grave' },          // restored by kubejs
+    { source: 'mca.jar', kind: 'loot_tables', id: 'mca:entities/reaper' },       // lost
+    { source: 'ewh.jar', kind: 'loot_tables', id: 'epic:chests/food' },          // the jar's own 1.21 twin
+    { source: 'trap.jar', kind: 'tags/blocks', id: 'trap:barn' },                // twin only from another jar: lost
+    { source: 'fence.jar', kind: 'tags/blocks', id: 'df:non_diagonal' },         // restored by kubejs
+    { source: 'er.jar', kind: 'recipes', id: 'thermal:machine/x' }               // reasoned
+  ];
+  const resources = res({
+    ignoredLayout,
+    recipes: {},
+    loot: { 'mca:blocks/grave': tbl({ source: 'kubejs' }), 'epic:chests/food': tbl({ source: 'ewh.jar' }) },
+    tags: { items: {}, fluids: {}, blocks: {
+      'trap:barn': { values: [{ id: 'bop:x', required: true, source: 'bop.jar' }] },
+      'df:non_diagonal': { values: [{ id: 'a:block', required: true, source: 'kubejs' }] } } }
+  });
+  const r = checkReferences(resources, mkLive({ lootTables: new Set(Object.keys(resources.loot)), blockTags: new Map([['trap:barn', ['bop:x']], ['df:non_diagonal', ['a:block']]]) }),
+    { ignoredLayout: { 'recipes|thermal:*': 'Thermal is not in the pack' } });
+  const layout = r.findings.filter((f) => f.code.startsWith('data-ignored-layout'));
+  assert.deepEqual(layout.map((f) => `${f.code}:${f.severity}:${f.subject}:${f.ref}`).sort(), [
+    'data-ignored-layout-accepted:info:er.jar:recipes',
+    'data-ignored-layout:fail:mca.jar:loot_tables',
+    'data-ignored-layout:fail:trap.jar:tags/blocks'
+  ]);
+  assert.match(layout.find((f) => f.subject === 'mca.jar').message, /^1 loot_tables file\(s\).*mca:entities\/reaper/);
+  assert.deepEqual([r.stats.ignoredLayout, r.stats.ignoredLayoutCovered, r.stats.ignoredLayoutAccepted, r.stats.ignoredLayoutLost], [6, 3, 1, 2]);
+});
+
+test('ignored-layout policy reports keys that no longer match anything', () => {
+  const { triageIgnoredLayout } = require('../../checks/ignored_layout.cjs');
+  const t = triageIgnoredLayout([{ source: 'j', kind: 'recipes', id: 'a:x' }], () => false, { 'recipes|a:*': 'r', 'recipes|b:y': 'stale' });
+  assert.deepEqual(t.accepted.map((f) => f.reason), ['r']);
+  assert.deepEqual(t.unused, ['recipes|b:y']);
+});

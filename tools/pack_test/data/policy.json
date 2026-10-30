@@ -1,8 +1,20 @@
 {
   "schema": 1,
   "removedMods": ["alltheores", "allthecompressed", "almostunified", "simplecorelib", "enhancedcelestials", "dataanchor", "corgilib", "corgikubejscompat", "commoncapabilities", "rftoolsbase", "rftoolsbuilder", "rftoolscontrol", "rftoolsdim", "rftoolsutility", "mcjtylib", "ironfurnaces", "chunky", "charginggadgets", "tesseract", "supermartijn642configlib", "oculus", "embeddium", "radium", "memoryleakfix"],
-  "requiredMods": ["hourglass"],
+  "requiredMods": ["hourglass", "dank_recipe_transfer"],
   "curatedLists": ["creative.json", "minecolonies-eggs.json"],
+  "ignoredLayout": {
+    "loot_tables|ars_nouveau:entities/wilden_boss": "Empty table (no pools) in the 1.20 folder; an absent table also drops nothing, so nothing is lost (2026-10-30).",
+    "loot_tables|ars_nouveau:blocks/mage_block": "Empty pools in the 1.20 folder; an absent table also drops nothing (2026-10-30).",
+    "tags/items|forge:wrenches": "Dank Storage's empty forge:wrenches tag: no values, and NeoForge 1.21 uses c: tags (2026-10-30).",
+    "recipes|enderio:darksteel_upgrade": "Special recipe type enderio:dark_steel_upgrade that Ender IO 8 no longer registers (no class in the jar names it), so it loads in neither layout (2026-10-30).",
+    "tags/blocks|bigreactors:dry_ice": "Holds only an optional powah:dry_ice entry; Powah is not in the pack, so the tag would be empty (2026-10-30).",
+    "recipes|thermal:*": "Extreme Reactors' Thermal pulverizer compat; Thermal is not in the pack (2026-10-30).",
+    "recipes|supplementaries:inspirations/blackboard_clear": "Inspirations compat, gated on mod_loaded inspirations; Inspirations is not in the pack (2026-10-30).",
+    "recipes|supplementaries:inspirations/flag_clear": "Inspirations compat, gated on mod_loaded inspirations; Inspirations is not in the pack (2026-10-30).",
+    "recipes|supplementaries:inspirations/flag_dye": "Inspirations compat, gated on mod_loaded inspirations; Inspirations is not in the pack (2026-10-30).",
+    "tags/blocks|mcwtrpdoors:*": "Macaw's Trapdoors family grouping tags; no class or data file in any pinned jar reads them (searched every jar for the ids, 2026-10-30)."
+  },
   "exclude": {
     "patterns": [
       { "re": "_spawn_egg$|:spawn_egg_", "reason": "spawn eggs are creative-only" },

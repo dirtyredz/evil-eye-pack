@@ -11,16 +11,24 @@ const { classify, matcher } = require('../data_io/resource_layout.cjs');
 const { readMetafileDownload } = require('../packwiz/pack_index.cjs');
 const root = path.resolve(__dirname, '../..');
 const SCANNED = new Set(['tags/items', 'tags/blocks', 'recipes', 'loot_tables', 'loot_modifiers', 'worldgen', 'biome_modifier']);
-function scan(dirs, packRoot = root) {
-  const data = new Map(), models = new Set(), blocks = new Set(), jars = [];
+// Every pinned mod jar's bytes from the cache folders, checked against its metafile hash: [{ filename, bytes }].
+function pinnedJars(dirs, packRoot = root) {
+  const out = [];
   for (const file of fs.readdirSync(path.join(packRoot, 'mods')).filter(f => f.endsWith('.pw.toml'))) {
     const meta = readMetafileDownload(fs.readFileSync(path.join(packRoot, 'mods', file), 'utf8'));
     const source = dirs.map(dir => path.join(dir, meta.filename)).find(f => fs.existsSync(f));
     if (!source) throw new Error('Missing cached jar: ' + meta.filename);
     const bytes = fs.readFileSync(source);
     if ((meta.hashFormat === 'sha256' ? sha256(bytes) : crypto.createHash(meta.hashFormat).update(bytes).digest('hex')) !== meta.hash) throw new Error('Jar hash mismatch: ' + source);
-    jars.push(meta.filename);
-    walkJar(bytes, meta.filename, (name, text) => {
+    out.push({ filename: meta.filename, bytes });
+  }
+  return out;
+}
+function scan(dirs, packRoot = root) {
+  const data = new Map(), models = new Set(), blocks = new Set(), jars = [];
+  for (const { filename, bytes } of pinnedJars(dirs, packRoot)) {
+    jars.push(filename);
+    walkJar(bytes, filename, (name, text) => {
       let json;
       try { json = JSON.parse(text); } catch { return; }
       const at = classify(name);
@@ -73,4 +81,4 @@ function duplicateGroups(tags) {
   }
   return groups;
 }
-module.exports = { root, scan, resolveTags, duplicateGroups, defaultJarDirs, MATERIAL_TAG };
+module.exports = { root, pinnedJars, scan, resolveTags, duplicateGroups, defaultJarDirs, MATERIAL_TAG };

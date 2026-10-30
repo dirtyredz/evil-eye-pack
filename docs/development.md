@@ -228,7 +228,7 @@ of malware. This command never runs as part of the offline pack test.
 
 ## Known exceptions registry
 
-Three lists record why something is deliberately hidden, missing or duplicated. Check them before
+Four lists record why something is deliberately hidden, missing or duplicated. Check them before
 investigating an item, a pack-test finding or a duplicate group; when you add an entry, add its reason.
 
 Acquisition analysis reads hidden-item classes and evidence from `hidden_reasons.json`
@@ -237,6 +237,7 @@ and includes them in `report.json`; do not repeat those ids in `policy.json` exc
 - `tools/dedup/hidden_reasons.json`: one reason (class, evidence, date, source) per id in `kubejs/config/dedup.json` `hiddenOnly`. `tools/dedup/tests/hidden_reasons.test.cjs` fails if an id has no reason or a reason names an id that is not hidden. The shipped `dedup.json` stays a plain array; reasons are never shipped (`tools/` is packwiz-ignored).
 - `tools/pack_test/data/baseline.json` (with `policy.json`): known pack-test findings, each with a reason and date.
 - `tools/dedup/allowed_groups.json`: duplicate material groups that are allowed to stay, each with a reason.
+- `tools/pack_test/data/policy.json` `ignoredLayout`: mod data shipped only in the other Minecraft version's folders that the pack deliberately does not restore (`<kind>|<id>` or `<kind>|<ns>:*`, each with a reason). Everything else must be restored under `kubejs/data` in the running layout; `tools/pack_test/tests/data/ignored_layout.test.cjs` enforces it on the pinned jars (see [NeoForge migration](neoforge-migration.md)).
 
 ## Pack test (agents' acceptance command)
 

@@ -179,7 +179,12 @@
   `-EncodedCommand` grows to about 2.7 times the script length, so long scripts are silently
   truncated and fail with nonsense parse errors. `remote/ssh.cjs` refuses anything over 8000 characters.
 - **1.21 jars still ship 1.20 folders** (`loot_tables/`, `recipes/`, `tags/items`); the game ignores
-  them. The scan records them as `ignoredLayout`; do not chase them as "not loaded".
+  them. Most have a 1.21 twin in the same jar; the ones that do not are real missing content (MCA grave
+  drops, Interiors recipes). The pack restores those under `kubejs/data` or reasons them in policy
+  `ignoredLayout`, and the fast gate fails on anything else. A tag twin from another jar is not a restoration:
+  tags merge, so the first jar's values are still missing (Macaw's BOP compat ships `mcwtrpdoors:` 1.21 tags).
+- **A restored copy shadows a later upstream fix.** When a mod starts shipping its own 1.21 file, the
+  `kubejs/data` copy still wins. After updating a jar, compare and delete restorations the jar now covers.
 - **1.21 data carries its own load conditions** (`neoforge:conditions` on loot tables, data maps and
   recipes), and nested `minecraft:loot_table` entries name their table in `value`, not `name`.
 - **A probe that makes Rhino reflect mod Item classes** (`stack.getItem()` on every creative-tab stack)
