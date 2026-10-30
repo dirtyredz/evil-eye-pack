@@ -13,6 +13,8 @@ Newest first.
   Fire and evileye_migration jars stay local on Valhalla; no public repository or
   download host. Prefer hash-verified direct copies if the installer can coexist;
   otherwise use the existing temporary loopback overlay and document why.
+  The final Trial uses ordinary local pack files: packwiz copies and tracks the
+  verified jars without a host. A real full install and repeat install both pass.
 
 ## 2026-10-30 - Evil Eye World Migration bridge
 
