@@ -4,9 +4,9 @@ Newest first.
 
 ## 2026-10-31 - Preserve game-owned client settings after first install
 
-**Decision.** Index runtime-owned client preferences with packwiz `preserve = true`: shader option
-sidecars, `*-client.toml`, and the explicit EMI, Iris, Jade, Xaero and other client-setting files
-classified by `pack_index.cjs`. The pack supplies their initial defaults, but later installs do not
+**Decision.** Index runtime-owned settings with packwiz `preserve = true`: shader option sidecars,
+`*-client.toml`, and the explicit client/common files that the played Trial rewrote during its first
+client runs, as classified by `pack_index.cjs`. The pack supplies their initial defaults, but later installs do not
 overwrite the owner's or game's values. `options.txt`, Sodium and JEI outputs are already unshipped;
 Default Options' shipped keybinding input remains installer-managed. The Trial post-install gate hashes
 every non-preserve installed file, including every resolved mod jar and private local pin.

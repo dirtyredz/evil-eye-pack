@@ -92,7 +92,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 ```
 
 - `pack.toml` — pack definition; its `[index]` hash is sha256 of `index.toml`
-- `index.toml` — every installed file with its sha256; runtime-owned client preferences carry `preserve = true` (rebuild with `tools/packwiz/rehash.cjs`)
+- `index.toml` — every installed file with its sha256; runtime-rewritten settings carry `preserve = true` (rebuild with `tools/packwiz/rehash.cjs`)
 - `mods/` — packwiz metafiles (`*.pw.toml`), one per mod jar (CurseForge, Modrinth, direct URL, or private migration `metadata:local` hash pins)
 - `shaderpacks/` — shaderpack metafiles and saved shader options
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
@@ -176,7 +176,7 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `tools/pack_test/checks/security/malware.cjs` | read raw or legacy evidence and apply current approvals once into the offline malware section |
 | `kubejs/server_scripts/dedup.js` | applies authored dedup policy and generated recipe/tag cleanup; hand-written server recipes go in a script named for the concern, not dedup.js |
 | `kubejs/server_scripts/tag_compat.js` | item tag aliases for mods that name tags the 1.21.1 target lacks (Create: Interiors `c:<colour>_dyes`, Create's item `#minecraft:convertable_to_mud`) |
-| `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (including the runtime-owned client `preserve` policy; `readTable` reads string tables and numeric CurseForge IDs; metafile name/download/side readers share the model), `isMetafile`, `.packwizignore`, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
+| `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (including the runtime-rewritten setting `preserve` policy; `readTable` reads string tables and numeric CurseForge IDs; metafile name/download/side readers share the model), `isMetafile`, `.packwizignore`, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
 | `tools/packwiz/pinned_jar.cjs` | `resolvePinnedJar(metafileText, dirs)`: the one pinned-jar lookup (safe filename, ordered folders, hash-verified bytes, fail closed, never downloads); used by offline server preparation and the mod map inventory |
 | `tools/packwiz/trial_install.cjs` | Trial-only local-copy installer: verifies cache pins, indexes artifacts as ordinary local files in a temporary pack, runs the cached headless installer, verifies every non-preserve installed hash (including all mod jars) and sets Trial prelaunch; no host or downloads |
 | `tools/packwiz/rehash.cjs` | rebuild `index.toml` membership and hashes, then `pack.toml`'s index hash |

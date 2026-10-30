@@ -22,18 +22,37 @@ const TEXT_EXTENSIONS = new Set([
 // `preserve` flag writes these when absent, then leaves the installed bytes alone.
 const PRESERVE_PATHS = new Set([
   'config/ae2/client.json',
+  'config/adlods/Deposits/sapphire.cfg',
+  'config/adlods/Deposits/silver.cfg',
+  'config/alexscaves-general.toml',
+  'config/alexsmobs.toml',
+  'config/ars_creo-common.toml',
+  'config/arseng-common.toml',
+  'config/biomesoplenty/gameplay.toml',
+  'config/biomesoplenty/generation.toml',
+  'config/citadel-common.toml',
   'config/colorfulhearts.toml',
+  'config/connectivity.json',
   'config/cull-less-leaves.json',
+  'config/cupboard.json',
   'config/emi.css',
   'config/enchdesc.json',
   'config/entityculling.json',
+  'config/fallingtree.json',
+  'config/ferritecore-mixin.toml',
+  'config/hammerlib/main.cfg',
   'config/immediatelyfast.json',
   'config/inventoryprofilesnext/inventoryprofiles.json',
   'config/iris.properties',
   'config/lightoverlay.properties',
   'config/MouseTweaks.cfg',
+  'config/modernfix-mixins.properties',
+  'config/multibeds.toml',
   'config/resourcepackoverrides.json',
   'config/sidebar_buttons.json',
+  'config/storagedrawers-common.v2.toml',
+  'config/supplementaries-common.toml',
+  'config/terrablender.toml',
   'config/xaerohud.txt',
   'config/xaeropatreon.txt',
 ]);
@@ -42,6 +61,7 @@ function isPreservePath(rel) {
   return PRESERVE_PATHS.has(rel) ||
     /^shaderpacks\/[^/]+\.zip\.txt$/.test(rel) ||
     /^config\/(?:.*\/)?[^/]+-client\.toml$/.test(rel) ||
+    /^config\/(?:ars_elemental|ars_nouveau)\/[^/]+\.toml$/.test(rel) ||
     /^config\/jade\/[^/]+\.json$/.test(rel) ||
     /^config\/xaero\/(?:lib|minimap|world-map)\/(?:client\.cfg|profiles\/.*|default_radar_categories_client\.json)$/.test(rel);
 }

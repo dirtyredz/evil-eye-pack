@@ -90,10 +90,13 @@ test('preserve policy covers runtime-owned client settings but not authored defa
     'config/enderio/base-client.toml',
     'config/iris.properties',
     'config/emi.css',
+    'config/ars_nouveau/glyph_break.toml',
+    'config/adlods/Deposits/sapphire.cfg',
+    'config/supplementaries-common.toml',
     'config/jade/jade.json',
     'config/xaero/minimap/profiles/default.cfg',
   ]) assert.equal(P.isPreservePath(rel), true, rel);
-  for (const rel of ['mods/a.jar', 'config/create-common.toml', 'config/defaultoptions/keybindings.txt']) {
+  for (const rel of ['mods/a.jar', 'config/create-common.toml', 'config/defaultoptions/keybindings.txt', 'config/emi-curation/rules.json']) {
     assert.equal(P.isPreservePath(rel), false, rel);
   }
 });
