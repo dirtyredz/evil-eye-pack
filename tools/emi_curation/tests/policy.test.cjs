@@ -25,8 +25,8 @@ test('resource id parts preserve namespace, nested paths and colonless fallback'
   }
 });
 
-test('loads the shipped curation: 1,166 explicit ids plus rules', () => {
-  assert.equal(policy.itemIdCount, 1166);
+test('loads the shipped curation: 1,168 explicit ids plus rules', () => {
+  assert.equal(policy.itemIdCount, 1168);
   assert.deepEqual([...policy.idContains], ['spawn_egg']);
   assert.equal(policy.namespaces.dramaticdoors, true);
   assert.equal(policy.displayFiltering, true);

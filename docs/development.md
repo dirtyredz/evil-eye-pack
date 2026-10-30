@@ -83,6 +83,35 @@ downloads. [Showcases](showcases.md) covers commands, layout, baseline compariso
 and adding a section with its check. This targeted live fixture check is the
 showcase acceptance run; do not also run the unrelated full pack-test tier.
 
+## World trial (copy only)
+
+`node tools/world_trial/run.cjs <command> --job <artifact job>` runs offline tooling;
+all outputs must remain under `artifacts/evil-eye-pack/jobs/`. Never use an instance as output.
+
+- `snapshot --source <stopped world>` waits for an idle Minecraft JVM slot, rejects links and
+  overlaps, writes an independent read-only `snapshot/` and `source-manifest.json`, and checks
+  the original again. Existing destinations are refused.
+- `verify` rehashes the original and snapshot against that manifest.
+- `inventory --world <copy> --out <job/inventory.json>` scans all current NBT regions and saved
+  data, not just spawn. Parse failures return 2. Historical `.dat_old` and ZIP backups are excluded.
+- `stage --root <pack checkout/export> --loader <cached loader> --jars <cache roots separated by semicolons>
+  --name <forge|neoforge>` copies the exact server pins into private `<name>-inputs/`; no downloads.
+  Cache roots contain `mods/`, not just jars. Export the Forge pack with `git archive main`;
+  do not switch or write the main checkout. Stable is a read-only exact-pin source.
+- `boot --root <pack> --cache <job/name-inputs> --inventory <job/snapshot-inventory.json> --name <name>`
+  creates `<name>-server/` from the snapshot and runs bounded existing-chunk probes. `restart`
+  with the same arguments reopens that working copy. Every boot checks the idle host and source
+  integrity, writes separate evidence, and stops its JVM. No visible client is launched.
+- `compare --before <inventory> --after <inventory> --registries <live registries> --out <job/comparison.json>`
+  flags missing registries, inventory/storage, ownership and dragon differences. Exit 1 means
+  unexplained differences; exit 2 means invalid inputs. A comparison is deliberately conservative:
+  component migrations and ordinary ticking need explicit evidence, not blanket exclusions.
+
+After each stopped boot inventory its `smoke-world/`. Require a clean conversion **and** restart,
+review logs and domain semantics (MineColonies, AE2, Dank), and verify original/snapshot integrity.
+Only a validated copy may be independently copied to `converted-for-owner/`. Never downgrade it.
+Fast gate: the command above plus `tools/world_trial/tests/*.cjs`; no build/lint step exists.
+
 ## Mod map
 
 From any working directory, invoke the checkout's `scripts/mod-map/build.ps1`

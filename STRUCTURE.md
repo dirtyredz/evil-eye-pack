@@ -38,6 +38,9 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 `-- tools/
     |-- data_io/
     |   `-- tests/
+    |-- world_trial/
+    |   |-- probe/
+    |   `-- tests/
     |-- dedup/
     |   `-- tests/
     |-- emi_coverage/
@@ -91,7 +94,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
 - `config/` — mod configs installed as plain files
 - `config/defaultoptions/keybindings.txt` — Default Options default keymap (new instances only; see GOTCHAS)
-- `config/emi-curation/` — EMI curation data: `rules.json`, six explicit item lists (including `roundwood-legacy.json` and `alexsmobs-creative.json`), `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
+- `config/emi-curation/` — EMI curation data: `rules.json`, seven explicit item lists (including `roundwood-legacy.json`, `alexsmobs-creative.json` and `iceandfire-creative.json`), `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
 - `defaultconfigs/` — Forge default (per-world) configs; Hourglass replaces the removed Enhanced Celestials/Corgi stack and sets half-speed day, vanilla-speed night and vanilla sleeping for new worlds
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
 - `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter
@@ -107,6 +110,10 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override. On the NeoForge branch it also restores 1.21-path copies of data mods ship only in 1.20 folders (MCA, Citadel, Waddles, Interiors, three block tags; see `docs/neoforge-migration.md`)
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
 - `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte hashing (`hashBytes`, `sha256`).
+- `tools/world_trial/` — guarded independent snapshots (`copy.cjs`, `snapshot.cjs`), offline
+  NBT/region inventories (`nbt.cjs`, `inventory.cjs`), conservative semantic comparison
+  (`compare.cjs`) and isolated headless boot/restart (`boot.cjs`, `probe/`). `run.cjs` is
+  the CLI; tests cover path isolation, manifests, NBT and storage/ownership loss.
 - `tools/mod_map/` — offline mod map. `build.mjs` (entry) and `run.cjs` (orchestration, artifact guards, saved-evidence replay) at the top; `inventory/` pinned-jar inventory and the `mods.toml`-only reader; `model/` dependency graph, classification, cost, families, categories and their checked-in data (`overrides.json` reasoned kind/family corrections, undeclared dependencies and pack-wide fixes; `categories.json` family/standalone ID → category); `capture/` the one-boot instrumented capture and TRACE timing; `page/` the pure view, HTML builders, document shell, CSS and browser controls. `tests/` mirrors those folders; `tests/fixtures.cjs` is a shared helper outside the `*/*.test.cjs` glob.
 - `scripts/` — owner-run PowerShell entry points, one `scripts/<area>/<verb>.ps1` per owner command; Node tooling sits underneath in `tools/`. Scripts and their logs (ignored `.tmp/`) are packwiz-excluded.
 - `scripts/mod-map/` — `build.ps1`, the mod map owner entry point (wraps `tools/mod_map/build.mjs`).

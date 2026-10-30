@@ -1,5 +1,25 @@
 # Architecture
 
+## World conversion trials
+
+`tools/world_trial/run.cjs` confines outputs to an artifact job. Copy guards reject protected
+instances, overlapping paths and symlinks/junctions in ancestors or descendants. Snapshots
+use independent file copies, SHA-256 manifests and read-only file attributes. The source and
+snapshot are verified again before and after each boot; neither is booted.
+
+The offline inventory decodes all current region/entity files and `.dat` saved data, including
+unloaded chunks. It retains full entity, block-entity, player and mod saved data alongside item
+counts, block palette quantities, biome references and chunk terrain digests. Parse errors
+invalidate input. Comparisons conservatively flag unexplained differences as LOSS; a raw
+NBT-to-component representation change still needs domain review.
+
+`boot.cjs` reuses the offline server preparer, process scope, idle-host guard and smoke
+supervisor. Its private caches contain hash-verified pinned jars and copied loader libraries.
+Only the working server gets `probe/capture.js`: live registries, one existing forced chunk
+at a time, bounded entity-ticking readiness, save, stop, then a separately recorded restart.
+Owner worlds never enter the ordinary generated-world caches. A complete probe and clean
+shutdown establish coverage, not preservation; semantic and log review remains mandatory.
+
 ## Mod map
 
 `scripts/mod-map/build.ps1` wraps `tools/mod_map/build.mjs` with the standard

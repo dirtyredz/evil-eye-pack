@@ -18,7 +18,7 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 | 6 First clean target boot | dk-626ee53d | done 2026-10-30 (ANU pack test PASS; see below) |
 | 7 Interstellaris stack | dk-7bcd9303 | done 2026-10-30 (ANU boots green; showcase checks below) |
 | 8 Seven owned ports | dk-279913bb | done 2026-10-30 (ANU and full showcase PASS; config/worldgen follow-ups below) |
-| 9 World conversion on a copy | — | todo |
+| 9 World conversion on a copy | dk-064ce2a5 | in progress; isolated snapshot and offline tooling, runtime verdict pending |
 | 10 Qualify 100% and cutover | — | todo |
 
 ## Isolation (Phase 1)
@@ -375,8 +375,9 @@ Client keys come from CE's `IafClientConfig`; no client was launched.
 The restored legacy biome lists/TOML remain for provenance, but CE does not read them.
 Its structure sets and per-candidate probabilities replace the old per-chunk chances;
 exact generation/biome parity is **dk-e7b276f4**, for review before world conversion.
-CE's new dreadwood leaves/sapling have no loot/acquisition data: exact reviewed baselines
-and **dk-ce8a67fc** retain that minecraft-mods handoff. The godly seeker is admin-only.
+CE's new dreadwood leaves/sapling have no loot/acquisition data. The owner designated them
+unfinished creative-only content: `iceandfire-creative.json` hides them in CLEAN and ALL
+restores them (**dk-ce8a67fc** done). The godly seeker is admin-only.
 The old amythest egg baseline follows the port's corrected amethyst ID; the dreadwood
 way sign follows Supplementaries' existing code-made compat signs.
 
