@@ -32,9 +32,9 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 | Migration jobs | `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-*/` |
 | Verified target artifacts | `artifacts/evil-eye-pack/migration/neoforge-1.21.1/cache/{mods,resourcepacks,shaderpacks,installers}/` |
 
-Since Phase 5 the worktree's `pack.toml` is the NeoForge 1.21.1 target, so the trial instance would
-install it. No boot or client launch has happened yet. The first target boot is Phase 6, coordinated
-with minecraft-mods for the machine.
+Since Phase 5 the migration worktree's `pack.toml` is the NeoForge 1.21.1 target. Phase 6 and
+Phase 7 acceptance boots are recorded below. The private-port integration uses the dev/trial
+wrapper described below; no client has been launched by this integration task.
 
 Pushing the migration branch is safe for Stable: Stable's prelaunch reads `main`'s raw
 `pack.toml` URL. Push only the migration ref; never `main`.
@@ -137,8 +137,9 @@ data therefore fails before any boot.
 Seven mods had no NeoForge 1.21.1 build and are being ported by the owner in `minecraft-mods`:
 Dank Recipe Transfer, Roundwood, Ars Instrumentum, Alex's Mobs, Alex's Caves, Ice and Fire, and
 FlatWorldFix. FlatWorldFix is kept and ported, not swapped for Give Me My Flat World. The lock
-records each one as `defer`. Phase 5 suspends their references, and each one returns as a direct
-GitHub release pin (`repoint` to a `direct` target; restore steps in `tools/packwiz/migration/deferred/README.md`).
+initially recorded each one as `defer`. Phase 5 suspended their references. Public ports return
+as direct GitHub release pins; private Alex ports use `local` pins (both are `repoint` actions).
+Restore steps are in `tools/packwiz/migration/deferred/README.md`.
 
 | Port | Pin | Integrated |
 |---|---|---|
@@ -332,3 +333,15 @@ Step 2 acceptance: `showcase-all-arrival` **PASS 1277/1277** (storage 657, Inter
 Mekanism 106, flat-world 2, command forms 384), no skipped assertions. The first full run also
 exposed same-tick destination tracking after planet teleport; bounded later-tick arrival checks
 fix that harness race. `step2-boots/run-2026-10-30T05-42-34-529Z` **ANU PASS**.
+
+Roundwood curation (2026-10-30): `roundwood-legacy.json` lists 49 per-material legacy blocks
+and the `window_trim` item alias, exactly 50 registered items. CLEAN hides them through the
+existing curation item-list mechanism; ALL restores the ordinary index. Generic doors, trim,
+windows and arches remain visible. No registry, world-migration or recipe changes. A pinned-jar
+regression checks the exact set (excluding the unregistered `template_round_door` model).
+
+Final acceptance: `step3-boots/run-2026-10-30T05-54-43-090Z` **ANU PASS**, complete probes,
+zero new findings. Documented fast gate: **501/501** (113 s). Roundwood live-registry evidence
+confirms all 50 items exist (49 blocks plus the alias). Rehash dry run is unchanged, hash and
+lock verification pass, `dk check` has zero errors (two pre-existing duplicate-rank warnings),
+and isolation evidence says `OK main, Stable and Local unchanged`. No visible client launched.

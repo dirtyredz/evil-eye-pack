@@ -261,7 +261,7 @@ and writes `report.json` + `summary.txt` into its run folder. Run it after any p
   parse failures), references (tags, loot tables, removed mods), acquisition (every expected item has an
   obtain method), machines (Create / Ender IO / Extreme Reactors type counts and key recipes), crafting
   (five curated crafts through a real crafting menu: Create andesite alloy, ER reinforced casing via
-  Dark Steel, a Farmer's Delight dish, an AE2 component, the dough survivor with its bucket remainder),
+  the steel survivor (Mekanism on the migration branch), a Farmer's Delight dish, an AE2 component, the dough survivor with its bucket remainder),
   dedup (the duplicate-material guard on live tags), logs (the smoke's error groups plus per-resource
   load failures). Inputs: `tools/pack_test/data/{policy,crafts,machines,baseline}.json`.
 - **Exit codes.** `0` complete run, no new findings; `1` new findings (listed in `summary.txt`);
@@ -364,3 +364,13 @@ Every dispatch gets its own `projects/artifacts/evil-eye-pack/jobs/<YYYY-MM-DD-t
 - [ ] After the rename, Stable shows one entry, Minecraft 1.20.1, Forge 47.4.10, and its worlds, settings, waypoints and `packwiz.json` are intact.
 - [ ] The EMI trial sync installs EMI/JEI/JEP and removes the REI jars and `rei_filter_toggle.js` (see `docs/emi.md`).
 - [ ] Restoring an instance backup and the reverse worktree move both recover the recorded baseline.
+
+### Private migration trial installs
+
+Private Alex forks have no committed download URL. A dedicated trial belonging to its checkout
+uses `node tools/packwiz/install_local.cjs --instance <trial/.minecraft>` before launch. It verifies
+the pack and hash-addressed migration cache, installs through a temporary gitignored loopback
+overlay, verifies the installed private bytes, and removes the overlay/listener. Stable and Local
+are refused. Pack-test/server-smoke staging use the same mechanism. Never repoint another
+checkout's trial. This is dev/trial-only; family delivery remains dk-85261627. See
+[NeoForge migration](neoforge-migration.md#private-alex-ports-devtrial-only-2026-10-30).

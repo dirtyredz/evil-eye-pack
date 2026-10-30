@@ -5,7 +5,8 @@
     "creative.json",
     "enderio-glass.json",
     "colours.json",
-    "minecolonies-eggs.json"
+    "minecolonies-eggs.json",
+    "roundwood-legacy.json"
   ],
   "idContains": [
     "spawn_egg"

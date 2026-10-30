@@ -86,12 +86,12 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 
 - `pack.toml` — pack definition; its `[index]` hash is sha256 of `index.toml`
 - `index.toml` — every installed file with its sha256 (rebuild with `tools/packwiz/rehash.cjs`)
-- `mods/` — packwiz metafiles (`*.pw.toml`), one per mod jar (CurseForge, Modrinth, or a direct URL such as the owner's GitHub-released Dank Recipe Transfer)
+- `mods/` — packwiz metafiles (`*.pw.toml`), one per mod jar (CurseForge, Modrinth, direct URL, or private migration `metadata:local` hash pins)
 - `shaderpacks/` — shaderpack metafiles and saved shader options
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
 - `config/` — mod configs installed as plain files
 - `config/defaultoptions/keybindings.txt` — Default Options default keymap (new instances only; see GOTCHAS)
-- `config/emi-curation/` — EMI curation data: `rules.json`, four explicit item lists, `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
+- `config/emi-curation/` — EMI curation data: `rules.json`, five explicit item lists (including `roundwood-legacy.json`), `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
 - `defaultconfigs/` — Forge default (per-world) configs; Hourglass replaces the removed Enhanced Celestials/Corgi stack and sets half-speed day, vanilla-speed night and vanilla sleeping for new worlds
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
 - `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter

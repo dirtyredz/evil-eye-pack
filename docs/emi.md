@@ -22,7 +22,7 @@ curation and the CLEAN/ALL button.
 ### Curation and the button
 
 - CLEAN (the default after every launch and logout) hides these from the index:
-  - 1,104 explicit item IDs: 19 creative-only, 708 Ender IO glass, 361 colour variants and 16 MineColonies eggs;
+  - 1,154 explicit item IDs: 19 creative-only, 708 Ender IO glass, 361 colour variants, 16 MineColonies eggs and 50 Roundwood migration-only IDs;
   - every ID containing `spawn_egg`;
   - the whole `dramaticdoors` namespace;
   - every Filled Soul Vial and Broken Spawner, except exactly one canonical Zombie stack of each;

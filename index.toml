@@ -1605,8 +1605,12 @@ file = "config/emi-curation/mods.json"
 hash = "4f8d780084c3aa515dfa2cc5e90f169193cffbbe207fb2f1e131d3ed93ca55d5"
 
 [[files]]
+file = "config/emi-curation/roundwood-legacy.json"
+hash = "e2e62dad2ddd4a70a10e51b7b892ba50702c99f4c0176ebbfabdeb39c37777af"
+
+[[files]]
 file = "config/emi-curation/rules.json"
-hash = "a83d09666b4fd7a358f62cb1f0a127e11f9ff39cb5153c79ae915a88ad4f9511"
+hash = "056e0c51cb65c16f239c2837e27b270b40c3e5f004ccfadc27645b9fb97e754d"
 
 [[files]]
 file = "config/emi.css"
