@@ -24,13 +24,14 @@ async function main(args) {
     const inv=JSON.parse(fs.readFileSync(opts.inventory,'utf8'));
     if(inv.errors.length)throw new Error('Inventory is incomplete');
     const coverage=require('./probe/plan.cjs').plan(inv);
-    await require('./boot.cjs').trialBoot({root:opts.root,cache:opts.cache,job,name:opts.name,targets:coverage.targets,coverage,restart:command==='restart'});
+    const players=Object.keys(inv.data).filter(f=>/^playerdata\/[a-f0-9-]+\.dat$/.test(f)).map(f=>path.basename(f,'.dat'));
+    await require('./boot.cjs').trialBoot({root:opts.root,cache:opts.cache,job,name:opts.name,targets:coverage.targets,coverage,players,restart:command==='restart'});
   }else if(command==='verify') {
     const r=JSON.parse(fs.readFileSync(path.join(job,'source-manifest.json'),'utf8'));
     console.log('Original:',verify(r.source,r.files));console.log('Snapshot:',verify(r.snapshot,r.files));
   }else if(command==='inventory') {
     if(!opts.world||!opts.out)throw new Error('Required --world and --out');output(opts.out,job);
-    const r=inventory(opts.world);fs.writeFileSync(opts.out,json(r)+'\n');console.log(json({files:r.files,chunks:r.chunks,errors:r.errors,targets:r.targets.length,entities:r.entities.length,blockEntities:r.blockEntities.length,items:r.items.length}));
+    const r=inventory(opts.world);fs.writeFileSync(opts.out,json(r)+'\n');fs.writeFileSync(opts.out+'.semantics.json',json(require('./semantics.cjs').semantics(r))+'\n');console.log(json({files:r.files,chunks:r.chunks,errors:r.errors,targets:r.targets.length,entities:r.entities.length,blockEntities:r.blockEntities.length,items:r.items.length}));
     if(r.errors.length)process.exitCode=2;
   }else if(command==='compare') {
     if(!opts.before||!opts.after||!opts.out)throw new Error('Required --before, --after, --out');output(opts.out,job);

@@ -20,3 +20,8 @@ test('Dank ExtendedCount, not wrapped signed byte Count, defines quantities',()=
   assert.equal(compare(a,b).verdict,'PASS');b.items[0].nbt.ExtendedCount=704;
   assert.equal(compare(a,b).verdict,'LOSS');
 });
+test('mod-owned camouflage and cell payload fields cannot silently disappear',()=>{
+  const a=empty();a.blockEntities=[{id:'roundwood:round_door',dimension:'minecraft:overworld',position:[1,2,3],nbt:{Camouflage:{Name:'minecraft:oak_planks'}}}];
+  const b=structuredClone(a);delete b.blockEntities[0].nbt.Camouflage;
+  assert.equal(compare(a,b).verdict,'LOSS');
+});

@@ -30,7 +30,7 @@ function stage({root,loader,jarDirs,job,name}) {
   }
   fs.writeFileSync(path.join(dest,'pins.json'),JSON.stringify(pins,null,2)+'\n');return dest;
 }
-async function trialBoot({root,cache,job,name,targets,restart=false,coverage=null}) {
+async function trialBoot({root,cache,job,name,targets,restart=false,coverage=null,players=[]}) {
   if(!/^[a-z][a-z0-9-]*$/.test(name))throw new Error('Invalid run name');
   if(!Array.isArray(targets)||targets.length>20000||targets.some(t=>!Number.isInteger(t.x)||!Number.isInteger(t.z)||!/^[a-z][\w.-]*:[\w./-]+$/.test(t.dimension)))throw new Error('Invalid or unbounded targets');
   const server=path.join(job,name+'-server');output(server,job);
@@ -46,16 +46,22 @@ async function trialBoot({root,cache,job,name,targets,restart=false,coverage=nul
       for(const rel of files(path.join(server,WORLD)))fs.chmodSync(path.join(server,WORLD,rel),0o644);
     } else {files(server);if(!fs.existsSync(path.join(server,WORLD,'level.dat')))throw new Error('Missing restart world');}
     const script=path.join(server,'kubejs/server_scripts/world_trial/capture.js');fs.mkdirSync(path.dirname(script),{recursive:true});fs.copyFileSync(path.join(__dirname,'probe/capture.js'),script);
-    fs.writeFileSync(path.join(server,'world-trial-input.json'),JSON.stringify({token,targets,coverage}));
+    fs.copyFileSync(path.join(__dirname,'probe/players.js'),path.join(path.dirname(script),'players.js'));
+    fs.writeFileSync(path.join(server,'world-trial-input.json'),JSON.stringify({token,targets,coverage,players}));
     const complete=path.join(server,'world-trial-complete.json');if(fs.existsSync(complete))fs.unlinkSync(complete);
     await waitForServer(scope);
-    const result=await boot(server,{priority:'AboveNormal',sample:10,silent:180,timeout:3600,completeTimeout:3000,complete:()=>fs.existsSync(complete)&&JSON.parse(fs.readFileSync(complete,'utf8')).token===token},console.log,{scope});
+    const stopRequest=path.join(server,'world-trial-stop-request');
+    if(fs.existsSync(stopRequest))throw new Error('Remove the previous stop request before a new boot');
+    const result=await boot(server,{priority:'AboveNormal',sample:10,silent:180,timeout:3600,completeTimeout:3000,complete:()=>fs.existsSync(stopRequest)||(fs.existsSync(complete)&&JSON.parse(fs.readFileSync(complete,'utf8')).token===token)},console.log,{scope});
     const evidence=path.join(job,name+'-'+label);output(evidence,job);fs.mkdirSync(evidence,{recursive:false});
-    for(const rel of ['console.log','world-trial-registries.json','world-trial-complete.json'])if(fs.existsSync(path.join(server,rel)))fs.copyFileSync(path.join(server,rel),path.join(evidence,rel));
+    for(const rel of ['console.log','world-trial-registries.json','world-trial-complete.json','world-trial-players.json'])if(fs.existsSync(path.join(server,rel)))fs.copyFileSync(path.join(server,rel),path.join(evidence,rel));
     for(const rel of ['logs','crash-reports'])if(fs.existsSync(path.join(server,rel)))copy(path.join(server,rel),path.join(evidence,rel),job);
     fs.writeFileSync(path.join(evidence,'boot.json'),JSON.stringify({...result,token,targets:targets.length,coverage},null,2)+'\n');
     if(!result.completed||result.crashed||result.killed||result.wallSeconds===null)throw new Error('Boot failed: '+path.join(evidence,'boot.json'));
+    if(fs.existsSync(stopRequest)||!fs.existsSync(complete))throw new Error('Trial stopped without complete probe: '+evidence);
     const probe=JSON.parse(fs.readFileSync(complete,'utf8'));if(probe.errors.length||probe.visited.length!==targets.length)throw new Error('Probe incomplete: '+complete);
+    const playerResult=JSON.parse(fs.readFileSync(path.join(server,'world-trial-players.json'),'utf8'));
+    if(playerResult.token!==token||playerResult.errors.length||playerResult.players.length!==players.length)throw new Error('Player round-trip incomplete: '+evidence);
     return {server,evidence,result};
   }finally{scope.killAll();lock?.release();process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);verify(record.source,record.files);verify(record.snapshot,record.files);}
 }

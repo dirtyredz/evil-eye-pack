@@ -21,6 +21,9 @@ function compare(before,after,{registries,expected={}}={}) {
       const next=map.get(key(e));if(!next){diff(kind,key(e),e,null);continue;}
       if(/_dragon$/.test(e.id))for(const field of ['Variant','AgeTicks','Gender','Owner','UUID','CustomName','Items'])diff('dragon',key(e)+'|'+field,e.nbt[field],next.nbt[field]);
       for(const field of ['Owner','OwnerUUID','UUID','CustomName','Items','Inventory','ForgeCaps','neoforge:attachments'])diff(kind,key(e)+'|'+field,e.nbt[field],next.nbt[field]);
+      // Unknown mod-owned fields are not assumed disposable (Roundwood camouflage, AE2 keys,
+      // Ars spell payloads, locks and attachments). Review tick/codec deltas explicitly.
+      diff(kind+' payload',key(e),e.nbt,next.nbt);
     }
   }
   // Per-location stack totals expose discarded inventories; retain payloads for component review.

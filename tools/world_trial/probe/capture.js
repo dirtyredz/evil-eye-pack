@@ -2,13 +2,19 @@
 // Injected only into trial servers. One forced existing chunk at a time, with bounded readiness.
 ;(function () {
   var state = null
+  function dimension(level) {
+    var key=String(typeof level.dimension==='function'?level.dimension():level.dimension)
+    var match=/([a-z0-9_.-]+:[a-z0-9_./-]+)\]?$/.exec(key)
+    if(!match)throw new Error('Unreadable dimension '+key)
+    return match[1]
+  }
   ServerEvents.loaded(function (event) {
     var input = JsonIO.read('world-trial-input.json')
     var BR = Java.loadClass('net.minecraft.core.registries.BuiltInRegistries')
     var Registries = Java.loadClass('net.minecraft.core.registries.Registries')
     function keys(reg) { var a=reg.keySet().toArray(), out=[]; for(var i=0;i<a.length;i++)out.push(String(a[i]));return out.sort() }
     var dims=[], levels=event.server.getAllLevels().iterator()
-    while(levels.hasNext())dims.push(String(levels.next().dimension().location()))
+    while(levels.hasNext())dims.push(dimension(levels.next()))
     JsonIO.write('world-trial-registries.json',{items:keys(BR.ITEM),blocks:keys(BR.BLOCK),entities:keys(BR.ENTITY_TYPE),blockEntities:keys(BR.BLOCK_ENTITY_TYPE),biomes:keys(event.server.registryAccess().registryOrThrow(Registries.BIOME)),dimensions:dims})
     state={input:input,index:0,ticks:0,active:null,visited:[],errors:[],done:false}
   })
@@ -21,6 +27,7 @@
         if(!ready&&state.ticks<200)return
         if(!ready)state.errors.push({target:p.target,error:'entity section not ticking after 200 ticks'})
         state.visited.push({dimension:p.target.dimension,x:p.target.x,z:p.target.z,entityTicking:ready,ticks:state.ticks})
+        if(state.visited.length%100===0)JsonIO.write('world-trial-progress.json',{token:state.input.token,visited:state.visited.length,total:state.input.targets.length,last:state.visited[state.visited.length-1]})
         p.level.setChunkForced(p.target.x,p.target.z,false)
         state.active=null;state.index++
       }
@@ -30,7 +37,7 @@
         state.done=true;return
       }
       var t=state.input.targets[state.index],levels=event.server.getAllLevels().iterator(),level=null
-      while(levels.hasNext()){var l=levels.next();if(String(l.dimension().location())===String(t.dimension))level=l}
+      while(levels.hasNext()){var l=levels.next();if(dimension(l)===String(t.dimension))level=l}
       if(!level)throw new Error('Missing dimension '+t.dimension)
       var BP=Java.loadClass('net.minecraft.core.BlockPos')
       level.setChunkForced(t.x,t.z,true)

@@ -17,7 +17,7 @@ function inventory(world) {
     if(typeof v==='string') { if(/^[a-z][\w.-]*:[\w./-]+$/.test(v))add(out.references,v);return; }
     if(!v||typeof v!=='object'||Buffer.isBuffer(v))return;
     if(Array.isArray(v)&&v.length&&typeof v[0]!=='object'&&typeof v[0]!=='string')return;
-    if(typeof v.id==='string'&&('Count'in v||'count'in v))out.items.push({...context,path:trail,id:v.id,count:Number(v.ExtendedCount??v.Count??v.count),nbt:v});
+    if(typeof v.id==='string'&&!Array.isArray(v.Pos)&&('Count'in v||'count'in v))out.items.push({...context,path:trail,id:v.id,count:Number(v.ExtendedCount??v.Count??v.count),nbt:v});
     for(const [k,x]of Object.entries(v)) { if(/^[a-z][\w.-]*:[\w./-]+$/.test(k))add(out.references,k);inspect(x,context,trail+'/'+k); }
   }
   for(const rel of files(world)) {
@@ -48,6 +48,7 @@ function inventory(world) {
         const nbt=parseNbt(decompressChunk(bytes.subarray(off+4,off+4+len),external));out.chunks++;
         inspect(nbt,context);
         const n=nbt.Level||nbt;
+        context.status=n.Status??null;
         const entities=n.Entities||n.entities||[];
         for(const e of entities){out.entities.push({...context,id:e.id,uuid:json(e.UUID??e.UUIDMost??null),nbt:e});target(dim,cx,cz,'entity');}
         const bes=n.block_entities||n.TileEntities||[];

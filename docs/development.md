@@ -102,6 +102,12 @@ all outputs must remain under `artifacts/evil-eye-pack/jobs/`. Never use an inst
   creates `<name>-server/` from the snapshot and runs bounded existing-chunk probes. `restart`
   with the same arguments reopens that working copy. Every boot checks the idle host and source
   integrity, writes separate evidence, and stops its JVM. No visible client is launched.
+  The plan visits all stored-stack, named/owned, dragon, colony and player/spawn chunks, plus
+  entity/block-entity type samples per dimension and terrain samples per region. It records
+  that limit; an offline inventory includes more chunks than a live probe. A stand-in player
+  exercises the actual player-data loader/saver under each original UUID, without network login.
+  To stop a responsive running trial early, create `world-trial-stop-request` inside its
+  server directory; the supervisor sends `stop` and marks the probe incomplete.
 - `compare --before <inventory> --after <inventory> --registries <live registries> --out <job/comparison.json>`
   flags missing registries, inventory/storage, ownership and dragon differences. Exit 1 means
   unexplained differences; exit 2 means invalid inputs. A comparison is deliberately conservative:

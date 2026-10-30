@@ -111,7 +111,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
 - `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte hashing (`hashBytes`, `sha256`).
 - `tools/world_trial/` — guarded independent snapshots (`copy.cjs`, `snapshot.cjs`), offline
-  NBT/region inventories (`nbt.cjs`, `inventory.cjs`), conservative semantic comparison
+  NBT/region inventories (`nbt.cjs`, `inventory.cjs`, domain views in `semantics.cjs`), conservative semantic comparison
   (`compare.cjs`) and isolated headless boot/restart (`boot.cjs`, `probe/`). `run.cjs` is
   the CLI; tests cover path isolation, manifests, NBT and storage/ownership loss.
 - `tools/mod_map/` — offline mod map. `build.mjs` (entry) and `run.cjs` (orchestration, artifact guards, saved-evidence replay) at the top; `inventory/` pinned-jar inventory and the `mods.toml`-only reader; `model/` dependency graph, classification, cost, families, categories and their checked-in data (`overrides.json` reasoned kind/family corrections, undeclared dependencies and pack-wide fixes; `categories.json` family/standalone ID → category); `capture/` the one-boot instrumented capture and TRACE timing; `page/` the pure view, HTML builders, document shell, CSS and browser controls. `tests/` mirrors those folders; `tests/fixtures.cjs` is a shared helper outside the `*/*.test.cjs` glob.
