@@ -28,7 +28,10 @@
     "mekanism:block_raw_uranium",
     "mekanism:block_uranium",
     "mekanism:uranium_ore",
-    "mekanism:deepslate_uranium_ore"
+    "mekanism:deepslate_uranium_ore",
+    "interstellaris:silver_ore",
+    "interstellaris:deepslate_silver_ore",
+    "interstellaris:silver_block"
   ],
   "removeRecipes": [
     "cluttered:willow_button",
@@ -160,6 +163,9 @@
     "minecraft:buttons": [
       "biomesoplenty:willow_button"
     ],
+    "c:wither_bones": [
+      "iceandfire:witherbone"
+    ],
     "cluttered:willow_log": [
       "biomesoplenty:willow_log",
       "biomesoplenty:willow_wood",
@@ -177,6 +183,9 @@
     ],
     "c:plates": [
       "createaddition:zinc_sheet"
+    ],
+    "c:nuggets/copper": [
+      "create:copper_nugget"
     ],
     "c:enchantables": [
       "create:wrench"
@@ -236,6 +245,13 @@
     "c:ropes": [
       "supplementaries:rope"
     ],
+    "c:ores/silver": [
+      "iceandfire:silver_ore",
+      "iceandfire:deepslate_silver_ore"
+    ],
+    "c:raw_materials/silver": [
+      "iceandfire:raw_silver"
+    ],
     "c:ore_rates/singular": [
       "bigreactors:yellorite_ore",
       "bigreactors:deepslate_yellorite_ore"
@@ -268,6 +284,9 @@
     ],
     "alexscaves:uranium_rod": [
       "alexscaves:uranium_rod"
+    ],
+    "c:bones/wither": [
+      "iceandfire:witherbone"
     ]
   },
   "blockTags": {
@@ -277,6 +296,9 @@
       "create:copper_bars",
       "create:andesite_door",
       "create:brass_door",
+      "iceandfire:silver_block",
+      "iceandfire:silver_ore",
+      "iceandfire:deepslate_silver_ore",
       "bigreactors:yellorium_block",
       "bigreactors:raw_yellorium_block",
       "bigreactors:yellorite_ore",
@@ -315,6 +337,11 @@
       "biomesoplenty:willow_wood",
       "biomesoplenty:stripped_willow_log",
       "biomesoplenty:stripped_willow_wood"
+    ],
+    "minecraft:needs_iron_tool": [
+      "iceandfire:silver_block",
+      "iceandfire:silver_ore",
+      "iceandfire:deepslate_silver_ore"
     ],
     "minecraft:needs_stone_tool": [
       "bigreactors:yellorite_ore",
@@ -442,6 +469,10 @@
     ],
     "farmersdelight:straw_blocks": [
       "supplementaries:rope"
+    ],
+    "c:ores/silver": [
+      "iceandfire:silver_ore",
+      "iceandfire:deepslate_silver_ore"
     ],
     "c:ore_rates/singular": [
       "bigreactors:yellorite_ore",

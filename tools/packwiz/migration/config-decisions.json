@@ -3,6 +3,16 @@
  "note": "Per-config treatment for the NeoForge 1.21.1 migration (plan Phase 5). Ordered rules: the first match decides. 'regenerate' files were reconciled at the first clean target boot (Phase 6, pack-test boot 6, 2026-10-30): no shipped value was reset by a mod; 87 files where the 1.21.1 mods dropped obsolete keys or added new ones were replaced by the files those mods wrote back (our values kept), and no dropped key carried Evil Eye intent (each differed from the pack's initial defaults only where a mod had written its own default). Client-only defaults that a server cannot generate wait for the owner's first launch. tools/packwiz/tests/config_decisions.test.cjs enforces full coverage.",
  "rules": [
   {
+   "match": "config/iceandfire",
+   "treatment": "preserve-intent",
+   "reason": "CE 2.1.4 Jupiter JSON carries the corresponding Forge pack values (griefing off, dragon behaviour, mob weights/ranges, 800-block spawn exclusion). Legacy restored TOML/biome lists are inert provenance; CE structure/biome equivalence awaits dk-e7b276f4."
+  },
+  {
+   "match": "config/jupiter.json",
+   "treatment": "carry",
+   "reason": "Observed Jupiter 2.3.7 defaults, shipped to prevent first-boot missing-config errors."
+  },
+  {
    "match": "config/emi-curation/",
    "treatment": "carry",
    "reason": "Authored EMI curation policy (rules, lists, DECOR, Mods menu); ids, tags and components are reconciled with the target registries at the first boot."
@@ -25,7 +35,7 @@
   {
    "match": "config/adlods/",
    "treatment": "preserve-intent",
-   "reason": "ADLods survivor deposits; ore ids and forge: tags are rechecked against target registries and c: tags at the first boot. Ice and Fire deposits are parked with the port."
+   "reason": "ADLods survivor deposits; Ice and Fire silver/sapphire targets restored 2026-10-30. Explicit ore IDs verified against target registries."
   },
   {
    "match": "config/hammerlib",
@@ -116,5 +126,5 @@
    "reason": "Let Me Despawn migrates letmedespawn.json to config/letmedespawn/letmedespawn.json5 on 1.21.1 and renames the old file .migrated; the old file held defaults."
   }
  ],
- "deferred": "Configs of the seven owned ports are parked in tools/packwiz/migration/deferred/<port>/ (see its README)."
+ "deferred": "All seven owned ports restored 2026-10-30; no parked files remain. See deferred/README.md for restoration history."
 }

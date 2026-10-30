@@ -461,6 +461,14 @@ file = "config/adlods/Deposits/ruthenium.cfg"
 hash = "b662c3ea57dd5c7a042672726a47f7beaa016bd7f88e61dc0bce290f76c5e981"
 
 [[files]]
+file = "config/adlods/Deposits/sapphire.cfg"
+hash = "c8e3428d1e66b1f53523bffcd4845902fcfcf38a6af47f59a3519886bcb7f29d"
+
+[[files]]
+file = "config/adlods/Deposits/silver.cfg"
+hash = "115275cf3486224a56fc4164e70128ac8cbc506335b947b191ffe67763e8dd92"
+
+[[files]]
 file = "config/adlods/Deposits/tin.cfg"
 hash = "3af65181efe89b51cf0a45798b345715e63fe8c358e816b5e2bb165d33f7c60d"
 
@@ -1454,7 +1462,7 @@ hash = "72d65e7e16a0067ea57b6f9275ade5245a0efcd151df0a21e26d4c820d068069"
 
 [[files]]
 file = "config/bhc-common.toml"
-hash = "760e05471562be6ab786080a0f2cb7ba697c1faaeaf9069443738e2a75b04a72"
+hash = "c19ef2ea00373877dd47653d891c2f6729843eb3e60427390eb8fc6cfd5ae2ef"
 
 [[files]]
 file = "config/bhc/drops.json"
@@ -1581,6 +1589,10 @@ file = "config/dramaticdoors-common.toml"
 hash = "23648e17ebd019754fa74d513dcee7cb00f2fc06c2e5e8f0f4270d5883dfd234"
 
 [[files]]
+file = "config/emi-curation/alexsmobs-creative.json"
+hash = "a712842cceb7cf78792d8d74cb2c6e81351b5308b94388e7144fcdea4976f091"
+
+[[files]]
 file = "config/emi-curation/colours.json"
 hash = "7f24c23660df62deb15a473cb07689bc3471f75ec9ef933ac8933a7421033ed2"
 
@@ -1610,7 +1622,7 @@ hash = "e2e62dad2ddd4a70a10e51b7b892ba50702c99f4c0176ebbfabdeb39c37777af"
 
 [[files]]
 file = "config/emi-curation/rules.json"
-hash = "056e0c51cb65c16f239c2837e27b270b40c3e5f004ccfadc27645b9fb97e754d"
+hash = "22924eea83c4808ce8970247f9918a3786124b70b2a5d941cc225c6ee672404c"
 
 [[files]]
 file = "config/emi.css"
@@ -1829,6 +1841,186 @@ file = "config/hammermultipart.cfg"
 hash = "391e0cf41ff346b9414f56afdb8032abb1c64777a304807a8fa733b14bbb5978"
 
 [[files]]
+file = "config/iceandfire-client.toml"
+hash = "2951cb48c8ceb7c4ab70652af11efc6f7fdfa65237a718697c4282026cd5fa1e"
+
+[[files]]
+file = "config/iceandfire-common.toml"
+hash = "70fec3d1d4dee2a960261d1bafda459db64990cc2b9fec2d3ec9ac4a634eb55c"
+
+[[files]]
+file = "config/iceandfire/amphithere_biomes.json"
+hash = "3c78e400997874cb1aca239d5754a03cd9dff04ece1c3c48b60135e299446118"
+
+[[files]]
+file = "config/iceandfire/cockatrice_biomes.json"
+hash = "d01094612d9d8a48e99809522ff7e009bc1ec7e03a57e0f5f8c9cd51ef44b0bb"
+
+[[files]]
+file = "config/iceandfire/cyclops_cave_biomes.json"
+hash = "0ec4ed27179c0a74651de2fe91cc17024ca05bd598b7f8043ebb794ad6d16a3a"
+
+[[files]]
+file = "config/iceandfire/deathworm_biomes.json"
+hash = "119e3398276786acafe198ebf3fd62d62e0e62e544ec74980c32bf0356c6f0c9"
+
+[[files]]
+file = "config/iceandfire/desert_myrmex_biomes.json"
+hash = "119e3398276786acafe198ebf3fd62d62e0e62e544ec74980c32bf0356c6f0c9"
+
+[[files]]
+file = "config/iceandfire/fire_dragon_biomes.json"
+hash = "b14dbfc0fc73b729167af268501f0bb6b76e4e73002916d6fa91df2338527d85"
+
+[[files]]
+file = "config/iceandfire/fire_dragon_cave_biomes.json"
+hash = "b14dbfc0fc73b729167af268501f0bb6b76e4e73002916d6fa91df2338527d85"
+
+[[files]]
+file = "config/iceandfire/fire_dragon_skeleton_biomes.json"
+hash = "119e3398276786acafe198ebf3fd62d62e0e62e544ec74980c32bf0356c6f0c9"
+
+[[files]]
+file = "config/iceandfire/fire_lily_biomes.json"
+hash = "a2a66102017dc3fd90d9f8cd9ac321fba3f4902e6fcdc862b77a57a4ed418926"
+
+[[files]]
+file = "config/iceandfire/forest_troll_biomes.json"
+hash = "071e4cf9db64d5771b17d2487d8229562311c584ce56a824abb478f2cc00a911"
+
+[[files]]
+file = "config/iceandfire/frost_lily_biomes.json"
+hash = "6d60f767a148703f43500a02bb97f576d4aff8d8a58987d205e0bd83b9553a57"
+
+[[files]]
+file = "config/iceandfire/gorgon_temple_biomes.json"
+hash = "0ec4ed27179c0a74651de2fe91cc17024ca05bd598b7f8043ebb794ad6d16a3a"
+
+[[files]]
+file = "config/iceandfire/graveyard_biomes.json"
+hash = "20c274d8cb86758e1d9b7ec1d936089561407535c98b675aa0160b0033f1adfa"
+
+[[files]]
+file = "config/iceandfire/hippocampus_biomes.json"
+hash = "e33237977094c9d26012e2a1883c75ff7062ca16d43f2c9a66f4ceb5d92d2fc0"
+
+[[files]]
+file = "config/iceandfire/hippogryph_biomes.json"
+hash = "8a199a14a2abf91b76855781bd37ed146491e896fd05ba714a806bc47b2c1657"
+
+[[files]]
+file = "config/iceandfire/hippogryph_black_biomes.json"
+hash = "9848c71b726e7fc6cb7100f1a644ef6c36727a774a5c4601a86f2f88a48e0f36"
+
+[[files]]
+file = "config/iceandfire/hippogryph_brown_biomes.json"
+hash = "a05e7cbe7541bff74314da9b23976b072e727387185840645e60f5eb98e989be"
+
+[[files]]
+file = "config/iceandfire/hippogryph_chestnut_biomes.json"
+hash = "88466c293acef0b7725de96c7d21747948769d2e6b33e952d4c204472c898ecd"
+
+[[files]]
+file = "config/iceandfire/hippogryph_creamy_biomes.json"
+hash = "42a2b88a0cb92149ce7707d43f9ad833250f13555db480e30090830dca0c0851"
+
+[[files]]
+file = "config/iceandfire/hippogryph_dark_brown_biomes.json"
+hash = "a77dad8b397928fb3b1d9b249b586b8103f866790d215b9bed549add0fa6f3db"
+
+[[files]]
+file = "config/iceandfire/hippogryph_gray_biomes.json"
+hash = "284c803abb59fccecee7d8d28b244c109045d47dd13cc0e83394f3b75ed1a4f4"
+
+[[files]]
+file = "config/iceandfire/hippogryph_white_biomes.json"
+hash = "172c79ed677b97663434c8bd90311802556489bcb8afb5fe246f5c8cac840ea4"
+
+[[files]]
+file = "config/iceandfire/hydra_cave_biomes.json"
+hash = "ae56c23cf566a2fd020dfa6dd2acbbc4ca7770ee98223fd293b0bd0290fd816a"
+
+[[files]]
+file = "config/iceandfire/iaf-client.json"
+hash = "b542fc37800601b9151726679f50eb6647c172fff1ea77cbd816e0ebd8090e74"
+
+[[files]]
+file = "config/iceandfire/iaf-common.json"
+hash = "1805632c3a6025a0592b9a9e0001b284dcf2870373aea4f5dbdf722973b38dc4"
+
+[[files]]
+file = "config/iceandfire/ice_dragon_biomes.json"
+hash = "5357ee877b398d80a521593ae0dc4c11c2255cdacf020b43a11720f2359d5c4c"
+
+[[files]]
+file = "config/iceandfire/ice_dragon_cave_biomes.json"
+hash = "5357ee877b398d80a521593ae0dc4c11c2255cdacf020b43a11720f2359d5c4c"
+
+[[files]]
+file = "config/iceandfire/ice_dragon_skeleton_biomes.json"
+hash = "6d60f767a148703f43500a02bb97f576d4aff8d8a58987d205e0bd83b9553a57"
+
+[[files]]
+file = "config/iceandfire/jungle_myrmex_biomes.json"
+hash = "3c78e400997874cb1aca239d5754a03cd9dff04ece1c3c48b60135e299446118"
+
+[[files]]
+file = "config/iceandfire/lightning_dragon_biomes.json"
+hash = "65ba1662b1a2c9b6f97c6a0f108ee1d1d0e928226d7fc1a05634e0a55329bbbf"
+
+[[files]]
+file = "config/iceandfire/lightning_dragon_cave_biomes.json"
+hash = "65ba1662b1a2c9b6f97c6a0f108ee1d1d0e928226d7fc1a05634e0a55329bbbf"
+
+[[files]]
+file = "config/iceandfire/lightning_dragon_skeleton_biomes.json"
+hash = "d01094612d9d8a48e99809522ff7e009bc1ec7e03a57e0f5f8c9cd51ef44b0bb"
+
+[[files]]
+file = "config/iceandfire/lightning_lily_biomes.json"
+hash = "d01094612d9d8a48e99809522ff7e009bc1ec7e03a57e0f5f8c9cd51ef44b0bb"
+
+[[files]]
+file = "config/iceandfire/mausoleum_biomes.json"
+hash = "84e8b236ed2083cdf7e22c5608ab40080bfcb48d48c2e9f09ab7b3f29cb5b89f"
+
+[[files]]
+file = "config/iceandfire/mountain_troll_biomes.json"
+hash = "a05e7cbe7541bff74314da9b23976b072e727387185840645e60f5eb98e989be"
+
+[[files]]
+file = "config/iceandfire/ore_gen_biomes.json"
+hash = "e7855fa7d73f4d3af77f47ddd70b4fcbab7862302d004b4ddae9dddc75c4e402"
+
+[[files]]
+file = "config/iceandfire/pixie_village_biomes.json"
+hash = "312606ce4926f66af082019bedfd9534789ef3ca27ed6f3c3533b5137e125c4f"
+
+[[files]]
+file = "config/iceandfire/sapphire_gen_biomes.json"
+hash = "6d60f767a148703f43500a02bb97f576d4aff8d8a58987d205e0bd83b9553a57"
+
+[[files]]
+file = "config/iceandfire/sea_serpent_biomes.json"
+hash = "e33237977094c9d26012e2a1883c75ff7062ca16d43f2c9a66f4ceb5d92d2fc0"
+
+[[files]]
+file = "config/iceandfire/siren_biomes.json"
+hash = "e33237977094c9d26012e2a1883c75ff7062ca16d43f2c9a66f4ceb5d92d2fc0"
+
+[[files]]
+file = "config/iceandfire/snowy_troll_biomes.json"
+hash = "7b0d7d7459b06d0f5a01e0d3cb803d534f9b654ad3b4d9e336f0f50fbe06f4d7"
+
+[[files]]
+file = "config/iceandfire/stymphalian_bird_biomes.json"
+hash = "ae56c23cf566a2fd020dfa6dd2acbbc4ca7770ee98223fd293b0bd0290fd816a"
+
+[[files]]
+file = "config/iceandfire/wandering_cyclops_biomes.json"
+hash = "46fb4b80eb9d9667223509ea17aa4b5aa65851f3cb09c09886d6b9dde1a63601"
+
+[[files]]
 file = "config/immediatelyfast.json"
 hash = "519a9c3d2d687d4d95c44f2449e5d91acb2cf1e68ba19d07ec967d77e55150e2"
 
@@ -1863,6 +2055,10 @@ hash = "67b4a5d6105bb389c324f404f348240fdcca723f9c4f1f4fa8db947783a2c2ae"
 [[files]]
 file = "config/jade/sort-order.json"
 hash = "2bafa45d247e666d8249c8bdeb178fa202180fddc124482eea1e409c650bcfa0"
+
+[[files]]
+file = "config/jupiter.json"
+hash = "c89c0940d0252fe2b8bba72c4a243e35700491435acef7103e4f9a7e86f929c9"
 
 [[files]]
 file = "config/lightoverlay.properties"
@@ -2070,7 +2266,7 @@ hash = "29c12c8b9c71b426585b7cf4bd761919e0495d19ed91a31c41cffde91eedf34b"
 
 [[files]]
 file = "kubejs/assets/emi/index/stacks/dedup.json"
-hash = "6804735216e75a39a68ea258123745992dd66ee664e698f475c2a2767d01be33"
+hash = "53e55078998c0343299614076e31112deb52ef4301e55e331db2a4a399a27a69"
 
 [[files]]
 file = "kubejs/assets/emi_curation/lang/en_us.json"
@@ -2174,19 +2370,19 @@ hash = "fe4b5696211a9d5af0b3da7b7a187559692979d71a6cd4f70658d13bd19dc60b"
 
 [[files]]
 file = "kubejs/config/dedup.json"
-hash = "5d16d695339d222b6e0f0789a99770571ad8da120d58ac0d2a246eb90dc86c4f"
+hash = "84a76c02a93e3ce07eb2c793cc9fbcae01d0c18e6fef57169acd84c90b61a680"
 
 [[files]]
 file = "kubejs/config/dedup_sources.json"
-hash = "ce89f2b97c6d1f8e669bc074fd176d8a46b1afbbf304a9157e9b72807978c02b"
+hash = "12de76372068bf701046ee60d00c82e413f0f9c6a9b4a74942a4449fb7e6c60e"
 
 [[files]]
-file = "kubejs/data/alexscaves/tags/item/cave_paintings.json"
-hash = "31a03f8d2104194e7ecdc11f72264ae30f9b999cee50b4ad821ee9bfb0d4aea5"
+file = "kubejs/data/bhc/recipe/wither_bone.json"
+hash = "6fa903f013c9f2eaa5ea71f1db07e68ae034a749190b97dc053a6021813b14be"
 
 [[files]]
-file = "kubejs/data/c/tags/item/concrete.json"
-hash = "73e2ad3b1432e2dcd2738e25e29c95e5d9ecb5e3eefe6e52bf9f1a60d211f98d"
+file = "kubejs/data/bhc/recipe/wither_bone_to_bonemeal.json"
+hash = "e5f5f3a9ce0ea5b01b579dd1a1f2fe64f46e32d86c7fdf9e3b4f67fbd1fdef64"
 
 [[files]]
 file = "kubejs/data/citadel/loot_table/blocks/lectern.json"
@@ -3573,6 +3769,38 @@ file = "kubejs/data/ftbessentials/tags/block/ignore_rtp.json"
 hash = "d6991f0d3b801369eaee714887ef3f5a888d4f249a3e1dd06fd0ee9dc3f1c227"
 
 [[files]]
+file = "kubejs/data/iceandfire/loot_table/blocks/copper_pile.json"
+hash = "676d20528844a62f7cdcb00c1b9661dbe40be35dc960fec0c21d6c44e80a84d7"
+
+[[files]]
+file = "kubejs/data/iceandfire/loot_table/chest/lightning_dragon_female_cave.json"
+hash = "27f2441c080dec43b5ee26ac3a147e65e30a9b009a5fe8de0de9549cc0c40252"
+
+[[files]]
+file = "kubejs/data/iceandfire/loot_table/chest/lightning_dragon_male_cave.json"
+hash = "fd88c91eac1b56ed112fd2f108c4fd1a3ddc4659dea62ec6ec18e92485d9dde8"
+
+[[files]]
+file = "kubejs/data/iceandfire/loot_table/chest/lightning_dragon_roost.json"
+hash = "27f2441c080dec43b5ee26ac3a147e65e30a9b009a5fe8de0de9549cc0c40252"
+
+[[files]]
+file = "kubejs/data/iceandfire/loot_table/entities/stymphalian_bird.json"
+hash = "393ed9086eec8882877e49ec9d3ed3992817d3c72409c2dc006c77d1269e21ff"
+
+[[files]]
+file = "kubejs/data/iceandfire/recipe/copper_ingot_to_nuggets.json"
+hash = "8805d4e00725c148d88e3aa4cac3b014832b1c03d3fecd3a4d6d466f4fcb004d"
+
+[[files]]
+file = "kubejs/data/iceandfire/recipe/furnace/copper_nugget.json"
+hash = "fa84d3f0b63609808850c8ddecd7a329a7ef7c7654f95d54cbb0676ac3006b28"
+
+[[files]]
+file = "kubejs/data/iceandfire/recipe/furnace/copper_nugget_blasting.json"
+hash = "985dba8113c331dd03662f9594026619dc6ddf219c0dcad69a90e948833d3471"
+
+[[files]]
 file = "kubejs/data/interiors/recipe/kelp_chair.json"
 hash = "ada30f4655e72985de2aaf592a6c828c7d6175ee19f296835eb4a25e6696d174"
 
@@ -3603,6 +3831,22 @@ hash = "e8a4f8af2543ef6c4bae2851fa5de0c243ee4dbd84397ddb1cb2daad03bf48f9"
 [[files]]
 file = "kubejs/data/interiors/recipe/wall_table.json"
 hash = "9fd7b5b550e8f688db00e1ba6aeeaedb00a2985cdae2baa683bcbb5d61e5dae3"
+
+[[files]]
+file = "kubejs/data/interstellaris/loot_table/blocks/deepslate_silver_ore.json"
+hash = "0554305ca9c735ecc933839edb58f143ee3934f1af67f06e9416d2c7c0a02945"
+
+[[files]]
+file = "kubejs/data/interstellaris/loot_table/blocks/silver_block.json"
+hash = "bd8bb17748840eb4933421474138b27405ef44aeac7030030d8a9ec723f362c1"
+
+[[files]]
+file = "kubejs/data/interstellaris/loot_table/blocks/silver_ore.json"
+hash = "b82b5b6c006e4c7c8bf8b32dac328dea5d3463a787032a1006b85b278ba4626c"
+
+[[files]]
+file = "kubejs/data/interstellaris/neoforge/biome_modifier/add_silver_ore.json"
+hash = "99b969132018e9da1071065a8593ba9564928b1ed0aa5ae3ab45f9dac071f7d5"
 
 [[files]]
 file = "kubejs/data/interstellaris/recipe/computing_circuit.json"
@@ -3741,8 +3985,96 @@ file = "kubejs/data/interstellaris/recipe/pressing/iron_plate.json"
 hash = "46b74c69f65ab6f3c4bebfb7d6cf35d95fe5873b65c19b3fe1194b03cf77e1ac"
 
 [[files]]
+file = "kubejs/data/interstellaris/recipe/pressing/silver_plate.json"
+hash = "d24a8dac765c4c84c9681ffc07948e2b1a920e35c57f0ab6677c054aa139746c"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/processing/silver/clump_from_ore.json"
+hash = "ecfac897c502f6c1a68ba91b29b0644275416e976c2ff43a82ed8629c5039ed6"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/processing/silver/clump_from_raw.json"
+hash = "877b0da1cee24bccaddec0b6771e1d8ad0ab27d0f80da6728f0e87bc6ab72a63"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/processing/silver/dirty_slurry_from_ore.json"
+hash = "16801e3a7582c9d76ba78830594b1584c098d33c789053284b7af22db7499b84"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/processing/silver/dirty_slurry_from_raw.json"
+hash = "4d4f0352d5e556839d59f40eb397085b63bdf97ab5b5c594a840d5fd63f469c6"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/processing/silver/dust_from_ore.json"
+hash = "8eccd57421a1ff35492cc3665641d2526245430ba86f5f5f9d73f5f56d463ff1"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/processing/silver/dust_from_raw.json"
+hash = "1a2d2e5937664dade12c15268b61c98e89794bacb73bb1c2e2619b5d76a911bb"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/processing/silver/shard_from_ore.json"
+hash = "b05fe703fc7cf7111a7f020a4b52a1c9e5e3f8731e26daec89cae9e68d5f5bea"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/processing/silver/shard_from_raw.json"
+hash = "4c5a3d54c1df554b052991beeeb10ce0814166274817619d18be10528fb37cdf"
+
+[[files]]
 file = "kubejs/data/interstellaris/recipe/reaction/polysilicon.json"
 hash = "d4af6020c92823227e2b4fb90405ea132a8618e5626e22f18bfcdb26abd4461d"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_block.json"
+hash = "e063c7a0b193a198994736ff7177a9118d8096d1d3af86dcdecca46c0c975e1b"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_ingot_from_deepslate_silver_ore_blasting.json"
+hash = "f68bbe531ffe68f2463e0e930406d2cdbb9e9e2905cd8b1526b8e12b39e395bf"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_ingot_from_deepslate_silver_ore_smelting.json"
+hash = "404e7f9870e95f51dbcaca359f0092b1d405fe18252109fae3799dc502dbd420"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_ingot_from_nuggets.json"
+hash = "01fa7b3a2b740ebd9100804446bf749c7a0785f9c7e62a52ae49bc62f8c9af60"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_ingot_from_raw_silver_blasting.json"
+hash = "3d498996aa2bdd5c9e7b9e36501e6de7b98e61375ecf1877b6a1ef40f682703b"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_ingot_from_raw_silver_smelting.json"
+hash = "fadf917e5aa95d13ddb3a31ff1b334b7d21eea4cde99d45bb4dbd469c16cb06f"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_ingot_from_silver_block.json"
+hash = "115715640df3e81b2aa3d7ed4a3ab56833cdf9bca172d37c140ea627c04fb521"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_ingot_from_silver_dust_blasting.json"
+hash = "af7b6050567324fcd1b31f24ed5abc9cad21a52a97a74bb43b86c6210e5f2684"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_ingot_from_silver_dust_smelting.json"
+hash = "962f993ca813c6dce93049ad247d6c935f1ab558a4f82907e1df857f1caff6a0"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_ingot_from_silver_ore_blasting.json"
+hash = "85146f62c6c0565165e0b553a60446ace2c56b1e47eee81b42bf1830c91ed94a"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_ingot_from_silver_ore_smelting.json"
+hash = "306c8d58cbd36356fb48f4cbf52e55cf96880a78daa912084f7d335cad9efce6"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_nugget.json"
+hash = "d960d191537f272060705c26b0975e616894d317deb702647044deefe37b4d85"
+
+[[files]]
+file = "kubejs/data/interstellaris/recipe/silver_wire.json"
+hash = "1946806ec8f51263712175fab69559919dec1a1fc26913089026636f393c57df"
 
 [[files]]
 file = "kubejs/data/interstellaris/recipe/vacuum_arc_smelting/silicon.json"
@@ -4229,7 +4561,7 @@ metafile = true
 
 [[files]]
 file = "mods/alexs-caves.pw.toml"
-hash = "8ede868a030a7ee25154860545ff197812133a04bdc55dddf79559be679f7ba5"
+hash = "b67b6f451ca35e19dfd1299c2fcef64904df57957c322afb5b6a774c9c8c99be"
 metafile = true
 
 [[files]]
@@ -4713,6 +5045,11 @@ hash = "672fe2518a1795814efc943c3e3cf8dc1b993bc7d838cc62950acfaba348c2c7"
 metafile = true
 
 [[files]]
+file = "mods/ice-and-fire-dragons.pw.toml"
+hash = "4446b06cef2df1cec2d87364300418654e252df8ad9972d0d4781e3e58cc5fc1"
+metafile = true
+
+[[files]]
 file = "mods/immediatelyfast.pw.toml"
 hash = "b308dfacb39de2e41e90ea4e5489d0075b60ed0e3f2a7d4e5d57ea8343db9a57"
 metafile = true
@@ -4755,6 +5092,11 @@ metafile = true
 [[files]]
 file = "mods/joy-of-painting.pw.toml"
 hash = "5b21ffe8e89b5b31876365b950b2e44fe6d51f8e3d6d3f8c639174ed4f9f8c9c"
+metafile = true
+
+[[files]]
+file = "mods/jupiter.pw.toml"
+hash = "a3d803079f7cba47f9d6bf728198f2c335a13938ef50bbdaa3f7ae2457bef58d"
 metafile = true
 
 [[files]]
@@ -5095,6 +5437,11 @@ metafile = true
 [[files]]
 file = "mods/towntalk.pw.toml"
 hash = "a7074e8e499d34f5ce633dbd33f818e376dd1941ec5b1d97a33acd019df69b5a"
+metafile = true
+
+[[files]]
+file = "mods/uranus.pw.toml"
+hash = "ba468b0e9e8ff229fdbaa7fc1efc6f43236cdafe7570b0ba2b51874ddbc1880b"
 metafile = true
 
 [[files]]

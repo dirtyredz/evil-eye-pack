@@ -12,11 +12,11 @@
    "action": "repoint",
    "target": {
     "source": "local",
-    "filename": "alexscaves-1.21.1-neoforge-2.0.2.jar",
-    "sha256": "2d7435f7228673a7dd1b38ea3154b5aeb7ed245a564d2eef07f96a40ae3d405c",
-    "size": 74864451
+    "filename": "alexscaves-1.21.1-neoforge-2.0.2-r2.jar",
+    "sha256": "9c3962cdbc8eae1f136da4a2cbb39a3471888cfc27ad734705ef474fa3e58408",
+    "size": 74865062
    },
-   "reason": "Owner-authorised private fork; dev/trial-only hash-addressed local cache. No redistribution URL; family delivery remains dk-85261627."
+   "reason": "Owner-authorised dev/trial local hash pin, verified against 2026-10-30 integration inputs; no redistribution URL. Family delivery remains dk-85261627."
   },
   "mods/alexs-mobs.pw.toml": {
    "action": "repoint",
@@ -38,8 +38,14 @@
    "reason": "Owner's port (minecraft-mods, public LGPL fork), fourth of the seven: Ars Instrumentum 5.0.0 built from dc29a50; mod id and all 9 registry / 43 recipe-data ids of 4.1.0 kept. Requires Ars Nouveau [5.13.3,) and Curios. Direct GitHub release pin, sha256 = release digest; no update table."
   },
   "mods/ice-and-fire-dragons.pw.toml": {
-   "action": "defer",
-   "reason": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+   "action": "repoint",
+   "target": {
+    "source": "local",
+    "filename": "iceandfire-1.21.1-neoforge-2.1.4.jar",
+    "sha256": "71fc6472c58d5cba9ae56cd3a37c98bcaed6187c168aef1a76f7ebd1d71a02d0",
+    "size": 20938919
+   },
+   "reason": "Owner-authorised dev/trial local hash pin, verified against 2026-10-30 integration inputs; no redistribution URL. Family delivery remains dk-85261627."
   },
   "mods/dank-recipe-transfer.pw.toml": {
    "action": "repoint",
@@ -223,6 +229,28 @@
     "file": "9345861"
    },
    "reason": "Plan Phase 7, last in dependency order: Interstellaris 0.6.1 beta (2026-10-27, WIP space mod; full release estimated Q2 2027). Requires Mekanism + Generators [10.7.19,10.8) and Sable [2.0.5,2.1), both pinned; CurseForge only (no Modrinth project)."
+  },
+  {
+   "metafile": "mods/uranus.pw.toml",
+   "name": "Uranus",
+   "side": "both",
+   "target": {
+    "source": "curseforge",
+    "project": "1010827",
+    "file": "8682870"
+   },
+   "reason": "Ice and Fire CE 2.1.4 dependency; exact file and SHA-256 supplied by minecraft-mods (2026-10-30)."
+  },
+  {
+   "metafile": "mods/jupiter.pw.toml",
+   "name": "Jupiter",
+   "side": "both",
+   "target": {
+    "source": "curseforge",
+    "project": "1072905",
+    "file": "7738312"
+   },
+   "reason": "Ice and Fire CE 2.1.4 dependency; exact file and SHA-256 supplied by minecraft-mods (2026-10-30)."
   }
  ],
  "waivers": {},

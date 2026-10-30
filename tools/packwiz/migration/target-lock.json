@@ -330,23 +330,23 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "Owner-authorised private fork; dev/trial-only hash-addressed local cache. No redistribution URL; family delivery remains dk-85261627.",
+   "rationale": "Owner-authorised dev/trial local hash pin, verified against 2026-10-30 integration inputs; no redistribution URL. Family delivery remains dk-85261627.",
    "target": {
     "declares": [
      "alexscaves required citadel [2.7.1,3.0)",
      "alexscaves required minecraft [1.21.1,1.22)",
      "alexscaves required neoforge [21.1.265,21.2)"
     ],
-    "filename": "alexscaves-1.21.1-neoforge-2.0.2.jar",
+    "filename": "alexscaves-1.21.1-neoforge-2.0.2-r2.jar",
     "loader": "neoforge",
     "metafile": "mods/alexs-caves.pw.toml",
     "mods": [
      "alexscaves@2.0.2"
     ],
     "name": "Alex's Caves",
-    "sha256": "2d7435f7228673a7dd1b38ea3154b5aeb7ed245a564d2eef07f96a40ae3d405c",
+    "sha256": "9c3962cdbc8eae1f136da4a2cbb39a3471888cfc27ad734705ef474fa3e58408",
     "side": "both",
-    "size": 74864451,
+    "size": 74865062,
     "source": "local"
    }
   },
@@ -4776,7 +4776,7 @@
    }
   },
   {
-   "action": "defer",
+   "action": "repoint",
    "metafile": "mods/ice-and-fire-dragons.pw.toml",
    "old": {
     "file": "5633453",
@@ -4789,7 +4789,29 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "Owned port (minecraft-mods seven-port programme); no NeoForge 1.21.1 build. Suspend references in Phase 5; restore when the port releases."
+   "rationale": "Owner-authorised dev/trial local hash pin, verified against 2026-10-30 integration inputs; no redistribution URL. Family delivery remains dk-85261627.",
+   "target": {
+    "declares": [
+     "iceandfire required jupiter [2.3,)",
+     "iceandfire required minecraft [1.21.1]",
+     "iceandfire required neoforge [21.1.265,)",
+     "iceandfire required uranus [2.3.2,)",
+     "integration required minecraft [0,)",
+     "integration required neoforge [0,)"
+    ],
+    "filename": "iceandfire-1.21.1-neoforge-2.1.4.jar",
+    "loader": "neoforge",
+    "metafile": "mods/ice-and-fire-dragons.pw.toml",
+    "mods": [
+     "iceandfire@2.1.4",
+     "integration@0.2 (bundled)"
+    ],
+    "name": "Ice and Fire: Dragons",
+    "sha256": "71fc6472c58d5cba9ae56cd3a37c98bcaed6187c168aef1a76f7ebd1d71a02d0",
+    "side": "both",
+    "size": 20938919,
+    "source": "local"
+   }
   },
   {
    "action": "repoint",
@@ -5145,6 +5167,40 @@
     "url": "https://cdn.modrinth.com/data/YOs4tZea/versions/73U02HbA/xercapaint-neoforge-1.21.1-2.0.1.jar",
     "version": "73U02HbA",
     "versionNumber": "1.21.1-2.0.1"
+   }
+  },
+  {
+   "action": "add",
+   "metafile": "mods/jupiter.pw.toml",
+   "old": null,
+   "provisional": false,
+   "rationale": "Ice and Fire CE 2.1.4 dependency; exact file and SHA-256 supplied by minecraft-mods (2026-10-30).",
+   "target": {
+    "channel": "release",
+    "declares": [
+     "jupiter required minecraft [1.21],[1.21.1]",
+     "jupiter required neoforge [1,)"
+    ],
+    "file": "7738312",
+    "filename": "jupiter-2.3.7-1.21.1-neoforge.jar",
+    "loader": "neoforge",
+    "metafile": "mods/jupiter.pw.toml",
+    "mods": [
+     "jupiter@2.3.7"
+    ],
+    "name": "Jupiter",
+    "project": "1072905",
+    "publisher": {
+     "md5": "e9d3d142f366cfc1d33030d61f6a1fb2",
+     "size": 278988
+    },
+    "sha1": "569fb484ea5c8e8d690945ad4cd132131a719751",
+    "sha256": "95af332af250f97fe2d9d288fe6b2057c266673a388348bf33756b0b693ace15",
+    "sha512": "b91665a0e7e74d7bfdc3903a297bc97477fdeea49c43e03f1de000cbb09422bf35d06a6f67a68c36029be23cd35b753770354967f25b8f09473654ea85473ee0",
+    "side": "both",
+    "size": 278988,
+    "source": "curseforge",
+    "versionNumber": "Jupiter 2.3.7 for 1.21.1 Neoforge"
    }
   },
   {
@@ -8169,6 +8225,39 @@
     "size": 52301863,
     "source": "curseforge",
     "versionNumber": "TownTalk 1.21 1.2.0"
+   }
+  },
+  {
+   "action": "add",
+   "metafile": "mods/uranus.pw.toml",
+   "old": null,
+   "provisional": false,
+   "rationale": "Ice and Fire CE 2.1.4 dependency; exact file and SHA-256 supplied by minecraft-mods (2026-10-30).",
+   "target": {
+    "channel": "beta",
+    "declares": [
+     "uranus required minecraft [1.21.1]",
+     "uranus required neoforge [21.1.248,)"
+    ],
+    "file": "8682870",
+    "filename": "uranus-3.0-beta.1.jar",
+    "loader": "neoforge",
+    "metafile": "mods/uranus.pw.toml",
+    "mods": [
+     "uranus@3.0-beta.1"
+    ],
+    "name": "Uranus",
+    "project": "1010827",
+    "publisher": {
+     "size": 221525
+    },
+    "sha1": "c87886ec34ba1282366801f84f6953dc42cb42b2",
+    "sha256": "3ab2a8c474aa306cc139ea03e343b20c0267b4887dedc05eed43968a8aed9232",
+    "sha512": "5358987500f7c6f8007135b1231ab26fb1f0158d4c2d63a43484f7cf8a001d42617f1ac9d346a92ab68a56a507591708bc0808e85f0a76fdc2ab9569ad281527",
+    "side": "both",
+    "size": 221525,
+    "source": "curseforge",
+    "versionNumber": "uranus-3.0-beta.1.jar"
    }
   },
   {

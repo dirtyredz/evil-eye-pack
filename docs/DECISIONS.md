@@ -2,6 +2,22 @@
 
 Newest first.
 
+## 2026-10-30 - Ice and Fire CE and the final port follow-ups
+
+- Ice and Fire CE 2.1.4 is a dev/trial local hash pin, alongside Alex's Caves r2. Uranus
+  3.0-beta.1 and Jupiter 2.3.7 use normal CurseForge pins; all supplied hashes were checked.
+- Ice and Fire silver survives: the existing world contains about 460,000 I&F silver ore blocks.
+  Interstellaris silver ore/deepslate ore, raw silver, ingot, nugget and block retire at recipe,
+  loot and tag sources, with permanent EMI removal. Its silver biome modifier is disabled.
+  I&F worldgen and the restored explicit Large Ore Deposits silver/sapphire targets remain.
+  Interstellaris silver dust, plate, wire and processing intermediates have no I&F duplicate
+  and remain, consuming/producing the survivor. No inventory or placed-block conversion.
+- `iceandfire:witherbone` again supplies `c:bones/wither`. BHC's Java bone drop rate is zero;
+  its recipes use the I&F survivor. Removed Myrmex egg IDs are not restored.
+- The twelve Alex's Mobs End Pirate/purpur blocks are creative-only by owner decision.
+  `alexsmobs-creative.json` uses the same reversible CLEAN item-list mechanism as Roundwood;
+  ALL restores them. Alex's Caves r2 owns both recipe tags, so the pack bridges are removed.
+
 ## 2026-10-30 - Private Alex ports and uranium progression
 
 - Alex's Mobs 1.22.9 and Alex's Caves 2.0.2 are private forks. Commit only local-source pins

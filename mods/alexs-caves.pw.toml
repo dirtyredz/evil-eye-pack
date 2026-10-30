@@ -1,8 +1,8 @@
 name = "Alex's Caves"
-filename = "alexscaves-1.21.1-neoforge-2.0.2.jar"
+filename = "alexscaves-1.21.1-neoforge-2.0.2-r2.jar"
 side = "both"
 
 [download]
 mode = "metadata:local"
 hash-format = "sha256"
-hash = "2d7435f7228673a7dd1b38ea3154b5aeb7ed245a564d2eef07f96a40ae3d405c"
+hash = "9c3962cdbc8eae1f136da4a2cbb39a3471888cfc27ad734705ef474fa3e58408"

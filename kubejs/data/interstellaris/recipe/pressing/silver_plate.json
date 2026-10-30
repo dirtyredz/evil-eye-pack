@@ -1,0 +1,16 @@
+{
+  "type": "interstellaris:pressing",
+  "ingredients": [
+    {
+      "count": 2,
+      "ingredient": {
+        "item": "iceandfire:silver_ingot"
+      }
+    }
+  ],
+  "processing_time": 100,
+  "result": {
+    "count": 1,
+    "id": "interstellaris:silver_plate"
+  }
+}

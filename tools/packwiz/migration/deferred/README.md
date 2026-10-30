@@ -1,32 +1,15 @@
-# Deferred port content (unshipped)
+# Deferred port content (fully restored)
 
-The owned ports (minecraft-mods) without a NeoForge 1.21.1 build yet have `defer` pins in
-`../target-lock.json`, and everything the pack shipped for them is parked here, outside the packwiz index
-(`tools/` is packwiz-ignored), with each file at its original repo-relative path under `<port>/`.
+All seven owned ports are integrated as of 2026-10-30. No files or policy entries remain parked.
 
-| Port | Parked here |
-|---|---|
-| Alex's Caves | restored 2026-10-30 (private 2.0.2 local pin; configs, chocolate sanding, uranium recipes and policies) |
-| Alex's Mobs | restored 2026-10-30 (private 1.22.9 local pin; configs and policies) |
-| Ars Instrumentum | restored 2026-10-30 (5.0.0 pin; `config/ars_instrumentum-client.toml` moved back) |
-| Ice and Fire (`iceandfire/`) | `config/iceandfire-*.toml`, `config/iceandfire/` biome lists, the generated `kubejs/data/iceandfire/` copper overrides, ADLods `sapphire.cfg` and `silver.cfg` (Ice and Fire ores only) |
-| Dank Recipe Transfer, Roundwood, FlatWorldFix | restored 2026-10-30 (0.2.0, 0.17.0 and 1.0.0 pins; they parked nothing) |
+Ice and Fire CE 2.1.4 restored the configs and silver/sapphire Large Ore Deposits targets.
+Copper recipe/loot overrides were regenerated from the pinned CE jar in the 1.21 layout;
+the old 1.20 generated copies were removed. Dedup and acquisition policy returned to their
+owning files, excluding the removed Myrmex eggs. Witherbone again survives over BHC.
 
-Shared files:
+See [migration status](../../../../docs/neoforge-migration.md) and
+[duplicate cleanup](../../../../docs/duplicate-cleanup.md). Private forks use local
+SHA-256/size pins and the dev/trial loopback installer overlay; family delivery is dk-85261627.
 
-- `dedup.json`: the port-dependent dedup policy removed from `kubejs/config/dedup.json` (replacements,
-  hidden-only ids with their `hidden_reasons.json` entries, extra tags), plus the temporary policy:
-  `bhc:wither_bone` survives while Ice and Fire's `iceandfire:witherbone` is absent.
-- `pack-test-baseline.json`: the pack-test baseline findings that name port items.
-
-Inert id lists that only mention port ids (EMI curation lists, Entity Culling, Supplementaries, Chloride)
-stay in place: they do nothing without the mod and are needed again when it returns.
-
-**Restoring a port:** change its disposition in `../dispositions.json` from `defer` to `repoint` with a `direct`
-target (GitHub release URL + sha256; no update table), run `node tools/packwiz/migrate.mjs resolve` (it re-reads
-the source from the commit the lock records) and `apply --write`, move its files
-back with `git mv`, merge its `dedup.json` and baseline entries back, undo its temporary policy, then
-regenerate dedup and rehash.
-
-Private forks use `local` SHA-256/size pins and a verified hash-addressed cache, never a release URL.
-See `docs/neoforge-migration.md` for the dev/trial installer overlay; family delivery is dk-85261627.
+CE also needs Jupiter JSON configs; the restored legacy TOML/biome lists are inert.
+See migration status for the applied settings and generation-equivalence follow-up.

@@ -54,7 +54,15 @@
     "interstellaris:gold_plate": "create:golden_sheet",
     "interstellaris:gold_wire": "createaddition:gold_wire",
     "interstellaris:silicon": "ae2:silicon",
-    "mekanism:dust_sulfur": "alexscaves:sulfur_dust"
+    "mekanism:dust_sulfur": "alexscaves:sulfur_dust",
+    "iceandfire:copper_nugget": "create:copper_nugget",
+    "bhc:wither_bone": "iceandfire:witherbone",
+    "interstellaris:silver_ore": "iceandfire:silver_ore",
+    "interstellaris:deepslate_silver_ore": "iceandfire:deepslate_silver_ore",
+    "interstellaris:raw_silver": "iceandfire:raw_silver",
+    "interstellaris:silver_ingot": "iceandfire:silver_ingot",
+    "interstellaris:silver_nugget": "iceandfire:silver_nugget",
+    "interstellaris:silver_block": "iceandfire:silver_block"
   },
   "disabled": [
     "hammerlib:gears/wooden",
@@ -185,7 +193,11 @@
     "alexsmobs:poison_bottle",
     "alexsmobs:red_sand_circle",
     "alexsmobs:sand_circle",
-    "alexsmobs:terrapin_egg"
+    "alexsmobs:terrapin_egg",
+    "iceandfire:dread_spawner",
+    "iceandfire:egginice",
+    "iceandfire:hippogryph_egg",
+    "iceandfire:fishing_spear"
   ],
   "removeOutputs": [
     "createdeco:zinc_sheet",
@@ -251,6 +263,9 @@
     ],
     "alexscaves:uranium_rod": [
       "alexscaves:uranium_rod"
+    ],
+    "c:bones/wither": [
+      "iceandfire:witherbone"
     ]
   }
 }

@@ -1,0 +1,11 @@
+{
+  "type": "mekanism:enriching",
+  "input": {
+    "count": 3,
+    "item": "iceandfire:raw_silver"
+  },
+  "output": {
+    "count": 4,
+    "id": "interstellaris:silver_dust"
+  }
+}

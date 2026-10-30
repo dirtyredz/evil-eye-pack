@@ -1,0 +1,8 @@
+name = "Ice and Fire: Dragons"
+filename = "iceandfire-1.21.1-neoforge-2.1.4.jar"
+side = "both"
+
+[download]
+mode = "metadata:local"
+hash-format = "sha256"
+hash = "71fc6472c58d5cba9ae56cd3a37c98bcaed6187c168aef1a76f7ebd1d71a02d0"

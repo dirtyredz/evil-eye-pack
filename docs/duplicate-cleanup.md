@@ -10,14 +10,14 @@ swap, unpacking window or registry remap. The old migration implementation remai
 | Group | Survivor | Removal |
 |---|---|---|
 | Zinc, brass, copper nuggets, iron/copper/gold/brass sheets | Create | AllTheOres jar removed; Ice and Fire nugget recipes/loot and shared tags use Create |
-| Silver and sapphire | Ice and Fire | AllTheOres jar removed; Large Ore Deposits uses explicit I&F ores |
+| Silver and sapphire | Ice and Fire | AllTheOres jar removed; Interstellaris duplicate silver forms retired at sources; Large Ore Deposits uses explicit I&F ores |
 | Uranium | Extreme Reactors yellorium | Explicit deposit ores; Alex's Caves raw uranium remains a biome-specific exception and smelts/blasts to yellorium; ER raw uranium also satisfies its machine tag |
 | Electrum, metal rods, zinc/electrum sheets, diamond grit | Crafts & Additions | AllTheOres removed; Create Deco zinc sheet recipe removed and internal plate tag supplied by Crafts & Additions |
 | Iron gears | Ender IO | HammerLib gear recipes and dynamic tags disabled except the stone gear, which has no duplicate and which HammerMicroblocks saws need (`#c:gears/stone`, NeoForge branch 2026-10-30); no copper/gold/diamond gear replacements are needed |
 | Metal dusts | Ender IO | AllTheOres removed |
 | Silicon / ender dust | AE2 | Ender IO SAG outputs and downstream inputs rewritten; counts/chances retained |
 | Obsidian dust | Create | Ender IO SAG output rewritten |
-| Wither bone | Ice and Fire | BHC's Java drop stays disabled by its existing zero drop rate; survivor supplies the canister ingredient tag. **NeoForge migration branch:** Ice and Fire is deferred, so `bhc:wither_bone` survives and BHC's drop rate is back at 0.15 until the port returns (`tools/packwiz/migration/deferred/dedup.json`) |
+| Wither bone | Ice and Fire | BHC's Java drop stays disabled by its existing zero drop rate; survivor supplies the canister ingredient tag. Its NeoForge ingredient is `c:bones/wither`. |
 | Wheat flour / dough / milk bottle | Create / Farmer's Delight / Farmer's Delight | Refurbished flour/dough recipes removed, pizzas rewritten; Create dough outputs and uses rewritten; Productive Bees bottler and bottle consumers rewritten |
 | Willow wood family (17 registered duplicates) | Biomes O' Plenty | Cluttered recipes removed, furniture inputs and sapling-chest/block drops rewritten |
 | Andesite/brass/copper bars and doors; industrial iron windows/panes | Create | Eight Create Deco producers removed, consumers/loot/tags rewritten |
@@ -90,3 +90,12 @@ belong to metal nugget/storage tags. Mekanism uranium stays replaced by ER yello
 The biome-specific raw uranium exception is recorded in `allowed_groups.json`; it does not restore
 Mekanism's duplicate raw uranium. Mekanism sulfur dust now retires to Alex's Caves sulfur dust
 (the existing-world survivor), with generated machine-output overrides.
+
+### Ice and Fire CE restored (2026-10-30)
+
+Ice and Fire silver is the existing-world survivor (about 460,000 ore blocks). Interstellaris
+silver ore, deepslate ore, raw silver, ingot, nugget and block retire through generated
+recipe/loot overrides, item/block tag cleanup and permanent EMI hiding. The explicit
+`interstellaris:add_silver_ore` biome-modifier override is `neoforge:none`; I&F silver
+worldgen remains. Silver dust, plate, wire and refining intermediates are unique and stay.
+BHC's bone drop rate returns to zero, and wither-bone recipes use I&F witherbone.

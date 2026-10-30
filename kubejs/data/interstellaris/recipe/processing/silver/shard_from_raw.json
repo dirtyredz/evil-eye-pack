@@ -1,0 +1,16 @@
+{
+  "type": "mekanism:injecting",
+  "chemical_input": {
+    "amount": 1,
+    "chemical": "mekanism:hydrogen_chloride"
+  },
+  "item_input": {
+    "count": 3,
+    "item": "iceandfire:raw_silver"
+  },
+  "output": {
+    "count": 8,
+    "id": "interstellaris:silver_shard"
+  },
+  "per_tick_usage": true
+}

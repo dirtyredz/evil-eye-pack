@@ -40,11 +40,13 @@ test('Alex uranium progression survives alongside yellorium and sulfur uses the 
   assert.ok(cooks.every(r => r.out === 'bigreactors:yellorium_ingot' && r.input === 'alexscaves:uranium'));
 });
 
-test('Alex recipe tag bridges preserve the pinned painting set and concrete colours', () => {
+test('Alex r2 supplies painting and concrete tags without pack bridges', () => {
   const paintings = catalog.data.get('data/alexscaves/tags/block/cave_paintings.json');
   assert.equal(paintings.values.length, 29);
-  assert.deepEqual(read('kubejs/data/alexscaves/tags/item/cave_paintings.json'), paintings);
-  assert.deepEqual(read('kubejs/data/c/tags/item/concrete.json').values, ['#alexscaves:concrete']);
+  assert.deepEqual(catalog.data.get('data/alexscaves/tags/item/cave_paintings.json'), paintings);
+  assert.equal(fs.existsSync(path.join(root, 'kubejs/data/alexscaves/tags/item/cave_paintings.json')), false);
+  assert.ok(catalog.data.get('data/c/tags/item/concrete.json').values.includes('#alexscaves:concrete'));
+  assert.equal(fs.existsSync(path.join(root, 'kubejs/data/c/tags/item/concrete.json')), false);
   assert.equal(catalog.data.get('data/alexscaves/tags/item/concrete.json').values.length, 16);
 });
 
@@ -122,9 +124,8 @@ test('recipe and tag events remove producers and code-driven loot candidates', (
   assert.deepEqual(removed, [...retired]);
   assert.deepEqual(untagged, policy.tagRemovals);
   assert.deepEqual(added, sources.itemTags);
-  // Temporary policy while Ice and Fire is deferred: BHC's wither bone survives and nothing names the port.
-  assert.equal(retired.has('bhc:wither_bone'), false);
-  assert.doesNotMatch(JSON.stringify({ added, removed, sources }), /iceandfire:/);
+  assert.equal(retired.has('bhc:wither_bone'), true);
+  assert.deepEqual(added['c:bones/wither'], ['iceandfire:witherbone']);
 });
 
 test('every shipped file is free of removed namespace references; deposit survivors stay explicit', () => {
@@ -141,4 +142,15 @@ test('every shipped file is free of removed namespace references; deposit surviv
   for (const deposit of ['aluminum', 'iridium', 'lead', 'nickel', 'osmium', 'platinum', 'ruby', 'tin']) {
     assert.match(fs.readFileSync(path.join(root, 'config/adlods/Deposits', deposit + '.cfg'), 'utf8'), /B:enabled=false/, deposit);
   }
+});
+
+test('Ice and Fire silver survives at every duplicate source', () => {
+  for (const id of ['silver_ore', 'deepslate_silver_ore', 'raw_silver', 'silver_ingot', 'silver_nugget', 'silver_block']) {
+    assert.equal(policy.replacements['interstellaris:' + id], 'iceandfire:' + id);
+    assert.ok(catalog.models.has('iceandfire:' + id));
+  }
+  assert.deepEqual(read('kubejs/data/interstellaris/neoforge/biome_modifier/add_silver_ore.json'), { type: 'neoforge:none' });
+  for (const id of ['silver_dust', 'dirty_silver_dust', 'silver_plate', 'silver_wire', 'silver_clump', 'silver_crystal', 'silver_shard']) assert.ok(!retired.has('interstellaris:' + id));
+  for (const [deposit, ore] of [['silver', 'silver_ore'], ['sapphire', 'sapphire_ore']]) assert.ok(fs.readFileSync(path.join(root, 'config/adlods/Deposits', deposit + '.cfg'), 'utf8').includes('iceandfire:' + ore));
+  assert.doesNotMatch(JSON.stringify(policy), /myrmex_(desert|jungle)_egg|iceandfire:witherbone\./);
 });

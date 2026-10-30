@@ -6,7 +6,8 @@ const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '../../../..');
 const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
-const modId = (file) => path.basename(file, '.pw.toml').replace(/[^a-z0-9]/g, '');
+// Historical CurseForge slug differs from the jar's mod ID.
+const modId = (file) => file === 'ice-and-fire-dragons.pw.toml' ? 'iceandfire' : path.basename(file, '.pw.toml').replace(/[^a-z0-9]/g, '');
 
 test('pack mod metafiles match the removed and required mod policy', () => {
   const policy = JSON.parse(read('tools/pack_test/data/policy.json'));

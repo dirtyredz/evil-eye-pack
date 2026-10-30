@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "removedMods": ["alltheores", "allthecompressed", "almostunified", "simplecorelib", "enhancedcelestials", "dataanchor", "corgilib", "corgikubejscompat", "commoncapabilities", "rftoolsbase", "rftoolsbuilder", "rftoolscontrol", "rftoolsdim", "rftoolsutility", "mcjtylib", "ironfurnaces", "chunky", "charginggadgets", "tesseract", "supermartijn642configlib", "oculus", "embeddium", "radium", "memoryleakfix"],
-  "requiredMods": ["hourglass", "dank_recipe_transfer", "roundwood", "flatworldfix", "ars_instrumentum", "alexsmobs", "alexscaves"],
-  "curatedLists": ["creative.json", "minecolonies-eggs.json"],
+  "requiredMods": ["hourglass", "dank_recipe_transfer", "roundwood", "flatworldfix", "ars_instrumentum", "alexsmobs", "alexscaves", "iceandfire", "uranus", "jupiter"],
+  "curatedLists": ["creative.json", "minecolonies-eggs.json", "alexsmobs-creative.json"],
   "ignoredLayout": {
     "loot_tables|ars_nouveau:entities/wilden_boss": "Empty table (no pools) in the 1.20 folder; an absent table also drops nothing, so nothing is lost (2026-10-30).",
     "loot_tables|ars_nouveau:blocks/mage_block": "Empty pools in the 1.20 folder; an absent table also drops nothing (2026-10-30).",
@@ -27,6 +27,7 @@
       { "re": "^dramaticdoors:", "reason": "Dramatic Doors registers a short/tall door for every wood and metal it supports whether or not that mod is installed; only installed materials have recipes (mod_loaded conditions). The EMI curation hides the namespace (config/emi-curation/rules.json)" }
     ],
     "ids": {
+      "iceandfire:godly_dragon_seeker": "CE admin-only seeker: DragonSeekerItem.SeekerType.GODLY sets admin=true and exposes teleport coordinates; no recipe or loot source (6118f541, 2026-10-30)",
       "create:handheld_worldshaper": "creative-only tool (Create gives it no recipe)",
       "interstellaris:drilled_bedrock": "placed in the world by the Interstellaris Deep Mine as it drills (ModBlocks); never crafted or dropped",
       "interstellaris:enigmatic_cube": "precursor artifact found in Interstellaris structures (advancement found_cube_shell); Java/structure loot, no data recipe",

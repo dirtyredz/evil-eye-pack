@@ -55,6 +55,14 @@
     "item:interstellaris:gold_wire",
     "item:interstellaris:silicon",
     "item:mekanism:dust_sulfur",
+    "item:iceandfire:copper_nugget",
+    "item:bhc:wither_bone",
+    "item:interstellaris:silver_ore",
+    "item:interstellaris:deepslate_silver_ore",
+    "item:interstellaris:raw_silver",
+    "item:interstellaris:silver_ingot",
+    "item:interstellaris:silver_nugget",
+    "item:interstellaris:silver_block",
     "item:hammerlib:gears/wooden",
     "item:hammerlib:gears/copper",
     "item:hammerlib:gears/iron",
@@ -181,6 +189,10 @@
     "item:alexsmobs:poison_bottle",
     "item:alexsmobs:red_sand_circle",
     "item:alexsmobs:sand_circle",
-    "item:alexsmobs:terrapin_egg"
+    "item:alexsmobs:terrapin_egg",
+    "item:iceandfire:dread_spawner",
+    "item:iceandfire:egginice",
+    "item:iceandfire:hippogryph_egg",
+    "item:iceandfire:fishing_spear"
   ]
 }

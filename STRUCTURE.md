@@ -91,7 +91,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
 - `config/` — mod configs installed as plain files
 - `config/defaultoptions/keybindings.txt` — Default Options default keymap (new instances only; see GOTCHAS)
-- `config/emi-curation/` — EMI curation data: `rules.json`, five explicit item lists (including `roundwood-legacy.json`), `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
+- `config/emi-curation/` — EMI curation data: `rules.json`, six explicit item lists (including `roundwood-legacy.json` and `alexsmobs-creative.json`), `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
 - `defaultconfigs/` — Forge default (per-world) configs; Hourglass replaces the removed Enhanced Celestials/Corgi stack and sets half-speed day, vanilla-speed night and vanilla sleeping for new worlds
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, views, hiding, session)
 - `kubejs/client_scripts/emi_curation/decor/` — the DECOR rules: pure policy, the local marks (`decor_local.js`) and the Java tag adapter

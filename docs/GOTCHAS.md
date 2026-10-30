@@ -295,3 +295,12 @@
   `file:///` download URLs. `metadata:local` intentionally has no download URL: use the gitignored
   loopback overlay through `tools/packwiz/install_local.cjs` for a dedicated trial, or the normal
   pack-test/server-smoke staging path. Missing or changed cache bytes fail before installation.
+
+## Ice and Fire CE config format
+
+CE 2.1.4 uses Jupiter JSON (`config/iceandfire/iaf-common.json`, `iaf-client.json`), not
+the Forge `iceandfire-*.toml`. Restoring only the TOML silently leaves CE defaults active,
+including griefing. First boot logs missing-config errors before writing defaults; ship the
+reconciled JSON plus `config/jupiter.json`. Legacy biome JSON filters also have no CE reader;
+CE uses biome tags and structure sets. Do not convert an old 1/N per-chunk spawn rate into
+a CE per-structure-candidate probability without accounting for spacing (dk-e7b276f4).

@@ -132,14 +132,14 @@ files after a boot, and `tools/pack_test/tests/data/ignored_layout.test.cjs` che
 fast gate (it also fails on policy entries that no longer match anything). A new or updated jar with lost
 data therefore fails before any boot.
 
-## Owned ports (deferred, never abandoned)
+## Owned ports (all seven integrated)
 
 Seven mods had no NeoForge 1.21.1 build and are being ported by the owner in `minecraft-mods`:
 Dank Recipe Transfer, Roundwood, Ars Instrumentum, Alex's Mobs, Alex's Caves, Ice and Fire, and
 FlatWorldFix. FlatWorldFix is kept and ported, not swapped for Give Me My Flat World. The lock
 initially recorded each one as `defer`. Phase 5 suspended their references. Public ports return
 as direct GitHub release pins; private Alex ports use `local` pins (both are `repoint` actions).
-Restore steps are in `tools/packwiz/migration/deferred/README.md`.
+Restoration history is in `tools/packwiz/migration/deferred/README.md`.
 
 | Port | Pin | Integrated |
 |---|---|---|
@@ -148,9 +148,11 @@ Restore steps are in `tools/packwiz/migration/deferred/README.md`.
 | FlatWorldFix | 1.0.0, `flatworldfix-1.21.1-neoforge-1.0.0.jar`, sha256 `90a6da88…b996` (built from 26b2fd2) | 2026-10-30 (parked nothing; malware guard clean). First run against Terralith 1.21.1: every showcase boot now checks four far Superflat columns (`tools/showcase/flat_world.js`) |
 | Ars Instrumentum | 5.0.0 (public LGPL fork), `ars_instrumentum-1.21.1-neoforge-5.0.0.jar`, sha256 `6d62964a…fb4e` (built from dc29a50) | 2026-10-30 (client config restored; needs Ars Nouveau ≥ 5.13.3; malware guard clean) |
 | Alex's Mobs | private 1.22.9, local SHA-256 `dc89b990?fa21` | 2026-10-30 (configs and hidden-item policy restored; Citadel 2.7.1 already locked; malware clean) |
-| Alex's Caves | private 2.0.2, local SHA-256 `2d7435f7?405c`, built from 881d907b | 2026-10-30 (configs, uranium progression, chocolate sanding and baseline restored; malware clean) |
+| Alex's Caves | private 2.0.2 r2, local SHA-256 `9c3962cd?8408`, built from 1d29b6b6 | 2026-10-30 (configs, uranium progression, chocolate sanding and baseline restored; malware clean) |
+| Ice and Fire CE | private 2.1.4, local SHA-256 `71fc6472?02d0`, built from 6118f541 | 2026-10-30 (configs, silver/sapphire deposits, copper and witherbone dedup restored) |
 
-Alex's Mobs and Alex's Caves join as private local-source pins (below). All six are `requiredMods`; only Ice and Fire remains `defer`.
+Alex's Mobs, Alex's Caves and Ice and Fire use local-source pins (below). All seven ports are
+`requiredMods`, along with I&F's Uranus 3.0-beta.1 and Jupiter 2.3.7 libraries. No lock entry remains `defer`.
 
 ## 100% checklist
 
@@ -262,7 +264,7 @@ booted on ANU before the next. Evidence: `artifacts/evil-eye-pack/jobs/2026-10-3
 Ender IO/Create/CCA, uranium to Extreme Reactors' yellorium (Mekanism uranium worldgen off), Mekanism steel is
 the only steel (the Dark Steel stand-in is gone), Interstellaris' iron/gold plates, gold wire and silicon go to
 Create sheets, CCA gold wire and AE2 silicon. Create crushed tin/lead/osmium and ER's Mekanism fluid port are
-unhidden. Silver (Interstellaris vs Ice and Fire) waits for the port: dk-d2c9d23b.
+unhidden. Ice and Fire now survives over Interstellaris silver (dk-d2c9d23b; integration below).
 
 **Sable mixin triage.** Static: `jobs/2026-10-30-neoforge-phase7/tools/mixin-overlap.cjs` parses every pinned jar's
 mixin configs and annotations (3218 mixin classes, 530 in Sable/Veil/Companion/Interstellaris) and finds 160
@@ -345,3 +347,35 @@ zero new findings. Documented fast gate: **501/501** (113 s). Roundwood live-reg
 confirms all 50 items exist (49 blocks plus the alias). Rehash dry run is unchanged, hash and
 lock verification pass, `dk check` has zero errors (two pre-existing duplicate-rank warnings),
 and isolation evidence says `OK main, Stable and Local unchanged`. No visible client launched.
+
+## Ice and Fire + Alex's Caves r2 integration (2026-10-30)
+
+Evidence: `jobs/2026-10-30-iaf-integration/`. The private jars match the supplied hashes;
+Uranus (CF 1010827/8682870) and Jupiter (CF 1072905/7738312) match the supplied SHA-256s
+and use normal CurseForge metadata. All four malware scans have zero findings.
+The lock contains 201 entries: 177 repoint, 3 replace, 3 drop, 8 retain and 10 add.
+
+All parked I&F configs and silver/sapphire deposits return. Copper overrides are regenerated
+from CE in the 1.21 layout rather than copying the parked 1.20 files. Shared deferred policies
+are consumed; removed Myrmex eggs are excluded. Witherbone and silver survivor decisions
+are in DECISIONS and duplicate-cleanup. The twelve creative End Pirate/purpur blocks use
+`alexsmobs-creative.json` in CLEAN, preserving ALL. Alex's Caves r2 provides the painting
+and concrete item tags, so both pack bridges are gone.
+
+This isolated worktree keeps its copied migration cache under `.tmp/migration-cache`.
+For checks here set `SMOKE_MIGRATION_MODS` to its absolute `mods` directory and pass
+`--cache .tmp/migration-cache` to `migrate check`; the shared migration cache is unchanged.
+
+CE configuration reconciliation: Jupiter reads `config/iceandfire/iaf-common.json` and
+`iaf-client.json`, not the restored Forge TOML. The integration carries the old pack
+griefing toggles, dragon flute/bite/dig behaviour, corresponding mob ranges/weights and
+800-block spawn exclusion into that schema. `jupiter.json` ships its observed defaults.
+Client keys come from CE's `IafClientConfig`; no client was launched.
+
+The restored legacy biome lists/TOML remain for provenance, but CE does not read them.
+Its structure sets and per-candidate probabilities replace the old per-chunk chances;
+exact generation/biome parity is **dk-e7b276f4**, for review before world conversion.
+CE's new dreadwood leaves/sapling have no loot/acquisition data: exact reviewed baselines
+and **dk-ce8a67fc** retain that minecraft-mods handoff. The godly seeker is admin-only.
+The old amythest egg baseline follows the port's corrected amethyst ID; the dreadwood
+way sign follows Supplementaries' existing code-made compat signs.

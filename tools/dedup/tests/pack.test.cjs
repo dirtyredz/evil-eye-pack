@@ -13,7 +13,7 @@ test('retired mods and migration layer are absent', () => {
     'tools/ato_retirement']) assert.equal(fs.existsSync(path.join(root, f)), false, f);
 });
 
-test('HammerLib duplicate gears are disabled at recipe and tag sources; its stone gear stays; BHC drops', () => {
+test('HammerLib duplicate gears are disabled at recipe and tag sources; its stone gear stays; duplicate BHC drops are disabled', () => {
   const recipes = json('config/hammerlib/recipes/modded/hammerlib.json');
   const tags = json('config/hammerlib/tags/modded/hammerlib.json');
   // The stone gear has no duplicate on 1.21.1 and HammerMicroblocks' saws need #c:gears/stone (boot 5).
@@ -24,8 +24,8 @@ test('HammerLib duplicate gears are disabled at recipe and tag sources; its ston
     assert.equal(Object.values(recipes.active).find(group => id in group)[id], false, id);
     assert.equal(tags.tags['minecraft:item']['c:gears/' + material][id], false, id);
   }
-  // Ice and Fire is deferred: BHC's own wither bone drop is the temporary acquisition path (deferred/dedup.json).
-  assert.match(fs.readFileSync(path.join(root, 'config/bhc-common.toml'), 'utf8'), /boneDropRate = 0\.15$/m);
+  // Ice and Fire witherbone is the survivor again.
+  assert.match(fs.readFileSync(path.join(root, 'config/bhc-common.toml'), 'utf8'), /boneDropRate = 0\.0$/m);
 });
 
 test('Mekanism steel is the only steel (no Dark Steel stand-in); BOP willow door stays out of trapdoor tags', () => {

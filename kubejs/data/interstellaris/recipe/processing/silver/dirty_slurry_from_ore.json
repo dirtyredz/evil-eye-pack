@@ -1,0 +1,24 @@
+{
+  "type": "mekanism:dissolution",
+  "chemical_input": {
+    "amount": 1,
+    "chemical": "mekanism:sulfuric_acid"
+  },
+  "item_input": {
+    "type": "neoforge:compound",
+    "children": [
+      {
+        "item": "iceandfire:silver_ore"
+      },
+      {
+        "item": "iceandfire:deepslate_silver_ore"
+      }
+    ],
+    "count": 1
+  },
+  "output": {
+    "amount": 1000,
+    "id": "interstellaris:dirty_silver"
+  },
+  "per_tick_usage": true
+}

@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "group": "creative",
+  "description": "Alex's Mobs creative-only End Pirate and purpur blocks (owner decision 2026-10-30). CLEAN hides these; ALL restores the ordinary index. No recipes or registry changes.",
+  "items": [
+    "alexsmobs:end_pirate_anchor",
+    "alexsmobs:end_pirate_anchor_winch",
+    "alexsmobs:end_pirate_door",
+    "alexsmobs:end_pirate_flag",
+    "alexsmobs:end_pirate_ship_wheel",
+    "alexsmobs:end_pirate_trapdoor",
+    "alexsmobs:phantom_sail",
+    "alexsmobs:purpur_planks",
+    "alexsmobs:purpur_planks_slab",
+    "alexsmobs:purpur_planks_stairs",
+    "alexsmobs:purpur_planks_wall",
+    "alexsmobs:spectre_sail"
+  ]
+}

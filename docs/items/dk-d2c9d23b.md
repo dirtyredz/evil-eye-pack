@@ -2,8 +2,8 @@
 id: dk-d2c9d23b
 type: task
 created: 2026-10-29
-status: todo
-since: 2026-10-29
+status: wip
+since: 2026-10-30
 area: migration
 priority: P2
 rank: zzzzzzy

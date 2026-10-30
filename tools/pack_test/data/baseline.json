@@ -1662,63 +1662,198 @@
    "since": "2026-10-23"
   },
   {
-   "key": "acquisition|no-known-source|alexsmobs:end_pirate_anchor|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
+   "key": "acquisition|no-known-source|iceandfire:dragon_skull_fire|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): EntityDragonBase.dragonDropSkull/getSkull drops the skull item when a dragon skeleton/corpse reaches its final stage (loot_tables/entities/dragon/*.json comment: skull, blood and heart drops are handled in code).",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragon_skull_ice|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): EntityDragonBase.dragonDropSkull/getSkull drops the skull item when a dragon skeleton/corpse reaches its final stage (loot_tables/entities/dragon/*.json comment: skull, blood and heart drops are handled in code).",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragon_skull_lightning|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): EntityDragonBase.dragonDropSkull/getSkull drops the skull item when a dragon skeleton/corpse reaches its final stage (loot_tables/entities/dragon/*.json comment: skull, blood and heart drops are handled in code).",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_amethyst|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Female dragon death loot table lists iceandfire:dragonegg_red (weight 2) with the iceandfire:customize_to_dragon loot function (loot/CustomizeToDragon) which swaps it to the dragon variant egg; eggs also laid via EntityDragonBase.createEgg/DragonAIMate.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_black|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Female dragon death loot table lists iceandfire:dragonegg_red (weight 2) with the iceandfire:customize_to_dragon loot function (loot/CustomizeToDragon) which swaps it to the dragon variant egg; eggs also laid via EntityDragonBase.createEgg/DragonAIMate.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_bronze|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Female dragon death loot table lists iceandfire:dragonegg_red (weight 2) with the iceandfire:customize_to_dragon loot function (loot/CustomizeToDragon) which swaps it to the dragon variant egg; eggs also laid via EntityDragonBase.createEgg/DragonAIMate.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_copper|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Female dragon death loot table lists iceandfire:dragonegg_red (weight 2) with the iceandfire:customize_to_dragon loot function (loot/CustomizeToDragon) which swaps it to the dragon variant egg; eggs also laid via EntityDragonBase.createEgg/DragonAIMate.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_gray|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Female dragon death loot table lists iceandfire:dragonegg_red (weight 2) with the iceandfire:customize_to_dragon loot function (loot/CustomizeToDragon) which swaps it to the dragon variant egg; eggs also laid via EntityDragonBase.createEgg/DragonAIMate.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_green|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Female dragon death loot table lists iceandfire:dragonegg_red (weight 2) with the iceandfire:customize_to_dragon loot function (loot/CustomizeToDragon) which swaps it to the dragon variant egg; eggs also laid via EntityDragonBase.createEgg/DragonAIMate.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_sapphire|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Female dragon death loot table lists iceandfire:dragonegg_red (weight 2) with the iceandfire:customize_to_dragon loot function (loot/CustomizeToDragon) which swaps it to the dragon variant egg; eggs also laid via EntityDragonBase.createEgg/DragonAIMate.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_silver|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Female dragon death loot table lists iceandfire:dragonegg_red (weight 2) with the iceandfire:customize_to_dragon loot function (loot/CustomizeToDragon) which swaps it to the dragon variant egg; eggs also laid via EntityDragonBase.createEgg/DragonAIMate.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonegg_white|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Female dragon death loot table lists iceandfire:dragonegg_red (weight 2) with the iceandfire:customize_to_dragon loot function (loot/CustomizeToDragon) which swaps it to the dragon variant egg; eggs also laid via EntityDragonBase.createEgg/DragonAIMate.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonforge_fire_core|",
+   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Lit/active forge core block; its loot table drops the _core_disabled item and the lit state is produced in code when the dragonforge multiblock is assembled and fed, so the active item has no recipe. Craftable form is dragonforge_*_core_disabled (heart + 8 forge bricks).",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonforge_ice_core|",
+   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Lit/active forge core block; its loot table drops the _core_disabled item and the lit state is produced in code when the dragonforge multiblock is assembled and fed, so the active item has no recipe. Craftable form is dragonforge_*_core_disabled (heart + 8 forge bricks).",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dragonforge_lightning_core|",
+   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Lit/active forge core block; its loot table drops the _core_disabled item and the lit state is produced in code when the dragonforge multiblock is assembled and fed, so the active item has no recipe. Craftable form is dragonforge_*_core_disabled (heart + 8 forge bricks).",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dread_knight_sword|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): EntityDreadKnight equips IafItemRegistry.DREAD_KNIGHT_SWORD via setItemSlot; obtained as a mob equipment drop from dread knights in dread ruins.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dread_queen_staff|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): EntityDreadQueen equips DREAD_QUEEN_SWORD / DREAD_QUEEN_STAFF in code; only source is the Dread Queen boss equipment drop.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dread_queen_sword|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): EntityDreadQueen equips DREAD_QUEEN_SWORD / DREAD_QUEEN_STAFF in code; only source is the Dread Queen boss equipment drop.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dread_sword|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): EntityDreadThrall equips DREAD_SWORD in code; only source is thrall equipment drop in dread ruins.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:fire_dragon_heart|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): EntityDragonBase.dragonDropHeart/getHeartItem drops the heart from a dead dragon in code; heart is then used in the dragonforge core recipe.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:lich_staff|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): EntityDreadLich equips LICH_STAFF in code (used in DreadLichAIStrife); only source is the Dread Lich equipment drop.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:lightning_dragon_heart|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): EntityDragonBase.dragonDropHeart/getHeartItem drops the heart from a dead dragon in code; heart is then used in the dragonforge core recipe.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:pixie_jar_0|",
+   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Filled pixie jar: right-clicking a pixie with the empty jar (recipe jar_empty) converts it to the colored pixie_jar_N via BlockJar/TileEntityJar; no recipe for the filled forms.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:pixie_jar_1|",
+   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Filled pixie jar: right-clicking a pixie with the empty jar (recipe jar_empty) converts it to the colored pixie_jar_N via BlockJar/TileEntityJar; no recipe for the filled forms.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:pixie_jar_2|",
+   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Filled pixie jar: right-clicking a pixie with the empty jar (recipe jar_empty) converts it to the colored pixie_jar_N via BlockJar/TileEntityJar; no recipe for the filled forms.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:pixie_jar_3|",
+   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Filled pixie jar: right-clicking a pixie with the empty jar (recipe jar_empty) converts it to the colored pixie_jar_N via BlockJar/TileEntityJar; no recipe for the filled forms.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:pixie_jar_4|",
+   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): Filled pixie jar: right-clicking a pixie with the empty jar (recipe jar_empty) converts it to the colored pixie_jar_N via BlockJar/TileEntityJar; no recipe for the filled forms.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:stone_statue|",
+   "reason": "Made in Java (reviewed 2026-10-23 from the mod jar): ItemStoneStatue is created when an entity is petrified (EntityStoneStatue, ServerEvents statue handling) and stores the entity NBT (IAFStoneStatueNBT); no recipe.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_axe|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Trolls are given an ItemTrollWeapon (TROLL_WEAPON_* in IafItemRegistry) at spawn by their troll type and drop it as held-equipment loot; no recipe.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_column|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Trolls are given an ItemTrollWeapon (TROLL_WEAPON_* in IafItemRegistry) at spawn by their troll type and drop it as held-equipment loot; no recipe.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_column_forest|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Trolls are given an ItemTrollWeapon (TROLL_WEAPON_* in IafItemRegistry) at spawn by their troll type and drop it as held-equipment loot; no recipe.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_column_frost|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Trolls are given an ItemTrollWeapon (TROLL_WEAPON_* in IafItemRegistry) at spawn by their troll type and drop it as held-equipment loot; no recipe.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_hammer|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Trolls are given an ItemTrollWeapon (TROLL_WEAPON_* in IafItemRegistry) at spawn by their troll type and drop it as held-equipment loot; no recipe.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_trunk|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Trolls are given an ItemTrollWeapon (TROLL_WEAPON_* in IafItemRegistry) at spawn by their troll type and drop it as held-equipment loot; no recipe.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:troll_weapon_trunk_frost|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): Trolls are given an ItemTrollWeapon (TROLL_WEAPON_* in IafItemRegistry) at spawn by their troll type and drop it as held-equipment loot; no recipe.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:weezer_blue_album|",
+   "reason": "Mob/trade/structure source (reviewed 2026-10-23 from the mod jar): ServerEvents LootTableLoadEvent handler injects WEEZER_BLUE_ALBUM as a loot pool (iaf_weezer) into chest loot tables; also consumed by banner_pattern_weezer recipe.",
+   "since": "2026-10-23"
+  },
+  {
+   "key": "acquisition|no-known-source|iceandfire:dreadwood_leaves|",
+   "reason": "CE 2.1.4 unfinished dreadwood tree content, added beyond the 1.20 baseline: registered in IafBlocks, but neither block has a loot table and the tree configured features have no natural placement. Sapling only grows when supplied by creative/commands (DreadwoodSaplingBlock). No existing-world ID lost; hand back missing survival acquisition/data to minecraft-mods. Evidence: jobs/2026-10-30-iaf-integration/boots/run-2026-10-30T06-49-10-194Z and CE source 6118f541.",
    "since": "2026-10-30"
   },
   {
-   "key": "acquisition|no-known-source|alexsmobs:end_pirate_anchor_winch|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
+   "key": "acquisition|no-known-source|iceandfire:dreadwood_sapling|",
+   "reason": "CE 2.1.4 unfinished dreadwood tree content, added beyond the 1.20 baseline: registered in IafBlocks, but neither block has a loot table and the tree configured features have no natural placement. Sapling only grows when supplied by creative/commands (DreadwoodSaplingBlock). No existing-world ID lost; hand back missing survival acquisition/data to minecraft-mods. Evidence: jobs/2026-10-30-iaf-integration/boots/run-2026-10-30T06-49-10-194Z and CE source 6118f541.",
    "since": "2026-10-30"
   },
   {
-   "key": "acquisition|no-known-source|alexsmobs:end_pirate_door|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "acquisition|no-known-source|alexsmobs:end_pirate_flag|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "acquisition|no-known-source|alexsmobs:end_pirate_ship_wheel|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "acquisition|no-known-source|alexsmobs:end_pirate_trapdoor|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "acquisition|no-known-source|alexsmobs:phantom_sail|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "acquisition|no-known-source|alexsmobs:purpur_planks|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "acquisition|no-known-source|alexsmobs:purpur_planks_slab|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "acquisition|no-known-source|alexsmobs:purpur_planks_stairs|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "acquisition|no-known-source|alexsmobs:purpur_planks_wall|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
-   "since": "2026-10-30"
-  },
-  {
-   "key": "acquisition|no-known-source|alexsmobs:spectre_sail|",
-   "reason": "Private port 1.22.9 registers this additional End Pirate/purpur block via AMBlockRegistry.registerBlockAndItem; absent from the original 1.20.1 registry. No packaged recipe, loot or worldgen source and no producer in class-reference audit (only registry, block, renderer and tile code). Unfinished port content, not lost existing-world progression; handed back to minecraft-mods for a content decision. Evidence: jobs/2026-10-30-alexsmobs-pin/port-findings.txt.",
+   "key": "acquisition|no-known-source|supplementaries:iceandfire/way_sign_dreadwood|",
+   "reason": "Supplementaries generates compat way signs for registered wood types. Its sign-post crafting handler makes them in code, as for the other reviewed way_sign variants; dreadwood planks have a native recipe and logs occur in I&F structures (CE 2.1.4).",
    "since": "2026-10-30"
   }
  ],
