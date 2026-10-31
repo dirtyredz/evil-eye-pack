@@ -525,3 +525,11 @@ until every chunk/player (including offline), colony and Dank store has been loa
 and pending `evileye_migration:smelter_items` / refunds lists drain. Dev.5 convert-all/status
 commands are planned for cutover. Original/snapshot content and main/Stable/Local isolation
 are rechecked for this job; no source, snapshot, Stable or Local was written or booted.
+
+## Bridge dev.7 pin (2026-10-31)
+
+`evileye_migration` is now 0.1.0-dev.7 (minecraft-mods 4c9fa1f, SHA-256
+`5dbd229df52f5e081b93b7c77676d911771dd407cf9828876299e63a17b4cd9b`, 119,760 bytes); declared
+dependencies unchanged. Jar stored hash-addressed and by filename in the shared migration cache and
+in the Trial walkthrough's job cache (`jobs/2026-10-31-world-trial-final/cache`). Jade 15.10.3 restored
+to the shared cache. Conversion evidence: `jobs/2026-10-31-world-trial-dev7/`.

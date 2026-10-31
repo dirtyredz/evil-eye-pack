@@ -1,8 +1,8 @@
 name = "Evil Eye World Migration"
-filename = "evileye_migration-1.21.1-neoforge-0.1.0-dev.4.jar"
+filename = "evileye_migration-1.21.1-neoforge-0.1.0-dev.7.jar"
 side = "both"
 
 [download]
 mode = "metadata:local"
 hash-format = "sha256"
-hash = "bc150d3a9af7a102de2a39614f7f2a4458465c6f65f4f22a9b20b97e88f4a262"
+hash = "5dbd229df52f5e081b93b7c77676d911771dd407cf9828876299e63a17b4cd9b"
