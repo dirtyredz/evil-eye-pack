@@ -25,6 +25,8 @@
         "show_button_tooltips": false
     },
     "AutoRefillSettings": {
+        "auto_refill_enable_indicator_icons": false,
+        "auto_refill_enable_horbar_indicator_icons": false,
         "visual_replace_success_notification": false,
         "audio_replace_success_notification": false,
         "visual_replace_failed_notification": false,
