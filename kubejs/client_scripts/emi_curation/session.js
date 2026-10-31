@@ -22,13 +22,15 @@
       error: null,
       reapply: true,
       failed: { index: null, recipe: null },
-      index: { master: null, baseline: null, views: {}, installed: null }
+      index: { master: null, baseline: null, views: {}, installed: null, pending: null }
     }
   }
 
   var st = ns.state || (ns.state = freshState())
+  if (st.index.pending === undefined) st.index.pending = null
   // A script reload must rebuild views with the reloaded policy and code, and retry a
   // curation file that failed to load.
+  st.index.pending = null
   st.reapply = true
   if (st.status === 'unavailable') st.status = 'waiting'
 
@@ -54,40 +56,64 @@
     if (!EmiReloadManager.isLoaded()) return false
     if (ns.recipeView.isBusy()) return false
     var Minecraft = ns.interop.cls('net.minecraft.client.Minecraft')
-    return Minecraft.getInstance().player != null
+    return !!Minecraft.getInstance().player
   }
 
   // ---- index ----
 
   // The index to install for the current CLEAN/ALL x DECOR combination; built views are
   // kept per combination until EMI replaces its list.
-  function applyIndex() {
+  function desiredIndex() {
     var clean = st.mode === CLEAN
     var decor = ns.decorState.indexHidden()
     var target = st.index.baseline
     if (clean || decor) {
       var key = (clean ? 'c' : '') + (decor ? 'd' : '')
-      if (st.index.views[key] == null) {
-        st.index.views[key] = ns.indexView.buildClean(st.index.baseline, function (stack) {
-          return (clean && ns.hiding.isPolicyHidden(stack)) || (decor && ns.decorState.isHidden(stack))
-        })
+      if (!(key in st.index.views)) {
+        var pending = st.index.pending
+        if (pending == null || pending.key !== key || !ns.interop.sameRef(pending.baseline, st.index.baseline)) {
+          pending = st.index.pending = {
+            key: key,
+            baseline: st.index.baseline,
+            build: ns.indexBuild.start(st.index.baseline, function (stack) {
+              return (clean && ns.hiding.isPolicyHidden(stack)) || (decor && ns.decorState.isHidden(stack))
+            })
+          }
+        }
+        var progress = ns.indexBuild.step(pending.build)
+        if (!progress.done) return null
+        // EMI's worker may replace the static lists concurrently. Validate the source
+        // references again immediately before making this completed view publishable.
+        var current = ns.indexView.currentFiltered()
+        var sourceCurrent = ns.interop.sameRef(current, st.index.baseline) ||
+          ns.interop.sameRef(current, st.index.installed)
+        if (!sourceCurrent || !ns.interop.sameRef(ns.indexView.currentMaster(), st.index.master)) {
+          st.index.pending = null
+          return null
+        }
+        st.index.views[key] = progress.result
+        st.index.pending = null
       }
       target = st.index.views[key]
+    } else {
+      st.index.pending = null
     }
-    ns.indexView.install(target)
-    st.index.installed = target
+    return target
   }
 
   // Returns true when EMI replaced its list since we last installed ours.
   function syncIndex() {
     var cur = ns.indexView.currentFiltered()
     if (ns.interop.sameRef(cur, st.index.installed)) return false
+    // During a sliced first apply EMI's untouched baseline remains installed.
+    if (ns.interop.sameRef(cur, st.index.baseline)) return false
     var master = ns.indexView.currentMaster()
     if (!ns.interop.sameRef(master, st.index.master)) {
       st.index.master = master
     }
     st.index.baseline = cur
     st.index.views = {}
+    st.index.pending = null
     ns.decorState.invalidate()
     return true
   }
@@ -98,13 +124,21 @@
     var prevIndex = st.index.installed
     var prevRecipe = ns.recipeView.installed()
     try {
-      applyIndex()
+      var target = desiredIndex()
+      if (!target) {
+        st.status = 'building'
+        st.error = null
+        return false
+      }
+      ns.indexView.install(target)
+      st.index.installed = target
       // Display filtering depends on the index (user hides, key set): rebuild it too.
       if (indexChanged) ns.recipeView.invalidate()
       ns.recipeView.apply(st.mode === CLEAN && policy.displayFiltering)
       ns.indexView.refresh()
       st.status = 'ready'
       st.error = null
+      return true
     } catch (err) {
       restore(prevIndex, prevRecipe)
       throw err
@@ -113,12 +147,13 @@
 
   // Puts back the last complete view after a failure.
   function restore(indexRef, recipeRef) {
-    try { if (indexRef != null) { ns.indexView.install(indexRef); st.index.installed = indexRef } } catch (e1) { ns.diag.logError('restore index', e1) }
+    try { if (indexRef) { ns.indexView.install(indexRef); st.index.installed = indexRef } } catch (e1) { ns.diag.logError('restore index', e1) }
     try { ns.recipeView.restore(recipeRef) } catch (e2) { ns.diag.logError('restore recipes', e2) }
     try { ns.indexView.refresh() } catch (e3) { ns.diag.logError('restore refresh', e3) }
   }
 
   function fail(where, err) {
+    st.index.pending = null
     st.status = 'error'
     st.error = String(err)
     ns.diag.logError(where, err)
@@ -136,7 +171,7 @@
 
   function unchangedSinceFailure() {
     var f = st.failed
-    if (f.index == null || f.recipe == null) return false
+    if (!f.index || !f.recipe) return false
     return ns.interop.sameRef(ns.indexView.currentFiltered(), f.index) &&
            ns.interop.sameRef(ns.recipeView.current(), f.recipe)
   }
@@ -144,6 +179,11 @@
   function tick() {
     if (!loadPolicy()) { st.status = 'unavailable'; return }
     if (!emiReady()) {
+      if (st.index.pending) {
+        st.index.pending = null
+        st.index.views = {}
+        st.reapply = true
+      }
       if (st.status === 'ready') st.status = 'waiting'
       return
     }
@@ -158,7 +198,7 @@
       // starts a new generation.
       if (st.status === 'error' && !indexChanged && !recipeChanged && !retry) return
       if (indexChanged || recipeChanged || retry || st.status !== 'ready') {
-        if (retry) { st.index.views = {}; ns.decorState.invalidate(); ns.recipeView.invalidate() }
+        if (retry) { st.index.views = {}; st.index.pending = null; ns.decorState.invalidate(); ns.recipeView.invalidate() }
         st.reapply = false
         applyAll(indexChanged)
       }
@@ -204,10 +244,19 @@
   }
 
   // Re-applies the index after the local DECOR marks changed (decorState.mark already dropped
-  // its caches), with the current CLEAN/ALL and DECOR state. Returns true when it is installed.
+  // its caches), with the current CLEAN/ALL and DECOR state. Pending work is stale even
+  // when no complete view is installed yet.
   function refreshDecor() {
-    if (st.status !== 'ready') return false
     st.index.views = {}
+    st.index.pending = null
+    if (st.status !== 'ready') {
+      if (st.status === 'building' || st.status === 'waiting') {
+        st.reapply = true
+        st.status = 'waiting'
+        return true
+      }
+      return false
+    }
     try {
       applyAll(false)
       return true
@@ -221,7 +270,7 @@
   // from a previous world are never restored over new ones) and reset to CLEAN.
   function logout() {
     try {
-      if (st.index.installed != null && st.index.baseline != null &&
+      if (st.index.installed && st.index.baseline &&
           ns.interop.sameRef(ns.indexView.currentFiltered(), st.index.installed)) {
         ns.indexView.install(st.index.baseline)
       }

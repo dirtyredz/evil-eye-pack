@@ -213,7 +213,10 @@ The malware guard scans NeoForge jars the same way, and approvals stay bound to 
   steps.
 - **KubeJS 2101 / EMI curation:** `startup_scripts/globals.js` creates the globals, listeners go
   through `NativeEvents` (`ui/native_hooks.js`), the key mapping uses NeoForge classes, and
-  components are translated in `java_interop.js`.
+  components are translated in `java_interop.js`. The 2026-10-31 client-tick fix removes Rhino
+  equality checks on raw Java references, uses the component adapter on classification-cache hits,
+  and builds uncached index views in private 256-item/4-ms slices before one publication. CLEAN's
+  authored recipe-display filtering is unchanged. The owner must still qualify this in the Trial.
 - **Configs:** `tools/packwiz/migration/config-decisions.json`.
 - **Dedup** was regenerated against the verified target jars: 82 overrides, 25 removed recipes and
   86 stale 1.20 outputs deleted. The Dragons Plus static sanding recipes (268) moved to the 1.21

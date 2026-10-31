@@ -17,8 +17,10 @@
   // Classification per registry key (Item/Fluid object), so the id string is built once
   // per key rather than once per stack; only NBT-rule verdicts read per-stack NBT.
   var keyClass = null
+  var keyClassReady = false
 
   var keySet = null
+  var keySetReady = false
   var keySetMaster = null
 
   // ctx: { policy: loaded policy, getMaster: function () -> EMI's master index list }
@@ -26,24 +28,31 @@
     policy = ctx.policy
     getMaster = ctx.getMaster
     keyClass = null
+    keyClassReady = false
     keySet = null
+    keySetReady = false
     keySetMaster = null
   }
 
   function isPolicyHidden(stack) {
-    if (keyClass == null) keyClass = ns.interop.newIdentityMap()
+    if (!keyClassReady) {
+      keyClass = ns.interop.newIdentityMap()
+      keyClassReady = true
+    }
     var key = stack.getKey()
-    var verdict = keyClass.get(key)
+    var verdict = null
     var desc = null
-    if (verdict == null) {
+    if (!keyClass.containsKey(key)) {
       desc = ns.interop.describe(stack)
       verdict = ns.policy.classifyId(policy, desc.id, desc.isItem)
       keyClass.put(key, verdict)
+    } else {
+      verdict = keyClass.get(key)
     }
     // On cache hits neither the id nor the item class is read again. NBT remains lazy
     // and belongs to this stack, never to the stack that first populated the cache.
     return ns.policy.verdictHidden(verdict, desc || {
-      nbt: function () { return ns.interop.toPlainNbt(stack.getNbt()) }
+      nbt: function () { return ns.interop.stackData(stack) }
     })
   }
 
@@ -62,9 +71,10 @@
   // Item keys present in the master list, rebuilt only when that list object changes.
   function currentKeys() {
     var master = getMaster()
-    if (keySet == null || !ns.interop.sameRef(master, keySetMaster)) {
+    if (!keySetReady || !ns.interop.sameRef(master, keySetMaster)) {
       keySet = buildKeySet(master)
       keySetMaster = master
+      keySetReady = true
     }
     return keySet
   }

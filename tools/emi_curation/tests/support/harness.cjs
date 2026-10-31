@@ -80,6 +80,9 @@ function loadScripts(env, names) {
     NativeEvents: env.NativeEvents,
     JsonIO: env.JsonIO || makeJsonIO(null, new Map(), {}),
     Platform: env.Platform || { isLoaded: () => false, getInfo: () => null },
+    // Production uses Date.now() for the 4 ms slice cap. A fixed fake clock keeps
+    // unit tests deterministic; classification-count tests still exercise the 256 cap.
+    Date: env.Date || { now: () => 0 },
     console: makeConsole(env.logs || []),
   };
   const context = vm.createContext(sandbox);

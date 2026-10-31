@@ -8,17 +8,12 @@
   var classes = {}
 
   function cls(name) {
-    var c = classes[name]
-    if (c === undefined) {
-      c = Java.loadClass(name)
-      classes[name] = c
-    }
-    return c
+    if (!(name in classes)) classes[name] = Java.loadClass(name)
+    return classes[name]
   }
 
   // Java reference identity, independent of how Rhino wraps the two values.
   function sameRef(a, b) {
-    if (a === null || a === undefined || b === null || b === undefined) return a == null && b == null
     var IdentityHashMap = cls('java.util.IdentityHashMap')
     var m = new IdentityHashMap()
     m.put(a, true)
@@ -52,7 +47,7 @@
   // on them throws IllegalAccessException. The ArrayList constructor copies through
   // the Collection interface in Java, so the script only ever touches a public class.
   function copy(list) {
-    if (list === null || list === undefined) return list
+    if (!list) return list
     var ArrayList = cls('java.util.ArrayList')
     return new ArrayList(list)
   }
@@ -85,7 +80,7 @@
   // CompoundTag -> plain object, ListTag -> array, StringTag -> string, numbers and
   // arrays -> tagged values so they never equal a string in the curation rules.
   function toPlainNbt(tag) {
-    if (tag === null || tag === undefined) return null
+    if (!tag) return null
     var id = Number(tag.getId())
     if (id === 10) {
       var out = {}
@@ -117,12 +112,16 @@
     return encoded.isPresent() ? encoded.get() : null
   }
 
+  function stackData(stack) {
+    return toPlainNbt(extraData(stack))
+  }
+
   // EmiStack -> { id, isItem, nbt() } for ns.policy.isStackHidden.
   function describe(stack) {
     return {
       id: String(stack.getId()),
       isItem: isItemKey(stack),
-      nbt: function () { return toPlainNbt(extraData(stack)) }
+      nbt: function () { return stackData(stack) }
     }
   }
 
@@ -132,10 +131,13 @@
     literal: literal,
     sameRef: sameRef,
     newIdentityMap: newIdentityMap,
+    newList: newList,
     copy: copy,
+    freeze: freeze,
     filterToList: filterToList,
     isItemKey: isItemKey,
     toPlainNbt: toPlainNbt,
+    stackData: stackData,
     describe: describe
   }
 })(global.emiCuration || (global.emiCuration = {}))

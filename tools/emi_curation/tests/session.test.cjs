@@ -304,3 +304,76 @@ test('first reload adopts the former session recipe holder without losing the EM
   c.logout();
   assert.equal(c.world.EmiRecipes.manager, baseline);
 });
+
+test('large first-generation curation is sliced, published once, then 3,600 unchanged ticks are idle', () => {
+  const items = [];
+  for (let i = 0; i < 700; i++) items.push(new F.EmiStack(new F.Item('minecraft:slice_' + i)));
+  const c = boot({ fixture: { spec: { items, recipes: [] } } });
+  const baselineList = c.world.EmiStackList.filteredStacks;
+  const baselineManager = c.world.EmiRecipes.manager;
+  const hidden = c.ns().hiding.isPolicyHidden;
+  let classifications = 0;
+  c.ns().hiding.isPolicyHidden = (stack) => { classifications++; return hidden(stack); };
+
+  const perTick = [];
+  for (let ticks = 0; ticks < 20 && c.ns().session.label() !== 'EMI: CLEAN'; ticks++) {
+    const before = classifications;
+    c.tick();
+    perTick.push(classifications - before);
+    if (c.ns().session.label() !== 'EMI: CLEAN') {
+      assert.equal(c.world.EmiStackList.filteredStacks, baselineList, 'partial work stays private');
+      assert.equal(c.world.EmiRecipes.manager, baselineManager, 'recipes publish with the complete index only');
+      assert.equal(c.world.counters.recalcs, 0, 'no partial refresh');
+    }
+  }
+
+  assert.equal(c.ns().session.label(), 'EMI: CLEAN');
+  assert.deepEqual(perTick, [256, 256, 188], '700 classifications are split at the exact item budget');
+  assert.equal(classifications, 700);
+  assert.notEqual(c.world.EmiStackList.filteredStacks, baselineList);
+  assert.deepEqual(c.world.EmiStackList.filteredStacks.a, items, 'order is preserved');
+  assert.throws(() => c.world.EmiStackList.filteredStacks.add(items[0]), /UnsupportedOperationException/);
+  assert.equal(c.world.counters.recalcs, 1, 'the complete view is published and refreshed once');
+  assert.equal(c.world.counters.searchUpdates, 1);
+
+  const installedList = c.world.EmiStackList.filteredStacks;
+  const installedManager = c.world.EmiRecipes.manager;
+  const recalcs = c.world.counters.recalcs;
+  for (let i = 0; i < 3600; i++) c.tick();
+  assert.equal(classifications, 700, 'unchanged ticks perform no classification work');
+  assert.equal(c.world.counters.recalcs, recalcs, 'unchanged ticks perform no apply work');
+  assert.equal(c.world.EmiStackList.filteredStacks, installedList);
+  assert.equal(c.world.EmiRecipes.manager, installedManager);
+});
+
+test('index slices stop at the time budget and discard a stale generation before publication', () => {
+  const first = [];
+  for (let i = 0; i < 700; i++) first.push(new F.EmiStack(new F.Item('minecraft:first_' + i)));
+  const second = [];
+  for (let i = 0; i < 12; i++) second.push(new F.EmiStack(new F.Item('minecraft:second_' + i)));
+  const c = boot({ fixture: { spec: { items: first, recipes: [] } } });
+
+  const direct = c.ns().indexBuild.start(c.world.EmiStackList.filteredStacks, () => false);
+  let clock = 0;
+  const timed = c.ns().indexBuild.step(direct, 256, 4, () => clock++);
+  assert.equal(timed.done, false);
+  assert.equal(timed.count, 4, 'the elapsed-time cap stops a slice before the item cap');
+
+  let classifications = 0;
+  const hidden = c.ns().hiding.isPolicyHidden;
+  c.ns().hiding.isPolicyHidden = (stack) => { classifications++; return hidden(stack); };
+  c.tick();
+  assert.equal(classifications, 256);
+  assert.equal(c.ns().session.label(), 'EMI: ...');
+  const staleBaseline = c.world.EmiStackList.filteredStacks;
+
+  c.world.EmiStackList.bake(second);
+  const freshBaseline = c.world.EmiStackList.filteredStacks;
+  assert.notEqual(freshBaseline, staleBaseline);
+  c.tick();
+  assert.equal(c.ns().session.label(), 'EMI: CLEAN');
+  assert.deepEqual(c.world.EmiStackList.filteredStacks.a, second,
+    'only the replacement generation is published');
+  assert.equal(classifications, 268, 'partial work from the old generation is not resumed');
+  assert.equal(c.world.counters.recalcs, 1);
+});

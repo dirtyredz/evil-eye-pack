@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { boot } = require('./support/harness.cjs');
+const { boot, readRepoText } = require('./support/harness.cjs');
 const F = require('./support/fake_emi.cjs');
 
 test('JDK-internal immutable lists from EMI are copied, never reflected on', () => {
@@ -127,4 +127,50 @@ test('1.21 EMI stacks: the data-component patch is encoded through its codec for
   assert.deepEqual(JSON.parse(JSON.stringify(c.ns().interop.describe(stack).nbt())), encoded);
   const empty = { ...stack, getComponentChanges: () => ({ isEmpty: () => true }) };
   assert.equal(c.ns().interop.describe(empty).nbt(), null);
+});
+
+test('1.21 component-only stacks keep using the component adapter on classification-cache hits', () => {
+  const c = boot();
+  const ns = c.ns();
+  c.world.classes['net.minecraft.nbt.NbtOps'] = { INSTANCE: 'nbt-ops' };
+  c.world.classes['net.minecraft.core.component.DataComponentPatch'] = { CODEC: { encodeStart: (ops, patch) => {
+    assert.equal(ops, 'nbt-ops');
+    return { result: () => ({ isPresent: () => true, get: () => F.tag(patch.value) }) };
+  } } };
+  const policy = ns.policy.compile({
+    schema: 1,
+    itemLists: [],
+    nbtExceptions: [{ ids: ['a:component_stack'], keepWhenNbtEquals: { 'a:data': { id: 'minecraft:zombie' } } }],
+  }, {});
+  ns.hiding.configure({ policy, getMaster: () => c.world.EmiStackList.stacks });
+
+  const key = new F.Item('a:component_stack');
+  let componentReads = 0;
+  const stack = (id) => ({
+    getId: () => 'a:component_stack',
+    getKey: () => key,
+    getComponentChanges: () => {
+      componentReads++;
+      return { isEmpty: () => false, value: { 'a:data': { id } } };
+    },
+  });
+  const zombie = stack('minecraft:zombie');
+  const skeleton = stack('minecraft:skeleton');
+  for (let pass = 0; pass < 2; pass++) {
+    assert.equal(ns.hiding.isPolicyHidden(zombie), false);
+    assert.equal(ns.hiding.isPolicyHidden(skeleton), true);
+  }
+  assert.equal(componentReads, 4, 'each stack decision reads its own current component patch');
+});
+
+test('sameRef never compares raw 1.21 Java references with JavaScript equality', () => {
+  const source = readRepoText('kubejs/client_scripts/emi_curation/java_interop.js');
+  const body = /function sameRef\(a, b\) \{([\s\S]*?)\n  \}/.exec(source);
+  assert.ok(body, 'sameRef implementation found');
+  assert.doesNotMatch(body[1], /===|!==|==|!=/,
+    'KubeJS 2101 warns and performs expensive message lookup for JS equality on raw Java objects');
+  const session = readRepoText('kubejs/client_scripts/emi_curation/session.js');
+  const recipes = readRepoText('kubejs/client_scripts/emi_curation/recipe_view.js');
+  assert.doesNotMatch(session, /\.player\s*!?==?\s*null/, 'tick readiness uses Java truthiness');
+  assert.doesNotMatch(recipes, /activeWorker\s*!?==?\s*null/, 'worker readiness uses Java truthiness');
 });

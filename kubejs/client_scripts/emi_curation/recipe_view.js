@@ -35,7 +35,7 @@
   // apply() records the actual Java reference only after assignment has succeeded.
   function viewFor(baseline) {
     baseline = unwrap(baseline)
-    if (st.wrapper != null && st.wrapperLoad === loadToken && ns.interop.sameRef(baseline, st.baseline)) return st.wrapper
+    if (st.wrapper && st.wrapperLoad === loadToken && ns.interop.sameRef(baseline, st.baseline)) return st.wrapper
     return createWrapper(baseline, ns.hiding.isDisplayHidden)
   }
 
@@ -54,7 +54,10 @@
   // A new EMI manager is a new baseline; never adopt one of our own wrappers.
   function sync() {
     var cur = current()
-    if (ns.interop.sameRef(cur, st.installed)) return false
+    // While session.js is building an index in slices it deliberately leaves EMI's
+    // baseline manager installed. Do not rediscover and invalidate that same baseline
+    // on every build tick.
+    if (ns.interop.sameRef(cur, st.installed) || ns.interop.sameRef(cur, st.baseline)) return false
     st.baseline = unwrap(cur)
     invalidate()
     knownWrappers().clear()
@@ -65,12 +68,12 @@
   function installed() { return st.installed }
 
   function restore(ref) {
-    if (ref != null) { install(ref); st.installed = ref }
+    if (ref) { install(ref); st.installed = ref }
   }
 
   // Restore only while ours is still installed; never overwrite a new EMI generation.
   function release() {
-    if (st.installed != null && st.baseline != null && ns.interop.sameRef(current(), st.installed)) install(st.baseline)
+    if (st.installed && st.baseline && ns.interop.sameRef(current(), st.installed)) install(st.baseline)
   }
 
   function reset() { ns.recipeState = st = freshState() }
@@ -80,7 +83,7 @@
   function current() { return recipes().manager }
 
   // EMI bakes a sorted manager on a worker thread after reload; wait for it.
-  function isBusy() { return recipes().activeWorker != null }
+  function isBusy() { return !!recipes().activeWorker }
 
   // Installs a manager (EMI's own or our wrapper object) and returns the Java object
   // EMI now holds (Rhino proxies a JS wrapper).
@@ -110,7 +113,7 @@
     var lists = Collections.synchronizedMap(I.newIdentityMap())
 
     function recipeHidden(recipe) {
-      if (recipe == null) return false
+      if (!recipe) return false
       if (!checked.containsKey(recipe)) {
         var h = false
         try {

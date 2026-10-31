@@ -274,7 +274,12 @@
 - **The class filter lives in the jar** (`kubejs.classfilter.txt`). `tools/emi_curation/tests/class_filter.test.cjs`
   reads it from the pinned KubeJS. `net.neoforged` is allowed, `net.neoforged.fml` denied.
 - **1.21 stacks have components, not NBT.** Use the component patch (`getComponentsPatch`,
-  EMI `getComponentChanges`); `getNbt()` does not exist.
+  EMI `getComponentChanges`); `getNbt()` does not exist. Classification-cache hits must still read
+  the particular stack through the component-aware adapter, because variants share one registry key.
+- **Do not compare raw Java references with JavaScript `==`/`===` in KubeJS 2101 hot paths.** Rhino's
+  `shallowEq` calls `warnAboutNonJSObject`, including an expensive resource-bundle lookup even when no
+  warning reaches the log. The 2026-10-31 walk JFR caught this pinning the client tick after curation.
+  Use Java identity (`java_interop.sameRef`) when identity matters and truthiness for null readiness.
 
 ## Worktrees
 
@@ -297,6 +302,10 @@
 
 - `EmiStackList.filteredStacks` is rebuilt by `bakeFiltered()` on every EMI bake and on every user hide or unhide. The curation session detects this (the list identity changes) and re-applies CLEAN.
 - `EmiRecipes.manager` is replaced twice per reload: first by a provisional manager, then by the sorted manager from a background worker. Install views only when `EmiReloadManager.isLoaded()` is true and `EmiRecipes.activeWorker == null`.
+- An uncached curated index is a generation-scoped job, not one long tick: snapshot once, classify at
+  most 256 stacks or 4 ms per tick, keep partial output private, validate the list/master references
+  again before publication, then install and refresh once. A new EMI list, script reload, mark change or
+  logout discards pending work; never publish a completed view from an old generation.
 - `JemiPlugin` skips JEI categories whose namespace has a native EMI plugin (`ae2`). AE2's JEI-only Certus Growth category is therefore not shown, and AE2's native EMI plugin uses info recipes instead.
 - EMI rewrites `config/emi.css` in full on launch, so a test instance differs from the indexed file after the first start. EMI's QDCSS parser is regex-based: comments in `emi.css` must not contain `:`, `;`, `{` or `}` (guarded by `tools/emi_curation/tests/emi_config.test.cjs`).
 

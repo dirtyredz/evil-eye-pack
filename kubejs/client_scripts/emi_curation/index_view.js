@@ -18,11 +18,6 @@
   // EMI's master index list; a new object after every EMI bake (reload generation).
   function currentMaster() { return stackList().stacks }
 
-  // Immutable copy of `baseline` without the stacks `isHidden` rejects, in EMI order.
-  function buildClean(baseline, isHidden) {
-    return ns.interop.filterToList(baseline, function (stack) { return !isHidden(stack) })
-  }
-
   function install(list) {
     stackList().filteredStacks = list
   }
@@ -37,7 +32,6 @@
   ns.indexView = {
     currentFiltered: currentFiltered,
     currentMaster: currentMaster,
-    buildClean: buildClean,
     install: install,
     refresh: refresh
   }
