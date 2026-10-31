@@ -280,6 +280,11 @@
   `shallowEq` calls `warnAboutNonJSObject`, including an expensive resource-bundle lookup even when no
   warning reaches the log. The 2026-10-31 walk JFR caught this pinning the client tick after curation.
   Use Java identity (`java_interop.sameRef`) when identity matters and truthiness for null readiness.
+- **Read back Java collection fields after assigning them from KubeJS 2101.** Assigning the curated
+  list to static `EmiStackList.filteredStacks` passes through Rhino's `Context.listOf`; the field can
+  hold a new Java list rather than the supplied wrapper. Tracking the supplied reference made the
+  session mistake its own installed view for a new EMI generation and rebuild forever. `indexView.install`
+  returns the field value after assignment, and lifecycle code must retain that returned identity.
 
 ## Worktrees
 
@@ -305,7 +310,8 @@
 - An uncached curated index is a generation-scoped job, not one long tick: snapshot once, classify at
   most 256 stacks or 4 ms per tick, keep partial output private, validate the list/master references
   again before publication, then install and refresh once. A new EMI list, script reload, mark change or
-  logout discards pending work; never publish a completed view from an old generation.
+  logout discards pending work; never publish a completed view from an old generation. Publication must
+  retain the Java list reference read back from EMI, not the pre-assignment value Rhino may have copied.
 - `JemiPlugin` skips JEI categories whose namespace has a native EMI plugin (`ae2`). AE2's JEI-only Certus Growth category is therefore not shown, and AE2's native EMI plugin uses info recipes instead.
 - EMI rewrites `config/emi.css` in full on launch, so a test instance differs from the indexed file after the first start. EMI's QDCSS parser is regex-based: comments in `emi.css` must not contain `:`, `;`, `{` or `}` (guarded by `tools/emi_curation/tests/emi_config.test.cjs`).
 

@@ -346,6 +346,36 @@ test('large first-generation curation is sliced, published once, then 3,600 unch
   assert.equal(c.world.EmiRecipes.manager, installedManager);
 });
 
+test('static List field coercion records the list EMI actually holds and reaches a stable ready state', () => {
+  const items = [];
+  for (let i = 0; i < 700; i++) items.push(new F.EmiStack(new F.Item('minecraft:coerced_' + i)));
+  const c = boot({ fixture: { spec: { items, recipes: [] } } });
+
+  // KubeJS 2101 converts a JavaScript assignment to EmiStackList.filteredStacks
+  // through Context.listOf, so the static field holds a different Java List reference
+  // than the value supplied by the script. Model that field coercion exactly.
+  let held = c.world.EmiStackList.filteredStacks;
+  let assignments = 0;
+  Object.defineProperty(c.world.EmiStackList, 'filteredStacks', {
+    configurable: true,
+    get: () => held,
+    set: (list) => { assignments++; held = new F.JList(list); },
+  });
+
+  const hidden = c.ns().hiding.isPolicyHidden;
+  let classifications = 0;
+  c.ns().hiding.isPolicyHidden = (stack) => { classifications++; return hidden(stack); };
+
+  for (let i = 0; i < 12; i++) c.tick();
+
+  assert.equal(c.ns().session.label(), 'EMI: CLEAN', 'the coerced install must remain ready on later ticks');
+  assert.equal(classifications, 700, 'the generation is classified once');
+  assert.equal(assignments, 1, 'the completed view is installed once');
+  assert.equal(c.world.counters.recalcs, 1, 'the completed view is refreshed once');
+  assert.equal(c.ns().state.index.installed, c.world.EmiStackList.filteredStacks,
+    'session identity is the post-coercion reference held by EMI');
+});
+
 test('index slices stop at the time budget and discard a stale generation before publication', () => {
   const first = [];
   for (let i = 0; i < 700; i++) first.push(new F.EmiStack(new F.Item('minecraft:first_' + i)));

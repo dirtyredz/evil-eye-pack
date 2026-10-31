@@ -130,8 +130,7 @@
         st.error = null
         return false
       }
-      ns.indexView.install(target)
-      st.index.installed = target
+      st.index.installed = ns.indexView.install(target)
       // Display filtering depends on the index (user hides, key set): rebuild it too.
       if (indexChanged) ns.recipeView.invalidate()
       ns.recipeView.apply(st.mode === CLEAN && policy.displayFiltering)
@@ -147,7 +146,7 @@
 
   // Puts back the last complete view after a failure.
   function restore(indexRef, recipeRef) {
-    try { if (indexRef) { ns.indexView.install(indexRef); st.index.installed = indexRef } } catch (e1) { ns.diag.logError('restore index', e1) }
+    try { if (indexRef) st.index.installed = ns.indexView.install(indexRef) } catch (e1) { ns.diag.logError('restore index', e1) }
     try { ns.recipeView.restore(recipeRef) } catch (e2) { ns.diag.logError('restore recipes', e2) }
     try { ns.indexView.refresh() } catch (e3) { ns.diag.logError('restore refresh', e3) }
   }

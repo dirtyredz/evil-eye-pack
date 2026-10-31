@@ -20,6 +20,10 @@
 
   function install(list) {
     stackList().filteredStacks = list
+    // KubeJS 2101 coerces a value assigned to a static java.util.List field through
+    // Context.listOf. The field can therefore hold a different Java List object than
+    // `list`; callers must track the reference EMI actually received.
+    return currentFiltered()
   }
 
   // Re-run the active search and rebuild sidebars/craftables without an EMI reload.

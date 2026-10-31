@@ -2495,7 +2495,7 @@ hash = "282e8741c95b29127b2d27d0e5aa4cde604c1a24e9a9d16402052a20a83657f7"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/index_view.js"
-hash = "f265d313f43529eb2f4c00c748b26283092d6cda2e017696dc22d5bd076f800d"
+hash = "984fa5e854b65ee31b744783b17aa177121ef8f3c61e75ebf6bb3fba8076421b"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/java_interop.js"
@@ -2511,7 +2511,7 @@ hash = "675c8c92d5155db8d07d11c1b83edf8240d2cf999ca88918b8458956ec16c3d5"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/session.js"
-hash = "1316fb2ced007a2a7b0c024e67edb9f3a61e0ca6e18a6e390eb9ce1d039ebd02"
+hash = "b04482328e3486d3a27076f3830eabe81e1d07d13712b75323437d8c47e6e312"
 
 [[files]]
 file = "kubejs/client_scripts/emi_curation/ui/button.js"
