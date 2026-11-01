@@ -63,3 +63,40 @@ test('Evil Eye Tweaks keeps the pack day length: half-speed day, vanilla night, 
   assert.match(config, /^\s*nightSpeed = 1\.0$/m);
   assert.match(config, /^\s*weatherEffect = "SLEEPING"$/m);
 });
+
+// Values from the removed defaultconfigs/ftbessentials-server.snbt; one TOML section per command.
+const tomlSection = (text, name) => {
+  const start = text.indexOf(`[${name}]`);
+  assert.ok(start >= 0, `missing [${name}]`);
+  const rest = text.slice(start + name.length + 2);
+  const next = rest.search(/^\s*\[/m);
+  return next < 0 ? rest : rest.slice(0, next);
+};
+
+test('Evil Eye Essentials carries the FTB Essentials pack values and imports its data', () => {
+  assert.match(read('mods/evileye-essentials.pw.toml'), /^side = "both"$/m);
+  for (const gone of ['mods/ftb-essentials.pw.toml', 'mods/ftb-library-forge.pw.toml', 'defaultconfigs/ftbessentials-server.snbt', 'config/sidebar_buttons.json']) {
+    assert.equal(fs.existsSync(path.join(ROOT, gone)), false, `${gone} was replaced`);
+  }
+  const config = read('config/evileye_essentials-common.toml');
+  assert.match(tomlSection(config, 'teleportation.home'), /^\s*max = 3$/m);
+  for (const command of ['home', 'back', 'spawn', 'tpa']) {
+    const section = tomlSection(config, `teleportation.${command}`);
+    assert.match(section, /^\s*enabled = true$/m, `${command} enabled`);
+    assert.match(section, /^\s*cooldown = 60$/m, `${command} cooldown`);
+  }
+  assert.match(tomlSection(config, 'teleportation.rtp'), /^\s*enabled = false$/m);
+  for (const admin of ['fly', 'god', 'heal', 'feed', 'extinguish', 'speed']) {
+    assert.match(tomlSection(config, `admin.${admin}`), /^\s*enabled = true$/m, `${admin} enabled`);
+  }
+  assert.match(tomlSection(config, 'misc.trashcan'), /^\s*enabled = true$/m);
+  assert.match(tomlSection(config, 'import'), /^\s*ftbOnServerStart = true$/m);
+});
+
+test('Evil Eye Client shows FTB Library\'s sidebar buttons in its layout', () => {
+  const sidebar = tomlSection(read('config/evileye_client-client.toml'), 'sidebar');
+  assert.match(sidebar, /^\s*enabled = true$/m);
+  assert.match(sidebar, /^\s*position = "TOP_LEFT"$/m);
+  assert.match(sidebar, /^\s*columns = 4$/m);
+  assert.match(sidebar, /^\s*buttons = \["gamemode", "day", "night", "rain", "trash_can"\]$/m);
+});

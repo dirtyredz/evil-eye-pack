@@ -12,6 +12,7 @@ duplicate-cleanup guides.
 | Roundwood 0.17.0 doors, windows, archways and trim (NeoForge; legacy variants hidden in CLEAN) | `/roundwood showcase` (operator player) | [Native showcase](showcases.md#roundwood-native-showcase) |
 | Mekanism power and ore processing display (NeoForge branch) | `/evileye showcase mekanism_machines` | [Sections](showcases.md#mekanism-and-interstellaris-sections-neoforge-branch) |
 | Interstellaris metals, planet ground and a Sable physics pad (NeoForge branch) | `/evileye showcase interstellaris_space` | [Sections](showcases.md#mekanism-and-interstellaris-sections-neoforge-branch) |
+| Evil Eye Essentials commands (homes, warps, /back, tpa, kits, trash can; replaced FTB Essentials) and the inventory sidebar (NeoForge branch) | `/evileye showcase evileye_essentials` | [Sections](showcases.md#evil-eye-essentials-section-neoforge-branch) |
 | One-boot showcase acceptance | `node tools/showcase/check.cjs --all` | [Headless checks](showcases.md#run-the-headless-check) |
 
 Private migration trial prelaunch: `node tools/packwiz/install_local.cjs --instance <trial/.minecraft>`

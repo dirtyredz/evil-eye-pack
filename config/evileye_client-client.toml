@@ -50,6 +50,20 @@
 	#Hide the recipe-book button on crafting screens (EMI and JEI replace it).
 	hideRecipeBookButton = true
 
+#Buttons beside the inventory (survival and creative). Each shows only while the server offers its command to you.
+[sidebar]
+	#Show the sidebar.
+	enabled = true
+	#Screen corner: TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT or BOTTOM_RIGHT.
+	#Allowed Values: TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+	position = "TOP_LEFT"
+	#Buttons per row.
+	# Default: 4
+	# Range: 1 ~ 16
+	columns = 4
+	#Buttons in order, row by row: gamemode, day, night, rain (operators) and trash_can (Evil Eye Essentials).
+	buttons = ["gamemode", "day", "night", "rain", "trash_can"]
+
 #Pick-up log: what you picked up, in a screen corner.
 [pickup]
 	#Log items.

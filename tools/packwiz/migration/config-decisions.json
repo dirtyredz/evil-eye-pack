@@ -53,9 +53,9 @@
    "reason": "Deterministic Dragons Plus sanding."
   },
   {
-   "match": "defaultconfigs/ftbessentials-server.snbt",
+   "match": "config/evileye_essentials-common.toml",
    "treatment": "preserve-intent",
-   "reason": "FTB Essentials settings for new worlds."
+   "reason": "Evil Eye Essentials 0.1.0 replaces FTB Essentials (wave 5). Carries defaultconfigs/ftbessentials-server.snbt's intent: 3 homes, 60-second cooldowns for /home, /back, /spawn and /tpa, /rtp off, fly/god/heal/feed/extinguish/speed on; everything else FTB Essentials 2101.1.10's defaults (warp 10 s, /back max 10). Bytes are the NeoForge-written default file (the defaults equal the pack values)."
   },
   {
    "match": "config/evileye_tweaks-common.toml",
@@ -65,7 +65,7 @@
   {
    "match": "config/evileye_client-client.toml",
    "treatment": "preserve-intent",
-   "reason": "Evil Eye Client 0.2.0 replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (wave 2) and Better Advancements, Mouse Tweaks and Crafting Tweaks' client options (wave 3: [advancements], [gestures], [crafting], carried from config/betteradvancements-client.toml, config/MouseTweaks.cfg and config/craftingtweaks-common.toml [client]). Bytes are the NeoForge-written default file (LF; the defaults equal the pack values), so the mod does not rewrite it."
+   "reason": "Evil Eye Client 0.2.0 replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (wave 2) and Better Advancements, Mouse Tweaks and Crafting Tweaks' client options (wave 3: [advancements], [gestures], [crafting], carried from config/betteradvancements-client.toml, config/MouseTweaks.cfg and config/craftingtweaks-common.toml [client]) and FTB Library's sidebar (wave 5: [sidebar], from config/sidebar_buttons.json and ftblibrary-client.snbt's layout). Bytes are the NeoForge-written default file (LF; the defaults equal the pack values), so the mod does not rewrite it."
   },
   {
    "match": "config/evileye_client/resourcepacks.json",
@@ -205,6 +205,18 @@
    "file": "config/balm-common.toml",
    "treatment": "dropped",
    "reason": "Balm dropped (no consumer left); the file held only Balm's example settings."
+  },
+  {
+   "file": "config/sidebar_buttons.json",
+   "treatment": "replaced",
+   "by": "config/evileye_client-client.toml",
+   "reason": "FTB Library replaced by Evil Eye Client 0.3.0 [sidebar]; the four ftblibrary toggles and ftbessentials trash_can were all enabled, in the default top-left layout (gamemode, day, night, rain, then trash can)."
+  },
+  {
+   "file": "defaultconfigs/ftbessentials-server.snbt",
+   "treatment": "replaced",
+   "by": "config/evileye_essentials-common.toml",
+   "reason": "FTB Essentials replaced by Evil Eye Essentials 0.1.0; home max 3, home/back/spawn/tpa cooldown 60, rtp off and the six admin switches carried. The converted trial world never received these values (its serverconfig/ftbessentials.snbt held FTB defaults)."
   }
  ],
  "deferred": "All seven owned ports restored 2026-10-30; no parked files remain. See deferred/README.md for restoration history."

@@ -145,7 +145,7 @@ where 1.21 changed the format (silk-touch `match_tool` → `predicates."minecraf
 | Citadel `blocks/lectern` | 1 | its lectern drops a lectern, keeping a custom name |
 | Waddles `entities/adelie_penguin` | 1 | penguins drop cod (looting adds) |
 | Create: Interiors kelp seats/chairs, seatwood planks, wall table | 8 | the recipes exist again |
-| `ftbessentials:ignore_rtp`, `structurize:null_placement`, `diagonalfences:non_diagonal_fences` | 3 | block tags their code reads (RTP avoids leaves/bedrock, Structurize placement order, grass-topped walls stay straight) |
+| `ftbessentials:ignore_rtp` (dropped in wave 5: Evil Eye Essentials ships `evileye_essentials:ignore_rtp`), `structurize:null_placement`, `diagonalfences:non_diagonal_fences` | 3 | block tags their code reads (RTP avoids leaves/bedrock, Structurize placement order, grass-topped walls stay straight) |
 
 Left out, with the reason in `tools/pack_test/data/policy.json` `ignoredLayout`: two empty Ars Nouveau tables,
 Dank Storage's empty `forge:wrenches`, Ender IO's `darksteel_upgrade` (no such serializer in Ender IO 8),
@@ -632,3 +632,20 @@ Lock drops: Better Advancements 0.4.3.21, Controlling 19.0.5, Default Options 21
 mod-consolidation.md; `config/MouseTweaks.cfg` and `config/resourcepackoverrides.json` leave the preserve list
 (the new resource-pack policy is pack-owned, so installs receive corrections). Physical mod metafiles: 173 to
 164. Not yet run: a pack-test boot, a Trial sync and the owner walk.
+
+## Evil Eye Essentials 0.1.0 and Client 0.3.0 pins: FTB Essentials and FTB Library removed (2026-11-01)
+
+Consolidation wave 5 ([mod-consolidation.md](mod-consolidation.md#wave-5-notes)). Two private `metadata:local` pins,
+stored hash-addressed and by filename in the shared migration cache and the Trial walkthrough's job cache:
+
+| Pin | Source | SHA-256 | Bytes |
+|---|---|---|---|
+| `evileye_essentials-1.21.1-neoforge-0.1.0.jar` (side both) | minecraft-mods `mods/EvilEyeEssentials` d2da76e | `04588d313863f17a6eba815709709812853bc1cf42fc2697ecd0086461c22d5c` | 232,209 |
+| `evileye_client-1.21.1-neoforge-0.3.0.jar` (side client) | minecraft-mods `mods/EvilEyeClient` 542c601 | `50a84af88c2d16421a160bca970abd7a2b853458bcafe17f8c543ae14a85351f` | 348,350 |
+
+Lock drops: FTB Essentials 2101.1.10 and FTB Library 2101.1.39. `ftbessentials` and `ftblibrary` join pack-test
+`removedMods`; `evileye_essentials` joins `requiredMods`. Configs: `defaultconfigs/ftbessentials-server.snbt` and
+`config/sidebar_buttons.json` (which leaves the preserve list) are replaced by `config/evileye_essentials-common.toml`
+(NeoForge-written default bytes, LF; defaults equal the pack values) and Evil Eye Client's `[sidebar]`. A new
+`evileye_essentials` showcase section and headless check cover the commands. Physical mod metafiles: 164 to 163.
+Not yet run: a Trial sync and the owner walk.

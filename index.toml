@@ -1787,12 +1787,16 @@ hash = "19e1a12a90c2b6c0df9fb3152c19a21eb4c9d84c49d496377eacfca0855b324f"
 
 [[files]]
 file = "config/evileye_client-client.toml"
-hash = "7a840e9f070df4317bc596cae13a226ffef0230b49b3fad34f5491f27e33eac5"
+hash = "77ad05611ab6ebc2392685cfe546d9641e0780c1798cddd8693ebc900da86df0"
 preserve = true
 
 [[files]]
 file = "config/evileye_client/resourcepacks.json"
 hash = "941dc9d96d79922dfec059567c30cb29a7edbd6b453c2ca595c07e1db37b148a"
+
+[[files]]
+file = "config/evileye_essentials-common.toml"
+hash = "e27c848c2e0bb82f09492108399513a7e93e4bb40cb90e41e9e65d38fcd68dd7"
 
 [[files]]
 file = "config/evileye_tweaks-common.toml"
@@ -2260,11 +2264,6 @@ file = "config/shetiphiancore.toml"
 hash = "28929b1112ea71c7244eb09449d37caf6afa4dd085fe1f637599e870e135cbae"
 
 [[files]]
-file = "config/sidebar_buttons.json"
-hash = "c15e8bc2e15de3248b51d2c7a582bb01a1235be123c24348c1393c6d9cefb137"
-preserve = true
-
-[[files]]
 file = "config/simplygraves-common.toml"
 hash = "4e70b7fb3347f9f0aa501aa2c7154387d45a9dbe07e4aab4a2998e712c7bdfa4"
 
@@ -2400,10 +2399,6 @@ preserve = true
 file = "config/xaeropatreon.txt"
 hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 preserve = true
-
-[[files]]
-file = "defaultconfigs/ftbessentials-server.snbt"
-hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
 
 [[files]]
 file = "kubejs/assets/emi/index/stacks/dedup.json"
@@ -3910,10 +3905,6 @@ file = "kubejs/data/farmersdelight/recipe/safety_net.json"
 hash = "cc8203d52738500efe43768928dd70019ffb33e182c743182f371bae9d1da580"
 
 [[files]]
-file = "kubejs/data/ftbessentials/tags/block/ignore_rtp.json"
-hash = "d6991f0d3b801369eaee714887ef3f5a888d4f249a3e1dd06fd0ee9dc3f1c227"
-
-[[files]]
 file = "kubejs/data/iceandfire/loot_table/blocks/copper_pile.json"
 hash = "676d20528844a62f7cdcb00c1b9661dbe40be35dc960fec0c21d6c44e80a84d7"
 
@@ -4646,6 +4637,10 @@ file = "kubejs/server_scripts/showcase/sections/contraption_storage.js"
 hash = "f67008197a69ca92125d4734f5df10c6aca1d6f50f14c2efd101215aff7391aa"
 
 [[files]]
+file = "kubejs/server_scripts/showcase/sections/evileye_essentials.js"
+hash = "62526ce2b758f4594bcd06e3ff349175433407625cc7f50683a7c2ffe290c6fe"
+
+[[files]]
 file = "kubejs/server_scripts/showcase/sections/interstellaris_space.js"
 hash = "b7b3692b57c5b5c4a553c1b627b5e330b0bf48e8082afaaee78d123b74b3a4cb"
 
@@ -4991,7 +4986,12 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "f9cac9440e972fd3a237eaadf9c723f08b22b7a55da1e109b0ee4d963f05fa27"
+hash = "ffa581a181e89718aaaa48ff017705b2900d343ffb1d5f2b5dbe427e282a8e5d"
+metafile = true
+
+[[files]]
+file = "mods/evileye-essentials.pw.toml"
+hash = "9734dc5cf136a0757fce21d4f5bdda99f649915e88df5736dc1f4f4fe93a802c"
 metafile = true
 
 [[files]]
@@ -5052,16 +5052,6 @@ metafile = true
 [[files]]
 file = "mods/friendly-furnishings.pw.toml"
 hash = "52069f707cb4df5dbb8433c945db1ab75423c5bde73c131ab7bf126986f4bc2d"
-metafile = true
-
-[[files]]
-file = "mods/ftb-essentials.pw.toml"
-hash = "6fa984dc1b5905ae909b417ed1cd92d6b536ba4832ed8c8d95aa9d424ad789df"
-metafile = true
-
-[[files]]
-file = "mods/ftb-library-forge.pw.toml"
-hash = "df64ca595f6f0f79e3a4a844fd0a887b44f5e007f5deb9ac011b5cf67b3a2127"
 metafile = true
 
 [[files]]

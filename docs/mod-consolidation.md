@@ -16,7 +16,7 @@ does not count. Full program plan: `artifacts/minecraft-mods/jobs/2026-11-01-evi
 | 2 | Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions, AppleSkin (C, with T producers) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.1.0 and Tweaks 0.3.0 local pins, six drops; Bookshelf kept (AttributeFix requires it); owner walk pending |
 | 3 | Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks, Crafting Tweaks | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.2.0 and Tweaks 0.5.0 local pins, seven drops plus Searchables and Balm after closure; owner walk pending |
 | 4 | AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps, Let Me Despawn (T) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.4.0 local pin, seven drops plus Bookshelf, Prickle, Almanac Lib and Kiwi after closure; owner walk pending |
-| 5 | FTB Essentials (E; mandatory saved-data migration) | not started |
+| 5 | FTB Essentials (E; mandatory saved-data migration), FTB Library (sidebar to C) | **Pinned on branch** `migration/evileye-essentials-wave5`: Essentials 0.1.0 and Client 0.3.0 local pins, two drops; import trial passed on a world copy; owner walk pending |
 | 6 | Pro Placer, Light Overlay (removed outright 2026-11-01), 3D Skin Layers, Quick Skin, Modern UI, Inventory Profiles Next, Chloride (C) | not started |
 | 7 | Polymorph, Cosmetic Armor Reworked, Diagonal Fences, Create: Compatible Storage, Create: Storage Drawers Compat (conversion-gated) | not started |
 
@@ -37,6 +37,7 @@ are removed only after a full dependency and consumer audit.
 | After wave 2 | 184 |
 | After wave 4 | 173 |
 | After wave 3 | 164 |
+| After wave 5 | 163 |
 
 ## Rules
 
@@ -47,6 +48,29 @@ are removed only after a full dependency and consumer audit.
   `fuelgoeshere:forced_fuels`), and never list such a namespace in pack-test `removedMods`.
 - Translate real configs and keybindings before deleting old files; record each added config in
   `tools/packwiz/migration/config-decisions.json`.
+
+## Wave 5 notes
+
+- **EvilEyeEssentials 0.1.0** (`evileye_essentials`, side `both`) replaces FTB Essentials 2101.1.10: homes,
+  warps, `/back`, spawn, tpa, rtp (off), kits, nicknames, mutes, fly/god, heal/feed, invsee, enderchest,
+  trash can, virtual workstations, with the pack's values as its defaults (`config/evileye_essentials-common.toml`).
+- **Saved data import.** On every server start Essentials imports `<world>/ftbessentials` once (keyed by the
+  files' checksum; `/evileye_essentials import ftb [dry_run]` by hand). Before writing it copies the FTB files
+  (read-only) and its previous state to `<world>/evileye_essentials/imports/ftb/<stamp>-<checksum>/`; it never
+  overwrites a home, warp or kit that already exists, and a missing dimension or unloadable kit item blocks the
+  whole import with a report instead of importing part of it. The FTB files are left in place.
+- **Import trial** on a copy of the converted trial world (minecraft-mods
+  `jobs/2026-11-01-evileye-essentials-wave5/import-trial`): 2 players, 1 home, 20 `/back` entries, 0 warps,
+  0 kits, 0 conflicts; a second run reports "already imported". 11 `time` stamps (a 2001.x field) are archived.
+- **FTB Library** goes with it (only FTB Essentials required it; class-reference scan of the other 162 pinned
+  jars: `jobs/2026-11-01-evileye-essentials-wave5/ftb-closure.txt`). Its sidebar buttons (gamemode, day, night,
+  rain, trash can) are rebuilt in **Evil Eye Client 0.3.0** (`inventory/sidebar`), shown only when the server
+  offers the command, so the first four stay operator-only. Architectury stays for Quick Skin.
+- **Configs**: `defaultconfigs/ftbessentials-server.snbt` and `config/sidebar_buttons.json` are carried into
+  `config/evileye_essentials-common.toml` and `config/evileye_client-client.toml` `[sidebar]`. The converted
+  trial world's `serverconfig/ftbessentials.snbt` held FTB's defaults (one home, 10 s cooldowns, rtp on), so the
+  pack values never reached it; Essentials restores them. The `kubejs/data/ftbessentials` rtp tag is dropped:
+  Essentials' own `evileye_essentials:ignore_rtp` has the same leaves and bedrock.
 
 ## Wave 2 notes
 

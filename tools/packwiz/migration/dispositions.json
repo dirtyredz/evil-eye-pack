@@ -254,6 +254,14 @@
   "mods/balm.pw.toml": {
    "action": "drop",
    "reason": "Library whose only consumers were Crafting Tweaks and Default Options (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of 254 jars (every lock jar, 79 nested jar-in-jar, both owned jars; jobs/2026-11-01-evileye-wave3/library-closure.json): no declared dependency; the one other net/blay09/mods/balm reference is Xaero's Minimap SupportWaystones, loaded only when Waystones is installed (it is not). config/balm-common.toml (Balm's example settings) goes with it."
+  },
+  "mods/ftb-essentials.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Essentials 0.1.0 (same commands, cooldowns and limits; the pack values from defaultconfigs/ftbessentials-server.snbt are its defaults in config/evileye_essentials-common.toml). World data <world>/ftbessentials (homes, warps, /back history, kits, mutes, nicknames) is imported once on server start, keyed by checksum, after a read-only backup, never overwriting; a missing dimension or unusable kit item blocks the whole import. Import trial on a copy of the converted trial world: 2 players, 1 home, 20 /back entries, 0 conflicts; second run already imported."
+  },
+  "mods/ftb-library-forge.pw.toml": {
+   "action": "drop",
+   "reason": "Library whose only consumer was FTB Essentials (dropped). Its sidebar buttons (toggle gamemode, day, night, rain; FTB Essentials' trash can) are rebuilt in Evil Eye Client 0.3.0 inventory/sidebar/ with the same layout. Closure 2026-11-01: no lock entry but FTB Essentials declares ftblibrary, and no dev/ftb/mods/ftblibrary class reference in the 162 other pinned jars (top-level classes; jobs/2026-11-01-evileye-essentials-wave5/ftb-closure.txt). Its Architectury dependency stays for Quick Skin. config/sidebar_buttons.json and ftblibrary-client.snbt go with it."
   }
  },
  "additions": [
@@ -387,11 +395,23 @@
    "side": "client",
    "target": {
     "source": "local",
-    "filename": "evileye_client-1.21.1-neoforge-0.2.0.jar",
-    "sha256": "635d1bda26561883190e565c56b94243608a5f62d4093903f3e1038635d7b560",
-    "size": 333902
+    "filename": "evileye_client-1.21.1-neoforge-0.3.0.jar",
+    "sha256": "50a84af88c2d16421a160bca970abd7a2b853458bcafe17f8c543ae14a85351f",
+    "size": 348350
    },
-   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient 7f40a0d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' controls (wave 3)."
+   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient 542c601, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' controls (wave 3); wave 5 adds FTB Library's inventory sidebar."
+  },
+  {
+   "metafile": "mods/evileye-essentials.pw.toml",
+   "name": "Evil Eye Essentials",
+   "side": "both",
+   "target": {
+    "source": "local",
+    "filename": "evileye_essentials-1.21.1-neoforge-0.1.0.jar",
+    "sha256": "04588d313863f17a6eba815709709812853bc1cf42fc2697ecd0086461c22d5c",
+    "size": 232209
+   },
+   "reason": "Owned mod (minecraft-mods/mods/EvilEyeEssentials d2da76e, private local pin until a canonical release): replaces FTB Essentials (consolidation wave 5) and imports its saved data once."
   },
   {
    "metafile": "mods/spark.pw.toml",

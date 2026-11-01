@@ -3243,23 +3243,47 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient 7f40a0d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' controls (wave 3).",
+   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient 542c601, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' controls (wave 3), and FTB Library's inventory sidebar (wave 5).",
    "target": {
     "declares": [
      "evileye_client optional evileye_tweaks [0.5.0,)",
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.2.0.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.3.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.2.0"
+     "evileye_client@0.3.0"
     ],
     "name": "Evil Eye Client",
-    "sha256": "635d1bda26561883190e565c56b94243608a5f62d4093903f3e1038635d7b560",
+    "sha256": "50a84af88c2d16421a160bca970abd7a2b853458bcafe17f8c543ae14a85351f",
     "side": "client",
-    "size": 333902,
+    "size": 348350,
+    "source": "local"
+   }
+  },
+  {
+   "action": "add",
+   "metafile": "mods/evileye-essentials.pw.toml",
+   "old": null,
+   "provisional": false,
+   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeEssentials d2da76e, private local pin until a canonical release): replaces FTB Essentials and, with Evil Eye Client 0.3.0, FTB Library (consolidation wave 5).",
+   "target": {
+    "declares": [
+     "evileye_essentials required minecraft [1.21.1,1.21.2)",
+     "evileye_essentials required neoforge [21.1.265,21.2)"
+    ],
+    "filename": "evileye_essentials-1.21.1-neoforge-0.1.0.jar",
+    "loader": "neoforge",
+    "metafile": "mods/evileye-essentials.pw.toml",
+    "mods": [
+     "evileye_essentials@0.1.0"
+    ],
+    "name": "Evil Eye Essentials",
+    "sha256": "04588d313863f17a6eba815709709812853bc1cf42fc2697ecd0086461c22d5c",
+    "side": "both",
+    "size": 232209,
     "source": "local"
    }
   },
@@ -3789,7 +3813,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/ftb-essentials.pw.toml",
    "old": {
     "file": "4896152",
@@ -3802,40 +3826,10 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "ftbessentials optional ftbranks [2100.1.0,)",
-     "ftbessentials optional luckperms [5.4.83,) (server)",
-     "ftbessentials required ftblibrary [2101.1.4,)",
-     "ftbessentials required minecraft [1.21.1,)",
-     "ftbessentials required neoforge [21.1.0,)"
-    ],
-    "file": "8442866",
-    "filename": "ftb-essentials-neoforge-2101.1.10.jar",
-    "loader": "neoforge",
-    "metafile": "mods/ftb-essentials.pw.toml",
-    "mods": [
-     "ftbessentials@2101.1.10"
-    ],
-    "name": "FTB Essentials (Forge & Fabric)",
-    "project": "410811",
-    "publisher": {
-     "md5": "03e617bc55882ae3450422370666b852",
-     "size": 217288
-    },
-    "sha1": "fa7b3d1b06c0285dcbe8e53a27d44cd7f8d15726",
-    "sha256": "a61de1b883ec9d6d652276f453e8e60b18bd315fef8c62f21d6545260d526587",
-    "sha512": "430dfff9d26840d3b08c07dc819deab5c93f3619b83d03b98d448213b4fc9ea87b44680522d55b954fbe5e29d5d05306e6fc0be77bfcdbbef96c4322115ad3dd",
-    "side": "both",
-    "size": 217288,
-    "source": "curseforge",
-    "versionNumber": "[NEOFORGE][1.21.1] FTB Essentials 2101.1.10"
-   }
+   "rationale": "Replaced by the owned Evil Eye Essentials 0.1.0 (homes, warps, /back, spawn, tpa, rtp, kits, nicknames, mutes, fly/god, heal/feed, invsee, enderchest, trash can, virtual workstations; the pack values from defaultconfigs/ftbessentials-server.snbt are its defaults). Saved data <world>/ftbessentials is imported once on server start (checksum-keyed, backed up, never overwriting); import trial on a copy of the NeoForge trial world: 2 players, 1 home, 20 /back entries, 0 conflicts (minecraft-mods jobs/2026-11-01-evileye-essentials-wave5/import-trial)."
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/ftb-library-forge.pw.toml",
    "old": {
     "file": "5051953",
@@ -3848,36 +3842,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "ftblibrary optional ftbxmodcompat [21.1.14,)",
-     "ftblibrary required architectury [13.0.11,)",
-     "ftblibrary required minecraft [1.21.1,)",
-     "ftblibrary required neoforge [21.1.0,)"
-    ],
-    "file": "9350706",
-    "filename": "ftb-library-neoforge-2101.1.39.jar",
-    "loader": "neoforge",
-    "metafile": "mods/ftb-library-forge.pw.toml",
-    "mods": [
-     "ftblibrary@2101.1.39"
-    ],
-    "name": "FTB Library (NeoForge)",
-    "project": "404465",
-    "publisher": {
-     "md5": "8e2c107c470a2c0e15a0880d767d3ca3",
-     "size": 1477833
-    },
-    "sha1": "ff852d99ade215fb892369687d0634ecf0bca6ae",
-    "sha256": "ca64bd1b5f335406900f74eeafacea5a3580a3933d61de6b6600a64eb12a9a95",
-    "sha512": "e28a5c032395b96ce696800ca7689315074110e572186d8ba08bdf326e0ff43f6fcce942c35a3fe60637dc2bf2077f04b3e222892e60016fe545339dcc7529aa",
-    "side": "both",
-    "size": 1477833,
-    "source": "curseforge",
-    "versionNumber": "[NEOFORGE][1.21.1] FTB Library 2101.1.39"
-   }
+   "rationale": "Library whose only consumer was FTB Essentials (dropped); its inventory sidebar buttons (gamemode, day, night, rain, trash can) are rebuilt in Evil Eye Client 0.3.0. Closure 2026-11-01: no other lock entry declares ftblibrary, and a class-reference scan of every remaining pinned jar finds no dev/ftb/mods/ftblibrary reference (jobs/2026-11-01-evileye-essentials-wave5/ftb-closure.txt). Architectury stays: Quick Skin requires it."
   },
   {
    "action": "drop",

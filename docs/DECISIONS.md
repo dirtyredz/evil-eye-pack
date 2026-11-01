@@ -2,6 +2,15 @@
 
 Newest first.
 
+## 2026-11-01 - Wave 5: FTB Essentials becomes Evil Eye Essentials 0.1.0; FTB Library's sidebar moves to Evil Eye Client 0.3.0
+
+**Decision.** FTB Essentials and FTB Library leave the NeoForge pack. Evil Eye Essentials provides the same
+commands with the pack's values as defaults and imports `<world>/ftbessentials` once on server start
+(checksum-keyed, backed up, never overwriting, all-or-nothing on a missing dimension or kit item). Evil Eye Client
+rebuilds the inventory sidebar from vanilla commands plus `/trashcan`, gated by the command tree the server sends
+each player. **Rejected:** keeping FTB Library for its sidebar alone (owner ruling: absorb small mods); a partial
+import that skips unknown dimensions (data would be dropped silently); copying FTB's icons (All Rights Reserved).
+
 ## 2026-11-01 - Wave 3: screens, input and first-install defaults become Evil Eye Client 0.2.0
 
 **Decision.** Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough

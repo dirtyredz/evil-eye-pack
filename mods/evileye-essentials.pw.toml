@@ -1,0 +1,8 @@
+name = "Evil Eye Essentials"
+filename = "evileye_essentials-1.21.1-neoforge-0.1.0.jar"
+side = "both"
+
+[download]
+mode = "metadata:local"
+hash-format = "sha256"
+hash = "04588d313863f17a6eba815709709812853bc1cf42fc2697ecd0086461c22d5c"

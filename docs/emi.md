@@ -82,7 +82,7 @@ The CLEAN and DECOR configs use `ui/screen_button.js` for their shared widget li
 | R / U / A / Ctrl+O / Backspace / middle-click | `view-recipes`, `view-uses`, `favorite`, `toggle-visibility`, `back`, `copy-recipe-id` keep the same keys, and left/right click on a stack also shows recipes/uses |
 | Max recipe page height 300 | `ui.maximum-recipe-screen-height: 300` |
 | Entry list = registry + creative stacks | `general.index-source: creative-plus-registered` |
-| Favorites | EMI's left sidebar. The two old REI favorites are not migrated: re-add cobbled deepslate with A. The FTB trash-can button was an REI-only favorite, and FTB Library now shows it in its own sidebar. |
+| Favorites | EMI's left sidebar. The two old REI favorites are not migrated: re-add cobbled deepslate with A. The FTB trash-can button was an REI-only favorite; Evil Eye Client's inventory sidebar now shows the trash can (it replaced FTB Library's). |
 
 AE2's facade switches, the coloured-cable recipe switch and `exposeInventoryToEmi: false`
 are unchanged. So are Jade's tooltip settings, the Crafting Tweaks / Ars Nouveau

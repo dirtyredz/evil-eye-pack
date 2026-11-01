@@ -43,7 +43,6 @@ const PRESERVE_PATHS = new Set([
   'config/iris.properties',
   'config/modernfix-mixins.properties',
   'config/multibeds.toml',
-  'config/sidebar_buttons.json',
   'config/storagedrawers-common.v2.toml',
   'config/supplementaries-common.toml',
   'config/terrablender.toml',

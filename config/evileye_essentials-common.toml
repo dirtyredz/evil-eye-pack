@@ -1,0 +1,235 @@
+#Teleport commands. Cooldowns and warm-ups are in seconds; a permissions mod can override them
+#per player through the evileye_essentials.<command>.cooldown / .warmup nodes.
+[teleportation]
+	#Operators (permission level 2) ignore the dimension lists below and /rtp's.
+	adminsExemptDimensionBlacklists = true
+
+	#Dimensions for every teleport command; 'somemod:*' matches a whole namespace.
+	[teleportation.blacklists]
+		#Dimensions players may not run teleport commands in.
+		from = []
+		#Dimensions players may not teleport into.
+		to = []
+
+	#/back returns to the previous location after a teleport or death.
+	[teleportation.back]
+		enabled = true
+		#Seconds between uses.
+		# Default: 60
+		# Range: 0 ~ 604800
+		cooldown = 60
+		#Seconds to stand still before the teleport happens.
+		# Default: 0
+		# Range: 0 ~ 604800
+		warmup = 0
+		#Earlier locations /back remembers per player (evileye_essentials.back.max).
+		# Default: 10
+		# Range: > 0
+		max = 10
+		#Only deaths go into the /back history, not teleports.
+		onlyOnDeath = false
+
+	#/home, /sethome, /delhome and /listhomes.
+	[teleportation.home]
+		enabled = true
+		#Seconds between uses.
+		# Default: 60
+		# Range: 0 ~ 604800
+		cooldown = 60
+		#Seconds to stand still before the teleport happens.
+		# Default: 0
+		# Range: 0 ~ 604800
+		warmup = 0
+		#Homes per player (evileye_essentials.home.max).
+		# Default: 3
+		# Range: > 0
+		max = 3
+		#Lowest block Y where /sethome works.
+		# Default: -2147483648
+		# Range: > -2147483648
+		minY = -2147483648
+
+	#/spawn teleports to the world spawn.
+	[teleportation.spawn]
+		enabled = true
+		#Seconds between uses.
+		# Default: 60
+		# Range: 0 ~ 604800
+		cooldown = 60
+		#Seconds to stand still before the teleport happens.
+		# Default: 0
+		# Range: 0 ~ 604800
+		warmup = 0
+
+	#/playerspawn teleports to your bed or respawn anchor (uses /spawn's cooldown).
+	[teleportation.playerspawn]
+		enabled = true
+
+	#/warp and /listwarps for everyone; /setwarp and /delwarp for operators.
+	[teleportation.warp]
+		enabled = true
+		#Seconds between uses.
+		# Default: 10
+		# Range: 0 ~ 604800
+		cooldown = 10
+		#Seconds to stand still before the teleport happens.
+		# Default: 0
+		# Range: 0 ~ 604800
+		warmup = 0
+
+	#/tpa, /tpahere, /tpaccept and /tpdeny teleport requests.
+	[teleportation.tpa]
+		enabled = true
+		#Seconds between uses.
+		# Default: 60
+		# Range: 0 ~ 604800
+		cooldown = 60
+		#Seconds to stand still before the teleport happens.
+		# Default: 0
+		# Range: 0 ~ 604800
+		warmup = 0
+
+	#/rtp teleports to a random spot in the wilderness.
+	[teleportation.rtp]
+		enabled = false
+		#Seconds between uses.
+		# Default: 600
+		# Range: 0 ~ 604800
+		cooldown = 600
+		#Seconds to stand still before the teleport happens.
+		# Default: 0
+		# Range: 0 ~ 604800
+		warmup = 0
+		#Random columns tried before /rtp gives up.
+		# Default: 100
+		# Range: 1 ~ 1000
+		maxTries = 100
+		#Minimum distance from 0,0.
+		# Default: 500
+		# Range: 0 ~ 30000000
+		minDistance = 500
+		#Maximum distance from 0,0.
+		# Default: 25000
+		# Range: 0 ~ 30000000
+		maxDistance = 25000
+		#When not empty, /rtp works only in these dimensions.
+		dimensionWhitelist = []
+		#/rtp never works in these dimensions.
+		dimensionBlacklist = ["minecraft:the_end"]
+		#Players may give their own maximum distance (evileye_essentials.rtp.custom_max).
+		allowCustomMaxDistance = false
+		#Players may give their own minimum and maximum distance (evileye_essentials.rtp.custom_min_max).
+		allowCustomMinMaxDistance = false
+
+	#/teleport_last: operators teleport to where a player was last seen.
+	[teleportation.tpl]
+		enabled = true
+
+	#/tpx: operators teleport to the same position in another dimension.
+	[teleportation.tpx]
+		enabled = true
+
+	#/jump: operators teleport onto the block they look at.
+	[teleportation.jump]
+		enabled = true
+
+#Operator commands (permission level 2).
+[admin]
+
+	#/heal: operators restore health, hunger, fire and curable effects.
+	[admin.heal]
+		enabled = true
+
+	#/feed: operators fill hunger and saturation.
+	[admin.feed]
+		enabled = true
+
+	#/extinguish: operators put out fire.
+	[admin.extinguish]
+		enabled = true
+
+	#/fly: operators toggle survival flight (kept across logins).
+	[admin.fly]
+		enabled = true
+
+	#/god: operators toggle invulnerability (kept across logins).
+	[admin.god]
+		enabled = true
+
+	#/speed: anyone sees their walk speed boost; operators change it.
+	[admin.speed]
+		enabled = true
+
+	#/invsee: operators open another player's inventory.
+	[admin.invsee]
+		enabled = true
+
+	#/mute and /unmute: operators stop a player chatting, optionally for a time.
+	[admin.mute]
+		enabled = true
+
+	#/kit for operators and /give_me_kit.
+	[admin.kit]
+		enabled = true
+
+	#/tp_offline (alias /tpo): operators move an offline player.
+	[admin.tp_offline]
+		enabled = true
+
+#Utility commands.
+[misc]
+
+	#/kickme disconnects yourself.
+	[misc.kickme]
+		enabled = true
+
+	#/trashcan opens a container that destroys what is left in it.
+	[misc.trashcan]
+		enabled = true
+
+	#/recording and /streaming announce and mark your status.
+	[misc.rec]
+		enabled = true
+
+	#/hat: operators swap the held item onto their head.
+	[misc.hat]
+		enabled = true
+
+	#/nickname for yourself; /nicknamefor for operators.
+	[misc.nick]
+		enabled = true
+
+	#/enderchest opens your ender chest; operators can open anyone's.
+	[misc.enderchest]
+		enabled = true
+
+	#/open crafting: operators open a crafting table anywhere.
+	[misc.crafting]
+		enabled = true
+
+	#/open stonecutter: operators open a stonecutter anywhere.
+	[misc.stonecutter]
+		enabled = true
+
+	#/open anvil: operators open an anvil anywhere.
+	[misc.anvil]
+		enabled = true
+
+	#/open smithing: operators open a smithing table anywhere.
+	[misc.smithing]
+		enabled = true
+
+	#/leaderboard shows statistics for every known player.
+	[misc.leaderboard]
+		enabled = true
+
+	#/near: operators list nearby players.
+	[misc.near]
+		enabled = true
+
+#FTB Essentials data import.
+[import]
+	#On server start, import <world>/ftbessentials (homes, warps, /back history, kits, mutes, nicknames)
+	#once. A repeated start with the same files changes nothing; missing dimensions or unreadable
+	#records block the whole import and are reported in the log and <world>/evileye_essentials/imports.
+	ftbOnServerStart = true

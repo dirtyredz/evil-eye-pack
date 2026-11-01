@@ -129,7 +129,8 @@ test('recipe and tag events remove producers and code-driven loot candidates', (
 });
 
 test('every shipped file is free of removed namespace references; deposit survivors stay explicit', () => {
-  for (const dir of ['config', 'defaultconfigs', 'kubejs']) {
+  // defaultconfigs/ is empty since wave 5 (git drops the folder); the other shipped-file scans skip it too.
+  for (const dir of ['config', 'defaultconfigs', 'kubejs'].filter((d) => fs.existsSync(path.join(root, d)))) {
     for (const entry of fs.readdirSync(path.join(root, dir), { recursive: true, withFileTypes: true })) {
       if (!entry.isFile()) continue;
       const file = path.join(entry.parentPath, entry.name);
