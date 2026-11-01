@@ -1717,7 +1717,7 @@ hash = "a7444e9071ebe7e1306e83141f9b4c53fbd6f99730f9d29f587b959b54f07a82"
 
 [[files]]
 file = "config/defaultoptions/keybindings.txt"
-hash = "e53134e09424f4127c3d00f151903a808b4b1e21308177b54b931f80e6b7d47f"
+hash = "1d95ab02d60aabeda12632654efc2dfc5a76064e5ee8bb330a145f58eb846403"
 
 [[files]]
 file = "config/dramaticdoors-common.toml"
@@ -2218,11 +2218,6 @@ preserve = true
 [[files]]
 file = "config/jupiter.json"
 hash = "c89c0940d0252fe2b8bba72c4a243e35700491435acef7103e4f9a7e86f929c9"
-
-[[files]]
-file = "config/lightoverlay.properties"
-hash = "f26672542348ed68d5ffdfed8671bbe421a8520dc11ee520a375837fc5738d8a"
-preserve = true
 
 [[files]]
 file = "config/minecolonies-client.toml"
@@ -5340,11 +5335,6 @@ metafile = true
 [[files]]
 file = "mods/libipn.pw.toml"
 hash = "0d2a00252d64ed7d2d9b19994f7accb780304be61f3903d36e810714b414c6cb"
-metafile = true
-
-[[files]]
-file = "mods/light-overlay.pw.toml"
-hash = "c9a79c8e684a727cfb60a1644a0306a3401375bdac808f4c9ba3f8321a9ff678"
 metafile = true
 
 [[files]]

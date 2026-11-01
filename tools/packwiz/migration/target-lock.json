@@ -5651,7 +5651,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/light-overlay.pw.toml",
    "old": {
     "file": "4573178",
@@ -5664,35 +5664,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "lightoverlay required architectury [13,) (client)",
-     "lightoverlay required cloth_config [15,) (client)",
-     "lightoverlay required neoforge [21.0.0-,)"
-    ],
-    "file": "5553811",
-    "filename": "light-overlay-12.0.0-neoforge.jar",
-    "loader": "neoforge",
-    "metafile": "mods/light-overlay.pw.toml",
-    "mods": [
-     "lightoverlay@12.0.0"
-    ],
-    "name": "Light Overlay (Rift/Forge/Fabric)",
-    "project": "325492",
-    "publisher": {
-     "md5": "e3ab9cb9abfdd0b84ddc25595c6c071f",
-     "size": 62920
-    },
-    "sha1": "f15a3b88c926d2dc9d06c2b876cd89287791773c",
-    "sha256": "f3de5dfa84ca732878f5eeafab3ee32c89b654e031b8f814a01bf4312ee42d4d",
-    "sha512": "c0aeb86c56f13f23f7e96c8619d9e7990af999670a47dd4df08fb8f63a30d4f82b8a26737952017eecc793df43dc30a75c550fc51b470bfdb2b76baec13d2c8a",
-    "side": "both",
-    "size": 62920,
-    "source": "curseforge",
-    "versionNumber": "[NeoForge 1.21] v12.0.0"
-   }
+   "rationale": "Owner request 2026-11-01: not used. Client-only light-level overlay (no blocks, items or world data)."
   },
   {
    "action": "add",

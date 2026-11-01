@@ -192,6 +192,10 @@ A Spark profile of the Trial with Iris + Complementary Unbound showed Create kin
 
 Fix: Iris & Oculus Flywheel Compat 2.4.0 (Modrinth `ndHYMY2K` / `6ZQz5Ow2`, client side; needs Iris >=1.8.1, Sodium >=0.6.9, Flywheel >=1.0.6) merges Flywheel's shaders into the pack's `gbuffer_block` program, plus `backend = "DEFAULT"` in the shipped config and `trial-owned-keys.json`. The first attempt (def8401) set `flywheel:instancing`, which never engaged: irisflw does not enable that backend, it registers its own `irisflw:iris_instancing` (priority 2000, supported only with a shaderpack), and Flywheel's `chooseBackend` only falls back to LOWER priorities (instancing 500 -> off). `DEFAULT` picks the highest-priority supported backend: irisflw with shaders, Flywheel's own without. Fallback if a shaderpack misbehaves: Colorwheel 1.3.0 (needs pack-specific support and is declared incompatible with this mod; never install both).
 
+## Light Overlay removed (2026-11-01)
+
+Owner does not use it. `mods/light-overlay.pw.toml` (12.0.0), `config/lightoverlay.properties`, its F7 default keybinding and its mod-map category are gone; the lock records a `drop` and `lightoverlay` is in `removedMods`. It was client-only and registers no blocks, items or entities (jar: 62 KB, only `META-INF/neoforge.mods.toml` plus client code), so no world data is affected. Architectury stays (FTB Library and Quick Skin require it). Cloth Config stays: only FallingTree still lists it, as an optional client dependency for its config screen.
+
 ## 100% checklist
 
 See plan Phase 10. Every criterion there is required. Temporary absences, a successful boot on

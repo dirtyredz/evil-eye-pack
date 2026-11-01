@@ -87,6 +87,10 @@
    "action": "drop",
    "reason": "MemoryLeakFix (misnamed metafile): no NeoForge 1.21.1 build; ModernFix, retained, covers the modern memory fixes (plan Phase 5)."
   },
+  "mods/light-overlay.pw.toml": {
+   "action": "drop",
+   "reason": "Owner request 2026-11-01: not used. Client-only light-level overlay (no blocks, items or world data)."
+  },
   "mods/embeddium.pw.toml": {
    "action": "drop",
    "reason": "Superseded by Sodium, the renderer Iris requires on NeoForge; Embeddium and Sodium cannot be installed together."

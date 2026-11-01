@@ -44,7 +44,6 @@ const PRESERVE_PATHS = new Set([
   'config/immediatelyfast.json',
   'config/inventoryprofilesnext/inventoryprofiles.json',
   'config/iris.properties',
-  'config/lightoverlay.properties',
   'config/MouseTweaks.cfg',
   'config/modernfix-mixins.properties',
   'config/multibeds.toml',

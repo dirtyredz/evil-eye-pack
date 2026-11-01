@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "removedMods": ["alltheores", "allthecompressed", "almostunified", "simplecorelib", "enhancedcelestials", "dataanchor", "corgilib", "corgikubejscompat", "commoncapabilities", "rftoolsbase", "rftoolsbuilder", "rftoolscontrol", "rftoolsdim", "rftoolsutility", "mcjtylib", "ironfurnaces", "chunky", "charginggadgets", "tesseract", "supermartijn642configlib", "oculus", "embeddium", "radium", "memoryleakfix"],
+  "removedMods": ["alltheores", "allthecompressed", "almostunified", "simplecorelib", "enhancedcelestials", "dataanchor", "corgilib", "corgikubejscompat", "commoncapabilities", "rftoolsbase", "rftoolsbuilder", "rftoolscontrol", "rftoolsdim", "rftoolsutility", "mcjtylib", "ironfurnaces", "chunky", "charginggadgets", "tesseract", "supermartijn642configlib", "oculus", "embeddium", "radium", "memoryleakfix", "lightoverlay"],
   "requiredMods": ["evileye_migration", "hourglass", "dank_recipe_transfer", "roundwood", "flatworldfix", "ars_instrumentum", "alexsmobs", "alexscaves", "iceandfire", "uranus", "jupiter"],
   "curatedLists": ["creative.json", "minecolonies-eggs.json", "alexsmobs-creative.json"],
   "ignoredLayout": {
