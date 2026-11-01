@@ -186,6 +186,12 @@ Alex's Mobs, Alex's Caves and Ice and Fire use local-source pins (below). All se
 
 spark 1.10.124 (Modrinth `l6YH9Als` / `v5qtqRQi`, side both) is a lock `addition` for in-game and server profiling (`/spark profiler`). Its jar bundles async-profiler natives and ByteBuddy attach classes, which the malware guard flags (8 findings); they are approved against the exact jar with the reason recorded in `tools/malware_guard/data/allowlist.json`. The jar is in both the migration cache and the Trial cache (`jobs/2026-10-31-world-trial-final/cache/mods`).
 
+## Flywheel with shaders (Iris Flywheel Compat, 2026-11-01)
+
+A Spark profile of the Trial with Iris + Complementary Unbound showed Create kinetic block entities drawn on the CPU (~8.2% of the render thread). Cause: Flywheel 1.0.6 registers its `flywheel:instancing` and `flywheel:indirect` backends with a `supported` check that includes `!ShadersModHelper.isShaderPackInUse()` (`dev.engine_room.flywheel.backend.Backends`), so with a shaderpack both are unsupported and the backend falls to `flywheel:off`. Separately, the shipped `config/flywheel-client.toml` still carried the Flywheel 0.6 value `backend = "INSTANCING"`; 1.0 parses it as `minecraft:INSTANCING` and logs `Backend with ID 'minecraft:INSTANCING' is not registered` (Trial `latest.log`, 2026-11-01 01:57:33).
+
+Fix: Iris & Oculus Flywheel Compat 2.4.0 (Modrinth `ndHYMY2K` / `6ZQz5Ow2`, client side; needs Iris >=1.8.1, Sodium >=0.6.9, Flywheel >=1.0.6) merges Flywheel's shaders into the pack's `gbuffer_block` program, plus `backend = "flywheel:instancing"` in the shipped config and `trial-owned-keys.json`. Fallback if a shaderpack misbehaves: Colorwheel 1.3.0 (needs pack-specific support and is declared incompatible with this mod; never install both).
+
 ## 100% checklist
 
 See plan Phase 10. Every criterion there is required. Temporary absences, a successful boot on

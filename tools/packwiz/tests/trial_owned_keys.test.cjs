@@ -37,3 +37,17 @@ test('TOML setter replaces in place and keeps other tables', () => {
     { section: ['misc'], key: 'hotbar_slot_animation_speed', value: 0.0 });
   assert.equal(out, '[general]\n\ta = 1\n[misc]\n\t#c\n\thotbar_slot_animation_speed = 0.0\n\tb = 2\n');
 });
+
+test('TOML setter handles top-level keys (empty section) without touching tables', () => {
+  const stale = '#c\nbackend = "INSTANCING"\nlimitUpdates = true\n\n[flw_backends]\n\tbackend = "x"\n';
+  const out = setToml(stale, { section: [], key: 'backend', value: 'flywheel:instancing' });
+  assert.equal(out, '#c\nbackend = "flywheel:instancing"\nlimitUpdates = true\n\n[flw_backends]\n\tbackend = "x"\n');
+  assert.equal(setToml('[t]\n\ta = 1\n', { section: [], key: 'k', value: 'v' }), 'k = "v"\n[t]\n\ta = 1\n');
+});
+
+test('Flywheel backend is a registered Flywheel 1.0 id in the shipped config and the owned keys', () => {
+  const owned = loadEntries().find(x => x.file === 'config/flywheel-client.toml' && x.key === 'backend');
+  assert.equal(owned.value, 'flywheel:instancing');
+  const shipped = fs.readFileSync(path.join(ROOT, 'config/flywheel-client.toml'), 'utf8');
+  assert.match(shipped, /^backend = "flywheel:instancing"$/m, 'legacy "INSTANCING" parses as minecraft:INSTANCING and is not registered');
+});

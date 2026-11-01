@@ -5021,6 +5021,50 @@
    }
   },
   {
+   "action": "add",
+   "metafile": "mods/iris-flywheel-compat.pw.toml",
+   "old": null,
+   "provisional": false,
+   "rationale": "Flywheel 1.0.6 marks its instancing and indirect backends unsupported while an Iris shaderpack is active (Backends.java supported() checks !ShadersModHelper.isShaderPackInUse), so Create kinetic block entities fall back to the CPU. This mod (2.4.0 release, NeoForge 1.21.1, requires Iris and Sodium) merges Flywheel shaders into the pack gbuffer_block program so instancing runs with shaders on. Owner profiling request 2026-11-01.",
+   "target": {
+    "channel": "release",
+    "declares": [
+     "flywheel optional embeddium [0.3.25,) (client)",
+     "flywheel optional sodium [0.6.0-beta.2,) (client)",
+     "flywheel required minecraft [1.21.1,1.21.2) (client)",
+     "flywheel required neoforge [21.1.66,) (client)",
+     "irisflw required flywheel [1.0.6,) (client)",
+     "irisflw required iris [1.8.1,) (client)",
+     "irisflw required minecraft [1.21.1,) (client)",
+     "irisflw required neoforge [21.1.219,)",
+     "irisflw required sodium [0.6.9,) (client)"
+    ],
+    "filename": "iris-flywheel-compat-NeoForge-2.4.0.jar",
+    "loader": "neoforge",
+    "metafile": "mods/iris-flywheel-compat.pw.toml",
+    "mods": [
+     "irisflw@2.4.0",
+     "flywheel@1.0.6 (bundled)"
+    ],
+    "name": "Iris & Oculus Flywheel Compat",
+    "project": "ndHYMY2K",
+    "publisher": {
+     "sha1": "b8630517b6017f4d075ce594e5ef333b38748029",
+     "sha512": "192e5f00f2c146d2920867d7cd691ecec7ddd2acfb95880cc59084e8949225db92ecfb9221ba7223fc924ec43f2ca861115f83f9dc3f79e14a2f2a8db5287070",
+     "size": 907133
+    },
+    "sha1": "b8630517b6017f4d075ce594e5ef333b38748029",
+    "sha256": "f5351cf9a838ae1624fcda78a8734b52cfde20de824db30e3f00dd00b9128ec8",
+    "sha512": "192e5f00f2c146d2920867d7cd691ecec7ddd2acfb95880cc59084e8949225db92ecfb9221ba7223fc924ec43f2ca861115f83f9dc3f79e14a2f2a8db5287070",
+    "side": "client",
+    "size": 907133,
+    "source": "modrinth",
+    "url": "https://cdn.modrinth.com/data/ndHYMY2K/versions/6ZQz5Ow2/iris-flywheel-compat-NeoForge-2.4.0.jar",
+    "version": "6ZQz5Ow2",
+    "versionNumber": "1.21.1+2.4.0-release"
+   }
+  },
+  {
    "action": "repoint",
    "metafile": "mods/iron-chests.pw.toml",
    "old": {

@@ -25,8 +25,9 @@ function setToml(text, e) {
   const table = e.section.join('.');
   const lines = text ? text.split('\n') : [];
   const head = `[${table}]`;
-  let start = lines.findIndex(l => l.trim() === head);
-  if (start < 0) {
+  // An empty section means top-level keys, which sit before the first table header.
+  let start = table ? lines.findIndex(l => l.trim() === head) : -1;
+  if (table && start < 0) {
     if (lines.length && lines[lines.length - 1] !== '') lines.push('');
     lines.push(head); start = lines.length - 1; lines.push('');
   }
@@ -37,7 +38,7 @@ function setToml(text, e) {
     const m = lines[i].match(re);
     if (m) { lines[i] = `${m[1]}${e.key} = ${tomlValue(e.value)}`; return lines.join('\n'); }
   }
-  lines.splice(start + 1, 0, `\t${e.key} = ${tomlValue(e.value)}`);
+  lines.splice(start + 1, 0, `${table ? '\t' : ''}${e.key} = ${tomlValue(e.value)}`);
   return lines.join('\n');
 }
 

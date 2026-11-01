@@ -283,6 +283,17 @@
     "version": "v5qtqRQi"
    },
    "reason": "Owner request 2026-11-01: profiler for in-game profiling of the Trial (client) and server; spark 1.10.124 is the newest NeoForge 1.21.1 release."
+  },
+  {
+   "metafile": "mods/iris-flywheel-compat.pw.toml",
+   "name": "Iris & Oculus Flywheel Compat",
+   "side": "client",
+   "target": {
+    "source": "modrinth",
+    "project": "ndHYMY2K",
+    "version": "6ZQz5Ow2"
+   },
+   "reason": "Flywheel 1.0.6 marks its instancing and indirect backends unsupported while an Iris shaderpack is active (Backends.java supported() checks !ShadersModHelper.isShaderPackInUse), so Create kinetic block entities fall back to the CPU. This mod (2.4.0 release, NeoForge 1.21.1, requires Iris and Sodium) merges Flywheel shaders into the pack gbuffer_block program so instancing runs with shaders on. Owner profiling request 2026-11-01."
   }
  ],
  "waivers": {},

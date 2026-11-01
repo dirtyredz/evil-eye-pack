@@ -1850,7 +1850,7 @@ preserve = true
 
 [[files]]
 file = "config/flywheel-client.toml"
-hash = "0a70d58a4a562c2aa2945a3883d35fa3a8e90d80eab9d6b2db3be6103f71b9b2"
+hash = "2494979f6fdd827c1bedc3bf1c165be69500c43665265df128308e4f60837672"
 preserve = true
 
 [[files]]
@@ -5265,6 +5265,11 @@ metafile = true
 [[files]]
 file = "mods/inventory-profiles-next.pw.toml"
 hash = "ab503e89461dff879ee793253e173625b6ab868f570a371323ef725e567cf5ea"
+metafile = true
+
+[[files]]
+file = "mods/iris-flywheel-compat.pw.toml"
+hash = "ed85b2ed42beb6523223eef6f0ae397ed29f8059b2bf5aa08d8598de04865614"
 metafile = true
 
 [[files]]
