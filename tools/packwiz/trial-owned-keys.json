@@ -1,0 +1,8 @@
+{
+  "_comment": "Keys the pack forces into Trial's installed configs on every sync, even for preserve = true files (which packwiz only writes when missing). Each entry: file (relative to .minecraft), format (json|toml), section (json: path of nested objects; toml: table name), key, value. See docs/GOTCHAS.md 'Preserved configs ignore later pack changes'.",
+  "keys": [
+    { "file": "config/inventoryprofilesnext/inventoryprofiles.json", "format": "json", "section": ["AutoRefillSettings"], "key": "auto_refill_enable_indicator_icons", "value": false },
+    { "file": "config/inventoryprofilesnext/inventoryprofiles.json", "format": "json", "section": ["AutoRefillSettings"], "key": "auto_refill_enable_horbar_indicator_icons", "value": false },
+    { "file": "config/amendments-client.toml", "format": "toml", "section": ["misc"], "key": "hotbar_slot_animation_speed", "value": 0.0 }
+  ]
+}

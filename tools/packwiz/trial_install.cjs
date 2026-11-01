@@ -8,6 +8,7 @@ const { sha256 } = require('../data_io/files.cjs');
 const { localPin, cachedLocal, verifyInstalledLocal } = require('./local_source.cjs');
 const { resolvePinnedJar } = require('./pinned_jar.cjs');
 const { noLinks } = require('../world_trial/copy.cjs');
+const { applyOwnedKeys } = require('./trial_owned_keys.cjs');
 const env = require('../server_smoke/env.cjs');
 const ROOT = path.resolve(__dirname, '../..');
 const INSTANCE = 'C:/Users/dirty/MultiMC/instances/Evil Eye NeoForge Trial/.minecraft';
@@ -121,6 +122,7 @@ async function main(argv) {
     if (result.code !== 0) throw Error('Headless installer exit ' + result.code);
     verifyInstalledLocal(ROOT, instance, 'client');
     verifyInstalledFiles(instance, files);
+    for (const rel of applyOwnedKeys(instance)) console.log('Forced pack-owned keys into ' + rel);
     // Preserve the original once, beside owner-run logs. Never change another instance.
     const logs = path.join(ROOT, '.tmp/owner-runs'); fs.mkdirSync(logs, { recursive: true });
     const backup = path.join(logs, 'trial-instance-before.cfg');
