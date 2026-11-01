@@ -15,7 +15,7 @@ does not count. Full program plan: `artifacts/minecraft-mods/jobs/2026-11-01-evi
 | 1 | Fuel Goes Here, Double Doors (T), Collective after closure | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.2.0 local pin, three drops; owner walk pending |
 | 2 | Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions, AppleSkin (C, with T producers) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.1.0 and Tweaks 0.3.0 local pins, six drops; Bookshelf kept (AttributeFix requires it); owner walk pending |
 | 3 | Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks, Crafting Tweaks | not started |
-| 4 | AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps, Let Me Despawn (T) | not started |
+| 4 | AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps, Let Me Despawn (T) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.4.0 local pin, seven drops plus Bookshelf, Prickle, Almanac Lib and Kiwi after closure; owner walk pending |
 | 5 | FTB Essentials (E; mandatory saved-data migration) | not started |
 | 6 | Pro Placer, Light Overlay (removed outright 2026-11-01), 3D Skin Layers, Quick Skin, Modern UI, Inventory Profiles Next, Chloride (C) | not started |
 | 7 | Polymorph, Cosmetic Armor Reworked, Diagonal Fences, Create: Compatible Storage, Create: Storage Drawers Compat (conversion-gated) | not started |
@@ -35,6 +35,7 @@ are removed only after a full dependency and consumer audit.
 | Before wave 1 (2026-11-01, after Light Overlay removal) | 191 |
 | After wave 1 | 189 |
 | After wave 2 | 184 |
+| After wave 4 | 173 |
 
 ## Rules
 
@@ -52,7 +53,7 @@ are removed only after a full dependency and consumer audit.
   adds the server producers (pick-up receipts for backpack/Dank absorption, saturation/exhaustion
   snapshots). They talk through optional payloads and inter-mod sinks; neither compiles against the other.
 - **Bookshelf stays**: AttributeFix declares it required (it was expected to be orphaned by Enchantment
-  Descriptions). It can go with AttributeFix in wave 4. Puzzles Lib (Diagonal Fences, Pro Placer) and
+  Descriptions). It went with AttributeFix in wave 4. Puzzles Lib (Diagonal Fences, Pro Placer) and
   Prickle (AttributeFix) also stay.
 - **Thirst Was Taken** only drew its quenched overlay, drink preview, thirst exhaustion bar and drink
   tooltips when AppleSkin was installed; Evil Eye Client redraws them (`integration/thirst/`).
@@ -61,3 +62,21 @@ are removed only after a full dependency and consumer audit.
   every row.
 - Configs: `stylisheffects-client.toml`, `colorfulhearts.toml`, `appleskin-client.toml` and
   `enchdesc.json` are carried into `config/evileye_client-client.toml` (see config-decisions).
+
+## Wave 4 notes
+
+- **EvilEyeTweaks 0.4.0** holds the pack-wide gameplay rules: `entity/attributes`, `entity/pets`,
+  `entity/experience`, `entity/despawn`, `world/trees`, `world/time`, `world/bedrock` (nested by subject
+  to keep the package root readable). Effective settings are in `config/evileye_tweaks-common.toml`.
+- **Libraries dropped after closure**: Bookshelf and Prickle (only AttributeFix), Almanac Lib with its bundled
+  DungeonConfig (only Let Me Despawn), Kiwi (only Companion). `migrate.mjs resolve` checks declared
+  dependencies; a class-reference scan of every kept jar, nested jars and the owned jars found no other user
+  (`jobs/2026-11-01-evileye-tweaks-wave4/library-closure.json`).
+- **Saved data** in the converted trial world: five experience orbs with Clumps' `clumpedMap` (converted on
+  load by `LegacyClumpsOrbData`), Companion's three game rules at their defaults (not carried as game rules),
+  no Let Me Despawn/Almanac keys, no FallingTree toggles, nothing from AttributeFix, Hourglass, Flat Bedrock
+  or the libraries. Hourglass's `serverconfig/hourglass-server.toml` stays in existing worlds, unread.
+- **Day length** now uses NeoForge's day-time rate, which NeoForge saves in level.dat (`neoDayTimePerTick`).
+- **Configs**: `config/attributefix.json` (an obsolete format the 1.21.1 jar never read), `config/fallingtree.json`
+  and `defaultconfigs/hourglass-server.toml` are carried into `config/evileye_tweaks-common.toml`. No
+  keybindings were involved.

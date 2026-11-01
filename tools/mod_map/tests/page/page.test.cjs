@@ -62,7 +62,7 @@ test('compact rows show first-sentence descriptions and dependency or pack-wide 
   assert.equal(shortDescription('x'.repeat(130)).length, 120);
   const base = node('base'); base.name = 'Base';
   const user = node('user', ['base']); user.mods[0].description = 'First sentence. Second sentence.';
-  const fix = node('fix'); fix.mods[0].id = 'attributefix';
+  const fix = node('fix'); fix.mods[0].id = 'evileye_tweaks';
   const nodes = [base, user, fix];
   const regs = registries(['base', 'user']);
   const html = render(pageData(nodes, familyModel(nodes, regs, overrides), { registries: regs }));

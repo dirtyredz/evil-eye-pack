@@ -6,7 +6,7 @@ duplicate-cleanup guides.
 | Feature | Entry point | Documentation |
 |---|---|---|
 | Offline mod dependency and startup map | `scripts/mod-map/build.ps1` | [Run and interpret the map](development.md#mod-map) |
-| Longer days (Hourglass replaces the retired Enhanced Celestials/Corgi stack) | `/hourglass query timeSpeed` | [Decision](DECISIONS.md#2026-10-27---remove-enhanced-celestials-and-lengthen-days) |
+| Longer days (Evil Eye Tweaks `[time]`, which replaced Hourglass, itself the replacement for the retired Enhanced Celestials/Corgi stack) | `/time query daytime` twice, 20 s apart (about 200 ticks by day, 400 by night) | [Decision](DECISIONS.md#2026-10-27---remove-enhanced-celestials-and-lengthen-days) |
 | Reusable operator showcases | `/evileye showcase list` | [Showcases](showcases.md) |
 | Contraption storage display | `/evileye showcase contraption_storage` | [Layout](showcases.md#storage-section-layout) |
 | Roundwood 0.17.0 doors, windows, archways and trim (NeoForge; legacy variants hidden in CLEAN) | `/roundwood showcase` (operator player) | [Native showcase](showcases.md#roundwood-native-showcase) |

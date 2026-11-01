@@ -385,7 +385,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/almanac-lib.pw.toml",
    "old": {
     "file": "5803518",
@@ -398,38 +398,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "almanac required dungeonconfig [1.26.10.3,)",
-     "almanac required minecraft [1.21.1,1.21.2)",
-     "almanac required neoforge [21.1.262,)",
-     "dungeonconfig required minecraft [1.21.1,1.21.2)",
-     "dungeonconfig required neoforge [21.1,)"
-    ],
-    "file": "9239689",
-    "filename": "almanac-neoforge-1.21.1-1.26.10.3.jar",
-    "loader": "neoforge",
-    "metafile": "mods/almanac-lib.pw.toml",
-    "mods": [
-     "almanac@1.26.10.3",
-     "dungeonconfig@1.26.10.3 (bundled)"
-    ],
-    "name": "Almanac Lib",
-    "project": "1115285",
-    "publisher": {
-     "md5": "31b25345b01781bea11eccecc0c60302",
-     "size": 402267
-    },
-    "sha1": "6ef67705ff70e57e2fb54aa3c6d9f563eddf1224",
-    "sha256": "53367bb59e890bb11975cb9e630996c9c9373b6fe139328da7547c0eca365e22",
-    "sha512": "42fcdd249ae055a9eb8a17c4cb3c20aa0eb0d4706ca961c111c51fdcf4d8827c4e17e53ad92fc1be1e324a8d87650720f05b8cbb76df0b3ef157ea70297e2b1c",
-    "side": "both",
-    "size": 402267,
-    "source": "curseforge",
-    "versionNumber": "Almanac 1.26.10.3"
-   }
+   "rationale": "Library (with bundled DungeonConfig) whose only consumer was Let Me Despawn (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of every lock jar, 81 nested jar-in-jar and both owned jars (jobs/2026-11-01-evileye-tweaks-wave4/library-closure.json): no declared dependency and no com/frikinjay/almanac or dungeonconfig class reference outside the dropped mods."
   },
   {
    "action": "repoint",
@@ -861,7 +830,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/attributefix.pw.toml",
    "old": {
     "file": "7612291",
@@ -874,36 +843,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "attributefix required bookshelf [21.1, 21.2)",
-     "attributefix required minecraft [1.21.1, 1.22)",
-     "attributefix required neoforge [21.1.209,)",
-     "attributefix required prickle [21.1, 21.2)"
-    ],
-    "file": "7115922",
-    "filename": "attributefix-neoforge-1.21.1-21.1.3.jar",
-    "loader": "neoforge",
-    "metafile": "mods/attributefix.pw.toml",
-    "mods": [
-     "attributefix@21.1.3"
-    ],
-    "name": "AttributeFix",
-    "project": "280510",
-    "publisher": {
-     "md5": "1552cea16a40215f9773e609114ccce1",
-     "size": 19809
-    },
-    "sha1": "7aae849f6d2a6cb1368227407ea5deb552e100ba",
-    "sha256": "b2b20f3d44e824071284c14de3f4d3323d420e1c450040b339a5c37d2c382ad4",
-    "sha512": "09e1ff6012d5b7bef7bb701d38feaaab41db4f2fc8b9f669b820fc2c91e53098e093e401062ad80a0ce249c68aa7a6209ac9ee341518b8f640bae2393b1595ae",
-    "side": "both",
-    "size": 19809,
-    "source": "curseforge",
-    "versionNumber": "attributefix-neoforge-1.21.1-21.1.3.jar"
-   }
+   "rationale": "Replaced by the owned Evil Eye Tweaks 0.4.0 (entity/attributes/: the five one-million maxima AttributeFix 21.1.3 applied, set once at common setup before any world loads). config/attributefix.json used an obsolete format the 1.21.1 jar never read; the effective values were the jar's defaults. No world data."
   },
   {
    "action": "repoint",
@@ -1127,7 +1067,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/bookshelf.pw.toml",
    "old": {
     "file": "7612389",
@@ -1140,34 +1080,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "bookshelf required minecraft [1.21.1, 1.22)",
-     "bookshelf required neoforge [21.1.209,)"
-    ],
-    "file": "7606240",
-    "filename": "bookshelf-neoforge-1.21.1-21.1.81.jar",
-    "loader": "neoforge",
-    "metafile": "mods/bookshelf.pw.toml",
-    "mods": [
-     "bookshelf@21.1.81"
-    ],
-    "name": "Bookshelf",
-    "project": "228525",
-    "publisher": {
-     "md5": "9f627fe031221159d74a491e279f773a",
-     "size": 328813
-    },
-    "sha1": "efc4cda6da4dd879f24d057ed0a6413764c9ba40",
-    "sha256": "19e88d40da2b6a114c2b808f7fb469d96e66a5379df0a8a43fcb7834498b3e76",
-    "sha512": "78d4577a8e8fbb241216968475dd73f5b9e5efeb7da802b18a4e6c290e49af6cb4a5676e9855d0d8ff3613f967812e4bd363bbb9196c17c954d19454f84b2214",
-    "side": "both",
-    "size": 328813,
-    "source": "curseforge",
-    "versionNumber": "bookshelf-neoforge-1.21.1-21.1.81.jar"
-   }
+   "rationale": "Library whose only consumer was AttributeFix (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of every lock jar, 81 nested jar-in-jar and both owned jars (jobs/2026-11-01-evileye-tweaks-wave4/library-closure.json): no declared dependency and no net/darkhax/bookshelf class reference outside the dropped mods."
   },
   {
    "action": "repoint",
@@ -1385,7 +1298,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/clumps.pw.toml",
    "old": {
     "filename": "Clumps-forge-1.20.1-12.0.0.4.jar",
@@ -1399,36 +1312,7 @@
     "version": "nAHGB5ls"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "clumps required minecraft [1.21.1]",
-     "clumps required neoforge [4,)"
-    ],
-    "filename": "Clumps-neoforge-1.21.1-19.0.0.1.jar",
-    "loader": "neoforge",
-    "metafile": "mods/clumps.pw.toml",
-    "mods": [
-     "clumps@19.0.0.1"
-    ],
-    "name": "Clumps",
-    "project": "Wnxd13zP",
-    "publisher": {
-     "sha1": "fa2576297c7bd12b28aa7070e8141792bd66da4c",
-     "sha512": "314d8d8e640d73041f27e0f3f2cad7aad8b4c77dbd7fb31700ef7760362261f77085eed5289555c725d99c3f47a114e7290cd608f39c9f0f12ef74958463bdcc",
-     "size": 18382
-    },
-    "sha1": "fa2576297c7bd12b28aa7070e8141792bd66da4c",
-    "sha256": "b524ccdace2ef8fd19f5b2074f7de1103ac5065c52553f064c00e098346c293e",
-    "sha512": "314d8d8e640d73041f27e0f3f2cad7aad8b4c77dbd7fb31700ef7760362261f77085eed5289555c725d99c3f47a114e7290cd608f39c9f0f12ef74958463bdcc",
-    "side": "both",
-    "size": 18382,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/Wnxd13zP/versions/jo7lDoK4/Clumps-neoforge-1.21.1-19.0.0.1.jar",
-    "version": "jo7lDoK4",
-    "versionNumber": "19.0.0.1"
-   }
+   "rationale": "Replaced by the owned Evil Eye Tweaks 0.4.0 (entity/experience/: orbs of any value clump, one-touch pick-up, Mending per original orb). Five orbs in the converted world carry Clumps' clumpedMap; LegacyClumpsOrbData converts them on load (true totals; read as vanilla orbs they would pay Value x Count)."
   },
   {
    "action": "repoint",
@@ -1509,7 +1393,7 @@
    "rationale": "Replaced by the owned Evil Eye Client 0.1.0 (health/: coloured heart rows and status palettes, tinted from the active pack hearts; config/colorfulhearts.toml carried into [health]). Client-only; no world data."
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/companion.pw.toml",
    "old": {
     "filename": "Companion-1.20.1-Forge-5.4.1.jar",
@@ -1523,35 +1407,7 @@
     "version": "O9wod42p"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "beta",
-    "declares": [
-     "companion optional kiwi [15,)"
-    ],
-    "filename": "Companion-1.21.1-NeoForge-6.3.0.jar",
-    "loader": "neoforge",
-    "metafile": "mods/companion.pw.toml",
-    "mods": [
-     "companion@?"
-    ],
-    "name": "Companion",
-    "project": "4w0EzGRW",
-    "publisher": {
-     "sha1": "6e99ea2769918ba330e4d936068ab2b4de1d141c",
-     "sha512": "bdc3b9d19c3650366404a6c4e0959b19ce9759a0861b5df05262eaf9af3ae6b0ed931dfe62b9cf61fe2b92f21bd9ea320822512af8cd27636edcc0010b2ddc7c",
-     "size": 45409
-    },
-    "sha1": "6e99ea2769918ba330e4d936068ab2b4de1d141c",
-    "sha256": "beb3b58710f8897274fe31277fb06cbb86a65ee1198dec7cdbe6f388c1f5f8bc",
-    "sha512": "bdc3b9d19c3650366404a6c4e0959b19ce9759a0861b5df05262eaf9af3ae6b0ed931dfe62b9cf61fe2b92f21bd9ea320822512af8cd27636edcc0010b2ddc7c",
-    "side": "both",
-    "size": 45409,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/4w0EzGRW/versions/PfXPQBGy/Companion-1.21.1-NeoForge-6.3.0.jar",
-    "version": "PfXPQBGy",
-    "versionNumber": "6.3.0+neoforge"
-   }
+   "rationale": "Replaced by the owned Evil Eye Tweaks 0.4.0 (entity/pets/: shoulder dismount rules, portal/respawn/chunk-unload/follow-failure teleports, injured-pet rules and sweep protection with Companion 6.3.0's defaults, which equal config/companion-common.yaml). Its three game rules sat at their defaults in the converted world (petFriendlyFire true, immortalPets false, alwaysTeleportHorses false) and are not carried as game rules. No entity data."
   },
   {
    "action": "repoint",
@@ -3591,22 +3447,22 @@
    "metafile": "mods/evileye-tweaks.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 49cd785, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), plus pick-up receipts and food snapshots for Evil Eye Client (wave 2).",
+   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 6e18c7f, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4).",
    "target": {
     "declares": [
      "evileye_tweaks required minecraft [1.21.1,1.21.2)",
      "evileye_tweaks required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.3.0.jar",
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.4.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-tweaks.pw.toml",
     "mods": [
-     "evileye_tweaks@0.3.0"
+     "evileye_tweaks@0.4.0"
     ],
     "name": "Evil Eye Tweaks",
-    "sha256": "14931de8c364e996ff46866f17594ef8a155523961b0b60b87c816caac6499b6",
+    "sha256": "c19581305e7cbeb4323c9aa037213465b88723dc788198be86cd979cfe14d037",
     "side": "both",
-    "size": 56868,
+    "size": 176281,
     "source": "local"
    }
   },
@@ -3654,7 +3510,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/fallingtree.pw.toml",
    "old": {
     "filename": "FallingTree-1.20.1-4.3.4.jar",
@@ -3668,37 +3524,7 @@
     "version": "NrtzFkZE"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "fallingtree optional cloth-config [15.0.0,) (client)",
-     "fallingtree required minecraft [1.21.1]",
-     "fallingtree required neoforge [21.1,)"
-    ],
-    "filename": "FallingTree-1.21.1-1.21.1.11.jar",
-    "loader": "neoforge",
-    "metafile": "mods/fallingtree.pw.toml",
-    "mods": [
-     "fallingtree@1.21.1.11"
-    ],
-    "name": "FallingTree",
-    "project": "Fb4jn8m6",
-    "publisher": {
-     "sha1": "7e1b3ee0ba89b556d5a468797bb1b5f4e2b8ccb7",
-     "sha512": "21876b270ca40e3ad6168423f2aba04460f590be191c5558d53e4f542993efa6070589029cb3218557309b096cd920e4da65e53f19687b86c638ec6c342d83e5",
-     "size": 496356
-    },
-    "sha1": "7e1b3ee0ba89b556d5a468797bb1b5f4e2b8ccb7",
-    "sha256": "b07cb3fe67d1f3bb66daf8836373614153790cfaa8c64fadbf53479d1b33cc54",
-    "sha512": "21876b270ca40e3ad6168423f2aba04460f590be191c5558d53e4f542993efa6070589029cb3218557309b096cd920e4da65e53f19687b86c638ec6c342d83e5",
-    "side": "both",
-    "size": 496356,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/Fb4jn8m6/versions/wxGXaJMA/FallingTree-1.21.1-1.21.1.11.jar",
-    "version": "wxGXaJMA",
-    "versionNumber": "1.21.1-1.21.1.11"
-   }
+   "rationale": "Replaced by the owned Evil Eye Tweaks 0.4.0 (world/trees/: instant whole-tree felling with config/fallingtree.json's values: scan 500, tree 100 with abort, furthest first, no mixed logs, crouch for one log, normal wear, leaf decay; /treefelling toggle keeps the fallingtree-disabled player tag). FallingTree 1.21.1.11 registers no enchantment or component; no player in the converted world had the tag."
   },
   {
    "action": "repoint",
@@ -3923,7 +3749,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/flat-bedrock.pw.toml",
    "old": {
     "file": "4680891",
@@ -3936,34 +3762,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "flatbedrock optional minecraft [1.21,)",
-     "flatbedrock optional neoforge [21,)"
-    ],
-    "file": "5443976",
-    "filename": "flatbedrock-neoforge-87.0.0.jar",
-    "loader": "neoforge",
-    "metafile": "mods/flat-bedrock.pw.toml",
-    "mods": [
-     "flatbedrock@87.0.0"
-    ],
-    "name": "Flat Bedrock (Forge / Fabric)",
-    "project": "398623",
-    "publisher": {
-     "md5": "d825e50c95fdbf0e03e38c1870da843a",
-     "size": 7728
-    },
-    "sha1": "ff6bdbf6d18c53277efaab3731fc6436deff37db",
-    "sha256": "0a7dc68a9d0c943bc9451a7ee476cb7f17c5c2facd3c9af188d2d06ea6a7bbbf",
-    "sha512": "33e479f675f66f27505e3865c288e245676cb321368a321d2b54e0c4d1761d4e268f5eec65cbe9d19e91102e04dc8154466b5c31740bd00388af6d4f0c688dbc",
-    "side": "both",
-    "size": 7728,
-    "source": "curseforge",
-    "versionNumber": "[NEOFORGE][1.21] flatbedrock 87.0.0"
-   }
+   "rationale": "Replaced by the owned Evil Eye Tweaks 0.4.0 (world/bedrock/: the bedrock_floor and bedrock_roof gradients become one layer in new chunks). Existing terrain unchanged; no data."
   },
   {
    "action": "repoint",
@@ -4605,7 +4404,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/hourglass.pw.toml",
    "old": {
     "filename": "hourglass-1.20-1.2.1.1.jar",
@@ -4619,33 +4418,7 @@
     "version": "G7VDa3zX"
    },
    "provisional": false,
-   "rationale": "Modrinth metadata lacks the 1.21.1 tag; the exact NeoForge 1.21.1 file is on CurseForge (survey cross-check).",
-   "target": {
-    "channel": "beta",
-    "declares": [
-     "hourglass required minecraft [1.21]",
-     "hourglass required neoforge [21.0.167,)"
-    ],
-    "file": "8624077",
-    "filename": "hourglass-1.21-1.3.0.0-beta1.jar",
-    "loader": "neoforge",
-    "metafile": "mods/hourglass.pw.toml",
-    "mods": [
-     "hourglass@1.3.0.0-beta1"
-    ],
-    "name": "Hourglass",
-    "project": "511172",
-    "publisher": {
-     "size": 224451
-    },
-    "sha1": "b69a0a99689c7e922ed8fc1f2932cf8113674dd5",
-    "sha256": "89f0eb655f0e6262775f1007f1ea9d92580dff7b7a167885d8f36df9658e6f9d",
-    "sha512": "d10e21436ca65742ef7e35c186a62e0e094beb3927b78293c97d570c857f4457371832441eb1538de351eef025febe8887d801ecd0c755e7894e263898a90662",
-    "side": "both",
-    "size": 224451,
-    "source": "curseforge",
-    "versionNumber": "Hourglass v1.3.0.0 Beta 1 for 1.21"
-   }
+   "rationale": "Replaced by the owned Evil Eye Tweaks 0.4.0 (world/time/: Overworld day 0.5, night 1.0 through NeoForge's day-time rate; weather pacing SLEEPING; vanilla sleep). defaultconfigs/hourglass-server.toml values carried into [time]; Hourglass kept no world data."
   },
   {
    "action": "repoint",
@@ -5216,7 +4989,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/kiwi.pw.toml",
    "old": {
     "filename": "Kiwi-1.20.1-Forge-11.10.3.jar",
@@ -5230,37 +5003,7 @@
     "version": "NSxwah05"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "fabric_api_base required minecraft [1.21.1,1.22)",
-     "fabric_api_base required neoforge [21.1.219,)"
-    ],
-    "filename": "Kiwi-1.21.1-NeoForge-15.8.7.jar",
-    "loader": "neoforge",
-    "metafile": "mods/kiwi.pw.toml",
-    "mods": [
-     "kiwi@15.8.7+neoforge",
-     "fabric_api_base@0.4.42+d1308ded19 (bundled)"
-    ],
-    "name": "Kiwi",
-    "project": "ufdDoWPd",
-    "publisher": {
-     "sha1": "d5c1d9f814bf146459f6e5e169c744c3e5bc184e",
-     "sha512": "d01c347febcb3d77bbfd2f44f38a80afbf4cf0b72a2aaa5d1875a38cbcd78be5a263fae4f63685256ea29c5f5f5d0f1c46892e2c78c4c1204863415dec9f4151",
-     "size": 1539578
-    },
-    "sha1": "d5c1d9f814bf146459f6e5e169c744c3e5bc184e",
-    "sha256": "f1222ac3773b2814d40ee6e77129bb27a29d82ec76d7a878ba23d3f5f9f8a392",
-    "sha512": "d01c347febcb3d77bbfd2f44f38a80afbf4cf0b72a2aaa5d1875a38cbcd78be5a263fae4f63685256ea29c5f5f5d0f1c46892e2c78c4c1204863415dec9f4151",
-    "side": "both",
-    "size": 1539578,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/ufdDoWPd/versions/tfwJWC8g/Kiwi-1.21.1-NeoForge-15.8.7.jar",
-    "version": "tfwJWC8g",
-    "versionNumber": "15.8.7+neoforge"
-   }
+   "rationale": "Library whose only consumer was Companion (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of every lock jar, 81 nested jar-in-jar and both owned jars (jobs/2026-11-01-evileye-tweaks-wave4/library-closure.json): no declared dependency on kiwi and no snownee/kiwi class reference outside the dropped mods; fabric_api_base, which Kiwi bundled, is still bundled by Sodium and Iris. No kiwi: ids in the converted world."
   },
   {
    "action": "repoint",
@@ -5448,7 +5191,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/let-me-despawn.pw.toml",
    "old": {
     "file": "6311230",
@@ -5461,36 +5204,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "letmedespawn required almanac [1.26.10.2,)",
-     "letmedespawn required dungeonconfig [1.26.10.2,)",
-     "letmedespawn required minecraft [1.21.1,1.21.2)",
-     "letmedespawn required neoforge [21.1.262,)"
-    ],
-    "file": "9218672",
-    "filename": "letmedespawn-neoforge-1.21.1-1.26.10.2.jar",
-    "loader": "neoforge",
-    "metafile": "mods/let-me-despawn.pw.toml",
-    "mods": [
-     "letmedespawn@1.26.10.2"
-    ],
-    "name": "Let Me Despawn",
-    "project": "663477",
-    "publisher": {
-     "md5": "a6de214ce648e04078c557d54ace6cd7",
-     "size": 29583
-    },
-    "sha1": "6e9b732a7ade6e3d2e7899b53821a8bcab1add1a",
-    "sha256": "62086f1e0dc89bb2d784fb75bf2fea37925a6cc1c24b9b3e3d686f2901183e17",
-    "sha512": "fa79cff5084c329a8985262a406b949cfd7ae0e3596ceaea9604ba2b24a70ff3176acf0416ac0e1fb46c9a58da6f7c45fd367f2a8a3bb454d1dbbffdd1edfa58",
-    "side": "both",
-    "size": 29583,
-    "source": "curseforge",
-    "versionNumber": "Let Me Despawn 1.26.10.2"
-   }
+   "rationale": "Replaced by the owned Evil Eye Tweaks 0.4.0 (entity/despawn/: pick-ups no longer pin mobs and drop on despawn, spawner and trial-spawner rules, endermen, corpse:corpse kept as in config/letmedespawn/letmedespawn.json5). No letmedespawn_* or almanac_picked_slots keys in the converted world; LegacyDespawnData reads them if a world has any."
   },
   {
    "action": "repoint",
@@ -6706,42 +6420,6 @@
     "size": 172671,
     "source": "curseforge",
     "versionNumber": "polymorph-neoforge-1.2.0+1.21.1.jar"
-   }
-  },
-  {
-   "action": "add",
-   "metafile": "mods/prickle.pw.toml",
-   "old": null,
-   "provisional": false,
-   "rationale": "Required by AttributeFix and Enchantment Descriptions ([21.1,21.2)); Darkhax config library split out for 1.21.",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "prickle required minecraft [1.21.1, 1.22)",
-     "prickle required neoforge [21.1.61,)"
-    ],
-    "filename": "prickle-neoforge-1.21.1-21.1.11.jar",
-    "loader": "neoforge",
-    "metafile": "mods/prickle.pw.toml",
-    "mods": [
-     "prickle@21.1.11"
-    ],
-    "name": "Prickle",
-    "project": "aaRl8GiW",
-    "publisher": {
-     "sha1": "5174059ecf97340a0de5ef211b938de26c4eaa36",
-     "sha512": "154d42795ccf1f3e07714775cdb82fd5db17574319286ced13d86b0456b64e4cf5bb89ffbcbfcefce67b73ed0b83e4e2944e493d79d9a385ff9de23006ee7bf5",
-     "size": 84812
-    },
-    "sha1": "5174059ecf97340a0de5ef211b938de26c4eaa36",
-    "sha256": "ccf46c442ed3c7fe41ad056f0940560829ec4dd88360985dfacd78f4614eb167",
-    "sha512": "154d42795ccf1f3e07714775cdb82fd5db17574319286ced13d86b0456b64e4cf5bb89ffbcbfcefce67b73ed0b83e4e2944e493d79d9a385ff9de23006ee7bf5",
-    "side": "both",
-    "size": 84812,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/aaRl8GiW/versions/EE1FHDyD/prickle-neoforge-1.21.1-21.1.11.jar",
-    "version": "EE1FHDyD",
-    "versionNumber": "21.1.11"
    }
   },
   {

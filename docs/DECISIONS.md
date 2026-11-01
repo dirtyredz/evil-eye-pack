@@ -2,6 +2,15 @@
 
 Newest first.
 
+## 2026-11-01 - Wave 4: gameplay rules become Evil Eye Tweaks 0.4.0
+
+**Decision.** AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps and Let Me Despawn are
+replaced by Evil Eye Tweaks 0.4.0 with the pack's effective settings; Bookshelf, Prickle, Almanac Lib and Kiwi
+go with them after the closure check. Saved Clumps orbs and Let Me Despawn mob keys convert on load; day
+length uses NeoForge's own day-time rate instead of Hourglass's per-tick packets. **Rejected:** keeping
+Hourglass for its client-side smoothing (NeoForge clients already advance at the synced rate); keeping
+Companion's game rules (at their defaults they change nothing).
+
 ## 2026-11-01 - Wave 2: presentation mods become Evil Eye Client
 
 **Decision.** Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment

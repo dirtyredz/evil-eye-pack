@@ -143,13 +143,8 @@
    "reason": "Reforged has no NeoForge 1.21.1 build; the NeoForge port 1.4.3 (survey replacement) requires Kotlin for Forge, already in the pack. Pinned by sha256 because the release tag name is not versioned."
   },
   "mods/hourglass.pw.toml": {
-   "action": "repoint",
-   "target": {
-    "source": "curseforge",
-    "project": "511172",
-    "file": "8624077"
-   },
-   "reason": "Modrinth metadata lacks the 1.21.1 tag; the exact NeoForge 1.21.1 file is on CurseForge (survey cross-check)."
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Tweaks 0.4.0 (world/time/: Overworld day 0.5, night 1.0 through NeoForge's day-time rate; weather pacing SLEEPING; vanilla sleep). defaultconfigs/hourglass-server.toml values carried into [time]; Hourglass kept no world data."
   },
   "mods/ranged-pumps.pw.toml": {
    "action": "repoint",
@@ -187,6 +182,42 @@
   "mods/appleskin.pw.toml": {
    "action": "drop",
    "reason": "Replaced by the owned Evil Eye Client 0.1.0 (food/: overlays, previews, tooltips, F3; config/appleskin-client.toml carried into [food]; Thirst Was Taken AppleSkin-gated overlays redrawn by its thirst adapter) and Evil Eye Tweaks 0.3.0 (food/: saturation/exhaustion snapshots). No world data."
+  },
+  "mods/attributefix.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Tweaks 0.4.0 (entity/attributes/: the five one-million maxima AttributeFix 21.1.3 applied, set once at common setup before any world loads). config/attributefix.json used an obsolete format the 1.21.1 jar never read; the effective values were the jar's defaults. No world data."
+  },
+  "mods/companion.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Tweaks 0.4.0 (entity/pets/: shoulder dismount rules, portal/respawn/chunk-unload/follow-failure teleports, injured-pet rules and sweep protection with Companion 6.3.0's defaults, which equal config/companion-common.yaml). Its three game rules sat at their defaults in the converted world (petFriendlyFire true, immortalPets false, alwaysTeleportHorses false) and are not carried as game rules. No entity data."
+  },
+  "mods/fallingtree.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Tweaks 0.4.0 (world/trees/: instant whole-tree felling with config/fallingtree.json's values: scan 500, tree 100 with abort, furthest first, no mixed logs, crouch for one log, normal wear, leaf decay; /treefelling toggle keeps the fallingtree-disabled player tag). FallingTree 1.21.1.11 registers no enchantment or component; no player in the converted world had the tag."
+  },
+  "mods/flat-bedrock.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Tweaks 0.4.0 (world/bedrock/: the bedrock_floor and bedrock_roof gradients become one layer in new chunks). Existing terrain unchanged; no data."
+  },
+  "mods/clumps.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Tweaks 0.4.0 (entity/experience/: orbs of any value clump, one-touch pick-up, Mending per original orb). Five orbs in the converted world carry Clumps' clumpedMap; LegacyClumpsOrbData converts them on load (true totals; read as vanilla orbs they would pay Value x Count)."
+  },
+  "mods/let-me-despawn.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Tweaks 0.4.0 (entity/despawn/: pick-ups no longer pin mobs and drop on despawn, spawner and trial-spawner rules, endermen, corpse:corpse kept as in config/letmedespawn/letmedespawn.json5). No letmedespawn_* or almanac_picked_slots keys in the converted world; LegacyDespawnData reads them if a world has any."
+  },
+  "mods/bookshelf.pw.toml": {
+   "action": "drop",
+   "reason": "Library whose only consumer was AttributeFix (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of every lock jar, 81 nested jar-in-jar and both owned jars (jobs/2026-11-01-evileye-tweaks-wave4/library-closure.json): no declared dependency and no net/darkhax/bookshelf class reference outside the dropped mods."
+  },
+  "mods/almanac-lib.pw.toml": {
+   "action": "drop",
+   "reason": "Library (with bundled DungeonConfig) whose only consumer was Let Me Despawn (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of every lock jar, 81 nested jar-in-jar and both owned jars (jobs/2026-11-01-evileye-tweaks-wave4/library-closure.json): no declared dependency and no com/frikinjay/almanac or dungeonconfig class reference outside the dropped mods."
+  },
+  "mods/kiwi.pw.toml": {
+   "action": "drop",
+   "reason": "Library whose only consumer was Companion (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of every lock jar, 81 nested jar-in-jar and both owned jars (jobs/2026-11-01-evileye-tweaks-wave4/library-closure.json): no declared dependency on kiwi and no snownee/kiwi class reference outside the dropped mods; fabric_api_base, which Kiwi bundled, is still bundled by Sodium and Iris. No kiwi: ids in the converted world."
   }
  },
  "additions": [
@@ -200,17 +231,6 @@
     "version": "uMOpc5uV"
    },
    "reason": "Required by Iris 1.8.14-beta.1 (its Modrinth dependency pins this version); replaces Embeddium."
-  },
-  {
-   "metafile": "mods/prickle.pw.toml",
-   "name": "Prickle",
-   "side": "both",
-   "target": {
-    "source": "modrinth",
-    "project": "aaRl8GiW",
-    "version": "EE1FHDyD"
-   },
-   "reason": "Required by AttributeFix and Enchantment Descriptions ([21.1,21.2)); Darkhax config library split out for 1.21."
   },
   {
    "metafile": "mods/lithostitched.pw.toml",
@@ -319,11 +339,11 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.3.0.jar",
-    "sha256": "14931de8c364e996ff46866f17594ef8a155523961b0b60b87c816caac6499b6",
-    "size": 56868
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.4.0.jar",
+    "sha256": "c19581305e7cbeb4323c9aa037213465b88723dc788198be86cd979cfe14d037",
+    "size": 176281
    },
-   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 49cd785, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), plus pick-up receipts and food snapshots for Evil Eye Client (wave 2)."
+   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 6e18c7f, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4)."
   },
   {
    "metafile": "mods/evileye-client.pw.toml",

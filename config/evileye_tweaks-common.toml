@@ -29,3 +29,131 @@
 	#Send each player's saturation and exhaustion to clients with Evil Eye Client when they change,
 	#so food overlays show the real values.
 	syncFoodSnapshots = true
+
+[attributes]
+	#Attribute ranges, as namespace:path=min,max. Applied once at startup (restart to change).
+	#Raising a limit never rewrites saved values; lowering one clamps values as vanilla would.
+	attributeLimits = ["minecraft:generic.max_health=1,1000000", "minecraft:generic.armor=0,1000000", "minecraft:generic.armor_toughness=0,1000000", "minecraft:generic.attack_damage=0,1000000", "minecraft:generic.attack_knockback=0,1000000"]
+
+[bedrock]
+	#Generate the bedrock floor (and the Nether roof) as one flat layer instead of a five-layer
+	#gradient. Only newly generated chunks change; existing terrain is left as it is.
+	flatBedrock = true
+
+[time]
+	#Overworld day speed (day = after 23500 or before 12500). 1.0 is vanilla, 0.5 is half speed.
+	# Default: 0.5
+	# Range: 0.0 ~ 24000.0
+	daySpeed = 0.5
+	#Overworld night speed (night = 12500 through 23500). 1.0 is vanilla.
+	# Default: 1.0
+	# Range: 0.0 ~ 24000.0
+	nightSpeed = 1.0
+	#Make rain and thunder pass at the time speed: NEVER, ALWAYS, or SLEEPING (only while a
+	#player in the Overworld is in bed).
+	#Allowed Values: NEVER, ALWAYS, SLEEPING
+	weatherEffect = "SLEEPING"
+
+[experience]
+	#Merge nearby experience orbs of any value into one and let players absorb a whole clump
+	#at once. Mending repairs per original orb value; the total experience is unchanged.
+	clumpOrbs = true
+
+[despawn]
+	#Vanilla: a mob that picks up an item never despawns. False lets it despawn; whatever it
+	#picked up (and an enderman's carried block) drops where it despawns.
+	pickupsKeepMobs = false
+	#Entity ids that still become persistent when they pick something up.
+	keepPickupPersistence = ["corpse:corpse"]
+	#Item ids that keep a mob from despawning while it holds or wears one it picked up.
+	persistenceEnablers = []
+	#Mobs from monster spawners (block or minecart) despawn normally even when something later
+	#tries to make them persistent. A name tag still keeps them.
+	spawnerDespawn = true
+	#Mobs from trial spawners are not made persistent; they despawn once their trial spawner
+	#no longer counts them.
+	trialSpawnerDespawn = true
+
+	[pets.shoulder]
+		#Shoulder pets leave when the player has fallen farther than this many blocks.
+		# Default: 4.0
+		# Range: 0.0 ~ 1024.0
+		dismountFallDistance = 4.0
+		#Shoulder pets leave when one hit does more damage than this.
+		# Default: 0.5
+		# Range: 0.0 ~ 1024.0
+		dismountDamageThreshold = 0.5
+		#Jump in place to drop shoulder pets.
+		smartDismount = true
+		#Shoulder pets leave when the player's head goes under water.
+		dismountUnderWater = true
+		#Shoulder pets leave during creative flight.
+		dismountWhileFlying = false
+		#Shoulder pets leave as soon as the player touches water.
+		dismountInWater = false
+
+	[pets.follow]
+		#Owned pets in the dimension where the player died follow them to the respawn point.
+		respawnTeleport = true
+		#A pet that falls behind teleports to a safe spot behind or beside its owner.
+		followFailedTeleport = true
+		#Owned pets only use a portal on their own when the owner is this close (-1 = always).
+		# Default: 3.0
+		# Range: -1.0 ~ 1024.0
+		ownerNearbyRadius = 3.0
+		#A following pet in a chunk that is about to unload is moved to its owner first.
+		chunkUnloadTeleport = true
+		#Most pets that come along through a portal (-1 = the maxEntityCramming game rule).
+		# Default: -1
+		# Range: -1 ~ 1024
+		portalMaxPets = -1
+		#Owned, following pets and animals on the player's lead come along through portals.
+		portalTeleport = true
+		#Log a warning when a pet cannot be moved to its owner.
+		logFailedTeleports = true
+		#Tamed horses follow their owner like pets.
+		alwaysTeleportHorses = false
+
+	[pets.injured]
+		#A pet at or below this share of its maximum health is injured.
+		# Default: 0.2
+		# Range: 0.0 ~ 1.0
+		injuredHealthRatio = 0.2
+		#Injured pets stop attacking monsters and start no new fights.
+		injuredStopAttacking = true
+		#An injured pet that is hurt again moves behind its owner (at most every 30 s).
+		injuredTeleportToOwner = true
+
+	[pets.combat]
+		#The owner's sweeping attacks do not hit the owner's own pets.
+		sweepSparesPets = true
+
+[trees]
+	#Breaking a log with an axe fells the whole tree at once (tool wear: one point per log).
+	treeFelling = true
+	#Trees with more blocks than this are not scanned further and only the broken log breaks.
+	# Default: 500
+	# Range: 1 ~ 10000
+	maxScanSize = 500
+	#Trees with more blocks than this (besides the broken log) are not felled.
+	# Default: 100
+	# Range: 1 ~ 10000
+	maxTreeSize = 100
+	#Crouching breaks a single log.
+	sneakDisables = true
+	#Logs of other kinds touching the tree are felled with it.
+	allowMixedLogs = false
+	#Wart blocks and shroomlights within 4 blocks of the stem are part of a nether tree.
+	breakNetherWarts = true
+	#Mangrove roots are part of the tree.
+	breakMangroveRoots = true
+	#Leaves the top log needs beside it for the logs to count as a tree (0 = none).
+	# Default: 1
+	# Range: 0 ~ 6
+	minimumLeavesAround = 1
+	#Placed and sheared leaves count for the check above.
+	includePersistentLeaves = true
+	#Leaves next to a block that just became air are checked for decay within about 5 ticks.
+	fastLeafDecay = true
+	#Creative players fell trees too.
+	fellInCreative = false

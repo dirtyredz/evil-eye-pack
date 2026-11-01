@@ -36,7 +36,6 @@ const PRESERVE_PATHS = new Set([
   'config/cupboard.json',
   'config/emi.css',
   'config/entityculling.json',
-  'config/fallingtree.json',
   'config/ferritecore-mixin.toml',
   'config/hammerlib/main.cfg',
   'config/immediatelyfast.json',

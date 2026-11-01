@@ -1566,10 +1566,6 @@ hash = "780084fc61f4846a0ac7a7a79b8852bbee5b8082d8c4f262c122cf76f4a6e20b"
 preserve = true
 
 [[files]]
-file = "config/attributefix.json"
-hash = "652a7176b9ae41fb9f2cb737f594251d70556ee38df3d80c7721bfff1ade5d5f"
-
-[[files]]
 file = "config/balm-common.toml"
 hash = "f24f7cede066400c657af13b1aff84e4920ac531bf24ab18cff1ef32fff72835"
 
@@ -1814,7 +1810,7 @@ preserve = true
 
 [[files]]
 file = "config/evileye_tweaks-common.toml"
-hash = "d8c3bf66f21e3c3da1c528a5db00d88831a75e373ae4c8f5de2071af3f08378d"
+hash = "d0680bc186814801796a4b2272e265a6036ae07d8a93aa79fae460644d36cc18"
 
 [[files]]
 file = "config/extremereactors/client.toml"
@@ -1823,11 +1819,6 @@ hash = "6cf0d1a23dd955982538b923cf6ed25c6f4a9f19fcae7302ca504ea44f419b72"
 [[files]]
 file = "config/extremereactors/common.toml"
 hash = "26895c36a9ead679d91f13c58c7fba1d6efe6e24712a994ca123f05a0494d413"
-
-[[files]]
-file = "config/fallingtree.json"
-hash = "fed61e10a472e8cebec0e9f63aff8738aa8f9b2fb1decf5403736d33b2e2d4da"
-preserve = true
 
 [[files]]
 file = "config/fastbench.cfg"
@@ -2432,10 +2423,6 @@ preserve = true
 [[files]]
 file = "defaultconfigs/ftbessentials-server.snbt"
 hash = "251ab90bae7637e18ad8079645c07dd223d139b6fa53fc7dffa34b0b98e5c845"
-
-[[files]]
-file = "defaultconfigs/hourglass-server.toml"
-hash = "29c12c8b9c71b426585b7cf4bd761919e0495d19ed91a31c41cffde91eedf34b"
 
 [[files]]
 file = "kubejs/assets/emi/index/stacks/dedup.json"
@@ -4747,11 +4734,6 @@ hash = "4e188d614878ead4a68f2dbc1045cd0da6a4956b22e9a80edcc5f480781e4d30"
 metafile = true
 
 [[files]]
-file = "mods/almanac-lib.pw.toml"
-hash = "85c6a862d585e0b054bc8b25aae1ae66495cd5f161f86a3ed2069d91f7ff4070"
-metafile = true
-
-[[files]]
 file = "mods/amendments.pw.toml"
 hash = "bce3cfb2ca545a3b0cad83d8137f36b83b4c137dd4c6dae6e73d1783f78eb8ab"
 metafile = true
@@ -4797,11 +4779,6 @@ hash = "5d9bdb9a8bcd02fe6f867d52c52a8f20100422de6db324b02543a1d2aff362fa"
 metafile = true
 
 [[files]]
-file = "mods/attributefix.pw.toml"
-hash = "a445471ac6843bcf9fb76eabb4357de0357dfa7782be536a7827a26764fe45c1"
-metafile = true
-
-[[files]]
 file = "mods/balm.pw.toml"
 hash = "603cdc47142b5aa5729cbbf265a473574c9e2b55561de4318e9842d3d4b3b995"
 metafile = true
@@ -4824,11 +4801,6 @@ metafile = true
 [[files]]
 file = "mods/blockui.pw.toml"
 hash = "643c88ee26ec68650091c395c5c4fbd33d534a9c493e3cc05da3c793cc7ab9db"
-metafile = true
-
-[[files]]
-file = "mods/bookshelf.pw.toml"
-hash = "cf914684c4151076b726116a66f7bc81a6116655551bcce70a9e64e34e5aa308"
 metafile = true
 
 [[files]]
@@ -4857,18 +4829,8 @@ hash = "22286fa216349c0767808903a0a38662857d2adee54950a18cbf26c167a06029"
 metafile = true
 
 [[files]]
-file = "mods/clumps.pw.toml"
-hash = "2acaff560bbda5741538528a2967355ec86a8f7564adba0b2316989c66892374"
-metafile = true
-
-[[files]]
 file = "mods/cluttered.pw.toml"
 hash = "503569d1bccf50d580e517550e8f66574d881deac197f30fedb0a18ebb5d3ff4"
-metafile = true
-
-[[files]]
-file = "mods/companion.pw.toml"
-hash = "0ce69e48253267d12ec645afff2ea9ff570c7129fbfb8f8ee2d23ffda0b7024c"
 metafile = true
 
 [[files]]
@@ -5083,17 +5045,12 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-tweaks.pw.toml"
-hash = "843d04574b7b1e0187de9b4e96ce85ac1d85b1f3c40236f7470112660e315a44"
+hash = "b5430f24187528f309c1d20e59141ed0df924b5b83b0cd581d1c29b7d3a98d93"
 metafile = true
 
 [[files]]
 file = "mods/extreme-reactors.pw.toml"
 hash = "a3d47e3c301ed2359820c2083dcddec8240a5d692a016c42a74eecc1193772e1"
-metafile = true
-
-[[files]]
-file = "mods/fallingtree.pw.toml"
-hash = "7d61ad815f97afb27f7e97475e80376aa19fecf25a1b04a500a4c3a6e5055973"
 metafile = true
 
 [[files]]
@@ -5119,11 +5076,6 @@ metafile = true
 [[files]]
 file = "mods/ferritecore.pw.toml"
 hash = "dff824171060c79b327a4880c2f0546c727a041a489ef3af643ec2dcd9cd0c48"
-metafile = true
-
-[[files]]
-file = "mods/flat-bedrock.pw.toml"
-hash = "d17382ebb5d2d2f7e56e9fbb71b4b9d7ec9a61134dec3de9ef8bfaab876c205a"
 metafile = true
 
 [[files]]
@@ -5197,11 +5149,6 @@ hash = "0004feab868f7b873c12db05aae0d0dac6c87b497490b48bb66480e7c8d0f340"
 metafile = true
 
 [[files]]
-file = "mods/hourglass.pw.toml"
-hash = "b75f0a58aeab26a404fe2e789fc618092425522eb8d068d8211be5bf083c023e"
-metafile = true
-
-[[files]]
 file = "mods/hypertube.pw.toml"
 hash = "672fe2518a1795814efc943c3e3cf8dc1b993bc7d838cc62950acfaba348c2c7"
 metafile = true
@@ -5272,11 +5219,6 @@ hash = "bffd4067f92d5d8ed7a8a3acfdae213e9523ba5a518196cbd0a98d05e95fe6b6"
 metafile = true
 
 [[files]]
-file = "mods/kiwi.pw.toml"
-hash = "547d5668cd5858a1c243a4ff6efaa23e48e4a60c8336fd144c29036cedb0f730"
-metafile = true
-
-[[files]]
 file = "mods/kotlin-for-forge.pw.toml"
 hash = "712a69b3569a8055979de6eea262068535fe182dffb3833e53e5833e9cbf9766"
 metafile = true
@@ -5294,11 +5236,6 @@ metafile = true
 [[files]]
 file = "mods/lendercataclysm.pw.toml"
 hash = "0f04f325e69159d49ef7ad0593d9fa2caaca3825bc519b3d54c253bfcb0ae435"
-metafile = true
-
-[[files]]
-file = "mods/let-me-despawn.pw.toml"
-hash = "e9d3cdd8daaecbd6e0e8196c69aabc4cb8be8fad5b44c3b63e561478784b1554"
 metafile = true
 
 [[files]]
@@ -5434,11 +5371,6 @@ metafile = true
 [[files]]
 file = "mods/polymorph.pw.toml"
 hash = "2e2af1cc71b69b26ae87bcb78d75fb0186d690ee1b85d8d4586eec112aa51b66"
-metafile = true
-
-[[files]]
-file = "mods/prickle.pw.toml"
-hash = "c99c5bac469e8d6ece5aae80f08635e3bbb8367f0c586b6288573c725faefe69"
 metafile = true
 
 [[files]]

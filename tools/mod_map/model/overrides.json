@@ -27,6 +27,6 @@
   "transition": { "kind": "library/API", "reason": "Jar-in-jar library owned by Entity Culling and 3D Skin Layers" },
   "trender": { "kind": "library/API", "reason": "Jar-in-jar rendering library owned by Entity Culling and 3D Skin Layers" },
   "hammermicroblocks": { "dependencies": ["hammermultipart"], "reason": "Calls org/zeith/multipart/api classes without declaring HammerMultipart" },
-  "attributefix": { "packWideFix": "Lifts Minecraft's attribute caps for the whole pack.", "reason": "Pack-wide behavior; no mod declares it" },
+  "evileye_tweaks": { "packWideFix": "Raises attribute caps, slows the day, clumps experience orbs and sets pet, despawn, tree-felling and flat-bedrock rules for the whole pack.", "reason": "Pack-wide behavior; no mod declares it" },
   "polymorph": { "packWideFix": "Resolves 770 recipe conflicts found by jobs/2026-10-28-recipe-conflicts.", "reason": "Pack-wide behavior; no mod declares it" }
 }

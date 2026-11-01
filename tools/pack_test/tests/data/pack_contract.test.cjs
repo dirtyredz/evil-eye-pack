@@ -25,15 +25,13 @@ test('pack mod metafiles match the removed and required mod policy', () => {
   }
 });
 
-test('Hourglass is pinned for both sides with the intended day, night and sleep policy', () => {
-  const meta = read('mods/hourglass.pw.toml');
-  assert.match(meta, /^filename = "hourglass-1\.21-1\.3\.0\.0-beta1\.jar"$/m);
+test('Evil Eye Tweaks keeps the pack day length: half-speed day, vanilla night, vanilla sleep', () => {
+  const meta = read('mods/evileye-tweaks.pw.toml');
   assert.match(meta, /^side = "both"$/m);
-  assert.match(meta, /^project-id = 511172$/m);
-  assert.match(meta, /^file-id = 8624077$/m);
+  assert.equal(fs.existsSync(path.join(ROOT, 'mods/hourglass.pw.toml')), false, 'Hourglass was replaced');
 
-  const config = read('defaultconfigs/hourglass-server.toml');
+  const config = read('config/evileye_tweaks-common.toml');
   assert.match(config, /^\s*daySpeed = 0\.5$/m);
   assert.match(config, /^\s*nightSpeed = 1\.0$/m);
-  assert.match(config, /^\s*enableSleepFeature = false$/m);
+  assert.match(config, /^\s*weatherEffect = "SLEEPING"$/m);
 });

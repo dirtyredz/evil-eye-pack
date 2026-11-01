@@ -53,11 +53,6 @@
    "reason": "Deterministic Dragons Plus sanding."
   },
   {
-   "match": "defaultconfigs/hourglass-server.toml",
-   "treatment": "preserve-intent",
-   "reason": "Hourglass half-speed day, vanilla-speed night, vanilla sleep (pack_contract test)."
-  },
-  {
    "match": "defaultconfigs/ftbessentials-server.snbt",
    "treatment": "preserve-intent",
    "reason": "FTB Essentials settings for new worlds."
@@ -65,7 +60,7 @@
   {
    "match": "config/evileye_tweaks-common.toml",
    "treatment": "preserve-intent",
-   "reason": "Evil Eye Tweaks 0.3.0 replaces Fuel Goes Here and Double Doors and adds the pick-up receipt and food snapshot producers for Evil Eye Client. Door values carry the Double Doors 7.5 settings the Trial generated in config/serilum/doubledoors.json (doors on, gates and trapdoors off, recursive on, distance 10, empty blacklist; Quark check dropped, Quark absent); [pickup] backpackReceipts and [food] syncFoodSnapshots on (Pick Up Notifier backpack integration and AppleSkin sync were on). Bytes are the NeoForge-written file (LF), so the mod does not rewrite it."
+   "reason": "Evil Eye Tweaks 0.4.0 replaces Fuel Goes Here and Double Doors (doors on, gates and trapdoors off, recursive on, distance 10, empty blacklist: the Double Doors 7.5 values), adds the pick-up receipt and food snapshot producers for Evil Eye Client (both on), and wave 4: AttributeFix maxima, Companion defaults (= config/companion-common.yaml), FallingTree values from config/fallingtree.json, Flat Bedrock, Hourglass day 0.5/night 1.0/weather SLEEPING, Clumps on, Let Me Despawn values (corpse:corpse kept, spawner and trial-spawner despawn on). Bytes are the NeoForge-written default file (LF; the defaults equal the pack values), so the mod does not rewrite it."
   },
   {
    "match": "config/evileye_client-client.toml",
@@ -158,6 +153,24 @@
    "treatment": "replaced",
    "by": "config/evileye_client-client.toml",
    "reason": "Stylish Effects replaced by Evil Eye Client; HUD and screen renderer settings, menu blacklist and compact/small widget styles carried into [effects] of config/evileye_client-client.toml."
+  },
+  {
+   "file": "config/attributefix.json",
+   "treatment": "replaced",
+   "by": "config/evileye_tweaks-common.toml",
+   "reason": "AttributeFix replaced by Evil Eye Tweaks [attributes]; this file was the pre-1.21 format the 1.21.1 jar never read (it read config/attributefix/<namespace>/<attribute>.json, generated with its defaults), so the effective limits are the five one-million maxima, carried as attributeLimits."
+  },
+  {
+   "file": "config/fallingtree.json",
+   "treatment": "replaced",
+   "by": "config/evileye_tweaks-common.toml",
+   "reason": "FallingTree replaced by Evil Eye Tweaks [trees]; every effective value carried (scan 500, tree size 100 with abort, furthest first, crouch disables, no mixed logs, warts and mangrove roots, one leaf needed incl. persistent, leaf decay, no creative felling, normal wear)."
+  },
+  {
+   "file": "defaultconfigs/hourglass-server.toml",
+   "treatment": "replaced",
+   "by": "config/evileye_tweaks-common.toml",
+   "reason": "Hourglass replaced by Evil Eye Tweaks [time] (daySpeed 0.5, nightSpeed 1.0, weatherEffect SLEEPING; the sleep feature stays off, so vanilla sleep). The other time effects were NEVER and are not implemented."
   }
  ],
  "deferred": "All seven owned ports restored 2026-10-30; no parked files remain. See deferred/README.md for restoration history."

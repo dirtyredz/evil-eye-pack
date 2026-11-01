@@ -597,3 +597,21 @@ Pick Up Notifier defaults) replaces the four upstream files; `config/evileye_twe
 `[pickup] backpackReceipts` and `[food] syncFoodSnapshots` (both on). `colorfulhearts.toml` and
 `enchdesc.json` leave the preserve list. No keybindings were involved. Physical mod metafiles: 189 to 184.
 Not yet run: a pack-test boot and the owner walk.
+
+## Evil Eye Tweaks 0.4.0 pin: seven gameplay mods and four libraries removed (2026-11-01)
+
+Consolidation wave 4 ([mod-consolidation.md](mod-consolidation.md)). One private `metadata:local` pin,
+stored hash-addressed and by filename in the shared migration cache and the Trial walkthrough's job cache:
+
+| Pin | Source | SHA-256 | Bytes |
+|---|---|---|---|
+| `evileye_tweaks-1.21.1-neoforge-0.4.0.jar` (side both) | minecraft-mods `mods/EvilEyeTweaks` 6e18c7f | `c19581305e7cbeb4323c9aa037213465b88723dc788198be86cd979cfe14d037` | 176,281 |
+
+Lock drops: AttributeFix 21.1.3, Companion 6.3.0, FallingTree 1.21.1.11, Flat Bedrock 87.0.0, Hourglass
+1.3.0.0-beta1, Clumps 19.0.0.1, Let Me Despawn 1.26.10.2, and the libraries Bookshelf 21.1.81, Prickle 21.1.11
+(an addition, now removed), Almanac Lib 1.26.10.3 (with DungeonConfig) and Kiwi 15.8.7. Their ids join
+pack-test `removedMods`; `hourglass` leaves `requiredMods` (Evil Eye Tweaks is required already). Configs:
+`config/attributefix.json`, `config/fallingtree.json` and `defaultconfigs/hourglass-server.toml` are replaced
+by sections of `config/evileye_tweaks-common.toml` (NeoForge-written default bytes, LF; defaults equal the
+pack values); `config/fallingtree.json` leaves the preserve list. Physical mod metafiles: 184 to 173.
+Not yet run: a pack-test boot and the owner walk.
