@@ -272,6 +272,17 @@
     "size": 119760
    },
    "reason": "Private local migration bridge built from minecraft-mods 4c9fa1f (dev.7 item-component conversion). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover."
+  },
+  {
+   "metafile": "mods/spark.pw.toml",
+   "name": "spark",
+   "side": "both",
+   "target": {
+    "source": "modrinth",
+    "project": "l6YH9Als",
+    "version": "v5qtqRQi"
+   },
+   "reason": "Owner request 2026-11-01: profiler for in-game profiling of the Trial (client) and server; spark 1.10.124 is the newest NeoForge 1.21.1 release."
   }
  ],
  "waivers": {},

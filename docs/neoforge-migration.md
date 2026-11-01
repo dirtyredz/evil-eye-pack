@@ -182,6 +182,10 @@ Restoration history is in `tools/packwiz/migration/deferred/README.md`.
 Alex's Mobs, Alex's Caves and Ice and Fire use local-source pins (below). All seven ports are
 `requiredMods`, along with I&F's Uranus 3.0-beta.1 and Jupiter 2.3.7 libraries. No lock entry remains `defer`.
 
+## Profiler (spark, 2026-11-01)
+
+spark 1.10.124 (Modrinth `l6YH9Als` / `v5qtqRQi`, side both) is a lock `addition` for in-game and server profiling (`/spark profiler`). Its jar bundles async-profiler natives and ByteBuddy attach classes, which the malware guard flags (8 findings); they are approved against the exact jar with the reason recorded in `tools/malware_guard/data/allowlist.json`. The jar is in both the migration cache and the Trial cache (`jobs/2026-10-31-world-trial-final/cache/mods`).
+
 ## 100% checklist
 
 See plan Phase 10. Every criterion there is required. Temporary absences, a successful boot on

@@ -7674,6 +7674,41 @@
    }
   },
   {
+   "action": "add",
+   "metafile": "mods/spark.pw.toml",
+   "old": null,
+   "provisional": false,
+   "rationale": "Owner request 2026-11-01: profiler for in-game profiling of the Trial (client) and server; spark 1.10.124 is the newest NeoForge 1.21.1 release.",
+   "target": {
+    "channel": "release",
+    "declares": [
+     "spark required neoforge [20,)"
+    ],
+    "filename": "spark-1.10.124-neoforge.jar",
+    "loader": "neoforge",
+    "metafile": "mods/spark.pw.toml",
+    "mods": [
+     "spark@1.10.124"
+    ],
+    "name": "spark",
+    "project": "l6YH9Als",
+    "publisher": {
+     "sha1": "9430cc2ab64ff89d698be593769fb9f9ee4efae6",
+     "sha512": "f86ce34f2759c69df82578c397ff55b666c84626229a98f598458b960c21b38c95d6bfef4772af7f963c4f4868e5e2d9aef6b99c1d51bab55bf45e0e6e6b5ed4",
+     "size": 3642581
+    },
+    "sha1": "9430cc2ab64ff89d698be593769fb9f9ee4efae6",
+    "sha256": "647e8a81afbe414dba1df4ba15fd06c5d32d4cb544e68828405e8e074c2e16db",
+    "sha512": "f86ce34f2759c69df82578c397ff55b666c84626229a98f598458b960c21b38c95d6bfef4772af7f963c4f4868e5e2d9aef6b99c1d51bab55bf45e0e6e6b5ed4",
+    "side": "both",
+    "size": 3642581,
+    "source": "modrinth",
+    "url": "https://cdn.modrinth.com/data/l6YH9Als/versions/v5qtqRQi/spark-1.10.124-neoforge.jar",
+    "version": "v5qtqRQi",
+    "versionNumber": "1.10.124-neoforge-1.21.1"
+   }
+  },
+  {
    "action": "repoint",
    "metafile": "mods/storagedrawers.pw.toml",
    "old": {
