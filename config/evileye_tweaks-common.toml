@@ -19,3 +19,13 @@
 	recursiveOpeningMaxBlocksDistance = 10
 	#Block ids (namespace:path) that never sync.
 	doorBlockBlacklist = []
+
+[pickup]
+	#Tell clients with Evil Eye Client about items a backpack or similar mod took from an item
+	#entity while it was being picked up, so the pick-up log shows them too.
+	backpackReceipts = true
+
+[food]
+	#Send each player's saturation and exhaustion to clients with Evil Eye Client when they change,
+	#so food overlays show the real values.
+	syncFoodSnapshots = true

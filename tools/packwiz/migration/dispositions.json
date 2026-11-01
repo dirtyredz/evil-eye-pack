@@ -163,6 +163,30 @@
   "mods/radium-reforged.pw.toml": {
    "action": "drop",
    "reason": "Create 6.0.10's neoforge.mods.toml declares radium incompatible (FML refuses to load both); Create is core content. Revisit if a later Create build lifts it."
+  },
+  "mods/yeetusexperimentus.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.1.0 (warnings/: experimental-settings prompts skipped without changing world lifecycle or saved flags). Client-only; no blocks, items, config or world data."
+  },
+  "mods/pick-up-notifier.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.1.0 (pickup/: pick-up log with Pick Up Notifier 21.1.1 defaults; untracked upstream config, defaults carried) and Evil Eye Tweaks 0.3.0 (pickup/: backpack receipts). No blocks, items or world data."
+  },
+  "mods/stylish-effects.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.1.0 (effects/: compact HUD and screen widgets carrying config/stylisheffects-client.toml into config/evileye_client-client.toml [effects]). Client-only; no world data."
+  },
+  "mods/colorful-hearts.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.1.0 (health/: coloured heart rows and status palettes, tinted from the active pack hearts; config/colorfulhearts.toml carried into [health]). Client-only; no world data."
+  },
+  "mods/enchantment-descriptions.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.1.0 (tooltips/enchantments/: same key convention, original vanilla descriptions; config/enchdesc.json was an obsolete format, effective defaults carried into [enchantments]). No world data."
+  },
+  "mods/appleskin.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.1.0 (food/: overlays, previews, tooltips, F3; config/appleskin-client.toml carried into [food]; Thirst Was Taken AppleSkin-gated overlays redrawn by its thirst adapter) and Evil Eye Tweaks 0.3.0 (food/: saturation/exhaustion snapshots). No world data."
   }
  },
  "additions": [
@@ -295,11 +319,23 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.2.0.jar",
-    "sha256": "f88a3ceea8d65231d2edef1e24d9b01a0dfd34d75d7fefa4f1f4412ebbf79527",
-    "size": 40265
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.3.0.jar",
+    "sha256": "14931de8c364e996ff46866f17594ef8a155523961b0b60b87c816caac6499b6",
+    "size": 56868
    },
-   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 5d69238, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors, replacing Fuel Goes Here, Double Doors and Collective (consolidation wave 1)."
+   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 49cd785, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), plus pick-up receipts and food snapshots for Evil Eye Client (wave 2)."
+  },
+  {
+   "metafile": "mods/evileye-client.pw.toml",
+   "name": "Evil Eye Client",
+   "side": "client",
+   "target": {
+    "source": "local",
+    "filename": "evileye_client-1.21.1-neoforge-0.1.0.jar",
+    "sha256": "dd2baefd352f64ebbc3db11f3015d9bcd03bd2a98d3843b37230bbc40b21098d",
+    "size": 178553
+   },
+   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient 790adbb, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2)."
   },
   {
    "metafile": "mods/spark.pw.toml",

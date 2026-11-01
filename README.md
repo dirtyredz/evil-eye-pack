@@ -50,9 +50,9 @@ mention REI describe how those lists were first built and were migrated to EMI u
 - One config file (`resourceful-config-web.json`) was excluded because it contained a web-config
   password; Resourceful Config's web server is left disabled by default anyway.
 - Curios 5.x draws its slot panel inside the vanilla inventory screen, so the
-  `curios:curios_container` entry in Stylish Effects' `menu_blacklist` does not prevent overlap.
-  Keep `screen_side = "RIGHT"` under `[renderers.inventory_renderer]` in
-  `config/stylisheffects-client.toml`.
+  `curios:curios_container` entry in the effect widgets' `menuBlacklist` does not prevent overlap.
+  Keep `screenSideRight = true` under `[effects.inventory]` in
+  `config/evileye_client-client.toml` (Evil Eye Client; was Stylish Effects).
 - Wither bones use Ice and Fire's: the permanent KubeJS tag policy supplies `forge:wither_bones`, and BHC's code-driven bone drop is disabled. See [duplicate cleanup](docs/duplicate-cleanup.md).
 - Dragon griefing is set to `2`, which Ice and Fire defines as **no griefing** (not weak-block griefing). Tamed griefing, stuck digging, Cyclops griefing and Sea Serpent griefing are disabled.
 - AdLODs iron/copper deposits have half the size (350-700 blocks) and half the frequency (rarity 2040/2904), yielding roughly one quarter of their previous added ore volume. Vanilla ore generation is unchanged. Zinc deposits use explicit Create ore IDs. These generation changes and rarer Myrmex colonies affect new chunks; the colony cap is now 30.

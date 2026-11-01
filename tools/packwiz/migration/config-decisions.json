@@ -65,7 +65,12 @@
   {
    "match": "config/evileye_tweaks-common.toml",
    "treatment": "preserve-intent",
-   "reason": "Evil Eye Tweaks 0.2.0 replaces Fuel Goes Here and Double Doors. Door values carry the Double Doors 7.5 settings the Trial generated in config/serilum/doubledoors.json (doors on, gates and trapdoors off, recursive on, distance 10, empty blacklist; Quark check dropped, Quark absent). Bytes are the NeoForge-written file (LF), so the mod does not rewrite it."
+   "reason": "Evil Eye Tweaks 0.3.0 replaces Fuel Goes Here and Double Doors and adds the pick-up receipt and food snapshot producers for Evil Eye Client. Door values carry the Double Doors 7.5 settings the Trial generated in config/serilum/doubledoors.json (doors on, gates and trapdoors off, recursive on, distance 10, empty blacklist; Quark check dropped, Quark absent); [pickup] backpackReceipts and [food] syncFoodSnapshots on (Pick Up Notifier backpack integration and AppleSkin sync were on). Bytes are the NeoForge-written file (LF), so the mod does not rewrite it."
+  },
+  {
+   "match": "config/evileye_client-client.toml",
+   "treatment": "preserve-intent",
+   "reason": "Evil Eye Client 0.1.0 replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin. Carries config/stylisheffects-client.toml, config/colorfulhearts.toml and config/appleskin-client.toml values exactly, enchdesc and Pick Up Notifier effective defaults, and suppresses experimental warnings as Yeetus did. Bytes are the NeoForge-written default file (LF; the defaults equal the pack values), so the mod does not rewrite it."
   },
   {
    "match": "config/",
@@ -129,6 +134,30 @@
    "file": "config/letmedespawn.json",
    "treatment": "removed",
    "reason": "Let Me Despawn migrates letmedespawn.json to config/letmedespawn/letmedespawn.json5 on 1.21.1 and renames the old file .migrated; the old file held defaults."
+  },
+  {
+   "file": "config/appleskin-client.toml",
+   "treatment": "replaced",
+   "by": "config/evileye_client-client.toml",
+   "reason": "AppleSkin replaced by Evil Eye Client; every value (all switches on, flash alpha 0.65) carried into [food] of config/evileye_client-client.toml."
+  },
+  {
+   "file": "config/colorfulhearts.toml",
+   "treatment": "replaced",
+   "by": "config/evileye_client-client.toml",
+   "reason": "Colorful Hearts replaced by Evil Eye Client; the health and absorption palettes (vanilla first row, row colours, status colours) carried into [health] of config/evileye_client-client.toml."
+  },
+  {
+   "file": "config/enchdesc.json",
+   "treatment": "replaced",
+   "by": "config/evileye_client-client.toml",
+   "reason": "Enchantment Descriptions replaced by Evil Eye Client; the file used a key format the 1.21.1 jar no longer read, so its effective defaults (enabled, every item, no Shift, dark grey) are carried into [enchantments]."
+  },
+  {
+   "file": "config/stylisheffects-client.toml",
+   "treatment": "replaced",
+   "by": "config/evileye_client-client.toml",
+   "reason": "Stylish Effects replaced by Evil Eye Client; HUD and screen renderer settings, menu blacklist and compact/small widget styles carried into [effects] of config/evileye_client-client.toml."
   }
  ],
  "deferred": "All seven owned ports restored 2026-10-30; no parked files remain. See deferred/README.md for restoration history."

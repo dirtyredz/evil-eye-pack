@@ -570,3 +570,30 @@ data, so no conversion is needed.
 (`config/serilum/doubledoors.json`: doors on, gates/trapdoors off, recursive on, distance 10, empty
 blacklist; all upstream defaults). The file is the NeoForge-written bytes (LF), so the mod does not rewrite
 it. Physical mod metafiles: 191 to 189. Not yet run: a pack-test boot and the owner walk.
+
+## Evil Eye Client 0.1.0 and Evil Eye Tweaks 0.3.0 pins: six presentation mods removed (2026-11-01)
+
+Consolidation wave 2 ([mod-consolidation.md](mod-consolidation.md)). Two private `metadata:local` pins,
+stored hash-addressed and by filename in the shared migration cache and the Trial walkthrough's job cache
+(`jobs/2026-10-31-world-trial-final/cache`):
+
+| Pin | Source | SHA-256 | Bytes |
+|---|---|---|---|
+| `evileye_client-1.21.1-neoforge-0.1.0.jar` (side client) | minecraft-mods `mods/EvilEyeClient` 790adbb | `dd2baefd352f64ebbc3db11f3015d9bcd03bd2a98d3843b37230bbc40b21098d` | 178,553 |
+| `evileye_tweaks-1.21.1-neoforge-0.3.0.jar` (side both) | minecraft-mods `mods/EvilEyeTweaks` 49cd785 | `14931de8c364e996ff46866f17594ef8a155523961b0b60b87c816caac6499b6` | 56,868 |
+
+Lock drops: Yeetus Experimentus 87.0.0, Pick Up Notifier 21.1.1, Stylish Effects 21.1.3, Colorful
+Hearts 10.5.9, Enchantment Descriptions 21.1.11, AppleSkin 3.0.9. Their ids join pack-test
+`removedMods`; `evileye_client` is client-only and is not in `requiredMods` (the pack test boots a
+dedicated server). Library closure (`jobs/2026-11-01-evileye-client-wave2/library-closure.json`, every
+lock jar plus nested jar-in-jar and both owned jars): Puzzles Lib is still used by Diagonal Fences and Pro
+Placer, Prickle and Bookshelf by AttributeFix (a declared requirement `migrate.mjs resolve` caught after
+the closure script missed it), so all three stay. ImmediatelyFast's AppleSkin batching mixin and Thirst Was
+Taken's AppleSkin overlays are optional and gated on AppleSkin; Evil Eye Client redraws Thirst's.
+
+Configs: `config/evileye_client-client.toml` (NeoForge-written default bytes, LF; the defaults equal the
+pack's Stylish Effects, Colorful Hearts and AppleSkin values and the effective Enchantment Descriptions and
+Pick Up Notifier defaults) replaces the four upstream files; `config/evileye_tweaks-common.toml` gains
+`[pickup] backpackReceipts` and `[food] syncFoodSnapshots` (both on). `colorfulhearts.toml` and
+`enchdesc.json` leave the preserve list. No keybindings were involved. Physical mod metafiles: 189 to 184.
+Not yet run: a pack-test boot and the owner walk.

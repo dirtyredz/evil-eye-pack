@@ -1,0 +1,280 @@
+#World creation and loading prompts.
+[warnings]
+	#Skip the experimental-settings warnings when creating or opening a world. The world itself is unchanged.
+	suppressExperimentalWarnings = true
+
+#Enchantment descriptions under each enchantment in item tooltips.
+[enchantments]
+	#Show descriptions.
+	enabled = true
+	#Only on enchanted books.
+	onlyOnBooks = false
+	#Only while the enchanting table is open.
+	onlyInEnchantingTable = false
+	#Only while Shift is held.
+	requireShift = false
+	#Text colour: a Minecraft colour name or #RRGGBB.
+	color = "dark_gray"
+
+#Food values on the HUD, in tooltips and in F3.
+[food]
+	#Show the hunger (and saturation) held food would restore.
+	showFoodValuesHudOverlay = true
+	#Show exhaustion as a bar behind the hunger icons.
+	showFoodExhaustionHudUnderlay = true
+	#Peak opacity of the flashing previews.
+	# Default: 0.65
+	# Range: 0.0 ~ 1.0
+	maxHudOverlayFlashAlpha = 0.65
+	#Overlays shake with the vanilla icons.
+	showVanillaAnimationsOverlay = true
+	#Add hunger, saturation and exhaustion to the F3 screen.
+	showFoodStatsInDebugOverlay = true
+	#Food values in tooltips while Shift is held.
+	showFoodValuesInTooltip = true
+	#Food values in tooltips always.
+	showFoodValuesInTooltipAlways = true
+	#Show the health held food would restore.
+	showFoodHealthHudOverlay = true
+	#Show current saturation over the hunger bar.
+	showSaturationHudOverlay = true
+	#Previews also use food held in the off hand.
+	showFoodValuesHudOverlayWhenOffhand = true
+
+#Pick-up log: what you picked up, in a screen corner.
+[pickup]
+	#Log items.
+	includeItems = true
+	#Log experience orbs.
+	includeExperience = true
+	#Log arrows picked back up.
+	includeArrows = true
+	#Show experience points gained instead of the number of orbs.
+	experienceValue = true
+	#Log nothing in creative mode.
+	disableInCreative = false
+	#ALWAYS: same item merges; EXCLUDE_NAMED: also needs the same name and rarity; NEVER: one line per pick-up.
+	#Allowed Values: ALWAYS, NEVER, EXCLUDE_NAMED
+	combineEntries = "EXCLUDE_NAMED"
+	#Ticks an entry stays. 0 keeps entries until newer ones push them out.
+	# Default: 80
+	# Range: > 0
+	displayTime = 80
+	#Outdated entries slide off the screen edge instead of vanishing in place.
+	moveOutOfScreen = true
+	#Ticks the slide takes (never longer than displayTime).
+	# Default: 20
+	# Range: > 0
+	moveTime = 20
+	#Text fades while it slides away.
+	fadeAway = true
+	#Draw the item or orb next to the text.
+	drawSprites = true
+	#Text colour for common items, and for all items when rarity is ignored.
+	#Allowed Values: BLACK, DARK_BLUE, DARK_GREEN, DARK_AQUA, DARK_RED, DARK_PURPLE, GOLD, GRAY, DARK_GRAY, BLUE, GREEN, AQUA, RED, LIGHT_PURPLE, YELLOW, WHITE
+	textColor = "WHITE"
+	#Never colour entries by item rarity.
+	ignoreRarity = false
+	#Screen corner the log grows from.
+	#Allowed Values: TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+	screenCorner = "BOTTOM_RIGHT"
+	#Distance from the side edge.
+	# Default: 8
+	# Range: > 0
+	offsetX = 8
+	#Distance from the top or bottom edge.
+	# Default: 4
+	# Range: > 0
+	offsetY = 4
+	#Share of the screen height the log may fill.
+	# Default: 0.5
+	# Range: 0.0 ~ 1.0
+	maxHeight = 0.5
+	#Entry size; 6 matches the GUI scale, lower fits more rows.
+	# Default: 4
+	# Range: 1 ~ 24
+	scale = 4
+	#Where the amount shows: OFF, SPRITE (on the icon), TEXT ("x3"), BOTH.
+	#Allowed Values: OFF, SPRITE, TEXT, BOTH
+	displayAmount = "TEXT"
+	#Add how many you now hold in total.
+	inventoryCount = false
+	#Show the amount for single items too.
+	displaySingleCount = true
+	#Backdrop: NONE, CHAT (like chat lines) or TOOLTIP.
+	#Allowed Values: NONE, CHAT, TOOLTIP
+	entryBackground = "NONE"
+	#Show the item name.
+	displayItemName = true
+
+#Status-effect widgets.
+[effects]
+
+	#In-world widgets.
+	[effects.hud]
+		#NONE, GUI_SMALL or GUI_COMPACT.
+		#Allowed Values: NONE, GUI_SMALL, GUI_COMPACT
+		rendererType = "GUI_COMPACT"
+		#Widgets grow from the right edge.
+		screenSideRight = true
+		#Distance from the side edge.
+		# Default: 3
+		# Range: 0 ~ 1024
+		offsetX = 3
+		#Distance from the top edge.
+		# Default: 3
+		# Range: 0 ~ 1024
+		offsetY = 3
+		#Widgets per row.
+		# Default: 5
+		# Range: 1 ~ 255
+		maxColumns = 5
+		#Rows before widgets start to overlap.
+		# Default: 255
+		# Range: 1 ~ 255
+		maxRows = 255
+		#Horizontal gap between widgets.
+		# Default: 1
+		# Range: 0 ~ 64
+		widgetSpaceX = 1
+		#Vertical gap between rows.
+		# Default: 1
+		# Range: 0 ~ 64
+		widgetSpaceY = 1
+		#Widget opacity.
+		# Default: 0.85
+		# Range: 0.0 ~ 1.0
+		widgetAlpha = 0.85
+		#Widget size; 4 is unscaled.
+		# Default: 4.0
+		# Range: 1.0 ~ 12.0
+		scale = 4.0
+		#Hide effects applied without particles or icon (for example by commands).
+		respectHideParticles = true
+		#Hide effects with infinite duration.
+		hideInfiniteEffects = false
+		#Use the small widget when the compact one does not fit.
+		allowFallback = false
+
+	#Widgets beside container screens.
+	[effects.inventory]
+		#NONE, GUI_SMALL or GUI_COMPACT.
+		#Allowed Values: NONE, GUI_SMALL, GUI_COMPACT
+		rendererType = "GUI_COMPACT"
+		#Widgets sit right of the menu (left when false).
+		screenSideRight = true
+		#Minimum distance from the screen border.
+		# Default: 3
+		# Range: 0 ~ 1024
+		screenBorderDistance = 3
+		#Widgets per row.
+		# Default: 5
+		# Range: 1 ~ 255
+		maxColumns = 5
+		#Rows before widgets start to overlap.
+		# Default: 255
+		# Range: 1 ~ 255
+		maxRows = 255
+		#Horizontal gap between widgets.
+		# Default: 1
+		# Range: 0 ~ 64
+		widgetSpaceX = 1
+		#Vertical gap between rows.
+		# Default: 1
+		# Range: 0 ~ 64
+		widgetSpaceY = 1
+		#Widget opacity.
+		# Default: 1.0
+		# Range: 0.0 ~ 1.0
+		widgetAlpha = 1.0
+		#Widget size; 4 is unscaled.
+		# Default: 4.0
+		# Range: 1.0 ~ 12.0
+		scale = 4.0
+		#Hide effects applied without particles or icon (for example by commands).
+		respectHideParticles = false
+		#Hide effects with infinite duration.
+		hideInfiniteEffects = false
+		#Use the small widget when the compact one does not fit.
+		allowFallback = true
+		#Show widgets beside every container screen, not only the inventory.
+		effectsEverywhere = true
+		#Menu types that never show widgets: namespace:path, or namespace:* for a whole mod.
+		menuBlacklist = ["curios:curios_container", "tconstruct:*", "mekanism:*"]
+		#Hovering a widget shows the effect name and description.
+		hoveringTooltip = true
+		#The tooltip includes the remaining time.
+		tooltipDuration = true
+
+	#Compact widget (29x24, full duration).
+	[effects.compactWidget]
+		#Amplifier digit colour: a Minecraft colour name, #RRGGBB, or EFFECT.
+		amplifierColor = "WHITE"
+		#The icon blinks during the last 10 seconds.
+		blinkingAlpha = true
+		#Durations like 5m instead of 4:59.
+		compactDuration = false
+		#Blue border for beneficial, red for harmful effects.
+		qualityBorder = false
+		#Show the duration of ambient (beacon) effects.
+		ambientDuration = false
+		#Corner for the amplifier digit: NONE, TOP_LEFT, TOP_RIGHT.
+		#Allowed Values: NONE, TOP_LEFT, TOP_RIGHT
+		effectAmplifier = "TOP_LEFT"
+		#Cyan border for ambient effects.
+		ambientBorder = true
+		#Harmful effects start a new row.
+		separateEffects = false
+		#Duration colour: a Minecraft colour name, #RRGGBB, or EFFECT.
+		durationColor = "GRAY"
+		#No symbol for infinite durations.
+		hideInfiniteDuration = false
+
+	#Small widget (24x24, short duration).
+	[effects.smallWidget]
+		#Amplifier digit colour: a Minecraft colour name, #RRGGBB, or EFFECT.
+		amplifierColor = "WHITE"
+		#The icon blinks during the last 10 seconds.
+		blinkingAlpha = true
+		#Blue border for beneficial, red for harmful effects.
+		qualityBorder = false
+		#Show the duration of ambient (beacon) effects.
+		ambientDuration = false
+		#Corner for the amplifier digit: NONE, TOP_LEFT, TOP_RIGHT.
+		#Allowed Values: NONE, TOP_LEFT, TOP_RIGHT
+		effectAmplifier = "TOP_LEFT"
+		#Cyan border for ambient effects.
+		ambientBorder = true
+		#Harmful effects start a new row.
+		separateEffects = false
+		#Duration colour: a Minecraft colour name, #RRGGBB, or EFFECT.
+		durationColor = "GRAY"
+		#No symbol for infinite durations.
+		hideInfiniteDuration = false
+
+#Coloured hearts. Changing colours takes effect after a resource reload (F3+T).
+[health]
+
+	[health.hearts]
+		#The first row uses the resource pack's own hearts.
+		vanillaHearts = true
+		#One colour per further row of 10 hearts.
+		colors = ["#F06E14", "#F5DC23", "#2DB928", "#1EAFBE", "#7346E1", "#FA7DEB", "#EB375A", "#FF8278", "#AAFFFA", "#EBEBFF"]
+		#While poisoned. One or two colours; with one, the first row keeps the resource pack's own heart (extra colours are ignored).
+		poisonedColors = ["#739B00"]
+		#While withered. One or two colours; with one, the first row keeps the resource pack's own heart (extra colours are ignored).
+		witheredColors = ["#0F0F0F"]
+		#While freezing. One or two colours; with one, the first row keeps the resource pack's own heart (extra colours are ignored).
+		frozenColors = ["#3E70E6"]
+
+	[health.absorption]
+		#The first row uses the resource pack's own hearts.
+		vanillaHearts = true
+		#One colour per further row of 10 hearts.
+		colors = ["#E1FA9B", "#A0FFAF", "#AAFFFA", "#AACDFF", "#D7B4FF", "#FAA5FF", "#FFB4B4", "#FFAA7D", "#D7F0FF", "#EBFFFA"]
+		#While poisoned. Two alternating colours (extra colours are ignored).
+		poisonedColors = ["#BFF230", "#7AA15A"]
+		#While withered. Two alternating colours (extra colours are ignored).
+		witheredColors = ["#787061", "#73625C"]
+		#While freezing. Two alternating colours (extra colours are ignored).
+		frozenColors = ["#90D136", "#36D183"]

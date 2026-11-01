@@ -13,7 +13,7 @@ does not count. Full program plan: `artifacts/minecraft-mods/jobs/2026-11-01-evi
 | Wave | Candidates (target) | Status |
 |---|---|---|
 | 1 | Fuel Goes Here, Double Doors (T), Collective after closure | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.2.0 local pin, three drops; owner walk pending |
-| 2 | Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions, AppleSkin (C, with T producers) | not started |
+| 2 | Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions, AppleSkin (C, with T producers) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.1.0 and Tweaks 0.3.0 local pins, six drops; Bookshelf kept (AttributeFix requires it); owner walk pending |
 | 3 | Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks, Crafting Tweaks | not started |
 | 4 | AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps, Let Me Despawn (T) | not started |
 | 5 | FTB Essentials (E; mandatory saved-data migration) | not started |
@@ -34,6 +34,7 @@ are removed only after a full dependency and consumer audit.
 |---|---|
 | Before wave 1 (2026-11-01, after Light Overlay removal) | 191 |
 | After wave 1 | 189 |
+| After wave 2 | 184 |
 
 ## Rules
 
@@ -44,3 +45,19 @@ are removed only after a full dependency and consumer audit.
   `fuelgoeshere:forced_fuels`), and never list such a namespace in pack-test `removedMods`.
 - Translate real configs and keybindings before deleting old files; record each added config in
   `tools/packwiz/migration/config-decisions.json`.
+
+## Wave 2 notes
+
+- **EvilEyeClient** (`evileye_client`, side `client`) holds the presentation; **EvilEyeTweaks 0.3.0**
+  adds the server producers (pick-up receipts for backpack/Dank absorption, saturation/exhaustion
+  snapshots). They talk through optional payloads and inter-mod sinks; neither compiles against the other.
+- **Bookshelf stays**: AttributeFix declares it required (it was expected to be orphaned by Enchantment
+  Descriptions). It can go with AttributeFix in wave 4. Puzzles Lib (Diagonal Fences, Pro Placer) and
+  Prickle (AttributeFix) also stay.
+- **Thirst Was Taken** only drew its quenched overlay, drink preview, thirst exhaustion bar and drink
+  tooltips when AppleSkin was installed; Evil Eye Client redraws them (`integration/thirst/`).
+- **Resource paths kept**: the food sheet stays at `appleskin:textures/icons.png` so CozyUI+'s re-skin
+  applies; coloured hearts are tinted from the active pack's hearts, so New Hearts' shapes carry to
+  every row.
+- Configs: `stylisheffects-client.toml`, `colorfulhearts.toml`, `appleskin-client.toml` and
+  `enchdesc.json` are carried into `config/evileye_client-client.toml` (see config-decisions).

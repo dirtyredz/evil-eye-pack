@@ -2,6 +2,16 @@
 
 Newest first.
 
+## 2026-11-01 - Wave 2: presentation mods become Evil Eye Client
+
+**Decision.** Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment
+Descriptions and AppleSkin are replaced by the owned client-only Evil Eye Client 0.1.0, with server data
+(backpack pick-up receipts, saturation/exhaustion) from Evil Eye Tweaks 0.3.0. Effective settings are carried
+into `config/evileye_client-client.toml`; AppleSkin's texture path is kept so CozyUI+ still re-skins the food
+sheet; coloured hearts derive from the active pack's (New Hearts) sprites. Bookshelf is kept because
+AttributeFix requires it. **Rejected:** keeping AppleSkin for Thirst Was Taken's overlays (redrawn by the
+client mod instead); dropping Bookshelf (would break AttributeFix).
+
 ## 2026-11-01 - Replace small mods with owned mods, wave by wave
 
 **Decision.** Small gameplay/presentation/compat mods are replaced by three owned mods (EvilEyeTweaks,

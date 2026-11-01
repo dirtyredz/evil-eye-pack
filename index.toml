@@ -989,11 +989,6 @@ file = "config/alexsmobs/warped_toad_spawns.json"
 hash = "72126b26d7f3ae03b80df97dd103e0cec87d10829e86ac8b08da23abc7b318d8"
 
 [[files]]
-file = "config/appleskin-client.toml"
-hash = "28c6ad7570268b02ec6f73fb7c39c49ecf90f0697d0db9447899e8aa96285200"
-preserve = true
-
-[[files]]
 file = "config/ars_creo-common.toml"
 hash = "c92169df182d9d3a54f36e82c7175c33445c716c7d6e73e6dfbd7e79158fcfc3"
 preserve = true
@@ -1645,11 +1640,6 @@ hash = "0a41518641bbb4133fc61b934e8663ae5271ffd8190a281e5b35d1efd97fb3e3"
 preserve = true
 
 [[files]]
-file = "config/colorfulhearts.toml"
-hash = "2d138398c8d200fde46d582b593bc9d7ac10014ae9e0e0306d23a56c77cbcfca"
-preserve = true
-
-[[files]]
 file = "config/connectivity.json"
 hash = "d1f6a792a03e4b2ccec19ba00098db7d4c47fa3f3888b534cba2247a045cfd64"
 preserve = true
@@ -1769,11 +1759,6 @@ hash = "b949dd47d254d6f6721be9c59af63899d82390a8b019e83918b9ee9489acebac"
 preserve = true
 
 [[files]]
-file = "config/enchdesc.json"
-hash = "69e1df6089b71c3c2fe2c7cf6760937094fd22434111f527229a9fcea3f90bc5"
-preserve = true
-
-[[files]]
 file = "config/enderchests-client.toml"
 hash = "48558d9295f4a20fbeb4795bf264890094adaf7df1939d29589349f68099680f"
 preserve = true
@@ -1823,8 +1808,13 @@ file = "config/everlastingabilities-common.toml"
 hash = "19e1a12a90c2b6c0df9fb3152c19a21eb4c9d84c49d496377eacfca0855b324f"
 
 [[files]]
+file = "config/evileye_client-client.toml"
+hash = "813cb7c616916eb885ec25fdef0335ae4dac2a744cbcd3bd45e4a6158b5753b8"
+preserve = true
+
+[[files]]
 file = "config/evileye_tweaks-common.toml"
-hash = "787814590e9585d940d26798adf00d1077db1cd4cfc7e0328602bc21c8512b94"
+hash = "d8c3bf66f21e3c3da1c528a5db00d88831a75e373ae4c8f5de2071af3f08378d"
 
 [[files]]
 file = "config/extremereactors/client.toml"
@@ -2323,11 +2313,6 @@ preserve = true
 [[files]]
 file = "config/structurize-client.toml"
 hash = "5b91f3a160dfe1048f5e4446da09eb7cd903e640fe39fadb25fb0d6612b82360"
-preserve = true
-
-[[files]]
-file = "config/stylisheffects-client.toml"
-hash = "45f715cf421a021992356c6bcca7b313865af727d49cb4520d790cc2b0a07aec"
 preserve = true
 
 [[files]]
@@ -4772,11 +4757,6 @@ hash = "bce3cfb2ca545a3b0cad83d8137f36b83b4c137dd4c6dae6e73d1783f78eb8ab"
 metafile = true
 
 [[files]]
-file = "mods/appleskin.pw.toml"
-hash = "3f910a2722d6884203aba5eee8f5c129ea3c2e0b78bc683b2d7b5604fec755f5"
-metafile = true
-
-[[files]]
 file = "mods/applied-energistics-2.pw.toml"
 hash = "4b78352cbccdb3400530955a3e1271b2a60aec604e26e2ecdbf840faf0457d47"
 metafile = true
@@ -4884,11 +4864,6 @@ metafile = true
 [[files]]
 file = "mods/cluttered.pw.toml"
 hash = "503569d1bccf50d580e517550e8f66574d881deac197f30fedb0a18ebb5d3ff4"
-metafile = true
-
-[[files]]
-file = "mods/colorful-hearts.pw.toml"
-hash = "57f8e906e0ec4815d1aceb9df17ccb026d74337aa6964737c0757eaf8ad86364"
 metafile = true
 
 [[files]]
@@ -5057,11 +5032,6 @@ hash = "67bb77eae0b644960be3b1074178ceb5d54facbb42f326981b9d94625238a54a"
 metafile = true
 
 [[files]]
-file = "mods/enchantment-descriptions.pw.toml"
-hash = "f9e6dd1d85322833d9d3440446e569340ef52e23a5ce2149ddedec1c49b24efc"
-metafile = true
-
-[[files]]
 file = "mods/ender-io.pw.toml"
 hash = "c1613456acb364fcc023dbdf16dff022cd01742eebc906f04b8b3b45899d9522"
 metafile = true
@@ -5102,13 +5072,18 @@ hash = "2dcbe0aa95aa627cbf4ced253984f3dae3f166ef54fe3dc57a8af6cd7e38266c"
 metafile = true
 
 [[files]]
+file = "mods/evileye-client.pw.toml"
+hash = "7d2de5611ea6a487ababce82e976b2c7352f7df7d6fbb14846e084508f496a0b"
+metafile = true
+
+[[files]]
 file = "mods/evileye-migration.pw.toml"
 hash = "2e84eb3c224b54e5e63a132e54ff790a4052a59b690ebce2de7834c4f991fdca"
 metafile = true
 
 [[files]]
 file = "mods/evileye-tweaks.pw.toml"
-hash = "f752a08a5556d424b5143c024cdf22a969074222e640bf23396641fd72a2df48"
+hash = "843d04574b7b1e0187de9b4e96ce85ac1d85b1f3c40236f7470112660e315a44"
 metafile = true
 
 [[files]]
@@ -5452,11 +5427,6 @@ hash = "3718e8a37d0dc2939cc350cce74bcb9c36b59f48baf4560e62804f7ca6478185"
 metafile = true
 
 [[files]]
-file = "mods/pick-up-notifier.pw.toml"
-hash = "985e76bc7102ebb55572abd9dd5a2e69ca0ea967cb8abcfa159ff2fdecb0d8e0"
-metafile = true
-
-[[files]]
 file = "mods/placebo.pw.toml"
 hash = "1762970777e293ba6d7a6a7b43dde2ac87604820e0fd90dd712beb744d068266"
 metafile = true
@@ -5582,11 +5552,6 @@ hash = "f05d9cd3bdaa15f67324165cd33b3a7a37967127ee0ebb5afa3ac02049954952"
 metafile = true
 
 [[files]]
-file = "mods/stylish-effects.pw.toml"
-hash = "335508a4dea6fa749ebb39169bc86cb6929eaf30c1afb66a84f3596906b7b82e"
-metafile = true
-
-[[files]]
 file = "mods/supermartijn642s-core-lib.pw.toml"
 hash = "52036d766eeb1b639503d237987878e7409933d5577d411b55b8b7a6633b5510"
 metafile = true
@@ -5649,11 +5614,6 @@ metafile = true
 [[files]]
 file = "mods/xaeros-world-map.pw.toml"
 hash = "62eaf7c193d20dbec89944f6e1401ce64a80d8d704830a988d24c1498d8316e2"
-metafile = true
-
-[[files]]
-file = "mods/yeetusexperimentus.pw.toml"
-hash = "7c6f2e38a6932f846738747fd6cff3af239748a84e89350f6c967c8ac72a65d6"
 metafile = true
 
 [[files]]
