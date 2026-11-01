@@ -4,6 +4,6 @@
     { "file": "config/inventoryprofilesnext/inventoryprofiles.json", "format": "json", "section": ["AutoRefillSettings"], "key": "auto_refill_enable_indicator_icons", "value": false },
     { "file": "config/inventoryprofilesnext/inventoryprofiles.json", "format": "json", "section": ["AutoRefillSettings"], "key": "auto_refill_enable_horbar_indicator_icons", "value": false },
     { "file": "config/amendments-client.toml", "format": "toml", "section": ["misc"], "key": "hotbar_slot_animation_speed", "value": 0.0 },
-    { "file": "config/flywheel-client.toml", "format": "toml", "section": [], "key": "backend", "value": "flywheel:instancing" }
+    { "file": "config/flywheel-client.toml", "format": "toml", "section": [], "key": "backend", "value": "DEFAULT" }
   ]
 }

@@ -1850,7 +1850,7 @@ preserve = true
 
 [[files]]
 file = "config/flywheel-client.toml"
-hash = "2494979f6fdd827c1bedc3bf1c165be69500c43665265df128308e4f60837672"
+hash = "cf802bcdb805f78b2254eca13ab89f0d36a2404124eeb4e743019f011c981807"
 preserve = true
 
 [[files]]
