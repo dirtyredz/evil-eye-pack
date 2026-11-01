@@ -23,7 +23,7 @@ global.evilEyeShowcaseCheck.checks.evileye_essentials = function (h) {
   var Profile = Java.loadClass('com.mojang.authlib.GameProfile')
   var UUID = Java.loadClass('java.util.UUID')
   var player = FPF.get(level, new Profile(UUID.fromString('5e5e5e5e-0000-4000-8000-00000000e5e5'), 'ees_showcase'))
-  function stand(x, z) { var at = h.pos(x, 1, z); player.moveTo(at.getX() + 0.5, at.getY(), at.getZ() + 0.5, 0, 0) }
+  function stand(x, z) { var at = h.pos(x, 1, z); player.setPos(at.getX() + 0.5, at.getY(), at.getZ() + 0.5) }  // moveTo(5 args) is ambiguous to Rhino
   function as(text, op) {
     var source = player.createCommandSourceStack().withSuppressedOutput()
     return global.evilEyeShowcaseCheck.runCommand(server, op ? source.withPermission(2) : source, text)
@@ -44,9 +44,8 @@ global.evilEyeShowcaseCheck.checks.evileye_essentials = function (h) {
   check(as('warp showcase') === 1, 'anyone uses /warp')
   check(as('delwarp showcase', true) === 1, 'the operator deletes it again')
 
-  check(as('trashcan') === 1, '/trashcan (the sidebar trash button) opens')
-  check(player.containerMenu !== player.inventoryMenu, 'the trash can menu is open')
-  player.closeContainer()
+  // NeoForge's FakePlayer never opens menus, so the screen itself is an owner check.
+  check(as('trashcan') === 1, '/trashcan (the sidebar trash button) runs')
 
   later(5, function () {
     check(h.invoke() === 1, 'rebuild succeeds')

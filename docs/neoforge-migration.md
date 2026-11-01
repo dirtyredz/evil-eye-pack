@@ -648,4 +648,4 @@ Lock drops: FTB Essentials 2101.1.10 and FTB Library 2101.1.39. `ftbessentials` 
 `config/sidebar_buttons.json` (which leaves the preserve list) are replaced by `config/evileye_essentials-common.toml`
 (NeoForge-written default bytes, LF; defaults equal the pack values) and Evil Eye Client's `[sidebar]`. A new
 `evileye_essentials` showcase section and headless check cover the commands. Physical mod metafiles: 164 to 163.
-Not yet run: a Trial sync and the owner walk.
+Showcase check `evileye_essentials` passed on the full NeoForge server (579/579 assertions, no script errors; `jobs/2026-11-01-evileye-essentials-wave5/showcase-ess-3`). Not yet run: a Trial sync and the owner walk.
