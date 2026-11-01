@@ -8,7 +8,7 @@ actual mod files from CurseForge/Modrinth on demand.
 Working on the pack (local test instances, worktrees, hashing): see
 [docs/development.md](docs/development.md).
 
-Recipe viewer: **EMI** with JEI (for its plugins) and Just Enough Professions, replacing REI. The item
+Recipe viewer: **EMI** with JEI (for its plugins) and Evil Eye Client's villager-professions category (which replaced Just Enough Professions), replacing REI. The item
 hide lists live in `config/emi-curation/` and are applied by `kubejs/client_scripts/emi_curation/`;
 see [docs/emi.md](docs/emi.md) and [docs/emi-coverage.md](docs/emi-coverage.md). The notes below that
 mention REI describe how those lists were first built and were migrated to EMI unchanged.

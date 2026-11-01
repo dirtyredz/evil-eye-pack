@@ -2,6 +2,19 @@
 
 Newest first.
 
+## 2026-11-01 - Wave 3: screens, input and first-install defaults become Evil Eye Client 0.2.0
+
+**Decision.** Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough
+Professions, Mouse Tweaks and Crafting Tweaks are replaced by Evil Eye Client 0.2.0, with Crafting Tweaks'
+grid actions performed by Evil Eye Tweaks 0.5.0 on the server; Searchables and Balm go with them after the
+closure check. `config/defaultoptions/` keeps its location and syntax (the keymap tooling and docs read it);
+the resource-pack policy moves to the pack-owned `config/evileye_client/resourcepacks.json` because the old
+preserved file never delivered corrections, and its ids are fixed for NeoForge (Eat Quiet's file name, Town
+Talk's `mod/towntalk:respack`). **Rejected:** keeping `key.craftingtweaks.*` names (a one-time import of saved
+bindings keeps the owner's choices without impersonating the removed mod); porting Crafting Tweaks' on-screen
+buttons and per-mod grid providers (the pack used HOTKEYS mode; AE2 terminals and other modded grids lose the
+grid keys until a provider is written).
+
 ## 2026-11-01 - Wave 4: gameplay rules become Evil Eye Tweaks 0.4.0
 
 **Decision.** AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps and Let Me Despawn are

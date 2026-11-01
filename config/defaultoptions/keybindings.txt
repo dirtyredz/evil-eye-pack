@@ -19,7 +19,7 @@ key_key.structurize.mirror:key.keyboard.insert
 key_key.dragon_change_view:key.keyboard.f8
 key_key.dragon_strike:key.keyboard.end
 key_key.guideme.guide:key.keyboard.g
-key_key.craftingtweaks.compress_stack:key.keyboard.k
+key_key.evileye_client.crafting.compress_stack:key.keyboard.k
 key_key.dankstorage.construction:key.keyboard.keypad.7
 key_key.dankstorage.pickup_mode:key.keyboard.keypad.6
 key_key.astikorcartsredux.slow:key.keyboard.right.control

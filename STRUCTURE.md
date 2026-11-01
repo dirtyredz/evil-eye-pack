@@ -97,7 +97,8 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `shaderpacks/` — shaderpack metafiles and saved shader options
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
 - `config/` — mod configs installed as plain files
-- `config/defaultoptions/keybindings.txt` — Default Options default keymap (new instances only; see GOTCHAS)
+- `config/defaultoptions/keybindings.txt` — default keymap applied by Evil Eye Client (Default Options syntax; new instances and unsaved keys only; see GOTCHAS)
+- `config/evileye_client/resourcepacks.json` — first-launch resource-pack order and required/force-compatible packs, read by Evil Eye Client
 - `config/emi-curation/` — EMI curation data: `rules.json`, seven explicit item lists (including `roundwood-legacy.json`, `alexsmobs-creative.json` and `iceandfire-creative.json`), `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
 - `defaultconfigs/` — default (per-world) server configs copied into new worlds (FTB Essentials); day length moved to `config/evileye_tweaks-common.toml` `[time]`
 - `kubejs/client_scripts/emi_curation/` — client scripts for the curated EMI views (diagnostics, collections, policy, interop, bounded index construction, views, hiding, session)

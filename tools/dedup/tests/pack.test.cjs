@@ -37,7 +37,7 @@ test('Mekanism steel is the only steel (no Dark Steel stand-in); BOP willow door
     assert.ok(sources[tag].includes('biomesoplenty:willow_trapdoor'), tag);
   }
   assert.equal(fs.existsSync(path.join(root, 'config/simplecorelib-common.toml')), false);
-  assert.ok(json('config/resourcepackoverrides.json').default_packs.includes('builtin/towntalk'));
+  assert.ok(json('config/evileye_client/resourcepacks.json').default_packs.includes('mod/towntalk:respack'));
 });
 
 test('keymap leaves no in-world clash among the keys fixed by the 2026-10-23 audit', () => {

@@ -615,3 +615,20 @@ pack-test `removedMods`; `hourglass` leaves `requiredMods` (Evil Eye Tweaks is r
 by sections of `config/evileye_tweaks-common.toml` (NeoForge-written default bytes, LF; defaults equal the
 pack values); `config/fallingtree.json` leaves the preserve list. Physical mod metafiles: 184 to 173.
 Not yet run: a pack-test boot and the owner walk.
+
+## Evil Eye Client 0.2.0 and Tweaks 0.5.0 pins: seven screen, input and crafting mods and two libraries removed (2026-11-01)
+
+Consolidation wave 3 ([mod-consolidation.md](mod-consolidation.md)). Two private `metadata:local` pins, stored
+hash-addressed and by filename in the shared migration cache and the Trial walkthrough's job cache:
+
+| Pin | Source | SHA-256 | Bytes |
+|---|---|---|---|
+| `evileye_client-1.21.1-neoforge-0.2.0.jar` (side client) | minecraft-mods `mods/EvilEyeClient` 7f40a0d | `635d1bda26561883190e565c56b94243608a5f62d4093903f3e1038635d7b560` | 333,902 |
+| `evileye_tweaks-1.21.1-neoforge-0.5.0.jar` (side both) | minecraft-mods `mods/EvilEyeTweaks` df4c4fd | `02820faa196c85dc65277f8be3494b1708ec4251f60114efcdf5659e2efa41c8` | 212,244 |
+
+Lock drops: Better Advancements 0.4.3.21, Controlling 19.0.5, Default Options 21.1.8, Resource Pack Overrides
+21.1.0, Just Enough Professions 4.0.5, Mouse Tweaks 2.26.1, Crafting Tweaks 21.1.11, and the libraries Searchables
+1.0.2 and Balm 21.0.66. Their ids join pack-test `removedMods`. Configs: see the wave-3 notes in
+mod-consolidation.md; `config/MouseTweaks.cfg` and `config/resourcepackoverrides.json` leave the preserve list
+(the new resource-pack policy is pack-owned, so installs receive corrections). Physical mod metafiles: 173 to
+164. Not yet run: a pack-test boot, a Trial sync and the owner walk.

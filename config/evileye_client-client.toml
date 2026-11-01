@@ -41,6 +41,15 @@
 	#Previews also use food held in the off hand.
 	showFoodValuesHudOverlayWhenOffhand = true
 
+#Crafting-grid keys and clicks; Evil Eye Tweaks on the server performs them.
+[crafting]
+	#The crafting keys (Controls > Key Binds > Crafting) act in crafting screens.
+	hotkeys = true
+	#Right-clicking a crafting result crafts a full stack onto the cursor.
+	rightClickCraftsStack = true
+	#Hide the recipe-book button on crafting screens (EMI and JEI replace it).
+	hideRecipeBookButton = true
+
 #Pick-up log: what you picked up, in a screen corner.
 [pickup]
 	#Log items.
@@ -278,3 +287,63 @@
 		witheredColors = ["#787061", "#73625C"]
 		#While freezing. Two alternating colours (extra colours are ignored).
 		frozenColors = ["#90D136", "#36D183"]
+
+#Full-size advancements screen.
+[advancements]
+	#Tint of the frame around the icon of an unfinished advancement (#RRGGBB).
+	uncompletedIconColor = "#FFFFFF"
+	#Tint of the unfinished part of the hover title bar (#RRGGBB).
+	uncompletedTitleColor = "#0489C1"
+	#Tint of the frame around the icon of a finished advancement (#RRGGBB).
+	completedIconColor = "#DBA213"
+	#Tint of the finished part of the hover title bar (#RRGGBB).
+	completedTitleColor = "#DBA213"
+	#Dim the tree while an advancement is hovered.
+	backgroundFade = true
+	#Show the tree coordinate under the mouse (for placing advancements).
+	showDebugCoordinates = false
+	#Sort tabs by title instead of the order the server sends them.
+	orderTabsAlphabetically = false
+	#Percent of the screen the window fills (1 to 100).
+	# Default: 100
+	# Range: 1 ~ 100
+	uiScaling = 100
+	#Criteria listed in the hover tooltip of a partly finished advancement: OFF (vanilla), DEFAULT (the ones obtained), SPOILER (only the missing ones), ALL (both).
+	#Allowed Values: OFF, DEFAULT, SPOILER, ALL
+	criteriaDetail = "DEFAULT"
+	#List criteria only while Shift is held.
+	criteriaDetailRequiresShift = false
+	#Join parent and child with one straight line instead of an elbow.
+	drawDirectLines = false
+	#Draw no connection lines.
+	hideLines = false
+	#Colour of lines leading to a finished advancement (#RRGGBB).
+	completedLineColor = "#FFFFFF"
+	#Colour of lines leading to an unfinished advancement (#RRGGBB).
+	uncompletedLineColor = "#FFFFFF"
+	#Colour the whole criterion, not just its + or x marker.
+	colorWholeCriteriaText = false
+	#How fast a criteria list too long for the screen pages through (1 to 10).
+	# Default: 3
+	# Range: 1 ~ 10
+	criteriaRotationSpeed = 3
+
+#Inventory gestures: drag to spread or gather items, scroll to move them.
+[gestures]
+	#Hold the right button with an item on the cursor and drag over slots to drop one item into each.
+	rmbDrag = true
+	#Hold the left button with an item and drag over slots to pick up matching stacks (with shift: quick-move them).
+	lmbDragWithItem = true
+	#Hold shift and the left button with an empty cursor and drag over slots to quick-move each.
+	lmbDragWithoutItem = true
+	#Scroll over a slot to move items between inventories one at a time.
+	wheel = true
+	#Slot order searched for a stack to pull from: FIRST_TO_LAST or LAST_TO_FIRST.
+	#Allowed Values: FIRST_TO_LAST, LAST_TO_FIRST
+	wheelSearchOrder = "LAST_TO_FIRST"
+	#NORMAL: scroll down pushes items away. INVERTED: scroll up pushes. INVENTORY_POSITION_AWARE: scrolling towards the other inventory pushes. INVENTORY_POSITION_AWARE_INVERTED: the opposite.
+	#Allowed Values: NORMAL, INVERTED, INVENTORY_POSITION_AWARE, INVENTORY_POSITION_AWARE_INVERTED
+	wheelScrollDirection = "NORMAL"
+	#PROPORTIONAL: the wheel amount decides how many items move. ALWAYS_ONE: one item per step.
+	#Allowed Values: PROPORTIONAL, ALWAYS_ONE
+	wheelItemScaling = "PROPORTIONAL"

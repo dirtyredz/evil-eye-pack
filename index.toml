@@ -5,11 +5,6 @@ file = "config/Mekanism/world.toml"
 hash = "2a52b6131e23f1f7ff30568f81067ddd44c4d7c804ed0c71288392b53389cfb9"
 
 [[files]]
-file = "config/MouseTweaks.cfg"
-hash = "4069ce1a439d8c37453c1b1e9f2037e0942674c7e48723a39b37eab245792ad4"
-preserve = true
-
-[[files]]
 file = "config/adchimneys-client.toml"
 hash = "49f87a4f3132ba06857b8d6293b60db84f715a2f704f90f86e4730eaa8bfae1f"
 preserve = true
@@ -1566,15 +1561,6 @@ hash = "780084fc61f4846a0ac7a7a79b8852bbee5b8082d8c4f262c122cf76f4a6e20b"
 preserve = true
 
 [[files]]
-file = "config/balm-common.toml"
-hash = "f24f7cede066400c657af13b1aff84e4920ac531bf24ab18cff1ef32fff72835"
-
-[[files]]
-file = "config/betteradvancements-client.toml"
-hash = "72d65e7e16a0067ea57b6f9275ade5245a0efcd151df0a21e26d4c820d068069"
-preserve = true
-
-[[files]]
 file = "config/bhc-common.toml"
 hash = "c19ef2ea00373877dd47653d891c2f6729843eb3e60427390eb8fc6cfd5ae2ef"
 
@@ -1650,10 +1636,6 @@ file = "config/cosmeticarmorreworked-common.toml"
 hash = "bbcc81de697b22295d1fb327a0fd0b1deebe86a33daba4713c341e15ecf89316"
 
 [[files]]
-file = "config/craftingtweaks-common.toml"
-hash = "c6347fa98fbcce48e5a5da63cfbffd7583a16daeea4642d4671e9f6cd28f7b20"
-
-[[files]]
 file = "config/create-client.toml"
 hash = "e08534fd349021a78c68ee3ace46bdbf2f8d28c50ed6a435431aa0cb2d047fee"
 preserve = true
@@ -1703,7 +1685,7 @@ hash = "a7444e9071ebe7e1306e83141f9b4c53fbd6f99730f9d29f587b959b54f07a82"
 
 [[files]]
 file = "config/defaultoptions/keybindings.txt"
-hash = "1d95ab02d60aabeda12632654efc2dfc5a76064e5ee8bb330a145f58eb846403"
+hash = "d8086bd292b21025ff087733f68d8df8ac8885c2b178ac1c3da3f54a0f08cf52"
 
 [[files]]
 file = "config/dramaticdoors-common.toml"
@@ -1805,12 +1787,16 @@ hash = "19e1a12a90c2b6c0df9fb3152c19a21eb4c9d84c49d496377eacfca0855b324f"
 
 [[files]]
 file = "config/evileye_client-client.toml"
-hash = "813cb7c616916eb885ec25fdef0335ae4dac2a744cbcd3bd45e4a6158b5753b8"
+hash = "7a840e9f070df4317bc596cae13a226ffef0230b49b3fad34f5491f27e33eac5"
 preserve = true
 
 [[files]]
+file = "config/evileye_client/resourcepacks.json"
+hash = "941dc9d96d79922dfec059567c30cb29a7edbd6b453c2ca595c07e1db37b148a"
+
+[[files]]
 file = "config/evileye_tweaks-common.toml"
-hash = "d0680bc186814801796a4b2272e265a6036ae07d8a93aa79fae460644d36cc18"
+hash = "e35e7a087bb4df6f32ded88492b464d4375b12ad1769094395f9bb7da4955ef4"
 
 [[files]]
 file = "config/extremereactors/client.toml"
@@ -2263,11 +2249,6 @@ hash = "58f7821842631af9ec8bcaddb60526b81cd1b9ad63cbba87c83c70e53c3a9b16"
 [[files]]
 file = "config/repurposed_structures-forge/modded_loot.toml"
 hash = "c21921f03014bdd061fc83803277218093d6b7c0a6175dd931d2d46045701a5f"
-
-[[files]]
-file = "config/resourcepackoverrides.json"
-hash = "c8965efbed3141ab8ad17b7f273f6874bb81a55ae925c675a16267fff7811157"
-preserve = true
 
 [[files]]
 file = "config/shetiphiancore-client.toml"
@@ -4779,18 +4760,8 @@ hash = "5d9bdb9a8bcd02fe6f867d52c52a8f20100422de6db324b02543a1d2aff362fa"
 metafile = true
 
 [[files]]
-file = "mods/balm.pw.toml"
-hash = "603cdc47142b5aa5729cbbf265a473574c9e2b55561de4318e9842d3d4b3b995"
-metafile = true
-
-[[files]]
 file = "mods/baubley-heart-canisters.pw.toml"
 hash = "bab7057ca78b619cae4bde7b35ceac1eb836e3858df95ef73bf4e4cfd6aa2b2e"
-metafile = true
-
-[[files]]
-file = "mods/better-advancements.pw.toml"
-hash = "bb2700ce31fc7cd121ecf07f106302303ee366b7573b77bbdd97eee955233cda"
 metafile = true
 
 [[files]]
@@ -4844,11 +4815,6 @@ hash = "89340330d49ebf646a46af0da4cd457c98e0dca4337490981421d86bfcd2fd94"
 metafile = true
 
 [[files]]
-file = "mods/controlling.pw.toml"
-hash = "65c8086d2ec3d39acc7bd36c7a0306ccc43b602b38fa07d13291bc478ef7dfff"
-metafile = true
-
-[[files]]
 file = "mods/cosmetic-armor-reworked.pw.toml"
 hash = "b65ee01fec17228645121952de6dec75053b0b4c59a8c8036d6fa7829819f3f9"
 metafile = true
@@ -4861,11 +4827,6 @@ metafile = true
 [[files]]
 file = "mods/cozys-improved-cats.pw.toml"
 hash = "8d08bc7a1dd2fa12e1579bd85f8cb4b9bb63b90229cd22d80bbad730458f1708"
-metafile = true
-
-[[files]]
-file = "mods/crafting-tweaks.pw.toml"
-hash = "b63999aa63a273098f42e22d8d5018c8617b8e2babdffc752d9aad3eefaaa76d"
 metafile = true
 
 [[files]]
@@ -4964,11 +4925,6 @@ hash = "66532136ecc977fd404def815cd18254f5c619e126c1c2aabc5aded6e00f5e6b"
 metafile = true
 
 [[files]]
-file = "mods/default-options.pw.toml"
-hash = "a6967d761dde867ccc1af53dc9f4e530eb9917a9cb21d0fc15708e8cd2c0f2ba"
-metafile = true
-
-[[files]]
 file = "mods/diagonal-fences.pw.toml"
 hash = "db153992e71c2c1ca7643ad93d11f1276cada2843879cd01909abef2f2ed9df9"
 metafile = true
@@ -5035,7 +4991,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "7d2de5611ea6a487ababce82e976b2c7352f7df7d6fbb14846e084508f496a0b"
+hash = "f9cac9440e972fd3a237eaadf9c723f08b22b7a55da1e109b0ee4d963f05fa27"
 metafile = true
 
 [[files]]
@@ -5045,7 +5001,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-tweaks.pw.toml"
-hash = "b5430f24187528f309c1d20e59141ed0df924b5b83b0cd581d1c29b7d3a98d93"
+hash = "541643a316970fcb2318ad9ac7999c8bcc720755ac4c9ba2a266d01a07b3f262"
 metafile = true
 
 [[files]]
@@ -5214,11 +5170,6 @@ hash = "a3d803079f7cba47f9d6bf728198f2c335a13938ef50bbdaa3f7ae2457bef58d"
 metafile = true
 
 [[files]]
-file = "mods/just-enough-professions-jep.pw.toml"
-hash = "bffd4067f92d5d8ed7a8a3acfdae213e9523ba5a518196cbd0a98d05e95fe6b6"
-metafile = true
-
-[[files]]
 file = "mods/kotlin-for-forge.pw.toml"
 hash = "712a69b3569a8055979de6eea262068535fe182dffb3833e53e5833e9cbf9766"
 metafile = true
@@ -5344,11 +5295,6 @@ hash = "1fae139080953d4ac5c894d72b7a8b205cd998dd347963c8ca295762995b32b8"
 metafile = true
 
 [[files]]
-file = "mods/mouse-tweaks.pw.toml"
-hash = "2bdee19bd39b4bd411d7c858a7978ca9d2bdda41c1cf15920ea6be0014663f79"
-metafile = true
-
-[[files]]
 file = "mods/multibeds.pw.toml"
 hash = "e626b451926303db68686850c834ae280cd1556c95b6e65304140166a7f7d20d"
 metafile = true
@@ -5409,11 +5355,6 @@ hash = "00e909b9e0ad9c7284a5f3c4b41add9211e1e89b35bfc6dcb514dd832d8a7ce8"
 metafile = true
 
 [[files]]
-file = "mods/resource-pack-overrides.pw.toml"
-hash = "b8101dca20d054277d99e75b43dd8db44dea64a761d2ab69fdda9f6d59d9e6f1"
-metafile = true
-
-[[files]]
 file = "mods/resourceful-lib.pw.toml"
 hash = "c0b066684294c33972d562e0cb08ea17b2d31bcf86cd1d6c63b8e968f0eac7a2"
 metafile = true
@@ -5431,11 +5372,6 @@ metafile = true
 [[files]]
 file = "mods/sable.pw.toml"
 hash = "fadb5c9cfe145e51992894fe57209fc8f1696ef892ee9702a24c6205f042e9b2"
-metafile = true
-
-[[files]]
-file = "mods/searchables.pw.toml"
-hash = "ce9ddada6ffd55a512149cc474c6a453281a997a5fdf1b7b4a2cc73f875e704a"
 metafile = true
 
 [[files]]

@@ -122,7 +122,7 @@ test('closure: missing, out of range, wrong loader, duplicate providers, client-
 });
 
 test('rendered metafiles keep packwiz layout for real pack files of each source', () => {
-  for (const f of ['mods/balm.pw.toml', 'mods/additional-lanterns.pw.toml', 'mods/culllessleaves-neoforge.pw.toml']) {
+  for (const f of ['mods/amendments.pw.toml', 'mods/additional-lanterns.pw.toml', 'mods/culllessleaves-neoforge.pw.toml']) {
     const text = fs.readFileSync(path.join(REPO, f), 'utf8');
     const o = oldIdentity(REPO, f);
     const t = { ...o, sha1: o.hash, sha256: o.hash, sha512: o.hash };

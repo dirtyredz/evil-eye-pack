@@ -218,6 +218,42 @@
   "mods/kiwi.pw.toml": {
    "action": "drop",
    "reason": "Library whose only consumer was Companion (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of every lock jar, 81 nested jar-in-jar and both owned jars (jobs/2026-11-01-evileye-tweaks-wave4/library-closure.json): no declared dependency on kiwi and no snownee/kiwi class reference outside the dropped mods; fabric_api_base, which Kiwi bundled, is still bundled by Sodium and Iris. No kiwi: ids in the converted world."
+  },
+  "mods/better-advancements.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.2.0 (screens/advancements/: full-size advancements screen with config/betteradvancements-client.toml's colours, background fade, criteria detail Default without Shift, ui scaling 100, unsorted tabs). Client-only; vanilla advancement ids and progress untouched; no world data."
+  },
+  "mods/controlling.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.2.0 (screens/controls/: Key Binds search by name/category/key, unbound and conflict filters, A-Z/Z-A sort, free-keys list, reset all with confirmation; vanilla editing). No config or saved data; bindings stay in options.txt."
+  },
+  "mods/default-options.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.2.0 (options/defaults/: config/defaultoptions/keybindings.txt becomes each listed key's default and its value where options.txt had none at startup; options.txt and servers.dat copied on a fresh instance). Same folder and file syntax, so the keymap needs no move; Crafting Tweaks keys saved under their old names carry over once."
+  },
+  "mods/resource-pack-overrides.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.2.0 (options/resourcepacks/: default_packs order on a first launch, Eat Quiet required, New Hearts force-compatible, failed-reload fallback, vanilla kept lowest). The policy moves from config/resourcepackoverrides.json (preserved, so stale ids never reached installs) to config/evileye_client/resourcepacks.json with the NeoForge pack ids corrected."
+  },
+  "mods/just-enough-professions-jep.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.2.0 (integration/professions/: JEI \"Professions\" category, every registered profession with a job-site block, villager model, emerald and spawn-egg catalysts; shown in EMI through its JEI bridge). No data."
+  },
+  "mods/mouse-tweaks.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Client 0.2.0 (inventory/gestures/: right-drag spread, left-drag gather or shift-move, shift-left-drag move, wheel transfer last-to-first, normal direction, proportional scaling: config/MouseTweaks.cfg's values). Only vanilla clicks, so the server validates every move; no data."
+  },
+  "mods/crafting-tweaks.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Tweaks 0.5.0 (inventory/crafting/: rotate, balance, spread, clear, refill last, compress/decompress with the sandstone and iron trapdoor denylist and grid-only compression, right-click stack crafting) and Evil Eye Client 0.2.0 (inventory/crafting/: the hotkeys, K/Ctrl+K/Shift+K and Tab/Ctrl+Tab, result right-click, hidden recipe-book button). Saved key_key.craftingtweaks.* bindings carry over once. No world data (only the level.dat mod list names it)."
+  },
+  "mods/searchables.pw.toml": {
+   "action": "drop",
+   "reason": "Library whose only consumer was Controlling (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of 254 jars (every lock jar, 79 nested jar-in-jar, both owned jars; jobs/2026-11-01-evileye-wave3/library-closure.json): no declared dependency and no com/blamejared/searchables class reference outside the dropped mods."
+  },
+  "mods/balm.pw.toml": {
+   "action": "drop",
+   "reason": "Library whose only consumers were Crafting Tweaks and Default Options (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of 254 jars (every lock jar, 79 nested jar-in-jar, both owned jars; jobs/2026-11-01-evileye-wave3/library-closure.json): no declared dependency; the one other net/blay09/mods/balm reference is Xaero's Minimap SupportWaystones, loaded only when Waystones is installed (it is not). config/balm-common.toml (Balm's example settings) goes with it."
   }
  },
  "additions": [
@@ -339,11 +375,11 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.4.0.jar",
-    "sha256": "c19581305e7cbeb4323c9aa037213465b88723dc788198be86cd979cfe14d037",
-    "size": 176281
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.5.0.jar",
+    "sha256": "02820faa196c85dc65277f8be3494b1708ec4251f60114efcdf5659e2efa41c8",
+    "size": 212244
    },
-   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 6e18c7f, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4)."
+   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks df4c4fd, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), crafting-grid actions for Evil Eye Client's crafting keys (wave 3), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4)."
   },
   {
    "metafile": "mods/evileye-client.pw.toml",
@@ -351,11 +387,11 @@
    "side": "client",
    "target": {
     "source": "local",
-    "filename": "evileye_client-1.21.1-neoforge-0.1.0.jar",
-    "sha256": "dd2baefd352f64ebbc3db11f3015d9bcd03bd2a98d3843b37230bbc40b21098d",
-    "size": 178553
+    "filename": "evileye_client-1.21.1-neoforge-0.2.0.jar",
+    "sha256": "635d1bda26561883190e565c56b94243608a5f62d4093903f3e1038635d7b560",
+    "size": 333902
    },
-   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient 790adbb, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2)."
+   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient 7f40a0d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' controls (wave 3)."
   },
   {
    "metafile": "mods/spark.pw.toml",

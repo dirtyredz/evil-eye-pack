@@ -846,7 +846,7 @@
    "rationale": "Replaced by the owned Evil Eye Tweaks 0.4.0 (entity/attributes/: the five one-million maxima AttributeFix 21.1.3 applied, set once at common setup before any world loads). config/attributefix.json used an obsolete format the 1.21.1 jar never read; the effective values were the jar's defaults. No world data."
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/balm.pw.toml",
    "old": {
     "filename": "balm-forge-1.20.1-7.3.44.jar",
@@ -860,39 +860,7 @@
     "version": "dDN38ae7"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "balm required minecraft [1.21.1,)",
-     "balm required neoforge [21.0.82-beta,)",
-     "kuma_api required minecraft [1.21,)",
-     "kuma_api required neoforge [21-beta,)"
-    ],
-    "filename": "balm-neoforge-1.21.1-21.0.66.jar",
-    "loader": "neoforge",
-    "metafile": "mods/balm.pw.toml",
-    "mods": [
-     "balm@21.0.66",
-     "kuma_api@21.0.8 (bundled)"
-    ],
-    "name": "Balm",
-    "project": "MBAkmtvl",
-    "publisher": {
-     "sha1": "dd3606a349f4a3c8fb5bd0ab22905675c02b0d74",
-     "sha512": "0262d51c0e931d10c3dccefb3b5426a1622edecab243d4b15dce07a23309641370184776739765067d292d808242d088c6fbf249762689824eff9ba42c2d1e63",
-     "size": 783793
-    },
-    "sha1": "dd3606a349f4a3c8fb5bd0ab22905675c02b0d74",
-    "sha256": "6be660e1f6d169553bf44f66d4f78bb9e96a1d66ce108d9608819e3ce6bfba34",
-    "sha512": "0262d51c0e931d10c3dccefb3b5426a1622edecab243d4b15dce07a23309641370184776739765067d292d808242d088c6fbf249762689824eff9ba42c2d1e63",
-    "side": "both",
-    "size": 783793,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/MBAkmtvl/versions/CquiaiDj/balm-neoforge-1.21.1-21.0.66.jar",
-    "version": "CquiaiDj",
-    "versionNumber": "21.0.66+neoforge-1.21.1"
-   }
+   "rationale": "Library whose only consumers were Crafting Tweaks and Default Options (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of 254 jars (every lock jar, 79 nested jar-in-jar, both owned jars; jobs/2026-11-01-evileye-wave3/library-closure.json): no declared dependency; the one other net/blay09/mods/balm reference is Xaero's Minimap SupportWaystones, loaded only when Waystones is installed (it is not). config/balm-common.toml (Balm's example settings) goes with it."
   },
   {
    "action": "repoint",
@@ -934,7 +902,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/better-advancements.pw.toml",
    "old": {
     "file": "8569648",
@@ -947,34 +915,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "beta",
-    "declares": [
-     "betteradvancements required minecraft [1.21.1, 1.22) (client)",
-     "betteradvancements required neoforge [21.1.0,) (client)"
-    ],
-    "file": "5850587",
-    "filename": "BetterAdvancements-NeoForge-1.21.1-0.4.3.21.jar",
-    "loader": "neoforge",
-    "metafile": "mods/better-advancements.pw.toml",
-    "mods": [
-     "betteradvancements@0.4.3.21"
-    ],
-    "name": "Better Advancements",
-    "project": "272515",
-    "publisher": {
-     "md5": "a18430f1f7ecf6dd1849a8f240f509af",
-     "size": 98641
-    },
-    "sha1": "870521cfaa1a4cb6c830e2409e8b9e4cf179aff2",
-    "sha256": "60b548bef04a2f0e1da686ee9035c2e3d4ed0459a17d7a4836fc26af6de6b60e",
-    "sha512": "b3deafd146dc3ea6e879fbc92f00de5797319a1aa620fb3b39be64c19271dab2efa07f824cda7139f8c22f2524ea413949357f5469bb6de584d1386de069c6b7",
-    "side": "both",
-    "size": 98641,
-    "source": "curseforge",
-    "versionNumber": "BetterAdvancements-NeoForge-1.21.1-0.4.3.21.jar"
-   }
+   "rationale": "Replaced by the owned Evil Eye Client 0.2.0 (screens/advancements/: full-size advancements screen with config/betteradvancements-client.toml's colours, background fade, criteria detail Default without Shift, ui scaling 100, unsorted tabs). Client-only; vanilla advancement ids and progress untouched; no world data."
   },
   {
    "action": "repoint",
@@ -1498,7 +1439,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/controlling.pw.toml",
    "old": {
     "filename": "Controlling-forge-1.20.1-12.0.2.jar",
@@ -1512,37 +1453,7 @@
     "version": "LH6Bi6Am"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "controlling required minecraft [1.21.1] (client)",
-     "controlling required neoforge [21.1.94,) (client)",
-     "controlling required searchables [1.0.1,) (client)"
-    ],
-    "filename": "Controlling-neoforge-1.21.1-19.0.5.jar",
-    "loader": "neoforge",
-    "metafile": "mods/controlling.pw.toml",
-    "mods": [
-     "controlling@19.0.5"
-    ],
-    "name": "Controlling",
-    "project": "xv94TkTM",
-    "publisher": {
-     "sha1": "8a34424fc1428778be2fdbfa4da67b21b70bcbfe",
-     "sha512": "bd01b2a38a869ea38e5f2a8fcd601e67ea9b132b9883c6ae752bc35dff6e94f6d47b965e31c1ee5c2f6a1221653549680da779fcb5319d199aec261d221d179e",
-     "size": 77555
-    },
-    "sha1": "8a34424fc1428778be2fdbfa4da67b21b70bcbfe",
-    "sha256": "cc525fb6b030d9e4d33176983f278919e17b33935e2ca568929bdfa98f2b44a0",
-    "sha512": "bd01b2a38a869ea38e5f2a8fcd601e67ea9b132b9883c6ae752bc35dff6e94f6d47b965e31c1ee5c2f6a1221653549680da779fcb5319d199aec261d221d179e",
-    "side": "client",
-    "size": 77555,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/xv94TkTM/versions/FaNppCJJ/Controlling-neoforge-1.21.1-19.0.5.jar",
-    "version": "FaNppCJJ",
-    "versionNumber": "19.0.5"
-   }
+   "rationale": "Replaced by the owned Evil Eye Client 0.2.0 (screens/controls/: Key Binds search by name/category/key, unbound and conflict filters, A-Z/Z-A sort, free-keys list, reset all with confirmation; vanilla editing). No config or saved data; bindings stay in options.txt."
   },
   {
    "action": "repoint",
@@ -1683,7 +1594,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/crafting-tweaks.pw.toml",
    "old": {
     "filename": "craftingtweaks-forge-1.20.1-18.2.9.jar",
@@ -1697,37 +1608,7 @@
     "version": "KOqT9kSZ"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "craftingtweaks required balm [21.0.48,)",
-     "craftingtweaks required minecraft [1.21,)",
-     "craftingtweaks required neoforge [21-beta,)"
-    ],
-    "filename": "craftingtweaks-neoforge-1.21.1-21.1.11.jar",
-    "loader": "neoforge",
-    "metafile": "mods/crafting-tweaks.pw.toml",
-    "mods": [
-     "craftingtweaks@21.1.11"
-    ],
-    "name": "Crafting Tweaks",
-    "project": "DMu0oBKf",
-    "publisher": {
-     "sha1": "b6252039445978a742f439fc398f2a198b86bd4e",
-     "sha512": "e1869211c2e037bdaadbe9b9f592d4ccfb7ab94d7ba6803629d6525945edc05db973db6bd7568f2af4550ae4616ae6cbb832e1684412ba439d37f523b564d9a7",
-     "size": 256086
-    },
-    "sha1": "b6252039445978a742f439fc398f2a198b86bd4e",
-    "sha256": "0964fefc4a07120a53232b2d934fac4baf15fdaa99b69add30a18a642bc1cf98",
-    "sha512": "e1869211c2e037bdaadbe9b9f592d4ccfb7ab94d7ba6803629d6525945edc05db973db6bd7568f2af4550ae4616ae6cbb832e1684412ba439d37f523b564d9a7",
-    "side": "both",
-    "size": 256086,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/DMu0oBKf/versions/IhkQpEve/craftingtweaks-neoforge-1.21.1-21.1.11.jar",
-    "version": "IhkQpEve",
-    "versionNumber": "21.1.11+neoforge-1.21.1"
-   }
+   "rationale": "Replaced by the owned Evil Eye Tweaks 0.5.0 (inventory/crafting/: rotate, balance, spread, clear, refill last, compress/decompress with the sandstone and iron trapdoor denylist and grid-only compression, right-click stack crafting) and Evil Eye Client 0.2.0 (inventory/crafting/: the hotkeys, K/Ctrl+K/Shift+K and Tab/Ctrl+Tab, result right-click, hidden recipe-book button). Saved key_key.craftingtweaks.* bindings carry over once. No world data (only the level.dat mod list names it)."
   },
   {
    "action": "repoint",
@@ -2691,7 +2572,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/default-options.pw.toml",
    "old": {
     "filename": "defaultoptions-forge-1.20.1-18.0.5.jar",
@@ -2705,37 +2586,7 @@
     "version": "AVz3mvZZ"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "defaultoptions required balm [21.0.39,)",
-     "defaultoptions required minecraft [1.21,)",
-     "defaultoptions required neoforge [21-beta,)"
-    ],
-    "filename": "defaultoptions-neoforge-1.21.1-21.1.8.jar",
-    "loader": "neoforge",
-    "metafile": "mods/default-options.pw.toml",
-    "mods": [
-     "defaultoptions@21.1.8"
-    ],
-    "name": "Default Options",
-    "project": "WEg59z5b",
-    "publisher": {
-     "sha1": "d682687ec41236092c5206a21e2ed34bdb7f6b79",
-     "sha512": "29f66777068d92b1e149630d569441e5176ac40ec5cb4ee6c63c565aa7d475587a5097f59c433d69a39fd238b64902e2ba742b30c26419de901c86a3300b848e",
-     "size": 105507
-    },
-    "sha1": "d682687ec41236092c5206a21e2ed34bdb7f6b79",
-    "sha256": "d12790dc1f0857778d282c00ad5be56882ac6fce44769c1f012be09b5604874a",
-    "sha512": "29f66777068d92b1e149630d569441e5176ac40ec5cb4ee6c63c565aa7d475587a5097f59c433d69a39fd238b64902e2ba742b30c26419de901c86a3300b848e",
-    "side": "client",
-    "size": 105507,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/WEg59z5b/versions/1zt17WsC/defaultoptions-neoforge-1.21.1-21.1.8.jar",
-    "version": "1zt17WsC",
-    "versionNumber": "21.1.8+neoforge-1.21.1"
-   }
+   "rationale": "Replaced by the owned Evil Eye Client 0.2.0 (options/defaults/: config/defaultoptions/keybindings.txt becomes each listed key's default and its value where options.txt had none at startup; options.txt and servers.dat copied on a fresh instance). Same folder and file syntax, so the keymap needs no move; Crafting Tweaks keys saved under their old names carry over once."
   },
   {
    "action": "repoint",
@@ -3392,23 +3243,23 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient 790adbb, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2).",
+   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient 7f40a0d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' controls (wave 3).",
    "target": {
     "declares": [
-     "evileye_client optional evileye_tweaks [0.3.0,)",
+     "evileye_client optional evileye_tweaks [0.5.0,)",
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.1.0.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.2.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.1.0"
+     "evileye_client@0.2.0"
     ],
     "name": "Evil Eye Client",
-    "sha256": "dd2baefd352f64ebbc3db11f3015d9bcd03bd2a98d3843b37230bbc40b21098d",
+    "sha256": "635d1bda26561883190e565c56b94243608a5f62d4093903f3e1038635d7b560",
     "side": "client",
-    "size": 178553,
+    "size": 333902,
     "source": "local"
    }
   },
@@ -3447,22 +3298,22 @@
    "metafile": "mods/evileye-tweaks.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 6e18c7f, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4).",
+   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks df4c4fd, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), crafting-grid actions for Evil Eye Client's crafting keys (wave 3), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4).",
    "target": {
     "declares": [
      "evileye_tweaks required minecraft [1.21.1,1.21.2)",
      "evileye_tweaks required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.4.0.jar",
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.5.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-tweaks.pw.toml",
     "mods": [
-     "evileye_tweaks@0.4.0"
+     "evileye_tweaks@0.5.0"
     ],
     "name": "Evil Eye Tweaks",
-    "sha256": "c19581305e7cbeb4323c9aa037213465b88723dc788198be86cd979cfe14d037",
+    "sha256": "02820faa196c85dc65277f8be3494b1708ec4251f60114efcdf5659e2efa41c8",
     "side": "both",
-    "size": 176281,
+    "size": 212244,
     "source": "local"
    }
   },
@@ -4942,7 +4793,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/just-enough-professions-jep.pw.toml",
    "old": {
     "filename": "JustEnoughProfessions-forge-1.20.1-3.0.1.jar",
@@ -4956,37 +4807,7 @@
     "version": "ANKVJC3T"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "justenoughprofessions required jei [19.3.1.22,)",
-     "justenoughprofessions required minecraft [1.21,1.22)",
-     "justenoughprofessions required neoforge [21.0.76-beta,)"
-    ],
-    "filename": "JustEnoughProfessions-neoforge-1.21.1-4.0.5.jar",
-    "loader": "neoforge",
-    "metafile": "mods/just-enough-professions-jep.pw.toml",
-    "mods": [
-     "justenoughprofessions@4.0.5"
-    ],
-    "name": "Just Enough Professions (JEP)",
-    "project": "kB56GtWA",
-    "publisher": {
-     "sha1": "b97a7420738c2ac020ad15e8f6ac472aad288af2",
-     "sha512": "2d9ecd7dbe8a676447009a6943b99f54bb732d084d220c09b79636293e67596f8e0ac1d1a849ad1077126b5e9da4aff31c5bfd81836459190c63b974500c8363",
-     "size": 24879
-    },
-    "sha1": "b97a7420738c2ac020ad15e8f6ac472aad288af2",
-    "sha256": "b320b47f1791f56df9e1a05138f0e312e6e54541945ff15f2f1fd398cd1d4d9d",
-    "sha512": "2d9ecd7dbe8a676447009a6943b99f54bb732d084d220c09b79636293e67596f8e0ac1d1a849ad1077126b5e9da4aff31c5bfd81836459190c63b974500c8363",
-    "side": "both",
-    "size": 24879,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/kB56GtWA/versions/Avs9oGLn/JustEnoughProfessions-neoforge-1.21.1-4.0.5.jar",
-    "version": "Avs9oGLn",
-    "versionNumber": "4.0.5"
-   }
+   "rationale": "Replaced by the owned Evil Eye Client 0.2.0 (integration/professions/: JEI \"Professions\" category, every registered profession with a job-site block, villager model, emerald and spawn-egg catalysts; shown in EMI through its JEI bridge). No data."
   },
   {
    "action": "drop",
@@ -6093,7 +5914,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/mouse-tweaks.pw.toml",
    "old": {
     "file": "5338457",
@@ -6106,31 +5927,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [],
-    "file": "5637846",
-    "filename": "MouseTweaks-neoforge-mc1.21-2.26.1.jar",
-    "loader": "neoforge",
-    "metafile": "mods/mouse-tweaks.pw.toml",
-    "mods": [
-     "mousetweaks@2.26.1"
-    ],
-    "name": "Mouse Tweaks",
-    "project": "60089",
-    "publisher": {
-     "md5": "4ab6e808a59fdebecfbc92438b85b470",
-     "size": 73938
-    },
-    "sha1": "6dae57f4f50f7808d2ed9a18f6cd1c0d4640c6bc",
-    "sha256": "68e6f4201c5de97b77929a7215c9552495696ca6a3bf3ae4eacc34e135f6cc8b",
-    "sha512": "f95c0cc881211ee0442434976775e07aae40b4a2ba4e3a85455bc57ca9d3c991e239cd98374a8abd442dc9c378dcd9001e2caa1bf69991d424b5652dd7f3483b",
-    "side": "both",
-    "size": 73938,
-    "source": "curseforge",
-    "versionNumber": "[1.21+ NeoForge] Mouse Tweaks 2.26.1"
-   }
+   "rationale": "Replaced by the owned Evil Eye Client 0.2.0 (inventory/gestures/: right-drag spread, left-drag gather or shift-move, shift-left-drag move, wheel transfer last-to-first, normal direction, proportional scaling: config/MouseTweaks.cfg's values). Only vanilla clicks, so the server validates every move; no data."
   },
   {
    "action": "repoint",
@@ -6769,7 +6566,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/resource-pack-overrides.pw.toml",
    "old": {
     "filename": "ResourcePackOverrides-v8.0.3-1.20.1-Forge.jar",
@@ -6783,36 +6580,7 @@
     "version": "fw5ouviG"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "resourcepackoverrides required minecraft [1.21.1]",
-     "resourcepackoverrides required neoforge [21.1.21,)"
-    ],
-    "filename": "ResourcePackOverrides-v21.1.0-1.21.1-NeoForge.jar",
-    "loader": "neoforge",
-    "metafile": "mods/resource-pack-overrides.pw.toml",
-    "mods": [
-     "resourcepackoverrides@21.1.0"
-    ],
-    "name": "Resource Pack Overrides",
-    "project": "YsFycamt",
-    "publisher": {
-     "sha1": "42dddb70cc645a864596439ea95bd56e7a5561ed",
-     "sha512": "9a15db96ffc86bc93624392c22c2aaea4ad4a7267c20ff528ff2dd61d8d84b9db611fc24673fba5b5d0bac318b4ce1e9d1725085ce2fad68f4231afa6bbb43c4",
-     "size": 83035
-    },
-    "sha1": "42dddb70cc645a864596439ea95bd56e7a5561ed",
-    "sha256": "5aab7282d287a7de64d6be4e20f4c3b9c577add436ac89fd643b6ce9b4445738",
-    "sha512": "9a15db96ffc86bc93624392c22c2aaea4ad4a7267c20ff528ff2dd61d8d84b9db611fc24673fba5b5d0bac318b4ce1e9d1725085ce2fad68f4231afa6bbb43c4",
-    "side": "client",
-    "size": 83035,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/YsFycamt/versions/xf3H2eJV/ResourcePackOverrides-v21.1.0-1.21.1-NeoForge.jar",
-    "version": "xf3H2eJV",
-    "versionNumber": "v21.1.0-1.21.1-NeoForge"
-   }
+   "rationale": "Replaced by the owned Evil Eye Client 0.2.0 (options/resourcepacks/: default_packs order on a first launch, Eat Quiet required, New Hearts force-compatible, failed-reload fallback, vanilla kept lowest). The policy moves from config/resourcepackoverrides.json (preserved, so stale ids never reached installs) to config/evileye_client/resourcepacks.json with the NeoForge pack ids corrected."
   },
   {
    "action": "repoint",
@@ -6999,7 +6767,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/searchables.pw.toml",
    "old": {
     "filename": "Searchables-forge-1.20.1-1.0.3.jar",
@@ -7013,36 +6781,7 @@
     "version": "PM9yAW1G"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "searchables required minecraft [1.21.1]",
-     "searchables required neoforge [4,)"
-    ],
-    "filename": "Searchables-neoforge-1.21.1-1.0.2.jar",
-    "loader": "neoforge",
-    "metafile": "mods/searchables.pw.toml",
-    "mods": [
-     "searchables@1.0.2"
-    ],
-    "name": "Searchables",
-    "project": "fuuu3xnx",
-    "publisher": {
-     "sha1": "5b8a0b43a474c066371b2e16f9bfb88622552a74",
-     "sha512": "d0824bac1900142ac9a53e68f7ec3b4c0d33d9366bbd3f1d0d93eed860e5eb6b5e6f5a215a69bfffa70bcb48573ff49b5a12bbaa96096ceac6636000d506027a",
-     "size": 77326
-    },
-    "sha1": "5b8a0b43a474c066371b2e16f9bfb88622552a74",
-    "sha256": "ca193f0c69033d8f709f9e073a7c1ef4ea46714e5c2f94eb23ace12781c6aa68",
-    "sha512": "d0824bac1900142ac9a53e68f7ec3b4c0d33d9366bbd3f1d0d93eed860e5eb6b5e6f5a215a69bfffa70bcb48573ff49b5a12bbaa96096ceac6636000d506027a",
-    "side": "client",
-    "size": 77326,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/fuuu3xnx/versions/iEE85X0w/Searchables-neoforge-1.21.1-1.0.2.jar",
-    "version": "iEE85X0w",
-    "versionNumber": "1.0.2"
-   }
+   "rationale": "Library whose only consumer was Controlling (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of 254 jars (every lock jar, 79 nested jar-in-jar, both owned jars; jobs/2026-11-01-evileye-wave3/library-closure.json): no declared dependency and no com/blamejared/searchables class reference outside the dropped mods."
   },
   {
    "action": "repoint",

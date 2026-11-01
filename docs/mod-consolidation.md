@@ -14,7 +14,7 @@ does not count. Full program plan: `artifacts/minecraft-mods/jobs/2026-11-01-evi
 |---|---|---|
 | 1 | Fuel Goes Here, Double Doors (T), Collective after closure | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.2.0 local pin, three drops; owner walk pending |
 | 2 | Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions, AppleSkin (C, with T producers) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.1.0 and Tweaks 0.3.0 local pins, six drops; Bookshelf kept (AttributeFix requires it); owner walk pending |
-| 3 | Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks, Crafting Tweaks | not started |
+| 3 | Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks, Crafting Tweaks | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.2.0 and Tweaks 0.5.0 local pins, seven drops plus Searchables and Balm after closure; owner walk pending |
 | 4 | AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps, Let Me Despawn (T) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.4.0 local pin, seven drops plus Bookshelf, Prickle, Almanac Lib and Kiwi after closure; owner walk pending |
 | 5 | FTB Essentials (E; mandatory saved-data migration) | not started |
 | 6 | Pro Placer, Light Overlay (removed outright 2026-11-01), 3D Skin Layers, Quick Skin, Modern UI, Inventory Profiles Next, Chloride (C) | not started |
@@ -36,6 +36,7 @@ are removed only after a full dependency and consumer audit.
 | After wave 1 | 189 |
 | After wave 2 | 184 |
 | After wave 4 | 173 |
+| After wave 3 | 164 |
 
 ## Rules
 
@@ -80,3 +81,30 @@ are removed only after a full dependency and consumer audit.
 - **Configs**: `config/attributefix.json` (an obsolete format the 1.21.1 jar never read), `config/fallingtree.json`
   and `defaultconfigs/hourglass-server.toml` are carried into `config/evileye_tweaks-common.toml`. No
   keybindings were involved.
+
+## Wave 3 notes
+
+- **Evil Eye Client 0.2.0** adds `screens/advancements` (Better Advancements), `screens/controls`
+  (Controlling), `inventory/gestures` (Mouse Tweaks), `inventory/crafting` (Crafting Tweaks' keys,
+  result right-click and hidden recipe-book button), `integration/professions` (Just Enough Professions, a JEI
+  category EMI shows through its JEI bridge), `options/defaults` (Default Options) and `options/resourcepacks`
+  (Resource Pack Overrides). The wave-2 HUD packages moved under `hud/`.
+- **Evil Eye Tweaks 0.5.0** adds `inventory/crafting`: the server performs every crafting-grid action the
+  client keys request (rotate, balance, spread, clear, refill last, compress/decompress, stack crafting); the
+  furnace routing moved beside it under `inventory/furnace`.
+- **Libraries dropped after closure**: Searchables (only Controlling) and Balm (only Crafting Tweaks and Default
+  Options; Xaero's Minimap references it only from its Waystones compat, and Waystones is not in the pack).
+  `jobs/2026-11-01-evileye-wave3/library-closure.json`.
+- **Saved data** in the converted trial world: none. The seven mods and both libraries appear only in level.dat's
+  loaded-mod list (`jobs/2026-11-01-evileye-wave3/world-scan.json`, read-only scan of every NBT file and
+  46,146 region/entity/POI chunks).
+- **Configs**: `config/betteradvancements-client.toml`, `config/MouseTweaks.cfg` and
+  `config/craftingtweaks-common.toml` [client] are carried into `config/evileye_client-client.toml`
+  (`[advancements]`, `[gestures]`, `[crafting]`); the Crafting Tweaks [common] values into
+  `config/evileye_tweaks-common.toml` `[crafting]`. `config/resourcepackoverrides.json` becomes the pack-owned
+  `config/evileye_client/resourcepacks.json` with NeoForge's pack ids: the old file named the Forge
+  `file/Eat-Quiet-...zip` and `builtin/towntalk`, so on the migration branch Eat Quiet was neither selected nor
+  required and Town Talk was never enabled. `config/defaultoptions/keybindings.txt` stays where it was (same
+  syntax); its Crafting Tweaks line is renamed to Evil Eye Client's key.
+- **Keybindings**: Evil Eye Client registers `key.evileye_client.crafting.*`; a binding saved under the old
+  `key.craftingtweaks.*` name is adopted once, while options.txt has nothing under the new name.

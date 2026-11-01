@@ -20,7 +20,7 @@
   {
    "match": "config/defaultoptions/",
    "treatment": "carry",
-   "reason": "Default Options key choices (new instances only); key names are checked against the 1.21.1 client at the owner's first launch."
+   "reason": "Default key choices, read by Evil Eye Client 0.2.0 (options/defaults/, the Default Options replacement): a key listed here is the default and is set wherever options.txt has no saved value (new instances, new mods). Crafting Tweaks' compress_stack line renamed to Evil Eye Client's key."
   },
   {
    "match": "config/emi.css",
@@ -60,12 +60,17 @@
   {
    "match": "config/evileye_tweaks-common.toml",
    "treatment": "preserve-intent",
-   "reason": "Evil Eye Tweaks 0.4.0 replaces Fuel Goes Here and Double Doors (doors on, gates and trapdoors off, recursive on, distance 10, empty blacklist: the Double Doors 7.5 values), adds the pick-up receipt and food snapshot producers for Evil Eye Client (both on), and wave 4: AttributeFix maxima, Companion defaults (= config/companion-common.yaml), FallingTree values from config/fallingtree.json, Flat Bedrock, Hourglass day 0.5/night 1.0/weather SLEEPING, Clumps on, Let Me Despawn values (corpse:corpse kept, spawner and trial-spawner despawn on). Bytes are the NeoForge-written default file (LF; the defaults equal the pack values), so the mod does not rewrite it."
+   "reason": "Evil Eye Tweaks 0.4.0 replaces Fuel Goes Here and Double Doors (doors on, gates and trapdoors off, recursive on, distance 10, empty blacklist: the Double Doors 7.5 values), adds the pick-up receipt and food snapshot producers for Evil Eye Client (both on), and wave 4: AttributeFix maxima, Companion defaults (= config/companion-common.yaml), FallingTree values from config/fallingtree.json, Flat Bedrock, Hourglass day 0.5/night 1.0/weather SLEEPING, Clumps on, Let Me Despawn values (corpse:corpse kept, spawner and trial-spawner despawn on). Bytes are the NeoForge-written default file (LF; the defaults equal the pack values), so the mod does not rewrite it. Wave 3 adds [crafting] (crafting actions on, compress needs a crafting grid, denylist sandstone and iron trapdoor: the config/craftingtweaks-common.toml values)."
   },
   {
    "match": "config/evileye_client-client.toml",
    "treatment": "preserve-intent",
-   "reason": "Evil Eye Client 0.1.0 replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin. Carries config/stylisheffects-client.toml, config/colorfulhearts.toml and config/appleskin-client.toml values exactly, enchdesc and Pick Up Notifier effective defaults, and suppresses experimental warnings as Yeetus did. Bytes are the NeoForge-written default file (LF; the defaults equal the pack values), so the mod does not rewrite it."
+   "reason": "Evil Eye Client 0.2.0 replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (wave 2) and Better Advancements, Mouse Tweaks and Crafting Tweaks' client options (wave 3: [advancements], [gestures], [crafting], carried from config/betteradvancements-client.toml, config/MouseTweaks.cfg and config/craftingtweaks-common.toml [client]). Bytes are the NeoForge-written default file (LF; the defaults equal the pack values), so the mod does not rewrite it."
+  },
+  {
+   "match": "config/evileye_client/resourcepacks.json",
+   "treatment": "preserve-intent",
+   "reason": "Resource-pack policy read by Evil Eye Client 0.2.0 (options/resourcepacks/), carried from config/resourcepackoverrides.json: the same default order (Fresh Animations, Eat Quiet, Fancy Crops, Better Leaves, New Hearts, CozyUI+, Town Talk, evil-eye-cozy-overrides), Eat Quiet required, New Hearts force-compatible. Ids corrected for NeoForge 1.21.1 (Eat Quiet's file name, Town Talk's mod pack id), which the preserved old file never received."
   },
   {
    "match": "config/",
@@ -171,6 +176,35 @@
    "treatment": "replaced",
    "by": "config/evileye_tweaks-common.toml",
    "reason": "Hourglass replaced by Evil Eye Tweaks [time] (daySpeed 0.5, nightSpeed 1.0, weatherEffect SLEEPING; the sleep feature stays off, so vanilla sleep). The other time effects were NEVER and are not implemented."
+  },
+  {
+   "file": "config/betteradvancements-client.toml",
+   "treatment": "replaced",
+   "by": "config/evileye_client-client.toml",
+   "reason": "Better Advancements replaced by Evil Eye Client 0.2.0 [advancements]; every value carried (colours, background fade, no debug coordinates, unsorted tabs, ui scaling 100, criteria detail DEFAULT without Shift, no direct or hidden lines, white line colours, criteria page speed 3, whole-criterion colouring off). addInventoryButton and onlyUseAboveAdvancementTabs were false and are not ported."
+  },
+  {
+   "file": "config/craftingtweaks-common.toml",
+   "treatment": "replaced",
+   "by": "config/evileye_tweaks-common.toml",
+   "reason": "Crafting Tweaks replaced by Evil Eye Tweaks 0.5.0 [crafting] (compressRequiresCraftingGrid true, compressDenylist sandstone and iron trapdoor) and Evil Eye Client 0.2.0 [crafting] in config/evileye_client-client.toml (hotkeys = mode HOTKEYS, rightClickCraftsStack true, hideRecipeBookButton = hideVanillaCraftingGuide true). disabledAddons was empty; the button offsets only applied to BUTTONS mode."
+  },
+  {
+   "file": "config/MouseTweaks.cfg",
+   "treatment": "replaced",
+   "by": "config/evileye_client-client.toml",
+   "reason": "Mouse Tweaks replaced by Evil Eye Client 0.2.0 [gestures]; RMB, LMB-with-item, LMB-without-item and wheel on, search LAST_TO_FIRST, direction NORMAL, scaling PROPORTIONAL. Debug was 0."
+  },
+  {
+   "file": "config/resourcepackoverrides.json",
+   "treatment": "replaced",
+   "by": "config/evileye_client/resourcepacks.json",
+   "reason": "Resource Pack Overrides replaced by Evil Eye Client 0.2.0; the policy moved to config/evileye_client/resourcepacks.json with the NeoForge pack ids (file/Eat Quiet 1.0.0_1.20-1.21.zip, mod/towntalk:respack)."
+  },
+  {
+   "file": "config/balm-common.toml",
+   "treatment": "dropped",
+   "reason": "Balm dropped (no consumer left); the file held only Balm's example settings."
   }
  ],
  "deferred": "All seven owned ports restored 2026-10-30; no parked files remain. See deferred/README.md for restoration history."
