@@ -63,6 +63,11 @@
    "reason": "FTB Essentials settings for new worlds."
   },
   {
+   "match": "config/evileye_tweaks-common.toml",
+   "treatment": "preserve-intent",
+   "reason": "Evil Eye Tweaks 0.2.0 replaces Fuel Goes Here and Double Doors. Door values carry the Double Doors 7.5 settings the Trial generated in config/serilum/doubledoors.json (doors on, gates and trapdoors off, recursive on, distance 10, empty blacklist; Quark check dropped, Quark absent). Bytes are the NeoForge-written file (LF), so the mod does not rewrite it."
+  },
+  {
    "match": "config/",
    "treatment": "regenerate",
    "reason": "Mod config carried unchanged; reconciled with the target build's generated defaults at the first boot."

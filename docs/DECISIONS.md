@@ -2,6 +2,16 @@
 
 Newest first.
 
+## 2026-11-01 - Replace small mods with owned mods, wave by wave
+
+**Decision.** Small gameplay/presentation/compat mods are replaced by three owned mods (EvilEyeTweaks,
+EvilEyeClient, EvilEyeEssentials) in independently shippable waves ([mod-consolidation.md](mod-consolidation.md)).
+Wave 1 pins EvilEyeTweaks 0.2.0 as a private `metadata:local` addition and drops Fuel Goes Here, Double
+Doors and Collective (after a recursive closure scan). Effective upstream settings are carried into the
+owned config; resource namespaces existing data uses (`fuelgoeshere:forced_fuels`) are kept.
+**Rejected:** dropping the upstream mods without an owned replacement (loses used features), and one
+catch-all owned mod (durable-data schemas must not ride in ordinary tweak releases).
+
 ## 2026-10-31 - Preserve game-owned client settings after first install
 
 **Decision.** Index runtime-owned settings with packwiz `preserve = true`: shader option sidecars,

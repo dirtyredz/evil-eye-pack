@@ -1502,7 +1502,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/collective.pw.toml",
    "old": {
     "file": "8940147",
@@ -1515,33 +1515,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "collective required minecraft [1.21,1.21.1]"
-    ],
-    "file": "9362915",
-    "filename": "collective-1.21.1-8.69.jar",
-    "loader": "neoforge",
-    "metafile": "mods/collective.pw.toml",
-    "mods": [
-     "collective@8.69"
-    ],
-    "name": "Collective",
-    "project": "342584",
-    "publisher": {
-     "md5": "31f8e391ed9116a19b8a89e98e2d4fcd",
-     "size": 1309120
-    },
-    "sha1": "111a518b4e7bc6187b3139c3457b0857933c8e2b",
-    "sha256": "716dd3e126da37a9cd4afb05120d2bd77f9f6c4750a80df0b7cacec5e39721e8",
-    "sha512": "68f26cab9934264d00bd4a54a4bcc1fa2bd23509b14767d000bda33207d3cae8efb66aeb265240e1ca81fccb262cbef7aed4efea6b3be479817a0e3958cdf3c3",
-    "side": "both",
-    "size": 1309120,
-    "source": "curseforge",
-    "versionNumber": "[Fabric/Forge/Neo] 1.21.1-8.69 | Collective"
-   }
+   "rationale": "Library whose only consumer was Double Doors (dropped). Closure 2026-11-01: 270 jars from the lock incl. 81 nested jar-in-jar scanned, no Collective metadata dependency or com/natamus/collective class reference (jobs/2026-11-01-evileye-tweaks-wave1/collective-closure.json)."
   },
   {
    "action": "repoint",
@@ -3095,7 +3069,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/double-doors.pw.toml",
    "old": {
     "file": "7143840",
@@ -3108,34 +3082,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "doubledoors required collective [8.58,)",
-     "doubledoors required minecraft [1.21,1.21.1]"
-    ],
-    "file": "9255519",
-    "filename": "doubledoors-1.21.1-7.5.jar",
-    "loader": "neoforge",
-    "metafile": "mods/double-doors.pw.toml",
-    "mods": [
-     "doubledoors@7.5"
-    ],
-    "name": "Double Doors",
-    "project": "348831",
-    "publisher": {
-     "md5": "43da68473eec323a665e3798d7c681a9",
-     "size": 71436
-    },
-    "sha1": "f9606649ffaca37ef3e8432b9fa29e314ebe0eb8",
-    "sha256": "378216c5b294d66975c8e1cbe01bb814af0f61426e9d3e515f535810a20e08e5",
-    "sha512": "485a8c2fc836b254693900840721ef58c4ca29b1cdb9caf0c2656f9547b276b462c395bc1ee64e1f5020d2e15893c20d1eb6e0c556f67987e60fe425d00af5e2",
-    "side": "both",
-    "size": 71436,
-    "source": "curseforge",
-    "versionNumber": "[Fabric/Forge/Neo] 1.21.1-7.5 | Double Doors"
-   }
+   "rationale": "Replaced by the owned Evil Eye Tweaks 0.2.0 (doors/: hand, villager and redstone sync with Double Doors 7.5 defaults, carried in config/evileye_tweaks-common.toml). No blocks, items or world data."
   },
   {
    "action": "repoint",
@@ -3691,6 +3638,30 @@
     "sha256": "5dbd229df52f5e081b93b7c77676d911771dd407cf9828876299e63a17b4cd9b",
     "side": "both",
     "size": 119760,
+    "source": "local"
+   }
+  },
+  {
+   "action": "add",
+   "metafile": "mods/evileye-tweaks.pw.toml",
+   "old": null,
+   "provisional": false,
+   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 5d69238, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors, replacing Fuel Goes Here, Double Doors and Collective (consolidation wave 1).",
+   "target": {
+    "declares": [
+     "evileye_tweaks required minecraft [1.21.1,1.21.2)",
+     "evileye_tweaks required neoforge [21.1.265,21.2)"
+    ],
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.2.0.jar",
+    "loader": "neoforge",
+    "metafile": "mods/evileye-tweaks.pw.toml",
+    "mods": [
+     "evileye_tweaks@0.2.0"
+    ],
+    "name": "Evil Eye Tweaks",
+    "sha256": "f88a3ceea8d65231d2edef1e24d9b01a0dfd34d75d7fefa4f1f4412ebbf79527",
+    "side": "both",
+    "size": 40265,
     "source": "local"
    }
   },
@@ -4314,7 +4285,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/fuelgoeshere.pw.toml",
    "old": {
     "file": "4579966",
@@ -4327,34 +4298,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "fuelgoeshere required minecraft [1.21, 1.22)",
-     "fuelgoeshere required neoforge [21.0.0-beta,)"
-    ],
-    "file": "6003423",
-    "filename": "fuelgoeshere-1.21.1-1.2.0.jar",
-    "loader": "neoforge",
-    "metafile": "mods/fuelgoeshere.pw.toml",
-    "mods": [
-     "fuelgoeshere@1.21.1-1.2.0"
-    ],
-    "name": "Fuel Goes Here",
-    "project": "659090",
-    "publisher": {
-     "md5": "551f9d1359b04aac76c816e09b78357e",
-     "size": 7564
-    },
-    "sha1": "8b5f1c77adb52641189961896e10aa47399eccde",
-    "sha256": "8ff10fba0f261537af9717fe3d3c0d53a179db1b354b2d62e0cd20b0e41e0101",
-    "sha512": "bbd0906d1314e6536b880e5097dca5c22258002d09aa47a06a070bfb37841b612733188e3ceded26ba9f90f88df60d04e854e357d60eef7d326c1f881a2dc7e2",
-    "side": "both",
-    "size": 7564,
-    "source": "curseforge",
-    "versionNumber": "fuelgoeshere-1.21.1-1.2.0.jar"
-   }
+   "rationale": "Replaced by the owned Evil Eye Tweaks 0.2.0 (furnace/ forced-fuel routing, same fuelgoeshere:forced_fuels tag id and coal/charcoal default). No config, blocks, items or world data."
   },
   {
    "action": "repoint",

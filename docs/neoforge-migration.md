@@ -547,3 +547,26 @@ are rechecked for this job; no source, snapshot, Stable or Local was written or 
 dependencies unchanged. Jar stored hash-addressed and by filename in the shared migration cache and
 in the Trial walkthrough's job cache (`jobs/2026-10-31-world-trial-final/cache`). Jade 15.10.3 restored
 to the shared cache. Conversion evidence: `jobs/2026-10-31-world-trial-dev7/`.
+
+## Evil Eye Tweaks 0.2.0 pin: Fuel Goes Here, Double Doors and Collective removed (2026-11-01)
+
+Consolidation wave 1 ([mod-consolidation.md](mod-consolidation.md)). The owned `evileye_tweaks`
+0.2.0 (minecraft-mods `mods/EvilEyeTweaks` 5d69238, MIT, private GitHub repo; SHA-256
+`f88a3ceea8d65231d2edef1e24d9b01a0dfd34d75d7fefa4f1f4412ebbf79527`, 40,265 bytes) is a
+`metadata:local` addition like the bridge, stored hash-addressed and by filename in the shared
+migration cache and the Trial walkthrough's job cache (`jobs/2026-10-31-world-trial-final/cache`).
+It declares only minecraft and neoforge. Fuel Goes Here 1.2.0, Double Doors 7.5 and Collective 8.69
+are lock `drop`s; `doubledoors` and `collective` join pack-test `removedMods`, `evileye_tweaks` joins
+`requiredMods`. `fuelgoeshere` is deliberately **not** in `removedMods`: the owned jar keeps the
+`fuelgoeshere:forced_fuels` tag id so existing data keeps working.
+
+Collective closure: Double Doors was its only declared consumer. A recursive scan of all 270 jars the lock
+selects (81 nested jar-in-jar included) found no Collective metadata dependency and no
+`com/natamus/collective` class reference (`jobs/2026-11-01-evileye-tweaks-wave1/collective-closure.json`);
+`migrate.mjs resolve` reports 0 dependency errors. None of the three registers blocks, items or world
+data, so no conversion is needed.
+
+`config/evileye_tweaks-common.toml` ships the Double Doors settings the Trial had generated
+(`config/serilum/doubledoors.json`: doors on, gates/trapdoors off, recursive on, distance 10, empty
+blacklist; all upstream defaults). The file is the NeoForge-written bytes (LF), so the mod does not rewrite
+it. Physical mod metafiles: 191 to 189. Not yet run: a pack-test boot and the owner walk.

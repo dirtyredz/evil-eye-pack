@@ -1823,6 +1823,10 @@ file = "config/everlastingabilities-common.toml"
 hash = "19e1a12a90c2b6c0df9fb3152c19a21eb4c9d84c49d496377eacfca0855b324f"
 
 [[files]]
+file = "config/evileye_tweaks-common.toml"
+hash = "787814590e9585d940d26798adf00d1077db1cd4cfc7e0328602bc21c8512b94"
+
+[[files]]
 file = "config/extremereactors/client.toml"
 hash = "6cf0d1a23dd955982538b923cf6ed25c6f4a9f19fcae7302ca504ea44f419b72"
 
@@ -4883,11 +4887,6 @@ hash = "503569d1bccf50d580e517550e8f66574d881deac197f30fedb0a18ebb5d3ff4"
 metafile = true
 
 [[files]]
-file = "mods/collective.pw.toml"
-hash = "d6b20ffb8a31dc43e351c5e708bad9c5287236f745cd039a26ae344131194c60"
-metafile = true
-
-[[files]]
 file = "mods/colorful-hearts.pw.toml"
 hash = "57f8e906e0ec4815d1aceb9df17ccb026d74337aa6964737c0757eaf8ad86364"
 metafile = true
@@ -5048,11 +5047,6 @@ hash = "d46331e2fffde2c3c2a952575e61827fb67ecbc200a030649bf3e08ad637c049"
 metafile = true
 
 [[files]]
-file = "mods/double-doors.pw.toml"
-hash = "dd7cef593c981ee150f7ed0541cbcd3669467c84b20ee01a7b28ca5c7a3bc3fa"
-metafile = true
-
-[[files]]
 file = "mods/dramatic-doors.pw.toml"
 hash = "b8a573fb90e6416ad88c42041e2f148121749f3f2548b8b67c5d1c90fa608f08"
 metafile = true
@@ -5110,6 +5104,11 @@ metafile = true
 [[files]]
 file = "mods/evileye-migration.pw.toml"
 hash = "2e84eb3c224b54e5e63a132e54ff790a4052a59b690ebce2de7834c4f991fdca"
+metafile = true
+
+[[files]]
+file = "mods/evileye-tweaks.pw.toml"
+hash = "f752a08a5556d424b5143c024cdf22a969074222e640bf23396641fd72a2df48"
 metafile = true
 
 [[files]]
@@ -5180,11 +5179,6 @@ metafile = true
 [[files]]
 file = "mods/ftb-library-forge.pw.toml"
 hash = "df64ca595f6f0f79e3a4a844fd0a887b44f5e007f5deb9ac011b5cf67b3a2127"
-metafile = true
-
-[[files]]
-file = "mods/fuelgoeshere.pw.toml"
-hash = "167e16c3a9bce43fa315af831930487448833b9c5a5f00676532df8a193e27b0"
 metafile = true
 
 [[files]]

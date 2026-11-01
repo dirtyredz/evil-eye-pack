@@ -91,6 +91,18 @@
    "action": "drop",
    "reason": "Owner request 2026-11-01: not used. Client-only light-level overlay (no blocks, items or world data)."
   },
+  "mods/fuelgoeshere.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Tweaks 0.2.0 (furnace/ forced-fuel routing, same fuelgoeshere:forced_fuels tag id and coal/charcoal default). No config, blocks, items or world data."
+  },
+  "mods/double-doors.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Tweaks 0.2.0 (doors/: hand, villager and redstone sync with Double Doors 7.5 defaults, carried in config/evileye_tweaks-common.toml). No blocks, items or world data."
+  },
+  "mods/collective.pw.toml": {
+   "action": "drop",
+   "reason": "Library whose only consumer was Double Doors (dropped). Closure 2026-11-01: 270 jars from the lock incl. 81 nested jar-in-jar scanned, no Collective metadata dependency or com/natamus/collective class reference (jobs/2026-11-01-evileye-tweaks-wave1/collective-closure.json)."
+  },
   "mods/embeddium.pw.toml": {
    "action": "drop",
    "reason": "Superseded by Sodium, the renderer Iris requires on NeoForge; Embeddium and Sodium cannot be installed together."
@@ -276,6 +288,18 @@
     "size": 119760
    },
    "reason": "Private local migration bridge built from minecraft-mods 4c9fa1f (dev.7 item-component conversion). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover."
+  },
+  {
+   "metafile": "mods/evileye-tweaks.pw.toml",
+   "name": "Evil Eye Tweaks",
+   "side": "both",
+   "target": {
+    "source": "local",
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.2.0.jar",
+    "sha256": "f88a3ceea8d65231d2edef1e24d9b01a0dfd34d75d7fefa4f1f4412ebbf79527",
+    "size": 40265
+   },
+   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 5d69238, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors, replacing Fuel Goes Here, Double Doors and Collective (consolidation wave 1)."
   },
   {
    "metafile": "mods/spark.pw.toml",

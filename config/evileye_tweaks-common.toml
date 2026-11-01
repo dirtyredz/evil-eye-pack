@@ -1,0 +1,21 @@
+[furnace]
+	#Shift-clicking an item in the fuelgoeshere:forced_fuels tag (coal and charcoal by default)
+	#sends it to the fuel slot even when it could be smelted, as long as the fuel slot is empty
+	#or holds the same item with room left.
+	forceFuelRouting = true
+
+[doors]
+	#Opening or closing a door also opens or closes matching doors beside it.
+	enableDoors = true
+	#Fence gates of the same kind open together (only gates parallel or opposite to the one used change).
+	enableFenceGates = false
+	#Trapdoors of the same kind open together.
+	enableTrapdoors = false
+	#Follow chains of touching matching blocks instead of only the direct neighbours.
+	enableRecursiveOpening = true
+	#Chained blocks must be closer than this many blocks to the one used.
+	# Default: 10
+	# Range: 1 ~ 64
+	recursiveOpeningMaxBlocksDistance = 10
+	#Block ids (namespace:path) that never sync.
+	doorBlockBlacklist = []
