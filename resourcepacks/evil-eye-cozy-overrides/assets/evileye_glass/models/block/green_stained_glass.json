@@ -1,0 +1,8 @@
+{
+  "type": "fusion:connecting",
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "evileye_glass:block/green_stained_glass"
+  },
+  "loader": "fusion:model"
+}

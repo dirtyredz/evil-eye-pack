@@ -25,8 +25,8 @@ test('resource id parts preserve namespace, nested paths and colonless fallback'
   }
 });
 
-test('loads the shipped curation: 1,168 explicit ids plus rules', () => {
-  assert.equal(policy.itemIdCount, 1168);
+test('loads the shipped curation: 1,056 explicit ids plus rules', () => {
+  assert.equal(policy.itemIdCount, 1056);
   assert.deepEqual([...policy.idContains], ['spawn_egg']);
   assert.equal(policy.namespaces.dramaticdoors, true);
   assert.equal(policy.displayFiltering, true);
@@ -37,7 +37,7 @@ test('every explicit family hides its listed ids', () => {
     'ae2:creative_item_cell', 'create:creative_motor', 'enderio:creative_power',
     'enderio:clear_glass_a', 'enderio:fused_quartz_red', 'enderio:clear_glass_dnp_white',
     'ae2:red_covered_cable', 'ae2:white_glass_cable', 'ae2:red_paint_ball', 'ae2:red_lumen_paint_ball',
-    'connectedglass:borderless_glass_black', 'supplementaries:present_red', 'supplementaries:flag_black',
+    'supplementaries:present_red', 'supplementaries:flag_black',
     'create:white_toolbox', 'create:red_valve_handle', 'create:white_seat',
     'alexscaves:radon_lamp_red', 'alexscaves:rock_candy_red',
     'minecolonies:pirateegg', 'minecolonies:pharaoegg',
@@ -47,7 +47,7 @@ test('every explicit family hides its listed ids', () => {
 test('documented uncoloured/base examples and lower tiers stay visible', () => {
   for (const id of [
     'ae2:fluix_covered_cable', 'ae2:fluix_glass_cable', 'ae2:white_paint_ball', 'ae2:white_lumen_paint_ball',
-    'connectedglass:borderless_glass', 'supplementaries:present', 'supplementaries:trapped_present',
+    'supplementaries:present', 'supplementaries:trapped_present',
     'supplementaries:candle_holder', 'supplementaries:candle_holder_soul', 'supplementaries:flag_white',
     'create:brown_toolbox', 'create:copper_valve_handle', 'create:red_seat',
     'alexscaves:radon_lamp_white', 'alexscaves:rock_candy_white',

@@ -53,7 +53,7 @@ test('the shipped decor.json compiles and names the verified mod ids and the req
   const { P } = policyOf({});
   const policy = P.load(readRepoText);
   // Ids verified from the jars' META-INF/mods.toml (Evil Eye Trial Cozy and Stable mods folders).
-  for (const id of ['handcrafted', 'cluttered', 'domum_ornamentum', 'createdeco', 'interiors', 'roundwood', 'connectedglass', 'friendly_furnishings', 'refurbished_furniture']) {
+  for (const id of ['handcrafted', 'cluttered', 'domum_ornamentum', 'createdeco', 'interiors', 'roundwood', 'friendly_furnishings', 'refurbished_furniture']) {
     assert.equal(policy.mods[id], true, id);
   }
   assert.ok(policy.modPrefixes.includes('mcw'));

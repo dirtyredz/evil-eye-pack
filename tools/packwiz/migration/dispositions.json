@@ -287,6 +287,10 @@
   "mods/pro-placer.pw.toml": {
    "action": "drop",
    "reason": "Reimplemented in Evil Eye Client 0.7.0: enabled reach-around, continuous placement and creative breaking; exact scaffolding exclusion and session toggle. Puzzles Lib and Diagonal Fences retained. Recursive closure and saved-inventory evidence: jobs/2026-11-02-pro-placer."
+  },
+  "mods/connected-glass.pw.toml": {
+   "action": "drop",
+   "reason": "Owner request 2026-11-02: removed. Connected Glass (119 connectedglass: blocks and items) is dropped with no world rescue; the owner never placed any, so unknown ids are simply dropped. Vanilla glass, stained glass and their panes now connect through Fusion resources in evil-eye-cozy-overrides."
   }
  },
  "additions": [

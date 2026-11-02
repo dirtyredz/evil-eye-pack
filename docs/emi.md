@@ -49,7 +49,7 @@ A **DECOR: SHOWN / DECOR: HIDDEN** button (`ui/decor_button.js`) sits right of t
 2. **Whole mods**: `mods` (exact namespaces), `modPrefixes` (namespace starts with, e.g. `mcw` for every Macaw's mod) and `pathPrefixes` (namespace to path prefixes, e.g. `herbalwitch` items whose path starts with `decor/`).
 3. **Tags**: `itemTags` and `blockTags`. A block tag matches the block's item (`Block.asItem()`). Tags are read from the live registries (`decor/decor_tags.js`), so modded stairs, slabs, fences and so on that join the common tags are included without being listed. The tag set is built on first use and rebuilt for every new EMI generation.
 
-Shipped contents: decor mods `handcrafted`, `another_furniture` (in no pack instance yet, so its id is unverified), `cluttered`, `domum_ornamentum`, `createdeco`, `interiors`, `roundwood`, `connectedglass`, `friendly_furnishings`, `refurbished_furniture`; prefix `mcw` (Macaw's: mcwbridges, mcwdoors, mcwfurnitures, mcwfences, mcwpaths, mcwstairs, mcwwindows, mcwpaintings, mcwroofs, mcwtrpdoors, mcwbiomesoplenty); and Herbal Witch `decor/`. Tags: stairs, slabs, walls, fences, fence gates, carpets, banners, candles, flower pots, glass panes (`forge:glass_panes`, `forge:stained_glass_panes`), signs and hanging signs, beds. **Not decor (owner call, easy to change): doors and trapdoors.** They are access and redstone parts, and the door families that are mostly variants are already covered (Macaw's by the prefix, Dramatic Doors by CLEAN). To hide them too, add `minecraft:doors` and `minecraft:trapdoors` to `itemTags` and `blockTags`. Joy of Painting is not a decor mod (its palettes and brushes are tools), so only its easel and canvases are in `forceDecor`. Functional items of decor mods are in `forceNotDecor`: Supplementaries' faucet, Domum Ornamentum's architect's cutter, Handcrafted's hammer, Refurbished Furniture's wrench, spatula and TV remote. Hidden decor also drops out of the Mods menu while it is hidden.
+Shipped contents: decor mods `handcrafted`, `another_furniture` (in no pack instance yet, so its id is unverified), `cluttered`, `domum_ornamentum`, `createdeco`, `interiors`, `roundwood`, `friendly_furnishings`, `refurbished_furniture`; prefix `mcw` (Macaw's: mcwbridges, mcwdoors, mcwfurnitures, mcwfences, mcwpaths, mcwstairs, mcwwindows, mcwpaintings, mcwroofs, mcwtrpdoors, mcwbiomesoplenty); and Herbal Witch `decor/`. Tags: stairs, slabs, walls, fences, fence gates, carpets, banners, candles, flower pots, glass panes (`forge:glass_panes`, `forge:stained_glass_panes`), signs and hanging signs, beds. **Not decor (owner call, easy to change): doors and trapdoors.** They are access and redstone parts, and the door families that are mostly variants are already covered (Macaw's by the prefix, Dramatic Doors by CLEAN). To hide them too, add `minecraft:doors` and `minecraft:trapdoors` to `itemTags` and `blockTags`. Joy of Painting is not a decor mod (its palettes and brushes are tools), so only its easel and canvases are in `forceDecor`. Functional items of decor mods are in `forceNotDecor`: Supplementaries' faucet, Domum Ornamentum's architect's cutter, Handcrafted's hammer, Refurbished Furniture's wrench, spatula and TV remote. Hidden decor also drops out of the Mods menu while it is hidden.
 
 #### Marking items as decor in game
 
@@ -109,11 +109,10 @@ After editing any pack file, save it as UTF-8 with LF line endings. Then run
 
 Record the results in [emi-coverage.md](emi-coverage.md).
 
-1. Launch the disposable world. There should be one viewer (EMI) and one `EMI: CLEAN` button. `logs/latest.log` and `logs/kubejs/client.log` should show no EMI curation, plugin or script errors. The log line `EMI curation: loaded curation (1105 explicit ids, decor rules)` should appear.
+1. Launch the disposable world. There should be one viewer (EMI) and one `EMI: CLEAN` button. `logs/latest.log` and `logs/kubejs/client.log` should show no EMI curation, plugin or script errors. The log line `EMI curation: loaded curation (1056 explicit ids, decor rules)` should appear.
 2. In CLEAN, check every hidden family and its kept base example:
    - fluix cables;
    - white paint balls;
-   - uncoloured Connected Glass;
    - the plain present, candle holder and flag;
    - brown toolbox, copper valve handle and red seat;
    - white radon lamp and rock candy;
