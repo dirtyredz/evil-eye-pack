@@ -7350,7 +7350,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/tool-belt.pw.toml",
    "old": {
     "file": "4581167",
@@ -7363,34 +7363,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "toolbelt optional sewingkit [2.0.1,)",
-     "toolbelt required minecraft [1.21,1.22)",
-     "toolbelt required neoforge [21.1.10-beta,)"
-    ],
-    "file": "8309722",
-    "filename": "ToolBelt-1.21.1-2.2.10.jar",
-    "loader": "neoforge",
-    "metafile": "mods/tool-belt.pw.toml",
-    "mods": [
-     "toolbelt@2.2.10"
-    ],
-    "name": "Tool Belt",
-    "project": "260262",
-    "publisher": {
-     "size": 217020
-    },
-    "sha1": "96862e5d8df67d63b749fc15d18262f3736d1828",
-    "sha256": "918b35093dfaf8033115acd8dacd8978e325dcba36355f8d1a938ee92d5ab4ff",
-    "sha512": "1cbcc5417da4e3b786249f41df6b9ab5fe48d435332388711bc3ddde17f081e91f1af009163d326ac0e7276bf178b77b90f8727f4438ce3e66596b4d591e1e51",
-    "side": "both",
-    "size": 217020,
-    "source": "curseforge",
-    "versionNumber": "ToolBelt-1.21.1-2.2.10.jar"
-   }
+   "rationale": "Owner request 2026-11-01: removed. Tool Belt (toolbelt:belt, toolbelt:pouch) is removed without a world-content rescue (owner re-scope 2026-11-01); belts or pouches left in a world lose their items."
   },
   {
    "action": "repoint",

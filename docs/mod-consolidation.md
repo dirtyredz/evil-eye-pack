@@ -38,6 +38,7 @@ are removed only after a full dependency and consumer audit.
 | After wave 4 | 173 |
 | After wave 3 | 164 |
 | After wave 5 | 163 |
+| After Tool Belt removal (outright, 2026-11-01) | 162 |
 
 ## Rules
 

@@ -6,8 +6,6 @@ key_key.ars_nouveau.previous_slot:key.keyboard.comma
 key_key.ars_nouveau.choose_armarium_slot:key.keyboard.home
 key_key.ars_nouveau.switch_armarium_slot:key.keyboard.n
 key_supplementaries.keybind.quiver:key.keyboard.semicolon
-key_key.toolbelt.open:key.keyboard.r
-key_key.toolbelt.slot:key.keyboard.apostrophe
 key_iris.keybind.reload:key.keyboard.f10
 key_iris.keybind.toggleShaders:key.keyboard.f9
 key_key.buildinggadgets2.range:key.keyboard.minus

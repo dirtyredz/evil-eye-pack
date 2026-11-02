@@ -1685,7 +1685,7 @@ hash = "a7444e9071ebe7e1306e83141f9b4c53fbd6f99730f9d29f587b959b54f07a82"
 
 [[files]]
 file = "config/defaultoptions/keybindings.txt"
-hash = "2ce15a4b20be2a13bb2537ff8946dce74146e71e3485fa39dd2a5aed53175baf"
+hash = "a6aebb126052da90c7570bcc3afce2388181e9aec617377b0138410c43cbb38b"
 
 [[files]]
 file = "config/dramaticdoors-common.toml"
@@ -2300,15 +2300,6 @@ preserve = true
 file = "config/terrablender.toml"
 hash = "2c248957470f6a15784cf06290597ce581049e77bfd757971cdae3c36bdf1217"
 preserve = true
-
-[[files]]
-file = "config/toolbelt-client.toml"
-hash = "21308b8beaf47d04e5a237e2d926880d428c4168b1bbda145c251d8167c5a86e"
-preserve = true
-
-[[files]]
-file = "config/toolbelt-common.toml"
-hash = "4f979d7ec57b4ed9bd6a8671abd19b687ebb94bf01065db5f36b1dc8eb987cf4"
 
 [[files]]
 file = "config/towns_and_towers/structure_enable_or_disable_new.json5"
@@ -5432,11 +5423,6 @@ metafile = true
 [[files]]
 file = "mods/thirst-was-taken.pw.toml"
 hash = "7186d80f0afd569ac8ec64d0f78382fe03b092de01d72f722f79b77c1cad4412"
-metafile = true
-
-[[files]]
-file = "mods/tool-belt.pw.toml"
-hash = "6e858314972147e4748f68e5ad8feb7039bfd8a885b952f9c3bf8d3a845e8dc9"
 metafile = true
 
 [[files]]

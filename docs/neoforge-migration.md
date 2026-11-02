@@ -196,6 +196,10 @@ Fix: Iris & Oculus Flywheel Compat 2.4.0 (Modrinth `ndHYMY2K` / `6ZQz5Ow2`, clie
 
 Owner does not use it. `mods/light-overlay.pw.toml` (12.0.0), `config/lightoverlay.properties`, its F7 default keybinding and its mod-map category are gone; the lock records a `drop` and `lightoverlay` is in `removedMods`. It was client-only and registers no blocks, items or entities (jar: 62 KB, only `META-INF/neoforge.mods.toml` plus client code), so no world data is affected. Architectury stays (FTB Library and Quick Skin require it). Cloth Config stays: only FallingTree still lists it, as an optional client dependency for its config screen.
 
+## Tool Belt removed (2026-11-01)
+
+Owner decision. `mods/tool-belt.pw.toml` (ToolBelt-1.21.1-2.2.10, items `toolbelt:belt` and `toolbelt:pouch`), `config/toolbelt-client.toml`, `config/toolbelt-common.toml`, its two default keybindings (open R, belt slot apostrophe) and its mod-map category are gone; the lock records a `drop`, both configs are `dropped` in config-decisions and `toolbelt` is in `removedMods`. R now has no in-world binding (EMI's view-recipes R works only inside screens). No KubeJS, recipe, EMI or showcase file referenced it. The owner ruled removal without a world rescue: a read-only byte scan (`jobs/2026-11-01-remove-tool-belt/scan-*.json`) found `toolbelt` in both players' playerdata and advancements and in five entity chunks of the Stable snapshot, the live Stable save and the converted Trial; those references were not decoded, so any belt or pouch there (and its stored tools) will not survive the converted world.
+
 ## 100% checklist
 
 See plan Phase 10. Every criterion there is required. Temporary absences, a successful boot on

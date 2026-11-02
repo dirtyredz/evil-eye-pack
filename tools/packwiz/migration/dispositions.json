@@ -91,6 +91,10 @@
    "action": "drop",
    "reason": "Owner request 2026-11-01: not used. Client-only light-level overlay (no blocks, items or world data)."
   },
+  "mods/tool-belt.pw.toml": {
+   "action": "drop",
+   "reason": "Owner request 2026-11-01: removed. Tool Belt (toolbelt:belt, toolbelt:pouch) is removed without a world-content rescue (owner re-scope 2026-11-01); belts or pouches left in a world lose their items."
+  },
   "mods/fuelgoeshere.pw.toml": {
    "action": "drop",
    "reason": "Replaced by the owned Evil Eye Tweaks 0.2.0 (furnace/ forced-fuel routing, same fuelgoeshere:forced_fuels tag id and coal/charcoal default). No config, blocks, items or world data."
