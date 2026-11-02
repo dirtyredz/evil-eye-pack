@@ -3322,22 +3322,22 @@
    "metafile": "mods/evileye-tweaks.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 98ea67f, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4).",
+   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks ca3494c, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4).",
    "target": {
     "declares": [
      "evileye_tweaks required minecraft [1.21.1,1.21.2)",
      "evileye_tweaks required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.6.0.jar",
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.6.1.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-tweaks.pw.toml",
     "mods": [
-     "evileye_tweaks@0.6.0"
+     "evileye_tweaks@0.6.1"
     ],
     "name": "Evil Eye Tweaks",
-    "sha256": "82e064213aca6a8b3f5b408990788bfcbbfdf19b705b02b0cba2600d02e03d45",
+    "sha256": "59163e593d140742c8f5821ffa623711307aeba4f2d1ea1f054969bd61775169",
     "side": "both",
-    "size": 176582,
+    "size": 183107,
     "source": "local"
    }
   },

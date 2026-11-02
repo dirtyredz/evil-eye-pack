@@ -24,6 +24,14 @@ change: the default `models/block/raw_silver_block.json` and `models/item/raw_si
 the mod's assets. Personal family pack, never published, so redistribution licence is not a blocker. Re-copy from the jar if
 its textures are ever re-pinned to a different version.
 
+## 2026-11-02 - Slow Falling gets a drop threshold in Evil Eye Tweaks (0.6.1)
+
+**Decision.** Everlasting Abilities' permanent Slow Falling stays, but Evil Eye Tweaks 0.6.1 makes the vanilla effect float
+a player only after a fall of more than 3 blocks (`[movement] slowFallingMinDrop`), for every source of the effect. **Why:**
+vanilla applies the 0.01 gravity from the first tick, so stairs and one-block step-downs floated; the fix belongs in the
+owned mod as a narrow mixin on the effect checks, not in the ability or a datapack. Fall damage stays prevented. **Rejected:**
+removing the ability (owner wants no fall damage); scoping the change to the ability only (the potion and Ars glyph feel the same).
+
 ## 2026-11-02 - Smooth thirst droplets ship from the pack override folder (Evil Eye Client 0.3.3)
 
 **Decision.** Original 4x droplet sprites for `thirst:textures/gui/thirst_icons.png` and `appleskin_icons.png` live in

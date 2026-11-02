@@ -768,3 +768,21 @@ failed start leaves the operation idle so a retry works instead of printing "alr
 Also rolls up dev.8 (Ars armor perks threaded through Ars's own holder API), which was never pinned.
 dev.9 is reserved by the unmerged equipment-panel branch. Jar stored hash-addressed and by filename in the
 shared migration cache and in the cache Stable's prelaunch uses (`jobs/2026-10-31-world-trial-final/cache`).
+
+## Evil Eye Tweaks 0.6.1 pin: Slow Falling floats only after a real drop (2026-11-02)
+
+Owner request. The permanent Slow Falling from Everlasting Abilities (vanilla `MobEffects.SLOW_FALLING`) made walking down
+stairs and small ledges float. Evil Eye Tweaks 0.6.1 (minecraft-mods `mods/EvilEyeTweaks` ca3494c, branch
+`feat/slow-fall-threshold`) applies the effect's reduced gravity to players only once they have fallen more than
+`[movement] slowFallingMinDrop` blocks (default 3.0; 0 = vanilla); fall damage stays prevented while the effect lasts. Any
+source of the effect is covered. The setting is read on both client and server (the local player simulates its own gravity), so
+the pack ships one `config/evileye_tweaks-common.toml`. Pinned like Client 0.3.3: `metadata:local` metafile, lock and
+disposition updated, jar stored hash-addressed and by filename in the shared migration cache and the Trial walkthrough's job cache.
+
+| Pin | Source | SHA-256 | Bytes |
+|---|---|---|---|
+| `evileye_tweaks-1.21.1-neoforge-0.6.1.jar` (side both) | minecraft-mods `mods/EvilEyeTweaks` ca3494c | `59163e593d140742c8f5821ffa623711307aeba4f2d1ea1f054969bd61775169` | 183,107 |
+
+Config: `evileye_tweaks-common.toml` gains `[movement] slowFallingMinDrop = 3.0`. The mod's GameTests (stairs at normal
+gravity, vanilla float with threshold 0, a long drop with no damage) ran headless against the real tick/travel path; the
+in-game feel is for the owner to confirm.

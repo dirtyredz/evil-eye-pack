@@ -387,11 +387,11 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.6.0.jar",
-    "sha256": "82e064213aca6a8b3f5b408990788bfcbbfdf19b705b02b0cba2600d02e03d45",
-    "size": 176582
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.6.1.jar",
+    "sha256": "59163e593d140742c8f5821ffa623711307aeba4f2d1ea1f054969bd61775169",
+    "size": 183107
    },
-   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 98ea67f, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4)."
+   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks ca3494c, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement)."
   },
   {
    "metafile": "mods/evileye-client.pw.toml",

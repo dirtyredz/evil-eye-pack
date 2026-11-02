@@ -157,3 +157,11 @@
 	fastLeafDecay = true
 	#Creative players fell trees too.
 	fellInCreative = false
+
+[movement]
+	#Blocks a player must have fallen before the Slow Falling effect (any source) slows the fall.
+	#Stairs, slabs and small step-downs then behave normally. Fall damage stays prevented while the
+	#effect lasts. 0 is vanilla. Read on the client too, so keep it equal on both sides.
+	# Default: 3.0
+	# Range: 0.0 ~ 256.0
+	slowFallingMinDrop = 3.0
