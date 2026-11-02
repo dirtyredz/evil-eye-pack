@@ -1671,7 +1671,7 @@ hash = "a7444e9071ebe7e1306e83141f9b4c53fbd6f99730f9d29f587b959b54f07a82"
 
 [[files]]
 file = "config/defaultoptions/keybindings.txt"
-hash = "e9f29f51609bb9296c932181c5d20d7a385dde4dcf5097717f85c8fb682c1919"
+hash = "885840decf1b0f28d78e3e26d4b64c5ab57e798f591ba5b3046cb663eeecc2ef"
 
 [[files]]
 file = "config/dramaticdoors-common.toml"
@@ -1773,7 +1773,7 @@ hash = "19e1a12a90c2b6c0df9fb3152c19a21eb4c9d84c49d496377eacfca0855b324f"
 
 [[files]]
 file = "config/evileye_client-client.toml"
-hash = "0366ba5621b7c3f2c4f1aeec3c77ac5cb0cac94fbe19d29bfa02a0c851d6678b"
+hash = "9d59e3f0caccc7f280ead8c53a6266ecf9e6d3a17eb91d1fc0c12f6e500f6ab0"
 preserve = true
 
 [[files]]
@@ -4952,7 +4952,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "6c9aa4e3634922b48c8808707228e6058324398c8b0864431d1ee53aee2d4ba2"
+hash = "6deab286149e2c4fd72da0d2a1a00978169d178a4cdb90c77e7908d79173855f"
 metafile = true
 
 [[files]]
@@ -5263,11 +5263,6 @@ metafile = true
 [[files]]
 file = "mods/polymorph.pw.toml"
 hash = "2e2af1cc71b69b26ae87bcb78d75fb0186d690ee1b85d8d4586eec112aa51b66"
-metafile = true
-
-[[files]]
-file = "mods/pro-placer.pw.toml"
-hash = "7fc653d77e2f6f083f95a1dc0b89645498684e9c721b6aad27d60b1ecafc870e"
 metafile = true
 
 [[files]]

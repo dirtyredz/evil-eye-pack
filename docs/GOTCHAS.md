@@ -405,3 +405,7 @@ Client 0.5.1 and Tweaks 0.8.1 own sorting, safe physical-storage/Dank transfers 
 ## Zoom after Chloride removal
 
 Modern UI is enabled and defaults to Z. Saved `options.txt` bindings win over shipped defaults, so existing C bindings still clash with vanilla creative save-hotbar. The pack-owned-key installer currently supports JSON/TOML only; it cannot force this key. See the Chloride retirement entry in [Decisions](DECISIONS.md#chloride-retirement-2026-11-02) for the narrow follow-up.
+
+## Pro Placer replacement
+
+Client 0.7.0 adds placement defaults through config correction; a shipped preserved TOML does not replace saved preferences. The toggle state lasts for the application session, while the legacy binding is adopted through the two-load options path. Puzzles Lib remains required by Diagonal Fences. Quick Skin local appearance files are persistent and untouched.

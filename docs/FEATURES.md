@@ -22,3 +22,5 @@ Private migration trial prelaunch: `node tools/packwiz/install/install_local.cjs
 Inventory subset (Client 0.5.0/Tweaks 0.8.0): two move-all controls on classified vanilla storage, and silent selected-hand/offhand refill with near-break tool swaps. IPN remains for sorting. Dank/modded-storage transfer and full IPN removal are not implemented. See [migration status](neoforge-migration.md#2026-11-02---inventory-runtime-subset).
 
 - **Evil Eye settings and inventory actions:** Client 0.6.1 with Tweaks 0.9.0 and Essentials 0.2.0 provides the owned settings screen/service and one outside-panel rail (to player, to storage, sort, trash). Only applicable actions show; clipped or obstructed rails hide. Inventory effects sit left; operator commands stay in the sidebar. IPN/libIPN are retired.
+
+Client 0.7.0 owns reach-around bridging, continuous placement and creative row/column breaking; [placement] settings and the unbound continuous-building key are in the owned settings/controls screens. Pro Placer leaves; Puzzles Lib remains for Diagonal Fences.

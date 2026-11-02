@@ -29,3 +29,5 @@ key_key.nextDestination:key.keyboard.unknown
 key_key.modernui.zoom:key.keyboard.z
 
 key_key.evileye_client.sort:key.mouse.middle
+
+key_key.evileye_client.placement.toggle:key.keyboard.unknown

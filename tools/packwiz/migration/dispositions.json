@@ -282,6 +282,10 @@
   "mods/chloride.pw.toml": {
    "action": "drop",
    "reason": "Owner decision 2026-11-02: remove Chloride entirely; graphics tweaks are unused. Modern UI remains as the zoom provider, default Z. Sodium remains required by Iris; bundled WaterConfig leaves with Chloride."
+  },
+  "mods/pro-placer.pw.toml": {
+   "action": "drop",
+   "reason": "Reimplemented in Evil Eye Client 0.7.0: enabled reach-around, continuous placement and creative breaking; exact scaffolding exclusion and session toggle. Puzzles Lib and Diagonal Fences retained. Recursive closure and saved-inventory evidence: jobs/2026-11-02-pro-placer."
   }
  },
  "additions": [
@@ -415,11 +419,11 @@
    "side": "client",
    "target": {
     "source": "local",
-    "filename": "evileye_client-1.21.1-neoforge-0.6.1.jar",
-    "sha256": "8f13aa591889a25ba50c8adb3ffa9817531303139643147a6f3c65115ba59510",
-    "size": 587928
+    "filename": "evileye_client-1.21.1-neoforge-0.7.0.jar",
+    "sha256": "326623c20e20427cf505f702bbe13c2e807200075306896c8a101eab4de7eb68",
+    "size": 609119
    },
-   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.6.1 from minecraft-mods 8195659; settings screen/service metadata and outside-panel inventory action rail. IPN replacement retained."
+   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.6.1 from minecraft-mods 8195659; settings screen/service metadata and outside-panel inventory action rail. IPN replacement retained. Wave 6: Client 0.7.0 absorbs Pro Placer reach-around, continuous placement and creative row/column breaking; no server protocol. Puzzles Lib stays for Diagonal Fences."
   },
   {
    "metafile": "mods/evileye-essentials.pw.toml",

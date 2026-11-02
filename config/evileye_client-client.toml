@@ -409,3 +409,10 @@
 	#Extra outward distance and vertical offset in GUI pixels.
 	offsetX = 0
 	offsetY = 0
+
+# Placement assistance, carried from the effective Pro Placer settings.
+[placement]
+	allowReachAroundPlacement = true
+	allowFastPlacement = true
+	bypassUseBlock = false
+	normalPlacementBlocks = ["minecraft:scaffolding"]

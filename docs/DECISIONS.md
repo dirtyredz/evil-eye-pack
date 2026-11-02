@@ -751,3 +751,11 @@ Ship the owner-approved IPN replacement, settings screen and action rail togethe
 Owner decision supersedes the wave-6 retention proposal: remove Chloride and its unused graphics tweaks; retain Modern UI, Quick Skin and 3D Skin Layers. Modern UI zoom is explicitly enabled in `config/modernui/client.toml` and defaults to Z. Physical mod metafiles: **159 -> 158**. Sodium stays (Iris requires it); bundled WaterConfig leaves with Chloride, with no separate library drop.
 
 Existing instances preserve saved keybindings, including Stable's Modern UI C binding. `pack-owned-keys.json` only supports JSON/TOML, not `options.txt`; no forcing entry or Stable edit is made. Follow-up `dk-382e202b`: add an exact-key colon-delimited options setter to the existing prelaunch installer, tested for missing/saved/duplicate bindings and idempotence, preserving every unrelated line, then force only `key_key.modernui.zoom:key.keyboard.z`. Until then, existing players can rebind Modern UI zoom to Z in Controls.
+
+## Pro Placer absorption (2026-11-02, Client 0.7.0)
+
+Client 0.7.0 independently implements reach-around bridging, continuous row/column placement and creative breaking. Four described [placement] settings carry the observed defaults; the owned unbound toggle adopts saved legacy bindings, including modifiers and explicit unbinding. Existing preserved Client configs acquire this new section through normal spec correction. The untracked Pro Placer config remains inert for rollback. No server protocol or world conversion is needed.
+
+Pro Placer is removed: **158 -> 157** physical mod metafiles. Puzzles Lib stays for Diagonal Fences and its nested Diagonal Blocks. Modern UI, Quick Skin and 3D Skin Layers stay. Chloride was already removed by the later owner decision in the supplied base; this change does not restore or otherwise alter it. Exact-ID exclusions replace the unused matcher grammar; block items only and stronger lifecycle cleanup are deliberate differences.
+
+Evidence: artifacts/evil-eye-pack/jobs/2026-11-02-pro-placer; full handoff: artifacts/minecraft-mods/jobs/2026-11-02-pro-placer/handoff.md. No push, merge, instance writes or promotion. Owner client input and multiplayer acceptance remain required.

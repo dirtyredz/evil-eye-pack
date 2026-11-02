@@ -3188,7 +3188,7 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.6.1 from minecraft-mods 8195659; settings screen/service metadata and outside-panel inventory action rail. IPN replacement retained.",
+   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.6.1 from minecraft-mods 8195659; settings screen/service metadata and outside-panel inventory action rail. IPN replacement retained. Wave 6: Client 0.7.0 absorbs Pro Placer reach-around, continuous placement and creative row/column breaking; no server protocol. Puzzles Lib stays for Diagonal Fences.",
    "target": {
     "declares": [
      "evileye_client optional curios [9.5.1,) (client)",
@@ -3196,16 +3196,16 @@
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.6.1.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.7.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.6.1"
+     "evileye_client@0.7.0"
     ],
     "name": "Evil Eye Client",
-    "sha256": "8f13aa591889a25ba50c8adb3ffa9817531303139643147a6f3c65115ba59510",
+    "sha256": "326623c20e20427cf505f702bbe13c2e807200075306896c8a101eab4de7eb68",
     "side": "client",
-    "size": 587928,
+    "size": 609119,
     "source": "local"
    }
   },
@@ -6071,7 +6071,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/pro-placer.pw.toml",
    "old": {
     "filename": "ProPlacer-v8.0.3-1.20.1-Forge.jar",
@@ -6085,37 +6085,7 @@
     "version": "nAAkM9HI"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "proplacer required minecraft [1.21.1]",
-     "proplacer required neoforge [21.1.21,)",
-     "proplacer required puzzleslib [21.1.8,)"
-    ],
-    "filename": "ProPlacer-v21.1.1-1.21.1-NeoForge.jar",
-    "loader": "neoforge",
-    "metafile": "mods/pro-placer.pw.toml",
-    "mods": [
-     "proplacer@21.1.1"
-    ],
-    "name": "Pro Placer",
-    "project": "LhK0LkWd",
-    "publisher": {
-     "sha1": "458337cbff5860133d95794da3a1439e640f9581",
-     "sha512": "73c6b9af5dfbcefc4e882a0d27450e0030edd8f568085282e0c1377b6bfe14f8f3455e5199cddcd7f0ea050b550f2c3bf131928196894a46a80190b9c7f52248",
-     "size": 58759
-    },
-    "sha1": "458337cbff5860133d95794da3a1439e640f9581",
-    "sha256": "20ee2f85ca16c7eacca35ff2226fd670c01f5e285c8dd6d304eea5a9bba0c6ac",
-    "sha512": "73c6b9af5dfbcefc4e882a0d27450e0030edd8f568085282e0c1377b6bfe14f8f3455e5199cddcd7f0ea050b550f2c3bf131928196894a46a80190b9c7f52248",
-    "side": "client",
-    "size": 58759,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/LhK0LkWd/versions/gxFLjZrq/ProPlacer-v21.1.1-1.21.1-NeoForge.jar",
-    "version": "gxFLjZrq",
-    "versionNumber": "v21.1.1-1.21.1-NeoForge"
-   }
+   "rationale": "Reimplemented in Evil Eye Client 0.7.0: enabled reach-around, continuous placement and creative breaking; exact scaffolding exclusion and session toggle. Puzzles Lib and Diagonal Fences retained. Recursive closure and saved-inventory evidence: jobs/2026-11-02-pro-placer."
   },
   {
    "action": "repoint",
