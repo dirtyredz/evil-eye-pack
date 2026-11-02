@@ -197,7 +197,12 @@
     "iceandfire:dread_spawner",
     "iceandfire:egginice",
     "iceandfire:hippogryph_egg",
-    "iceandfire:fishing_spear"
+    "iceandfire:fishing_spear",
+    "citadel:citadel_book",
+    "citadel:debug",
+    "citadel:effect_item",
+    "citadel:fancy_item",
+    "citadel:icon_item"
   ],
   "removeOutputs": [
     "createdeco:zinc_sheet",

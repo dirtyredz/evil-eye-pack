@@ -750,6 +750,36 @@
    "evidence": "ItemFishingSpear is registered (IafItemRegistry.FISHING_SPEAR) but referenced nowhere else: no recipe, no loot entry, no mob equipment. Legacy item with no source. (item/ItemFishingSpear.class; grep of all data and classes finds only IafItemRegistry; medium)",
    "date": "2026-10-23",
    "source": "acquisition review 2026-10-23 (commit ac48f7b)"
+  },
+  "citadel:citadel_book": {
+   "class": "creative-technical",
+   "evidence": "Internal Citadel book-rendering helper item (Citadel 2.7.1); no recipe, loot or mob grant, not meant to be held. Owner saw it in JEI/EMI 2026-11-01; citadel:lectern stays visible.",
+   "date": "2026-11-01",
+   "source": "owner report 2026-11-01"
+  },
+  "citadel:debug": {
+   "class": "creative-technical",
+   "evidence": "Citadel debug item (Citadel 2.7.1); developer tool with no recipe or loot. Owner saw it in JEI/EMI 2026-11-01; citadel:lectern stays visible.",
+   "date": "2026-11-01",
+   "source": "owner report 2026-11-01"
+  },
+  "citadel:effect_item": {
+   "class": "creative-technical",
+   "evidence": "Citadel internal item used only to render effect icons (Citadel 2.7.1); no recipe or loot. Owner saw it in JEI/EMI 2026-11-01; citadel:lectern stays visible.",
+   "date": "2026-11-01",
+   "source": "owner report 2026-11-01"
+  },
+  "citadel:fancy_item": {
+   "class": "creative-technical",
+   "evidence": "Citadel internal item used only to render fancy tooltips/GUI stacks (Citadel 2.7.1); no recipe or loot. Owner saw it in JEI/EMI 2026-11-01; citadel:lectern stays visible.",
+   "date": "2026-11-01",
+   "source": "owner report 2026-11-01"
+  },
+  "citadel:icon_item": {
+   "class": "creative-technical",
+   "evidence": "Citadel internal item used only to render GUI icons (Citadel 2.7.1); no recipe or loot. Owner saw it in JEI/EMI 2026-11-01; citadel:lectern stays visible.",
+   "date": "2026-11-01",
+   "source": "owner report 2026-11-01"
   }
  }
 }

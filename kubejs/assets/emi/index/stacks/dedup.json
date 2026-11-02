@@ -193,6 +193,11 @@
     "item:iceandfire:dread_spawner",
     "item:iceandfire:egginice",
     "item:iceandfire:hippogryph_egg",
-    "item:iceandfire:fishing_spear"
+    "item:iceandfire:fishing_spear",
+    "item:citadel:citadel_book",
+    "item:citadel:debug",
+    "item:citadel:effect_item",
+    "item:citadel:fancy_item",
+    "item:citadel:icon_item"
   ]
 }

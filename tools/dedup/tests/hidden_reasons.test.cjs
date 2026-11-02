@@ -32,3 +32,13 @@ test('each reason records class, evidence and date', () => {
     assert.match(r.date || '', /^\d{4}-\d{2}-\d{2}$/, id + ' date');
   }
 });
+
+test('Citadel internal helper items are permanently hidden from EMI and JEI, the lectern stays visible', () => {
+  const removed = new Set(read('kubejs/assets/emi/index/stacks/dedup.json').removed);
+  for (const id of ['citadel_book', 'debug', 'effect_item', 'fancy_item', 'icon_item'].map(s => 'citadel:' + s)) {
+    assert.ok(hidden.includes(id), id + ' in hiddenOnly');
+    assert.ok(removed.has('item:' + id), id + ' in the EMI index removals');
+  }
+  assert.ok(!hidden.includes('citadel:lectern'));
+  assert.ok(!removed.has('item:citadel:lectern'));
+});

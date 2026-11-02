@@ -2393,7 +2393,7 @@ preserve = true
 
 [[files]]
 file = "kubejs/assets/emi/index/stacks/dedup.json"
-hash = "53e55078998c0343299614076e31112deb52ef4301e55e331db2a4a399a27a69"
+hash = "0d0cae8105aa5bbf32e9ef37b75ec815e42dbc3b408662dd5ddc618cac548193"
 
 [[files]]
 file = "kubejs/assets/emi_curation/lang/en_us.json"
@@ -2501,7 +2501,7 @@ hash = "fe4b5696211a9d5af0b3da7b7a187559692979d71a6cd4f70658d13bd19dc60b"
 
 [[files]]
 file = "kubejs/config/dedup.json"
-hash = "84a76c02a93e3ce07eb2c793cc9fbcae01d0c18e6fef57169acd84c90b61a680"
+hash = "5937cf513d8bf914dac2e67daa6d43ff6aa3bdb92fb234660642533542082e81"
 
 [[files]]
 file = "kubejs/config/dedup_sources.json"
