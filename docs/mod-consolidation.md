@@ -17,7 +17,7 @@ does not count. Full program plan: `artifacts/minecraft-mods/jobs/2026-11-01-evi
 | 3 | Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks, Crafting Tweaks | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.2.0 and Tweaks 0.5.0 local pins (since superseded by Client 0.3.2 and Tweaks 0.6.0, which remove the crafting-grid controls), seven drops plus Searchables and Balm after closure; owner walk pending |
 | 4 | AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps, Let Me Despawn (T) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.4.0 local pin, seven drops plus Bookshelf, Prickle, Almanac Lib and Kiwi after closure; owner walk pending |
 | 5 | FTB Essentials (E; mandatory saved-data migration), FTB Library (sidebar to C) | **Pinned on branch** `migration/evileye-essentials-wave5`: Essentials 0.1.0, Client 0.3.6 and Tweaks 0.6.1 local pins (0.3.1 = Trial fixes: hearts, trash-can icon, pick-up scale; 0.3.2 and 0.6.0 remove the crafting-grid controls; 0.3.3 = one-line labelled food and drink tooltips; 0.3.5 = Electromagnet charge widget; 0.3.6 = Ender IO + EMI tooltip layer and missing-slot highlight fixes; Tweaks 0.6.1 = Slow Falling drop threshold), two drops; import trial passed on a world copy; owner walk pending |
-| 6 | Pro Placer, Light Overlay (removed outright 2026-11-01), 3D Skin Layers, Quick Skin, Modern UI, Inventory Profiles Next, Chloride (C) | IPN replaced; other work remains |
+| 6 | Pro Placer, Light Overlay (removed outright 2026-11-01), 3D Skin Layers, Quick Skin, Modern UI, Inventory Profiles Next, Chloride (C) | IPN done (Client 0.6.1 / Tweaks 0.9.0); other work remains |
 | 7 | Polymorph, Cosmetic Armor Reworked (**done 2026-11-02**, see the equipment panel wave), Diagonal Fences, Create: Compatible Storage, Create: Storage Drawers Compat (conversion-gated) | not started |
 
 ## Retained
@@ -157,3 +157,7 @@ still fails on the pre-existing Mekanism size record; see the handoff.
 ## IPN cutover (round 4)
 
 Client 0.5.1/Tweaks 0.8.1 replace sorting, move-all and refill. IPN and libIPN are removed together; Kotlin remains for Create Jetpack, nested FlightLib and Cull Less Leaves. Mod metafiles: **161 -> 159**. Supported storage is the conservative vanilla set, player main inventory for sorting, and Dank through its bulk seam. Complex/virtual menus remain native-only. Automated evidence and owner UI/multiplayer acceptance limits are recorded in artifacts/minecraft-mods/jobs/2026-11-02-ipn-build/handoff.md.
+
+## Settings and action rail release (2026-11-02)
+
+Client 0.6.1, Tweaks 0.9.0 and Essentials 0.2.0 combine the completed IPN replacement with the owned settings screen/service. The outside-panel rail orders applicable actions as to-player, to-storage, sort, trash; EMI/JEI reserve its rectangle. Inventory effects are forced left, rail right, and operator commands remain in the sidebar. See the current pins in [NeoForge migration](neoforge-migration.md#stable-ipn-settings-and-action-rail-release-2026-11-02).

@@ -399,11 +399,11 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.8.1.jar",
-    "sha256": "5eaa61ce136cad8394c5e3d3cc97cf3fa1b5df25eeaf686743b44a6f6c664644",
-    "size": 329033
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.9.0.jar",
+    "sha256": "5293c6c9930abd0b1257ab1731769e36d14e962b49a66ec7aaddfe8373b43c4b",
+    "size": 374687
    },
-   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained."
+   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.9.0 from minecraft-mods 42406c6; settings screen/service metadata. IPN replacement retained."
   },
   {
    "metafile": "mods/evileye-client.pw.toml",
@@ -411,11 +411,11 @@
    "side": "client",
    "target": {
     "source": "local",
-    "filename": "evileye_client-1.21.1-neoforge-0.5.1.jar",
-    "sha256": "e60691855bc19a3353bafbf0effb87f4f06aeb63423b0255094c52536b5bb3b4",
-    "size": 497453
+    "filename": "evileye_client-1.21.1-neoforge-0.6.1.jar",
+    "sha256": "8f13aa591889a25ba50c8adb3ffa9817531303139643147a6f3c65115ba59510",
+    "size": 587928
    },
-   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained."
+   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.6.1 from minecraft-mods 8195659; settings screen/service metadata and outside-panel inventory action rail. IPN replacement retained."
   },
   {
    "metafile": "mods/evileye-essentials.pw.toml",
@@ -423,11 +423,11 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_essentials-1.21.1-neoforge-0.1.0.jar",
-    "sha256": "04588d313863f17a6eba815709709812853bc1cf42fc2697ecd0086461c22d5c",
-    "size": 232209
+    "filename": "evileye_essentials-1.21.1-neoforge-0.2.0.jar",
+    "sha256": "8487ba2be58ad02c87fedae61d8df8c7ade486d9834f4b333614d85adeec325d",
+    "size": 237818
    },
-   "reason": "Owned mod (minecraft-mods/mods/EvilEyeEssentials d2da76e, private local pin until a canonical release): replaces FTB Essentials (consolidation wave 5) and imports its saved data once."
+   "reason": "Owned mod (minecraft-mods/mods/EvilEyeEssentials d2da76e, private local pin until a canonical release): replaces FTB Essentials (consolidation wave 5) and imports its saved data once. Release 2026-11-02: 0.2.0 from minecraft-mods 2d258ea; settings screen/service metadata. IPN replacement retained."
   },
   {
    "metafile": "mods/spark.pw.toml",

@@ -741,3 +741,7 @@ Use the orchestrator-authorized shippable fallback: Client 0.5.0/Tweaks 0.8.0 ow
 ## IPN replacement (2026-11-02, round 4)
 
 Supersede the round-2 subset with the complete bounded replacement in Client 0.5.1/Tweaks 0.8.1. Remove IPN and libIPN in one step and retain Kotlin for its other consumers. Preserve owner-local IPN files as inert data; installers must not recreate or change them. Unsupported complex/virtual storage stays excluded under the owner-approved rescope.
+
+## 2026-11-02 - Stable inventory layout and settings release
+
+Ship the owner-approved IPN replacement, settings screen and action rail together with Client 0.6.1, Tweaks 0.9.0 and Essentials 0.2.0. Force actionRail enabled/RIGHT/zero offsets and effects.inventory.screenSideRight=false during local-copy install so preserved Stable configs receive the layout. These five settings are pack-owned and reset on sync; unrelated personal settings remain preserved. Trash moves to the rail; Client ignores legacy sidebar trash entries, so no forced rewrite of personal sidebar button lists is needed. Common settings catalogs expose existing keys, with no invented metadata configuration.

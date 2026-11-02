@@ -17,7 +17,11 @@ function setJson(text, e) {
   return JSON.stringify(doc, null, 4) + '\n';
 }
 
-function tomlValue(v) {
+function tomlValue(v, type) {
+  if (type === 'integer') {
+    if (!Number.isSafeInteger(v)) throw Error('Expected a safe TOML integer');
+    return String(v);
+  }
   return typeof v === 'number' && Number.isInteger(v) ? v.toFixed(1) : JSON.stringify(v);
 }
 
@@ -36,9 +40,9 @@ function setToml(text, e) {
   const re = new RegExp('^(\\s*)' + e.key + '\\s*=');
   for (let i = start + 1; i < end; i++) {
     const m = lines[i].match(re);
-    if (m) { lines[i] = `${m[1]}${e.key} = ${tomlValue(e.value)}`; return lines.join('\n'); }
+    if (m) { lines[i] = `${m[1]}${e.key} = ${tomlValue(e.value, e.tomlType)}`; return lines.join('\n'); }
   }
-  lines.splice(start + 1, 0, `${table ? '\t' : ''}${e.key} = ${tomlValue(e.value)}`);
+  lines.splice(start + 1, 0, `${table ? '\t' : ''}${e.key} = ${tomlValue(e.value, e.tomlType)}`);
   return lines.join('\n');
 }
 

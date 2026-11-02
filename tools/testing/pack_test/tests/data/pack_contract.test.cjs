@@ -93,12 +93,12 @@ test('Evil Eye Essentials carries the FTB Essentials pack values and imports its
   assert.match(tomlSection(config, 'import'), /^\s*ftbOnServerStart = true$/m);
 });
 
-test('Evil Eye Client shows FTB Library\'s sidebar buttons in its layout', () => {
+test('Evil Eye Client keeps operator commands in the sidebar and trash on the rail', () => {
   const sidebar = tomlSection(read('config/evileye_client-client.toml'), 'sidebar');
   assert.match(sidebar, /^\s*enabled = true$/m);
   assert.match(sidebar, /^\s*position = "TOP_LEFT"$/m);
   assert.match(sidebar, /^\s*columns = 4$/m);
-  assert.match(sidebar, /^\s*buttons = \["gamemode", "day", "night", "rain", "trash_can"\]$/m);
+  assert.match(sidebar, /^\s*buttons = \["gamemode", "day", "night", "rain"\]$/m);
 });
 
 test('Cosmetic Armor Reworked is replaced by the equipment panel: metafile, configs and texture gone, owned configs present', () => {
@@ -121,6 +121,7 @@ test('owned inventory actions replace IPN and libIPN while retaining Kotlin', ()
   for(const file of ['config/evileye_client-client.toml','config/evileye_tweaks-common.toml'])
     for(const section of ['sorting','transfer','refill']) assert.match(tomlSection(read(file),section),/^\s*enabled = true$/m);
   assert.match(read('config/defaultoptions/keybindings.txt'),/^key_key.evileye_client.sort:key.mouse.middle$/m);
-  assert.match(read('mods/evileye-client.pw.toml'),/neoforge-0\.5\.1\.jar/);
-  assert.match(read('mods/evileye-tweaks.pw.toml'),/neoforge-0\.8\.1\.jar/);
+  assert.match(read('mods/evileye-client.pw.toml'),/neoforge-0\.6\.1\.jar/);
+  assert.match(read('mods/evileye-tweaks.pw.toml'),/neoforge-0\.9\.0\.jar/);
+  assert.match(read('mods/evileye-essentials.pw.toml'),/neoforge-0\.2\.0\.jar/);
 });

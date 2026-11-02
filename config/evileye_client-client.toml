@@ -57,8 +57,8 @@
 	# Default: 4
 	# Range: 1 ~ 16
 	columns = 4
-	#Buttons in order, row by row: gamemode, day, night, rain (operators) and trash_can (Evil Eye Essentials).
-	buttons = ["gamemode", "day", "night", "rain", "trash_can"]
+	#Buttons in order, row by row: gamemode, day, night, rain (operators); trash is on the action rail.
+	buttons = ["gamemode", "day", "night", "rain"]
 
 #Pick-up log: what you picked up, in a screen corner.
 [pickup]
@@ -181,7 +181,7 @@
 		#Allowed Values: NONE, GUI_SMALL, GUI_COMPACT
 		rendererType = "GUI_COMPACT"
 		#Widgets sit right of the menu (left when false).
-		screenSideRight = true
+		screenSideRight = false
 		#Minimum distance from the screen border.
 		# Default: 3
 		# Range: 0 ~ 1024
@@ -390,7 +390,7 @@
 	#("Show skin" choices still hide armour). Also switchable in the equipment panel's Visibility editor.
 	showCosmetics = true
 
-#Owned vanilla-storage transfer; IPN remains for sorting only.
+#Owned physical-storage and Dank transfers; IPN is retired.
 [transfer]
 	enabled = true
 	deniedScreens = ["appeng.client.gui.*", "com.simibubi.create.*"]
@@ -401,3 +401,11 @@
 
 [sorting]
 	enabled = true
+
+#One action column outside the panel; hidden when clipped or obstructed.
+[actionRail]
+	enabled = true
+	side = "RIGHT"
+	#Extra outward distance and vertical offset in GUI pixels.
+	offsetX = 0
+	offsetY = 0

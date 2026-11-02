@@ -51,3 +51,33 @@ test('preserved client configuration enables all owned inventory actions', () =>
   assert.deepEqual(applyOwnedKeys(dir),[]);
  } finally {fs.rmSync(dir,{recursive:true,force:true});}
 });
+
+test('integer owned TOML values retain their type on insertion and replacement', () => {
+  const entry = { section: ['actionRail'], key: 'offsetX', value: 0, tomlType: 'integer' };
+  assert.match(setToml('', entry), /offsetX = 0\n/);
+  assert.equal(setToml('[actionRail]\n  offsetX = 12\n', entry), '[actionRail]\n  offsetX = 0\n');
+});
+
+test('Stable preserved configs receive the rail and left effects without resetting personal settings', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'owned-rail-'));
+  const file = path.join(dir, 'config/evileye_client-client.toml');
+  try {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, '[effects.hud]\n screenSideRight = true\n[effects.inventory]\n screenSideRight = true\n[sidebar]\n enabled = false\n[actionRail]\n enabled = false\n side = "LEFT"\n offsetX = 12\n offsetY = -8\n');
+    applyOwnedKeys(dir);
+    const installed = fs.readFileSync(file, 'utf8');
+    for (const [section, key, value] of [
+      ['effects.inventory', 'screenSideRight', 'false'],
+      ['actionRail', 'enabled', 'true'], ['actionRail', 'side', '"RIGHT"'],
+      ['actionRail', 'offsetX', '0'], ['actionRail', 'offsetY', '0']
+    ]) {
+      const table = text => text.split(`[${section}]`)[1]?.split(/\n\s*\[/)[0];
+      const expected = new RegExp(`^\\s*${key} = ${value}$`, 'm');
+      assert.match(table(installed), expected);
+      assert.match(table(fs.readFileSync(path.join(ROOT, 'config/evileye_client-client.toml'), 'utf8')), expected);
+    }
+    assert.match(installed, /\[effects.hud\]\n screenSideRight = true/);
+    assert.match(installed, /\[sidebar\]\n enabled = false/);
+    assert.deepEqual(applyOwnedKeys(dir), []);
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});

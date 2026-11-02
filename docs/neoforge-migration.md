@@ -854,3 +854,15 @@ in its own change. No runtime jar, upstream pin or migration validator was chang
 Client 0.5.1 and Tweaks 0.8.1 replace IPN sorting, directional move-all (including Dank) and both-hand refill. IPN/libIPN become migration drops; their configs and forcing keys leave. Kotlin stays. Mod count is 159. Both authorized caches receive filename and SHA-256 copies of verified local artifacts. Final verification and private artifact digests: artifacts/minecraft-mods/jobs/2026-11-02-ipn-build/handoff.md.
 
 Round-4 automated acceptance: Client 243 JUnit / 15 GameTests; Tweaks 141 JUnit / 112 ordinary GameTests and 114 with Dank; pack 578 Node tests; both migration caches and hash chain pass. Closure: 159 roots, 237 archives, 84,027 classes, zero IPN consumers/errors. One offline headless boot passed (27.007 seconds server startup, 80.241 seconds to Done, normal shutdown). No client mixins changed; owner rendering/input/multiplayer acceptance remains manual. Evidence: artifacts/evil-eye-pack/jobs/2026-11-02-ipn-round4/.
+
+## Stable IPN, settings and action rail release (2026-11-02)
+
+The owner-approved release combines the completed IPN replacement with the Evil Eye settings screen and inventory action rail. Private local pins (both caches verified by filename and SHA-256):
+
+| Jar | Source commit | SHA-256 | Bytes |
+|---|---|---|---|
+| evileye_client-1.21.1-neoforge-0.6.1.jar | 8195659 | 8f13aa591889a25ba50c8adb3ffa9817531303139643147a6f3c65115ba59510 | 587928 |
+| evileye_tweaks-1.21.1-neoforge-0.9.0.jar | 42406c6 | 5293c6c9930abd0b1257ab1731769e36d14e962b49a66ec7aaddfe8373b43c4b | 374687 |
+| evileye_essentials-1.21.1-neoforge-0.2.0.jar | 2d258ea | 8487ba2be58ad02c87fedae61d8df8c7ade486d9834f4b333614d85adeec325d | 237818 |
+
+Client ships actionRail enabled on the RIGHT with zero offsets; inventory effects move left. These five keys are forced on preserved Trial/Stable configs at sync. Trash is on the rail; the sidebar keeps gamemode/day/night/rain. Client ignores legacy sidebar trash entries. Tweaks 0.9.0 and Essentials 0.2.0 expose existing config values to the settings service; no new common TOML keys. IPN/libIPN remain dropped and Kotlin remains. Qualification evidence: jobs/2026-11-02-release-ipn-settings-rail/handoff.md. Release preparation does not itself install into Stable or publish main.

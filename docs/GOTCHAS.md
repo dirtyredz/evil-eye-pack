@@ -399,3 +399,5 @@ a CE per-structure-candidate probability without accounting for spacing (dk-e7b2
 ## IPN cutover (round 4)
 
 Client 0.5.1 and Tweaks 0.8.1 own sorting, safe physical-storage/Dank transfers and both-hand refill. IPN/libIPN and their shipped configs are removed; Kotlin remains. Pack-owned keys enable the three owned sections and never recreate or edit personal IPN data. The sort binding defaults to middle mouse; existing saved choices remain respected.
+
+- **Rail offsets are TOML integers.** Pack-owned numeric entries historically emitted floats. Declare `tomlType: "integer"` for actionRail offsets; otherwise sync writes `0.0` instead of the mod's integer `0`. Other numeric entries retain their previous formatting. The rail and inventory-effect side are pack-owned and reset at each sync, including after edits in the settings screen.

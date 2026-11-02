@@ -1,5 +1,5 @@
 {
-  "_comment": "Keys the pack forces into Trial's installed configs on every sync, even for preserve = true files (which packwiz only writes when missing). Each entry: file (relative to .minecraft), format (json|toml), section (json: path of nested objects; toml: table name, [] for top-level keys), key, value. See docs/GOTCHAS.md 'Preserved configs ignore later pack changes'.",
+  "_comment": "Keys the pack forces into Trial and Stable installed configs on every sync, even for preserve = true files (which packwiz only writes when missing). Each entry: file (relative to .minecraft), format (json|toml), section (json: path of nested objects; toml: table name, [] for top-level keys), key, value. See docs/GOTCHAS.md 'Preserved configs ignore later pack changes'. Optional tomlType=integer writes an integer literal (legacy numeric entries remain floats).",
   "keys": [
     {
       "file": "config/amendments-client.toml",
@@ -52,6 +52,54 @@
       ],
       "key": "enabled",
       "value": true
+    },
+    {
+      "file": "config/evileye_client-client.toml",
+      "format": "toml",
+      "section": [
+        "effects",
+        "inventory"
+      ],
+      "key": "screenSideRight",
+      "value": false
+    },
+    {
+      "file": "config/evileye_client-client.toml",
+      "format": "toml",
+      "section": [
+        "actionRail"
+      ],
+      "key": "enabled",
+      "value": true
+    },
+    {
+      "file": "config/evileye_client-client.toml",
+      "format": "toml",
+      "section": [
+        "actionRail"
+      ],
+      "key": "side",
+      "value": "RIGHT"
+    },
+    {
+      "file": "config/evileye_client-client.toml",
+      "format": "toml",
+      "section": [
+        "actionRail"
+      ],
+      "key": "offsetX",
+      "value": 0,
+      "tomlType": "integer"
+    },
+    {
+      "file": "config/evileye_client-client.toml",
+      "format": "toml",
+      "section": [
+        "actionRail"
+      ],
+      "key": "offsetY",
+      "value": 0,
+      "tomlType": "integer"
     }
   ]
 }
