@@ -1,5 +1,12 @@
 # Owned-mod consolidation
 
+## Furniture survey (2026-11-02)
+
+The [furniture and wood-variant findings](furniture-survey.md) compare 23 pinned primary
+jars plus adjacent decor, historical archived placements and material-driven rendering.
+Start with owner style selection and reversible EMI curation; no content is removed.
+Physical furniture removal remains a separate dependency/remap/restart acceptance task.
+
 ## Wave 7 evidence checkpoint (2026-11-02)
 
 Keep Polymorph, Diagonal Fences and Create: Compatible Storage, as accepted in the
