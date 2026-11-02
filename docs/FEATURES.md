@@ -15,5 +15,5 @@ duplicate-cleanup guides.
 | Evil Eye Essentials commands (homes, warps, /back, tpa, kits, trash can; replaced FTB Essentials) and the inventory sidebar (NeoForge branch) | `/evileye showcase evileye_essentials` | [Sections](showcases.md#evil-eye-essentials-section-neoforge-branch) |
 | One-boot showcase acceptance | `node tools/showcase/check.cjs --all` | [Headless checks](showcases.md#run-the-headless-check) |
 
-Private migration trial prelaunch: `node tools/packwiz/install_local.cjs --instance <trial/.minecraft>`
+Private migration trial prelaunch: `node tools/packwiz/install/install_local.cjs --instance <trial/.minecraft>`
 ([private pins](neoforge-migration.md#private-alex-ports-devtrial-only-2026-10-30)); family delivery remains separate.

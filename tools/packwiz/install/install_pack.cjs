@@ -1,17 +1,17 @@
 'use strict';
-// Owner's dedicated trial: packwiz copies cached artifacts as ordinary local files.
-// No download metadata or URLs survive into the temporary installer input.
+// Neutral install route shared by the Trial and Stable targets: packwiz copies hash-verified cached
+// artifacts as ordinary local files. No download metadata or URLs survive into the temporary
+// installer input. Target modules (trial_target.cjs, stable_target.cjs) own the instance rules.
 const fs = require('node:fs');
 const path = require('node:path');
-const P = require('./pack_index.cjs');
-const { sha256 } = require('../data_io/files.cjs');
+const P = require('../pack_index.cjs');
+const { sha256 } = require('../../data_io/files.cjs');
 const { localPin, cachedLocal, verifyInstalledLocal } = require('./local_source.cjs');
-const { resolvePinnedJar } = require('./pinned_jar.cjs');
-const { noLinks } = require('../data_io/path_guard.cjs');
+const { resolvePinnedJar } = require('../pinned_jar.cjs');
+const { noLinks } = require('../../data_io/path_guard.cjs');
 const { applyOwnedKeys } = require('./trial_owned_keys.cjs');
-const env = require('../server_smoke/env.cjs');
-const ROOT = path.resolve(__dirname, '../..');
-const INSTANCE = 'C:/Users/dirty/MultiMC/instances/Evil Eye NeoForge Trial/.minecraft';
+const env = require('../../server_smoke/env.cjs');
+const ROOT = path.resolve(__dirname, '../../..');
 
 function instanceCfgValue(value) {
   if (typeof value !== 'string' || /[\r\n]/.test(value)) throw Error('Unsafe instance.cfg value');
@@ -21,20 +21,8 @@ function instanceCfgValue(value) {
 function setInstanceCfgValue(text, key, value) {
   if (!/^[A-Za-z][A-Za-z0-9]*$/.test(key)) throw Error('Unsafe instance.cfg key');
   const line = new RegExp(`^${key}=[^\\r\\n]*$`, 'm');
-  if (!line.test(text)) throw Error(`Missing Trial ${key}`);
+  if (!line.test(text)) throw Error(`Missing instance.cfg key ${key}`);
   return text.replace(line, `${key}=${instanceCfgValue(value)}`);
-}
-
-function trialPreLaunchCommand(root, cache) {
-  const script = path.join(root, 'scripts/migration/trial-walkthrough.ps1');
-  if ([script, cache].some(s => /["\r\n]/.test(s))) throw Error('Unsafe launcher argument');
-  return instanceCfgValue(`powershell.exe -NoProfile -ExecutionPolicy Bypass -File "${script}" -Cache "${cache}"`);
-}
-
-function trialInstance(instance) {
-  if (path.resolve(instance).toLowerCase() !== path.resolve(INSTANCE).toLowerCase()) throw Error('Only Evil Eye NeoForge Trial is allowed');
-  noLinks(instance);
-  return path.resolve(instance);
 }
 
 function prepareFiles(root, cache) {
@@ -87,7 +75,7 @@ function writePack(root, overlay, files) {
   return pack;
 }
 
-// Shared install route (Trial and cutover): verify pack + cached bytes, then packwiz copies the
+// Install route (Trial and Stable targets): verify pack + cached bytes, then packwiz copies the
 // local files into `instance` and sets the instance's PreLaunchCommand to `prelaunch`.
 async function installPack({ instance, cache, dryRun, prelaunch, backupName, label }) {
   const cfg = path.resolve(instance, '../instance.cfg');
@@ -95,14 +83,14 @@ async function installPack({ instance, cache, dryRun, prelaunch, backupName, lab
   const original = fs.readFileSync(cfg, 'utf8');
   const installer = env.INSTALLER_JAR_SOURCES.find(f => fs.existsSync(f));
   if (!installer || !fs.existsSync(env.BOOTSTRAP)) throw Error('Cached installer/bootstrap missing; no downloads');
-  const problems = require('./verify_hashes.cjs').verify(ROOT).problems;
+  const problems = require('../verify_hashes.cjs').verify(ROOT).problems;
   if (problems.length) throw Error(problems.join('\n'));
   const files = prepareFiles(ROOT, cache);
   for (const f of files) noLinks(path.join(instance, f.file));
   console.log(`Verified ${files.length} local files; destination ${instance}; no host or downloads.`);
   if (dryRun) { console.log(`Dry run: would install local files and set this ${label} prelaunch to the same command.`); return; }
   // This is the owner's client pre-launch path. It must not wait on unrelated JVMs.
-  const scope = require('../server_smoke/procs.cjs').scope();
+  const scope = require('../../server_smoke/procs.cjs').scope();
   const stop = () => scope.killAll();
   process.once('SIGINT', stop); process.once('SIGTERM', stop);
   const scratch = path.join(ROOT, '.tmp');
@@ -130,16 +118,4 @@ async function installPack({ instance, cache, dryRun, prelaunch, backupName, lab
   }
 }
 
-async function main(argv) {
-  let cache, dryRun = false;
-  for (let i = 0; i < argv.length; i++) {
-    if (argv[i] === '--dry-run') dryRun = true;
-    else if (argv[i] === '--cache' && argv[i + 1]) cache = path.resolve(argv[++i]);
-    else throw Error('Usage: trial_install.cjs --cache <cache root> [--dry-run]');
-  }
-  if (!cache) throw Error('A complete offline --cache is required');
-  const instance = trialInstance(INSTANCE);
-  await installPack({ instance, cache, dryRun, prelaunch: trialPreLaunchCommand(ROOT, cache), backupName: 'trial-instance-before.cfg', label: 'Evil Eye NeoForge Trial' });
-}
-if (require.main === module) main(process.argv.slice(2)).catch(e => { console.error(e.stack); process.exitCode = 1; });
-module.exports = { installPack, instanceCfgValue, setInstanceCfgValue, trialPreLaunchCommand, prepareFiles, writePack, verifyInstalledFiles, trialInstance };
+module.exports = { installPack, instanceCfgValue, setInstanceCfgValue, prepareFiles, writePack, verifyInstalledFiles };

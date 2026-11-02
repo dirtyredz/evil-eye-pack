@@ -178,10 +178,10 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `kubejs/server_scripts/tag_compat.js` | item tag aliases for mods that name tags the 1.21.1 target lacks (Create: Interiors `c:<colour>_dyes`, Create's item `#minecraft:convertable_to_mud`) |
 | `tools/packwiz/pack_index.cjs` | index/pack TOML parse and format (including the runtime-rewritten setting `preserve` policy; `readTable` reads string tables and numeric CurseForge IDs; metafile name/download/side readers share the model), `isMetafile`, `.packwizignore`, `publishableFiles()` (the one publishable-file set used by rehash and verify) |
 | `tools/packwiz/pinned_jar.cjs` | `resolvePinnedJar(metafileText, dirs)`: the one pinned-jar lookup (safe filename, ordered folders, hash-verified bytes, fail closed, never downloads); used by offline server preparation and the mod map inventory |
-| `tools/packwiz/trial_install.cjs` | Trial-only local-copy installer: verifies cache pins, indexes artifacts as ordinary local files in a temporary pack, runs the cached headless installer, verifies every non-preserve installed hash (including all mod jars) and sets Trial prelaunch; no host or downloads |
-| `tools/packwiz/trial_owned_keys.cjs` | Forces the keys in `trial-owned-keys.json` into Trial's installed (including preserved) configs after each sync; JSON and TOML setters |
+| `tools/packwiz/install/install_pack.cjs` | Trial-only local-copy installer: verifies cache pins, indexes artifacts as ordinary local files in a temporary pack, runs the cached headless installer, verifies every non-preserve installed hash (including all mod jars) and sets Trial prelaunch; no host or downloads |
+| `tools/packwiz/install/trial_owned_keys.cjs` | Forces the keys in `trial-owned-keys.json` into Trial's installed (including preserved) configs after each sync; JSON and TOML setters |
 | `tools/packwiz/rehash.cjs` | rebuild `index.toml` membership and hashes, then `pack.toml`'s index hash |
-| `tools/packwiz/migrate.mjs`, `migration/run.cjs` | NeoForge migration CLI through script-run: `resolve` (build the lock), `check` (offline lock/cache/closure verification), `apply` (re-point; dry run unless `--write`) |
+| `tools/packwiz/migration/migrate.mjs`, `migration/run.cjs` | NeoForge migration CLI through script-run: `resolve` (build the lock), `check` (offline lock/cache/closure verification), `apply` (re-point; dry run unless `--write`) |
 | `tools/packwiz/migration/resolve.cjs` | survey + dispositions + source metafiles → one selector per entry (never guesses a file) |
 | `tools/packwiz/migration/fetch.cjs` | platform identity and publisher-verified bytes: Modrinth sha1/sha512, CurseForge length + CDN MD5 via the site's download redirect, GitHub asset sha256 digest, NeoForge Maven `.sha256`; raw API JSON cached in the job folder |
 | `tools/packwiz/migration/manifest.cjs` | the lock contract: source fingerprint, canonical serialization, exactly-once coverage and per-action/source validation |
@@ -276,7 +276,7 @@ Baseline review 2026-10-12. Remaining debt is filed in Docket (`docs/items/`, `d
 
 Last full review: 2026-10-12
 
-Private migration pins: `tools/packwiz/local_source.cjs` verifies hash-addressed cache bytes and
+Private migration pins: `tools/packwiz/install/local_source.cjs` verifies hash-addressed cache bytes and
 creates the temporary loopback installer overlay; `install_local.cjs` is the dedicated trial
 prelaunch wrapper. Server smoke and pack-test staging share the same overlay. Public delivery
 is separate (dk-85261627); see [NeoForge migration](docs/neoforge-migration.md).

@@ -1,5 +1,5 @@
 'use strict';
-// Migration CLI orchestration (entry: tools/packwiz/migrate.mjs, through script-run).
+// Migration CLI orchestration (entry: tools/packwiz/migration/migrate.mjs, through script-run).
 //   resolve   build target-lock.json: plan selectors, fetch and verify every artifact, read jar
 //             metadata, check the dependency closure, write the lock and a report in the job folder
 //   check     validate the lock against this checkout, re-verify every cached artifact (complete

@@ -52,7 +52,7 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
 node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs tools/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs tools/world_trial/tests/*.cjs tools/client_mixin/tests/*.cjs
-# NeoForge migration lock (offline): node tools/packwiz/migrate.mjs check  (see neoforge-migration.md)
+# NeoForge migration lock (offline): node tools/packwiz/migration/migrate.mjs check  (see neoforge-migration.md)
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
 # node tools/dedup/generate.cjs [--dry-run] <pinned jar folder>   (main: Evil Eye Local mods; migration branch:
@@ -449,7 +449,7 @@ Every dispatch gets its own `projects/artifacts/evil-eye-pack/jobs/<YYYY-MM-DD-t
 ### Private migration trial installs
 
 Private Alex forks have no committed download URL. A dedicated trial belonging to its checkout
-uses `node tools/packwiz/install_local.cjs --instance <trial/.minecraft>` before launch. It verifies
+uses `node tools/packwiz/install/install_local.cjs --instance <trial/.minecraft>` before launch. It verifies
 the pack and hash-addressed migration cache, installs through a temporary gitignored loopback
 overlay, verifies the installed private bytes, and removes the overlay/listener. Stable and Local
 are refused. Pack-test/server-smoke staging use the same mechanism. Never repoint another

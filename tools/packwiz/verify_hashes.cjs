@@ -74,7 +74,7 @@ function verify(root, opts) {
     if (!want) problems.push(m.file + ': unknown or missing [download] hash-format');
     else if (!d.hash || !new RegExp('^[0-9a-f]{' + want + '}$').test(d.hash)) problems.push(m.file + ': [download] hash is not a concrete ' + d.hashFormat);
     if (d.mode === 'metadata:local') {
-      try { require('./local_source.cjs').localPin(root, m.file, m.text); } catch (e) { problems.push(e.message); }
+      try { require('./install/local_source.cjs').localPin(root, m.file, m.text); } catch (e) { problems.push(e.message); }
     } else if (!d.url && d.mode !== 'metadata:curseforge') problems.push(m.file + ': [download] has neither url nor metadata:curseforge mode');
     if (!d.filename) problems.push(m.file + ': missing filename');
     downloads.push({ file: m.file, ...d });

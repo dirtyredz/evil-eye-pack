@@ -4,9 +4,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const http = require('node:http');
-const { sha256 } = require('../data_io/files.cjs');
-const P = require('./pack_index.cjs');
-const { renderMetafile } = require('./migration/repoint.cjs');
+const { sha256 } = require('../../data_io/files.cjs');
+const P = require('../pack_index.cjs');
+const { renderMetafile } = require('../migration/repoint.cjs');
 
 function localTargets(root) {
   const file = path.join(root, 'tools/packwiz/migration/target-lock.json');

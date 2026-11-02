@@ -7,7 +7,8 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
-const { cutoverInstance, stablePreLaunchCommand, STABLE } = require('../migration/cutover_install.cjs');
+const { stablePreLaunchCommand } = require('../install/stable_target.cjs');
+const { STABLE, stableTarget: cutoverInstance } = require('../install/instance_targets.cjs');
 
 const LIB = path.resolve(__dirname, '../../../scripts/migration/cutover-lib.ps1');
 const ps = process.platform === 'win32' ? 'powershell.exe' : null;
@@ -102,4 +103,22 @@ test('cutover target is Stable (or a copy), never Local or the Trial; prelaunch 
   const cmd = stablePreLaunchCommand(root, 'C:/cache', STABLE);
   assert.equal(cmd, 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:/repo/scripts/migration/stable-prelaunch.ps1" -Cache "C:/cache"');
   assert.match(stablePreLaunchCommand(root, 'C:/cache', 'D:/copy/.minecraft'), /-Instance "D:\/copy\/\.minecraft"$/);
+});
+
+test('Set-InstanceNeoForge rewrites mmc-pack.json and the Java keys; target checks delegate to Node', { skip: !ps }, t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'neoforge-switch-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  fs.writeFileSync(path.join(root, 'instance.cfg'), 'JavaPath=old\nname=x\n');
+  fs.writeFileSync(path.join(root, 'mmc-pack.json'), '{"forge":true}');
+  const out = run(`
+    Set-InstanceNeoForge '${root.replaceAll("'", "''")}' 'C:\\jdk\\bin\\java.exe'
+    $stable = Test-RealStable 'C:/Users/dirty/MultiMC/instances/Evil Eye Stable'
+    $copy = Test-RealStable 'C:/rehearsal/Evil Eye Stable'
+    $refused = try { Assert-NotLocalOrTrial 'C:/Users/dirty/MultiMC/instances/Evil Eye Local' 'Rollback'; '' } catch { $_.Exception.Message }
+    @{ stable = $stable; copy = $copy; refused = $refused } | ConvertTo-Json -Compress`);
+  assert.deepEqual(out, { stable: true, copy: false, refused: 'Rollback never targets Evil Eye Local or the NeoForge Trial instance' });
+  const cfg = fs.readFileSync(path.join(root, 'instance.cfg'), 'utf8');
+  assert.match(cfg, /^JavaPath=C:\/jdk\/bin\/java\.exe$/m);
+  assert.match(cfg, /^OverrideJavaLocation=true$/m);
+  assert.match(fs.readFileSync(path.join(root, 'mmc-pack.json'), 'utf8'), /"net\.neoforged"/);
 });

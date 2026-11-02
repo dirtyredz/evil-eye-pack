@@ -8,7 +8,7 @@ const P = require('../pack_index.cjs');
 const { validate } = require('../migration/manifest.cjs');
 const { renderMetafile } = require('../migration/repoint.cjs');
 const { resolveSelector } = require('../migration/fetch.cjs');
-const { withLocalPack, localPin, verifyInstalledLocal } = require('../local_source.cjs');
+const { withLocalPack, localPin, verifyInstalledLocal } = require('../install/local_source.cjs');
 
 function fixture(t) {
   const scratch = path.resolve(__dirname, '../../../.tmp'); fs.mkdirSync(scratch, { recursive: true });

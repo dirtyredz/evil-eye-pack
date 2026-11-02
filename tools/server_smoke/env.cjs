@@ -20,7 +20,7 @@ module.exports = {
   LOCAL_MODS: e.SMOKE_LOCAL_MODS || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods',
   INSTALLER_JAR_SOURCES: [e.SMOKE_INSTALLER_JAR || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/packwiz-installer.jar'],
   ARTIFACTS: e.SMOKE_ARTIFACTS || 'C:/Users/dirty/projects/artifacts/evil-eye-pack',
-  // Verified NeoForge 1.21.1 target jars (tools/packwiz/migrate.mjs resolve): the read-only pinned-jar input
+  // Verified NeoForge 1.21.1 target jars (tools/packwiz/migration/migrate.mjs resolve): the read-only pinned-jar input
   // for scanners while no instance has installed the target pack.
   MIGRATION_MODS: e.SMOKE_MIGRATION_MODS || 'C:/Users/dirty/projects/artifacts/evil-eye-pack/migration/neoforge-1.21.1/cache/mods'
 };

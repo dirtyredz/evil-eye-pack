@@ -5,7 +5,8 @@
   Pure functions with injectable inputs (process list, free bytes) so tests can prove the guards
   without a launcher or a full disk. Nothing here runs on dot-source.
   Functions: Get-LauncherBlockers, Test-ArchiveSpace, Get-InstanceFiles, New-InstanceArchive,
-  Test-HashManifest, Restore-InstanceArchive, Set-CfgKey.
+  Test-HashManifest, Restore-InstanceArchive, Set-CfgKey, Set-InstanceNeoForge, Get-InstanceTarget,
+  Test-RealStable, Assert-NotLocalOrTrial.
 #>
 
 # Paths (relative to the instance folder, forward slashes) that are volatile and never archived.
@@ -141,4 +142,66 @@ function Set-CfgKey([string]$Text, [string]$Key, [string]$Value) {
   if ([regex]::IsMatch($Text, $rx)) { return [regex]::Replace($Text, $rx, { param($m) "$Key=$Value" }) }
   $eol = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
   return $Text.TrimEnd("`r", "`n") + $eol + "$Key=$Value" + $eol
+}
+
+# --- Instance targets: tools/packwiz/install/instance_targets.cjs is the one authority -----------
+function Get-InstanceTarget([string]$Path) {
+  $node = Get-Command node -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+  if (-not $node) { throw 'Node 22 is required to classify the instance target.' }
+  $authority = Join-Path $PSScriptRoot '../../tools/packwiz/install/instance_targets.cjs'
+  $out = & $node.Source $authority classify $Path
+  if ($LASTEXITCODE -ne 0) { throw "Instance target check failed (Node exit $LASTEXITCODE)" }
+  return ($out | ConvertFrom-Json)
+}
+
+# True only for the real Evil Eye Stable instance, not a rehearsal copy of it.
+function Test-RealStable([string]$Path) { return [bool](Get-InstanceTarget $Path).realStable }
+
+# Throws when the path is Evil Eye Local or the NeoForge Trial instance (or a copy of either).
+function Assert-NotLocalOrTrial([string]$Path, [string]$What = 'Cutover') {
+  if ((Get-InstanceTarget $Path).forbiddenForStable) { throw "$What never targets Evil Eye Local or the NeoForge Trial instance" }
+}
+
+# --- NeoForge switch ---------------------------------------------------------------------------
+# Values MultiMC wrote for the working NeoForge Trial instance (same Temurin 21 install).
+$script:JavaVersion = '21.0.13'; $script:JavaTimestamp = '1792603613000'
+$script:MmcPack = @'
+{
+    "components": [
+        {
+            "cachedName": "Minecraft",
+            "cachedVersion": "1.21.1",
+            "important": true,
+            "uid": "net.minecraft",
+            "version": "1.21.1"
+        },
+        {
+            "cachedName": "NeoForge",
+            "cachedRequires": [
+                {
+                    "equals": "1.21.1",
+                    "uid": "net.minecraft"
+                }
+            ],
+            "cachedVersion": "21.1.265",
+            "uid": "net.neoforged",
+            "version": "21.1.265"
+        }
+    ],
+    "formatVersion": 1
+}
+'@
+
+# Switches mmc-pack.json to Minecraft 1.21.1 + NeoForge 21.1.265 and instance.cfg to the given Java 21.
+function Set-InstanceNeoForge([string]$InstanceDir, [string]$Java) {
+  $utf8 = New-Object Text.UTF8Encoding($false)
+  [IO.File]::WriteAllText((Join-Path $InstanceDir 'mmc-pack.json'), ($script:MmcPack -replace "`r?`n", "`n"), $utf8)
+  $cfgPath = Join-Path $InstanceDir 'instance.cfg'
+  $cfg = [IO.File]::ReadAllText($cfgPath)
+  $cfg = Set-CfgKey $cfg 'JavaPath' ($Java -replace '\\', '/')
+  $cfg = Set-CfgKey $cfg 'JavaVersion' $script:JavaVersion
+  $cfg = Set-CfgKey $cfg 'JavaArchitecture' 'amd64'
+  $cfg = Set-CfgKey $cfg 'JavaTimestamp' $script:JavaTimestamp
+  $cfg = Set-CfgKey $cfg 'OverrideJavaLocation' 'true'
+  [IO.File]::WriteAllText($cfgPath, $cfg, $utf8)
 }

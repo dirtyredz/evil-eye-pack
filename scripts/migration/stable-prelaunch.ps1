@@ -28,7 +28,7 @@ Initialize-OwnerRun 'stable-prelaunch'
 try {
   $node = Find-Tool 'node'
   if (-not $node) { Complete-OwnerRun 1 'Node 22 is required.' }
-  $arguments = @((Join-Path $script:RepoRoot 'tools/packwiz/migration/cutover_install.cjs'), '--cache', $Cache)
+  $arguments = @((Join-Path $script:RepoRoot 'tools/packwiz/install/stable_target.cjs'), '--cache', $Cache)
   if ($Instance) { $arguments += @('--instance', $Instance) }
   if ($DryRun) { $arguments += '--dry-run' }
   $code = Invoke-Native $node $arguments $script:RepoRoot

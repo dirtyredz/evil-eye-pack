@@ -244,7 +244,7 @@ import or invoke it. Failed requests say `not checked`; unavailable versions are
 distinguished from archived projects. Known-bad IDs/hashes are used when present;
 the initial owner-supplied list has slugs/names only and records that limitation.
 
-Private migration pins: `tools/packwiz/local_source.cjs` verifies hash-addressed cache bytes and
+Private migration pins: `tools/packwiz/install/local_source.cjs` verifies hash-addressed cache bytes and
 creates the temporary loopback installer overlay; `install_local.cjs` is the dedicated trial
 prelaunch wrapper. Server smoke and pack-test staging share the same overlay. The owner Trial route
 uses `trial_install.cjs`: all hash-verified cached artifacts become ordinary index files in

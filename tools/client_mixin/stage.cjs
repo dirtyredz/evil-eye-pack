@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { listEntries, readEntry } = require('../data_io/zip_reader.cjs');
-const { prepareFiles } = require('../packwiz/trial_install.cjs');
+const { prepareFiles } = require('../packwiz/install/install_pack.cjs');
 
 function archiveJson(file, name) {
   const bytes = fs.readFileSync(file);

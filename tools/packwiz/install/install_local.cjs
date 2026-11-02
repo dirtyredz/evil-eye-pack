@@ -3,15 +3,16 @@
 // Dev/trial-only prelaunch entry. The instance must be dedicated to this checkout.
 const path = require('node:path');
 const fs = require('node:fs');
-const env = require('../server_smoke/env.cjs');
-const procs = require('../server_smoke/procs.cjs');
+const env = require('../../server_smoke/env.cjs');
+const procs = require('../../server_smoke/procs.cjs');
 const { withLocalPack, verifyInstalledLocal } = require('./local_source.cjs');
-const { verify } = require('./verify_hashes.cjs');
+const { verify } = require('../verify_hashes.cjs');
+const { assertPinTarget } = require('./instance_targets.cjs');
 
 async function main(argv) {
-  if (argv.length !== 2 || argv[0] !== '--instance') throw new Error('usage: node tools/packwiz/install_local.cjs --instance <dedicated trial .minecraft>');
-  const root = path.resolve(__dirname, '../..'), instance = path.resolve(argv[1]);
-  if (/Evil Eye (Stable|Local)([\\/]|$)/i.test(instance)) throw new Error('Private pins must never install into Stable or Local');
+  if (argv.length !== 2 || argv[0] !== '--instance') throw new Error('usage: node tools/packwiz/install/install_local.cjs --instance <dedicated trial .minecraft>');
+  const root = path.resolve(__dirname, '../../..'), instance = path.resolve(argv[1]);
+  assertPinTarget(instance);
   if (!fs.existsSync(instance)) throw new Error('Trial instance directory does not exist');
   const problems = verify(root).problems;
   if (problems.length) throw new Error(problems.join('\n'));

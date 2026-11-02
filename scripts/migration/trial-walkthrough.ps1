@@ -27,7 +27,7 @@ Initialize-OwnerRun 'trial-walkthrough'
 try {
   $node = Find-Tool 'node'
   if (-not $node) { Complete-OwnerRun 1 'Node 22 is required.' }
-  $arguments = @((Join-Path $script:RepoRoot 'tools/packwiz/trial_install.cjs'), '--cache', $Cache)
+  $arguments = @((Join-Path $script:RepoRoot 'tools/packwiz/install/trial_target.cjs'), '--cache', $Cache)
   if ($DryRun) { $arguments += '--dry-run' }
   $code = Invoke-Native $node $arguments $script:RepoRoot
   if ($code -ne 0) { Complete-OwnerRun 2 "Trial preparation failed (Node exit $code)." }

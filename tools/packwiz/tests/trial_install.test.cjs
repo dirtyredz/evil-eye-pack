@@ -6,7 +6,8 @@ const path = require('node:path');
 const { sha256 } = require('../../data_io/files.cjs');
 const P = require('../pack_index.cjs');
 const { renderMetafile } = require('../migration/repoint.cjs');
-const { instanceCfgValue, setInstanceCfgValue, trialPreLaunchCommand, prepareFiles, writePack, verifyInstalledFiles, trialInstance } = require('../trial_install.cjs');
+const { instanceCfgValue, setInstanceCfgValue, prepareFiles, writePack, verifyInstalledFiles } = require('../install/install_pack.cjs');
+const { trialPreLaunchCommand, trialInstance } = require('../install/trial_target.cjs');
 
 function multimcBackslashUnescape(value) {
   return value.replace(/\\(.)/g, '$1');
@@ -26,7 +27,7 @@ test('Trial instance.cfg values use forward slashes and survive MultiMC unescapi
 });
 
 test('Trial install path never waits for other JVMs', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '../trial_install.cjs'), 'utf8');
+  const source = fs.readFileSync(path.resolve(__dirname, '../install/install_pack.cjs'), 'utf8');
   assert.doesNotMatch(source, /host_wait|waitForServer/);
 });
 

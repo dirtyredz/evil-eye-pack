@@ -53,10 +53,10 @@ unchanged. Before any later phase gate, re-run `node evidence.mjs --check stable
 against what its publisher states, and the dependency closure is read from actual jar metadata.
 
 ```powershell
-node tools/packwiz/migrate.mjs resolve   # fetch + verify (cached), read metadata, closure, write the lock
-node tools/packwiz/migrate.mjs check     # offline: lock vs checkout fingerprint, every cached byte, closure
-node tools/packwiz/migrate.mjs apply     # dry run (default): planned writes/deletes
-node tools/packwiz/migrate.mjs apply --write   # then rehash.cjs and verify_hashes.cjs
+node tools/packwiz/migration/migrate.mjs resolve   # fetch + verify (cached), read metadata, closure, write the lock
+node tools/packwiz/migration/migrate.mjs check     # offline: lock vs checkout fingerprint, every cached byte, closure
+node tools/packwiz/migration/migrate.mjs apply     # dry run (default): planned writes/deletes
+node tools/packwiz/migration/migrate.mjs apply --write   # then rehash.cjs and verify_hashes.cjs
 ```
 
 The lock records its source commit (`source.commit`, e99fd1f). After apply the checkout is the target,
@@ -218,7 +218,7 @@ The malware guard scans NeoForge jars the same way, and approvals stay bound to 
 
 ## Activation (Phase 5)
 
-- **Lock applied** with `node tools/packwiz/migrate.mjs apply --write`, then rehash.
+- **Lock applied** with `node tools/packwiz/migration/migrate.mjs apply --write`, then rehash.
   `migrate.mjs check` now verifies that the checkout matches the applied target exactly, and
   `verify_hashes.cjs --jars <cache>/mods` checks all 176 jars.
 - **Swaps** came from the lock: Iris + Sodium, the Steam 'n' Rails port and the CullLessLeaves port;
@@ -702,7 +702,7 @@ Scripts (all in `scripts/migration/`, owner-run standard: help, dry run, `.tmp/o
 - `rollback.ps1` - same convention; restores the newest (or `-Archive`) `cutover-archive-*`.
 - `stable-prelaunch.ps1` - becomes Stable's PreLaunchCommand; repeats the verified private-jar install each launch.
 - `cutover-lib.ps1` - guards/archive/restore functions (tested by `tools/packwiz/tests/cutover_guards.test.cjs`).
-- `tools/packwiz/migration/cutover_install.cjs` - Stable target for the shared `installPack` in `trial_install.cjs`
+- `tools/packwiz/install/stable_target.cjs` - Stable target for the shared `installPack` in `trial_install.cjs`
   (Trial behaviour unchanged). `--fresh` first deletes every file the old install tracked in `packwiz.json`
   except files the new index marks `preserve`.
 

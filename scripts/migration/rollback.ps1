@@ -38,9 +38,7 @@ $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'cutover-lib.ps1')
 Initialize-OwnerRun 'rollback'
 
-$RealStable = 'C:/Users/dirty/MultiMC/instances/Evil Eye Stable'
 $plan = -not $Execute -or $DryRun
-function Same([string]$a, [string]$b) { return ([IO.Path]::GetFullPath($a).TrimEnd('\', '/') -ieq [IO.Path]::GetFullPath($b).TrimEnd('\', '/')) }
 
 try {
   Write-Log ("Rollback {0}: instance {1}" -f $(if ($plan) { 'DRY RUN (nothing will be written)' } else { 'EXECUTE' }), $Instance)
@@ -52,8 +50,8 @@ try {
   }
   if ($Archive -and -not (Test-Path -LiteralPath (Join-Path $Archive 'manifest.sha256'))) { $blockers.Add("Not a cutover archive (no manifest.sha256): $Archive") }
   if (-not (Test-Path -LiteralPath $Instance -PathType Container)) { $blockers.Add("Instance folder not found: $Instance") }
-  if ($Instance -match '(?i)evil eye (local|neoforge trial)') { $blockers.Add('Rollback never targets Evil Eye Local or the NeoForge Trial instance') }
-  if (Same $Instance $RealStable) { foreach ($b in (Get-LauncherBlockers)) { $blockers.Add($b) } }
+  try { Assert-NotLocalOrTrial $Instance 'Rollback' } catch { $blockers.Add($_.Exception.Message) }
+  if (Test-RealStable $Instance) { foreach ($b in (Get-LauncherBlockers)) { $blockers.Add($b) } }
   else { Write-Log 'launcher check skipped: target is a rehearsal copy, not the real Stable instance' }
 
   if (-not $blockers.Count) {

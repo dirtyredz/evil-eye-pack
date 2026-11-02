@@ -56,35 +56,6 @@ $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot 'cutover-lib.ps1')
 Initialize-OwnerRun 'cutover'
 
-$RealStable = 'C:/Users/dirty/MultiMC/instances/Evil Eye Stable'
-# Values MultiMC wrote for the working NeoForge Trial instance (same Temurin 21 install).
-$JavaVersion = '21.0.13'; $JavaTimestamp = '1792603613000'
-$MmcPack = @'
-{
-    "components": [
-        {
-            "cachedName": "Minecraft",
-            "cachedVersion": "1.21.1",
-            "important": true,
-            "uid": "net.minecraft",
-            "version": "1.21.1"
-        },
-        {
-            "cachedName": "NeoForge",
-            "cachedRequires": [
-                {
-                    "equals": "1.21.1",
-                    "uid": "net.minecraft"
-                }
-            ],
-            "cachedVersion": "21.1.265",
-            "uid": "net.neoforged",
-            "version": "21.1.265"
-        }
-    ],
-    "formatVersion": 1
-}
-'@
 $plan = -not $Execute -or $DryRun
 $blockers = New-Object System.Collections.Generic.List[string]
 function Block([string]$m) { $blockers.Add($m); Write-Log "  BLOCKED: $m" }
@@ -103,13 +74,13 @@ try {
   $mmcPackPath = Join-Path $Instance 'mmc-pack.json'
   $cfgPath = Join-Path $Instance 'instance.cfg'
   foreach ($p in $mc, $mmcPackPath, $cfgPath) { if (-not (Test-Path -LiteralPath $p)) { Block "Not a MultiMC instance (missing $p)" } }
-  $isRealStable = Same $Instance $RealStable
+  $isRealStable = Test-RealStable $Instance
   if ($isRealStable) {
     foreach ($b in (Get-LauncherBlockers)) { Block $b }
   } else {
     Write-Log '  launcher check skipped: target is a rehearsal copy, not the real Stable instance'
   }
-  if ($Instance -match '(?i)evil eye (local|neoforge trial)') { Block 'Cutover never targets Evil Eye Local or the NeoForge Trial instance' }
+  try { Assert-NotLocalOrTrial $Instance 'Cutover' } catch { Block $_.Exception.Message }
   $pack = Get-Content -LiteralPath (Join-Path $script:RepoRoot 'pack.toml') -Raw
   if ($pack -notmatch '(?m)^\s*neoforge\s*=\s*"21\.1\.265"' -or $pack -notmatch '(?m)^\s*minecraft\s*=\s*"1\.21\.1"') {
     Block "This checkout's pack.toml is not NeoForge 21.1.265 / Minecraft 1.21.1 (run from the merged branch)"
@@ -140,7 +111,7 @@ try {
   }
 
   # --- dry-run verification of the pack/cache (read-only) ------------------------------------
-  $installerArgs = @((Join-Path $script:RepoRoot 'tools/packwiz/migration/cutover_install.cjs'), '--cache', $Cache, '--instance', $mc, '--fresh')
+  $installerArgs = @((Join-Path $script:RepoRoot 'tools/packwiz/install/stable_target.cjs'), '--cache', $Cache, '--instance', $mc, '--fresh')
   if ($plan -or $blockers.Count -eq 0) {
     Write-Log 'Verifying the pack and every cached artifact (read-only):'
     $code = Invoke-Native $node ($installerArgs + '--dry-run') $script:RepoRoot
@@ -176,14 +147,7 @@ try {
       Get-ChildItem -LiteralPath $modsDir -Force | Remove-Item -Recurse -Force
       Write-Log 'Emptied .minecraft\mods (the archive holds every Forge jar); the installer also clears old tracked files.'
     }
-    [IO.File]::WriteAllText($mmcPackPath, ($MmcPack -replace "`r?`n", "`n") , (New-Object Text.UTF8Encoding($false)))
-    $cfg = [IO.File]::ReadAllText($cfgPath)
-    $cfg = Set-CfgKey $cfg 'JavaPath' ($Java -replace '\\', '/')
-    $cfg = Set-CfgKey $cfg 'JavaVersion' $JavaVersion
-    $cfg = Set-CfgKey $cfg 'JavaArchitecture' 'amd64'
-    $cfg = Set-CfgKey $cfg 'JavaTimestamp' $JavaTimestamp
-    $cfg = Set-CfgKey $cfg 'OverrideJavaLocation' 'true'
-    [IO.File]::WriteAllText($cfgPath, $cfg, (New-Object Text.UTF8Encoding($false)))
+    Set-InstanceNeoForge $Instance $Java
     Write-Log "Switched mmc-pack.json to NeoForge 21.1.265 and the instance Java to $Java."
     $code = Invoke-Native $node $installerArgs $script:RepoRoot
     if ($code -ne 0) { throw "Pack install failed (Node exit $code)" }
