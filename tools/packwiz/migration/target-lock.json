@@ -3243,23 +3243,23 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient 542c601, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' controls (wave 3), and FTB Library's inventory sidebar (wave 5).",
+   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient 54d104b, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' controls (wave 3), and FTB Library's inventory sidebar (wave 5).",
    "target": {
     "declares": [
      "evileye_client optional evileye_tweaks [0.5.0,)",
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.3.0.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.3.1.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.3.0"
+     "evileye_client@0.3.1"
     ],
     "name": "Evil Eye Client",
-    "sha256": "50a84af88c2d16421a160bca970abd7a2b853458bcafe17f8c543ae14a85351f",
+    "sha256": "fe7c57171f022dddd2f7cee7d0ba164ab899789c9a8d95b67e9b9686af0c6ba6",
     "side": "client",
-    "size": 348350,
+    "size": 349688,
     "source": "local"
    }
   },

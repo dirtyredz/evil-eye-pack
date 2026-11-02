@@ -649,3 +649,20 @@ Lock drops: FTB Essentials 2101.1.10 and FTB Library 2101.1.39. `ftbessentials` 
 (NeoForge-written default bytes, LF; defaults equal the pack values) and Evil Eye Client's `[sidebar]`. A new
 `evileye_essentials` showcase section and headless check cover the commands. Physical mod metafiles: 164 to 163.
 Showcase check `evileye_essentials` passed on the full NeoForge server (579/579 assertions, no script errors; `jobs/2026-11-01-evileye-essentials-wave5/showcase-ess-3`). Not yet run: a Trial sync and the owner walk.
+
+## Evil Eye Client 0.3.1 pin: Trial-walk fixes (2026-11-01)
+
+The Trial walk of Client 0.3.0 found three client-only faults, fixed in minecraft-mods `mods/EvilEyeClient` 54d104b
+(0.3.1): tinted and absorption hearts drew as the missing texture (the atlas source read the base hearts from the
+wrong texture folder, so every tint was skipped; hearts now also fall back to the vanilla heart), the sidebar trash can
+used a lava-bucket icon (now an original trash-can texture), and the pick-up log was too small (`[pickup] scale` is now
+a 0.5 to 3.0 multiple of the GUI scale, default 1.5). Pinned exactly like 0.3.0: same `metadata:local` metafile, jar
+stored hash-addressed and by filename in the shared migration cache and the Trial walkthrough's job cache.
+
+| Pin | Source | SHA-256 | Bytes |
+|---|---|---|---|
+| `evileye_client-1.21.1-neoforge-0.3.1.jar` (side client) | minecraft-mods `mods/EvilEyeClient` 54d104b | `fe7c57171f022dddd2f7cee7d0ba164ab899789c9a8d95b67e9b9686af0c6ba6` | 349,688 |
+
+`config/evileye_client-client.toml` carries the new `[pickup] scale = 1.5` (the old integer 4 would be out of range).
+No server change, so no server boot; the Trial instance installs the pin on its next launch and the owner re-checks
+the three fixes in game.
