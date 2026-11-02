@@ -3292,7 +3292,7 @@
    "metafile": "mods/evileye-migration.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Private local migration bridge built from minecraft-mods 4c9fa1f (dev.7 item-component conversion). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover.",
+   "rationale": "Private local migration bridge built from minecraft-mods d3c3ebb (dev.10: empty-region scan fix; includes dev.8 Ars armor perks). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover.",
    "target": {
     "declares": [
      "evileye_migration optional ars_nouveau [5.13.3,5.14)",
@@ -3304,16 +3304,16 @@
      "evileye_migration required minecraft [1.21.1,1.21.2)",
      "evileye_migration required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.7.jar",
+    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.10.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-migration.pw.toml",
     "mods": [
-     "evileye_migration@0.1.0-dev.7"
+     "evileye_migration@0.1.0-dev.10"
     ],
     "name": "Evil Eye World Migration",
-    "sha256": "5dbd229df52f5e081b93b7c77676d911771dd407cf9828876299e63a17b4cd9b",
+    "sha256": "18cb68d2a8877bb16d9540bea4a15dea2fdd46af521fb820affc8c35d21f6f24",
     "side": "both",
-    "size": 119760,
+    "size": 121971,
     "source": "local"
    }
   },
@@ -5639,13 +5639,13 @@
     "publisher": {
      "sha1": "b78945c40cfe7640408f3fd1e44da385a8c8b805",
      "sha512": "66745825330a98f3e4a5ea3a44aff8b00870f715c144edc38dd2f61b4240589600b58ae89efac3b54dbb5aa430b1059dac1a28fd71cac5cc9002bbeb5ba3f22b",
-     "size": 11976009
+     "size": 12197109
     },
     "sha1": "b78945c40cfe7640408f3fd1e44da385a8c8b805",
     "sha256": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43",
     "sha512": "66745825330a98f3e4a5ea3a44aff8b00870f715c144edc38dd2f61b4240589600b58ae89efac3b54dbb5aa430b1059dac1a28fd71cac5cc9002bbeb5ba3f22b",
     "side": "both",
-    "size": 11976009,
+    "size": 12197109,
     "source": "modrinth",
     "url": "https://cdn.modrinth.com/data/Ce6I4WUE/versions/5KzzycBT/Mekanism-1.21.1-10.7.19.85.jar",
     "version": "5KzzycBT",

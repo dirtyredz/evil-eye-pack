@@ -4987,7 +4987,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-migration.pw.toml"
-hash = "2e84eb3c224b54e5e63a132e54ff790a4052a59b690ebce2de7834c4f991fdca"
+hash = "fd21df699fba1e41b3c08f7314ae000d59c9a6d9ef6ea8411fc03862e4a5b705"
 metafile = true
 
 [[files]]

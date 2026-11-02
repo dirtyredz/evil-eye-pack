@@ -375,11 +375,11 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.7.jar",
-    "sha256": "5dbd229df52f5e081b93b7c77676d911771dd407cf9828876299e63a17b4cd9b",
-    "size": 119760
+    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.10.jar",
+    "sha256": "18cb68d2a8877bb16d9540bea4a15dea2fdd46af521fb820affc8c35d21f6f24",
+    "size": 121971
    },
-   "reason": "Private local migration bridge built from minecraft-mods 4c9fa1f (dev.7 item-component conversion). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover."
+   "reason": "Private local migration bridge built from minecraft-mods d3c3ebb (dev.10: empty-region scan fix; includes dev.8 Ars armor perks). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover."
   },
   {
    "metafile": "mods/evileye-tweaks.pw.toml",

@@ -738,3 +738,15 @@ hash matched, and an independent compare against pre-cutover hashes showed 0 dif
 cutover exit 0 in 6 min, 191 jars incl. `evileye_migration-...-dev.7`, mmc-pack = MC 1.21.1 + NeoForge 21.1.265,
 Java 21 Temurin, prelaunch = stable-prelaunch.ps1, saves byte-identical to pre-cutover; rollback restored 3925 files,
 0 differences. No game was launched. A launch of the cut-over copy has not been done; that is the owner's day-one check.
+
+## Bridge dev.10 pin (2026-11-02)
+
+`evileye_migration` is now 0.1.0-dev.10 (minecraft-mods d3c3ebb, SHA-256
+`18cb68d2a8877bb16d9540bea4a15dea2fdd46af521fb820affc8c35d21f6f24`, 121,971 bytes); declared dependencies unchanged. Fixes the cutover
+failure where `/evileye_migration convert-all dry-run` aborted with "Truncated region file" on the
+live world's 63 zero-byte `.mca` files: zero-byte and header-only region files now hold no chunks, a
+genuinely truncated non-empty file is reported as one scan error (unsafe to remove) without aborting, and a
+failed start leaves the operation idle so a retry works instead of printing "already active: idle".
+Also rolls up dev.8 (Ars armor perks threaded through Ars's own holder API), which was never pinned.
+dev.9 is reserved by the unmerged equipment-panel branch. Jar stored hash-addressed and by filename in the
+shared migration cache and in the cache Stable's prelaunch uses (`jobs/2026-10-31-world-trial-final/cache`).
