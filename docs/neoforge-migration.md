@@ -709,6 +709,18 @@ textures. The override pack already loads above CozyUI+ (`config/evileye_client/
 
 No config change; no server change.
 
+## Evil Eye Client 0.3.5 pin: Electromagnet charge widget (2026-11-02)
+
+Owner request. Evil Eye Client 0.3.5 (minecraft-mods `mods/EvilEyeClient` d509910, branch `feat/magnet-hud`; 0.3.4 is reserved
+for the Ender IO tooltip-layer fix) draws a small widget right of the hotbar while an Ender IO Electromagnet is switched on:
+icon, charge bar, percentage and `µI` amount, red under 15%. Active = `enderio:toggled` component true; energy = the item
+energy capability; inventory, offhand, armour and Curios slots are scanned every 10 ticks. New `[magnet]` section in
+`config/evileye_client-client.toml` (`enabled`, `anchor`, `offsetX`, `offsetY`, `scale`). Pinned like 0.3.3.
+
+| Pin | Source | SHA-256 | Bytes |
+|---|---|---|---|
+| `evileye_client-1.21.1-neoforge-0.3.5.jar` (side client) | minecraft-mods `mods/EvilEyeClient` d509910 | `d543e885e4a4b49a8da9d387b45f2bbd162786d8f34dfc5c3d70950f766fb4cc` | 366,528 |
+
 ## Phase 10 cutover tooling (2026-11-01)
 
 Branch `migration/cutover-tooling`. **Nothing here has touched the real Stable instance**: only

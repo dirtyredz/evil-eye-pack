@@ -357,3 +357,23 @@
 	#PROPORTIONAL: the wheel amount decides how many items move. ALWAYS_ONE: one item per step.
 	#Allowed Values: PROPORTIONAL, ALWAYS_ONE
 	wheelItemScaling = "PROPORTIONAL"
+
+#Charge of an active Ender IO Electromagnet; hidden when none is switched on.
+[magnet]
+	#Show the widget.
+	enabled = true
+	#HOTBAR_RIGHT (just right of the hotbar, clear of the offhand slot) or a screen corner.
+	#Allowed Values: HOTBAR_RIGHT, TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+	anchor = "HOTBAR_RIGHT"
+	#Corners: distance from the side edge. HOTBAR_RIGHT: extra shift to the right.
+	# Default: 0
+	# Range: -512 ~ 512
+	offsetX = 0
+	#Corners: distance from the top or bottom edge. HOTBAR_RIGHT: extra shift upwards.
+	# Default: 0
+	# Range: -512 ~ 512
+	offsetY = 0
+	#Widget size as a multiple of the GUI scale.
+	# Default: 1.0
+	# Range: 0.5 ~ 3.0
+	scale = 1.0
