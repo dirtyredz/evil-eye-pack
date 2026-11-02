@@ -141,3 +141,9 @@ Cosmetic Armor Reworked is absorbed into the owned mods: **Evil Eye Client 0.4.0
 - **Keybindings**: Evil Eye Client 0.2.0 to 0.3.1 registered `key.evileye_client.crafting.*` and adopted saved
   `key.craftingtweaks.*` bindings; 0.3.2 registers no crafting keys (saved crafting bindings in options.txt are
   harmless leftovers).
+
+## IPN replacement checkpoint (2026-11-02)
+
+The assigned Client and Tweaks worktrees contain inactive pure policies/planners and JUnit coverage only. The replacement is not ready for pack cutover. IPN, libIPN and Kotlin for Forge remain pinned; no owned-config migration or replacement release pin is shipped. The handoff and ad hoc baseline closure evidence live at `artifacts/minecraft-mods/jobs/2026-11-02-ipn-build/`. Repeat closure against final replacement jars before removal; baseline evidence alone is not acceptance.
+
+The ad hoc baseline audit resolved all 161 mod roots by declared hash and scanned 239 archives (78 nested jars), 85,052 classes and 215 metadata files. Excluding IPN/libIPN roots leaves 83,968 classes and no `org/anti_ad/` or `org.anti_ad.` constant-pool matches or declared IPN/libIPN consumers. Create Jetpack 5.2.1, nested FlightLib 4.0.36 and Cull Less Leaves 1.4.3 still declare Kotlin for Forge and reference Kotlin classes. The saved `library-closure.json` labels this baseline-only scope explicitly.
