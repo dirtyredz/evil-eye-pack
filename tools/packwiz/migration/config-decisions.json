@@ -3,6 +3,11 @@
  "note": "Per-config treatment for the NeoForge 1.21.1 migration (plan Phase 5). Ordered rules: the first match decides. 'regenerate' files were reconciled at the first clean target boot (Phase 6, pack-test boot 6, 2026-10-30): no shipped value was reset by a mod; 87 files where the 1.21.1 mods dropped obsolete keys or added new ones were replaced by the files those mods wrote back (our values kept), and no dropped key carried Evil Eye intent (each differed from the pack's initial defaults only where a mod had written its own default). Client-only defaults that a server cannot generate wait for the owner's first launch. tools/packwiz/tests/config_decisions.test.cjs enforces full coverage.",
  "rules": [
   {
+   "match": "config/modernui/client.toml",
+   "treatment": "preserve-intent",
+   "reason": "Modern UI is retained as the zoom provider: [general] zoom=true, with Z in shipped key defaults. Other Modern UI settings use native defaults; saved options.txt bindings remain unchanged."
+  },
+  {
    "match": "config/iceandfire",
    "treatment": "preserve-intent",
    "reason": "CE 2.1.4 Jupiter JSON carries the corresponding Forge pack values (griefing off, dragon behaviour, mob weights/ranges, 800-block spawn exclusion). Legacy restored TOML/biome lists are inert provenance; CE structure/biome equivalence awaits dk-e7b276f4."
@@ -247,6 +252,11 @@
    "file": "config/inventoryprofilesnext/integrationHints/dankstorage.json",
    "treatment": "replaced",
    "reason": "Replaced by Evil Eye Client 0.5.1 and Tweaks 0.8.1: owned middle-click sorting, directional physical-storage/Dank transfers and both-hand refill. Recursive final-pin closure recorded under jobs/2026-11-02-ipn-round4. Kotlin retained for Create Jetpack, FlightLib and Cull Less Leaves."
+  },
+  {
+   "file": "config/chloride-client.toml",
+   "treatment": "dropped",
+   "reason": "Owner decision 2026-11-02: remove Chloride entirely; graphics tweaks are unused. Modern UI remains as the zoom provider, default Z. Sodium remains required by Iris; bundled WaterConfig leaves with Chloride."
   }
  ],
  "deferred": "All seven owned ports restored 2026-10-30; no parked files remain. See deferred/README.md for restoration history."

@@ -278,6 +278,10 @@
   "mods/libipn.pw.toml": {
    "action": "drop",
    "reason": "Replaced by Evil Eye Client 0.5.1 and Tweaks 0.8.1: owned middle-click sorting, directional physical-storage/Dank transfers and both-hand refill. Recursive final-pin closure recorded under jobs/2026-11-02-ipn-round4. Kotlin retained for Create Jetpack, FlightLib and Cull Less Leaves."
+  },
+  "mods/chloride.pw.toml": {
+   "action": "drop",
+   "reason": "Owner decision 2026-11-02: remove Chloride entirely; graphics tweaks are unused. Modern UI remains as the zoom provider, default Z. Sodium remains required by Iris; bundled WaterConfig leaves with Chloride."
   }
  },
  "additions": [

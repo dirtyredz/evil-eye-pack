@@ -1612,11 +1612,6 @@ file = "config/chimes-common.toml"
 hash = "b0383111b410663758521048922292e264e216b7d79d4da1f8eb4cb0b5ab5652"
 
 [[files]]
-file = "config/chloride-client.toml"
-hash = "bc8dbcde3097831c4a131cdb2b20ddad2ce68af7d59620a7582a88ba810ff133"
-preserve = true
-
-[[files]]
 file = "config/citadel-common.toml"
 hash = "0a41518641bbb4133fc61b934e8663ae5271ffd8190a281e5b35d1efd97fb3e3"
 preserve = true
@@ -1676,7 +1671,7 @@ hash = "a7444e9071ebe7e1306e83141f9b4c53fbd6f99730f9d29f587b959b54f07a82"
 
 [[files]]
 file = "config/defaultoptions/keybindings.txt"
-hash = "f351bc601c489bc825f9cc3805ca944712a4549a9dcb075b66ed3538d611c31a"
+hash = "e9f29f51609bb9296c932181c5d20d7a385dde4dcf5097717f85c8fb682c1919"
 
 [[files]]
 file = "config/dramaticdoors-common.toml"
@@ -2198,6 +2193,10 @@ hash = "d40a0510a5eaf56e3c48e881348d7d826c5a1f61aa29b69cf0fc33dd96d6fdcd"
 file = "config/modernfix-mixins.properties"
 hash = "cc9db08ca3f44714cf14117fb1772eed88c9cc3272fea6d17e657292c8799fe0"
 preserve = true
+
+[[files]]
+file = "config/modernui/client.toml"
+hash = "7a5e6730f80a3853130859838553c3bd52277587d63f93dd4871668a587c45cb"
 
 [[files]]
 file = "config/multibeds-client.toml"
@@ -4754,11 +4753,6 @@ metafile = true
 [[files]]
 file = "mods/chimes.pw.toml"
 hash = "af7a7bc7b98551838c08343baa1883334f9c46a45af6fe8d113053edbf21b8cc"
-metafile = true
-
-[[files]]
-file = "mods/chloride.pw.toml"
-hash = "144d4bd742122408670a1453c889191a15cb4a7912956dbe8db6518fe1a26b2f"
 metafile = true
 
 [[files]]

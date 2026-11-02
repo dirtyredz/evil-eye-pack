@@ -48,5 +48,5 @@ test('keymap leaves no in-world clash among the keys fixed by the 2026-10-23 aud
   const values = Object.entries(map).filter(([, v]) => !v.includes('unknown')).map(([, v]) => v);
   assert.equal(new Set(values).size, values.length, 'duplicate key in keybindings.txt');
   for (const k of moved) assert.ok(map[k], k);
-  for (const k of ['key_key.mca.skin_library', 'key_keybinding.enderio.probe_mode', 'key_key.nextDestination', 'key_key.modernui.zoom']) assert.equal(map[k], 'key.keyboard.unknown', k);
+  for (const k of ['key_key.mca.skin_library', 'key_keybinding.enderio.probe_mode', 'key_key.nextDestination']) assert.equal(map[k], 'key.keyboard.unknown', k);
 });

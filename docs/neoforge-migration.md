@@ -866,3 +866,9 @@ The owner-approved release combines the completed IPN replacement with the Evil 
 | evileye_essentials-1.21.1-neoforge-0.2.0.jar | 2d258ea | 8487ba2be58ad02c87fedae61d8df8c7ade486d9834f4b333614d85adeec325d | 237818 |
 
 Client ships actionRail enabled on the RIGHT with zero offsets; inventory effects move left. These five keys are forced on preserved Trial/Stable configs at sync. Trash is on the rail; the sidebar keeps gamemode/day/night/rain. Client ignores legacy sidebar trash entries. Tweaks 0.9.0 and Essentials 0.2.0 expose existing config values to the settings service; no new common TOML keys. IPN/libIPN remain dropped and Kotlin remains. Qualification evidence: jobs/2026-11-02-release-ipn-settings-rail/handoff.md. Release preparation does not itself install into Stable or publish main.
+
+## Chloride retirement (2026-11-02)
+
+Owner decision supersedes the wave-6 retention proposal: remove Chloride and its unused graphics tweaks; retain Modern UI, Quick Skin and 3D Skin Layers. Modern UI zoom is explicitly enabled in `config/modernui/client.toml` and defaults to Z. Physical mod metafiles: **159 -> 158**. Sodium stays (Iris requires it); bundled WaterConfig leaves with Chloride, with no separate library drop.
+
+Existing instances preserve saved keybindings, including Stable's Modern UI C binding. `pack-owned-keys.json` only supports JSON/TOML, not `options.txt`; no forcing entry or Stable edit is made. Smallest safe follow-up: add an exact-key colon-delimited options setter to the existing prelaunch installer, tested for missing/saved/duplicate bindings and idempotence, preserving every unrelated line, then force only `key_key.modernui.zoom:key.keyboard.z`. Until then, existing players can rebind Modern UI zoom to Z in Controls.

@@ -1110,7 +1110,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/chloride.pw.toml",
    "old": {
     "file": "8462759",
@@ -1123,36 +1123,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "chloride incompatible smoothskies [0,) (client)",
-     "chloride required minecraft [1.21.1,1.21.2) (client)",
-     "chloride required neoforge [21.1.170,) (client)",
-     "chloride required sodium [0.8.12,) (client)"
-    ],
-    "file": "8462029",
-    "filename": "chloride-NEOFORGE-mc1.21.1-v1.8.1.jar",
-    "loader": "neoforge",
-    "metafile": "mods/chloride.pw.toml",
-    "mods": [
-     "chloride@1.8.1"
-    ],
-    "name": "(Sodium) Chloride",
-    "project": "931925",
-    "publisher": {
-     "md5": "ed1cc4210fc6d0b992ec92aab2f309a2",
-     "size": 527889
-    },
-    "sha1": "50454011525e2862678b15d94484fd32a5a54dfb",
-    "sha256": "d0b0a80a241078f917afb96e53821d7c70c38faebaca9adee0c86a9a8cb482c1",
-    "sha512": "dbe315d2e86275b503c71673440f7da97676f6c68893673ac6a9df6bd6cc51567b775fb5cf1bf78adb7aaeb850617821b639256d8abbb1084ed6bf7be654e0ef",
-    "side": "both",
-    "size": 527889,
-    "source": "curseforge",
-    "versionNumber": "chloride-1.8.1-NEOFORGE-1.21.1"
-   }
+   "rationale": "Owner decision 2026-11-02: remove Chloride entirely; graphics tweaks are unused. Modern UI remains as the zoom provider, default Z. Sodium remains required by Iris; bundled WaterConfig leaves with Chloride."
   },
   {
    "action": "repoint",

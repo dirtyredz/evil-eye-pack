@@ -1,0 +1,3 @@
+# Modern UI is the pack zoom provider; default key Z is in defaultoptions/keybindings.txt.
+[general]
+zoom = true

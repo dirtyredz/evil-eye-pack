@@ -17,7 +17,7 @@ does not count. Full program plan: `artifacts/minecraft-mods/jobs/2026-11-01-evi
 | 3 | Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks, Crafting Tweaks | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.2.0 and Tweaks 0.5.0 local pins (since superseded by Client 0.3.2 and Tweaks 0.6.0, which remove the crafting-grid controls), seven drops plus Searchables and Balm after closure; owner walk pending |
 | 4 | AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps, Let Me Despawn (T) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.4.0 local pin, seven drops plus Bookshelf, Prickle, Almanac Lib and Kiwi after closure; owner walk pending |
 | 5 | FTB Essentials (E; mandatory saved-data migration), FTB Library (sidebar to C) | **Pinned on branch** `migration/evileye-essentials-wave5`: Essentials 0.1.0, Client 0.3.6 and Tweaks 0.6.1 local pins (0.3.1 = Trial fixes: hearts, trash-can icon, pick-up scale; 0.3.2 and 0.6.0 remove the crafting-grid controls; 0.3.3 = one-line labelled food and drink tooltips; 0.3.5 = Electromagnet charge widget; 0.3.6 = Ender IO + EMI tooltip layer and missing-slot highlight fixes; Tweaks 0.6.1 = Slow Falling drop threshold), two drops; import trial passed on a world copy; owner walk pending |
-| 6 | Pro Placer, Light Overlay (removed outright 2026-11-01), 3D Skin Layers, Quick Skin, Modern UI, Inventory Profiles Next, Chloride (C) | IPN done (Client 0.6.1 / Tweaks 0.9.0); other work remains |
+| 6 | Pro Placer, Light Overlay (removed outright 2026-11-01), 3D Skin Layers, Quick Skin, Modern UI, Inventory Profiles Next, Chloride (C) | IPN done (Client 0.6.1 / Tweaks 0.9.0); Chloride removed outright 2026-11-02; Modern UI, Quick Skin and 3D Skin Layers retained; Pro Placer remains |
 | 7 | Polymorph, Cosmetic Armor Reworked (**done 2026-11-02**, see the equipment panel wave), Diagonal Fences, Create: Compatible Storage, Create: Storage Drawers Compat (conversion-gated) | not started |
 
 ## Retained
@@ -161,3 +161,11 @@ Client 0.5.1/Tweaks 0.8.1 replace sorting, move-all and refill. IPN and libIPN a
 ## Settings and action rail release (2026-11-02)
 
 Client 0.6.1, Tweaks 0.9.0 and Essentials 0.2.0 combine the completed IPN replacement with the owned settings screen/service. The outside-panel rail orders applicable actions as to-player, to-storage, sort, trash; EMI/JEI reserve its rectangle. Inventory effects are forced left, rail right, and operator commands remain in the sidebar. See the current pins in [NeoForge migration](neoforge-migration.md#stable-ipn-settings-and-action-rail-release-2026-11-02).
+
+## Chloride retirement (2026-11-02)
+
+Owner decision supersedes the wave-6 retention proposal: remove Chloride and its unused graphics tweaks; retain Modern UI, Quick Skin and 3D Skin Layers. Modern UI zoom is explicitly enabled in `config/modernui/client.toml` and defaults to Z. Physical mod metafiles: **159 -> 158**. Sodium stays (Iris requires it); bundled WaterConfig leaves with Chloride, with no separate library drop.
+
+Existing instances preserve saved keybindings, including Stable's Modern UI C binding. `pack-owned-keys.json` only supports JSON/TOML, not `options.txt`; no forcing entry or Stable edit is made. Smallest safe follow-up: add an exact-key colon-delimited options setter to the existing prelaunch installer, tested for missing/saved/duplicate bindings and idempotence, preserving every unrelated line, then force only `key_key.modernui.zoom:key.keyboard.z`. Until then, existing players can rebind Modern UI zoom to Z in Controls.
+
+Closure evidence: `.tmp/chloride-closure.json` in the removal worktree scanned 159 pinned roots, 237 archives (78 nested), 84,088 classes and 213 metadata files without errors. Excluding Chloride and its bundled WaterConfig leaves 83,847 classes: no WaterConfig references or declared Chloride consumers. The broad Chloride string hits in five other jars are chemistry content and Lucene dictionary words, reviewed individually. Repository recipes reference only unrelated hydrogen-chloride chemistry.

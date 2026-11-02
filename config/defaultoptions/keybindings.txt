@@ -1,4 +1,3 @@
-key_chloride.zoom:key.keyboard.z
 key_key.ars_nouveau.open_book:key.keyboard.i
 key_key.ars_nouveau.selection_hud:key.keyboard.v
 key_key.ars_nouveau.next_slot:key.keyboard.period
@@ -27,6 +26,6 @@ key_key.cpm.gestureMenu:key.keyboard.f6
 key_key.mca.skin_library:key.keyboard.unknown
 key_keybinding.enderio.probe_mode:key.keyboard.unknown
 key_key.nextDestination:key.keyboard.unknown
-key_key.modernui.zoom:key.keyboard.unknown
+key_key.modernui.zoom:key.keyboard.z
 
 key_key.evileye_client.sort:key.mouse.middle

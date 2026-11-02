@@ -104,6 +104,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `shaderpacks/` — shaderpack metafiles and saved shader options
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
 - `config/` — mod configs installed as plain files
+- `config/modernui/client.toml` - enables Modern UI zoom; its Z default is in `config/defaultoptions/keybindings.txt`.
 - `config/defaultoptions/keybindings.txt` — default keymap applied by Evil Eye Client (Default Options syntax; new instances and unsaved keys only; see GOTCHAS)
 - `config/evileye_client/resourcepacks.json` — first-launch resource-pack order and required/force-compatible packs, read by Evil Eye Client
 - `config/emi-curation/` — EMI curation data: `rules.json`, seven explicit item lists (including `roundwood-legacy.json`, `alexsmobs-creative.json` and `iceandfire-creative.json`), `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped
