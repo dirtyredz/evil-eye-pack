@@ -137,7 +137,7 @@ function Restore-InstanceArchive([string]$ArchiveDir, [string]$InstanceDir, [str
 
 # Replaces KEY=value in instance.cfg text, adding the key when missing. Preserves line endings.
 function Set-CfgKey([string]$Text, [string]$Key, [string]$Value) {
-  $rx = '(?m)^' + [regex]::Escape($Key) + '=[^\r\n]*$'
+  $rx = '(?m)^' + [regex]::Escape($Key) + '=[^\r\n]*(?=\r?$)'
   if ([regex]::IsMatch($Text, $rx)) { return [regex]::Replace($Text, $rx, { param($m) "$Key=$Value" }) }
   $eol = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
   return $Text.TrimEnd("`r", "`n") + $eol + "$Key=$Value" + $eol

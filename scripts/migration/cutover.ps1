@@ -140,7 +140,7 @@ try {
   }
 
   # --- dry-run verification of the pack/cache (read-only) ------------------------------------
-  $installerArgs = @((Join-Path $script:RepoRoot 'tools/packwiz/cutover_install.cjs'), '--cache', $Cache, '--instance', $mc)
+  $installerArgs = @((Join-Path $script:RepoRoot 'tools/packwiz/migration/cutover_install.cjs'), '--cache', $Cache, '--instance', $mc, '--fresh')
   if ($plan -or $blockers.Count -eq 0) {
     Write-Log 'Verifying the pack and every cached artifact (read-only):'
     $code = Invoke-Native $node ($installerArgs + '--dry-run') $script:RepoRoot
@@ -150,7 +150,7 @@ try {
   if ($plan) {
     Write-Log 'Would, in order:'
     Write-Log "  1. archive $($files.Count) files ($(Fmt $totalBytes)) to $archiveDir with a SHA-256 manifest"
-    Write-Log '  2. empty .minecraft\mods (archived) so no Forge jar lingers'
+    Write-Log '  2. empty .minecraft\mods and delete every file the old install tracked (all archived), so nothing stale survives'
     Write-Log "  3. rewrite mmc-pack.json -> Minecraft 1.21.1 + NeoForge 21.1.265; instance.cfg JavaPath -> $Java"
     Write-Log '  4. install the pack via the trial route and set Stable prelaunch -> stable-prelaunch.ps1'
     if ($blockers.Count) {
@@ -174,7 +174,7 @@ try {
     $modsDir = Join-Path $mc 'mods'
     if (Test-Path -LiteralPath $modsDir) {
       Get-ChildItem -LiteralPath $modsDir -Force | Remove-Item -Recurse -Force
-      Write-Log 'Emptied .minecraft\mods (the archive holds every Forge jar).'
+      Write-Log 'Emptied .minecraft\mods (the archive holds every Forge jar); the installer also clears old tracked files.'
     }
     [IO.File]::WriteAllText($mmcPackPath, ($MmcPack -replace "`r?`n", "`n") , (New-Object Text.UTF8Encoding($false)))
     $cfg = [IO.File]::ReadAllText($cfgPath)
