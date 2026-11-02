@@ -91,7 +91,7 @@ recipe-book suppression and Stylish Effects' right-side placement.
 ## 2. Checks to run from the checkout
 
 ```
-node --test tools/emi_curation/tests/*.cjs
+node --test tools/analysis/emi_curation/tests/*.cjs
 node --test tools/packwiz/tests/*.cjs
 node tools/packwiz/verify_hashes.cjs
 node tools/packwiz/verify_hashes.cjs --jars <dir with the downloaded jars>

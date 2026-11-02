@@ -9,7 +9,7 @@ pass. The **In-game result** column is for the owner's checklist in
 Reproduce with:
 
 ```
-node tools/emi_coverage/scan_jars.cjs "<instance>/.minecraft/mods" emi.jar jei.jar jep.jar
+node tools/analysis/emi_coverage/scan_jars.cjs "<instance>/.minecraft/mods" emi.jar jei.jar jep.jar
 ```
 
 The scan reads every top-level jar and every nested jar (`META-INF/jarjar/*.jar`,

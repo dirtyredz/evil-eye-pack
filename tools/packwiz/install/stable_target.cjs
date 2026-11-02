@@ -49,7 +49,7 @@ async function main(argv) {
     else if (argv[i] === '--fresh') fresh = true;
     else if (argv[i] === '--cache' && argv[i + 1]) cache = path.resolve(argv[++i]);
     else if (argv[i] === '--instance' && argv[i + 1]) instance = argv[++i];
-    else throw Error('Usage: cutover_install.cjs --cache <cache root> [--instance <.minecraft>] [--fresh] [--dry-run]');
+    else throw Error('Usage: stable_target.cjs --cache <cache root> [--instance <.minecraft>] [--fresh] [--dry-run]');
   }
   if (!cache) throw Error('A complete offline --cache is required');
   const target = stableTarget(instance);

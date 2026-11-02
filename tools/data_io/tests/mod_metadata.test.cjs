@@ -34,7 +34,7 @@ test('custom mods.toml modLoader is a mandatory dependency', () => {
   assert.deepEqual(mod.dependencies, [{ id: 'kotlinforforge', type: 'required', mandatory: true, side: 'BOTH', range: '', source: 'modLoader' }]);
 });
 const { readJarMods } = require('../mod_metadata.cjs');
-const { zip } = require('../../malware_guard/tests/fixtures.cjs');
+const { zip } = require('../../analysis/malware_guard/tests/fixtures.cjs');
 
 test('NeoForge dependency types map to required/optional and reject unknown types', () => {
   const [mod] = parseMods(`[[mods]]

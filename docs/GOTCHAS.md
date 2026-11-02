@@ -1,5 +1,12 @@
 # Gotchas
 
+## Tool layout
+
+- **ANU runs a synced copy of `tools/` with the same relative layout.** `pack_test/remote/anu.cjs` `CODE_DIRS` and
+  `remote/scripts.cjs` `AGENT_SCRIPT` name `testing/server_smoke`, `testing/pack_test`, `analysis/emi_coverage`,
+  `analysis/dedup` and `data_io`; moving any of them means updating those, or the remote agent's relative requires
+  and its kill-guard command-line match break (the `signoff` test covers the kill guard).
+
 ## Client mixin verification
 
 - Dedicated-server acceptance never applies CLIENT-only mixins. DRT 0.2.0 demonstrated the
@@ -19,7 +26,7 @@
   Jade 15.10.3 matches, while 15.10.6 does not. Thirst has no Jade version constraint or
   compat toggle, so do not update Jade independently without rerunning this audit.
 - Missing and unhandled targets are reviewed only through the exact reasoned entries in
-  `tools/client_mixin/allowlist.json`; there is no blanket exemption. Bootstrap-layer
+  `tools/testing/client_mixin/allowlist.json`; there is no blanket exemption. Bootstrap-layer
   classes can link successfully without traversing the game transformer, so the final
   unhandled-target check plus exact baseline prevents new blind spots from passing.
   A deliberately accepted behavior loss must be marked `known-minor` with its Docket id;
@@ -159,7 +166,7 @@
 - **FlatWorldFix only affects worlds created while it is installed.** A chosen non-default world type (including Superflat) wins over datapack overworld overrides; default worlds retain Terralith. It does not change existing saves.
 
 - **AllTheOres/AllTheCompressed/Almost Unified were removed on 2026-10-23.** The owner abandoned migration after a partial in-game swap. Old stacks and blocks disappear; no remap or conversion remains. Keep Large Ore Deposits on explicit survivor IDs.
-- **Duplicate removal must cover custom serializers and code drops.** `tools/dedup/generate.cjs` preserves full pinned recipe/loot JSON; regenerate and run its tests when jars change. BHC wither bones are a Java drop (`boneDropRate = 0.0`), not a loot-table entry. Ice and Fire tag-selected nuggets need tag cleanup as well as loot overrides. HammerLib recipes and dynamic tags have separate switches. Refurbished Furniture's wrench has electrical-link behavior and cannot be replaced by Create's wrench.
+- **Duplicate removal must cover custom serializers and code drops.** `tools/analysis/dedup/generate.cjs` preserves full pinned recipe/loot JSON; regenerate and run its tests when jars change. BHC wither bones are a Java drop (`boneDropRate = 0.0`), not a loot-table entry. Ice and Fire tag-selected nuggets need tag cleanup as well as loot overrides. HammerLib recipes and dynamic tags have separate switches. Refurbished Furniture's wrench has electrical-link behavior and cannot be replaced by Create's wrench.
 - **Extreme Reactors needs `forge:ingots/steel` non-empty.** Its reinforced parts are `forge:conditional` recipes gated on `tag_empty`; an empty tag silently switches them to iron-block `_alt` recipes and leaves 14 empty Patchouli pages. On `main` the pack tags Ender IO Dark Steel into it via `dedup.json` `extraItemTags`; on the NeoForge branch Mekanism's steel fills `c:ingots/steel` and the stand-in is gone, so removing Mekanism empties it again.
 - **Keymap changes need a regenerated check and a manual strip.** `config/defaultoptions/keybindings.txt` is read only for keys missing from `options.txt`. Mod keys are not unique across mods (Jetpack G/H, Dank I/O, AstikorCarts Z/R); after adding a mod, simulate the merged map (instance `options.txt` plus the keymap) for duplicates, and treat GUI-context keys (JEI, Xaero GUI) as non-clashes.
 - **Cluttered's jar mis-tags `cluttered:willow_door` as a trapdoor.** Duplicate replacement copies jar tags to the survivor, so `dedup.json` `tagFixes` corrects the target after mapping.
@@ -174,13 +181,13 @@
 - **The library closure script's metadata check must split `unzip -Z1` output on `\r?\n`.** The wave-1 version split on `\n` only, so on Windows its metadata branch never matched (class references still did). Always confirm a library drop with `migrate.mjs resolve`, which checks declared dependencies (it caught AttributeFix requiring Bookshelf).
 - **The "Unidentified mapping" list in `latest.log` is the content a world loses** after a removal or rewrite: every registry ID the world knew that no longer exists. Read it before shipping a removal.
 
-## Server smoke (`tools/server_smoke/`)
+## Server smoke (`tools/testing/server_smoke/`)
 
 - **A mod marked `side = "both"` can still be client-only.** packwiz `-s server` installs every `both` mod, and Forge aborts server boot at the first one that touches client classes. Oculus 1.8.0 (`side = "both"`) crashes the server: `Attempted to load class net/minecraft/client/gui/screens/Screen for invalid dist DEDICATED_SERVER`. Forge reports only the first failing mod and leaves the JVM alive after "Crash report saved", so the smoke stops on that line. Use `--drop <name>` to find the next offender, then fix the metafile's `side`.
-- **Known server boot noise** (observed 2026-10-18 on a successful boot, listed in `tools/server_smoke/known_noise.json`): datapack tags, recipes and advancements from dramaticdoors, productivebees and totw_modded that reference mods the pack does not ship (Mekanism and others); Radium probing Minecolonies `BlockHutTownHall` (`RuntimeDistCleaner ... ClientLevel`); Structurize's ModernFix `LazyDataFixer` banner; HammerLib's test recipe extension. Mixin "Error loading class ... ClassNotFoundException" lines are WARN, not errors.
+- **Known server boot noise** (observed 2026-10-18 on a successful boot, listed in `tools/testing/server_smoke/known_noise.json`): datapack tags, recipes and advancements from dramaticdoors, productivebees and totw_modded that reference mods the pack does not ship (Mekanism and others); Radium probing Minecolonies `BlockHutTownHall` (`RuntimeDistCleaner ... ClientLevel`); Structurize's ModernFix `LazyDataFixer` banner; HammerLib's test recipe extension. Mixin "Error loading class ... ClassNotFoundException" lines are WARN, not errors.
 - Time to `Done (` with a fresh world, measured 2026-10-23: 136 s wall on Valhalla with a light load, 527 s while Valhalla was busy with other work, 135 s on ANU. Spawn-area generation dominates; the pack test's cached world brings it to about 50 s. The JVM exits within a minute of `stop`.
 
-## Pack test (`tools/pack_test/`)
+## Pack test (`tools/testing/pack_test/`)
 
 - **Old runs lack malware evidence.** Offline analysis now requires `evidence/malware.json`; its absence is incomplete, never a clean security result. Copy historical runs before backfilling from a verified matching stage. The later scan is new evidence, not evidence collected during the historical boot. Static approvals bind the outer jar/ZIP hash and exact finding; a dependency update must be reviewed again. See development's Malware guard section.
 
@@ -214,7 +221,7 @@
   matching stamp are rebuilt or refused. The first run after this change reinstalls the Forge base under
   `loader-base/forge-1.20.1-47.4.10` and rebuilds `pack-test/stage/forge-1.20.1-47.4.10/server`, once.
 - **The dedup cached-jar test reads Evil Eye Local's mods.** On 2026-10-29 Local lacked
-  `hourglass-1.20-1.2.1.1.jar`, so `tools/dedup/tests/installed.test.cjs` failed with "Missing cached jar".
+  `hourglass-1.20-1.2.1.1.jar`, so `tools/analysis/dedup/tests/installed.test.cjs` failed with "Missing cached jar".
   That is an environment gap; relaunching Local installs the jar.
 
 ## NeoForge 1.21.1 first boots (2026-10-30)
@@ -272,7 +279,7 @@
   `startup_*.js`, and the EMI test harness throws on a top-level `global` write.
 - **Native listeners are reloadable** (`NativeEvents.onEvent(className, fn)`). Do not add once-per-launch
   guards. `NativeModEvents`/`ForgeModEvents` are gone, and mod-bus events also go through `NativeEvents`.
-- **The class filter lives in the jar** (`kubejs.classfilter.txt`). `tools/emi_curation/tests/class_filter.test.cjs`
+- **The class filter lives in the jar** (`kubejs.classfilter.txt`). `tools/analysis/emi_curation/tests/class_filter.test.cjs`
   reads it from the pinned KubeJS. `net.neoforged` is allowed, `net.neoforged.fml` denied.
 - **1.21 stacks have components, not NBT.** Use the component patch (`getComponentsPatch`,
   EMI `getComponentChanges`); `getNbt()` does not exist. Classification-cache hits must still read
@@ -301,7 +308,7 @@
 - `instanceof` against a `Java.loadClass` class works. `.class` does not.
 - Rhino turns a plain JS object into a Java interface proxy when it is assigned to an interface-typed field (used for `EmiRecipeManager`). Overloaded interface methods (`getRecipes()` / `getRecipes(category)`) all reach the same JS function, so branch on `undefined`.
 - Every script in `client_scripts/` shares one scope. Top-level `const`s in different files collide, which is why each curation module is an IIFE that publishes onto `global.emiCuration`.
-- KubeJS's script class filter denies `java.io`, `java.nio`, most of `java.lang`, `java.net` and `net.minecraftforge.fml`. A denied `Java.loadClass` fails only at runtime (the old REI script's `java.io.StringWriter` stack-trace path never worked). `tools/emi_curation/tests/class_filter.test.cjs` checks every class the curation scripts load.
+- KubeJS's script class filter denies `java.io`, `java.nio`, most of `java.lang`, `java.net` and `net.minecraftforge.fml`. A denied `Java.loadClass` fails only at runtime (the old REI script's `java.io.StringWriter` stack-trace path never worked). `tools/analysis/emi_curation/tests/class_filter.test.cjs` checks every class the curation scripts load.
 - KubeJS wraps `CompoundTag` as a map view (`NativeJavaMap`) and NBT lists as list views. Key lookups return unwrapped values, and Java methods (`getId()`, `getAllKeys()`, `get(...)`) still resolve when no key of that name exists. `java_interop.toPlainNbt` relies on that.
 
 ## EMI internals (pinned 1.1.24+1.20.1+forge)
@@ -314,7 +321,7 @@
   logout discards pending work; never publish a completed view from an old generation. Publication must
   retain the Java list reference read back from EMI, not the pre-assignment value Rhino may have copied.
 - `JemiPlugin` skips JEI categories whose namespace has a native EMI plugin (`ae2`). AE2's JEI-only Certus Growth category is therefore not shown, and AE2's native EMI plugin uses info recipes instead.
-- EMI rewrites `config/emi.css` in full on launch, so a test instance differs from the indexed file after the first start. EMI's QDCSS parser is regex-based: comments in `emi.css` must not contain `:`, `;`, `{` or `}` (guarded by `tools/emi_curation/tests/emi_config.test.cjs`).
+- EMI rewrites `config/emi.css` in full on launch, so a test instance differs from the indexed file after the first start. EMI's QDCSS parser is regex-based: comments in `emi.css` must not contain `:`, `;`, `{` or `}` (guarded by `tools/analysis/emi_curation/tests/emi_config.test.cjs`).
 
 - **Macaw's addons need their sibling Macaw mods.** `mcwbiomesoplenty` ships ~7,000 models whose parents live in `mcwfurnitures`, `mcwroofs`, `mcwstairs`, `mcwtrpdoors` and `mcwpaths` (plus bridges/doors/fences/windows). Without those mods its blocks register but render as the purple/black missing model, with no log error for the missing parents. The five are pinned as direct-URL Modrinth metafiles (no CurseForge ids looked up).
 
@@ -328,7 +335,7 @@
 
 - **IPN buttons on Dank Storage:** IPN 1.10.20 ships a built-in Dank hint with stale class names, so it never matched and its buttons overlapped Dank's own C / Sort / S. `buttonHints.*.hide` does NOT hide the sort or move-all buttons (only the profile selector reads it), and hints are looked up by the exact screen class name only (not the menu). `config/inventoryprofilesnext/integrationHints/dankstorage.json` keys `tfar.dankstorage.client.screens.CDankStorageScreen` (the one screen for every tier, dock and portable) and moves the buttons instead: `horizontalOffset` is added to the button's right margin (positive = left). Move-to-player and the sort buttons go +72 (left of Dank's cycle button at x=101, top row); move-to-container goes +20 (left of Dank's S at x=155). Re-check after a Dank Storage update.
 - **IPN auto-refill indicators are separate from auto-refill.** IPN 2.2.5 draws a slot arrow when `AutoRefillSettings.auto_refill_enable_indicator_icons` or its misspelled hotbar counterpart `auto_refill_enable_horbar_indicator_icons` is enabled; CozyUI+ recolors that arrow purple. The pack sets both indicator flags to `false` while keeping `ModSettings.enable_auto_refill` `true`, so used-up hotbar stacks still restock without arrows on hotbar, inventory or armor slots. Preserve IPN's `horbar` spelling in the JSON key. IPN code confirms it: `AutoRefillSettings` defines both flags and `AutoRefillHandler` reads them to draw the icons.
-- **Preserved configs ignore later pack changes (the purple arrows survived f104681).** `config/inventoryprofilesnext/inventoryprofiles.json` is `preserve = true`, so packwiz installs it only when missing; Trial's copy (written 2026-10-30) never received the indicator flags. Any new key for a `preserve` file, or for a config the mod generates itself, must go in `tools/packwiz/install/trial-owned-keys.json`: `trial_install.cjs` forces those keys after every sync (`tools/packwiz/install/trial_owned_keys.cjs`). Changing the shipped file alone does nothing for an existing install.
+- **Preserved configs ignore later pack changes (the purple arrows survived f104681).** `config/inventoryprofilesnext/inventoryprofiles.json` is `preserve = true`, so packwiz installs it only when missing; Trial's copy (written 2026-10-30) never received the indicator flags. Any new key for a `preserve` file, or for a config the mod generates itself, must go in `tools/packwiz/install/trial-owned-keys.json`: `install/install_pack.cjs` forces those keys after every sync (`tools/packwiz/install/trial_owned_keys.cjs`). Changing the shipped file alone does nothing for an existing install.
 - **Flywheel 1.0 turns itself off under any Iris shaderpack, and rejects the 0.6 backend names.** `Backends` marks `flywheel:instancing`/`flywheel:indirect` unsupported while `isShaderPackInUse()`, so Create gears and belts render on the CPU through Iris vertex extension unless Iris Flywheel Compat is installed. Config values must be registry ids or `DEFAULT`, and with Iris Flywheel Compat it must be `DEFAULT` (or `irisflw:iris_instancing`): irisflw registers its own backend at priority 2000 and Flywheel's `chooseBackend` only falls back to lower priorities, so `flywheel:instancing` under a shaderpack logs `Flywheel backend fell back from 'flywheel:instancing' to 'flywheel:off'` and Create stays on the CPU path. Success is `IrisFLW backends initialized` with no fallback line. Unverified: irisflw's `accesstransformer.cfg` sits in `META-INF/` but its mods.toml points at the jar root (load ERROR in the log), so the `ShaderInstance.MODEL_VIEW_MATRIX` final-strip may not apply; `INSTANCING` logs `Backend with ID 'minecraft:INSTANCING' is not registered` and is ignored. Do not combine with Colorwheel (declared incompatible).
 - **Selected hotbar slot draws no item: Amendments + an opaque-centre selection sprite.** Amendments' `GuiMixin` wraps `renderItemHotbar`'s selection `blitSprite` and draws it at z+270 (in front of items) unless `HotbarSelectionAnimation.selectionOnBackground` is set. That flag is read from the centre pixel of `hotbar_selection.png` inside the dynamic-asset generator, whose ResourceManager sees only vanilla files while `texture_pack_support = false`, so it always sees vanilla's transparent centre. CozyUI+'s selection sprite has an opaque centre in every frame (alpha 255), so the frame paints over the item. The pack sets `amendments-client.toml [misc] hotbar_slot_animation_speed = 0.0` (the wrapper then calls the vanilla draw), forced through `trial-owned-keys.json`. Cost: no sliding selector. Do not rely on `texture_pack_support`: a CACHED dynamic pack skips the generator and leaves the flag false.
 

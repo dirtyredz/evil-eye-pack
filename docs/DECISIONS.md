@@ -2,6 +2,18 @@
 
 Newest first.
 
+## 2026-11-01 - Tool tree regrouped; one install route and one instance-target authority
+
+**Decision.** Push-review structure fixes (no behaviour change). `tools/` is grouped into `testing/` (client_mixin,
+world_trial, server_smoke, pack_test, showcase) and `analysis/` (dedup, emi_curation, emi_coverage, mod_map,
+malware_guard), with `packwiz`, `data_io` and `script-run` at the top. `server_smoke` splits into `process/` and
+`runtime/`. The install route is neutral (`packwiz/install/install_pack.cjs`) with thin Trial and Stable targets;
+`install/instance_targets.cjs` is the single place that knows which MultiMC instance is Stable, Local or Trial, and
+`cutover-lib.ps1` asks it through a `classify` CLI. The no-symlink / containment / protected-output guard lives in
+`data_io/path_guard.cjs`. **Why:** Stable's installer imported from a Trial-named module, the "never Local or Trial"
+rule was written five times, and `tools/` had 13 siblings. **Rejected:** keeping the rule in PowerShell (the Node
+installers need it too); a shared JSON of instance paths (two readers would still each encode the matching rules).
+
 ## 2026-11-01 - The crafting-grid controls are removed (Evil Eye Client 0.3.2, Tweaks 0.6.0)
 
 **Decision.** Owner ruling: the Crafting Tweaks replacement keys and server actions are unused, so they are removed from
@@ -81,7 +93,7 @@ still need exact integrity checks; mutable preferences do not.
   minor cosmetic issue for the NeoForge 1.21.1 owner trial. Railways keybinds may be
   shown as conflicting with one another on the Controls screen; this is not a crash risk.
 - Keep the exception exact and separate from harmless optional/bootstrap findings:
-  `tools/client_mixin/allowlist.json` marks only that mod/config/mixin/target tuple with
+  `tools/testing/client_mixin/allowlist.json` marks only that mod/config/mixin/target tuple with
   `"known-minor": "dk-2d33cee0"`. Any changed or additional finding still fails.
 - Leave dk-2d33cee0 open and re-check it when a new Railways build is available.
 
@@ -204,8 +216,8 @@ Branch `migration/neoforge-1.21.1` (Phases 4–5). Status and open checks: `docs
 - **One versioned data-layout recognizer** (`tools/data_io/resource_layout.cjs`). Evidence keeps the
   1.20 kind names, so checks and baselines stay comparable across versions. Rejected: a global
   `forge:` → `c:` rewrite. Tags are translated one by one and only where target data uses them
-  (`tools/dedup/migration-1.21.json`).
-- **The dedup generator owns its outputs** (`tools/dedup/generated.json`). Stale generated files are
+  (`tools/analysis/dedup/migration-1.21.json`).
+- **The dedup generator owns its outputs** (`tools/analysis/dedup/generated.json`). Stale generated files are
   deleted on regeneration only when unmodified; hand-written overrides are never touched. The
   manifest was bootstrapped by byte-matching a Forge regeneration (96 owned files).
 - **Pins frozen with minecraft-mods** (NeoForge 21.1.265, JEI 19.70.0.464, EMI 1.1.24, Polymorph
@@ -434,7 +446,7 @@ rendering still need in-game verification.
 
 ## 2026-10-24 — Core malware guard with exact, reviewed hash exceptions
 
-**Decision.** Add three offline layers under `tools/malware_guard/`: recursive
+**Decision.** Add three offline layers under `tools/analysis/malware_guard/`: recursive
 static content scanning, installed-file drift, and a pinned-source/known-bad
 metadata gate. Save their evidence during pack-test staging and report new matches
 through the ordinary verdict. Optional Modrinth version/project status lives in a
@@ -481,7 +493,7 @@ Node tools share `tools/data_io/`: `zip_reader.cjs` reads ZIP entries, `walk.cjs
 **Decision.**
 - Block-tag policy is data, not a namespace-prefix rule. The catalog identifies blocks by pinned jar block loot-table paths; `plan()` filters replacement ids against that set. This reproduces the reviewed 26 removals. `kubejs/config/dedup.json` stays authored-only; generated `blockTagRemovals` belongs in `dedup_sources.json`, with an empty-list guard in the server script. Loot-table evidence is sufficient for the current replacements, not a complete runtime block registry.
 - Hand-written server recipes belong in a script named for their concern. `uranium.js` owns the four Alex's Caves / Create crushed-uranium → yellorium recipes; `dedup.js` only applies duplicate cleanup.
-- `tools/dedup/hidden_reasons.json` is the acquisition exclusion source for `hiddenOnly` ids. `tools/pack_test/data/policy.json` must not repeat them. Tool-data loading reads the registry and passes it explicitly into the pure policy compiler. Re-analysis uses the current registry with saved pack evidence, so corrected reasons apply to historical runs.
+- `tools/analysis/dedup/hidden_reasons.json` is the acquisition exclusion source for `hiddenOnly` ids. `tools/testing/pack_test/data/policy.json` must not repeat them. Tool-data loading reads the registry and passes it explicitly into the pure policy compiler. Re-analysis uses the current registry with saved pack evidence, so corrected reasons apply to historical runs.
 
 **Alternative rejected.** Hard-coded namespace prefixes duplicate block classification in code and tests and miss blocks from other namespaces.
 
@@ -491,13 +503,13 @@ Node tools share `tools/data_io/`: `zip_reader.cjs` reads ZIP entries, `walk.cjs
 - **Kept in the baseline (307)** with a per-item reason naming the mechanism: made in Java with no recipe (special-recipe serializers, machine/block-entity output, in-world interactions, rituals, NBT or filled variants, tablets, packages, paint pitchers, presents; 226) or a mob drop, villager/colonist trade, boss or structure loot, loot modifier (81). Policy: a baseline entry says what produces the item, never just "mod code"; a mechanism that could not be confirmed says so in the reason.
 - **Hidden (131)** through `dedup.json` `hiddenOnly` (regenerated EMI index): creative-only, icon, render-state and placed-only technical items (106, plus six placed-only encased Create blocks) and items with no source in this pack (18, plus `dankstorage:red_print`, whose jar ships no recipe). Hiding removes them from EMI only. To un-hide an item, remove it from `hiddenOnly` and regenerate.
 - **Fixed (1):** `supplementaries:bomb_spiky` was craftable only with lead ingots (or Oreganized), neither in the pack; `kubejs/data/supplementaries/recipes/spiky_bomb_2.json` overrides it with iron ingots (the Oreganized variant's own ingredient).
-- **Productive Bees bee types.** `bee_conversion` `result` and `bee_breeding` `offspring` are bee type ids (data-driven NBT on one configurable bee entity), not items. The pack test now recognises them (`tools/pack_test/checks/bees.cjs`), no longer reports `output-unrecognized` for them, and counts the configurable spawn egg as their product for acquisition evidence.
+- **Productive Bees bee types.** `bee_conversion` `result` and `bee_breeding` `offspring` are bee type ids (data-driven NBT on one configurable bee entity), not items. The pack test now recognises them (`tools/testing/pack_test/checks/bees.cjs`), no longer reports `output-unrecognized` for them, and counts the configurable spawn egg as their product for acquisition evidence.
 
 ## 2026-10-23 — First pack-test findings: fixed, allowed or hidden (orchestrator rulings, owner away)
 
 **Decision.**
 - **Ars Elemental quartz crush.** `ars_elemental:quartz_crush` output the nonexistent `minecraft:nether_quartz`; `kubejs/data/ars_elemental/recipes/quartz_crush.json` overrides it with `minecraft:quartz` (same counts and chances).
-- **Allowed duplicate groups** (`tools/dedup/allowed_groups.json`, `liveOnly`): `alexscaves:galena_iron_ore` in `#forge:ores/iron` (a stone-variant iron ore, same material) and `supplementaries:ash_brick` in `#forge:ingots/brick` (a distinct material Supplementaries deliberately tags as a brick). Both reach the tag through Forge's own tags, which the cached-jar test cannot see, so the cached-jar stale check skips `liveOnly` entries and only the live pack test guards them.
+- **Allowed duplicate groups** (`tools/analysis/dedup/allowed_groups.json`, `liveOnly`): `alexscaves:galena_iron_ore` in `#forge:ores/iron` (a stone-variant iron ore, same material) and `supplementaries:ash_brick` in `#forge:ingots/brick` (a distinct material Supplementaries deliberately tags as a brick). Both reach the tag through Forge's own tags, which the cached-jar test cannot see, so the cached-jar stale check skips `liveOnly` entries and only the live pack test guards them.
 - **Removed from a tag.** `cluttered:chiseled_gold_block` is a decor block and must not act as gold storage: `dedup.json` `tagRemovals` (`forge:storage_blocks/gold`) is applied by `kubejs/server_scripts/dedup.js` (`event.remove`) and subtracted in the cached-jar duplicate test.
 - **Hidden orphans.** Nineteen items players could see in EMI but never obtain went into `dedup.json` `hiddenOnly` (regenerated `kubejs/assets/emi/index/stacks/dedup.json`): nine Extreme Reactors dusts, `reinforced_reactorfluidport_mekanism_passive`, `enderio:powdered_cobalt`/`powdered_tin`, three Iron Furnaces allthemodium/unobtainium/vibranium upgrades, and four Create items (`chromatic_compound`, `refined_radiance`, `shadow_steel`, `crushed_raw_quicksilver`). Checked in the evidence: the only producers are Thermal pulverizer recipes, Mekanism-gated recipes, `allthemodium`-gated recipes and quicksilver-tag-gated Create crushing, all of which are unloaded because those mods or tags are absent; no loot or worldgen source. The pack test already treats `hiddenOnly` as an expected acquisition exclusion.
 - **Create: Dragons Plus sandpaper polishing recipes are static data (2026-10-23).** The mod generates them racily (see GOTCHAS), so boots lost up to 85 of 269 recipes. The three generators are off in `config/create_dragons_plus-common.toml` and the recipes ship in `kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/` under the original ids; `machines.json` no longer marks the type `varies`.
@@ -505,8 +517,8 @@ Node tools share `tools/data_io/`: `zip_reader.cjs` reads ZIP entries, `walk.cjs
 
 ## 2026-10-23 — Automated pack test: one headless boot, an artifact-only KubeJS probe, exact baselines, ANU by default
 
-**Decision.** `node tools/pack_test/run.cjs` is the agent's acceptance command for pack changes. It boots the checkout once on a hidden Forge dedicated server (no client, no window), and a KubeJS probe in that throwaway server writes the live registries, final tags, every loaded recipe and the results of five scripted crafts. Node then checks recipes, tag/loot/removed-mod references, acquisition coverage, machine recipe types, crafts, the duplicate-material guard on live tags, and log groups, and compares every finding with `tools/pack_test/data/baseline.json`.
-- **Probe = KubeJS server scripts copied into the throwaway server only** (`tools/pack_test/probe/`, unshipped). KubeJS already ships, earlier artifact probes worked, and it reaches the live `RecipeManager`, registries and a `FakePlayer` crafting menu. A Forge test mod would add a build and distribution step for no extra reach.
+**Decision.** `node tools/testing/pack_test/run.cjs` is the agent's acceptance command for pack changes. It boots the checkout once on a hidden Forge dedicated server (no client, no window), and a KubeJS probe in that throwaway server writes the live registries, final tags, every loaded recipe and the results of five scripted crafts. Node then checks recipes, tag/loot/removed-mod references, acquisition coverage, machine recipe types, crafts, the duplicate-material guard on live tags, and log groups, and compares every finding with `tools/testing/pack_test/data/baseline.json`.
+- **Probe = KubeJS server scripts copied into the throwaway server only** (`tools/testing/pack_test/probe/`, unshipped). KubeJS already ships, earlier artifact probes worked, and it reaches the live `RecipeManager`, registries and a `FakePlayer` crafting menu. A Forge test mod would add a build and distribution step for no extra reach.
 - **Raw data is read by Node, not the probe.** KubeJS's class filter denies `java.io`, so resource streams cannot be read from a script; Node reads the same installed jars (vanilla, Forge, mods, KubeJS data) for conditions, loot references, tag files and worldgen blocks. Precedence is approximated (KubeJS > mods > Forge > vanilla); the log and live state stay authoritative.
 - **One boot.** The supervisor waits for `Done` *and* the probe's manifest (run token checked); it never boots twice. Spawn-area generation is the slowest part of a boot and is irrelevant to recipes, so a generated world is cached per mod set and seed (`--fresh-world` regenerates).
 - **Exact baselines.** Findings have a stable key (check, code, subject, reference); only `fail` findings can be new; each baseline entry carries a reason. A run writes `baseline-candidate.json` for review and never updates the committed baseline itself. Exit 0 = no new findings, 1 = new findings, 2 = invalid run (incomplete probe, crash, setup or cleanup failure), which a baseline can never absorb.
@@ -518,7 +530,7 @@ Node tools share `tools/data_io/`: `zip_reader.cjs` reads ZIP entries, `walk.cjs
 
 **Decision.**
 - **Steel.** With AllTheOres gone, `forge:ingots/steel` was empty, so Extreme Reactors' 17 `forge:conditional` recipes fell back to their `_alt` versions (iron blocks) and its manual showed 14 missing-recipe pages. `kubejs/config/dedup.json` `extraItemTags` now adds `enderio:dark_steel_ingot` to `forge:ingots/steel` (regenerated into `dedup_sources.json`). ER only reads the ingot tag, so plates, nuggets and blocks are not tagged (the Productive Bees steel comb reads `nuggets/steel` and stays off). This fills an empty tag with one namespace, so the duplicate-material guard needs no exception in `allowed_groups.json`; `pack.test.cjs` pins the entry instead.
-- **Willow door.** Cluttered's jar tags `cluttered:willow_door` as a trapdoor; the replacement inherited it. `dedup.json` `tagFixes` (applied in `tools/dedup/overrides.cjs`) maps it to `biomesoplenty:willow_trapdoor` in `minecraft:trapdoors` and `minecraft:wooden_trapdoors`, so regeneration keeps the fix.
+- **Willow door.** Cluttered's jar tags `cluttered:willow_door` as a trapdoor; the replacement inherited it. `dedup.json` `tagFixes` (applied in `tools/analysis/dedup/overrides.cjs`) maps it to `biomesoplenty:willow_trapdoor` in `minecraft:trapdoors` and `minecraft:wooden_trapdoors`, so regeneration keeps the fix.
 - Removed `config/simplecorelib-common.toml` (SimpleCore API left on 10-21). `builtin/towntalk` (MineColonies citizen voice lines) joins `default_packs`, before the overrides folder.
 - **Keymap.** Every in-world clash from the audit is gone. Kept: Ars book I, Chloride zoom Z, Tool Belt R (Tool Belt removed 2026-11-01; R is free in world), Xaero U, GuideME G, Building Gadgets anchor H, Iris O, Xaero minimap settings Y and settings ], vanilla keys. Moved: Dank Storage construction/pickup to keypad 7/6, AstikorCarts slow/action to right Ctrl/right Alt, Create Jetpack active/hover to 0/Caps Lock, Customizable Player Models gestures to F6. Unbound: MCA skin library, Ender IO probe mode, RFTools next destination, Modern UI zoom (Chloride is the single zoom; Modern UI's would also clash with vanilla's creative hotbar save on C).
 
@@ -584,8 +596,8 @@ Large Ore Deposits keeps its explicit survivors and disabled dead-end deposits. 
 ## 2026-10-18 — Server compatibility smoke is the agent's check; Oculus is client-only
 
 **Decision.**
-- `tools/server_smoke/smoke.cjs` (headless Forge 47.4.10 dedicated server, `-s server` install) is how agents verify pack compatibility. The owner verifies the client by hand.
-- `tools/server_smoke/known_noise.json` is an allowlist of observed, harmless boot errors. Any error group not in it fails the run, so a new mod's breakage cannot hide as noise; add an entry (with the reason) only after reading the log.
+- `tools/testing/server_smoke/smoke.cjs` (headless Forge 47.4.10 dedicated server, `-s server` install) is how agents verify pack compatibility. The owner verifies the client by hand.
+- `tools/testing/server_smoke/known_noise.json` is an allowlist of observed, harmless boot errors. Any error group not in it fails the run, so a new mod's breakage cannot hide as noise; add an entry (with the reason) only after reading the log.
 - Oculus is `side = client`: it loads client classes at construction and crashed the dedicated server (`Attempted to load class ...Screen for invalid dist DEDICATED_SERVER`). The smoke passes with it excluded from the server install.
 
 **Why.** A client launch is slow and manual; the server boot catches mod-loading and dist errors in minutes, headless.
@@ -687,6 +699,6 @@ apply it as in-memory views:
 ## 2026-10-11 — Exact source set for curation; Node-only tooling
 
 **Decision.**
-- The five item lists were split once from the frozen REI 12.1.785 config (1,759 IDs; not regenerated from naming patterns). `tools/emi_curation/migrate_rei.cjs`, its `fixtures/rei-config.json5` and `migration.test.cjs` were retired 2026-10-20 (dk-eaeaf6eb, dk-232fd37d): the import was done, `--check` pinned live hand-curated counts so any normal edit broke it, and it re-declared validation that `policy.compile` owns. Ongoing list integrity (schema, id format, duplicates) is `policy.compile`, exercised against the real config by `policy.test.cjs`. The fixture and script are recoverable from git at commit a61035d.
+- The five item lists were split once from the frozen REI 12.1.785 config (1,759 IDs; not regenerated from naming patterns). `tools/analysis/emi_curation/migrate_rei.cjs`, its `fixtures/rei-config.json5` and `migration.test.cjs` were retired 2026-10-20 (dk-eaeaf6eb, dk-232fd37d): the import was done, `--check` pinned live hand-curated counts so any normal edit broke it, and it re-declared validation that `policy.compile` owns. Ongoing list integrity (schema, id format, duplicates) is `policy.compile`, exercised against the real config by `policy.test.cjs`. The fixture and script are recoverable from git at commit a61035d.
 - The README's old "377 colour variants" figure was 361 colour variants plus 16 MineColonies eggs.
 - Tooling is Node-only: tests, hash verifier, index rebuild and localhost server. The planned `py -3.11` scripts were ported because this machine has no `py` launcher or system Python, and Node is needed for the KubeJS tests anyway.

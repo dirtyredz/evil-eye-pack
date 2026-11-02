@@ -26,7 +26,7 @@ swap, unpacking window or registry remap. The old migration implementation remai
 
 The canonical explicit duplicate IDs are in [dedup.json](../kubejs/config/dedup.json).
 [dedup_sources.json](../kubejs/config/dedup_sources.json) records removed recipe IDs and
-inherited tags. `tools/dedup/overrides.cjs` computes the block-only strip list,
+inherited tags. `tools/analysis/dedup/overrides.cjs` computes the block-only strip list,
 derived from the scanned block loot tables and written by the generator as `dedup_sources.json` `blockTagRemovals` (`dedup.json` stays hand-authored); `dedup.js` reads it
 through KubeJS `JsonIO`. Create's crushed-uranium smelting comes from Create's own Mekanism-gated
 compat recipes, rewritten to yellorium (`uranium.js` was removed on the migration branch, 2026-10-30;

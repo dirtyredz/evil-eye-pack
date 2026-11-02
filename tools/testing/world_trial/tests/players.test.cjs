@@ -1,0 +1,28 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const code=fs.readFileSync(path.join(__dirname, '../probe/players.js'),'utf8');
+test('player probe loads and saves the original UUID and preserves read failures',()=>{
+  for(const fails of [false,true]) {
+    let handler,result,saved=0;const id='90486bf9-1855-4113-8ab9-35ef878c5a5c';
+    const container={getContainerSize:()=>1,getItem:()=>({isEmpty:()=>false,getId:()=>'minecraft:diamond',getCount:()=>7,getNbt:()=>null})};
+    const player={uuid:id,getInventory:()=>container,getEnderChestInventory:()=>container,getNbt:()=>'{UUID:original}'};
+    const server={overworld:()=>({}),getPlayerList:()=>({load:()=>{if(fails)throw new Error('bad player NBT');},remove:p=>{assert.equal(p,player);saved++;}})};
+    vm.runInNewContext(code,{ServerEvents:{loaded:f=>{handler=f;}},JsonIO:{read:()=>({token:'t',players:[id]}),write:(_f,v)=>{result=v;}},Java:{loadClass:n=>n.endsWith('FakePlayerFactory')?{get:(_l,p)=>{assert.equal(p.id,id);return player;}}:n==='java.util.UUID'?{fromString:x=>x}:n.endsWith('GameProfile')?function(uuid){this.id=uuid;}:function(){}}});
+    handler({server});assert.equal(result.token,'t');assert.equal(saved,fails?0:1);assert.equal(result.errors.length,fails?1:0);
+    if(!fails){assert.equal(result.players[0].uuid,id);assert.equal(result.players[0].inventory[0].count,7);}
+  }
+});
+
+test('portable Dank probe follows the actual item frequency to its backing inventory',()=>{
+  for(const missing of [false,true]) {
+    let handler,result;const id='original',saved=[];
+    const stack={isEmpty:()=>false,getId:()=>'dankstorage:dank_2',getCount:()=>1,getComponentsPatch:()=>({})};
+    const container={getContainerSize:()=>1,getItem:()=>stack};
+    const player={uuid:id,getInventory:()=>container,getEnderChestInventory:()=>({getContainerSize:()=>0}),getNbt:()=>''};
+    const server={overworld:()=>({}),getPlayerList:()=>({load:()=>{},remove:p=>saved.push(p)})};
+    const dank={getFrequency:s=>{assert.equal(s,stack);return missing?-1:3;},getInventoryFrom:(s,sv)=>{assert.equal(s,stack);assert.equal(sv,server);return missing?null:{items:{size:()=>1,get:()=>({isEmpty:()=>false,getId:()=>'minecraft:stone',getCount:()=>1040})}};}};
+    vm.runInNewContext(code,{ServerEvents:{loaded:f=>handler=f},JsonIO:{read:()=>({token:'t',players:[id]}),write:(_f,v)=>result=v},Java:{loadClass:n=>n.endsWith('DankItem')?dank:n.endsWith('FakePlayerFactory')?{get:()=>player}:n==='java.util.UUID'?{fromString:x=>x}:function(){}}});
+    handler({server});assert.equal(result.errors.length,missing?1:0);
+    if(!missing){assert.equal(result.players[0].inventory[0].dank.frequency,3);assert.equal(result.players[0].inventory[0].dank.total,1040);}
+  }
+});

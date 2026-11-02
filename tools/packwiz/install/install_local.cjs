@@ -3,8 +3,8 @@
 // Dev/trial-only prelaunch entry. The instance must be dedicated to this checkout.
 const path = require('node:path');
 const fs = require('node:fs');
-const env = require('../../server_smoke/runtime/env.cjs');
-const procs = require('../../server_smoke/process/procs.cjs');
+const env = require('../../testing/server_smoke/runtime/env.cjs');
+const procs = require('../../testing/server_smoke/process/procs.cjs');
 const { withLocalPack, verifyInstalledLocal } = require('./local_source.cjs');
 const { verify } = require('../verify_hashes.cjs');
 const { assertPinTarget } = require('./instance_targets.cjs');

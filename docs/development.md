@@ -51,13 +51,13 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/malware_guard/tests/*.test.cjs tools/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/emi_curation/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/*/*.cjs tools/showcase/tests/*.cjs tools/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs tools/world_trial/tests/*.cjs tools/client_mixin/tests/*.cjs
+node --test tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.cjs tools/testing/showcase/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs
 # NeoForge migration lock (offline): node tools/packwiz/migration/migrate.mjs check  (see neoforge-migration.md)
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
-# node tools/dedup/generate.cjs [--dry-run] <pinned jar folder>   (main: Evil Eye Local mods; migration branch:
+# node tools/analysis/dedup/generate.cjs [--dry-run] <pinned jar folder>   (main: Evil Eye Local mods; migration branch:
 #   C:/Users/dirty/projects/artifacts/evil-eye-pack/migration/neoforge-1.21.1/cache/mods). It removes only
-#   its own stale outputs (tools/dedup/generated.json); the dedup tests pick the folder from pack.toml.
+#   its own stale outputs (tools/analysis/dedup/generated.json); the dedup tests pick the folder from pack.toml.
 node tools/packwiz/rehash.cjs --dry-run      # a second run after rehash must show +0 -0 ~0
 node tools/packwiz/verify_hashes.cjs
 git diff --check
@@ -72,8 +72,8 @@ below also uses JDK 21 to compile its unshipped launch service.
 Before handing a migration build to the owner, run the isolated client transformer check:
 
 ```powershell
-node tools/client_mixin/run.cjs --out C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/<job>/client-audit --cache C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache
-node --test tools/client_mixin/tests/*.cjs
+node tools/testing/client_mixin/run.cjs --out C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/<job>/client-audit --cache C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache
+node --test tools/testing/client_mixin/tests/*.cjs
 ```
 
 `--out` must be a new directory below the artifacts `jobs/` root (`SMOKE_ARTIFACTS`
@@ -91,7 +91,7 @@ method-signature type). Exit 0 requires a complete nonempty CLIENT target sweep;
 1 means detected failures; 2 means setup failure, timeout or incomplete evidence.
 All owned processes stop on completion or interruption.
 
-`tools/client_mixin/allowlist.json` contains exact, reviewed exceptions for harmless
+`tools/testing/client_mixin/allowlist.json` contains exact, reviewed exceptions for harmless
 missing optional-compat targets and bootstrap/loader classes that cannot revisit the
 game transformer during this pre-main sweep. The one owner-accepted cosmetic behavior
 loss is separately marked `"known-minor": "dk-2d33cee0"`; that marker must be a Docket
@@ -101,7 +101,7 @@ Do not add broad patterns or unrecorded behavior loss to it.
 
 For differential diagnosis only, append `--exclude <exact-pinned-jar-filename>` to a
 second run with a fresh output path. Exclusions are recorded and never qualify the
-full pack. Use the same cache for both runs. Include `tools/client_mixin/tests/*.cjs`
+full pack. Use the same cache for both runs. Include `tools/testing/client_mixin/tests/*.cjs`
 in the fast gate after changing this tool. The live fail/pass pair is its named
 acceptance check, separate from the dedicated-server acceptance suite.
 
@@ -112,7 +112,7 @@ provisioned; a Valhalla result does not claim an observed ANU pass.
 For showcase changes, the focused fast gate is:
 
 ```powershell
-node --test tools/showcase/tests/*.cjs tools/server_smoke/tests/*.cjs tools/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs
+node --test tools/testing/showcase/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs
 node tools/packwiz/rehash.cjs
 node tools/packwiz/rehash.cjs --dry-run
 node tools/packwiz/verify_hashes.cjs
@@ -120,7 +120,7 @@ git diff --check
 dk check
 ```
 
-Also run `node tools/showcase/check.cjs <section>` for the actual in-world
+Also run `node tools/testing/showcase/check.cjs <section>` for the actual in-world
 behaviour. It reuses the server supervisor, requires cached inputs and never
 downloads. [Showcases](showcases.md) covers commands, layout, baseline comparison
 and adding a section with its check. This targeted live fixture check is the
@@ -128,7 +128,7 @@ showcase acceptance run; do not also run the unrelated full pack-test tier.
 
 ## World trial (copy only)
 
-`node tools/world_trial/run.cjs <command> --job <artifact job>` runs offline tooling;
+`node tools/testing/world_trial/run.cjs <command> --job <artifact job>` runs offline tooling;
 all outputs must remain under `artifacts/evil-eye-pack/jobs/`. Never use an instance as output.
 
 - `snapshot --source <stopped world>` waits for an idle Minecraft JVM slot, rejects links and
@@ -162,7 +162,7 @@ all outputs must remain under `artifacts/evil-eye-pack/jobs/`. Never use an inst
 After each stopped boot inventory its `smoke-world/`. Require a clean conversion **and** restart,
 review logs and domain semantics (MineColonies, AE2, Dank), and verify original/snapshot integrity.
 Only a validated copy may be independently copied to `converted-for-owner/`. Never downgrade it.
-Fast gate: the command above plus `tools/world_trial/tests/*.cjs`; no build/lint step exists.
+Fast gate: the command above plus `tools/testing/world_trial/tests/*.cjs`; no build/lint step exists.
 
 ## Mod map
 
@@ -193,7 +193,7 @@ only bytes matching this checkout's `.pw.toml` hashes. `-Mods` and `-Cache`
 override those read-only inputs. Missing pins fail rather than silently dropping
 mods. The full client inventory is mapped; only server-compatible jars are booted.
 The local offline mode reuses the shared offline-server preparer
-(`tools/server_smoke/runtime/offline_server.cjs`), pack-test world copying and
+(`tools/testing/server_smoke/runtime/offline_server.cjs`), pack-test world copying and
 registry collection, and server-smoke supervision. It waits for an idle Minecraft
 JVM slot (up to 45 minutes) and takes a mod-map lock. This explicit local capture
 avoids changing ANU's shared stage/logging or triggering remote provisioning.
@@ -209,7 +209,7 @@ dependencies are displayed but never create membership. Suites whose metadata do
 not express the player-facing family (currently MineColonies and Macaw's) use
 reasoned data overrides rather than code special cases. Kinds use side metadata,
 descriptions and live namespace registry counts, with corrections in
-`tools/mod_map/model/overrides.json`. Zero registrations plus mandatory users is a library
+`tools/analysis/mod_map/model/overrides.json`. Zero registrations plus mandatory users is a library
 heuristic, not a guarantee. Family totals include shared add-ons in each applicable
 family; the page-wide attributed total de-duplicates every mod ID.
 
@@ -223,7 +223,7 @@ are labelled as bundled, not independently removable. Confirmed undeclared code
 edges and pack-wide-fix reasons live in `overrides.json`, not source special cases.
 
 Every family and standalone mod is assigned to a top-level purpose category by
-`tools/mod_map/model/categories.json`; unknown future IDs remain visible under Other /
+`tools/analysis/mod_map/model/categories.json`; unknown future IDs remain visible under Other /
 Uncategorised. Category totals de-duplicate shared members and libraries within
 that category. The compact page starts with both category and family rows collapsed,
 and keeps mandatory libraries nested beneath their users.
@@ -236,7 +236,7 @@ and client-only costs remain unmeasured. See [timing caveats](GOTCHAS.md#mod-map
 Focused fast gate (no build or lint command exists for this Node-only tooling):
 
 ```powershell
-node --test tools/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/server_smoke/tests/*.cjs tools/showcase/tests/*.cjs tools/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs
+node --test tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/testing/server_smoke/tests/*.cjs tools/testing/showcase/tests/*.cjs tools/testing/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs
 node tools/packwiz/rehash.cjs --dry-run
 node tools/packwiz/verify_hashes.cjs
 git diff --check
@@ -249,13 +249,13 @@ All commands use Node 22 and return JSON. Exit 0 means no unexplained findings,
 1 means new findings, 2 means invalid/incomplete input (including online `not
 checked`). The content commands only read their target. `--out <file>` saves the
 full report, including entry hashes, and prints counts. Policies live under
-`tools/malware_guard/data/`, outside the installed pack.
+`tools/analysis/malware_guard/data/`, outside the installed pack.
 
 ```powershell
-node tools/malware_guard/cli.cjs scan "C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft" --out tools/malware_guard/.local/scan.json
-node tools/malware_guard/cli.cjs drift "C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft"
-node tools/malware_guard/cli.cjs gate
-node --test tools/malware_guard/tests/*.test.cjs tools/pack_test/tests/*/*.cjs tools/dedup/tests/*.cjs
+node tools/analysis/malware_guard/cli.cjs scan "C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft" --out tools/analysis/malware_guard/.local/scan.json
+node tools/analysis/malware_guard/cli.cjs drift "C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft"
+node tools/analysis/malware_guard/cli.cjs gate
+node --test tools/analysis/malware_guard/tests/*.test.cjs tools/testing/pack_test/tests/*/*.cjs tools/analysis/dedup/tests/*.cjs
 ```
 
 `scan` also accepts a mods directory, jar, ZIP or folder resource pack. A folder
@@ -270,8 +270,8 @@ Do not suppress a finding just because its library name looks familiar.
 Review a match's exact bytes, then use its `sha256` and `finding` fields:
 
 ```powershell
-node tools/malware_guard/cli.cjs approve --sha256 <reported-sha256> --finding "<reported-finding>" --reason "<inspection evidence>" --approver "<reviewer>"
-node tools/malware_guard/cli.cjs approve "<owner-added-file>" --owner-added --reason "<why this file belongs here>" --approver "<reviewer>"
+node tools/analysis/malware_guard/cli.cjs approve --sha256 <reported-sha256> --finding "<reported-finding>" --reason "<inspection evidence>" --approver "<reviewer>"
+node tools/analysis/malware_guard/cli.cjs approve "<owner-added-file>" --owner-added --reason "<why this file belongs here>" --approver "<reviewer>"
 ```
 
 Alternatively pass the top-level jar/ZIP as `approve`'s positional file instead
@@ -299,7 +299,7 @@ Online status requires explicit invocation and a writable cache. For the
 orchestrator's first authorised live check (not run during implementation):
 
 ```powershell
-node tools/malware_guard/cli.cjs status --cache tools/malware_guard/.local/modrinth-status.json --ttl-hours 24
+node tools/analysis/malware_guard/cli.cjs status --cache tools/analysis/malware_guard/.local/modrinth-status.json --ttl-hours 24
 ```
 
 The cache stores version and project responses; `--ttl-hours 0` refreshes them.
@@ -315,14 +315,14 @@ investigating an item, a pack-test finding or a duplicate group; when you add an
 Acquisition analysis reads hidden-item classes and evidence from `hidden_reasons.json`
 and includes them in `report.json`; do not repeat those ids in `policy.json` exclusions.
 
-- `tools/dedup/hidden_reasons.json`: one reason (class, evidence, date, source) per id in `kubejs/config/dedup.json` `hiddenOnly`. `tools/dedup/tests/hidden_reasons.test.cjs` fails if an id has no reason or a reason names an id that is not hidden. The shipped `dedup.json` stays a plain array; reasons are never shipped (`tools/` is packwiz-ignored).
-- `tools/pack_test/data/baseline.json` (with `policy.json`): known pack-test findings, each with a reason and date.
-- `tools/dedup/allowed_groups.json`: duplicate material groups that are allowed to stay, each with a reason.
-- `tools/pack_test/data/policy.json` `ignoredLayout`: mod data shipped only in the other Minecraft version's folders that the pack deliberately does not restore (`<kind>|<id>` or `<kind>|<ns>:*`, each with a reason). Everything else must be restored under `kubejs/data` in the running layout; `tools/pack_test/tests/data/ignored_layout.test.cjs` enforces it on the pinned jars (see [NeoForge migration](neoforge-migration.md)).
+- `tools/analysis/dedup/hidden_reasons.json`: one reason (class, evidence, date, source) per id in `kubejs/config/dedup.json` `hiddenOnly`. `tools/analysis/dedup/tests/hidden_reasons.test.cjs` fails if an id has no reason or a reason names an id that is not hidden. The shipped `dedup.json` stays a plain array; reasons are never shipped (`tools/` is packwiz-ignored).
+- `tools/testing/pack_test/data/baseline.json` (with `policy.json`): known pack-test findings, each with a reason and date.
+- `tools/analysis/dedup/allowed_groups.json`: duplicate material groups that are allowed to stay, each with a reason.
+- `tools/testing/pack_test/data/policy.json` `ignoredLayout`: mod data shipped only in the other Minecraft version's folders that the pack deliberately does not restore (`<kind>|<id>` or `<kind>|<ns>:*`, each with a reason). Everything else must be restored under `kubejs/data` in the running layout; `tools/testing/pack_test/tests/data/ignored_layout.test.cjs` enforces it on the pinned jars (see [NeoForge migration](neoforge-migration.md)).
 
 ## Pack test (agents' acceptance command)
 
-`node tools/pack_test/run.cjs` verifies a pack change without anyone playing. It checks the hash chain,
+`node tools/testing/pack_test/run.cjs` verifies a pack change without anyone playing. It checks the hash chain,
 boots the checkout **once** on a hidden dedicated server of the runtime its `pack.toml` declares (Forge or NeoForge; see [NeoForge migration](neoforge-migration.md)) (no client, no window, `127.0.0.1` only,
 offline) with a KubeJS probe injected into that throwaway server only, stops every process it started,
 and writes `report.json` + `summary.txt` into its run folder. Run it after any pack-file change (after
@@ -344,20 +344,20 @@ and writes `report.json` + `summary.txt` into its run folder. Run it after any p
   (five curated crafts through a real crafting menu: Create andesite alloy, ER reinforced casing via
   the steel survivor (Mekanism on the migration branch), a Farmer's Delight dish, an AE2 component, the dough survivor with its bucket remainder),
   dedup (the duplicate-material guard on live tags), logs (the smoke's error groups plus per-resource
-  load failures). Inputs: `tools/pack_test/data/{policy,crafts,machines,baseline}.json`.
+  load failures). Inputs: `tools/testing/pack_test/data/{policy,crafts,machines,baseline}.json`.
 - **Exit codes.** `0` complete run, no new findings; `1` new findings (listed in `summary.txt`);
   `2` invalid run: probe incomplete, crash, setup or cleanup failure. A baseline never turns 2 into 0.
 - **Baseline review.** Known findings live in `data/baseline.json`, each with a reason. New ones are
   either fixed in the pack or, after review, copied from `baseline-candidate.json` with a real reason
   (never the `TODO`). Entries reported as "resolved" are removed. Acquisition gaps that are by design
   (trades, Java drops, in-world conversions, technical items) go into `data/policy.json` exclusions.
-- **Re-analyse without booting:** `node tools/pack_test/run.cjs --analyze <run folder>` (same verdict
+- **Re-analyse without booting:** `node tools/testing/pack_test/run.cjs --analyze <run folder>` (same verdict
   from the saved evidence; use it after editing the baseline or the checks).
 - **Options.** `--seed` (default `20261020`), `--fresh-world` (ignore the cached world),
   `--priority` (local JVM, default `AboveNormal`; ANU always runs at `BelowNormal`, alone or shared), `--timeout`, `--silent`,
   `--sample` (watchdog, as in the smoke), `--probe-timeout` (seconds allowed after `Done`, default 300),
   `--heap` (default `6G`), `--port` (default 25601). Java, the installer jars and the artifacts root come
-  from `tools/server_smoke/runtime/env.cjs` (`SMOKE_*` overrides).
+  from `tools/testing/server_smoke/runtime/env.cjs` (`SMOKE_*` overrides).
 - **Timing (measured 2026-10-23).** Valhalla with the cached world: stage 3-6 s, raw scan 7-15 s, server
   copy 4-8 s, boot 100 s (Done at ~50 s, probe ~8 s, stop), about 2 minutes in all. ANU, first run (full
   765 MiB sync 56 s, fresh world, Done at 135 s): 4 minutes; later runs sync only changed files and reuse
@@ -368,7 +368,7 @@ and writes `report.json` + `summary.txt` into its run folder. Run it after any p
 
 ANU is the spare LAN PC (`ssh anu`, fallback `ssh anu-byname`). The pack test owns `G:\evil-eye-pack-ci\`
 (README there explains layout, manual stop and clean-up) and `C:\Tools\evil-eye-pack\` (portable Node 22
-and Temurin JDKs 17 and 21 side by side, SHA-256-verified; `node tools/pack_test/remote/provision.cjs` installs them and is
+and Temurin JDKs 17 and 21 side by side, SHA-256-verified; `node tools/testing/pack_test/remote/provision.cjs` installs them and is
 idempotent; `run.cjs` calls it when they are missing). The machine PATH, JAVA_HOME and Defender are never
 changed.
 
@@ -388,7 +388,7 @@ changed.
   room: free physical RAM >= 8 GB and the mean of 5 one-second CPU readings < 50%. If so it runs beside
   that job (`anu (shared with <job>)`) at BelowNormal, the agent and the server JVM it starts; otherwise it
   falls back to Valhalla. Without the neighbour's lock it runs `anu (alone)` with no load check.
-  Thresholds are in `tools/pack_test/remote/config.cjs` (`PACKTEST_ANU_MIN_FREE_GB`,
+  Thresholds are in `tools/testing/pack_test/remote/config.cjs` (`PACKTEST_ANU_MIN_FREE_GB`,
   `PACKTEST_ANU_MAX_CPU_PCT`, `PACKTEST_ANU_CPU_SAMPLES`, `PACKTEST_ANU_CPU_SAMPLE_MS`); the decision is
   `remote/capacity.cjs`. The neighbour's `lock\pid`, `lock\job` and `queue\*.ticket` count are only read.
 - **Starved shared runs.** A boot that never finished, with no crash and the JVM averaging under 0.25 cores
@@ -404,7 +404,7 @@ changed.
 
 ## Server compatibility smoke (agents)
 
-`node tools/server_smoke/smoke.cjs [--pack <pack.toml>] [--out <dir>] [--drop oculus]` boots the checkout headless on the dedicated server its `pack.toml` declares (Forge 47.4.10 on `main`, NeoForge 21.1.265 on the migration branch; `-s server` install, nogui, hidden, localhost:25599, offline, fresh world; about 2.5 min on an idle host, 9+ min on a busy one, see GOTCHAS) and prints PASS/FAIL, time to `Done (`, crash causes and error groups (known noise vs new). Agents use this to check pack compatibility; the owner verifies in game. It never opens a window or touches MultiMC. Cache and runs live under the artifacts root in `server-smoke/` (pass `--out` to put a run in a job folder). The loader and its version come from `pack.toml` through `tools/server_smoke/runtime/runtime.cjs`, which also picks the Java major (17 for 1.20.1, 21 for 1.21.1) and verifies the executable is that major before any install or boot. Java per major, the packwiz jars and the artifacts root are defined in `tools/server_smoke/runtime/env.cjs` (override with `SMOKE_JAVA_17`, `SMOKE_JCMD_17`, `SMOKE_JAVA_21`, `SMOKE_JCMD_21`, `SMOKE_BOOTSTRAP_JAR`, `SMOKE_INSTALLER_JAR`, `SMOKE_INSTALLER_URL` (checksum still verified), `SMOKE_ARTIFACTS`). `--seed <n>` (default `20261020`) sets `level-seed` so boots are repeatable; the seed is printed in the PASS/FAIL/STALL header and on every failure. A random seed made two of four boots stall in "Preparing spawn area". A timeout inside that phase with no crash and no new errors is reported as `STALL` (exit 3, "WORLDGEN STALL ... seed N"), not a pack FAIL: retry with another `--seed`. On such a timeout the smoke also saves a `jcmd Thread.print` to `stall-threads.txt` in the run dir (`SMOKE_JCMD_<major>` overrides the jcmd path). The wall-clock timeout is gone: a progress watchdog samples the JVM's CPU time every `--sample` s (default 10) and stops the boot only when the log is silent AND CPU is flat for `--silent` s (default 180), with `--timeout` (default 1800 s) as a hard cap. Right after spawn the server JVM (the spawned `java.exe` itself, no wrapper) is raised to `--priority` (default `AboveNormal`; `Idle|BelowNormal|Normal|AboveNormal|High|none`) because Windows starves it while the host is busy. The header prints `JVM CPU` seconds, wall seconds and priority. A non-finishing boot with no crash and no new errors where the JVM averaged under `--starved` cores (default 0.25) per wall second is labelled `HOST STARVED` (exit 4), distinct from `STALL` (worldgen, exit 3) and `FAIL`: retry on an idle host or with `--priority High`. `--drop` deletes installed jars from the throwaway server only, to find the next offender; `--analyze <run dir>` re-reports a finished run.
+`node tools/testing/server_smoke/smoke.cjs [--pack <pack.toml>] [--out <dir>] [--drop oculus]` boots the checkout headless on the dedicated server its `pack.toml` declares (Forge 47.4.10 on `main`, NeoForge 21.1.265 on the migration branch; `-s server` install, nogui, hidden, localhost:25599, offline, fresh world; about 2.5 min on an idle host, 9+ min on a busy one, see GOTCHAS) and prints PASS/FAIL, time to `Done (`, crash causes and error groups (known noise vs new). Agents use this to check pack compatibility; the owner verifies in game. It never opens a window or touches MultiMC. Cache and runs live under the artifacts root in `server-smoke/` (pass `--out` to put a run in a job folder). The loader and its version come from `pack.toml` through `tools/testing/server_smoke/runtime/runtime.cjs`, which also picks the Java major (17 for 1.20.1, 21 for 1.21.1) and verifies the executable is that major before any install or boot. Java per major, the packwiz jars and the artifacts root are defined in `tools/testing/server_smoke/runtime/env.cjs` (override with `SMOKE_JAVA_17`, `SMOKE_JCMD_17`, `SMOKE_JAVA_21`, `SMOKE_JCMD_21`, `SMOKE_BOOTSTRAP_JAR`, `SMOKE_INSTALLER_JAR`, `SMOKE_INSTALLER_URL` (checksum still verified), `SMOKE_ARTIFACTS`). `--seed <n>` (default `20261020`) sets `level-seed` so boots are repeatable; the seed is printed in the PASS/FAIL/STALL header and on every failure. A random seed made two of four boots stall in "Preparing spawn area". A timeout inside that phase with no crash and no new errors is reported as `STALL` (exit 3, "WORLDGEN STALL ... seed N"), not a pack FAIL: retry with another `--seed`. On such a timeout the smoke also saves a `jcmd Thread.print` to `stall-threads.txt` in the run dir (`SMOKE_JCMD_<major>` overrides the jcmd path). The wall-clock timeout is gone: a progress watchdog samples the JVM's CPU time every `--sample` s (default 10) and stops the boot only when the log is silent AND CPU is flat for `--silent` s (default 180), with `--timeout` (default 1800 s) as a hard cap. Right after spawn the server JVM (the spawned `java.exe` itself, no wrapper) is raised to `--priority` (default `AboveNormal`; `Idle|BelowNormal|Normal|AboveNormal|High|none`) because Windows starves it while the host is busy. The header prints `JVM CPU` seconds, wall seconds and priority. A non-finishing boot with no crash and no new errors where the JVM averaged under `--starved` cores (default 0.25) per wall second is labelled `HOST STARVED` (exit 4), distinct from `STALL` (worldgen, exit 3) and `FAIL`: retry on an idle host or with `--priority High`. `--drop` deletes installed jars from the throwaway server only, to find the next offender; `--analyze <run dir>` re-reports a finished run.
 
 ## Custom mods
 

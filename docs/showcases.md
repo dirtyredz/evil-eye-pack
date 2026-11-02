@@ -109,7 +109,7 @@ a player source, so headless probes use a Forge fake player instead of a bare
 
 ## Run the headless check
 
-Requires Node 22, the runtime's Java from `tools/server_smoke/runtime/env.cjs`, and a prepared server
+Requires Node 22, the runtime's Java from `tools/testing/server_smoke/runtime/env.cjs`, and a prepared server
 cache stamped for the pack's runtime. **No installer/download runs.** Cache defaults to
 `artifacts/evil-eye-pack/pack-test/stage/<runtime id>/server`; override with `SHOWCASE_CACHE`
 or `--cache <prepared-server-directory>`. Server jars/resource archives must match
@@ -119,13 +119,13 @@ are unnecessary. Pack source files come from this checkout. Stable/Local are nev
 ```powershell
 node tools/packwiz/rehash.cjs
 node tools/packwiz/verify_hashes.cjs
-node --test tools/showcase/tests/*.cjs
-node tools/showcase/check.cjs contraption_storage
+node --test tools/testing/showcase/tests/*.cjs
+node tools/testing/showcase/check.cjs contraption_storage
 # Every registered section, sequentially in one boot:
-node tools/showcase/check.cjs --all
+node tools/testing/showcase/check.cjs --all
 # Optional same-cache baseline and warning/error comparison:
-node tools/showcase/check.cjs --baseline-ref main --out <baseline-directory>
-node tools/showcase/check.cjs contraption_storage --out <new-directory> --compare <baseline-directory>
+node tools/testing/showcase/check.cjs --baseline-ref main --out <baseline-directory>
+node tools/testing/showcase/check.cjs contraption_storage --out <new-directory> --compare <baseline-directory>
 ```
 
 Every boot also runs `flat_world.js` once (FlatWorldFix vs Terralith: four far Superflat columns keep the
@@ -156,7 +156,7 @@ completion always fail.
 | `mekanism_machines` | Hostile-terrain build; full plan; creative cube placed full; machine inputs and charge prefilled from block-entity NBT; enrichment chamber and crusher output Ender IO iron dust and never Mekanism dust; ore consumed; heat generator burns coal into stored energy; cube stays full; running rebuild resets contents; clear; exterior shell unchanged (106 assertions, `jobs/2026-10-30-neoforge-phase7/showcase-mek-14`). Cable transport is not asserted: command-placed Mekanism blocks expose no sided energy (dk-1a3141d6) | Whether a player-placed cube powers the cable; machine fronts animate; generator flames |
 | `interstellaris_space` | Hostile-terrain build; full plan; the Moon, Mars, Venus, Enceladus and Io dimensions load; Moon and Mars generate solid ground (Moon: lunar regolith) and receive a teleported traveller; `/sable assemble area` captures the pad into exactly one sub-level that stays alive for 100 ticks of server physics; rebuild; clear; exterior shell unchanged (128 assertions, `showcase-is-8`) | The pad falling (Sable's position selectors matched nothing headless), ore/metal textures, rockets and travel |
 | `evileye_essentials` | Hostile-terrain build; full plan; exterior shell; every Essentials command registered and no FTB command tree; `/rtp` off; the FTB import command runs; a fake player sets a home, uses `/home` and `/back`, hits the 60 s cooldown, deletes the home; `/setwarp` refused below level 2 and allowed for an operator, `/warp`, `/delwarp`; `/trashcan` runs (a fake player cannot open its menu); rebuild; clear (134 assertions; `--all`-style boot total 579/579 with flat-world and command forms, `jobs/2026-11-01-evileye-essentials-wave5/showcase-ess-3`) | The inventory sidebar (buttons, icons, tooltips, operator-only visibility); real teleports and chat messages; the trash can screen |
-| `contraption_storage` | First build on hostile terrain (hill, tree, water, floor hole, chest, fence) with an unnamed mob and item removed, a named mob refused without any change, a mob outside untouched and the exterior shell identical (shared `tools/showcase/terrain.js`); all blocks/states/prefills and complete floor/air volume; quantity flag; one glue and no dropped items; exterior shell; all six sided + unsided drawer handlers; idle motor; lever start/stop; five-block/three-inventory assembly; PSI docking; exact insert/extract per inventory; compacting ratios; disassembly preservation; automatic input/output hopper circuit; rotation; idle/active rebuild; clear | Drawer icons/counts at 8/24/48 blocks and front/back views; moving fronts; opening moving drawer/chest menus |
+| `contraption_storage` | First build on hostile terrain (hill, tree, water, floor hole, chest, fence) with an unnamed mob and item removed, a named mob refused without any change, a mob outside untouched and the exterior shell identical (shared `tools/testing/showcase/terrain.js`); all blocks/states/prefills and complete floor/air volume; quantity flag; one glue and no dropped items; exterior shell; all six sided + unsided drawer handlers; idle motor; lever start/stop; five-block/three-inventory assembly; PSI docking; exact insert/extract per inventory; compacting ratios; disassembly preservation; automatic input/output hopper circuit; rotation; idle/active rebuild; clear | Drawer icons/counts at 8/24/48 blocks and front/back views; moving fronts; opening moving drawer/chest menus |
 
 The exterior snapshot covers all faces immediately outside the volume, including
 block-entity data, before build and after motion/clear. Plan tests also reject
@@ -185,7 +185,7 @@ belongs in a future section.
    `preflight(sweep, box, refuse)` apply to entity sweeps for all plots; preflight
    must only read and must throw before any mutation. The complete descriptor
    persists in the plot record; ticks must never reconstruct a section plan.
-3. Add `tools/showcase/checks/<name>.js`, priority -10, registering
+3. Add `tools/testing/showcase/checks/<name>.js`, priority -10, registering
    `global.evilEyeShowcaseChecks.<name> = function (h) { ... }`; call
    `global.evilEyeShowcaseTerrain(h)` first for the shared hostile-terrain check. Use `h.invoke()`
    for the real command, `h.check` for assertions, `h.later` for bounded tick
@@ -195,7 +195,7 @@ belongs in a future section.
    Section checks assert only their own plan. Do not duplicate permissions or
    command-form checks: `command_forms.js` runs once per boot across the registry,
    verifying bare/named builds, list, refusals and clear at the row origins.
-4. Add Node VM tests of the production layout/registry under `tools/showcase/tests/`,
+4. Add Node VM tests of the production layout/registry under `tools/testing/showcase/tests/`,
    including failures/negative controls. Discovery requires a matching headless
    check for each shipped section. Neither command nor runner needs another switch.
 5. Update this coverage table and [FEATURES](FEATURES.md), plus architecture/gotchas

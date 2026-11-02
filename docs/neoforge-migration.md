@@ -99,7 +99,7 @@ pin sweep and dk-d4a36381 is closed.
 The initial strict audit also exposed a Thirst/Jade injection failure and unresolved
 missing/unapplied targets. Jade is pinned back to 15.10.3, whose `FluidView.readDefault`
 bytecode matches Thirst 2.1.5; the six bootstrap-layer targets and 14 absent optional/no-op
-targets have exact reasoned entries in `tools/client_mixin/allowlist.json`. Steam 'n' Rails
+targets have exact reasoned entries in `tools/testing/client_mixin/allowlist.json`. Steam 'n' Rails
 still targets the pre-1.21 Controls-screen package; the owner accepted that non-crashing
 cosmetic behavior loss as an exact `known-minor` exception while dk-2d33cee0 remains open.
 Triage evidence is under `jobs/2026-10-31-client-mixin-triage/`.
@@ -117,7 +117,7 @@ no verifier/mixin/injection errors and no failed target. The fresh-world ANU pac
 `run-2026-10-30T18-10-55-205Z` also passed alone (Done 89.206 s, probe complete,
 zero new findings). No visible game window was opened.
 
-`pack.toml [versions]` decides the runtime (`tools/server_smoke/runtime/runtime.cjs`). Each loader runtime
+`pack.toml [versions]` decides the runtime (`tools/testing/server_smoke/runtime/runtime.cjs`). Each loader runtime
 has its own loader base, local stage, cached worlds and ANU lane:
 
 - Loader base: `server-smoke/cache/loader-base/<runtime id>/`. The installer is checked against
@@ -147,16 +147,16 @@ where 1.21 changed the format (silk-touch `match_tool` → `predicates."minecraf
 | Create: Interiors kelp seats/chairs, seatwood planks, wall table | 8 | the recipes exist again |
 | `ftbessentials:ignore_rtp` (dropped in wave 5: Evil Eye Essentials ships `evileye_essentials:ignore_rtp`), `structurize:null_placement`, `diagonalfences:non_diagonal_fences` | 3 | block tags their code reads (RTP avoids leaves/bedrock, Structurize placement order, grass-topped walls stay straight) |
 
-Left out, with the reason in `tools/pack_test/data/policy.json` `ignoredLayout`: two empty Ars Nouveau tables,
+Left out, with the reason in `tools/testing/pack_test/data/policy.json` `ignoredLayout`: two empty Ars Nouveau tables,
 Dank Storage's empty `forge:wrenches`, Ender IO's `darksteel_upgrade` (no such serializer in Ender IO 8),
 Extreme Reactors' Thermal compat and `dry_ice` (Thermal and Powah absent), Supplementaries' Inspirations compat,
 and Macaw's Trapdoors' 16 family tags (no jar reads them). The translator was a one-off job tool
 (`jobs/2026-10-30-neoforge-phase7/tools/translate.cjs`); it covers only the constructs these files use.
 
-**Regression guard.** `tools/pack_test/checks/ignored_layout.cjs` sorts each other-layout file into covered
+**Regression guard.** `tools/testing/pack_test/checks/ignored_layout.cjs` sorts each other-layout file into covered
 (loot table or recipe twin from any source; for tags, which merge, only the same jar's twin or the pack's
 copy), accepted (policy reason, exact id or `<kind>|<ns>:*`) or lost. The references check fails on lost
-files after a boot, and `tools/pack_test/tests/data/ignored_layout.test.cjs` checks every pinned jar in the
+files after a boot, and `tools/testing/pack_test/tests/data/ignored_layout.test.cjs` checks every pinned jar in the
 fast gate (it also fails on policy entries that no longer match anything). A new or updated jar with lost
 data therefore fails before any boot.
 
@@ -173,7 +173,7 @@ Restoration history is in `tools/packwiz/migration/deferred/README.md`.
 |---|---|---|
 | Dank Recipe Transfer | 0.2.1 prerelease, `dank_recipe_transfer-1.21.1-neoforge-0.2.1.jar`, sha256 `9921f8fd…b8ef` (built from 6605b8d) | 2026-10-31 (replaces 0.2.0's client verifier failure; parked nothing; malware guard clean) |
 | Roundwood | 0.17.0 prerelease, `roundwood-1.21.1-neoforge-0.17.0.jar`, sha256 `b6877267…c006` (built from 5e8988e) | 2026-10-30 (parked nothing; ids unchanged so `decor.json` stays; malware guard clean) |
-| FlatWorldFix | 1.0.0, `flatworldfix-1.21.1-neoforge-1.0.0.jar`, sha256 `90a6da88…b996` (built from 26b2fd2) | 2026-10-30 (parked nothing; malware guard clean). First run against Terralith 1.21.1: every showcase boot now checks four far Superflat columns (`tools/showcase/flat_world.js`) |
+| FlatWorldFix | 1.0.0, `flatworldfix-1.21.1-neoforge-1.0.0.jar`, sha256 `90a6da88…b996` (built from 26b2fd2) | 2026-10-30 (parked nothing; malware guard clean). First run against Terralith 1.21.1: every showcase boot now checks four far Superflat columns (`tools/testing/showcase/flat_world.js`) |
 | Ars Instrumentum | 5.0.0 (public LGPL fork), `ars_instrumentum-1.21.1-neoforge-5.0.0.jar`, sha256 `6d62964a…fb4e` (built from dc29a50) | 2026-10-30 (client config restored; needs Ars Nouveau ≥ 5.13.3; malware guard clean) |
 | Alex's Mobs | private 1.22.9, local SHA-256 `dc89b990?fa21` | 2026-10-30 (configs and hidden-item policy restored; Citadel 2.7.1 already locked; malware clean) |
 | Alex's Caves | private 2.0.2 r2, local SHA-256 `9c3962cd?8408`, built from 1d29b6b6 | 2026-10-30 (configs, uranium progression, chocolate sanding and baseline restored; malware clean) |
@@ -184,7 +184,7 @@ Alex's Mobs, Alex's Caves and Ice and Fire use local-source pins (below). All se
 
 ## Profiler (spark, 2026-11-01)
 
-spark 1.10.124 (Modrinth `l6YH9Als` / `v5qtqRQi`, side both) is a lock `addition` for in-game and server profiling (`/spark profiler`). Its jar bundles async-profiler natives and ByteBuddy attach classes, which the malware guard flags (8 findings); they are approved against the exact jar with the reason recorded in `tools/malware_guard/data/allowlist.json`. The jar is in both the migration cache and the Trial cache (`jobs/2026-10-31-world-trial-final/cache/mods`).
+spark 1.10.124 (Modrinth `l6YH9Als` / `v5qtqRQi`, side both) is a lock `addition` for in-game and server profiling (`/spark profiler`). Its jar bundles async-profiler natives and ByteBuddy attach classes, which the malware guard flags (8 findings); they are approved against the exact jar with the reason recorded in `tools/analysis/malware_guard/data/allowlist.json`. The jar is in both the migration cache and the Trial cache (`jobs/2026-10-31-world-trial-final/cache/mods`).
 
 ## Flywheel with shaders (Iris Flywheel Compat, 2026-11-01)
 
@@ -238,11 +238,11 @@ The malware guard scans NeoForge jars the same way, and approvals stay bound to 
 - **Configs:** `tools/packwiz/migration/config-decisions.json`.
 - **Dedup** was regenerated against the verified target jars: 82 overrides, 25 removed recipes and
   86 stale 1.20 outputs deleted. The Dragons Plus static sanding recipes (268) moved to the 1.21
-  layout. Policy changes are recorded in `tools/dedup/migration-1.21.json`.
+  layout. Policy changes are recorded in `tools/analysis/dedup/migration-1.21.json`.
 
 ## First clean boot (Phase 6)
 
-Every boot ran as an ANU pack test (`node tools/pack_test/run.cjs`, shared lease, BelowNormal, alone).
+Every boot ran as an ANU pack test (`node tools/testing/pack_test/run.cjs`, shared lease, BelowNormal, alone).
 Evidence for each is in `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-first-boot/` (`run<N>.log`
 plus `run-<time>/`).
 
@@ -448,7 +448,7 @@ Final index SHA-256: `abb5dea6ca565c480feafa7fa9e068d84a9112c4290b97c7952dfa3d13
 Evidence: `jobs/2026-10-30-world-trial/world-trial-report.md` and
 `minecraft-mods-handoff.md`. The original and independent read-only snapshot have full
 SHA-256 manifests. Forge and NeoForge boot only separate working copies. The new
-`tools/world_trial/` CLI is documented in development; tests cover protected paths,
+`tools/testing/world_trial/` CLI is documented in development; tests cover protected paths,
 independent copying, NBT, inventories, comparisons and bounded probes.
 
 The exact pinned Forge baseline completed 943 existing-chunk probes and stopped cleanly.
@@ -702,7 +702,7 @@ Scripts (all in `scripts/migration/`, owner-run standard: help, dry run, `.tmp/o
 - `rollback.ps1` - same convention; restores the newest (or `-Archive`) `cutover-archive-*`.
 - `stable-prelaunch.ps1` - becomes Stable's PreLaunchCommand; repeats the verified private-jar install each launch.
 - `cutover-lib.ps1` - guards/archive/restore functions (tested by `tools/packwiz/tests/cutover_guards.test.cjs`).
-- `tools/packwiz/install/stable_target.cjs` - Stable target for the shared `installPack` in `trial_install.cjs`
+- `tools/packwiz/install/stable_target.cjs` - Stable target for the shared `installPack` in `install_pack.cjs`
   (Trial behaviour unchanged). `--fresh` first deletes every file the old install tracked in `packwiz.json`
   except files the new index marks `preserve`.
 

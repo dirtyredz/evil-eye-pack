@@ -27,7 +27,7 @@ Initialize-OwnerRun 'mod-map'
 try {
   $node = Find-Tool 'node'
   if (-not $node) { Complete-OwnerRun 1 'Node 22 is required.' }
-  $arguments = @((Join-Path $script:RepoRoot 'tools/mod_map/build.mjs'))
+  $arguments = @((Join-Path $script:RepoRoot 'tools/analysis/mod_map/build.mjs'))
   if ($DryRun) { $arguments += '--dry-run' }
   foreach ($pair in @(@('--evidence', $Evidence), @('--world', $World), @('--out', $Out), @('--mods', $Mods), @('--cache', $Cache))) {
     if ($pair[1]) { $arguments += $pair }

@@ -1,0 +1,15 @@
+'use strict';
+const fs = require('node:fs');
+const path = require('node:path');
+const { scan } = require('../../../analysis/malware_guard/scanning/scan.cjs');
+const { gate } = require('../../../analysis/malware_guard/gate.cjs');
+const { drift } = require('../../../analysis/malware_guard/drift.cjs');
+const { metadata } = require('../../../analysis/malware_guard/metadata.cjs');
+function writeMalwareEvidence(stage, evidenceDir, { root, instance = '' }) {
+  const evidence = { schema: 1, scan: scan(stage), gate: gate(root),
+    drift: instance ? drift(instance, { expected: metadata(root).expected }) : null };
+  fs.mkdirSync(evidenceDir, { recursive: true });
+  fs.writeFileSync(path.join(evidenceDir, 'malware.json'), JSON.stringify(evidence));
+  return evidence;
+}
+module.exports = { writeMalwareEvidence };

@@ -2,7 +2,7 @@
 
 ## Client mixin audit
 
-`tools/client_mixin/run.cjs` stages an independent CLIENT classpath and the exact pack pins,
+`tools/testing/client_mixin/run.cjs` stages an independent CLIENT classpath and the exact pack pins,
 then adds an unshipped ModLauncher launch service derived from NeoForge's production client
 handler. The custom launch target selects the dummy early-window provider and replaces
 Minecraft's main method with target verification. Sodium's adapter discovery still runs;
@@ -31,7 +31,7 @@ waits for the Minecraft JVM slot and the process scope stops owned children.
 
 ## World conversion trials
 
-`tools/world_trial/run.cjs` confines outputs to an artifact job. Copy guards reject protected
+`tools/testing/world_trial/run.cjs` confines outputs to an artifact job. Copy guards reject protected
 instances, overlapping paths and symlinks/junctions in ancestors or descendants. Snapshots
 use independent file copies, SHA-256 manifests and read-only file attributes. The source and
 snapshot are verified again before and after each boot; neither is booted.
@@ -52,7 +52,7 @@ shutdown establish coverage, not preservation; semantic and log review remains m
 
 ## Mod map
 
-`scripts/mod-map/build.ps1` wraps `tools/mod_map/build.mjs` with the standard
+`scripts/mod-map/build.ps1` wraps `tools/analysis/mod_map/build.mjs` with the standard
 owner log contract; `run.cjs` orchestrates the pipeline below and owns artifact
 placement, input identity checks and saved-evidence replay.
 
@@ -109,8 +109,8 @@ section removal without consulting factories or force-loading chunks. The Create
 adapter handles old motor-only records by reading existing glue when starting;
 a rebuild stores the complete descriptor. Missing rig implementations skip ticks.
 
-`tools/showcase/check.cjs` discovers matching checks and sequences them in one
-dedicated server. `tools/server_smoke/runtime/offline_server.cjs` validates pinned cached
+`tools/testing/showcase/check.cjs` discovers matching checks and sequences them in one
+dedicated server. `tools/testing/server_smoke/runtime/offline_server.cjs` validates pinned cached
 bytes, applies the flat `showcase` profile and reuses pack-test server-copy/evidence
 modules; server-smoke also owns watchdog and shutdown.
 The injected harness sequences checks and records lifecycle/completion;
@@ -121,7 +121,7 @@ Commands, layout, coverage and extension recipe: [showcases](showcases.md).
 
 ## Automated pack test
 
-`tools/pack_test/run.cjs` drives a server-only acceptance run from Valhalla, normally
+`tools/testing/pack_test/run.cjs` drives a server-only acceptance run from Valhalla, normally
 booting on ANU. Commands, options and artifact locations are in
 [development](development.md); module ownership is in [STRUCTURE](../STRUCTURE.md).
 The [EMI architecture](emi.md) covers the separate client subsystem.
@@ -174,7 +174,7 @@ The [EMI architecture](emi.md) covers the separate client subsystem.
    currently loaded checks, policy and baseline.
 
 Acquisition exclusions for saved `dedup.json` `hiddenOnly` ids use the current
-`tools/dedup/hidden_reasons.json` class and evidence, rather than a generic orphan
+`tools/analysis/dedup/hidden_reasons.json` class and evidence, rather than a generic orphan
 label. Missing reasons fail analysis; registry entries alone do not exclude items.
 `report.json` retains the matched item-to-reason map at
 `sections.acquisition.exclusions`; summary counts and finding identities are unchanged.
@@ -215,7 +215,7 @@ checkout's metadata. `--instance <.minecraft>` adds a read-only drift inventory.
 The instance scan covers these three content directories; launcher libraries and
 world saves are outside that inventory. A direct directory argument scans its tree.
 
-`tools/malware_guard/` owns static detection and policy: `metadata.cjs` inventories
+`tools/analysis/malware_guard/` owns static detection and policy: `metadata.cjs` inventories
 expected paths, `drift.cjs` compares installed content, `gate.cjs` checks sources,
 and `scanning/` compiles `data/signatures.json` and scans bytes. Shared `data_io` owns ZIP
 decoding and jar walking, including optional raw bytes and bounded entry reads;
@@ -247,7 +247,7 @@ the initial owner-supplied list has slugs/names only and records that limitation
 Private migration pins: `tools/packwiz/install/local_source.cjs` verifies hash-addressed cache bytes and
 creates the temporary loopback installer overlay; `install_local.cjs` is the dedicated trial
 prelaunch wrapper. Server smoke and pack-test staging share the same overlay. The owner Trial route
-uses `trial_install.cjs`: all hash-verified cached artifacts become ordinary index files in
+uses `install/trial_target.cjs` (the neutral `install_pack.cjs` route): all hash-verified cached artifacts become ordinary index files in
 a temporary local pack. The cached installer copies and tracks them without any URL or server;
 installed artifact hashes are checked before Trial prelaunch is updated. Stable and Local
 are refused. The owner-only local delivery ruling supersedes dk-85261627; future cutover
