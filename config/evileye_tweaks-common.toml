@@ -181,3 +181,6 @@
 #Clients must negotiate and opt in.
 [refill]
 	enabled = true
+
+[sorting]
+	enabled = true

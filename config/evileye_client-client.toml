@@ -398,3 +398,6 @@
 #Server-validated selected-hand and offhand refill, suspended in every GUI.
 [refill]
 	enabled = true
+
+[sorting]
+	enabled = true

@@ -737,3 +737,7 @@ apply it as in-memory views:
 ## 2026-11-02 - IPN round-2 bounded subset
 
 Use the orchestrator-authorized shippable fallback: Client 0.5.0/Tweaks 0.8.0 own vanilla move-all and provenance-based hand refill. Keep IPN/libIPN for sorting and Kotlin for retained consumers. Disable IPN's competing refill and move-all switches through shipped config and pack-owned keys. This deliberately leaves modded-storage move-all, including Dank, unavailable pending verified bulk adapters. No claim of complete IPN replacement or removal acceptance is made. No instance was modified.
+
+## IPN replacement (2026-11-02, round 4)
+
+Supersede the round-2 subset with the complete bounded replacement in Client 0.5.1/Tweaks 0.8.1. Remove IPN and libIPN in one step and retain Kotlin for its other consumers. Preserve owner-local IPN files as inert data; installers must not recreate or change them. Unsupported complex/virtual storage stays excluded under the owner-approved rescope.

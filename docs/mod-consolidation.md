@@ -17,7 +17,7 @@ does not count. Full program plan: `artifacts/minecraft-mods/jobs/2026-11-01-evi
 | 3 | Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks, Crafting Tweaks | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.2.0 and Tweaks 0.5.0 local pins (since superseded by Client 0.3.2 and Tweaks 0.6.0, which remove the crafting-grid controls), seven drops plus Searchables and Balm after closure; owner walk pending |
 | 4 | AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps, Let Me Despawn (T) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.4.0 local pin, seven drops plus Bookshelf, Prickle, Almanac Lib and Kiwi after closure; owner walk pending |
 | 5 | FTB Essentials (E; mandatory saved-data migration), FTB Library (sidebar to C) | **Pinned on branch** `migration/evileye-essentials-wave5`: Essentials 0.1.0, Client 0.3.6 and Tweaks 0.6.1 local pins (0.3.1 = Trial fixes: hearts, trash-can icon, pick-up scale; 0.3.2 and 0.6.0 remove the crafting-grid controls; 0.3.3 = one-line labelled food and drink tooltips; 0.3.5 = Electromagnet charge widget; 0.3.6 = Ender IO + EMI tooltip layer and missing-slot highlight fixes; Tweaks 0.6.1 = Slow Falling drop threshold), two drops; import trial passed on a world copy; owner walk pending |
-| 6 | Pro Placer, Light Overlay (removed outright 2026-11-01), 3D Skin Layers, Quick Skin, Modern UI, Inventory Profiles Next, Chloride (C) | not started |
+| 6 | Pro Placer, Light Overlay (removed outright 2026-11-01), 3D Skin Layers, Quick Skin, Modern UI, Inventory Profiles Next, Chloride (C) | IPN replaced; other work remains |
 | 7 | Polymorph, Cosmetic Armor Reworked (**done 2026-11-02**, see the equipment panel wave), Diagonal Fences, Create: Compatible Storage, Create: Storage Drawers Compat (conversion-gated) | not started |
 
 ## Retained
@@ -142,7 +142,7 @@ Cosmetic Armor Reworked is absorbed into the owned mods: **Evil Eye Client 0.4.0
   `key.craftingtweaks.*` bindings; 0.3.2 registers no crafting keys (saved crafting bindings in options.txt are
   harmless leftovers).
 
-## IPN replacement checkpoint (2026-11-02)
+## IPN replacement history (2026-11-02)
 
 Round 2 ships the authorized bounded subset in Client 0.5.0/Tweaks 0.8.0: vanilla-storage move-all and native-use selected-hand/offhand refill. IPN refill/move-all are disabled, including preserved-config enforcement; IPN/libIPN remain for sorting and Kotlin remains for its other consumers. Sorting parity and Dank bulk storage are still unfinished, so this is not full replacement acceptance. The complete handoff is artifacts/minecraft-mods/jobs/2026-11-02-ipn-build/handoff.md.
 
@@ -153,3 +153,7 @@ and Cull Less Leaves still require Kotlin. Evidence: `artifacts/evil-eye-pack/jo
 This verifies the bounded candidate, not full-removal acceptance. Both mod gates, 574 pack Node tests,
 the client transformation audit and a cached-only headless smoke passed. Migration-lock validation
 still fails on the pre-existing Mekanism size record; see the handoff.
+
+## IPN cutover (round 4)
+
+Client 0.5.1/Tweaks 0.8.1 replace sorting, move-all and refill. IPN and libIPN are removed together; Kotlin remains for Create Jetpack, nested FlightLib and Cull Less Leaves. Mod metafiles: **161 -> 159**. Supported storage is the conservative vanilla set, player main inventory for sorting, and Dank through its bulk seam. Complex/virtual menus remain native-only. Automated evidence and owner UI/multiplayer acceptance limits are recorded in artifacts/minecraft-mods/jobs/2026-11-02-ipn-build/handoff.md.

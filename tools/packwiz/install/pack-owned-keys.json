@@ -1,13 +1,57 @@
 {
   "_comment": "Keys the pack forces into Trial's installed configs on every sync, even for preserve = true files (which packwiz only writes when missing). Each entry: file (relative to .minecraft), format (json|toml), section (json: path of nested objects; toml: table name, [] for top-level keys), key, value. See docs/GOTCHAS.md 'Preserved configs ignore later pack changes'.",
   "keys": [
-    { "file": "config/inventoryprofilesnext/inventoryprofiles.json", "format": "json", "section": ["AutoRefillSettings"], "key": "auto_refill_enable_indicator_icons", "value": false },
-    { "file": "config/inventoryprofilesnext/inventoryprofiles.json", "format": "json", "section": ["AutoRefillSettings"], "key": "auto_refill_enable_horbar_indicator_icons", "value": false },
-    { "file": "config/amendments-client.toml", "format": "toml", "section": ["misc"], "key": "hotbar_slot_animation_speed", "value": 0.0 },
-    { "file": "config/flywheel-client.toml", "format": "toml", "section": [], "key": "backend", "value": "DEFAULT" },
-    { "file": "config/inventoryprofilesnext/inventoryprofiles.json", "format": "json", "section": ["ModSettings"], "key": "enable_auto_refill", "value": false },
-    { "file": "config/inventoryprofilesnext/inventoryprofiles.json", "format": "json", "section": ["GuiSettings"], "key": "show_move_all_button", "value": false },
-    { "file": "config/evileye_client-client.toml", "format": "toml", "section": ["transfer"], "key": "enabled", "value": true },
-    { "file": "config/evileye_client-client.toml", "format": "toml", "section": ["refill"], "key": "enabled", "value": true }
+    {
+      "file": "config/amendments-client.toml",
+      "format": "toml",
+      "section": [
+        "misc"
+      ],
+      "key": "hotbar_slot_animation_speed",
+      "value": 0
+    },
+    {
+      "file": "config/flywheel-client.toml",
+      "format": "toml",
+      "section": [],
+      "key": "backend",
+      "value": "DEFAULT"
+    },
+    {
+      "file": "config/evileye_client-client.toml",
+      "format": "toml",
+      "section": [
+        "transfer"
+      ],
+      "key": "enabled",
+      "value": true
+    },
+    {
+      "file": "config/evileye_client-client.toml",
+      "format": "toml",
+      "section": [
+        "refill"
+      ],
+      "key": "enabled",
+      "value": true
+    },
+    {
+      "file": "config/evileye_client-client.toml",
+      "format": "toml",
+      "section": [
+        "sorting"
+      ],
+      "key": "enabled",
+      "value": true
+    },
+    {
+      "file": "config/evileye_tweaks-common.toml",
+      "format": "toml",
+      "section": [
+        "sorting"
+      ],
+      "key": "enabled",
+      "value": true
+    }
   ]
 }

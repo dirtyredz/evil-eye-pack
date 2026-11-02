@@ -86,20 +86,6 @@
       "reason": "Optional Better Third Person conflict fix; Better Third Person is not installed and the mixin config is not required."
     },
     {
-      "mod": "inventoryprofilesnext",
-      "config": "mixins.ipnext.json",
-      "mixin": "MixinVirtualMouseHandler",
-      "target": "dev.isxander.controlify.virtualmouse.VirtualMouseHandler",
-      "reason": "Optional Controlify interoperability; Controlify is not installed in this pack."
-    },
-    {
-      "mod": "inventoryprofilesnext",
-      "config": "mixins.ipnext.json",
-      "mixin": "MixinTraderTileEntityBase",
-      "target": "de.maxhenkel.easyvillagers.blocks.tileentity.TraderTileentityBase",
-      "reason": "Optional Easy Villagers interoperability; Easy Villagers is not installed in this pack."
-    },
-    {
       "mod": "createaddition",
       "config": "createaddition.mixins.json",
       "mixin": "DockingConnectorBEMixin",

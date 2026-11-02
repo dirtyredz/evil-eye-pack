@@ -270,6 +270,14 @@
   "mods/ftb-library-forge.pw.toml": {
    "action": "drop",
    "reason": "Library whose only consumer was FTB Essentials (dropped). Its sidebar buttons (toggle gamemode, day, night, rain; FTB Essentials' trash can) are rebuilt in Evil Eye Client 0.3.0 inventory/sidebar/ with the same layout. Closure 2026-11-01: no lock entry but FTB Essentials declares ftblibrary, and no dev/ftb/mods/ftblibrary class reference in the 162 other pinned jars (top-level classes; jobs/2026-11-01-evileye-essentials-wave5/ftb-closure.txt). Its Architectury dependency stays for Quick Skin. config/sidebar_buttons.json and ftblibrary-client.snbt go with it."
+  },
+  "mods/inventory-profiles-next.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by Evil Eye Client 0.5.1 and Tweaks 0.8.1: owned middle-click sorting, directional physical-storage/Dank transfers and both-hand refill. Recursive final-pin closure recorded under jobs/2026-11-02-ipn-round4. Kotlin retained for Create Jetpack, FlightLib and Cull Less Leaves."
+  },
+  "mods/libipn.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by Evil Eye Client 0.5.1 and Tweaks 0.8.1: owned middle-click sorting, directional physical-storage/Dank transfers and both-hand refill. Recursive final-pin closure recorded under jobs/2026-11-02-ipn-round4. Kotlin retained for Create Jetpack, FlightLib and Cull Less Leaves."
   }
  },
  "additions": [
@@ -391,11 +399,11 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.8.0.jar",
-    "sha256": "34cd53e0cf13c1e1a1b305bc5e7f594fc7eaa6f572dacacbf6a6d5cce9021b65",
-    "size": 313963
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.8.1.jar",
+    "sha256": "5eaa61ce136cad8394c5e3d3cc97cf3fa1b5df25eeaf686743b44a6f6c664644",
+    "size": 329033
    },
-   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave). Round-2 0.8.0 fallback: verified vanilla move-all and both-hand refill; sorting and Dank bulk support remain inactive. IPN/libIPN retained for sorting."
+   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained."
   },
   {
    "metafile": "mods/evileye-client.pw.toml",
@@ -403,11 +411,11 @@
    "side": "client",
    "target": {
     "source": "local",
-    "filename": "evileye_client-1.21.1-neoforge-0.5.0.jar",
-    "sha256": "9a75792392a9718a291292e02fd0db5b7b57be0f658d010c5f9f2ec001c01ab4",
-    "size": 475303
+    "filename": "evileye_client-1.21.1-neoforge-0.5.1.jar",
+    "sha256": "e60691855bc19a3353bafbf0effb87f4f06aeb63423b0255094c52536b5bb3b4",
+    "size": 497453
    },
-   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-2 0.5.0 fallback: verified vanilla move-all and both-hand refill; sorting and Dank bulk support remain inactive. IPN/libIPN retained for sorting."
+   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained."
   },
   {
    "metafile": "mods/evileye-essentials.pw.toml",

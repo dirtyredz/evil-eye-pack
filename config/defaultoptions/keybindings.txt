@@ -28,3 +28,5 @@ key_key.mca.skin_library:key.keyboard.unknown
 key_keybinding.enderio.probe_mode:key.keyboard.unknown
 key_key.nextDestination:key.keyboard.unknown
 key_key.modernui.zoom:key.keyboard.unknown
+
+key_key.evileye_client.sort:key.mouse.middle

@@ -3,11 +3,6 @@
  "note": "Per-config treatment for the NeoForge 1.21.1 migration (plan Phase 5). Ordered rules: the first match decides. 'regenerate' files were reconciled at the first clean target boot (Phase 6, pack-test boot 6, 2026-10-30): no shipped value was reset by a mod; 87 files where the 1.21.1 mods dropped obsolete keys or added new ones were replaced by the files those mods wrote back (our values kept), and no dropped key carried Evil Eye intent (each differed from the pack's initial defaults only where a mod had written its own default). Client-only defaults that a server cannot generate wait for the owner's first launch. tools/packwiz/tests/config_decisions.test.cjs enforces full coverage.",
  "rules": [
   {
-   "match": "config/inventoryprofilesnext/inventoryprofiles.json",
-   "treatment": "preserve-intent",
-   "reason": "Retain IPN sorting during the bounded round-2 subset. Disable its auto-refill and move-all to avoid competing writes/widgets; pack-owned keys enforce those two switches in preserved configs. IPN/libIPN removal is deferred until sorting parity and Dank bulk support are accepted."
-  },
-  {
    "match": "config/iceandfire",
    "treatment": "preserve-intent",
    "reason": "CE 2.1.4 Jupiter JSON carries the corresponding Forge pack values (griefing off, dragon behaviour, mob weights/ranges, 800-block spawn exclusion). Legacy restored TOML/biome lists are inert provenance; CE structure/biome equivalence awaits dk-e7b276f4."
@@ -242,6 +237,16 @@
    "file": "config/cosmeticarmorreworked-common.toml",
    "treatment": "dropped",
    "reason": "Cosmetic Armor Reworked removed (equipment panel wave, owner-approved 2026-11-01); its only meaningful value (CosArmorKeepThroughDeath = false) is carried as Evil Eye Tweaks 0.7.0 [cosmeticArmor] keepThroughDeath = false."
+  },
+  {
+   "file": "config/inventoryprofilesnext/inventoryprofiles.json",
+   "treatment": "replaced",
+   "reason": "Replaced by Evil Eye Client 0.5.1 and Tweaks 0.8.1: owned middle-click sorting, directional physical-storage/Dank transfers and both-hand refill. Recursive final-pin closure recorded under jobs/2026-11-02-ipn-round4. Kotlin retained for Create Jetpack, FlightLib and Cull Less Leaves."
+  },
+  {
+   "file": "config/inventoryprofilesnext/integrationHints/dankstorage.json",
+   "treatment": "replaced",
+   "reason": "Replaced by Evil Eye Client 0.5.1 and Tweaks 0.8.1: owned middle-click sorting, directional physical-storage/Dank transfers and both-hand refill. Recursive final-pin closure recorded under jobs/2026-11-02-ipn-round4. Kotlin retained for Create Jetpack, FlightLib and Cull Less Leaves."
   }
  ],
  "deferred": "All seven owned ports restored 2026-10-30; no parked files remain. See deferred/README.md for restoration history."

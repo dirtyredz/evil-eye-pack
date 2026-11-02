@@ -6,7 +6,8 @@ const { loadAllowlist } = require('../allowlist.cjs');
 
 test('committed client-mixin allow-list is exact and reasoned', () => {
   const data = loadAllowlist(path.join(__dirname, '../allowlist.json'));
-  assert.equal(data.missingTargets.length, 15);
+  assert.equal(data.missingTargets.length, 13);
+  assert.ok(data.missingTargets.every(entry => entry.mod !== "inventoryprofilesnext"));
   assert.equal(data.unhandled.length, 6);
   const knownMinor = data.missingTargets.filter(entry => entry['known-minor']);
   assert.deepEqual(knownMinor.map(entry => entry['known-minor']), ['dk-2d33cee0']);

@@ -39,7 +39,6 @@ const PRESERVE_PATHS = new Set([
   'config/ferritecore-mixin.toml',
   'config/hammerlib/main.cfg',
   'config/immediatelyfast.json',
-  'config/inventoryprofilesnext/inventoryprofiles.json',
   'config/iris.properties',
   'config/modernfix-mixins.properties',
   'config/multibeds.toml',

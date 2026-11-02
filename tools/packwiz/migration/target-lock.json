@@ -3217,7 +3217,7 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-2 0.5.0 fallback: verified vanilla move-all and both-hand refill; sorting and Dank bulk support remain inactive. IPN/libIPN retained for sorting.",
+   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained.",
    "target": {
     "declares": [
      "evileye_client optional curios [9.5.1,) (client)",
@@ -3225,16 +3225,16 @@
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.5.0.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.5.1.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.5.0"
+     "evileye_client@0.5.1"
     ],
     "name": "Evil Eye Client",
-    "sha256": "9a75792392a9718a291292e02fd0db5b7b57be0f658d010c5f9f2ec001c01ab4",
+    "sha256": "e60691855bc19a3353bafbf0effb87f4f06aeb63423b0255094c52536b5bb3b4",
     "side": "client",
-    "size": 475303,
+    "size": 497453,
     "source": "local"
    }
   },
@@ -3297,23 +3297,23 @@
    "metafile": "mods/evileye-tweaks.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave). Round-2 0.8.0 fallback: verified vanilla move-all and both-hand refill; sorting and Dank bulk support remain inactive. IPN/libIPN retained for sorting.",
+   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained.",
    "target": {
     "declares": [
      "evileye_tweaks optional curios [9.5.1,)",
      "evileye_tweaks required minecraft [1.21.1,1.21.2)",
      "evileye_tweaks required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.8.0.jar",
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.8.1.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-tweaks.pw.toml",
     "mods": [
-     "evileye_tweaks@0.8.0"
+     "evileye_tweaks@0.8.1"
     ],
     "name": "Evil Eye Tweaks",
-    "sha256": "34cd53e0cf13c1e1a1b305bc5e7f594fc7eaa6f572dacacbf6a6d5cce9021b65",
+    "sha256": "5eaa61ce136cad8394c5e3d3cc97cf3fa1b5df25eeaf686743b44a6f6c664644",
     "side": "both",
-    "size": 313963,
+    "size": 329033,
     "source": "local"
    }
   },
@@ -4427,7 +4427,7 @@
    }
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/inventory-profiles-next.pw.toml",
    "old": {
     "filename": "InventoryProfilesNext-forge-1.20-1.10.20.jar",
@@ -4441,38 +4441,7 @@
     "version": "CrtAI3P9"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "inventoryprofilesnext required kotlinforforge *",
-     "inventoryprofilesnext required libipn [6.6.3, 6.7)",
-     "inventoryprofilesnext required minecraft [1.21.1, 1.21.2)",
-     "inventoryprofilesnext required neoforge [21, 22.2)"
-    ],
-    "filename": "InventoryProfilesNext-neoforge-1.21.1-2.2.5.jar",
-    "loader": "neoforge",
-    "metafile": "mods/inventory-profiles-next.pw.toml",
-    "mods": [
-     "inventoryprofilesnext@2.2.5"
-    ],
-    "name": "Inventory Profiles Next",
-    "project": "O7RBXm3n",
-    "publisher": {
-     "sha1": "b09d7c0820c233ea34af54d0a3ab7ed510b32dcc",
-     "sha512": "521296cc7e4fa48e06eb0c00d430968c7b879946db5b02e632cc724672759ac152e11bd9d320bd09f7418edd6fe4ece521a1a2cac49d7f5687519c69a0bcbf12",
-     "size": 1295466
-    },
-    "sha1": "b09d7c0820c233ea34af54d0a3ab7ed510b32dcc",
-    "sha256": "05f1b8660f74f543fba61d4ce7cf8632d4c69a95b7c15b1a6fd442be2e397ca6",
-    "sha512": "521296cc7e4fa48e06eb0c00d430968c7b879946db5b02e632cc724672759ac152e11bd9d320bd09f7418edd6fe4ece521a1a2cac49d7f5687519c69a0bcbf12",
-    "side": "client",
-    "size": 1295466,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/O7RBXm3n/versions/vjuNnHLv/InventoryProfilesNext-neoforge-1.21.1-2.2.5.jar",
-    "version": "vjuNnHLv",
-    "versionNumber": "neoforge-1.21.1-2.2.5"
-   }
+   "rationale": "Replaced by Evil Eye Client 0.5.1 and Tweaks 0.8.1: owned middle-click sorting, directional physical-storage/Dank transfers and both-hand refill. Recursive final-pin closure recorded under jobs/2026-11-02-ipn-round4. Kotlin retained for Create Jetpack, FlightLib and Cull Less Leaves."
   },
   {
    "action": "add",
@@ -4969,7 +4938,7 @@
    "rationale": "Replaced by the owned Evil Eye Tweaks 0.4.0 (entity/despawn/: pick-ups no longer pin mobs and drop on despawn, spawner and trial-spawner rules, endermen, corpse:corpse kept as in config/letmedespawn/letmedespawn.json5). No letmedespawn_* or almanac_picked_slots keys in the converted world; LegacyDespawnData reads them if a world has any."
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/libipn.pw.toml",
    "old": {
     "filename": "libIPN-forge-1.20-4.0.2.jar",
@@ -4983,37 +4952,7 @@
     "version": "pdAXmKcS"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "libipn required kotlinforforge *",
-     "libipn required minecraft [1.21.1, 1.21.2)",
-     "libipn required neoforge [21.1,)"
-    ],
-    "filename": "libIPN-neoforge-1.21.1-6.6.3.jar",
-    "loader": "neoforge",
-    "metafile": "mods/libipn.pw.toml",
-    "mods": [
-     "libipn@6.6.3"
-    ],
-    "name": "libIPN",
-    "project": "onSQdWhM",
-    "publisher": {
-     "sha1": "baab9e8cae3d2b77b5e172b5694e465ee9f30d4a",
-     "sha512": "89383465eb8dfa296e7518dd0e6ddc1a242f4537a3183425f2319c79a3e97843ded0f5e13f86b095f2f09beacd2a1f249f554e0f4e18291209720826031a8b93",
-     "size": 626146
-    },
-    "sha1": "baab9e8cae3d2b77b5e172b5694e465ee9f30d4a",
-    "sha256": "98f061ba69d31764fa10ab7810ca49062633e107a6b261ba3b66dc25ba5fef7b",
-    "sha512": "89383465eb8dfa296e7518dd0e6ddc1a242f4537a3183425f2319c79a3e97843ded0f5e13f86b095f2f09beacd2a1f249f554e0f4e18291209720826031a8b93",
-    "side": "client",
-    "size": 626146,
-    "source": "modrinth",
-    "url": "https://cdn.modrinth.com/data/onSQdWhM/versions/BGe4KMlE/libIPN-neoforge-1.21.1-6.6.3.jar",
-    "version": "BGe4KMlE",
-    "versionNumber": "neoforge-1.21.1-6.6.3"
-   }
+   "rationale": "Replaced by Evil Eye Client 0.5.1 and Tweaks 0.8.1: owned middle-click sorting, directional physical-storage/Dank transfers and both-hand refill. Recursive final-pin closure recorded under jobs/2026-11-02-ipn-round4. Kotlin retained for Create Jetpack, FlightLib and Cull Less Leaves."
   },
   {
    "action": "drop",

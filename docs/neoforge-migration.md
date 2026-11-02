@@ -848,3 +848,9 @@ The overall migration gate is **not green**: Mekanism's unchanged target-lock si
 but both caches contain 11,976,009 bytes matching the locked SHA-256 and SHA-512. Offline `check`
 rejects that size and consequently reports two missing dependencies. Repair that unrelated metadata
 in its own change. No runtime jar, upstream pin or migration validator was changed to bypass it.
+
+## IPN replacement (2026-11-02, round 4)
+
+Client 0.5.1 and Tweaks 0.8.1 replace IPN sorting, directional move-all (including Dank) and both-hand refill. IPN/libIPN become migration drops; their configs and forcing keys leave. Kotlin stays. Mod count is 159. Both authorized caches receive filename and SHA-256 copies of verified local artifacts. Final verification and private artifact digests: artifacts/minecraft-mods/jobs/2026-11-02-ipn-build/handoff.md.
+
+Round-4 automated acceptance: Client 243 JUnit / 15 GameTests; Tweaks 141 JUnit / 112 ordinary GameTests and 114 with Dank; pack 578 Node tests; both migration caches and hash chain pass. Closure: 159 roots, 237 archives, 84,027 classes, zero IPN consumers/errors. One offline headless boot passed (27.007 seconds server startup, 80.241 seconds to Done, normal shutdown). No client mixins changed; owner rendering/input/multiplayer acceptance remains manual. Evidence: artifacts/evil-eye-pack/jobs/2026-11-02-ipn-round4/.

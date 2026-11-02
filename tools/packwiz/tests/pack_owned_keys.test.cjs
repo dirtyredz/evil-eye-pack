@@ -15,21 +15,13 @@ test('pack-owned keys that target a shipped file match the shipped bytes', () =>
   }
 });
 
-test('IPN indicator flags are forced into a stale preserved Trial config', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'owned-'));
-  try {
-    const file = path.join(dir, 'config/inventoryprofilesnext/inventoryprofiles.json');
-    fs.mkdirSync(path.dirname(file), { recursive: true });
-    fs.writeFileSync(file, '{"AutoRefillSettings":{"visual_replace_success_notification":false}}');
-    applyOwnedKeys(dir);
-    const s = JSON.parse(fs.readFileSync(file, 'utf8')).AutoRefillSettings;
-    assert.equal(s.auto_refill_enable_indicator_icons, false);
-    assert.equal(s.auto_refill_enable_horbar_indicator_icons, false);
-    assert.equal(s.visual_replace_success_notification, false);
-    const amend = fs.readFileSync(path.join(dir, 'config/amendments-client.toml'), 'utf8');
-    assert.match(amend, /\[misc\]\n\thotbar_slot_animation_speed = 0\.0/);
-    assert.deepEqual(applyOwnedKeys(dir), [], 'second run is idempotent');
-  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+test('sync never creates retired IPN configs or changes owner-local data', () => {
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'owned-retired-'));
+ try {
+  const file=path.join(dir,'config/inventoryprofilesnext/inventoryprofiles.json');applyOwnedKeys(dir);assert.equal(fs.existsSync(file),false);
+  fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,'{"owner":true}');applyOwnedKeys(dir);
+  assert.equal(fs.readFileSync(file,'utf8'),'{"owner":true}');assert.deepEqual(applyOwnedKeys(dir),[]);
+ } finally {fs.rmSync(dir,{recursive:true,force:true});}
 });
 
 test('TOML setter replaces in place and keeps other tables', () => {
@@ -52,21 +44,10 @@ test('Flywheel backend is a registered Flywheel 1.0 id in the shipped config and
   assert.match(shipped, /^backend = "DEFAULT"$/m, 'legacy "INSTANCING" parses as minecraft:INSTANCING and is not registered');
 });
 
-test('inventory subset disables competing upstream features in preserved configs and enables the owned pair', () => {
-  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'owned-inventory-'));
-  try {
-    const ipn = path.join(dir, 'config/inventoryprofilesnext/inventoryprofiles.json');
-    fs.mkdirSync(path.dirname(ipn), { recursive: true });
-    fs.writeFileSync(ipn, JSON.stringify({ ModSettings: { enable_auto_refill: true },
-      GuiSettings: { show_move_all_button: true }, Hotkeys: { sort_inventory: { main: { keys: 'BUTTON_3' } } } }));
-    applyOwnedKeys(dir);
-    const actual = JSON.parse(fs.readFileSync(ipn, 'utf8'));
-    assert.equal(actual.ModSettings.enable_auto_refill, false);
-    assert.equal(actual.GuiSettings.show_move_all_button, false);
-    assert.equal(actual.Hotkeys.sort_inventory.main.keys, 'BUTTON_3', 'IPN still owns sorting');
-    const client = fs.readFileSync(path.join(dir, 'config/evileye_client-client.toml'), 'utf8');
-    assert.match(client, /\[transfer\]\n\s*enabled = true/);
-    assert.match(client, /\[refill\]\n\s*enabled = true/);
-    assert.deepEqual(applyOwnedKeys(dir), []);
-  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+test('preserved client configuration enables all owned inventory actions', () => {
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'owned-inventory-'));
+ try {applyOwnedKeys(dir);const client=fs.readFileSync(path.join(dir,'config/evileye_client-client.toml'),'utf8');
+  for(const section of ['sorting','transfer','refill']) assert.match(client,new RegExp('\\['+section+'\\]\\n\\s*enabled = true'));
+  assert.deepEqual(applyOwnedKeys(dir),[]);
+ } finally {fs.rmSync(dir,{recursive:true,force:true});}
 });

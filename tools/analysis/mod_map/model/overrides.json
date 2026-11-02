@@ -21,8 +21,6 @@
   "mcwtrpdoors": { "family": "macaws", "familyName": "Macaw's", "familyRoot": true, "reason": "Macaw's peer suite shares branding rather than mandatory content edges" },
   "mcwwindows": { "family": "macaws", "familyName": "Macaw's", "familyRoot": true, "reason": "Macaw's peer suite shares branding rather than mandatory content edges" },
   "terrablender": { "kind": "library/API", "reason": "World-generation framework used by biome mods; never a player-facing family root" },
-  "inventoryprofilesnext": { "reason": "Inventory Profiles Next is the player-facing owner of libIPN and its Kotlin language loader" },
-  "libipn": { "kind": "library/API", "reason": "Client library used by Inventory Profiles Next" },
   "kotlinforforge": { "kind": "library/API", "reason": "Language loader selected by mods.toml modLoader=kotlinforforge" },
   "transition": { "kind": "library/API", "reason": "Jar-in-jar library owned by Entity Culling and 3D Skin Layers" },
   "trender": { "kind": "library/API", "reason": "Jar-in-jar rendering library owned by Entity Culling and 3D Skin Layers" },
