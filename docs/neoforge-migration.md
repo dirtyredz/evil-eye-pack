@@ -1,6 +1,6 @@
 # NeoForge 1.21.1 migration
 
-Current baseline (2026-11-02): supplied main is NeoForge 1.21.1 / 21.1.265. Phase/cutover entries below are historical evidence, not a claim that Stable is still Forge. This Pro Placer branch does not promote or write an instance.
+Current baseline (2026-11-02): supplied main is NeoForge 1.21.1 / 21.1.265. Phase/cutover entries below are historical evidence, not a claim that Stable is still Forge. Per the wave-7 dispatch, Stable prelaunch installs local pack main; pack base 29ba4a6 already removes Pro Placer and pins migration dev.11. The plan's earlier installed-version discrepancy is superseded by that owner clarification. Wave 7 adds evidence tooling only at this checkpoint: the drawer addon and existing Tweaks 0.9.0 / Client 0.7.0 pins remain. Bridge conversion and removal are separate pending work. No instance was changed.
 
 Moves Evil Eye from Forge 47.4.10 / Minecraft 1.20.1 / Java 17 to NeoForge 21.1.265 /
 Minecraft 1.21.1 / Java 21 on the long-lived branch `migration/neoforge-1.21.1`. `main` and

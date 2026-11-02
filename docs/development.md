@@ -51,7 +51,7 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.cjs tools/testing/showcase/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs
+node --test tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.cjs tools/testing/showcase/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs
 # NeoForge migration lock (offline): node tools/packwiz/migration/migrate.mjs check  (see neoforge-migration.md)
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
@@ -73,7 +73,7 @@ Before handing a migration build to the owner, run the isolated client transform
 
 ```powershell
 node tools/testing/client_mixin/run.cjs --out C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/<job>/client-audit --cache C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache
-node --test tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs
+node --test tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs
 ```
 
 `--out` must be a new directory below the artifacts `jobs/` root (`SMOKE_ARTIFACTS`
@@ -101,7 +101,7 @@ Do not add broad patterns or unrecorded behavior loss to it.
 
 For differential diagnosis only, append `--exclude <exact-pinned-jar-filename>` to a
 second run with a fresh output path. Exclusions are recorded and never qualify the
-full pack. Use the same cache for both runs. Include `tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs`
+full pack. Use the same cache for both runs. Include `tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs`
 in the fast gate after changing this tool. The live fail/pass pair is its named
 acceptance check, separate from the dedicated-server acceptance suite.
 
@@ -463,3 +463,21 @@ The owner-only local delivery ruling closes the family-hosting question (dk-8526
 ## IPN replacement (2026-11-02, round 4)
 
 Repeat removal closure with `node tools/analysis/library_closure/run.mjs --out <job-dir> --cache <cache/mods>`. All input pins must resolve by hash; every nested jar is scanned. Missing, unreadable or recursion-limited inputs fail closed. References are conservative (no package/local-definition suppression); optional dependencies are recorded separately from required ones. The documented Node gate includes this suite.
+
+## Wave 7 evidence (offline, no gameplay cutover)
+
+Create a new snapshot with the world-trial commands above, then run:
+
+```
+node tools/analysis/consolidation/run.mjs --job C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/<snapshot-job>
+node tools/analysis/library_closure/run.mjs --profile wave7-drawers --cache C:/Users/dirty/projects/artifacts/evil-eye-pack/migration/neoforge-1.21.1/cache/mods --out C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/<job>/closure
+```
+
+The evidence command requires source-manifest.json and snapshot/ in the job, refuses
+an existing report, verifies both source and snapshot before and after inspection,
+and fails on unsupported files or parse errors. Keep raw snapshot bytes for fixtures;
+JSON preserves values but not every original NBT numeric tag type. No live world is read.
+Closure defaults to the existing IPN/Kotlin profile; wave7 is an assessment with all
+candidates retained, while wave7-drawers evaluates only physical drawer-addon removal.
+Both scan all pinned bytes, including proposed exclusions. A clear closure never
+qualifies storage decoding, menus, rendering or an addon drop.

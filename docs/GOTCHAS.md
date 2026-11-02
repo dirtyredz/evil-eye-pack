@@ -1,5 +1,16 @@
 # Gotchas
 
+- **Wave-7 storage evidence is not a conversion.** Preserve `createdrawerscompat:drawer`
+  and all four `mounted_drawer_*` menu IDs in any eventual replacement. Never blacklist
+  the retained namespace through `removedMods`. The pinned NeoForge addon targets
+  Create 6.0.10 and Storage Drawers 13.11.4; the older Forge notes below are historical.
+  The NeoForge renderer exception is virtual-world-only. Native inventories need both
+  fixture families and source-absent acceptance before the physical addon can leave.
+- **Compacting drawer views are alternate quantities of one inventory.** The wave-7
+  evidence report preserves raw documents and locations, never adds their view counts
+  or collapses matching payloads into one physical holding. Its JSON does not replace
+  the byte-exact snapshot as a decoder fixture.
+
 ## Tool layout
 
 - **ANU runs a synced copy of `tools/` with the same relative layout.** `pack_test/remote/anu.cjs` `CODE_DIRS` and

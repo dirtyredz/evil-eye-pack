@@ -2,6 +2,21 @@
 
 Newest first.
 
+## Wave 7 preservation boundary (2026-11-02)
+
+Retain Polymorph, Diagonal Fences (and Puzzles Lib), and Create: Compatible Storage.
+Their active behavior exceeds the bounded drawer replacement; historical absence is
+not evidence of current non-use. An eventual drawer cutover must permanently retain
+`createdrawerscompat:drawer` and `createdrawerscompat:mounted_drawer_1` through `_4`.
+This is backwards decoding under transferred ownership, not an NBT conversion.
+
+The addon remains installed in this implementation checkpoint. Create and Storage
+Drawers hosted API artifacts are absent from the available Gradle module cache, and
+this dispatch prohibits downloads and local-jar compile dependencies. Native adapter,
+fixture-family preservation and source-absent parity have not been established.
+Ship evidence tooling independently; do not bump owned mod versions, repin jars or
+remove the addon based on static closure alone. Track remaining work in dk-375ad6c2.
+
 ## 2026-11-02 - Cosmetic Armor Reworked is absorbed into Evil Eye Tweaks and Client (equipment panel wave)
 
 **Decision.** Owner-approved plan 2026-11-01: Cosmetic Armor Reworked leaves the NeoForge pack. Evil Eye Tweaks 0.7.0 owns the cosmetic armour storage and the `evileye_tweaks:equipment` menu; Evil Eye Client 0.4.0 owns the equipment panel (Curios key G and the inventory button open one screen for curios, armour, cosmetic armour and cosmetic curios) and the cosmetic armour rendering; Evil Eye World Migration 0.1.0-dev.11 imports the old `playerdata/<uuid>.cosarmor` sidecars. **Why:** one equipment screen instead of two mods with separate screens and buttons, and fewer third-party jars (consolidation wave 7). **Rejected:** keeping Cosmetic Armor Reworked beside the Curios screen (two inventories to open, no shared visibility controls). Existing items are carried by the migration, not lost.

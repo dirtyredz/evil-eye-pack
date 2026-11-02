@@ -1,5 +1,19 @@
 # Owned-mod consolidation
 
+## Wave 7 evidence checkpoint (2026-11-02)
+
+Keep Polymorph, Diagonal Fences and Create: Compatible Storage, as accepted in the
+wave-7 plan. Create: Storage Drawers Compat also stays until its native replacement
+passes both historical Forge and NeoForge payload preservation and source-absent
+parity. No physical jar is removed: 157 metafiles remain. Tweaks stays 0.9.0 and
+Client stays 0.7.0; no replacement gameplay or renderer is shipped here.
+
+New offline tooling separates candidate closure profiles from archive traversal and
+records all eleven storage codec IDs, Polymorph selections, placed diagonal counts
+and full mounted payloads from a verified historical snapshot. Evidence lives under
+`artifacts/evil-eye-pack/jobs/2026-11-02-drawers-compat/`; the handoff records actual
+gate results and missing offline prerequisites. This does not complete the absorption.
+
 Small gameplay, presentation and compatibility mods are replaced by three owned mods built in the
 `minecraft-mods` workspace: **EvilEyeTweaks** (`evileye_tweaks`, server gameplay and small compat),
 **EvilEyeClient** (`evileye_client`, HUD/screens/controls/appearance) and **EvilEyeEssentials**

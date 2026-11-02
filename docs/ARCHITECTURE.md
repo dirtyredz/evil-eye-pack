@@ -1,5 +1,24 @@
 # Architecture
 
+## Consolidation evidence
+
+Library closure keeps candidate definitions and proposed physical exclusions in
+`analysis/library_closure/targets.cjs`. Every pin is hash checked before recursive
+archive traversal, including excluded roots. Reports retain archive SHA-256, provider
+provenance, required/optional edges and conservative constant-pool references. Missing
+inputs, malformed metadata and ambiguous target providers fail closed. A clear closure
+is only dependency evidence, not behavioral replacement acceptance.
+
+`analysis/consolidation/run.mjs` reads a manifest-backed historical world snapshot,
+verifies source and copy before and after inspection, and writes only a new job report.
+The generic world-trial inventory visitor supplies whole NBT documents from all region,
+entity, `.dat` and structure `.nbt` files. Candidate interpretation stays in
+`wave7_evidence.cjs`: eleven mounted-storage IDs, Polymorph selections and diagonal
+references versus actual packed-palette counts. Equal payloads retain every owning
+location; they are not merged as physical holdings. Compacting views are never summed.
+Raw NBT remains byte-exact in the read-only snapshot; JSON is a diagnostic projection.
+Unknown world files and unknown candidate storage IDs prevent complete evidence.
+
 ## Client mixin audit
 
 `tools/testing/client_mixin/run.cjs` stages an independent CLIENT classpath and the exact pack pins,

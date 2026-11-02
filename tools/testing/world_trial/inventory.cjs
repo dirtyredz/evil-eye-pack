@@ -5,7 +5,7 @@ const { parseNbt,gunzipMaybe,decompressChunk,dimensionFor,paletteCounts }=requir
 const json=v=>JSON.stringify(v,(_k,x)=>typeof x==='bigint'?x.toString():x);
 const digest=v=>crypto.createHash('sha256').update(json(v)).digest('hex');
 const add=(map,id,n=1)=>{map[id]=(map[id]||0)+n;};
-function inventory(world) {
+function inventory(world, { visit = () => {} } = {}) {
   const out={schema:1,world,files:0,chunks:0,errors:[],blocks:{},biomes:{},entities:[],blockEntities:[],data:{},items:[],references:{},targets:[],terrain:{}};
   const targets=new Map();
   function target(dimension,x,z,reason) {
@@ -22,9 +22,9 @@ function inventory(world) {
   }
   for(const rel of files(world)) {
     const file=path.join(world,rel);out.files++;
-    if(rel.endsWith('.dat')&&!rel.includes('/backups/')) {
+    if((rel.endsWith('.dat')||rel.endsWith('.nbt'))&&!rel.includes('/backups/')) {
       try {
-        const v=parseNbt(gunzipMaybe(fs.readFileSync(file)));out.data[rel]=v;inspect(v,{file:rel});
+        const v=parseNbt(gunzipMaybe(fs.readFileSync(file)));out.data[rel]=v;inspect(v,{file:rel});visit(v,{file:rel});
         const p=v.Data?.Player||v;
         if(Array.isArray(p.Pos)&&typeof p.Dimension==='string')target(p.Dimension,Math.floor(p.Pos[0]/16),Math.floor(p.Pos[2]/16),'player');
         if(rel==='level.dat')target('minecraft:overworld',Math.floor(v.Data.SpawnX/16),Math.floor(v.Data.SpawnZ/16),'spawn');
@@ -46,7 +46,7 @@ function inventory(world) {
         if(len<1||len>sectors*4096-4||off+4+len>bytes.length)throw new Error('invalid chunk length');
         const external=path.join(path.dirname(file),`c.${cx}.${cz}.mcc`);
         const nbt=parseNbt(decompressChunk(bytes.subarray(off+4,off+4+len),external));out.chunks++;
-        inspect(nbt,context);
+        inspect(nbt,context);visit(nbt,context);
         const n=nbt.Level||nbt;
         context.status=n.Status??null;
         const entities=n.Entities||n.entities||[];
