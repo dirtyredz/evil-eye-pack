@@ -29,7 +29,7 @@ param(
   [switch]$Execute,
   [switch]$DryRun,
   [string]$Archive,
-  [string]$Instance = 'C:/Users/dirty/MultiMC/instances/Evil Eye Stable',
+  [string]$Instance,
   [string]$ArchiveRoot = 'C:/Users/dirty/projects/artifacts/evil-eye-pack'
 )
 Set-StrictMode -Version 2.0
@@ -37,6 +37,7 @@ $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot '../owner/owner-run.ps1')
 . (Join-Path $PSScriptRoot 'cutover-lib.ps1')
 Initialize-OwnerRun 'rollback'
+if (-not $Instance) { $Instance = Get-StableInstancePath }
 
 $plan = -not $Execute -or $DryRun
 
@@ -50,7 +51,7 @@ try {
   }
   if ($Archive -and -not (Test-Path -LiteralPath (Join-Path $Archive 'manifest.sha256'))) { $blockers.Add("Not a cutover archive (no manifest.sha256): $Archive") }
   if (-not (Test-Path -LiteralPath $Instance -PathType Container)) { $blockers.Add("Instance folder not found: $Instance") }
-  try { Assert-NotLocalOrTrial $Instance 'Rollback' } catch { $blockers.Add($_.Exception.Message) }
+  try { Assert-NotLocalOrTrial $Instance 'Rollback'; Assert-StableInstance $Instance 'Rollback' } catch { $blockers.Add($_.Exception.Message) }
   if (Test-RealStable $Instance) { foreach ($b in (Get-LauncherBlockers)) { $blockers.Add($b) } }
   else { Write-Log 'launcher check skipped: target is a rehearsal copy, not the real Stable instance' }
 

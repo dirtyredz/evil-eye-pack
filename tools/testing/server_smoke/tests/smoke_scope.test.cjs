@@ -10,11 +10,11 @@ test('smoke CLI owns installer processes and cleans them up on an install failur
   const processStub = { argv: ['node', 'smoke'], once() {}, removeListener() {} };
   const modules = {
     '../../data_io/files.cjs': {}, 'node:fs': { mkdirSync() {} }, 'node:path': path,
-    './runtime/env.cjs': { ARTIFACTS: '/fixture', JAVAS: {} },
+    '../../runtime_env/env.cjs': { ARTIFACTS: '/fixture', JAVAS: {} },
     './runtime/runtime.cjs': { readRuntime: () => ({ id: 'fixture', java: 21 }), javaPaths: () => ({ java: 'java' }), checkJava() {} },
     './runtime/setup.cjs': { ensureLoaderBase: async (...args) => { calls.push(args[4]); return '/base'; }, prepareRunDir() {},
       installPack: async (...args) => { calls.push(args[5]); throw Error('fixture installation failure'); } },
-    './process/procs.cjs': { scope: () => scope }, './process/host_wait.cjs': { waitForServer: async () => {} },
+    '../../runtime_env/procs.cjs': { scope: () => scope }, './process/host_wait.cjs': { waitForServer: async () => {} },
     './log_report.cjs': {}, './process/boot.cjs': {}, './process/watchdog.cjs': {}, './verdict.cjs': {}
   };
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../smoke.cjs'), 'utf8'), {

@@ -2,8 +2,8 @@
 // Instrument an offline disposable copy; the existing smoke owns the JVM lifecycle.
 const fs = require('node:fs');
 const path = require('node:path');
-const env = require('../../../testing/server_smoke/runtime/env.cjs');
-const procs = require('../../../testing/server_smoke/process/procs.cjs');
+const env = require('../../../runtime_env/env.cjs');
+const procs = require('../../../runtime_env/procs.cjs');
 const { boot } = require('../../../testing/server_smoke/process/boot.cjs');
 const { prepare } = require('../../../testing/server_smoke/runtime/offline_server.cjs');
 const { waitForServer } = require('../../../testing/server_smoke/process/host_wait.cjs');

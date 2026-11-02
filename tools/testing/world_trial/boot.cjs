@@ -11,7 +11,7 @@ const {readRuntime,writeStamp}=require('../server_smoke/runtime/runtime.cjs');
 const {boot}=require('../server_smoke/process/boot.cjs');
 const {waitForServer}=require('../server_smoke/process/host_wait.cjs');
 const {localLock}=require('../pack_test/session/lock.cjs');
-const procs=require('../server_smoke/process/procs.cjs');
+const procs=require('../../runtime_env/procs.cjs');
 const {WORLD}=require('../pack_test/stage_runtime.cjs');
 // Compose a private offline cache. Neither shared caches nor instances receive stamps or writes.
 function stage({root,loader,jarDirs,job,name}) {

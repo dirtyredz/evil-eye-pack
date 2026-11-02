@@ -5,7 +5,7 @@
   Pure functions with injectable inputs (process list, free bytes) so tests can prove the guards
   without a launcher or a full disk. Nothing here runs on dot-source.
   Functions: Get-LauncherBlockers, Test-ArchiveSpace, Get-InstanceFiles, New-InstanceArchive,
-  Test-HashManifest, Restore-InstanceArchive, Set-CfgKey, Set-InstanceNeoForge, Get-InstanceTarget,
+  Test-HashManifest, Restore-InstanceArchive, Set-CfgKey, Set-InstanceNeoForge, Get-InstanceTarget, Assert-StableInstance, Get-StableInstancePath,
   Test-RealStable, Assert-NotLocalOrTrial.
 #>
 
@@ -160,6 +160,20 @@ function Test-RealStable([string]$Path) { return [bool](Get-InstanceTarget $Path
 # Throws when the path is Evil Eye Local or the NeoForge Trial instance (or a copy of either).
 function Assert-NotLocalOrTrial([string]$Path, [string]$What = 'Cutover') {
   if ((Get-InstanceTarget $Path).forbiddenForStable) { throw "$What never targets Evil Eye Local or the NeoForge Trial instance" }
+}
+
+# Throws unless the path is the real Stable instance or a rehearsal copy outside the MultiMC instances folder.
+function Assert-StableInstance([string]$Path, [string]$What = 'Cutover') {
+  if (-not (Get-InstanceTarget $Path).allowedAsStable) { throw "$What targets only the real Evil Eye Stable instance or a copy outside the MultiMC instances folder" }
+}
+
+# The real Stable instance folder, from the authority (used for parameter defaults).
+function Get-StableInstancePath {
+  $node = Get-Command node -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1
+  if (-not $node) { throw 'Node 22 is required to resolve the Stable instance.' }
+  $out = & $node.Source (Join-Path $PSScriptRoot '../../tools/packwiz/install/instance_targets.cjs') stable
+  if ($LASTEXITCODE -ne 0 -or -not $out) { throw "Stable instance lookup failed (Node exit $LASTEXITCODE)" }
+  return ([string]$out).Trim()
 }
 
 # --- NeoForge switch ---------------------------------------------------------------------------

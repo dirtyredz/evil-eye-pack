@@ -1,7 +1,7 @@
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
-const env = require('../../testing/server_smoke/runtime/env.cjs');
+const env = require('../../runtime_env/env.cjs');
 const { readRuntime } = require('../../testing/server_smoke/runtime/runtime.cjs');
 const { stageDirFor } = require('../../testing/pack_test/stage_runtime.cjs');
 const { inventory } = require('./inventory/inventory.cjs');

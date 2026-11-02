@@ -265,7 +265,7 @@ Branch `migration/neoforge-1.21.1` only; `main`/Stable stay on Forge. Status and
   (ModernFix stays). Prickle, Lithostitched, Lionfish API and Sodium are added as declared
   required dependencies. JEI, EMI, Polymorph and Dank Storage stay provisional until minecraft-mods
   confirms what the ports build against.
-- **One runtime identity keys everything.** `pack.toml [versions]` → `server_smoke/runtime.cjs`
+- **One runtime identity keys everything.** `pack.toml [versions]` → `tools/testing/server_smoke/runtime/runtime.cjs`
   `id`. Loader bases, stages, world caches and ANU lanes are keyed by it and stamped with
   `runtime.json`; cross-runtime reuse is refused. World keys hash jar bytes and world-shaping
   config, not filenames. The Forge ANU lane keeps its paths, so `main`'s runs resync nothing.

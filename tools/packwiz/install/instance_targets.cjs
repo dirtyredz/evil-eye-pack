@@ -4,6 +4,7 @@
 // and Stable and Local must never receive Trial's private pins. Node installers call these
 // functions; PowerShell (scripts/migration/cutover-lib.ps1) calls `classify` below.
 //   node tools/packwiz/install/instance_targets.cjs classify <instance folder or .minecraft>
+//   node tools/packwiz/install/instance_targets.cjs stable     (prints the real Stable instance folder)
 const path = require('node:path');
 const { noLinks } = require('../../data_io/path_guard.cjs');
 
@@ -35,11 +36,15 @@ function assertNotLocalOrTrial(p, what = 'Cutover') {
   if (kind === 'local' || kind === 'trial') throw Error(`${what} never targets Evil Eye Local or the NeoForge Trial instance`);
 }
 
-// Only the real Stable instance (or an explicit copy of it, for rehearsals) is a valid Stable target.
+const insideInstances = p => (slash(p).toLowerCase() + '/').startsWith(INSTANCES.toLowerCase() + '/');
+
+// Allowlist: the real Stable .minecraft, or a rehearsal copy OUTSIDE the MultiMC instances folder.
+// Any other MultiMC instance (and Local/Trial, or copies of them) is refused.
 function stableTarget(instance) {
   const resolved = path.resolve(instance);
   if (path.basename(resolved) !== '.minecraft') throw Error('Target must be an instance .minecraft folder');
   assertNotLocalOrTrial(resolved);
+  if (!same(resolved, STABLE) && insideInstances(resolved)) throw Error('Stable target must be the real Evil Eye Stable instance or a copy outside the MultiMC instances folder');
   noLinks(resolved);
   return resolved;
 }
@@ -56,14 +61,22 @@ function assertPinTarget(instance) {
   if (kind === 'stable' || kind === 'local') throw Error('Private pins must never install into Stable or Local');
 }
 
+// Pure (no filesystem) form of the stableTarget allowlist, for an instance folder or its .minecraft.
+function allowedAsStable(p) {
+  const kind = instanceKind(p);
+  if (kind === 'local' || kind === 'trial') return false;
+  return isRealStable(p) || !insideInstances(p);
+}
+
 function classify(p) {
   const kind = instanceKind(p);
-  return { kind, realStable: isRealStable(p), forbiddenForStable: kind === 'local' || kind === 'trial' };
+  return { kind, realStable: isRealStable(p), forbiddenForStable: kind === 'local' || kind === 'trial', allowedAsStable: allowedAsStable(p) };
 }
 
 if (require.main === module) {
   const [cmd, target] = process.argv.slice(2);
-  if (cmd !== 'classify' || !target) { console.error('usage: instance_targets.cjs classify <path>'); process.exitCode = 3; }
+  if (cmd === 'stable') console.log(STABLE_INSTANCE);
+  else if (cmd !== 'classify' || !target) { console.error('usage: instance_targets.cjs classify <path> | stable'); process.exitCode = 3; }
   else console.log(JSON.stringify(classify(target)));
 }
-module.exports = { STABLE, TRIAL, STABLE_INSTANCE, TRIAL_INSTANCE, instanceKind, isRealStable, assertNotLocalOrTrial, stableTarget, trialTarget, assertPinTarget, classify };
+module.exports = { STABLE, TRIAL, STABLE_INSTANCE, TRIAL_INSTANCE, instanceKind, isRealStable, assertNotLocalOrTrial, stableTarget, trialTarget, assertPinTarget, allowedAsStable, classify };

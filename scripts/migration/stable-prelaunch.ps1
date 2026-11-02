@@ -2,7 +2,7 @@
 .SYNOPSIS
 Repeat the verified private-jar install into Evil Eye Stable on every launch (post-cutover prelaunch).
 .DESCRIPTION
-Set as Stable's PreLaunchCommand by cutover.ps1. Same route as trial-walkthrough.ps1: packwiz copies
+Set as Stable's PreLaunchCommand by cutover.ps1. Uses the neutral install route (stable_target.cjs, which enforces instance_targets.cjs): packwiz copies
 hash-verified cached jars as ordinary files; no host, no downloads. Runs from the checkout that
 contains this script (resolved from PSScriptRoot). Logs under .tmp/owner-runs and ends OK/FAILED.
 Exit 1: Node missing; 2: install failed.

@@ -15,14 +15,14 @@ const { readJson } = require('../../data_io/files.cjs');
 // Nothing here may show a window: nogui, windowsHide, piped stdio, no launcher, no client.
 const fs = require('node:fs');
 const path = require('node:path');
-const { ARTIFACTS, JAVAS } = require('./runtime/env.cjs');
+const { ARTIFACTS, JAVAS } = require('../../runtime_env/env.cjs');
 const { readRuntime, javaPaths, checkJava } = require('./runtime/runtime.cjs');
 const { ensureLoaderBase, prepareRunDir, readRunSeed, installPack, dropMods } = require('./runtime/setup.cjs');
 const { analyze } = require('./log_report.cjs');
 const { boot } = require('./process/boot.cjs');
 const { DEFAULT_STARVED_CORES } = require('./process/watchdog.cjs');
 const { crashReports, crashCauses, decide, EXIT_CODES } = require('./verdict.cjs');
-const procs = require('./process/procs.cjs');
+const procs = require('../../runtime_env/procs.cjs');
 const { waitForServer } = require('./process/host_wait.cjs');
 
 function parseArgs(argv) {

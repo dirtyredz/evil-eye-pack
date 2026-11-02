@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { loadEntries, applyOwnedKeys, setToml } = require('../install/trial_owned_keys.cjs');
+const { loadEntries, applyOwnedKeys, setToml } = require('../install/pack_owned_keys.cjs');
 const ROOT = path.resolve(__dirname, '../../..');
 
 test('pack-owned keys that target a shipped file match the shipped bytes', () => {

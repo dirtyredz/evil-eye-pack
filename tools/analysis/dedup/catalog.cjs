@@ -68,7 +68,7 @@ const MATERIAL_TAG = /^(?:forge|c):(?:(?:ingots|nuggets|dusts|plates|gears|rods|
 // Default pinned-jar folders: DEDUP_MODS, else the instance/cache that holds this runtime's jars.
 function defaultJarDirs(packRoot = root) {
   if (process.env.DEDUP_MODS) return process.env.DEDUP_MODS.split(';');
-  const env = require('../../testing/server_smoke/runtime/env.cjs');
+  const env = require('../../runtime_env/env.cjs');
   const { readRuntime } = require('../../testing/server_smoke/runtime/runtime.cjs');
   return readRuntime(path.join(packRoot, 'pack.toml')).loader === 'neoforge' ? [env.MIGRATION_MODS] : [env.LOCAL_MODS];
 }

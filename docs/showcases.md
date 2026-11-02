@@ -109,7 +109,7 @@ a player source, so headless probes use a Forge fake player instead of a bare
 
 ## Run the headless check
 
-Requires Node 22, the runtime's Java from `tools/testing/server_smoke/runtime/env.cjs`, and a prepared server
+Requires Node 22, the runtime's Java from `tools/runtime_env/env.cjs`, and a prepared server
 cache stamped for the pack's runtime. **No installer/download runs.** Cache defaults to
 `artifacts/evil-eye-pack/pack-test/stage/<runtime id>/server`; override with `SHOWCASE_CACHE`
 or `--cache <prepared-server-directory>`. Server jars/resource archives must match

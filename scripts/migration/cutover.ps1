@@ -14,7 +14,7 @@ With -Execute and the launcher closed it:
      against the source file by file;
   3. empties Stable's mods folder (archived) so no Forge jar can linger;
   4. switches mmc-pack.json to Minecraft 1.21.1 + NeoForge 21.1.265 and the instance Java to Temurin 21;
-  5. installs the pack through the trial route (hash-verified private jars incl. the bridge) and
+  5. installs the pack through the neutral install route (stable_target.cjs) (hash-verified private jars incl. the bridge) and
      points Stable's prelaunch at stable-prelaunch.ps1 so every launch repeats that install;
   6. prints the in-game steps. It never launches the game.
 Never downgrade a converted world in place: use rollback.ps1, which keeps the NeoForge folder aside.
@@ -45,7 +45,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File C:\path\to\checkout\scripts\
 param(
   [switch]$Execute,
   [switch]$DryRun,
-  [string]$Instance = 'C:/Users/dirty/MultiMC/instances/Evil Eye Stable',
+  [string]$Instance,
   [string]$ArchiveRoot = 'C:/Users/dirty/projects/artifacts/evil-eye-pack',
   [string]$Cache = 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache',
   [string]$Java = 'C:/Tools/evil-eye-pack/temurin-21/bin/java.exe'
@@ -55,12 +55,12 @@ $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot '../owner/owner-run.ps1')
 . (Join-Path $PSScriptRoot 'cutover-lib.ps1')
 Initialize-OwnerRun 'cutover'
+if (-not $Instance) { $Instance = Get-StableInstancePath }
 
 $plan = -not $Execute -or $DryRun
 $blockers = New-Object System.Collections.Generic.List[string]
 function Block([string]$m) { $blockers.Add($m); Write-Log "  BLOCKED: $m" }
 function Fmt([long]$b) { return ('{0:N2} GiB' -f ($b / 1GB)) }
-function Same([string]$a, [string]$b) { return ([IO.Path]::GetFullPath($a).TrimEnd('\', '/') -ieq [IO.Path]::GetFullPath($b).TrimEnd('\', '/')) }
 
 try {
   Write-Log ("Cutover {0}: instance {1}" -f $(if ($plan) { 'DRY RUN (nothing will be written)' } else { 'EXECUTE' }), $Instance)
@@ -80,7 +80,7 @@ try {
   } else {
     Write-Log '  launcher check skipped: target is a rehearsal copy, not the real Stable instance'
   }
-  try { Assert-NotLocalOrTrial $Instance 'Cutover' } catch { Block $_.Exception.Message }
+  try { Assert-NotLocalOrTrial $Instance 'Cutover'; Assert-StableInstance $Instance 'Cutover' } catch { Block $_.Exception.Message }
   $pack = Get-Content -LiteralPath (Join-Path $script:RepoRoot 'pack.toml') -Raw
   if ($pack -notmatch '(?m)^\s*neoforge\s*=\s*"21\.1\.265"' -or $pack -notmatch '(?m)^\s*minecraft\s*=\s*"1\.21\.1"') {
     Block "This checkout's pack.toml is not NeoForge 21.1.265 / Minecraft 1.21.1 (run from the merged branch)"
@@ -123,7 +123,7 @@ try {
     Write-Log "  1. archive $($files.Count) files ($(Fmt $totalBytes)) to $archiveDir with a SHA-256 manifest"
     Write-Log '  2. empty .minecraft\mods and delete every file the old install tracked (all archived), so nothing stale survives'
     Write-Log "  3. rewrite mmc-pack.json -> Minecraft 1.21.1 + NeoForge 21.1.265; instance.cfg JavaPath -> $Java"
-    Write-Log '  4. install the pack via the trial route and set Stable prelaunch -> stable-prelaunch.ps1'
+    Write-Log '  4. install the pack via the neutral install route (stable_target.cjs) and set Stable prelaunch -> stable-prelaunch.ps1'
     if ($blockers.Count) {
       Write-Log ("NOT READY: {0} blocker(s) above would stop a real run." -f $blockers.Count)
     } else { Write-Log 'READY: a real run (-Execute) would proceed.' }

@@ -26,8 +26,33 @@ test('Local and Trial are refused as Stable targets and Stable/Local as pin targ
   assert.doesNotThrow(() => T.assertPinTarget(T.TRIAL));
 });
 
+test('stableTarget is an allowlist: real Stable and outside rehearsal copies only', () => {
+  assert.equal(T.stableTarget(T.STABLE), path.resolve(T.STABLE));
+  assert.doesNotThrow(() => T.stableTarget('C:/rehearsal/Evil Eye Stable/.minecraft'));
+  assert.doesNotThrow(() => T.stableTarget('C:/rehearsal/anything/.minecraft'));
+  assert.throws(() => T.stableTarget(`${I}/Some Other Pack/.minecraft`), /real Evil Eye Stable/);
+  assert.throws(() => T.stableTarget(`${I}/Evil Eye Stable Copy/.minecraft`), /real Evil Eye Stable/);
+  assert.throws(() => T.stableTarget(`${I}/Evil Eye Local/.minecraft`), /never targets/);
+  assert.throws(() => T.stableTarget(T.TRIAL), /never targets/);
+  assert.throws(() => T.stableTarget('C:/rehearsal/Evil Eye Local/.minecraft'), /never targets/);
+  assert.throws(() => T.stableTarget(`${I}/Evil Eye Stable`), /.minecraft/);
+});
+
+test('allowedAsStable mirrors the allowlist for folders and .minecraft', () => {
+  assert.equal(T.allowedAsStable(`${I}/Evil Eye Stable`), true);
+  assert.equal(T.allowedAsStable(T.STABLE), true);
+  assert.equal(T.allowedAsStable('C:/rehearsal/copy'), true);
+  assert.equal(T.allowedAsStable(`${I}/Other Pack`), false);
+  assert.equal(T.allowedAsStable(`${I}/Evil Eye Local`), false);
+});
+
+test('stable CLI prints the real Stable instance', () => {
+  const r = spawnSync(process.execPath, [path.resolve(__dirname, '../install/instance_targets.cjs'), 'stable'], { encoding: 'utf8' });
+  assert.equal(r.stdout.trim(), T.STABLE_INSTANCE);
+});
+
 test('classify CLI is the PowerShell entry point', () => {
   const r = spawnSync(process.execPath, [path.resolve(__dirname, '../install/instance_targets.cjs'), 'classify', `${I}/Evil Eye Local`], { encoding: 'utf8' });
   assert.equal(r.status, 0);
-  assert.deepEqual(JSON.parse(r.stdout), { kind: 'local', realStable: false, forbiddenForStable: true });
+  assert.deepEqual(JSON.parse(r.stdout), { kind: 'local', realStable: false, forbiddenForStable: true, allowedAsStable: false });
 });

@@ -2,11 +2,11 @@
 // Forces pack-owned keys into Trial's installed configs. packwiz never rewrites
 // `preserve = true` files after their first install, so pack fixes to those files
 // (and to configs a mod generates itself) would never arrive. Edit
-// trial-owned-keys.json; install_pack.cjs applies it after every sync.
+// pack-owned-keys.json; install_pack.cjs applies it after every sync.
 const fs = require('node:fs');
 const path = require('node:path');
 
-const DATA = path.join(__dirname, 'trial-owned-keys.json');
+const DATA = path.join(__dirname, 'pack-owned-keys.json');
 const loadEntries = () => JSON.parse(fs.readFileSync(DATA, 'utf8')).keys;
 
 function setJson(text, e) {
