@@ -19,7 +19,7 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 | 7 Interstellaris stack | dk-7bcd9303 | done 2026-10-30 (ANU boots green; showcase checks below) |
 | 8 Seven owned ports | dk-279913bb | done 2026-10-30 (ANU and full showcase PASS; config/worldgen follow-ups below) |
 | 9 World conversion on a copy | dk-064ce2a5 | done 2026-10-31 brief: dev.4 conversion/restart 68/68; owner Trial copy ready |
-| 10 Qualify 100% and cutover | — | todo |
+| 10 Qualify 100% and cutover | — | tooling ready 2026-11-01 (dry-run + copy rehearsal proven); cutover waits for owner sign-off |
 
 ## Isolation (Phase 1)
 
@@ -690,3 +690,51 @@ Config: `evileye_client-client.toml` loses `[crafting]` and gains `[recipeBook] 
 `hideRecipeBookButton` carried over); `evileye_tweaks-common.toml` loses `[crafting]`; `config/defaultoptions/keybindings.txt`
 loses the compress-stack line. No showcase section or headless check exercised the crafting controls (they were
 client keys with no scripted check), so no showcase boot was needed.
+
+## Phase 10 cutover tooling (2026-11-01)
+
+Branch `migration/cutover-tooling`. **Nothing here has touched the real Stable instance**: only
+`-DryRun` ran against it; the full cutover and rollback ran on a throwaway copy
+(`jobs/2026-11-01-cutover-tooling/`, logs + manifests kept).
+
+Scripts (all in `scripts/migration/`, owner-run standard: help, dry run, `.tmp/owner-runs/` log, OK/FAILED):
+- `cutover.ps1` - **dry run unless `-Execute`**. Guards, then: archive, switch loader/Java, trial-route install.
+- `rollback.ps1` - same convention; restores the newest (or `-Archive`) `cutover-archive-*`.
+- `stable-prelaunch.ps1` - becomes Stable's PreLaunchCommand; repeats the verified private-jar install each launch.
+- `cutover-lib.ps1` - guards/archive/restore functions (tested by `tools/packwiz/tests/cutover_guards.test.cjs`).
+- `tools/packwiz/migration/cutover_install.cjs` - Stable target for the shared `installPack` in `trial_install.cjs`
+  (Trial behaviour unchanged). `--fresh` first deletes every file the old install tracked in `packwiz.json`
+  except files the new index marks `preserve`.
+
+**Why `--fresh`**: the first rehearsal failed with `Installed artifact differs: config/addonslib-common.toml`.
+packwiz skips a file whose pack hash equals its cached hash even when a Forge-era run changed it on disk,
+and keeps tracked files the new pack dropped. Starting from an empty `mods/` plus untracked tracked files
+gives the exact target inventory. Kubejs example/config files KubeJS generates itself remain (harmless).
+
+Guards (real Stable): MultiMC and any Minecraft java closed; checkout `pack.toml` is NeoForge 21.1.265 / MC 1.21.1;
+Stable is still Forge (refuses a second run); Java 21 exists; cache holds the `evileye_migration` bridge;
+archive folder is new; free space >= 1.1 x archive + 2 GiB. A rehearsal `-Instance` copy skips only the launcher check.
+Archive = whole instance folder except `logs`, `crash-reports`, `quickskin_cache`, `hs_err_pid*.log`, `packwiz-install.log`
+(2.88 GiB / 3925 files for Stable), copied into `<ArchiveRoot>/cutover-archive-<date-time>/files` with `manifest.sha256`
+(source and copy hashed and compared per file). Rollback re-verifies the archive first, then **moves** (never deletes)
+the live NeoForge `.minecraft` to `cutover-rollback-<date-time>/` (a converted world is never downgraded in place),
+restores from the archive and re-hashes every file.
+
+### Owner's cutover day
+1. Merge `migration/neoforge-1.21.1` to `main` (rehash per branch), qualify 100%, push.
+2. Close MultiMC fully and the game. From the **main checkout** run
+   `powershell -NoProfile -ExecutionPolicy Bypass -File <main checkout>scriptsmigrationcutover.ps1`
+   (dry run; confirm `READY`), then the same with `-Execute`. About 6 minutes. Pass `-Cache <dir>` if the bridge
+   or jars changed after `jobs/2026-10-31-world-trial-final/cache`.
+3. Open MultiMC, launch **Evil Eye (Stable)** (the prelaunch reinstalls the verified pack), open the world, then as operator:
+   `/evileye_migration convert-all dry-run`, then `/evileye_migration convert-all`, then
+   `/evileye_migration status` until it reports SAFE TO REMOVE. Keep the bridge until then.
+4. Rollback at any point: close the game, run `rollback.ps1` (dry run), then `rollback.ps1 -Execute`.
+   The main checkout must stay put: Stable's prelaunch points at it.
+
+### Rehearsal evidence (copy of Stable, 2026-11-01)
+Run 1: archived, switched, install failed on the config above; `rollback.ps1 -Execute` restored 3925 files, every
+hash matched, and an independent compare against pre-cutover hashes showed 0 differences. Run 2 (with `--fresh`):
+cutover exit 0 in 6 min, 191 jars incl. `evileye_migration-...-dev.7`, mmc-pack = MC 1.21.1 + NeoForge 21.1.265,
+Java 21 Temurin, prelaunch = stable-prelaunch.ps1, saves byte-identical to pre-cutover; rollback restored 3925 files,
+0 differences. No game was launched. A launch of the cut-over copy has not been done; that is the owner's day-one check.

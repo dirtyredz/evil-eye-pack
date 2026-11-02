@@ -87,15 +87,9 @@ function writePack(root, overlay, files) {
   return pack;
 }
 
-async function main(argv) {
-  let cache, dryRun = false;
-  for (let i = 0; i < argv.length; i++) {
-    if (argv[i] === '--dry-run') dryRun = true;
-    else if (argv[i] === '--cache' && argv[i + 1]) cache = path.resolve(argv[++i]);
-    else throw Error('Usage: trial_install.cjs --cache <cache root> [--dry-run]');
-  }
-  if (!cache) throw Error('A complete offline --cache is required');
-  const instance = trialInstance(INSTANCE);
+// Shared install route (Trial and cutover): verify pack + cached bytes, then packwiz copies the
+// local files into `instance` and sets the instance's PreLaunchCommand to `prelaunch`.
+async function installPack({ instance, cache, dryRun, prelaunch, backupName, label }) {
   const cfg = path.resolve(instance, '../instance.cfg');
   noLinks(cfg);
   const original = fs.readFileSync(cfg, 'utf8');
@@ -106,7 +100,7 @@ async function main(argv) {
   const files = prepareFiles(ROOT, cache);
   for (const f of files) noLinks(path.join(instance, f.file));
   console.log(`Verified ${files.length} local files; destination ${instance}; no host or downloads.`);
-  if (dryRun) { console.log('Dry run: would install local files and set this Trial prelaunch to the same command.'); return; }
+  if (dryRun) { console.log(`Dry run: would install local files and set this ${label} prelaunch to the same command.`); return; }
   // This is the owner's client pre-launch path. It must not wait on unrelated JVMs.
   const scope = require('../server_smoke/procs.cjs').scope();
   const stop = () => scope.killAll();
@@ -125,16 +119,27 @@ async function main(argv) {
     for (const rel of applyOwnedKeys(instance)) console.log('Forced pack-owned keys into ' + rel);
     // Preserve the original once, beside owner-run logs. Never change another instance.
     const logs = path.join(ROOT, '.tmp/owner-runs'); fs.mkdirSync(logs, { recursive: true });
-    const backup = path.join(logs, 'trial-instance-before.cfg');
+    const backup = path.join(logs, backupName);
     if (!fs.existsSync(backup)) fs.writeFileSync(backup, original, { flag: 'wx' });
-    const command = trialPreLaunchCommand(ROOT, cache);
-    fs.writeFileSync(cfg, setInstanceCfgValue(original, 'PreLaunchCommand', command));
-    console.log('Private jars verified. Launch Evil Eye NeoForge Trial in MultiMC; no client was started.');
+    fs.writeFileSync(cfg, setInstanceCfgValue(original, 'PreLaunchCommand', prelaunch));
+    console.log(`Private jars verified. Launch ${label} in MultiMC; no client was started.`);
   } finally {
     scope.killAll(); process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop);
     // run was made by mkdtemp directly under this worktree's .tmp, never user-provided.
     fs.rmSync(run, { recursive: true, force: true });
   }
 }
+
+async function main(argv) {
+  let cache, dryRun = false;
+  for (let i = 0; i < argv.length; i++) {
+    if (argv[i] === '--dry-run') dryRun = true;
+    else if (argv[i] === '--cache' && argv[i + 1]) cache = path.resolve(argv[++i]);
+    else throw Error('Usage: trial_install.cjs --cache <cache root> [--dry-run]');
+  }
+  if (!cache) throw Error('A complete offline --cache is required');
+  const instance = trialInstance(INSTANCE);
+  await installPack({ instance, cache, dryRun, prelaunch: trialPreLaunchCommand(ROOT, cache), backupName: 'trial-instance-before.cfg', label: 'Evil Eye NeoForge Trial' });
+}
 if (require.main === module) main(process.argv.slice(2)).catch(e => { console.error(e.stack); process.exitCode = 1; });
-module.exports = { instanceCfgValue, setInstanceCfgValue, trialPreLaunchCommand, prepareFiles, writePack, verifyInstalledFiles, trialInstance };
+module.exports = { installPack, instanceCfgValue, setInstanceCfgValue, trialPreLaunchCommand, prepareFiles, writePack, verifyInstalledFiles, trialInstance };
