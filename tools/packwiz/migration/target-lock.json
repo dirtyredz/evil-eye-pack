@@ -5615,13 +5615,13 @@
     "publisher": {
      "sha1": "b78945c40cfe7640408f3fd1e44da385a8c8b805",
      "sha512": "66745825330a98f3e4a5ea3a44aff8b00870f715c144edc38dd2f61b4240589600b58ae89efac3b54dbb5aa430b1059dac1a28fd71cac5cc9002bbeb5ba3f22b",
-     "size": 12197109
+     "size": 11976009
     },
     "sha1": "b78945c40cfe7640408f3fd1e44da385a8c8b805",
     "sha256": "004dbc9f3106f4d192aeaa1ee1190dd16ec9ca8059ed3d093b80034f4c574f43",
     "sha512": "66745825330a98f3e4a5ea3a44aff8b00870f715c144edc38dd2f61b4240589600b58ae89efac3b54dbb5aa430b1059dac1a28fd71cac5cc9002bbeb5ba3f22b",
     "side": "both",
-    "size": 12197109,
+    "size": 11976009,
     "source": "modrinth",
     "url": "https://cdn.modrinth.com/data/Ce6I4WUE/versions/5KzzycBT/Mekanism-1.21.1-10.7.19.85.jar",
     "version": "5KzzycBT",
