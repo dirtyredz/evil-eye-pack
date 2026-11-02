@@ -831,3 +831,9 @@ Removed: `mods/cosmetic-armor-reworked.pw.toml`, `config/cosmeticarmorreworked-c
 **Migration path for an existing world.** Open the converted world with this pack (Cosmetic Armor Reworked absent), then run `/evileye_migration convert-all` as a dry run, then `convert-all`, then `status`. For a singleplayer world the owner must be in the world while `convert-all` runs; otherwise their sidecar stays "owner deferred". The source sidecars are kept.
 
 **Evidence.** Copied-world dry-run on a copy of the converted Trial world (2026-11-02, dev.9 jar): both real CAR sidecars (owner 90486bf9 and b876a5c7, both empty, Size 11) read cleanly, sources=2, unsupported=0; the full conversion proof was skipped by orchestrator decision (import path covered by GameTests on real files). The same dry-run reported pre-existing legacy remaining chunks=2, entity chunks=818 in that world, unrelated to CAR.
+
+## 2026-11-02 - Inventory runtime subset
+
+Private local pins advance to Evil Eye Client 0.5.0 and Tweaks 0.8.0, with verified jars in both the migration cache and world-trial-final cache. The pack enables owned vanilla-storage move-all and selected-hand/offhand refill, disabling the equivalent IPN switches and enforcing that migration on preserved client configs. Existing middle-click sorting stays in IPN. IPN/libIPN and Kotlin remain pinned; sorting parity, Dank bulk support and full removal are follow-up work.
+
+The no-download dispatch updates only the two local lock targets from their built bytes using the existing metadata reader/serializer, then runs migration check offline. Full resolve is not used because it fetches platform metadata. Acceptance evidence and exact remaining work: artifacts/minecraft-mods/jobs/2026-11-02-ipn-build/handoff.md. No owner-instance writes or visible client launch.

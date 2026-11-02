@@ -733,3 +733,7 @@ apply it as in-memory views:
 - The five item lists were split once from the frozen REI 12.1.785 config (1,759 IDs; not regenerated from naming patterns). `tools/analysis/emi_curation/migrate_rei.cjs`, its `fixtures/rei-config.json5` and `migration.test.cjs` were retired 2026-10-20 (dk-eaeaf6eb, dk-232fd37d): the import was done, `--check` pinned live hand-curated counts so any normal edit broke it, and it re-declared validation that `policy.compile` owns. Ongoing list integrity (schema, id format, duplicates) is `policy.compile`, exercised against the real config by `policy.test.cjs`. The fixture and script are recoverable from git at commit a61035d.
 - The README's old "377 colour variants" figure was 361 colour variants plus 16 MineColonies eggs.
 - Tooling is Node-only: tests, hash verifier, index rebuild and localhost server. The planned `py -3.11` scripts were ported because this machine has no `py` launcher or system Python, and Node is needed for the KubeJS tests anyway.
+
+## 2026-11-02 - IPN round-2 bounded subset
+
+Use the orchestrator-authorized shippable fallback: Client 0.5.0/Tweaks 0.8.0 own vanilla move-all and provenance-based hand refill. Keep IPN/libIPN for sorting and Kotlin for retained consumers. Disable IPN's competing refill and move-all switches through shipped config and pack-owned keys. This deliberately leaves modded-storage move-all, including Dank, unavailable pending verified bulk adapters. No claim of complete IPN replacement or removal acceptance is made. No instance was modified.

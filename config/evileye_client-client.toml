@@ -389,3 +389,12 @@
 	#Draw cosmetic armour over worn armour. Off shows everyone's real equipment
 	#("Show skin" choices still hide armour). Also switchable in the equipment panel's Visibility editor.
 	showCosmetics = true
+
+#Owned vanilla-storage transfer; IPN remains for sorting only.
+[transfer]
+	enabled = true
+	deniedScreens = ["appeng.client.gui.*", "com.simibubi.create.*"]
+
+#Server-validated selected-hand and offhand refill, suspended in every GUI.
+[refill]
+	enabled = true

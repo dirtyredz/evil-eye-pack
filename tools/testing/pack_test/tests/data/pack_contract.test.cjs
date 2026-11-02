@@ -113,3 +113,18 @@ test('Cosmetic Armor Reworked is replaced by the equipment panel: metafile, conf
   assert.match(tomlSection(client, 'equipment'), /^\s*enabled = true$/m);
   assert.match(tomlSection(client, 'cosmeticArmor'), /^\s*showCosmetics = true$/m);
 });
+
+test('inventory subset retains IPN sorting and Kotlin while owned transfer/refill have no competing controls', () => {
+  for (const retained of ['inventory-profiles-next', 'libipn', 'kotlin-for-forge']) {
+    assert.ok(fs.existsSync(path.join(ROOT, `mods/${retained}.pw.toml`)), `${retained} must stay until full replacement acceptance`);
+  }
+  const ipn = JSON.parse(read('config/inventoryprofilesnext/inventoryprofiles.json'));
+  assert.equal(ipn.ModSettings.enable_auto_refill, false);
+  assert.equal(ipn.GuiSettings.show_move_all_button, false);
+  assert.equal(ipn.Hotkeys.sort_inventory.main.keys, 'BUTTON_3');
+  for (const file of ['config/evileye_client-client.toml', 'config/evileye_tweaks-common.toml']) {
+    for (const section of ['transfer', 'refill']) assert.match(tomlSection(read(file), section), /^\s*enabled = true$/m);
+  }
+  assert.match(read('mods/evileye-client.pw.toml'), /neoforge-0\.5\.0\.jar/);
+  assert.match(read('mods/evileye-tweaks.pw.toml'), /neoforge-0\.8\.0\.jar/);
+});

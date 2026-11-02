@@ -18,3 +18,5 @@ duplicate-cleanup guides.
 
 Private migration trial prelaunch: `node tools/packwiz/install/install_local.cjs --instance <trial/.minecraft>`
 ([private pins](neoforge-migration.md#private-alex-ports-devtrial-only-2026-10-30)); family delivery remains separate.
+
+Inventory subset (Client 0.5.0/Tweaks 0.8.0): two move-all controls on classified vanilla storage, and silent selected-hand/offhand refill with near-break tool swaps. IPN remains for sorting. Dank/modded-storage transfer and full IPN removal are not implemented. See [migration status](neoforge-migration.md#2026-11-02---inventory-runtime-subset).

@@ -3217,24 +3217,24 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused), and FTB Library's inventory sidebar (wave 5).; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave).",
+   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-2 0.5.0 fallback: verified vanilla move-all and both-hand refill; sorting and Dank bulk support remain inactive. IPN/libIPN retained for sorting.",
    "target": {
     "declares": [
-     "evileye_client optional curios [9.5.1,)",
+     "evileye_client optional curios [9.5.1,) (client)",
      "evileye_client optional evileye_tweaks [0.5.0,)",
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.4.0.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.5.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.4.0"
+     "evileye_client@0.5.0"
     ],
     "name": "Evil Eye Client",
-    "sha256": "613672f6d644a551e1178d8224bc9dafdcd15dc56bfc617b97d1d51bb9cee06f",
+    "sha256": "9a75792392a9718a291292e02fd0db5b7b57be0f658d010c5f9f2ec001c01ab4",
     "side": "client",
-    "size": 447714,
+    "size": 475303,
     "source": "local"
    }
   },
@@ -3297,23 +3297,23 @@
    "metafile": "mods/evileye-tweaks.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave).",
+   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave). Round-2 0.8.0 fallback: verified vanilla move-all and both-hand refill; sorting and Dank bulk support remain inactive. IPN/libIPN retained for sorting.",
    "target": {
     "declares": [
      "evileye_tweaks optional curios [9.5.1,)",
      "evileye_tweaks required minecraft [1.21.1,1.21.2)",
      "evileye_tweaks required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.7.0.jar",
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.8.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-tweaks.pw.toml",
     "mods": [
-     "evileye_tweaks@0.7.0"
+     "evileye_tweaks@0.8.0"
     ],
     "name": "Evil Eye Tweaks",
-    "sha256": "d0fe7fe27391a333b22abed7e8f310a78661924aed421e350046435f58f83e13",
+    "sha256": "34cd53e0cf13c1e1a1b305bc5e7f594fc7eaa6f572dacacbf6a6d5cce9021b65",
     "side": "both",
-    "size": 261491,
+    "size": 313963,
     "source": "local"
    }
   },

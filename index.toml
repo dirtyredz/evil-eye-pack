@@ -1778,7 +1778,7 @@ hash = "19e1a12a90c2b6c0df9fb3152c19a21eb4c9d84c49d496377eacfca0855b324f"
 
 [[files]]
 file = "config/evileye_client-client.toml"
-hash = "bcf253dc5e53acbf3ae9307ae38244ef92fc70a68255c501b2e5919aba2f351f"
+hash = "1fdd6ea3306afd45776d7d86512089de1676ffe8ad310f777fb9a7080937a212"
 preserve = true
 
 [[files]]
@@ -1791,7 +1791,7 @@ hash = "e27c848c2e0bb82f09492108399513a7e93e4bb40cb90e41e9e65d38fcd68dd7"
 
 [[files]]
 file = "config/evileye_tweaks-common.toml"
-hash = "9503867247cd7c1393688b8e19cdc2cfbc14b5655e52a2347f0545be3125720e"
+hash = "ea9558b6ad2c36653053f908a1ad669ed544333bf9ba03e2ea341f8bd16b0033"
 
 [[files]]
 file = "config/extremereactors/client.toml"
@@ -2148,7 +2148,7 @@ hash = "2279d8a3e195b3053f71bd1c7debc85ec8ea1fdc204833b59641c06d862aa99e"
 
 [[files]]
 file = "config/inventoryprofilesnext/inventoryprofiles.json"
-hash = "4e196d37818e8eb94704d9be8b9e1361558aebafa3e0464f368168fb29c94195"
+hash = "1d502d172c2557e2cc2ac34794288c3a836f8a54cb30881a33c3d8617037b914"
 preserve = true
 
 [[files]]
@@ -4967,7 +4967,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "aa45cb193a164004f0393e52f643b2811bf693d8fd1ee4f121a2ad5cc7fa1b3e"
+hash = "feb5734042c263c9b7dc1d33940be37cffc0848ae177c630f3384fb21da2b111"
 metafile = true
 
 [[files]]
@@ -4982,7 +4982,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-tweaks.pw.toml"
-hash = "1aa0da42be582c222d73e0dba4f54ae4442042d17abf6b7accfa6ac5dbec5878"
+hash = "1eb7fa80a9ade84608bd3084ba611b807d90127be5996ab0e098fa93950a7672"
 metafile = true
 
 [[files]]

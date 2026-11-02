@@ -51,3 +51,22 @@ test('Flywheel backend is a registered Flywheel 1.0 id in the shipped config and
   const shipped = fs.readFileSync(path.join(ROOT, 'config/flywheel-client.toml'), 'utf8');
   assert.match(shipped, /^backend = "DEFAULT"$/m, 'legacy "INSTANCING" parses as minecraft:INSTANCING and is not registered');
 });
+
+test('inventory subset disables competing upstream features in preserved configs and enables the owned pair', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'owned-inventory-'));
+  try {
+    const ipn = path.join(dir, 'config/inventoryprofilesnext/inventoryprofiles.json');
+    fs.mkdirSync(path.dirname(ipn), { recursive: true });
+    fs.writeFileSync(ipn, JSON.stringify({ ModSettings: { enable_auto_refill: true },
+      GuiSettings: { show_move_all_button: true }, Hotkeys: { sort_inventory: { main: { keys: 'BUTTON_3' } } } }));
+    applyOwnedKeys(dir);
+    const actual = JSON.parse(fs.readFileSync(ipn, 'utf8'));
+    assert.equal(actual.ModSettings.enable_auto_refill, false);
+    assert.equal(actual.GuiSettings.show_move_all_button, false);
+    assert.equal(actual.Hotkeys.sort_inventory.main.keys, 'BUTTON_3', 'IPN still owns sorting');
+    const client = fs.readFileSync(path.join(dir, 'config/evileye_client-client.toml'), 'utf8');
+    assert.match(client, /\[transfer\]\n\s*enabled = true/);
+    assert.match(client, /\[refill\]\n\s*enabled = true/);
+    assert.deepEqual(applyOwnedKeys(dir), []);
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
