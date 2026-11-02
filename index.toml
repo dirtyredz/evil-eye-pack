@@ -5493,6 +5493,14 @@ file = "resourcepacks/evil-eye-cozy-overrides/assets/curios/textures/gui/invento
 hash = "e7fa5937f6be374c9c7ec91f44ce1efcf4d9c06e23992917af31ceb70f146630"
 
 [[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/iceandfire/textures/block/raw_silver_block.png"
+hash = "b27b44a7898ccef08bb51b282301070199d77959b4d0e3352a2939e4bf33a00a"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/iceandfire/textures/item/raw_silver.png"
+hash = "7a3212bb64be3ec2e5143517a552b9c135201f4d063290a460d96c421b7c2349"
+
+[[files]]
 file = "resourcepacks/evil-eye-cozy-overrides/assets/thirst/textures/gui/appleskin_icons.png"
 hash = "504ecda08f9e85b88c3bcb013f07e7014f2c557e70af501fc4bfa4bb2e542c9e"
 

@@ -14,6 +14,16 @@ malware_guard), with `packwiz`, `data_io` and `script-run` at the top. `server_s
 rule was written five times, and `tools/` had 13 siblings. **Rejected:** keeping the rule in PowerShell (the Node
 installers need it too); a shared JSON of instance paths (two readers would still each encode the matching rules).
 
+## 2026-11-02 - Classic raw silver textures from Ice and Fire's bundled legacy pack
+
+**Decision.** `evil-eye-cozy-overrides` carries `iceandfire:textures/item/raw_silver.png` and `textures/block/raw_silver_block.png`,
+byte-copied from `resourcepacks/iaf_legacy/` inside the pinned private `iceandfire-1.21.1-neoforge-2.1.4.jar` (Ice and Fire's own
+optional legacy pack; Ice and Fire's authors own the art). **Why:** owner prefers the classic look. They apply with no model
+change: the default `models/block/raw_silver_block.json` and `models/item/raw_silver.json` already point at
+`iceandfire:block/raw_silver_block` and `iceandfire:item/raw_silver`, neither texture has an `.mcmeta`, and the folder pack sits above
+the mod's assets. Personal family pack, never published, so redistribution licence is not a blocker. Re-copy from the jar if
+its textures are ever re-pinned to a different version.
+
 ## 2026-11-02 - Smooth thirst droplets ship from the pack override folder (Evil Eye Client 0.3.3)
 
 **Decision.** Original 4x droplet sprites for `thirst:textures/gui/thirst_icons.png` and `appleskin_icons.png` live in
