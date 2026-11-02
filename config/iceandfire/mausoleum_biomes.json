@@ -9,12 +9,12 @@
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_snowy"
+        "value": "c:is_snowy"
       },
       {
         "type": "BIOME_TAG",
         "negate": true,
-        "value": "forge:is_wet"
+        "value": "c:is_wet"
       },
       {
         "type": "BIOME_TAG",

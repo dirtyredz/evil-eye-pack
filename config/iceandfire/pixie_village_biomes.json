@@ -9,12 +9,12 @@
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_rare"
+        "value": "c:is_rare"
       },
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_magical"
+        "value": "c:is_magical"
       }
     ],
     [
@@ -26,7 +26,7 @@
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_dense"
+        "value": "c:is_dense_vegetation"
       },
       {
         "type": "BIOME_TAG",
@@ -36,7 +36,7 @@
       {
         "type": "BIOME_TAG",
         "negate": true,
-        "value": "forge:is_mountain"
+        "value": "c:is_mountain"
       },
       {
         "type": "BIOME_TAG",
@@ -46,22 +46,22 @@
       {
         "type": "BIOME_TAG",
         "negate": true,
-        "value": "forge:is_wet"
+        "value": "c:is_wet"
       },
       {
         "type": "BIOME_TAG",
         "negate": true,
-        "value": "forge:is_hot"
+        "value": "c:is_hot"
       },
       {
         "type": "BIOME_TAG",
         "negate": true,
-        "value": "forge:is_cold"
+        "value": "c:is_cold"
       },
       {
         "type": "BIOME_TAG",
         "negate": true,
-        "value": "forge:is_dry"
+        "value": "c:is_dry"
       },
       {
         "type": "BIOME_TAG",

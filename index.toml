@@ -1979,27 +1979,27 @@ hash = "0ec4ed27179c0a74651de2fe91cc17024ca05bd598b7f8043ebb794ad6d16a3a"
 
 [[files]]
 file = "config/iceandfire/deathworm_biomes.json"
-hash = "119e3398276786acafe198ebf3fd62d62e0e62e544ec74980c32bf0356c6f0c9"
+hash = "b523a7784d36e8e7cb1be7edfcd038ed90fe450754cfefbc592dc7f03e507df0"
 
 [[files]]
 file = "config/iceandfire/desert_myrmex_biomes.json"
-hash = "119e3398276786acafe198ebf3fd62d62e0e62e544ec74980c32bf0356c6f0c9"
+hash = "b523a7784d36e8e7cb1be7edfcd038ed90fe450754cfefbc592dc7f03e507df0"
 
 [[files]]
 file = "config/iceandfire/fire_dragon_biomes.json"
-hash = "b14dbfc0fc73b729167af268501f0bb6b76e4e73002916d6fa91df2338527d85"
+hash = "a4063c8dbad9585a0c65d9d997628e1be16d9b642eaa86bf372799ad7662da38"
 
 [[files]]
 file = "config/iceandfire/fire_dragon_cave_biomes.json"
-hash = "b14dbfc0fc73b729167af268501f0bb6b76e4e73002916d6fa91df2338527d85"
+hash = "a4063c8dbad9585a0c65d9d997628e1be16d9b642eaa86bf372799ad7662da38"
 
 [[files]]
 file = "config/iceandfire/fire_dragon_skeleton_biomes.json"
-hash = "119e3398276786acafe198ebf3fd62d62e0e62e544ec74980c32bf0356c6f0c9"
+hash = "b523a7784d36e8e7cb1be7edfcd038ed90fe450754cfefbc592dc7f03e507df0"
 
 [[files]]
 file = "config/iceandfire/fire_lily_biomes.json"
-hash = "a2a66102017dc3fd90d9f8cd9ac321fba3f4902e6fcdc862b77a57a4ed418926"
+hash = "a1cc83ba479f7e7b985f648a49c0c3cadd23b58b4014cf9a7e844abcfcab9938"
 
 [[files]]
 file = "config/iceandfire/forest_troll_biomes.json"
@@ -2007,7 +2007,7 @@ hash = "071e4cf9db64d5771b17d2487d8229562311c584ce56a824abb478f2cc00a911"
 
 [[files]]
 file = "config/iceandfire/frost_lily_biomes.json"
-hash = "6d60f767a148703f43500a02bb97f576d4aff8d8a58987d205e0bd83b9553a57"
+hash = "fa0db37bb35dda7830e520a9b05612ce5b7f178d97b0c5968b834f8e39edc4f7"
 
 [[files]]
 file = "config/iceandfire/gorgon_temple_biomes.json"
@@ -2015,7 +2015,7 @@ hash = "0ec4ed27179c0a74651de2fe91cc17024ca05bd598b7f8043ebb794ad6d16a3a"
 
 [[files]]
 file = "config/iceandfire/graveyard_biomes.json"
-hash = "20c274d8cb86758e1d9b7ec1d936089561407535c98b675aa0160b0033f1adfa"
+hash = "133931777507a5830183d4f408f93cf60ad84a50e35aa9b2b70810a44f7311b5"
 
 [[files]]
 file = "config/iceandfire/hippocampus_biomes.json"
@@ -2023,7 +2023,7 @@ hash = "e33237977094c9d26012e2a1883c75ff7062ca16d43f2c9a66f4ceb5d92d2fc0"
 
 [[files]]
 file = "config/iceandfire/hippogryph_biomes.json"
-hash = "8a199a14a2abf91b76855781bd37ed146491e896fd05ba714a806bc47b2c1657"
+hash = "1a581dd4e2fb50b8b3194607b0fd0656caf0b339901c6f5135523dc6d767bd09"
 
 [[files]]
 file = "config/iceandfire/hippogryph_black_biomes.json"
@@ -2031,11 +2031,11 @@ hash = "9848c71b726e7fc6cb7100f1a644ef6c36727a774a5c4601a86f2f88a48e0f36"
 
 [[files]]
 file = "config/iceandfire/hippogryph_brown_biomes.json"
-hash = "a05e7cbe7541bff74314da9b23976b072e727387185840645e60f5eb98e989be"
+hash = "66033a0a128f04e6703c67bc78ed1e03b9156c8621dd6149531343f8cd26adf7"
 
 [[files]]
 file = "config/iceandfire/hippogryph_chestnut_biomes.json"
-hash = "88466c293acef0b7725de96c7d21747948769d2e6b33e952d4c204472c898ecd"
+hash = "cea9bafbdd782f062c5ce0c9e270852dcf76035443dd5ada3465630ecca7cf4a"
 
 [[files]]
 file = "config/iceandfire/hippogryph_creamy_biomes.json"
@@ -2043,7 +2043,7 @@ hash = "42a2b88a0cb92149ce7707d43f9ad833250f13555db480e30090830dca0c0851"
 
 [[files]]
 file = "config/iceandfire/hippogryph_dark_brown_biomes.json"
-hash = "a77dad8b397928fb3b1d9b249b586b8103f866790d215b9bed549add0fa6f3db"
+hash = "b35484778050a0803e2b883b4871d1b3d70a48280cf3d4337daf7f20cd5ed448"
 
 [[files]]
 file = "config/iceandfire/hippogryph_gray_biomes.json"
@@ -2051,11 +2051,11 @@ hash = "284c803abb59fccecee7d8d28b244c109045d47dd13cc0e83394f3b75ed1a4f4"
 
 [[files]]
 file = "config/iceandfire/hippogryph_white_biomes.json"
-hash = "172c79ed677b97663434c8bd90311802556489bcb8afb5fe246f5c8cac840ea4"
+hash = "2f0b650866971342f63d4690b98f50ddb4d6493cc13621386bbd6d5bcd39a0c0"
 
 [[files]]
 file = "config/iceandfire/hydra_cave_biomes.json"
-hash = "ae56c23cf566a2fd020dfa6dd2acbbc4ca7770ee98223fd293b0bd0290fd816a"
+hash = "5b2abc9d96879181a38e72eda635260f98b3c250a115cd3e7dd18df73be9c240"
 
 [[files]]
 file = "config/iceandfire/iaf-client.json"
@@ -2067,15 +2067,15 @@ hash = "1805632c3a6025a0592b9a9e0001b284dcf2870373aea4f5dbdf722973b38dc4"
 
 [[files]]
 file = "config/iceandfire/ice_dragon_biomes.json"
-hash = "5357ee877b398d80a521593ae0dc4c11c2255cdacf020b43a11720f2359d5c4c"
+hash = "003f834e287b066970340921a7b20c71aee15145b70a0cef0fbe1027e998c3e3"
 
 [[files]]
 file = "config/iceandfire/ice_dragon_cave_biomes.json"
-hash = "5357ee877b398d80a521593ae0dc4c11c2255cdacf020b43a11720f2359d5c4c"
+hash = "003f834e287b066970340921a7b20c71aee15145b70a0cef0fbe1027e998c3e3"
 
 [[files]]
 file = "config/iceandfire/ice_dragon_skeleton_biomes.json"
-hash = "6d60f767a148703f43500a02bb97f576d4aff8d8a58987d205e0bd83b9553a57"
+hash = "fa0db37bb35dda7830e520a9b05612ce5b7f178d97b0c5968b834f8e39edc4f7"
 
 [[files]]
 file = "config/iceandfire/jungle_myrmex_biomes.json"
@@ -2099,11 +2099,11 @@ hash = "d01094612d9d8a48e99809522ff7e009bc1ec7e03a57e0f5f8c9cd51ef44b0bb"
 
 [[files]]
 file = "config/iceandfire/mausoleum_biomes.json"
-hash = "84e8b236ed2083cdf7e22c5608ab40080bfcb48d48c2e9f09ab7b3f29cb5b89f"
+hash = "4ba6514d949a5d833bb9c6fe289f70277a34f464a4e36e63b19eb952ce505f79"
 
 [[files]]
 file = "config/iceandfire/mountain_troll_biomes.json"
-hash = "a05e7cbe7541bff74314da9b23976b072e727387185840645e60f5eb98e989be"
+hash = "66033a0a128f04e6703c67bc78ed1e03b9156c8621dd6149531343f8cd26adf7"
 
 [[files]]
 file = "config/iceandfire/ore_gen_biomes.json"
@@ -2111,11 +2111,11 @@ hash = "e7855fa7d73f4d3af77f47ddd70b4fcbab7862302d004b4ddae9dddc75c4e402"
 
 [[files]]
 file = "config/iceandfire/pixie_village_biomes.json"
-hash = "312606ce4926f66af082019bedfd9534789ef3ca27ed6f3c3533b5137e125c4f"
+hash = "78b96fb305efbb4490139401794b36bf9b75147f55caf5536f250d3afad1ee13"
 
 [[files]]
 file = "config/iceandfire/sapphire_gen_biomes.json"
-hash = "6d60f767a148703f43500a02bb97f576d4aff8d8a58987d205e0bd83b9553a57"
+hash = "fa0db37bb35dda7830e520a9b05612ce5b7f178d97b0c5968b834f8e39edc4f7"
 
 [[files]]
 file = "config/iceandfire/sea_serpent_biomes.json"
@@ -2127,15 +2127,15 @@ hash = "e33237977094c9d26012e2a1883c75ff7062ca16d43f2c9a66f4ceb5d92d2fc0"
 
 [[files]]
 file = "config/iceandfire/snowy_troll_biomes.json"
-hash = "7b0d7d7459b06d0f5a01e0d3cb803d534f9b654ad3b4d9e336f0f50fbe06f4d7"
+hash = "c2ec6a21664e7b4e2ea550740c0003e722f719fdcc81095002b1780e2fd9ac54"
 
 [[files]]
 file = "config/iceandfire/stymphalian_bird_biomes.json"
-hash = "ae56c23cf566a2fd020dfa6dd2acbbc4ca7770ee98223fd293b0bd0290fd816a"
+hash = "5b2abc9d96879181a38e72eda635260f98b3c250a115cd3e7dd18df73be9c240"
 
 [[files]]
 file = "config/iceandfire/wandering_cyclops_biomes.json"
-hash = "46fb4b80eb9d9667223509ea17aa4b5aa65851f3cb09c09886d6b9dde1a63601"
+hash = "305b4c9d6974970efb1b018e752e3e238c576846a5231a103a48d83e705c7f76"
 
 [[files]]
 file = "config/immediatelyfast.json"

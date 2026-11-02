@@ -419,6 +419,18 @@ reconciled JSON plus `config/jupiter.json`. Legacy biome JSON filters also have 
 CE uses biome tags and structure sets. Do not convert an old 1/N per-chunk spawn rate into
 a CE per-structure-candidate probability without accounting for spacing (dk-e7b276f4).
 
+- **I&F dragon roosts/caves are gated by distance from world spawn, not by the legacy biome JSON.**
+  CE places roosts/caves via structure sets (`dragon_roost` spacing 15/sep 6, `dragon_cave` 18/12) and
+  biome tags `#iceandfire:structure_gen/*`; `DragonRoostStructure`/`DragonCaveStructure.findGenerationPoint`
+  also reject any point within `worldgen.dangerousDistanceLimit` blocks (horizontal) of world spawn
+  (pack value 800; CE default 1000), then roll `generate<Type>Chance`. Nothing within that radius ever generates.
+  The `config/iceandfire/*_biomes.json` files are not read by CE (provenance only), but their
+  `forge:` tags were rewritten to NeoForge `c:` names and are guarded by
+  `tools/testing/pack_test/tests/checks/iaf_biome_tags.test.cjs` (tag list: `pack_test/data/biome_tags.json`).
+  Renames: is_dense -> c:is_dense_vegetation, is_sparse -> c:is_sparse_vegetation, is_peak/is_slope ->
+  c:is_mountain/peak and /slope, is_water -> c:is_aquatic (closest). Other `forge:` tags remain in
+  `config/alexsmobs/*_spawns.json` (not audited).
+
 - **Planet terrain loaded does not mean entity sections are ready.** A height lookup can load
   moon terrain while the asynchronous destination tracker is still catching up. The showcase
   now waits on `ServerLevel.isPositionEntityTicking(BlockPos)` before teleporting (up to 200

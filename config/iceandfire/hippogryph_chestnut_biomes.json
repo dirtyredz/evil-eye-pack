@@ -9,7 +9,7 @@
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_mountain"
+        "value": "c:is_mountain"
       },
       {
         "type": "BIOME_TAG",
@@ -19,7 +19,7 @@
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_dry"
+        "value": "c:is_dry"
       }
     ],
     [

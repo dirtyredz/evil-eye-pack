@@ -4,7 +4,7 @@
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_hot/overworld"
+        "value": "c:is_hot/overworld"
       },
       {
         "type": "BIOME_TAG",
@@ -31,17 +31,17 @@
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_plains"
+        "value": "c:is_plains"
       },
       {
         "type": "BIOME_TAG",
         "negate": true,
-        "value": "forge:is_wet"
+        "value": "c:is_wet"
       },
       {
         "type": "BIOME_TAG",
         "negate": true,
-        "value": "forge:is_cold"
+        "value": "c:is_cold"
       },
       {
         "type": "BIOME_TAG",

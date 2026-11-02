@@ -9,22 +9,22 @@
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_sparse"
+        "value": "c:is_sparse_vegetation"
       },
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_snowy"
+        "value": "c:is_snowy"
       },
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_mountain"
+        "value": "c:is_mountain"
       },
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_peak"
+        "value": "c:is_mountain/peak"
       }
     ],
     [
@@ -36,22 +36,22 @@
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_sparse"
+        "value": "c:is_sparse_vegetation"
       },
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_snowy"
+        "value": "c:is_snowy"
       },
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_mountain"
+        "value": "c:is_mountain"
       },
       {
         "type": "BIOME_TAG",
         "negate": false,
-        "value": "forge:is_slope"
+        "value": "c:is_mountain/slope"
       }
     ],
     [
