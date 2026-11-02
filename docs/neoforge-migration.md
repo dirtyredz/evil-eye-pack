@@ -711,8 +711,8 @@ No config change; no server change.
 
 ## Evil Eye Client 0.3.5 pin: Electromagnet charge widget (2026-11-02)
 
-Owner request. Evil Eye Client 0.3.5 (minecraft-mods `mods/EvilEyeClient` d509910, branch `feat/magnet-hud`; 0.3.4 is reserved
-for the Ender IO tooltip-layer fix) draws a small widget right of the hotbar while an Ender IO Electromagnet is switched on:
+Owner request. Evil Eye Client 0.3.5 (minecraft-mods `mods/EvilEyeClient` d509910, branch `feat/magnet-hud`)
+draws a small widget right of the hotbar while an Ender IO Electromagnet is switched on:
 icon, charge bar, percentage and `µI` amount, red under 15%. Active = `enderio:toggled` component true; energy = the item
 energy capability; inventory, offhand, armour and Curios slots are scanned every 10 ticks. New `[magnet]` section in
 `config/evileye_client-client.toml` (`enabled`, `anchor`, `offsetX`, `offsetY`, `scale`). Pinned like 0.3.3.
@@ -720,6 +720,23 @@ energy capability; inventory, offhand, armour and Curios slots are scanned every
 | Pin | Source | SHA-256 | Bytes |
 |---|---|---|---|
 | `evileye_client-1.21.1-neoforge-0.3.5.jar` (side client) | minecraft-mods `mods/EvilEyeClient` d509910 | `d543e885e4a4b49a8da9d387b45f2bbd162786d8f34dfc5c3d70950f766fb4cc` | 366,528 |
+
+## Evil Eye Client 0.3.6 pin: Ender IO + EMI tooltip layer and missing-slot highlight (2026-11-02)
+
+Owner bugs on Stable. (1) Inside Ender IO machine screens, EMI's item-list stacks painted over EMI's own tooltip.
+Root cause: Ender Core's `EnderContainerScreen.renderLabels` leaves a `translate(0, 0, 200 + 150 x layers)` on the pose
+stack; EMI draws its list in `ContainerScreenEvent.Render.Foreground` (inside that pose) but its tooltip in
+`ScreenEvent.Render.Post` at the base level plus 400. Evil Eye Client's `EnderScreenDepth` cancels the leak for those
+screens only. (2) In EMI's recipe view for Ender IO's Alloy Smelting the "not enough ingredients" highlight sat in the
+recipe's top-left corner. Root cause: EMI 1.1.24's JEI bridge (`JemiRecipeHandler.addIngredients`) matches slot widgets by
+`==` across two separate builds, never finds them, and places every slot at 0,0, so every missing slot's highlight lands
+there. A mixin matches by equality. Neither is a Dank Recipe Transfer issue (it only wraps vanilla crafting handlers).
+
+| Pin | Source | SHA-256 | Bytes |
+|---|---|---|---|
+| `evileye_client-1.21.1-neoforge-0.3.6.jar` (side client) | minecraft-mods `mods/EvilEyeClient` 4eae700 | `8406e2a59cc54331fbf11d95ab4f88e1c29ff9487e338b0f9f356a7f26e15f97` | 372,323 |
+
+No config change; no server change. Adds one client mixin config (`evileye_client.emi.mixins.json`, gated to EMI + JEI).
 
 ## Phase 10 cutover tooling (2026-11-01)
 

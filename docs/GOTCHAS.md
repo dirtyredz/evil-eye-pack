@@ -389,3 +389,9 @@ a CE per-structure-candidate probability without accounting for spacing (dk-e7b2
   `mod/<namespace>:<path>` (Town Talk is `mod/towntalk:respack`, not Forge's `builtin/towntalk`), and a pack
   file's id is its exact installed file name (`file/Eat Quiet 1.0.0_1.20-1.21.zip` on the migration branch). A
   stale id is silently skipped; the pack contract test checks every id in `config/evileye_client/resourcepacks.json`.
+
+- **Ender IO machine screens + EMI (fixed in Evil Eye Client 0.3.6).** Ender Core's `EnderContainerScreen.renderLabels`
+  leaks a z translation into `ContainerScreenEvent.Render.Foreground`, which put EMI's item list over EMI's own tooltip
+  (drawn later in `ScreenEvent.Render.Post`); and EMI 1.1.24's JEI bridge (`dev.emi.emi.jemi.JemiRecipeHandler`) placed every
+  transfer-highlight slot at 0,0 (identity `==` lookup), so JEI-provided recipes' (Ender IO machines) missing-ingredient
+  highlights drew in the recipe's top-left corner. Both are patched in the Client jar; drop the mixin when EMI fixes the lookup.
