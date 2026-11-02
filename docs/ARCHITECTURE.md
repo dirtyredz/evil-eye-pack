@@ -76,8 +76,8 @@ placement, input identity checks and saved-evidence replay.
   `overrides.json` holds reasoned kind/family corrections, undeclared
   dependencies and pack-wide fixes.
 - `capture/` — `capture.cjs` prepares the disposable server through
-  `server_smoke/offline_server.cjs` with the `ordinary` world profile, waits on
-  `server_smoke/host_wait.cjs`, reuses pack-test's cached-world copy and
+  `tools/testing/server_smoke/runtime/offline_server.cjs` with the `ordinary` world profile, waits on
+  `tools/testing/server_smoke/process/host_wait.cjs`, reuses pack-test's cached-world copy and
   registry collector and server-smoke's JVM supervision. Only that server gets a
   narrow Forge TRACE logger and the registry snapshot callback. `timing.cjs`
   pairs boundaries before the server `DONE_RE` marker.
@@ -128,7 +128,7 @@ The [EMI architecture](emi.md) covers the separate client subsystem.
 
 1. **Verify and stage on Valhalla.** Create an artifact run directory and record the
    checkout identity, pack/index hashes, seed, probe token and the runtime descriptor
-   (`server_smoke/runtime.cjs`: loader, versions, Java major, id from `pack.toml`).
+   (`tools/testing/server_smoke/runtime/runtime.cjs`: loader, versions, Java major, id from `pack.toml`).
    Verify the hash chain and the runtime's Java, take the local stage lock, then
    incrementally install the server-side pack over the cached per-runtime loader base
    into that runtime's stage (stamped `runtime.json`; a mismatched stage is rebuilt). The stage is never booted. Scan its installed resources
@@ -244,11 +244,34 @@ import or invoke it. Failed requests say `not checked`; unavailable versions are
 distinguished from archived projects. Known-bad IDs/hashes are used when present;
 the initial owner-supplied list has slugs/names only and records that limitation.
 
+## Install route, cutover and rollback
+
 Private migration pins: `tools/packwiz/install/local_source.cjs` verifies hash-addressed cache bytes and
 creates the temporary loopback installer overlay; `install_local.cjs` is the dedicated trial
-prelaunch wrapper. Server smoke and pack-test staging share the same overlay. The owner Trial route
-uses `install/trial_target.cjs` (the neutral `install_pack.cjs` route): all hash-verified cached artifacts become ordinary index files in
-a temporary local pack. The cached installer copies and tracks them without any URL or server;
-installed artifact hashes are checked before Trial prelaunch is updated. Stable and Local
-are refused. The owner-only local delivery ruling supersedes dk-85261627; future cutover
-reuses this route with its own explicit authorization. See [NeoForge migration](neoforge-migration.md).
+prelaunch wrapper. Server smoke and pack-test staging share the same overlay. Machine paths and
+Java come from `tools/runtime_env/env.cjs`; the install route reads its `FIXED` view, which ignores
+every `SMOKE_*` override, and runs its processes in a `tools/runtime_env/procs.cjs` scope.
+
+The neutral route is `install/install_pack.cjs`: all hash-verified cached artifacts become
+ordinary index files in a temporary local pack. The cached installer copies and tracks them without
+any URL or server; installed artifact hashes are checked before a target's prelaunch is updated.
+Two thin targets sit on it: `trial_target.cjs` (only Evil Eye NeoForge Trial) and
+`stable_target.cjs` (the real Stable instance or a rehearsal copy; `--fresh` first removes every
+file the old install tracked). `pack_owned_keys.cjs` forces the keys in `pack-owned-keys.json`
+into installed configs after each sync, for both targets.
+
+**Guard authority.** `tools/packwiz/install/instance_targets.cjs` alone decides which MultiMC
+instance is which. `stableTarget` is an allowlist: the real Stable `.minecraft`, or a path outside
+`C:/Users/dirty/MultiMC/instances` (rehearsal copies); Local, Trial, copies of either, and every
+other MultiMC instance are refused. `trialTarget` accepts only the Trial path; `assertPinTarget`
+keeps private pins out of Stable and Local. PowerShell never re-implements the rules:
+`scripts/migration/cutover-lib.ps1` calls the `classify` and `stable` CLI commands.
+
+**Cutover and rollback** (`scripts/migration/cutover.ps1`, `rollback.ps1`, owner-run, dry run by
+default). `cutover.ps1 -Execute` refuses on any guard blocker, archives the whole Stable instance
+with a SHA-256 manifest, empties `mods/`, rewrites `mmc-pack.json` and the instance Java to
+Minecraft 1.21.1 / NeoForge 21.1.265 / Temurin 21, installs through `stable_target.cjs --fresh`
+and points Stable's prelaunch at `stable-prelaunch.ps1`, which repeats that install on every
+launch. `rollback.ps1` restores the newest `cutover-archive-*`, keeping the NeoForge folder aside.
+Both default `-Instance` from `instance_targets.cjs stable` and refuse anything the allowlist
+refuses. See [NeoForge migration](neoforge-migration.md).
