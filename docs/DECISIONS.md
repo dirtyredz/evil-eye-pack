@@ -2,6 +2,10 @@
 
 Newest first.
 
+## 2026-11-02 - Cosmetic Armor Reworked is absorbed into Evil Eye Tweaks and Client (equipment panel wave)
+
+**Decision.** Owner-approved plan 2026-11-01: Cosmetic Armor Reworked leaves the NeoForge pack. Evil Eye Tweaks 0.7.0 owns the cosmetic armour storage and the `evileye_tweaks:equipment` menu; Evil Eye Client 0.4.0 owns the equipment panel (Curios key G and the inventory button open one screen for curios, armour, cosmetic armour and cosmetic curios) and the cosmetic armour rendering; Evil Eye World Migration 0.1.0-dev.11 imports the old `playerdata/<uuid>.cosarmor` sidecars. **Why:** one equipment screen instead of two mods with separate screens and buttons, and fewer third-party jars (consolidation wave 7). **Rejected:** keeping Cosmetic Armor Reworked beside the Curios screen (two inventories to open, no shared visibility controls). Existing items are carried by the migration, not lost.
+
 ## 2026-11-01 - Tool tree regrouped; one install route and one instance-target authority
 
 **Decision.** Push-review structure fixes (no behaviour change). `tools/` is grouped into `testing/` (client_mixin,

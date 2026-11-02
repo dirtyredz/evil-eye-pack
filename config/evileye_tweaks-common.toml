@@ -165,3 +165,10 @@
 	# Default: 3.0
 	# Range: 0.0 ~ 256.0
 	slowFallingMinDrop = 3.0
+
+[cosmeticArmor]
+	#Show cosmetic armour on players (it replaces the worn armour's appearance only). Turning
+	#this off keeps every stored cosmetic item; the equipment panel still edits them.
+	shown = true
+	#Keep cosmetic armour on death. When false it drops with the inventory unless keepInventory is on.
+	keepThroughDeath = false

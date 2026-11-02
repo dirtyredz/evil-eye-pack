@@ -1627,15 +1627,6 @@ hash = "d1f6a792a03e4b2ccec19ba00098db7d4c47fa3f3888b534cba2247a045cfd64"
 preserve = true
 
 [[files]]
-file = "config/cosmeticarmorreworked-client.toml"
-hash = "000b9988ecbe8b294dc3577d1867b09954e237775b3a252af45df0b4cb2c591c"
-preserve = true
-
-[[files]]
-file = "config/cosmeticarmorreworked-common.toml"
-hash = "bbcc81de697b22295d1fb327a0fd0b1deebe86a33daba4713c341e15ecf89316"
-
-[[files]]
 file = "config/create-client.toml"
 hash = "e08534fd349021a78c68ee3ace46bdbf2f8d28c50ed6a435431aa0cb2d047fee"
 preserve = true
@@ -1787,7 +1778,7 @@ hash = "19e1a12a90c2b6c0df9fb3152c19a21eb4c9d84c49d496377eacfca0855b324f"
 
 [[files]]
 file = "config/evileye_client-client.toml"
-hash = "d1908b2186eee1940df7a4bb60f042417179f42818ddeec5d5f731b6632b782d"
+hash = "bcf253dc5e53acbf3ae9307ae38244ef92fc70a68255c501b2e5919aba2f351f"
 preserve = true
 
 [[files]]
@@ -1800,7 +1791,7 @@ hash = "e27c848c2e0bb82f09492108399513a7e93e4bb40cb90e41e9e65d38fcd68dd7"
 
 [[files]]
 file = "config/evileye_tweaks-common.toml"
-hash = "69d4efebb93d22987e20fe684a08bdf2fe510873ae80e585e340f515d9d8df91"
+hash = "9503867247cd7c1393688b8e19cdc2cfbc14b5655e52a2347f0545be3125720e"
 
 [[files]]
 file = "config/extremereactors/client.toml"
@@ -4628,6 +4619,10 @@ file = "kubejs/server_scripts/showcase/sections/contraption_storage.js"
 hash = "f67008197a69ca92125d4734f5df10c6aca1d6f50f14c2efd101215aff7391aa"
 
 [[files]]
+file = "kubejs/server_scripts/showcase/sections/evileye_equipment.js"
+hash = "d185f7d77920e6cae5c0407b04b43ad8a7169b7bf106ffcd133a1de638a7d1ac"
+
+[[files]]
 file = "kubejs/server_scripts/showcase/sections/evileye_essentials.js"
 hash = "62526ce2b758f4594bcd06e3ff349175433407625cc7f50683a7c2ffe290c6fe"
 
@@ -4798,11 +4793,6 @@ metafile = true
 [[files]]
 file = "mods/connectivity.pw.toml"
 hash = "89340330d49ebf646a46af0da4cd457c98e0dca4337490981421d86bfcd2fd94"
-metafile = true
-
-[[files]]
-file = "mods/cosmetic-armor-reworked.pw.toml"
-hash = "b65ee01fec17228645121952de6dec75053b0b4c59a8c8036d6fa7829819f3f9"
 metafile = true
 
 [[files]]
@@ -4977,7 +4967,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "706f708451d7f53713fb7b8df739e61bf3701fd72af059a68567c0da738470d7"
+hash = "aa45cb193a164004f0393e52f643b2811bf693d8fd1ee4f121a2ad5cc7fa1b3e"
 metafile = true
 
 [[files]]
@@ -4987,12 +4977,12 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-migration.pw.toml"
-hash = "fd21df699fba1e41b3c08f7314ae000d59c9a6d9ef6ea8411fc03862e4a5b705"
+hash = "da99eb7e9144ef3bf2064f5342b915d206c3a8166a00b5750b483536b2e75681"
 metafile = true
 
 [[files]]
 file = "mods/evileye-tweaks.pw.toml"
-hash = "fb7063086b0185d8125ff66610e679e78a6e3fa394513c829541fb075ca1ed31"
+hash = "1aa0da42be582c222d73e0dba4f54ae4442042d17abf6b7accfa6ac5dbec5878"
 metafile = true
 
 [[files]]
@@ -5479,10 +5469,6 @@ metafile = true
 file = "resourcepacks/eat-quiet.pw.toml"
 hash = "9f19ab211d31699d2f8522b46b37f834e03fe6e5f31cfd529123e1889d17b8c6"
 metafile = true
-
-[[files]]
-file = "resourcepacks/evil-eye-cozy-overrides/assets/cosmeticarmorreworked/textures/gui/cosarmorinventory.png"
-hash = "9da0e04009c8a52cdd362827c9c562d236eb2dbc0fbd7d4fcfbc3019058ec7af"
 
 [[files]]
 file = "resourcepacks/evil-eye-cozy-overrides/assets/curios/textures/gui/inventory.png"

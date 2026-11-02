@@ -13,6 +13,7 @@ duplicate-cleanup guides.
 | Mekanism power and ore processing display (NeoForge branch) | `/evileye showcase mekanism_machines` | [Sections](showcases.md#mekanism-and-interstellaris-sections-neoforge-branch) |
 | Interstellaris metals, planet ground and a Sable physics pad (NeoForge branch) | `/evileye showcase interstellaris_space` | [Sections](showcases.md#mekanism-and-interstellaris-sections-neoforge-branch) |
 | Evil Eye Essentials commands (homes, warps, /back, tpa, kits, trash can; replaced FTB Essentials) and the inventory sidebar (NeoForge branch) | `/evileye showcase evileye_essentials` | [Sections](showcases.md#evil-eye-essentials-section-neoforge-branch) |
+| Evil Eye equipment panel (curios, armour, cosmetic armour in one screen; replaced Cosmetic Armor Reworked; NeoForge branch) | `/evileye showcase evileye_equipment` | [Sections](showcases.md#evil-eye-equipment-panel-section-neoforge-branch) |
 | One-boot showcase acceptance | `node tools/testing/showcase/check.cjs --all` | [Headless checks](showcases.md#run-the-headless-check) |
 
 Private migration trial prelaunch: `node tools/packwiz/install/install_local.cjs --instance <trial/.minecraft>`

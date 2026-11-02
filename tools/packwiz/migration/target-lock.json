@@ -1456,7 +1456,7 @@
    "rationale": "Replaced by the owned Evil Eye Client 0.2.0 (screens/controls/: Key Binds search by name/category/key, unbound and conflict filters, A-Z/Z-A sort, free-keys list, reset all with confirmation; vanilla editing). No config or saved data; bindings stay in options.txt."
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/cosmetic-armor-reworked.pw.toml",
    "old": {
     "file": "4600191",
@@ -1469,33 +1469,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "cosmeticarmorreworked required neoforge [21.1,)"
-    ],
-    "file": "5610814",
-    "filename": "cosmeticarmorreworked-1.21.1-v1-neoforge.jar",
-    "loader": "neoforge",
-    "metafile": "mods/cosmetic-armor-reworked.pw.toml",
-    "mods": [
-     "cosmeticarmorreworked@1.21.1-v1-neoforge"
-    ],
-    "name": "Cosmetic Armor Reworked",
-    "project": "237307",
-    "publisher": {
-     "md5": "881eb025d54ca01165c115a38a8d48c4",
-     "size": 92722
-    },
-    "sha1": "5f1e699cd0888b857ec63f01adaeb3571848bfea",
-    "sha256": "6328049755735159c55f5918ac301cff53a8d8790c3fe63e32e7d8a0e37f123f",
-    "sha512": "0bfae4647f98b172edc8029b782b4d812eb9a439decfb9f30460890e565f5c684b64e2377e1b8a1b820e9dc69f65e6cd48fee5d1d9fcebb8cd3278e9a4b8b318",
-    "side": "both",
-    "size": 92722,
-    "source": "curseforge",
-    "versionNumber": "cosmeticarmorreworked-1.21.1-v1-neoforge.jar"
-   }
+   "rationale": "Replaced by the owned Evil Eye Tweaks 0.7.0 cosmetic armour and Evil Eye Client 0.4.0 equipment panel; existing items are imported by Evil Eye World Migration 0.1.0-dev.11 convert-all (playerdata/<uuid>.cosarmor -> evileye_tweaks:cosmetic_armor_v1)."
   },
   {
    "action": "repoint",
@@ -3243,23 +3217,24 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient 4eae700, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused), and FTB Library's inventory sidebar (wave 5).",
+   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused), and FTB Library's inventory sidebar (wave 5).; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave).",
    "target": {
     "declares": [
+     "evileye_client optional curios [9.5.1,)",
      "evileye_client optional evileye_tweaks [0.5.0,)",
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.3.6.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.4.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.3.6"
+     "evileye_client@0.4.0"
     ],
     "name": "Evil Eye Client",
-    "sha256": "8406e2a59cc54331fbf11d95ab4f88e1c29ff9487e338b0f9f356a7f26e15f97",
+    "sha256": "613672f6d644a551e1178d8224bc9dafdcd15dc56bfc617b97d1d51bb9cee06f",
     "side": "client",
-    "size": 372323,
+    "size": 447714,
     "source": "local"
    }
   },
@@ -3292,7 +3267,7 @@
    "metafile": "mods/evileye-migration.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Private local migration bridge built from minecraft-mods d3c3ebb (dev.10: empty-region scan fix; includes dev.8 Ars armor perks). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover.",
+   "rationale": "Private local migration bridge built from minecraft-mods 3a0dcc8 (dev.11: imports Cosmetic Armor Reworked sidecars playerdata/<uuid>.cosarmor into Evil Eye Tweaks' cosmetic armour on convert-all; includes dev.10's empty-region scan fix and dev.8 Ars armor perks). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover.",
    "target": {
     "declares": [
      "evileye_migration optional ars_nouveau [5.13.3,5.14)",
@@ -3304,16 +3279,16 @@
      "evileye_migration required minecraft [1.21.1,1.21.2)",
      "evileye_migration required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.10.jar",
+    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.11.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-migration.pw.toml",
     "mods": [
-     "evileye_migration@0.1.0-dev.10"
+     "evileye_migration@0.1.0-dev.11"
     ],
     "name": "Evil Eye World Migration",
-    "sha256": "18cb68d2a8877bb16d9540bea4a15dea2fdd46af521fb820affc8c35d21f6f24",
+    "sha256": "94ac88aa8ca307fdb32b10d223966cd120595455078d1936d7ea8a8e943c06a8",
     "side": "both",
-    "size": 121971,
+    "size": 145895,
     "source": "local"
    }
   },
@@ -3322,22 +3297,23 @@
    "metafile": "mods/evileye-tweaks.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks ca3494c, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4).",
+   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave).",
    "target": {
     "declares": [
+     "evileye_tweaks optional curios [9.5.1,)",
      "evileye_tweaks required minecraft [1.21.1,1.21.2)",
      "evileye_tweaks required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.6.1.jar",
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.7.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-tweaks.pw.toml",
     "mods": [
-     "evileye_tweaks@0.6.1"
+     "evileye_tweaks@0.7.0"
     ],
     "name": "Evil Eye Tweaks",
-    "sha256": "59163e593d140742c8f5821ffa623711307aeba4f2d1ea1f054969bd61775169",
+    "sha256": "d0fe7fe27391a333b22abed7e8f310a78661924aed421e350046435f58f83e13",
     "side": "both",
-    "size": 183107,
+    "size": 261491,
     "source": "local"
    }
   },

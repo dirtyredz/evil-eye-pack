@@ -377,3 +377,15 @@
 	# Default: 1.0
 	# Range: 0.5 ~ 3.0
 	scale = 1.0
+
+#The equipment panel: curios, armour, cosmetic armour and inventory in one screen.
+[equipment]
+	#Open the equipment panel with the Curios key (G) and the inventory's Curios button when the
+	#server runs a compatible Evil Eye Tweaks. Off keeps the stock Curios screen.
+	enabled = true
+
+#Cosmetic armour display on this client.
+[cosmeticArmor]
+	#Draw cosmetic armour over worn armour. Off shows everyone's real equipment
+	#("Show skin" choices still hide armour). Also switchable in the equipment panel's Visibility editor.
+	showCosmetics = true

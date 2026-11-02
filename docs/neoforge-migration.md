@@ -815,3 +815,19 @@ disposition updated, jar stored hash-addressed and by filename in the shared mig
 Config: `evileye_tweaks-common.toml` gains `[movement] slowFallingMinDrop = 3.0`. The mod's GameTests (stairs at normal
 gravity, vanilla float with threshold 0, a long drop with no damage) ran headless against the real tick/travel path; the
 in-game feel is for the owner to confirm.
+
+## Equipment panel: Cosmetic Armor Reworked removed, Client 0.4.0, Tweaks 0.7.0 and Migration dev.11 pins (2026-11-02)
+
+Owner-approved plan 2026-11-01. Evil Eye Client 0.4.0 (minecraft-mods `mods/EvilEyeClient` f622b5d; 0.4.0 = 0.3.6 plus the equipment panel, so it includes 0.3.3-0.3.6) adds the equipment panel (Curios key G and the inventory's Curios button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering. Evil Eye Tweaks 0.7.0 (`mods/EvilEyeTweaks` fce93f3; includes 0.6.1) adds owned cosmetic armour storage (player persistent data) and the `evileye_tweaks:equipment` menu. Evil Eye World Migration 0.1.0-dev.11 (`mods/EvilEyeWorldMigration` 3a0dcc8; includes dev.10's region-file fix and dev.8's Ars armor-perk fix) imports Cosmetic Armor Reworked sidecars (`playerdata/<uuid>.cosarmor`) into the Tweaks cosmetic armour (`evileye_tweaks:cosmetic_armor_v1`). Pinned like the earlier owned pins: `metadata:local` metafiles. Client and Tweaks now declare an optional Curios dependency (`curios [9.5.1,)`).
+
+| Pin | Source | SHA-256 | Bytes |
+|---|---|---|---|
+| `evileye_client-1.21.1-neoforge-0.4.0.jar` (side client) | minecraft-mods `mods/EvilEyeClient` f622b5d | `613672f6d644a551e1178d8224bc9dafdcd15dc56bfc617b97d1d51bb9cee06f` | 447,714 |
+| `evileye_tweaks-1.21.1-neoforge-0.7.0.jar` (side both) | minecraft-mods `mods/EvilEyeTweaks` fce93f3 | `d0fe7fe27391a333b22abed7e8f310a78661924aed421e350046435f58f83e13` | 261,491 |
+| `evileye_migration-1.21.1-neoforge-0.1.0-dev.11.jar` (side both) | minecraft-mods `mods/EvilEyeWorldMigration` 3a0dcc8 | `94ac88aa8ca307fdb32b10d223966cd120595455078d1936d7ea8a8e943c06a8` | 145,895 |
+
+Removed: `mods/cosmetic-armor-reworked.pw.toml`, `config/cosmeticarmorreworked-client.toml`, `config/cosmeticarmorreworked-common.toml` and the CozyUI override texture `resourcepacks/evil-eye-cozy-overrides/assets/cosmeticarmorreworked/`. The lock records a `drop`, both configs are `dropped` in config-decisions and `cosmeticarmorreworked` is in `removedMods`. New config: `evileye_tweaks-common.toml` `[cosmeticArmor]` (shown, keepThroughDeath) and `evileye_client-client.toml` `[equipment]` / `[cosmeticArmor]`. Mod metafiles 162 -> 161. New showcase section `evileye_equipment` with a headless check (menu type registered, Cosmetic Armor Reworked not loaded).
+
+**Migration path for an existing world.** Open the converted world with this pack (Cosmetic Armor Reworked absent), then run `/evileye_migration convert-all` as a dry run, then `convert-all`, then `status`. For a singleplayer world the owner must be in the world while `convert-all` runs; otherwise their sidecar stays "owner deferred". The source sidecars are kept.
+
+**Evidence.** Copied-world dry-run on a copy of the converted Trial world (2026-11-02, dev.9 jar): both real CAR sidecars (owner 90486bf9 and b876a5c7, both empty, Size 11) read cleanly, sources=2, unsupported=0; the full conversion proof was skipped by orchestrator decision (import path covered by GameTests on real files). The same dry-run reported pre-existing legacy remaining chunks=2, entity chunks=818 in that world, unrelated to CAR.

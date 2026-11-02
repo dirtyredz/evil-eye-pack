@@ -18,7 +18,7 @@ does not count. Full program plan: `artifacts/minecraft-mods/jobs/2026-11-01-evi
 | 4 | AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps, Let Me Despawn (T) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.4.0 local pin, seven drops plus Bookshelf, Prickle, Almanac Lib and Kiwi after closure; owner walk pending |
 | 5 | FTB Essentials (E; mandatory saved-data migration), FTB Library (sidebar to C) | **Pinned on branch** `migration/evileye-essentials-wave5`: Essentials 0.1.0, Client 0.3.6 and Tweaks 0.6.1 local pins (0.3.1 = Trial fixes: hearts, trash-can icon, pick-up scale; 0.3.2 and 0.6.0 remove the crafting-grid controls; 0.3.3 = one-line labelled food and drink tooltips; 0.3.5 = Electromagnet charge widget; 0.3.6 = Ender IO + EMI tooltip layer and missing-slot highlight fixes; Tweaks 0.6.1 = Slow Falling drop threshold), two drops; import trial passed on a world copy; owner walk pending |
 | 6 | Pro Placer, Light Overlay (removed outright 2026-11-01), 3D Skin Layers, Quick Skin, Modern UI, Inventory Profiles Next, Chloride (C) | not started |
-| 7 | Polymorph, Cosmetic Armor Reworked, Diagonal Fences, Create: Compatible Storage, Create: Storage Drawers Compat (conversion-gated) | not started |
+| 7 | Polymorph, Cosmetic Armor Reworked (**done 2026-11-02**, see the equipment panel wave), Diagonal Fences, Create: Compatible Storage, Create: Storage Drawers Compat (conversion-gated) | not started |
 
 ## Retained
 
@@ -39,6 +39,7 @@ are removed only after a full dependency and consumer audit.
 | After wave 3 | 164 |
 | After wave 5 | 163 |
 | After Tool Belt removal (outright, 2026-11-01) | 162 |
+| After the equipment panel wave (Cosmetic Armor Reworked absorbed, 2026-11-02) | 161 |
 
 ## Rules
 
@@ -106,6 +107,10 @@ are removed only after a full dependency and consumer audit.
 - **Configs**: `config/attributefix.json` (an obsolete format the 1.21.1 jar never read), `config/fallingtree.json`
   and `defaultconfigs/hourglass-server.toml` are carried into `config/evileye_tweaks-common.toml`. No
   keybindings were involved.
+
+## Equipment panel (2026-11-02)
+
+Cosmetic Armor Reworked is absorbed into the owned mods: **Evil Eye Client 0.4.0** (equipment panel: Curios key G and the inventory's Curios button open one screen with equipped curios, real armour, the model, cosmetic armour and cosmetic curios; cosmetic armour rendering; includes 0.3.3-0.3.6) and **Evil Eye Tweaks 0.7.0** (owned cosmetic armour storage in player persistent data, the `evileye_tweaks:equipment` menu; includes 0.6.1). **Evil Eye World Migration 0.1.0-dev.11** imports the old sidecars (`playerdata/<uuid>.cosarmor`; includes dev.10's region-file fix). The mod metafile, both configs and the CozyUI texture override are gone.
 
 ## Wave 3 notes
 

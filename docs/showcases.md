@@ -85,6 +85,13 @@ four planet ground blocks, and a 3 × 3 iron pad floating four blocks up. In gam
 `/sable assemble area <corner> <corner>` on the pad to watch Sable turn it into a falling physics body.
 Rockets, the Fabrication Unit and multiblock machines need a player (research, launch) and are not built.
 
+## Evil Eye equipment panel section (NeoForge branch)
+
+`evileye_equipment` (24 × 22 × 6): labelled pads for the equipment panel that replaced Cosmetic Armor Reworked (press G
+or the inventory's Curios button; equipped curios on the left, cosmetic curios on the right; real armour beside the
+model, cosmetic armour opposite; the Visibility... button with Show equipment / Show skin). The panel is a client
+screen, so the signs tell the owner what to look for; the check confirms the server side.
+
 ## Evil Eye Essentials section (NeoForge branch)
 
 `evileye_essentials` (24 × 22 × 6): labelled pads for the commands that replaced FTB Essentials (homes on a
@@ -156,6 +163,7 @@ completion always fail.
 | `mekanism_machines` | Hostile-terrain build; full plan; creative cube placed full; machine inputs and charge prefilled from block-entity NBT; enrichment chamber and crusher output Ender IO iron dust and never Mekanism dust; ore consumed; heat generator burns coal into stored energy; cube stays full; running rebuild resets contents; clear; exterior shell unchanged (106 assertions, `jobs/2026-10-30-neoforge-phase7/showcase-mek-14`). Cable transport is not asserted: command-placed Mekanism blocks expose no sided energy (dk-1a3141d6) | Whether a player-placed cube powers the cable; machine fronts animate; generator flames |
 | `interstellaris_space` | Hostile-terrain build; full plan; the Moon, Mars, Venus, Enceladus and Io dimensions load; Moon and Mars generate solid ground (Moon: lunar regolith) and receive a teleported traveller; `/sable assemble area` captures the pad into exactly one sub-level that stays alive for 100 ticks of server physics; rebuild; clear; exterior shell unchanged (128 assertions, `showcase-is-8`) | The pad falling (Sable's position selectors matched nothing headless), ore/metal textures, rockets and travel |
 | `evileye_essentials` | Hostile-terrain build; full plan; exterior shell; every Essentials command registered and no FTB command tree; `/rtp` off; the FTB import command runs; a fake player sets a home, uses `/home` and `/back`, hits the 60 s cooldown, deletes the home; `/setwarp` refused below level 2 and allowed for an operator, `/warp`, `/delwarp`; `/trashcan` runs (a fake player cannot open its menu); rebuild; clear (134 assertions; `--all`-style boot total 579/579 with flat-world and command forms, `jobs/2026-11-01-evileye-essentials-wave5/showcase-ess-3`) | The inventory sidebar (buttons, icons, tooltips, operator-only visibility); real teleports and chat messages; the trash can screen |
+| `evileye_equipment` | Hostile-terrain build; full plan; exterior shell; the server registers the `evileye_tweaks:equipment` menu type; Evil Eye Tweaks loaded and Cosmetic Armor Reworked not loaded; rebuild; clear (VM-tested; not yet run in a boot) | The panel screen itself (layout, cosmetic slots, Visibility editor), cosmetic armour rendering on players |
 | `contraption_storage` | First build on hostile terrain (hill, tree, water, floor hole, chest, fence) with an unnamed mob and item removed, a named mob refused without any change, a mob outside untouched and the exterior shell identical (shared `tools/testing/showcase/terrain.js`); all blocks/states/prefills and complete floor/air volume; quantity flag; one glue and no dropped items; exterior shell; all six sided + unsided drawer handlers; idle motor; lever start/stop; five-block/three-inventory assembly; PSI docking; exact insert/extract per inventory; compacting ratios; disassembly preservation; automatic input/output hopper circuit; rotation; idle/active rebuild; clear | Drawer icons/counts at 8/24/48 blocks and front/back views; moving fronts; opening moving drawer/chest menus |
 
 The exterior snapshot covers all faces immediately outside the volume, including

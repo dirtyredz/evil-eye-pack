@@ -251,6 +251,10 @@
    "action": "drop",
    "reason": "Replaced only by Evil Eye Client's hidden recipe-book button (0.2.0, kept in 0.3.2 as inventory/recipebook/). Its crafting keys and server actions (Evil Eye Tweaks 0.5.0 inventory/crafting) were ported in wave 3 and removed again in Client 0.3.2 and Tweaks 0.6.0 by owner decision (unused); EMI's + recipe fill and DankRecipeTransfer are unaffected. No world data (only the level.dat mod list names it)."
   },
+  "mods/cosmetic-armor-reworked.pw.toml": {
+   "action": "drop",
+   "reason": "Replaced by the owned Evil Eye Tweaks 0.7.0 cosmetic armour and Evil Eye Client 0.4.0 equipment panel; existing items are imported by Evil Eye World Migration 0.1.0-dev.11 convert-all (playerdata/<uuid>.cosarmor -> evileye_tweaks:cosmetic_armor_v1)."
+  },
   "mods/searchables.pw.toml": {
    "action": "drop",
    "reason": "Library whose only consumer was Controlling (dropped). Closure 2026-11-01: migrate.mjs resolve (declared dependencies) plus a class-reference scan of 254 jars (every lock jar, 79 nested jar-in-jar, both owned jars; jobs/2026-11-01-evileye-wave3/library-closure.json): no declared dependency and no com/blamejared/searchables class reference outside the dropped mods."
@@ -375,11 +379,11 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.10.jar",
-    "sha256": "18cb68d2a8877bb16d9540bea4a15dea2fdd46af521fb820affc8c35d21f6f24",
-    "size": 121971
+    "filename": "evileye_migration-1.21.1-neoforge-0.1.0-dev.11.jar",
+    "sha256": "94ac88aa8ca307fdb32b10d223966cd120595455078d1936d7ea8a8e943c06a8",
+    "size": 145895
    },
-   "reason": "Private local migration bridge built from minecraft-mods d3c3ebb (dev.10: empty-region scan fix; includes dev.8 Ars armor perks). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover."
+   "reason": "Private local migration bridge built from minecraft-mods 3a0dcc8 (dev.11: imports Cosmetic Armor Reworked sidecars playerdata/<uuid>.cosarmor into Evil Eye Tweaks' cosmetic armour on convert-all; includes dev.10's empty-region scan fix and dev.8 Ars armor perks). Keep installed until every chunk, player including offline, colony and Dank store has been loaded and saved and pending evileye_migration:smelter_items / refunds lists are drained. Dev.5 convert-all/status is planned for cutover."
   },
   {
    "metafile": "mods/evileye-tweaks.pw.toml",
@@ -387,11 +391,11 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.6.1.jar",
-    "sha256": "59163e593d140742c8f5821ffa623711307aeba4f2d1ea1f054969bd61775169",
-    "size": 183107
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.7.0.jar",
+    "sha256": "d0fe7fe27391a333b22abed7e8f310a78661924aed421e350046435f58f83e13",
+    "size": 261491
    },
-   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks ca3494c, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement)."
+   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave)."
   },
   {
    "metafile": "mods/evileye-client.pw.toml",
@@ -399,11 +403,11 @@
    "side": "client",
    "target": {
     "source": "local",
-    "filename": "evileye_client-1.21.1-neoforge-0.3.6.jar",
-    "sha256": "8406e2a59cc54331fbf11d95ab4f88e1c29ff9487e338b0f9f356a7f26e15f97",
-    "size": 372323
+    "filename": "evileye_client-1.21.1-neoforge-0.4.0.jar",
+    "sha256": "613672f6d644a551e1178d8224bc9dafdcd15dc56bfc617b97d1d51bb9cee06f",
+    "size": 447714
    },
-   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient 4eae700, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar."
+   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave)."
   },
   {
    "metafile": "mods/evileye-essentials.pw.toml",

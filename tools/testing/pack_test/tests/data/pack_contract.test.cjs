@@ -100,3 +100,16 @@ test('Evil Eye Client shows FTB Library\'s sidebar buttons in its layout', () =>
   assert.match(sidebar, /^\s*columns = 4$/m);
   assert.match(sidebar, /^\s*buttons = \["gamemode", "day", "night", "rain", "trash_can"\]$/m);
 });
+
+test('Cosmetic Armor Reworked is replaced by the equipment panel: metafile, configs and texture gone, owned configs present', () => {
+  for (const gone of ['mods/cosmetic-armor-reworked.pw.toml', 'config/cosmeticarmorreworked-client.toml', 'config/cosmeticarmorreworked-common.toml',
+    'resourcepacks/evil-eye-cozy-overrides/assets/cosmeticarmorreworked']) {
+    assert.equal(fs.existsSync(path.join(ROOT, gone)), false, `${gone} was removed`);
+  }
+  const tweaks = tomlSection(read('config/evileye_tweaks-common.toml'), 'cosmeticArmor');
+  assert.match(tweaks, /^\s*shown = true$/m);
+  assert.match(tweaks, /^\s*keepThroughDeath = false$/m);
+  const client = read('config/evileye_client-client.toml');
+  assert.match(tomlSection(client, 'equipment'), /^\s*enabled = true$/m);
+  assert.match(tomlSection(client, 'cosmeticArmor'), /^\s*showCosmetics = true$/m);
+});
