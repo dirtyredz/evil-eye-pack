@@ -157,13 +157,3 @@
 	fastLeafDecay = true
 	#Creative players fell trees too.
 	fellInCreative = false
-
-[crafting]
-	#Perform the crafting-grid actions Evil Eye Client's crafting keys ask for (rotate, balance,
-	#spread, clear, refill last recipe, compress and decompress, right-click to craft a stack).
-	craftingActions = true
-	#Compress and decompress only while a screen with a crafting grid is open (crafting table or
-	#the player inventory). False also allows them in other containers.
-	compressRequiresCraftingGrid = true
-	#Item ids (namespace:path) the compress keys never craft.
-	compressDenylist = ["minecraft:sandstone", "minecraft:iron_trapdoor"]

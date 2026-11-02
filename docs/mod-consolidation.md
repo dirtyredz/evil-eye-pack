@@ -14,9 +14,9 @@ does not count. Full program plan: `artifacts/minecraft-mods/jobs/2026-11-01-evi
 |---|---|---|
 | 1 | Fuel Goes Here, Double Doors (T), Collective after closure | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.2.0 local pin, three drops; owner walk pending |
 | 2 | Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions, AppleSkin (C, with T producers) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.1.0 and Tweaks 0.3.0 local pins, six drops; Bookshelf kept (AttributeFix requires it); owner walk pending |
-| 3 | Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks, Crafting Tweaks | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.2.0 and Tweaks 0.5.0 local pins, seven drops plus Searchables and Balm after closure; owner walk pending |
+| 3 | Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks, Crafting Tweaks | **Pinned on branch** `migration/evileye-tweaks-wave1`: Client 0.2.0 and Tweaks 0.5.0 local pins (since superseded by Client 0.3.2 and Tweaks 0.6.0, which remove the crafting-grid controls), seven drops plus Searchables and Balm after closure; owner walk pending |
 | 4 | AttributeFix, Companion, FallingTree, Flat Bedrock, Hourglass, Clumps, Let Me Despawn (T) | **Pinned on branch** `migration/evileye-tweaks-wave1`: Tweaks 0.4.0 local pin, seven drops plus Bookshelf, Prickle, Almanac Lib and Kiwi after closure; owner walk pending |
-| 5 | FTB Essentials (E; mandatory saved-data migration), FTB Library (sidebar to C) | **Pinned on branch** `migration/evileye-essentials-wave5`: Essentials 0.1.0 and Client 0.3.1 local pins (0.3.1 = Trial fixes: hearts, trash-can icon, pick-up scale), two drops; import trial passed on a world copy; owner walk pending |
+| 5 | FTB Essentials (E; mandatory saved-data migration), FTB Library (sidebar to C) | **Pinned on branch** `migration/evileye-essentials-wave5`: Essentials 0.1.0, Client 0.3.2 and Tweaks 0.6.0 local pins (0.3.1 = Trial fixes: hearts, trash-can icon, pick-up scale; 0.3.2 and 0.6.0 remove the crafting-grid controls), two drops; import trial passed on a world copy; owner walk pending |
 | 6 | Pro Placer, Light Overlay (removed outright 2026-11-01), 3D Skin Layers, Quick Skin, Modern UI, Inventory Profiles Next, Chloride (C) | not started |
 | 7 | Polymorph, Cosmetic Armor Reworked, Diagonal Fences, Create: Compatible Storage, Create: Storage Drawers Compat (conversion-gated) | not started |
 
@@ -110,12 +110,14 @@ are removed only after a full dependency and consumer audit.
 
 - **Evil Eye Client 0.2.0** adds `screens/advancements` (Better Advancements), `screens/controls`
   (Controlling), `inventory/gestures` (Mouse Tweaks), `inventory/crafting` (Crafting Tweaks' keys,
-  result right-click and hidden recipe-book button), `integration/professions` (Just Enough Professions, a JEI
+  result right-click and hidden recipe-book button; **0.3.2 removed the keys and right-click, unused, and the
+  button hiding now lives in `inventory/recipebook`**), `integration/professions` (Just Enough Professions, a JEI
   category EMI shows through its JEI bridge), `options/defaults` (Default Options) and `options/resourcepacks`
   (Resource Pack Overrides). The wave-2 HUD packages moved under `hud/`.
-- **Evil Eye Tweaks 0.5.0** adds `inventory/crafting`: the server performs every crafting-grid action the
-  client keys request (rotate, balance, spread, clear, refill last, compress/decompress, stack crafting); the
-  furnace routing moved beside it under `inventory/furnace`.
+- **Evil Eye Tweaks 0.5.0** added `inventory/crafting`: the server performed every crafting-grid action the
+  client keys requested (rotate, balance, spread, clear, refill last, compress/decompress, stack crafting); the
+  furnace routing moved beside it under `inventory/furnace`. **Tweaks 0.6.0 removed all of it** (owner decision,
+  2026-11-01: unused; EMI's + recipe fill and DankRecipeTransfer are what the owner uses and are untouched).
 - **Libraries dropped after closure**: Searchables (only Controlling) and Balm (only Crafting Tweaks and Default
   Options; Xaero's Minimap references it only from its Waystones compat, and Waystones is not in the pack).
   `jobs/2026-11-01-evileye-wave3/library-closure.json`.
@@ -124,11 +126,12 @@ are removed only after a full dependency and consumer audit.
   46,146 region/entity/POI chunks).
 - **Configs**: `config/betteradvancements-client.toml`, `config/MouseTweaks.cfg` and
   `config/craftingtweaks-common.toml` [client] are carried into `config/evileye_client-client.toml`
-  (`[advancements]`, `[gestures]`, `[crafting]`); the Crafting Tweaks [common] values into
-  `config/evileye_tweaks-common.toml` `[crafting]`. `config/resourcepackoverrides.json` becomes the pack-owned
+  (`[advancements]`, `[gestures]`, `[crafting]`, now `[recipeBook] hideButton` only); the Crafting Tweaks [common] values went into
+  `config/evileye_tweaks-common.toml` `[crafting]`, removed again with Tweaks 0.6.0. `config/resourcepackoverrides.json` becomes the pack-owned
   `config/evileye_client/resourcepacks.json` with NeoForge's pack ids: the old file named the Forge
   `file/Eat-Quiet-...zip` and `builtin/towntalk`, so on the migration branch Eat Quiet was neither selected nor
   required and Town Talk was never enabled. `config/defaultoptions/keybindings.txt` stays where it was (same
-  syntax); its Crafting Tweaks line is renamed to Evil Eye Client's key.
-- **Keybindings**: Evil Eye Client registers `key.evileye_client.crafting.*`; a binding saved under the old
-  `key.craftingtweaks.*` name is adopted once, while options.txt has nothing under the new name.
+  syntax); its Crafting Tweaks line was renamed to Evil Eye Client's key and then removed with it in 0.3.2.
+- **Keybindings**: Evil Eye Client 0.2.0 to 0.3.1 registered `key.evileye_client.crafting.*` and adopted saved
+  `key.craftingtweaks.*` bindings; 0.3.2 registers no crafting keys (saved crafting bindings in options.txt are
+  harmless leftovers).

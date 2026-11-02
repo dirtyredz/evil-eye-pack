@@ -1685,7 +1685,7 @@ hash = "a7444e9071ebe7e1306e83141f9b4c53fbd6f99730f9d29f587b959b54f07a82"
 
 [[files]]
 file = "config/defaultoptions/keybindings.txt"
-hash = "d8086bd292b21025ff087733f68d8df8ac8885c2b178ac1c3da3f54a0f08cf52"
+hash = "2ce15a4b20be2a13bb2537ff8946dce74146e71e3485fa39dd2a5aed53175baf"
 
 [[files]]
 file = "config/dramaticdoors-common.toml"
@@ -1787,7 +1787,7 @@ hash = "19e1a12a90c2b6c0df9fb3152c19a21eb4c9d84c49d496377eacfca0855b324f"
 
 [[files]]
 file = "config/evileye_client-client.toml"
-hash = "912ef6cf8afe215d43283102c29d78ae6e08dfe6c5e915abc8e38df5c7120fc4"
+hash = "62b9ac4afd2d650ed7b39584219b623c223ff0c1f89ebb38075c3857c0cc04d9"
 preserve = true
 
 [[files]]
@@ -1800,7 +1800,7 @@ hash = "e27c848c2e0bb82f09492108399513a7e93e4bb40cb90e41e9e65d38fcd68dd7"
 
 [[files]]
 file = "config/evileye_tweaks-common.toml"
-hash = "e35e7a087bb4df6f32ded88492b464d4375b12ad1769094395f9bb7da4955ef4"
+hash = "d0680bc186814801796a4b2272e265a6036ae07d8a93aa79fae460644d36cc18"
 
 [[files]]
 file = "config/extremereactors/client.toml"
@@ -4986,7 +4986,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "25fe4399af90bb7b2f0811dd9ac5f54a3941283a5d0f24c7a2bcc86f7c0befee"
+hash = "9b887a449e877b80cdfe8c9b52df2e781543e2a9f5a72d00bac23da018b46315"
 metafile = true
 
 [[files]]
@@ -5001,7 +5001,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-tweaks.pw.toml"
-hash = "541643a316970fcb2318ad9ac7999c8bcc720755ac4c9ba2a266d01a07b3f262"
+hash = "2b53a2524c89c6973a810755fe942b4bab342074df40b7be52e9e696e1845e2d"
 metafile = true
 
 [[files]]

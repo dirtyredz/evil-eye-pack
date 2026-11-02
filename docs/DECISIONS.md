@@ -2,6 +2,14 @@
 
 Newest first.
 
+## 2026-11-01 - The crafting-grid controls are removed (Evil Eye Client 0.3.2, Tweaks 0.6.0)
+
+**Decision.** Owner ruling: the Crafting Tweaks replacement keys and server actions are unused, so they are removed from
+both owned mods and the pack config. The owner fills recipes with EMI's "+" and Dank storage through DankRecipeTransfer,
+neither of which depended on them. The hidden vanilla recipe-book button stays (cheap, independent; now
+`[recipeBook] hideButton`). **Why:** less code, config and key-binding surface for controls nobody presses.
+**Supersedes** the wave-3 crafting entries below on keys, right-click and server actions.
+
 ## 2026-11-01 - Wave 5: FTB Essentials becomes Evil Eye Essentials 0.1.0; FTB Library's sidebar moves to Evil Eye Client 0.3.0
 
 **Decision.** FTB Essentials and FTB Library leave the NeoForge pack. Evil Eye Essentials provides the same

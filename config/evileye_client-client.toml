@@ -41,14 +41,10 @@
 	#Previews also use food held in the off hand.
 	showFoodValuesHudOverlayWhenOffhand = true
 
-#Crafting-grid keys and clicks; Evil Eye Tweaks on the server performs them.
-[crafting]
-	#The crafting keys (Controls > Key Binds > Crafting) act in crafting screens.
-	hotkeys = true
-	#Right-clicking a crafting result crafts a full stack onto the cursor.
-	rightClickCraftsStack = true
+#The vanilla recipe-book button.
+[recipeBook]
 	#Hide the recipe-book button on crafting screens (EMI and JEI replace it).
-	hideRecipeBookButton = true
+	hideButton = true
 
 #Buttons beside the inventory (survival and creative). Each shows only while the server offers its command to you.
 [sidebar]

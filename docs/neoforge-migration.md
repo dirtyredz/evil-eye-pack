@@ -666,3 +666,23 @@ stored hash-addressed and by filename in the shared migration cache and the Tria
 `config/evileye_client-client.toml` carries the new `[pickup] scale = 1.5` (the old integer 4 would be out of range).
 No server change, so no server boot; the Trial instance installs the pin on its next launch and the owner re-checks
 the three fixes in game.
+
+## Crafting-grid controls removed: Evil Eye Client 0.3.2 and Tweaks 0.6.0 pins (2026-11-01)
+
+Owner decision: the Crafting Tweaks replacement controls (rotate, balance, spread, clear, refill last,
+compress/decompress, stack crafting) are unused and removed. Evil Eye Client 0.3.2 (minecraft-mods
+`mods/EvilEyeClient` 1a540f4) drops the keys, the result right-click, the key category and the
+`key.craftingtweaks.*` adoption; the hidden recipe-book button stays as `inventory/recipebook/`. Evil Eye Tweaks 0.6.0
+(`mods/EvilEyeTweaks` 98ea67f) drops the server actions, the `crafting_action` payload and the `crafting_sender` hand-off.
+EMI's "+" recipe fill and DankRecipeTransfer are separate and unchanged. Pinned like 0.3.1: `metadata:local` metafiles,
+jars stored hash-addressed and by filename in the shared migration cache and the Trial walkthrough's job cache.
+
+| Pin | Source | SHA-256 | Bytes |
+|---|---|---|---|
+| `evileye_client-1.21.1-neoforge-0.3.2.jar` (side client) | minecraft-mods `mods/EvilEyeClient` 1a540f4 | `88b4c99345040e43d486dcd2bc6f4853ca8e1e52df8766a7b3e9e3e7d070d8fb` | 342,897 |
+| `evileye_tweaks-1.21.1-neoforge-0.6.0.jar` (side both) | minecraft-mods `mods/EvilEyeTweaks` 98ea67f | `82e064213aca6a8b3f5b408990788bfcbbfdf19b705b02b0cba2600d02e03d45` | 176,582 |
+
+Config: `evileye_client-client.toml` loses `[crafting]` and gains `[recipeBook] hideButton = true` (the old
+`hideRecipeBookButton` carried over); `evileye_tweaks-common.toml` loses `[crafting]`; `config/defaultoptions/keybindings.txt`
+loses the compress-stack line. No showcase section or headless check exercised the crafting controls (they were
+client keys with no scripted check), so no showcase boot was needed.

@@ -20,7 +20,7 @@
   {
    "match": "config/defaultoptions/",
    "treatment": "carry",
-   "reason": "Default key choices, read by Evil Eye Client 0.2.0 (options/defaults/, the Default Options replacement): a key listed here is the default and is set wherever options.txt has no saved value (new instances, new mods). Crafting Tweaks' compress_stack line renamed to Evil Eye Client's key."
+   "reason": "Default key choices, read by Evil Eye Client 0.2.0 (options/defaults/, the Default Options replacement): a key listed here is the default and is set wherever options.txt has no saved value (new instances, new mods). Crafting Tweaks' compress_stack line is gone (the crafting keys were removed in Evil Eye Client 0.3.2)."
   },
   {
    "match": "config/emi.css",
@@ -65,7 +65,7 @@
   {
    "match": "config/evileye_client-client.toml",
    "treatment": "preserve-intent",
-   "reason": "Evil Eye Client 0.2.0 replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (wave 2) and Better Advancements, Mouse Tweaks and Crafting Tweaks' client options (wave 3: [advancements], [gestures], [crafting], carried from config/betteradvancements-client.toml, config/MouseTweaks.cfg and config/craftingtweaks-common.toml [client]) and FTB Library's sidebar (wave 5: [sidebar], from config/sidebar_buttons.json and ftblibrary-client.snbt's layout). Bytes are the NeoForge-written default file (LF; the defaults equal the pack values), so the mod does not rewrite it."
+   "reason": "Evil Eye Client 0.2.0 replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (wave 2) and Better Advancements, Mouse Tweaks and Crafting Tweaks' client options (wave 3: [advancements], [gestures], [recipeBook] hideButton, carried from config/betteradvancements-client.toml, config/MouseTweaks.cfg and config/craftingtweaks-common.toml [client]; the crafting keys were removed in 0.3.2) and FTB Library's sidebar (wave 5: [sidebar], from config/sidebar_buttons.json and ftblibrary-client.snbt's layout). Bytes are the NeoForge-written default file (LF; the defaults equal the pack values), so the mod does not rewrite it."
   },
   {
    "match": "config/evileye_client/resourcepacks.json",
@@ -187,7 +187,7 @@
    "file": "config/craftingtweaks-common.toml",
    "treatment": "replaced",
    "by": "config/evileye_tweaks-common.toml",
-   "reason": "Crafting Tweaks replaced by Evil Eye Tweaks 0.5.0 [crafting] (compressRequiresCraftingGrid true, compressDenylist sandstone and iron trapdoor) and Evil Eye Client 0.2.0 [crafting] in config/evileye_client-client.toml (hotkeys = mode HOTKEYS, rightClickCraftsStack true, hideRecipeBookButton = hideVanillaCraftingGuide true). disabledAddons was empty; the button offsets only applied to BUTTONS mode."
+   "reason": "Crafting Tweaks is replaced only by Evil Eye Client's hidden recipe-book button ([recipeBook] hideButton = true, from hideVanillaCraftingGuide). The crafting keys, the stack-crafting right-click and Evil Eye Tweaks' [crafting] actions (ported in wave 3) were removed by owner decision (unused) in Client 0.3.2 and Tweaks 0.6.0."
   },
   {
    "file": "config/MouseTweaks.cfg",

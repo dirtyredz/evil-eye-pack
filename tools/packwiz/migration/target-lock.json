@@ -1608,7 +1608,7 @@
     "version": "KOqT9kSZ"
    },
    "provisional": false,
-   "rationale": "Replaced by the owned Evil Eye Tweaks 0.5.0 (inventory/crafting/: rotate, balance, spread, clear, refill last, compress/decompress with the sandstone and iron trapdoor denylist and grid-only compression, right-click stack crafting) and Evil Eye Client 0.2.0 (inventory/crafting/: the hotkeys, K/Ctrl+K/Shift+K and Tab/Ctrl+Tab, result right-click, hidden recipe-book button). Saved key_key.craftingtweaks.* bindings carry over once. No world data (only the level.dat mod list names it)."
+   "rationale": "Replaced only by Evil Eye Client's hidden recipe-book button (0.2.0, kept in 0.3.2 as inventory/recipebook/). Its crafting keys and server actions (Evil Eye Tweaks 0.5.0 inventory/crafting) were ported in wave 3 and removed again in Client 0.3.2 and Tweaks 0.6.0 by owner decision (unused); EMI's + recipe fill and DankRecipeTransfer are unaffected. No world data (only the level.dat mod list names it)."
   },
   {
    "action": "repoint",
@@ -3243,23 +3243,23 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient 54d104b, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' controls (wave 3), and FTB Library's inventory sidebar (wave 5).",
+   "rationale": "Owned client mod (minecraft-mods/mods/EvilEyeClient 1a540f4, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused), and FTB Library's inventory sidebar (wave 5).",
    "target": {
     "declares": [
      "evileye_client optional evileye_tweaks [0.5.0,)",
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.3.1.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.3.2.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.3.1"
+     "evileye_client@0.3.2"
     ],
     "name": "Evil Eye Client",
-    "sha256": "fe7c57171f022dddd2f7cee7d0ba164ab899789c9a8d95b67e9b9686af0c6ba6",
+    "sha256": "88b4c99345040e43d486dcd2bc6f4853ca8e1e52df8766a7b3e9e3e7d070d8fb",
     "side": "client",
-    "size": 349688,
+    "size": 342897,
     "source": "local"
    }
   },
@@ -3322,22 +3322,22 @@
    "metafile": "mods/evileye-tweaks.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks df4c4fd, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), crafting-grid actions for Evil Eye Client's crafting keys (wave 3), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4).",
+   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks 98ea67f, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4).",
    "target": {
     "declares": [
      "evileye_tweaks required minecraft [1.21.1,1.21.2)",
      "evileye_tweaks required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.5.0.jar",
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.6.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-tweaks.pw.toml",
     "mods": [
-     "evileye_tweaks@0.5.0"
+     "evileye_tweaks@0.6.0"
     ],
     "name": "Evil Eye Tweaks",
-    "sha256": "02820faa196c85dc65277f8be3494b1708ec4251f60114efcdf5659e2efa41c8",
+    "sha256": "82e064213aca6a8b3f5b408990788bfcbbfdf19b705b02b0cba2600d02e03d45",
     "side": "both",
-    "size": 212244,
+    "size": 176582,
     "source": "local"
    }
   },

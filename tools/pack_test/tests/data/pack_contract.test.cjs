@@ -47,10 +47,10 @@ test('every resource-pack id in the Evil Eye Client policy names a pack the NeoF
   assert.equal(policy.pack_overrides['file/New Hearts 1.9-15w49b.zip'].force_compatible, true);
 });
 
-test('the default keymap names Evil Eye Client crafting keys, not the removed Crafting Tweaks', () => {
+test('the default keymap carries no crafting-grid keys (Crafting Tweaks and the Evil Eye Client keys were removed)', () => {
   const keymap = read('config/defaultoptions/keybindings.txt');
   assert.doesNotMatch(keymap, /^key_key\.craftingtweaks\./m);
-  assert.match(keymap, /^key_key\.evileye_client\.crafting\.compress_stack:key\.keyboard\.k$/m);
+  assert.doesNotMatch(keymap, /^key_key\.evileye_client\.crafting\./m);
 });
 
 test('Evil Eye Tweaks keeps the pack day length: half-speed day, vanilla night, vanilla sleep', () => {
