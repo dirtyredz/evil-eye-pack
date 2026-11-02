@@ -15,7 +15,7 @@ const log = (m) => logFile.write(`[${new Date().toISOString()}] ${m}\n`);
 const status = (s) => fs.writeFileSync(path.join(runDir, 'status.json'), JSON.stringify({ ...s, pid: process.pid, at: Date.now() }));
 
 // Runtime paths come from job fields passed to execute(), never from process-global overrides.
-const procs = require('../../server_smoke/procs.cjs');
+const procs = require('../../server_smoke/process/procs.cjs');
 const { execute } = require('../session/execute.cjs');
 const { startLease } = require('./lease/lifecycle.cjs');
 

@@ -4,7 +4,7 @@ const assert = require('node:assert');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { prepareRunDir, readRunSeed } = require('../setup.cjs');
+const { prepareRunDir, readRunSeed } = require('../runtime/setup.cjs');
 
 test('prepareRunDir writes the requested level-seed into server.properties', () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'smoke-setup-'));

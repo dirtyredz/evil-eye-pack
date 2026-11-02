@@ -1,6 +1,6 @@
 'use strict';
 // Which machine and mode a run used, and whether a boot that did not finish was CPU-starved.
-const { isStarved } = require('../../server_smoke/watchdog.cjs');
+const { isStarved } = require('../../server_smoke/process/watchdog.cjs');
 
 // run: { target, fallback, shared, local }. One of: anu (alone), anu (shared with <job>),
 // local (fallback: <reason>), local (--local), or not started (setup failed first).

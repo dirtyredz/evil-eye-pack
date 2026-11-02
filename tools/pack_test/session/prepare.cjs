@@ -4,8 +4,8 @@
 // Used on Valhalla by run.cjs and on ANU by remote/agent.cjs, so it depends only on Node and server_smoke.
 const fs = require('node:fs');
 const path = require('node:path');
-const { ensureLoaderBase, prepareRunDir, installPack } = require('../../server_smoke/setup.cjs');
-const { readStamp } = require('../../server_smoke/runtime.cjs');
+const { ensureLoaderBase, prepareRunDir, installPack } = require('../../server_smoke/runtime/setup.cjs');
+const { readStamp } = require('../../server_smoke/runtime/runtime.cjs');
 const { WORLD, isStageRuntime } = require('../stage_runtime.cjs');
 
 const PROBE_DIR = path.join(__dirname, '../probe');

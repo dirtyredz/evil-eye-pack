@@ -4,7 +4,7 @@
 // Shared by the local target (run.cjs) and the ANU agent (remote/agent.cjs).
 const fs = require('node:fs');
 const path = require('node:path');
-const { boot } = require('../../server_smoke/boot.cjs');
+const { boot } = require('../../server_smoke/process/boot.cjs');
 const { manifestReady } = require('../verdict/protocol.cjs');
 const { makeRunServer, injectProbe } = require('./prepare.cjs');
 const { worldKey, restoreWorld, saveWorld } = require('./world_cache.cjs');

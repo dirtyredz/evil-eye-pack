@@ -10,7 +10,7 @@ const { localPin, cachedLocal, verifyInstalledLocal } = require('./local_source.
 const { resolvePinnedJar } = require('../pinned_jar.cjs');
 const { noLinks } = require('../../data_io/path_guard.cjs');
 const { applyOwnedKeys } = require('./trial_owned_keys.cjs');
-const env = require('../../server_smoke/env.cjs');
+const env = require('../../server_smoke/runtime/env.cjs');
 const ROOT = path.resolve(__dirname, '../../..');
 
 function instanceCfgValue(value) {
@@ -90,7 +90,7 @@ async function installPack({ instance, cache, dryRun, prelaunch, backupName, lab
   console.log(`Verified ${files.length} local files; destination ${instance}; no host or downloads.`);
   if (dryRun) { console.log(`Dry run: would install local files and set this ${label} prelaunch to the same command.`); return; }
   // This is the owner's client pre-launch path. It must not wait on unrelated JVMs.
-  const scope = require('../../server_smoke/procs.cjs').scope();
+  const scope = require('../../server_smoke/process/procs.cjs').scope();
   const stop = () => scope.killAll();
   process.once('SIGINT', stop); process.once('SIGTERM', stop);
   const scratch = path.join(ROOT, '.tmp');

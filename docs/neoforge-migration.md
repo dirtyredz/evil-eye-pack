@@ -117,7 +117,7 @@ no verifier/mixin/injection errors and no failed target. The fresh-world ANU pac
 `run-2026-10-30T18-10-55-205Z` also passed alone (Done 89.206 s, probe complete,
 zero new findings). No visible game window was opened.
 
-`pack.toml [versions]` decides the runtime (`tools/server_smoke/runtime.cjs`). Each loader runtime
+`pack.toml [versions]` decides the runtime (`tools/server_smoke/runtime/runtime.cjs`). Each loader runtime
 has its own loader base, local stage, cached worlds and ANU lane:
 
 - Loader base: `server-smoke/cache/loader-base/<runtime id>/`. The installer is checked against

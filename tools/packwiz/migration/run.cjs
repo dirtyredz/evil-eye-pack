@@ -9,7 +9,7 @@
 // A resolve after apply reads the source metafiles from the commit the lock records (source_tree.cjs).
 const fs = require('node:fs');
 const path = require('node:path');
-const env = require('../../server_smoke/env.cjs');
+const env = require('../../server_smoke/runtime/env.cjs');
 const { readJson, sha256 } = require('../../data_io/files.cjs');
 const { readJarMods } = require('../../data_io/mod_metadata.cjs');
 const { SCHEMA, fingerprint, serialize, sourceMetafiles, validate } = require('./manifest.cjs');

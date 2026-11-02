@@ -110,7 +110,7 @@ adapter handles old motor-only records by reading existing glue when starting;
 a rebuild stores the complete descriptor. Missing rig implementations skip ticks.
 
 `tools/showcase/check.cjs` discovers matching checks and sequences them in one
-dedicated server. `tools/server_smoke/offline_server.cjs` validates pinned cached
+dedicated server. `tools/server_smoke/runtime/offline_server.cjs` validates pinned cached
 bytes, applies the flat `showcase` profile and reuses pack-test server-copy/evidence
 modules; server-smoke also owns watchdog and shutdown.
 The injected harness sequences checks and records lifecycle/completion;

@@ -103,7 +103,7 @@ async function ensureProvisioned(ssh, scope, log) {
 module.exports = { ensureProvisioned, provision, isProvisioned, nodeExe, javaFor, MAJORS, INSTALL, INSTALL_STEPS };
 
 if (require.main === module) {
-  const procs = require('../../server_smoke/procs.cjs');
+  const procs = require('../../server_smoke/process/procs.cjs');
   const { connect } = require('./ssh.cjs');
   (async () => {
     const scope = procs.scope();

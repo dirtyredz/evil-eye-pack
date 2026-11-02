@@ -2,17 +2,17 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
-const { boot } = require('../server_smoke/boot.cjs');
-const procs = require('../server_smoke/procs.cjs');
-const { waitForServer } = require('../server_smoke/host_wait.cjs');
-const env = require('../server_smoke/env.cjs');
-const { readRuntime } = require('../server_smoke/runtime.cjs');
+const { boot } = require('../server_smoke/process/boot.cjs');
+const procs = require('../server_smoke/process/procs.cjs');
+const { waitForServer } = require('../server_smoke/process/host_wait.cjs');
+const env = require('../server_smoke/runtime/env.cjs');
+const { readRuntime } = require('../server_smoke/runtime/runtime.cjs');
 const { stageDirFor } = require('../pack_test/stage_runtime.cjs');
 const { verify } = require('../packwiz/verify_hashes.cjs');
 const { localLock } = require('../pack_test/session/lock.cjs');
 const { checkDestination, runMeta } = require('../pack_test/session/run_meta.cjs');
 const { collectEvidence } = require('../pack_test/session/execute.cjs');
-const { prepare } = require('../server_smoke/offline_server.cjs');
+const { prepare } = require('../server_smoke/runtime/offline_server.cjs');
 const { normalize } = require('../server_smoke/log_report.cjs');
 
 function sections(root) {

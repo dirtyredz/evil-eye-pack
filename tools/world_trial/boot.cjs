@@ -3,15 +3,15 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
 const {copy,files}=require('./copy.cjs');
 const {output}=require('../data_io/path_guard.cjs');
 const {verify}=require('./snapshot.cjs');
-const {prepare}=require('../server_smoke/offline_server.cjs');
-const {prepareRunDir}=require('../server_smoke/setup.cjs');
+const {prepare}=require('../server_smoke/runtime/offline_server.cjs');
+const {prepareRunDir}=require('../server_smoke/runtime/setup.cjs');
 const {parseIndex,readMetafileSide}=require('../packwiz/pack_index.cjs');
 const {resolvePinnedJar}=require('../packwiz/pinned_jar.cjs');
-const {readRuntime,writeStamp}=require('../server_smoke/runtime.cjs');
-const {boot}=require('../server_smoke/boot.cjs');
-const {waitForServer}=require('../server_smoke/host_wait.cjs');
+const {readRuntime,writeStamp}=require('../server_smoke/runtime/runtime.cjs');
+const {boot}=require('../server_smoke/process/boot.cjs');
+const {waitForServer}=require('../server_smoke/process/host_wait.cjs');
 const {localLock}=require('../pack_test/session/lock.cjs');
-const procs=require('../server_smoke/procs.cjs');
+const procs=require('../server_smoke/process/procs.cjs');
 const {WORLD}=require('../pack_test/stage_runtime.cjs');
 // Compose a private offline cache. Neither shared caches nor instances receive stamps or writes.
 function stage({root,loader,jarDirs,job,name}) {

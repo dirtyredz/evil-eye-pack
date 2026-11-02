@@ -78,7 +78,7 @@ function readRunSeed(runDir) {
 }
 
 async function installPack(runDir, packToml, java, cache, log, scope) {
-  const { withLocalPack, verifyInstalledLocal } = require('../packwiz/install/local_source.cjs');
+  const { withLocalPack, verifyInstalledLocal } = require('../../packwiz/install/local_source.cjs');
   const cachedInstaller = path.join(cache, 'packwiz-installer.jar');
   if (!fs.existsSync(cachedInstaller)) {
     const src = INSTALLER_JAR_SOURCES.find((p) => fs.existsSync(p));

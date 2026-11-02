@@ -20,7 +20,7 @@ function safeLibraryPath(relative) {
   return relative;
 }
 function stage(root, out, cache, launcher, exclude) {
-  const runtime = require('../server_smoke/runtime.cjs').fromPackText(fs.readFileSync(path.join(root, 'pack.toml'), 'utf8'));
+  const runtime = require('../server_smoke/runtime/runtime.cjs').fromPackText(fs.readFileSync(path.join(root, 'pack.toml'), 'utf8'));
   if (runtime.loader !== 'neoforge' || runtime.loaderVersion !== '21.1.265' || runtime.minecraft !== '1.21.1') throw Error('Client audit requires NeoForge 21.1.265 / Minecraft 1.21.1');
   const libraries = path.join(out, 'libraries');
   const source = path.join(launcher, 'libraries');

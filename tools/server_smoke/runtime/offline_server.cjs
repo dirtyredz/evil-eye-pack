@@ -2,9 +2,9 @@
 // Prepare an isolated, exact server install using cached bytes only. Never runs an installer.
 const fs = require('node:fs');
 const path = require('node:path');
-const { parseIndex, readMetafileSide } = require('../packwiz/pack_index.cjs');
-const { resolvePinnedJar } = require('../packwiz/pinned_jar.cjs');
-const { makeRunServer } = require('../pack_test/session/prepare.cjs');
+const { parseIndex, readMetafileSide } = require('../../packwiz/pack_index.cjs');
+const { resolvePinnedJar } = require('../../packwiz/pinned_jar.cjs');
+const { makeRunServer } = require('../../pack_test/session/prepare.cjs');
 const { assertStamp } = require('./runtime.cjs');
 
 // The showcase builds on an empty flat world; `ordinary` keeps the pack's normal world

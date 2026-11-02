@@ -2,8 +2,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { stage } = require('./stage.cjs');
-const { scope } = require('../server_smoke/procs.cjs');
-const { waitForServer } = require('../server_smoke/host_wait.cjs');
+const { scope } = require('../server_smoke/process/procs.cjs');
+const { waitForServer } = require('../server_smoke/process/host_wait.cjs');
 const { verdict } = require('./verdict.cjs');
 const { loadAllowlist } = require('./allowlist.cjs');
 const { output, inside, noLinks } = require('../data_io/path_guard.cjs');
@@ -18,7 +18,7 @@ async function main(argv) {
   const allowlist = loadAllowlist(path.join(__dirname, 'allowlist.json'));
   if (!options.out || !options.cache) throw Error('--out and --cache are required');
   const out = path.resolve(options.out);
-  const jobs = path.resolve(require('../server_smoke/env.cjs').ARTIFACTS, 'jobs');
+  const jobs = path.resolve(require('../server_smoke/runtime/env.cjs').ARTIFACTS, 'jobs');
   output(out, jobs);
   for (const input of [root, options.cache, options.launcher || 'C:/Users/dirty/MultiMC']) {
     noLinks(input);

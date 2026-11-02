@@ -6,7 +6,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const cfg = require('../../remote/config.cjs');
 const provision = require('../../remote/provision.cjs');
-const { describe: runtimeOf } = require('../../../server_smoke/runtime.cjs');
+const { describe: runtimeOf } = require('../../../server_smoke/runtime/runtime.cjs');
 
 const FORGE = runtimeOf({ loader: 'forge', minecraft: '1.20.1', loaderVersion: '47.4.10' });
 const NEO = runtimeOf({ loader: 'neoforge', minecraft: '1.21.1', loaderVersion: '21.1.265' });

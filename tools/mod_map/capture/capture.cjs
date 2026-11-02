@@ -2,14 +2,14 @@
 // Instrument an offline disposable copy; the existing smoke owns the JVM lifecycle.
 const fs = require('node:fs');
 const path = require('node:path');
-const env = require('../../server_smoke/env.cjs');
-const procs = require('../../server_smoke/procs.cjs');
-const { boot } = require('../../server_smoke/boot.cjs');
-const { prepare } = require('../../server_smoke/offline_server.cjs');
-const { waitForServer } = require('../../server_smoke/host_wait.cjs');
+const env = require('../../server_smoke/runtime/env.cjs');
+const procs = require('../../server_smoke/process/procs.cjs');
+const { boot } = require('../../server_smoke/process/boot.cjs');
+const { prepare } = require('../../server_smoke/runtime/offline_server.cjs');
+const { waitForServer } = require('../../server_smoke/process/host_wait.cjs');
 const { localLock } = require('../../pack_test/session/lock.cjs');
 const { worldKey, restoreWorld } = require('../../pack_test/session/world_cache.cjs');
-const { readRuntime, readStamp } = require('../../server_smoke/runtime.cjs');
+const { readRuntime, readStamp } = require('../../server_smoke/runtime/runtime.cjs');
 const { WORLD } = require('../../pack_test/stage_runtime.cjs');
 const { FML_LOGGERS } = require('./timing.cjs');
 

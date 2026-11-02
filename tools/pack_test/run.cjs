@@ -15,10 +15,10 @@
 // Exit: 0 no new findings; 1 new findings; 2 invalid/incomplete run, setup or cleanup failure.
 const fs = require('node:fs');
 const path = require('node:path');
-const env = require('../server_smoke/env.cjs');
-const { readRuntime, javaPaths, checkJava, identity } = require('../server_smoke/runtime.cjs');
+const env = require('../server_smoke/runtime/env.cjs');
+const { readRuntime, javaPaths, checkJava, identity } = require('../server_smoke/runtime/runtime.cjs');
 const { stageDirFor } = require('./stage_runtime.cjs');
-const procs = require('../server_smoke/procs.cjs');
+const procs = require('../server_smoke/process/procs.cjs');
 const { verify } = require('../packwiz/verify_hashes.cjs');
 const prep = require('./session/prepare.cjs');
 const { checkDestination, runId, runMeta } = require('./session/run_meta.cjs');
