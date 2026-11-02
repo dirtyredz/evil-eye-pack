@@ -837,3 +837,14 @@ Removed: `mods/cosmetic-armor-reworked.pw.toml`, `config/cosmeticarmorreworked-c
 Private local pins advance to Evil Eye Client 0.5.0 and Tweaks 0.8.0, with verified jars in both the migration cache and world-trial-final cache. The pack enables owned vanilla-storage move-all and selected-hand/offhand refill, disabling the equivalent IPN switches and enforcing that migration on preserved client configs. Existing middle-click sorting stays in IPN. IPN/libIPN and Kotlin remain pinned; sorting parity, Dank bulk support and full removal are follow-up work.
 
 The no-download dispatch updates only the two local lock targets from their built bytes using the existing metadata reader/serializer, then runs migration check offline. Full resolve is not used because it fetches platform metadata. Acceptance evidence and exact remaining work: artifacts/minecraft-mods/jobs/2026-11-02-ipn-build/handoff.md. No owner-instance writes or visible client launch.
+
+Round-3 evidence: `artifacts/evil-eye-pack/jobs/2026-11-02-ipn-round3/`. Client/Tweaks fast gates pass
+(14/110 GameTests); all 574 Node tests, hash verification, recursive candidate closure, client audit
+(243 configs, 1808 targets, existing allowlist) and the cached-only server smoke pass. The smoke reaches
+Done in 71.916 seconds wall time with no new error groups and exits cleanly. A first wrapper attempt
+stopped before world startup because it omitted the standard test EULA setup; its evidence is retained.
+
+The overall migration gate is **not green**: Mekanism's unchanged target-lock size is 12,197,109 bytes,
+but both caches contain 11,976,009 bytes matching the locked SHA-256 and SHA-512. Offline `check`
+rejects that size and consequently reports two missing dependencies. Repair that unrelated metadata
+in its own change. No runtime jar, upstream pin or migration validator was changed to bypass it.

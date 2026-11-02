@@ -146,4 +146,10 @@ Cosmetic Armor Reworked is absorbed into the owned mods: **Evil Eye Client 0.4.0
 
 Round 2 ships the authorized bounded subset in Client 0.5.0/Tweaks 0.8.0: vanilla-storage move-all and native-use selected-hand/offhand refill. IPN refill/move-all are disabled, including preserved-config enforcement; IPN/libIPN remain for sorting and Kotlin remains for its other consumers. Sorting parity and Dank bulk storage are still unfinished, so this is not full replacement acceptance. The complete handoff is artifacts/minecraft-mods/jobs/2026-11-02-ipn-build/handoff.md.
 
-The ad hoc baseline audit resolved all 161 mod roots by declared hash and scanned 239 archives (78 nested jars), 85,052 classes and 215 metadata files. Excluding IPN/libIPN roots leaves 83,968 classes and no `org/anti_ad/` or `org.anti_ad.` constant-pool matches or declared IPN/libIPN consumers. Create Jetpack 5.2.1, nested FlightLib 4.0.36 and Cull Less Leaves 1.4.3 still declare Kotlin for Forge and reference Kotlin classes. The saved `library-closure.json` labels this baseline-only scope explicitly.
+Round 3 repeated the ad hoc audit against the subset jars: 161 hash-verified roots, 239 archives
+(78 nested jars), 85,097 classes and 215 metadata files, with no scan errors. Excluding IPN/libIPN
+leaves 84,013 classes and no targeted IPN references or dependencies. Create Jetpack, nested FlightLib
+and Cull Less Leaves still require Kotlin. Evidence: `artifacts/evil-eye-pack/jobs/2026-11-02-ipn-round3/`.
+This verifies the bounded candidate, not full-removal acceptance. Both mod gates, 574 pack Node tests,
+the client transformation audit and a cached-only headless smoke passed. Migration-lock validation
+still fails on the pre-existing Mekanism size record; see the handoff.
