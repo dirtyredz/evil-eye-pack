@@ -6,7 +6,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const P = require('../pack_index.cjs');
 const { installPack, instanceCfgValue } = require('../trial_install.cjs');
-const { noLinks } = require('../../world_trial/copy.cjs');
+const { noLinks } = require('../../data_io/path_guard.cjs');
 
 const ROOT = path.resolve(__dirname, '../../..');
 const STABLE = 'C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft';

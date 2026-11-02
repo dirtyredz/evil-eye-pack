@@ -6,7 +6,7 @@ const { scope } = require('../server_smoke/procs.cjs');
 const { waitForServer } = require('../server_smoke/host_wait.cjs');
 const { verdict } = require('./verdict.cjs');
 const { loadAllowlist } = require('./allowlist.cjs');
-const { output, inside, noLinks } = require('../world_trial/copy.cjs');
+const { output, inside, noLinks } = require('../data_io/path_guard.cjs');
 
 async function main(argv) {
   const options = {};

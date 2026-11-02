@@ -2,7 +2,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { files, copy, output } = require('./copy.cjs');
+const { files, copy } = require('./copy.cjs');
+const { output } = require('../data_io/path_guard.cjs');
 function manifest(root) {
   return Object.fromEntries(files(root).map(rel => {
     const bytes = fs.readFileSync(path.join(root, rel));

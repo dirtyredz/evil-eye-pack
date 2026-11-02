@@ -2,21 +2,7 @@
 // All mutable world bytes are copied, never linked. Validate every ancestor as well as children.
 const fs = require('node:fs');
 const path = require('node:path');
-const PROTECTED = ['C:/Users/dirty/MultiMC/instances', 'C:/Users/dirty/projects/evil-eye-pack'];
-function inside(a, b) {
-  const rel = path.relative(path.resolve(b), path.resolve(a)).toLowerCase();
-  return rel === '' || (!rel.startsWith('..' + path.sep) && rel !== '..' && !path.isAbsolute(rel));
-}
-function noLinks(target) {
-  let p = path.resolve(target);
-  for (;;) {
-    if (fs.existsSync(p) || (() => { try { fs.lstatSync(p); return true; } catch { return false; } })()) {
-      const s = fs.lstatSync(p);
-      if (s.isSymbolicLink()) throw new Error('Symlink/junction refused: ' + p);
-    }
-    const parent = path.dirname(p); if (parent === p) break; p = parent;
-  }
-}
+const { inside, noLinks, output, PROTECTED } = require('../data_io/path_guard.cjs');
 function files(root) {
   noLinks(root);
   const out = [];
@@ -30,11 +16,6 @@ function files(root) {
     }
   }
   walk(root); return out.sort();
-}
-function output(target, job, protectedPaths = PROTECTED) {
-  noLinks(job); noLinks(target);
-  if (!inside(target, job) || path.resolve(target).toLowerCase() === path.resolve(job).toLowerCase()) throw new Error('Output must be below job: ' + target);
-  if (protectedPaths.some(p => inside(target,p) || inside(p,target))) throw new Error('Protected output: ' + target);
 }
 function copy(source, dest, job, protectedPaths = PROTECTED) {
   output(dest, job, protectedPaths); noLinks(source);
@@ -50,4 +31,4 @@ function copy(source, dest, job, protectedPaths = PROTECTED) {
   }
   return entries.length;
 }
-module.exports = { inside, noLinks, files, output, copy, PROTECTED };
+module.exports = { files, copy };

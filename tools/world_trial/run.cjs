@@ -1,6 +1,6 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path');
-const {output,inside}=require('./copy.cjs');
+const {output,inside}=require('../data_io/path_guard.cjs');
 const {snapshot,verify}=require('./snapshot.cjs');
 const {inventory,json}=require('./inventory.cjs');
 const {compare}=require('./compare.cjs');
