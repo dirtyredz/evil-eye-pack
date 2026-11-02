@@ -4977,7 +4977,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "9b887a449e877b80cdfe8c9b52df2e781543e2a9f5a72d00bac23da018b46315"
+hash = "b946a23ed448721b4d4ca445d49a299f78a519cff007632467189393beccf860"
 metafile = true
 
 [[files]]
@@ -5491,6 +5491,14 @@ hash = "703027e03f6c3c85c751fefda57a543819c201105e038add10b1f0ed5490b1fc"
 [[files]]
 file = "resourcepacks/evil-eye-cozy-overrides/assets/curios/textures/gui/inventory_revamp.png"
 hash = "e7fa5937f6be374c9c7ec91f44ce1efcf4d9c06e23992917af31ceb70f146630"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/thirst/textures/gui/appleskin_icons.png"
+hash = "504ecda08f9e85b88c3bcb013f07e7014f2c557e70af501fc4bfa4bb2e542c9e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/thirst/textures/gui/thirst_icons.png"
+hash = "1c75889ea23cc9ab98d17da4cfeeaf07eb776a685300562b7e2301e5503bd663"
 
 [[files]]
 file = "resourcepacks/evil-eye-cozy-overrides/pack.mcmeta"

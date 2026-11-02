@@ -14,6 +14,15 @@ malware_guard), with `packwiz`, `data_io` and `script-run` at the top. `server_s
 rule was written five times, and `tools/` had 13 siblings. **Rejected:** keeping the rule in PowerShell (the Node
 installers need it too); a shared JSON of instance paths (two readers would still each encode the matching rules).
 
+## 2026-11-02 - Smooth thirst droplets ship from the pack override folder (Evil Eye Client 0.3.3)
+
+**Decision.** Original 4x droplet sprites for `thirst:textures/gui/thirst_icons.png` and `appleskin_icons.png` live in
+`resourcepacks/evil-eye-cozy-overrides`, not in Evil Eye Client's jar. **Why:** Thirst's own jar and ours would both
+supply the `thirst:` path from mod resource packs, whose relative order is not defined; the override folder already
+sits above CozyUI+ by explicit order (`config/evileye_client/resourcepacks.json`). Thirst draws its bar from
+`thirst_icons.png` (8px-stride frames) and Evil Eye Client draws the rest from both files, all with absolute UVs against
+the 25x9 / 256x256 logical size, so a 4x texture drops in. Generator: minecraft-mods `mods/EvilEyeClient/tools/textures/GenerateThirstSprites.java`.
+
 ## 2026-11-01 - The crafting-grid controls are removed (Evil Eye Client 0.3.2, Tweaks 0.6.0)
 
 **Decision.** Owner ruling: the Crafting Tweaks replacement keys and server actions are unused, so they are removed from

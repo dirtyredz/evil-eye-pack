@@ -399,11 +399,11 @@
    "side": "client",
    "target": {
     "source": "local",
-    "filename": "evileye_client-1.21.1-neoforge-0.3.2.jar",
-    "sha256": "88b4c99345040e43d486dcd2bc6f4853ca8e1e52df8766a7b3e9e3e7d070d8fb",
-    "size": 342897
+    "filename": "evileye_client-1.21.1-neoforge-0.3.3.jar",
+    "sha256": "8c15014d4d5bd804cff4a6672e66e82848cd837ac96f8d8d1624c5d18e66be20",
+    "size": 346821
    },
-   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient 1a540f4, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar."
+   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient 837fd2f, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar."
   },
   {
    "metafile": "mods/evileye-essentials.pw.toml",
