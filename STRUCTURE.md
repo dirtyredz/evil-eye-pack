@@ -108,7 +108,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `mods/` — packwiz metafiles (`*.pw.toml`), one per mod jar (CurseForge, Modrinth, direct URL, or private migration `metadata:local` hash pins)
 - `shaderpacks/` — shaderpack metafiles and saved shader options
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
-- `resourcepacks/evil-eye-cozy-overrides/` — top-priority thirst, legacy silver, Curios and New Hearts GUI assets; `assets/.../gui/sprites/` is intentionally flat. Selection policy lives in `config/evileye_client/resourcepacks.json`; the pack data contract guards both.
+- `resourcepacks/evil-eye-cozy-overrides/` — top-priority thirst, legacy silver, Curios GUI assets; CozyUI+ owns HUD hearts, with no `gui/sprites/hud/heart/` folder in this override; `assets/.../gui/sprites/` is intentionally flat. Selection policy lives in `config/evileye_client/resourcepacks.json`; the pack data contract guards both.
 - `config/` — mod configs installed as plain files
 - `config/modernui/client.toml` - enables Modern UI zoom; its Z default is in `config/defaultoptions/keybindings.txt`.
 - `config/defaultoptions/keybindings.txt` — default keymap applied by Evil Eye Client (Default Options syntax; new instances and unsaved keys only; see GOTCHAS)

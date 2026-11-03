@@ -2,12 +2,15 @@
 ## Stable visual priority (2026-11-02)
 
 Require and fix the Cozy override folder at TOP on every launch, including saved
-instances crossing pack-format compatibility. Copy the 45 GUI heart PNGs verbatim
-from the SHA-512-pinned New Hearts archive into that folder; New Hearts' authors
-own the art. This preserves its complete status/hardcore/container family above
-CozyUI+ without moving the rest of CozyUI below New Hearts. Evil Eye Client 0.7.0
-already derives tinted hearts from these active sprite files; no mod change is
-needed. The pack contract checks family coverage and exact combined asset bytes.
+instances crossing pack-format compatibility. Keep the policy and its contract.
+
+CozyUI+ hearts stay. Revert the 45 New Hearts PNGs copied into the top override
+by ec8c459: the owner's screenshot showed an unwanted texture change and a last
+heart that never filled. The original complaint was only that the two extra
+Heart Canister hearts were not yellow. Canister tint is owned by Evil Eye Client
+and is handled separately; replacing the heart art is not the fix. The pack
+contract forbids the override's `gui/sprites/hud/heart/` folder so CozyUI+ provides
+these sprites.
 
 
 

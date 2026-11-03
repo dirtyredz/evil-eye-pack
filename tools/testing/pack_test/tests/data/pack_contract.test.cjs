@@ -60,25 +60,10 @@ test('visual overrides survive saved-pack omissions and stay above the UI packs'
   assert.equal(JSON.parse(read('resourcepacks/evil-eye-cozy-overrides/pack.mcmeta')).pack.pack_format, 34);
 });
 
-test('the top override supplies the New Hearts families used by normal and coloured HUD hearts', () => {
+test('the top override leaves HUD heart sprites to CozyUI+', () => {
   const folder = 'resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart';
-  const variants = ['full', 'half', 'full_blinking', 'half_blinking',
-    'hardcore_full', 'hardcore_half', 'hardcore_full_blinking', 'hardcore_half_blinking'];
-  const names = ['', 'absorbing_', 'poisoned_', 'withered_', 'frozen_']
-    .flatMap(prefix => variants.map(variant => prefix + variant));
-  names.push('vehicle_container', 'container', 'container_blinking', 'container_hardcore', 'container_hardcore_blinking');
-  const digest = require('node:crypto').createHash('sha256');
-  assert.deepEqual(fs.readdirSync(path.join(ROOT, folder)).sort(), names.map(n => n + '.png').sort());
-  for (const name of names.sort()) {
-    const png = fs.readFileSync(path.join(ROOT, folder, name + '.png'));
-    digest.update(name + '.png');
-    digest.update(png);
-    assert.equal(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a', name + ' PNG signature');
-    assert.equal(png.readUInt32BE(16), 9, name + ' width');
-    assert.equal(png.readUInt32BE(20), 9, name + ' height');
-  }
-  // Verbatim family from the SHA-512-pinned New Hearts 1.9-15w49b.zip.
-  assert.equal(digest.digest('hex'), '3f80508b79230b4c088f8d6e7a88c57782da1ba5c85386c15595a5915da04e26');
+  assert.equal(fs.existsSync(path.join(ROOT, folder)), false,
+    'CozyUI+ owns HUD heart sprites; the override must not ship a heart folder');
 });
 
 test('the default keymap carries no crafting-grid keys (Crafting Tweaks and the Evil Eye Client keys were removed)', () => {
