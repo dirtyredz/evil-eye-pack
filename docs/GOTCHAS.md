@@ -438,3 +438,5 @@ Modern UI is enabled and defaults to Z. Saved `options.txt` bindings win over sh
 ## Pro Placer replacement
 
 Client 0.7.0 adds placement defaults through config correction; a shipped preserved TOML does not replace saved preferences. The toggle state lasts for the application session, while the legacy binding is adopted through the two-load options path. Puzzles Lib remains required by Diagonal Fences. Quick Skin local appearance files are persistent and untouched.
+
+- **Client 0.7.1 does not enable Iron Chests sorting/transfers by itself.** Its stable rail and Dank sync fixes retain server capability negotiation; the pinned Tweaks storage classifier still needs companion support. No config or owned-key change grants that capability.

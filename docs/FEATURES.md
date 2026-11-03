@@ -24,3 +24,5 @@ Inventory subset (Client 0.5.0/Tweaks 0.8.0): two move-all controls on classifie
 - **Evil Eye settings and inventory actions:** Client 0.6.1 with Tweaks 0.9.0 and Essentials 0.2.0 provides the owned settings screen/service and one outside-panel rail (to player, to storage, sort, trash). Only applicable actions show; clipped or obstructed rails hide. Inventory effects sit left; operator commands stay in the sidebar. IPN/libIPN are retired.
 
 Client 0.7.0 owns reach-around bridging, continuous placement and creative row/column breaking; [placement] settings and the unbound continuous-building key are in the owned settings/controls screens. Pro Placer leaves; Puzzles Lib remains for Diagonal Fences.
+
+Client 0.7.1 stabilizes the inventory sort rail, consumes each sort guard once and fixes client-side Dank inventory sync. The existing settings and placement behavior remain; Iron Chests sort/transfer support still needs companion Tweaks changes.

@@ -882,3 +882,9 @@ Client 0.7.0 independently implements reach-around bridging, continuous row/colu
 Pro Placer is removed: **158 -> 157** physical mod metafiles. Puzzles Lib stays for Diagonal Fences and its nested Diagonal Blocks. Modern UI, Quick Skin and 3D Skin Layers stay. Chloride was already removed by the later owner decision in the supplied base; this change does not restore or otherwise alter it. Exact-ID exclusions replace the unused matcher grammar; block items only and stronger lifecycle cleanup are deliberate differences.
 
 Evidence: artifacts/evil-eye-pack/jobs/2026-11-02-pro-placer; full handoff: artifacts/minecraft-mods/jobs/2026-11-02-pro-placer/handoff.md. No push, merge, instance writes or promotion. Owner client input and multiplayer acceptance remain required.
+
+## Stable feedback: Client 0.7.1 (2026-11-02)
+
+Private client-only pin replaces 0.7.0 with `evileye_client-1.21.1-neoforge-0.7.1.jar` (614383 bytes), SHA-256 `97132263b0a5c76593a45e164b03e98287089061dd1f4acb28939bfc70fe0163`. The release stabilizes the sort rail, makes sort guards single-use and adds client-only Dank sync (`evileye_client.dank.mixins.json`). Existing config and owned-key contracts remain unchanged.
+
+Upstream handoff: `jobs/2026-11-02-stable-feedback/client-handoff.md` reports 280 passing tests and a complete client mixin audit under the unchanged allowlist, including DankInventory. No new audit exception is needed. Iron Chests support still requires companion Tweaks work; this pin does not claim that support or in-game acceptance. The hash-named jar is staged in the Stable install cache alongside 0.7.0; Stable itself is not changed by this release preparation.
