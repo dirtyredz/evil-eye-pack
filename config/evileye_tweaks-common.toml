@@ -1,3 +1,14 @@
+[sorting]
+	enabled = true
+
+[transfer]
+	enabled = true
+	deniedMenus = ["ae2:*", "create:*", "minecraft:crafting", "minecraft:furnace", "minecraft:blast_furnace", "minecraft:smoker", "minecraft:anvil", "minecraft:merchant", "minecraft:smithing", "minecraft:grindstone", "minecraft:brewing_stand", "minecraft:stonecutter", "minecraft:loom", "minecraft:cartography_table", "minecraft:enchantment"]
+
+[refill]
+	#Allow negotiated clients to opt into hand refill and near-break tool swaps.
+	enabled = true
+
 [furnace]
 	#Shift-clicking an item in the fuelgoeshere:forced_fuels tag (coal and charcoal by default)
 	#sends it to the fuel slot even when it could be smelted, as long as the fuel slot is empty
@@ -172,15 +183,3 @@
 	shown = true
 	#Keep cosmetic armour on death. When false it drops with the inventory unless keepInventory is on.
 	keepThroughDeath = false
-
-#Only classified vanilla storage has bulk-write capability.
-[transfer]
-	enabled = true
-	deniedMenus = ["ae2:*","create:*","minecraft:crafting","minecraft:furnace","minecraft:blast_furnace","minecraft:smoker","minecraft:anvil","minecraft:merchant","minecraft:smithing","minecraft:grindstone","minecraft:brewing_stand","minecraft:stonecutter","minecraft:loom","minecraft:cartography_table","minecraft:enchantment"]
-
-#Clients must negotiate and opt in.
-[refill]
-	enabled = true
-
-[sorting]
-	enabled = true

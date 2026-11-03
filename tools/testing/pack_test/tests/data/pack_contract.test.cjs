@@ -140,7 +140,7 @@ test('owned inventory actions replace IPN and libIPN while retaining Kotlin', ()
   for(const file of ['config/evileye_client-client.toml','config/evileye_tweaks-common.toml'])
     for(const section of ['sorting','transfer','refill']) assert.match(tomlSection(read(file),section),/^\s*enabled = true$/m);
   assert.match(read('config/defaultoptions/keybindings.txt'),/^key_key.evileye_client.sort:key.mouse.middle$/m);
-  assert.match(read('mods/evileye-client.pw.toml'),/neoforge-0\.7\.1\.jar/);
-  assert.match(read('mods/evileye-tweaks.pw.toml'),/neoforge-0\.9\.0\.jar/);
+  assert.match(read('mods/evileye-client.pw.toml'),/neoforge-0\.8\.0\.jar/);
+  assert.match(read('mods/evileye-tweaks.pw.toml'),/neoforge-0\.10\.0\.jar/);
   assert.match(read('mods/evileye-essentials.pw.toml'),/neoforge-0\.2\.0\.jar/);
 });

@@ -407,11 +407,11 @@
    "side": "both",
    "target": {
     "source": "local",
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.9.0.jar",
-    "sha256": "5293c6c9930abd0b1257ab1731769e36d14e962b49a66ec7aaddfe8373b43c4b",
-    "size": 374687
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.10.0.jar",
+    "sha256": "4c52b26e5e96e08a9493a52d56f8c6a7cc699eafded5ae1a70b9130b0ab57351",
+    "size": 378981
    },
-   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.9.0 from minecraft-mods 42406c6; settings screen/service metadata. IPN replacement retained."
+   "reason": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.9.0 from minecraft-mods 42406c6; settings screen/service metadata. IPN replacement retained. Paired Stable release: Tweaks 0.10.0 repairs IMC dispatch and admits ordinary/trapped Iron Chests physical storage up to 108 slots; Dirt stays excluded. Inventory sorting negotiates protocol 2."
   },
   {
    "metafile": "mods/evileye-client.pw.toml",
@@ -419,11 +419,11 @@
    "side": "client",
    "target": {
     "source": "local",
-    "filename": "evileye_client-1.21.1-neoforge-0.7.1.jar",
-    "sha256": "97132263b0a5c76593a45e164b03e98287089061dd1f4acb28939bfc70fe0163",
-    "size": 614383
+    "filename": "evileye_client-1.21.1-neoforge-0.8.0.jar",
+    "sha256": "d067e3601fd8fa955d2830e817403492d5c537f061c49adf4e9d71f3581c9417",
+    "size": 627679
    },
-   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.6.1 from minecraft-mods 8195659; settings screen/service metadata and outside-panel inventory action rail. IPN replacement retained. Wave 6: Client 0.7.0 absorbs Pro Placer reach-around, continuous placement and creative row/column breaking; no server protocol. Puzzles Lib stays for Diagonal Fences. Stable feedback 2026-11-02: Client 0.7.1 stabilizes the sort rail, consumes sort guards once and fixes client-only Dank inventory sync; no config or server protocol change."
+   "reason": "Owned client mod (minecraft-mods/mods/EvilEyeClient f622b5d, private local pin until a canonical release): replaces Yeetus Experimentus, Pick Up Notifier, Stylish Effects, Colorful Hearts, Enchantment Descriptions and AppleSkin (consolidation wave 2), and Better Advancements, Controlling, Default Options, Resource Pack Overrides, Just Enough Professions, Mouse Tweaks and Crafting Tweaks' hidden recipe-book button (wave 3; its crafting keys were removed in 0.3.2, unused); wave 5 adds FTB Library's inventory sidebar.; 0.4.0 adds the equipment panel (Curios key G and the inventory button open one panel: equipped curios, real armour, model, cosmetic armour, cosmetic curios) and cosmetic armour rendering, replacing Cosmetic Armor Reworked's screen and rendering (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.6.1 from minecraft-mods 8195659; settings screen/service metadata and outside-panel inventory action rail. IPN replacement retained. Wave 6: Client 0.7.0 absorbs Pro Placer reach-around, continuous placement and creative row/column breaking; no server protocol. Puzzles Lib stays for Diagonal Fences. Stable feedback 2026-11-02: Client 0.7.1 stabilizes the sort rail, consumes sort guards once and fixes client-only Dank inventory sync; no config or server protocol change. Paired Stable release: Client 0.8.0 repairs IMC dispatch, guards null Ponder cameras in Interstellaris, recovers pause-menu settings placement and adds an opt-in FPS HUD."
   },
   {
    "metafile": "mods/evileye-essentials.pw.toml",

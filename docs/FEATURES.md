@@ -25,4 +25,6 @@ Inventory subset (Client 0.5.0/Tweaks 0.8.0): two move-all controls on classifie
 
 Client 0.7.0 owns reach-around bridging, continuous placement and creative row/column breaking; [placement] settings and the unbound continuous-building key are in the owned settings/controls screens. Pro Placer leaves; Puzzles Lib remains for Diagonal Fences.
 
-Client 0.7.1 stabilizes the inventory sort rail, consumes each sort guard once and fixes client-side Dank inventory sync. The existing settings and placement behavior remain; Iron Chests sort/transfer support still needs companion Tweaks changes.
+Client 0.7.1 stabilizes the inventory sort rail, consumes each sort guard once and fixes client-side Dank inventory sync. The existing settings and placement behavior remain; Iron Chests support is supplied by the paired 0.8.0/0.10.0 release below.
+
+Client 0.8.0 + Tweaks 0.10.0 repair equipment/settings IMC routing and enable negotiated sorting/transfers for ordinary and trapped Iron Chests through 108 slots (Dirt excluded). Client adds the Interstellaris Ponder null-camera guard, pause-menu settings placement recovery/diagnostics and an optional FPS HUD (off by default). Real Iron Chests and rendered client acceptance remain owner checks.

@@ -1786,7 +1786,7 @@ hash = "e27c848c2e0bb82f09492108399513a7e93e4bb40cb90e41e9e65d38fcd68dd7"
 
 [[files]]
 file = "config/evileye_tweaks-common.toml"
-hash = "cf95d715a8efc2f236242f597f87061c99e3a8ba2724b42f1d0b8e51ae698f1b"
+hash = "974069dd8f1bebd8c93915c5b77122716f8cdaa128b51610dff0e611028801ff"
 
 [[files]]
 file = "config/extremereactors/client.toml"
@@ -4952,7 +4952,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "824d3a1d73dab4cd56bdce4a0f886b04496e498a74a10e1c090c19fe1591a26a"
+hash = "a6d4a20b3dcdf9241e7d7d5df768035bdebdcb401dc64dad9a80c527cfb45337"
 metafile = true
 
 [[files]]
@@ -4967,7 +4967,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-tweaks.pw.toml"
-hash = "59634f290b667a079252af2a2c3e217cdd814d1fd9ec4f1ca4286cd4dd8f7ceb"
+hash = "2af5327fb6f0982305b7dcbc8fe1d894392866d6ca3013a6d001bc0054b9dc64"
 metafile = true
 
 [[files]]

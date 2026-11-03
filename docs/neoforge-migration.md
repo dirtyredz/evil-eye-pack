@@ -888,3 +888,13 @@ Evidence: artifacts/evil-eye-pack/jobs/2026-11-02-pro-placer; full handoff: arti
 Private client-only pin replaces 0.7.0 with `evileye_client-1.21.1-neoforge-0.7.1.jar` (614383 bytes), SHA-256 `97132263b0a5c76593a45e164b03e98287089061dd1f4acb28939bfc70fe0163`. The release stabilizes the sort rail, makes sort guards single-use and adds client-only Dank sync (`evileye_client.dank.mixins.json`). Existing config and owned-key contracts remain unchanged.
 
 Upstream handoff: `jobs/2026-11-02-stable-feedback/client-handoff.md` reports 280 passing tests and a complete client mixin audit under the unchanged allowlist, including DankInventory. No new audit exception is needed. Iron Chests support still requires companion Tweaks work; this pin does not claim that support or in-game acceptance. The hash-named jar is staged in the Stable install cache alongside 0.7.0; Stable itself is not changed by this release preparation.
+
+## Stable feedback: Client 0.8.0 + Tweaks 0.10.0 (2026-11-02)
+
+Ship the two private pins together. Client: 627679 bytes, SHA-256 `d067e3601fd8fa955d2830e817403492d5c537f061c49adf4e9d71f3581c9417`. Tweaks: 378981 bytes, SHA-256 `4c52b26e5e96e08a9493a52d56f8c6a7cc699eafded5ae1a70b9130b0ab57351`. Both hashes were independently verified and staged in the world-trial-final and migration caches; the missing Client 0.7.1 cache copy was also restored.
+
+The pair fixes consuming-queue IMC routing and supports ordinary/trapped Iron Chests physical storage through 108 slots, excluding Dirt; sorting negotiates protocol 2. Client adds the Interstellaris Ponder null-camera guard, pause settings placement recovery and opt-in FPS HUD. The client audit discovers both Dank and Interstellaris mixin configs automatically; no new exception is required by the upstream successful audit.
+
+Tweaks 0.10.0 has the same 56 common keys and values; its GameTest-written formatting is shipped. Client FPS defaults arrive through normal correction of the preserved config; owned keys are unchanged. The installer backs up and restores drifted strict plain files before verifying them, retaining backups below the run's .tmp directory. Tweaks common and Modern UI remain non-preserve; pack-owned values still win.
+
+Upstream evidence: jobs/2026-11-02-stable-feedback/batch-handoff.md (288 Client tests and client audit) and tweaks-gate-handoff.md (158 tests, 116 GameTests; supersedes the initial dependency block). Pack gate evidence: pin-08-handoff.md in the same job. These are upstream results, not new pack integration or rendered-client acceptance. No Stable installation, Minecraft launch or publication is part of this preparation.
