@@ -273,7 +273,10 @@ every `SMOKE_*` override, and runs its processes in a `tools/runtime_env/procs.c
 
 The neutral route is `install/install_pack.cjs`: all hash-verified cached artifacts become
 ordinary index files in a temporary local pack. The cached installer copies and tracks them without
-any URL or server; installed artifact hashes are checked before a target's prelaunch is updated.
+any URL or server. Original metafile provenance stays attached to prepared entries. After packwiz,
+non-preserved plain files that differ are backed up under the run's `.tmp/trial-install-*/drift-backup/`
+and restored to pack bytes; backups survive overlay cleanup. Jar entries are never repaired by this
+step. Installed artifact hashes are checked before a target's prelaunch is updated.
 Two thin targets sit on it: `trial_target.cjs` (only Evil Eye NeoForge Trial) and
 `stable_target.cjs` (the real Stable instance or a rehearsal copy; `--fresh` first removes every
 file the old install tracked). `pack_owned_keys.cjs` forces the keys in `pack-owned-keys.json`

@@ -442,3 +442,5 @@ Client 0.7.0 adds placement defaults through config correction; a shipped preser
 - **Client 0.7.1 does not enable Iron Chests sorting/transfers by itself.** Its stable rail and Dank sync fixes retain server capability negotiation; the pinned Tweaks storage classifier still needs companion support. No config or owned-key change grants that capability.
 
 - **Local mod releases must update the migration source pin too.** Keep `dispositions.json` target filename, SHA-256 and size aligned with `target-lock.json` and the `.pw.toml` filename/hash; otherwise a later resolve can downgrade the release. `local_pin_consistency.test.cjs` guards every local mod across all three records.
+
+- **Game config re-saves can leave unchanged packwiz index entries dirty.** Stable/Trial prelaunch restores pack bytes for non-preserve, non-metafile files before strict verification, logs each restored path and retains old bytes under `.tmp/trial-install-*/drift-backup/`. Tweaks common and Modern UI stay pack-owned; preserved preferences and jar verification are unchanged.

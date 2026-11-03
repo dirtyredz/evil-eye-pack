@@ -44,7 +44,7 @@ function prepareFiles(root, cache) {
     }
     if (paths.has(file.toLowerCase())) throw Error('Duplicate installed path: ' + file);
     paths.add(file.toLowerCase());
-    files.push({ file, hash: sha256(bytes), bytes, preserve: f.preserve });
+    files.push({ file, hash: sha256(bytes), bytes, preserve: f.preserve, sourceMetafile: f.metafile });
   }
   return files;
 }
@@ -57,6 +57,29 @@ function verifyInstalledFiles(instance, files) {
       throw Error('Installed artifact differs: ' + f.file);
     }
   }
+}
+
+// Keep original metadata provenance: converted jar entries must still fail strict verification.
+function restorePackFiles(instance, files, run, log = console.log) {
+  const restored = [];
+  for (const f of files) {
+    if (f.preserve || f.sourceMetafile) continue;
+    const installed = path.join(instance, f.file);
+    noLinks(installed);
+    const previous = fs.existsSync(installed) ? fs.readFileSync(installed) : null;
+    if (previous !== null && sha256(previous) === f.hash) continue;
+    if (previous !== null) {
+      const backup = path.join(run, 'drift-backup', f.file);
+      noLinks(backup);
+      fs.mkdirSync(path.dirname(backup), { recursive: true });
+      fs.writeFileSync(backup, previous, { flag: 'wx' });
+    }
+    fs.mkdirSync(path.dirname(installed), { recursive: true });
+    fs.writeFileSync(installed, f.bytes);
+    restored.push(f.file);
+    log('Restored pack-owned file: ' + f.file);
+  }
+  return restored;
 }
 
 function writePack(root, overlay, files) {
@@ -102,6 +125,7 @@ async function installPack({ instance, cache, dryRun, prelaunch, backupName, lab
     fs.writeFileSync(path.join(instance, 'packwiz-install.log'), result.out);
     console.log(result.out);
     if (result.code !== 0) throw Error('Headless installer exit ' + result.code);
+    restorePackFiles(instance, files, run);
     verifyInstalledLocal(ROOT, instance, 'client');
     verifyInstalledFiles(instance, files);
     for (const rel of applyOwnedKeys(instance)) console.log('Forced pack-owned keys into ' + rel);
@@ -114,8 +138,10 @@ async function installPack({ instance, cache, dryRun, prelaunch, backupName, lab
   } finally {
     scope.killAll(); process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop);
     // run was made by mkdtemp directly under this worktree's .tmp, never user-provided.
-    fs.rmSync(run, { recursive: true, force: true });
+    fs.rmSync(path.join(run, 'pack'), { recursive: true, force: true });
+    if (!fs.existsSync(path.join(run, 'drift-backup'))) fs.rmdirSync(run);
+    else console.log('Retained config drift backups: ' + path.join(run, 'drift-backup'));
   }
 }
 
-module.exports = { installPack, instanceCfgValue, setInstanceCfgValue, prepareFiles, writePack, verifyInstalledFiles };
+module.exports = { installPack, instanceCfgValue, setInstanceCfgValue, prepareFiles, writePack, verifyInstalledFiles, restorePackFiles };
