@@ -4952,7 +4952,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "0de0eef3952c137c28bab720769b8cf091889d2a8ec7ed2a1db4f06952d7519c"
+hash = "b1960d8dd41dae9d4afe4063ffe8dc346c1f919982cf202d0a536cf1f5d86e08"
 metafile = true
 
 [[files]]

@@ -916,3 +916,11 @@ Client 0.10.0 retains Tweaks 0.11.0 and the existing config. Equipment tabs join
 Private local pin: 657216 bytes, SHA-256 `4b59f266d44d3085ec99b4f2dbfbf222e2470d038a4b96a1e1349918e017b7b2`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar is verified in both the world-trial-final and migration caches. Upstream `EvilEyeClient` commit `eb01d38` and `docs/releases/0.10.0.md` describe the release; config and network sources are unchanged from 0.9.0. The jar declares optional Tweaks `[0.5.0,)`, which includes 0.11.0. No shipped config or config-decisions change is required.
 
 Pack verification is recorded in `jobs/2026-11-03-pin-client-0.10.0/handoff.md`. Rendered tab, effect paging and pause-button acceptance remain owner checks; no game launch, Stable installation or publication is part of this pin.
+
+## Client 0.10.1 equipment slot styling (2026-11-03)
+
+Client 0.10.1 paints inventory, hotbar, crafting/result, offhand, armour, cosmetic armour and curio slot backgrounds from a cell in the active vanilla inventory texture, so CozyUI supplies their shading and separators. Positions, sizes, hit-testing, placeholders and inactive overlays are unchanged. Tweaks stays 0.11.0; no shipped config or config-decisions change is needed.
+
+Private local pin: 657353 bytes, SHA-256 `a59d2eef55d26dfd84cb8f0394973de72b44407011b33600c1f2f06a98d585aa`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar is verified in both the world-trial-final and migration caches. Upstream `docs/releases/0.10.1.md` describes this painter-only release.
+
+Pack verification: `jobs/2026-11-03-pin-client-0.10.1/handoff.md`. Rendered CozyUI slot acceptance remains an owner check; no game launch, Stable installation or publication is part of this pin.
