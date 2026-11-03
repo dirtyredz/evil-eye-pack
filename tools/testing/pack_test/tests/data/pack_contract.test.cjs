@@ -141,6 +141,8 @@ test('owned inventory actions replace IPN and libIPN while retaining Kotlin', ()
     for(const section of ['sorting','transfer','refill']) assert.match(tomlSection(read(file),section),/^\s*enabled = true$/m);
   assert.match(read('config/defaultoptions/keybindings.txt'),/^key_key.evileye_client.sort:key.mouse.middle$/m);
   // Exact local pins are covered across source, lock and metafiles by local_pin_consistency.
+  assert.match(read('mods/evileye-client.pw.toml'), /^side = "client"$/m);
+  assert.match(read('mods/evileye-client.pw.toml'), /^mode = "metadata:local"$/m);
   for (const mod of ['client', 'tweaks', 'essentials'])
     assert.ok(fs.existsSync(path.join(ROOT, `mods/evileye-${mod}.pw.toml`)));
 });

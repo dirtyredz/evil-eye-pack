@@ -908,3 +908,11 @@ Client adds Equipment, Cosmetics and Attributes & Effects tabs, readable setting
 Transfer arrows now use click for matching item+component identities already in the destination and Shift-click for ALL. Empty destinations accept nothing in matching mode. Tweaks adds optional inventory_transfer_v2 alongside unchanged v1 ALL; Client matching fails closed against older Tweaks. Transfers still exclude hotbar, armour and offhand.
 
 Upstream evidence: jobs/2026-11-02-stable-feedback/transfer-handoff.md reports 302 Client tests and the final client mixin audit, plus 163 Tweaks tests and 117 GameTests. It supersedes the blocked audit and earlier jar in client09-handoff.md. These are upstream results, not a new paired multiplayer or rendered-client acceptance run. Owner checks remain equipment tabs/drag/EMI, settings and pause rendering, and both transfer modes on ordinary, Dank and Iron Chests storage. Pack gate and cache evidence: pin-09-handoff.md in the same job. No Stable install, launch or publication is performed.
+
+## Client 0.10.0 UI polish (2026-11-03)
+
+Client 0.10.0 retains Tweaks 0.11.0 and the existing config. Equipment tabs join the panel frame; Attributes & Effects hides slots and uses the full panel for paged attributes and active effects with atlas icons, names, levels and live durations. The pause eye uses the active resource pack's vanilla button frame. FPS, settings and transfer behavior are unchanged.
+
+Private local pin: 657216 bytes, SHA-256 `4b59f266d44d3085ec99b4f2dbfbf222e2470d038a4b96a1e1349918e017b7b2`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar is verified in both the world-trial-final and migration caches. Upstream `EvilEyeClient` commit `eb01d38` and `docs/releases/0.10.0.md` describe the release; config and network sources are unchanged from 0.9.0. The jar declares optional Tweaks `[0.5.0,)`, which includes 0.11.0. No shipped config or config-decisions change is required.
+
+Pack verification is recorded in `jobs/2026-11-03-pin-client-0.10.0/handoff.md`. Rendered tab, effect paging and pause-button acceptance remain owner checks; no game launch, Stable installation or publication is part of this pin.
