@@ -1778,7 +1778,7 @@ preserve = true
 
 [[files]]
 file = "config/evileye_client/resourcepacks.json"
-hash = "941dc9d96d79922dfec059567c30cb29a7edbd6b453c2ca595c07e1db37b148a"
+hash = "fa4336d3961c528a3398898e4a897c06ff6d166bf8a011285d3681e834cc2c76"
 
 [[files]]
 file = "config/evileye_essentials-common.toml"
@@ -5455,6 +5455,186 @@ hash = "b27b44a7898ccef08bb51b282301070199d77959b4d0e3352a2939e4bf33a00a"
 [[files]]
 file = "resourcepacks/evil-eye-cozy-overrides/assets/iceandfire/textures/item/raw_silver.png"
 hash = "7a3212bb64be3ec2e5143517a552b9c135201f4d063290a460d96c421b7c2349"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/absorbing_full.png"
+hash = "e477d2c6ae4c20995735ddfdb7905068010f4f01b834c88e59695dd35e56b331"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/absorbing_full_blinking.png"
+hash = "122458972dc07648583df97f4c9a1ad8304d3f2030df0a71beac562b300655e9"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/absorbing_half.png"
+hash = "a5172c9d68f1673b90c053928b89cf7a965ecdd4b18f7474719524c72ae54d72"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/absorbing_half_blinking.png"
+hash = "d7eaa3143335439798dfa5182efc3f85483860c4c042fef7fabef53d75205ad0"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/absorbing_hardcore_full.png"
+hash = "ddbea2da60b2bcbb535aea5b5a1c4cff9feb4eb83ac1f6fd9e984c5cdc0c04bb"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/absorbing_hardcore_full_blinking.png"
+hash = "af7bccb7e1bb90ccf5af3819d7f12cf72ac3662cc07c8101d91ff2298539a9d8"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/absorbing_hardcore_half.png"
+hash = "335982c5ba29ffc9ce588fa679e1d48940f42d8398a35a61c67e4b4323550621"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/absorbing_hardcore_half_blinking.png"
+hash = "6f20dc73211937a1fc414a2cc2d378823683d4cfc01abb9802724722acb3e00b"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/container.png"
+hash = "f20df619b347a579933e1171ca2d244be8a8ea23bee35e1cac6107094bce4424"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/container_blinking.png"
+hash = "f6a525616334038c0f18d9cae75043219c3be6a403cbce4a6fc932f73113941c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/container_hardcore.png"
+hash = "d0397e8fee6a946e7bd130065fe0a5b9ed72600af9e3eb7c66c2c3131ebba690"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/container_hardcore_blinking.png"
+hash = "6a8e1d281d8f98f16fda5dee9ac647f6b14b3a17948557e7dffe9c42af178426"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/frozen_full.png"
+hash = "890628486b006a0bc5ed23d5b75ca80e60fab81a7b4ce38a4874ce77f9c607d9"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/frozen_full_blinking.png"
+hash = "d39cc577e4810dd105d875274ed05e6f0f5197716fe2679d7ccba3bea22f5c86"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/frozen_half.png"
+hash = "8e283f848fc1a60f2205960f9fa2b03dd321c41a49d201c682eab3e9b8139dfd"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/frozen_half_blinking.png"
+hash = "0339ecde5145341aa6e61b96de9f1d694635a921f021dd375e60b4e55c00d135"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/frozen_hardcore_full.png"
+hash = "eae2d7fe1ce45bd74068debcc124ea04a952b4e20a90d18b3d236bbebed32b3c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/frozen_hardcore_full_blinking.png"
+hash = "c1a67e64cd38ff25f062d5fc6c4647f824e3b433fa73a140aeb75cc812d16f3d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/frozen_hardcore_half.png"
+hash = "76373763f31992500fbc4a5c3f75e4a3457bc87f280b813bc89688bcfdd79f50"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/frozen_hardcore_half_blinking.png"
+hash = "05948b5c820a93e40baf0165b5a855703d8ddc7ab4449899cb4c587c3c5f9882"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/full.png"
+hash = "5ae0088d32563ce746ed89d25c8449f8b1706fcfe5f3bf7aaaa8529af4bbfe08"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/full_blinking.png"
+hash = "613fa06ac84e27d0401965766c5cc750cf3d2932c65079085f0d05d6d5249ae7"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/half.png"
+hash = "69aebafe10572e41d38ef8f2c456275574f0bb5f471100776aafa3b02c17f8f0"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/half_blinking.png"
+hash = "225d3742ae6294a17b4f317ef66fcf172012482c8972c666969124b3531bfe2e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/hardcore_full.png"
+hash = "cff3197008e38fc5f9e1991345dc0eeed044abc6f60e707ead97b920a1c82cda"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/hardcore_full_blinking.png"
+hash = "d2dd4f8b7f77f260f8f0545fe7f52063db10fbe41852d89e4b70b64ddff7bdf0"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/hardcore_half.png"
+hash = "e7b236d0a8d42fa0ba615196da8dc6ff2038e5c0da99d29f5d08def16692e93c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/hardcore_half_blinking.png"
+hash = "f9cfd40fbd67e1e4ffffc1ad0d6a04ae64ad22390a5e9f6c40a2a56a6abbf4d2"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/poisoned_full.png"
+hash = "e935870896baaa5d25ecab031dfc58362315a05bb0b2762b5d7ca8325a29e8bd"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/poisoned_full_blinking.png"
+hash = "e877d129a2515c974f709239c10c785f1fd6ea801391ba836252326a9bc4ea64"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/poisoned_half.png"
+hash = "e5ec0c546c0899ce6ee0e2cca3ed3cc907fd1a7f0d0c001ae29459c5ab37fc71"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/poisoned_half_blinking.png"
+hash = "f22cef7e7695d269a44b7df1fee04432372220711e97c085dd573323f1274e0f"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/poisoned_hardcore_full.png"
+hash = "cc9208a76f9a43db8ac7a2dcc287d5fd97d451268e32bc66956fc3711339f2c5"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/poisoned_hardcore_full_blinking.png"
+hash = "3069def735e2bb41c9e3419e78a39a06e012dae18cb8cd80c07e656341642bfe"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/poisoned_hardcore_half.png"
+hash = "6d0506db486b419656f33a21ca394c1213bc96d2bad55178eab664ad58ad8b98"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/poisoned_hardcore_half_blinking.png"
+hash = "51008811ac9eb916eb0cb15923fc7ddcc94ef04d9cda7472cd8063aa215d2f8a"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/vehicle_container.png"
+hash = "f20df619b347a579933e1171ca2d244be8a8ea23bee35e1cac6107094bce4424"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/withered_full.png"
+hash = "8c433e003e5cc345421c2697c62f393977a131abe389f1442e681f3eee9238a2"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/withered_full_blinking.png"
+hash = "15db185fe805cb13516cac6f79acbf18901cc561c07fd51dff400144a72374f6"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/withered_half.png"
+hash = "7bc24568eadc71e17357ec4a59b162a31cf2d4c1a83c2d37c3ec5579bc861bcc"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/withered_half_blinking.png"
+hash = "b85c73ac83704cbf3e174327ae1e6841a9d76510665fe073d3c5681c1d76919e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/withered_hardcore_full.png"
+hash = "266eb4bd9bae67e1751a5f86c108a96164b73b17e29a90ab9d7c66a8f35698e7"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/withered_hardcore_full_blinking.png"
+hash = "8c42940dcbe640eb74be30d993d0deddfde8da4ce761ea572e5c231ac5d5b3e1"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/withered_hardcore_half.png"
+hash = "06b6596cb62a19cfe058d108a7c1ac1f2eec1c327c3e107733e6d0a0c2ae4a90"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart/withered_hardcore_half_blinking.png"
+hash = "530861b737727ff00027075d3049f33c9c07f06a58608374c852350779255593"
 
 [[files]]
 file = "resourcepacks/evil-eye-cozy-overrides/assets/thirst/textures/gui/appleskin_icons.png"

@@ -1,4 +1,15 @@
 # Decisions
+## Stable visual priority (2026-11-02)
+
+Require and fix the Cozy override folder at TOP on every launch, including saved
+instances crossing pack-format compatibility. Copy the 45 GUI heart PNGs verbatim
+from the SHA-512-pinned New Hearts archive into that folder; New Hearts' authors
+own the art. This preserves its complete status/hardcore/container family above
+CozyUI+ without moving the rest of CozyUI below New Hearts. Evil Eye Client 0.7.0
+already derives tinted hearts from these active sprite files; no mod change is
+needed. The pack contract checks family coverage and exact combined asset bytes.
+
+
 
 Newest first.
 

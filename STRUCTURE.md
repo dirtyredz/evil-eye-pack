@@ -5,6 +5,11 @@ metadata, configs and client scripts that packwiz installs into an instance. It 
 unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 
 ## Layout
+`resourcepacks/evil-eye-cozy-overrides/` owns the top-priority thirst, legacy
+silver, Curios and New Hearts GUI assets. Its selection policy is
+`config/evileye_client/resourcepacks.json`; the pack data contract guards both.
+
+
 
 Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 

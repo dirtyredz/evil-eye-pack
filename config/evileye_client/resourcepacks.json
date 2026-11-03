@@ -11,6 +11,11 @@
     "file/evil-eye-cozy-overrides"
   ],
   "pack_overrides": {
+    "file/evil-eye-cozy-overrides": {
+      "required": true,
+      "fixed_position": true,
+      "default_position": "TOP"
+    },
     "file/Eat Quiet 1.0.0_1.20-1.21.zip": {
       "required": true
     },

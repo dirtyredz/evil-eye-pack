@@ -47,6 +47,40 @@ test('every resource-pack id in the Evil Eye Client policy names a pack the NeoF
   assert.equal(policy.pack_overrides['file/New Hearts 1.9-15w49b.zip'].force_compatible, true);
 });
 
+test('visual overrides survive saved-pack omissions and stay above the UI packs', () => {
+  const policy = JSON.parse(read('config/evileye_client/resourcepacks.json'));
+  const id = 'file/evil-eye-cozy-overrides';
+  // Vanilla 1.21.1 omits a newly compatible pack from setSelected while removing
+  // its old incompatible acknowledgement. Required packs are reinserted by the
+  // repository; first-launch defaults alone do not protect existing instances.
+  assert.deepEqual(policy.pack_overrides[id], {
+    required: true, fixed_position: true, default_position: 'TOP'
+  });
+  assert.equal(policy.default_packs.at(-1), id);
+  assert.equal(JSON.parse(read('resourcepacks/evil-eye-cozy-overrides/pack.mcmeta')).pack.pack_format, 34);
+});
+
+test('the top override supplies the New Hearts families used by normal and coloured HUD hearts', () => {
+  const folder = 'resourcepacks/evil-eye-cozy-overrides/assets/minecraft/textures/gui/sprites/hud/heart';
+  const variants = ['full', 'half', 'full_blinking', 'half_blinking',
+    'hardcore_full', 'hardcore_half', 'hardcore_full_blinking', 'hardcore_half_blinking'];
+  const names = ['', 'absorbing_', 'poisoned_', 'withered_', 'frozen_']
+    .flatMap(prefix => variants.map(variant => prefix + variant));
+  names.push('vehicle_container', 'container', 'container_blinking', 'container_hardcore', 'container_hardcore_blinking');
+  const digest = require('node:crypto').createHash('sha256');
+  assert.deepEqual(fs.readdirSync(path.join(ROOT, folder)).sort(), names.map(n => n + '.png').sort());
+  for (const name of names.sort()) {
+    const png = fs.readFileSync(path.join(ROOT, folder, name + '.png'));
+    digest.update(name + '.png');
+    digest.update(png);
+    assert.equal(png.subarray(0, 8).toString('hex'), '89504e470d0a1a0a', name + ' PNG signature');
+    assert.equal(png.readUInt32BE(16), 9, name + ' width');
+    assert.equal(png.readUInt32BE(20), 9, name + ' height');
+  }
+  // Verbatim family from the SHA-512-pinned New Hearts 1.9-15w49b.zip.
+  assert.equal(digest.digest('hex'), '3f80508b79230b4c088f8d6e7a88c57782da1ba5c85386c15595a5915da04e26');
+});
+
 test('the default keymap carries no crafting-grid keys (Crafting Tweaks and the Evil Eye Client keys were removed)', () => {
   const keymap = read('config/defaultoptions/keybindings.txt');
   assert.doesNotMatch(keymap, /^key_key\.craftingtweaks\./m);
