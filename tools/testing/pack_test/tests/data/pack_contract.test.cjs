@@ -140,7 +140,17 @@ test('owned inventory actions replace IPN and libIPN while retaining Kotlin', ()
   for(const file of ['config/evileye_client-client.toml','config/evileye_tweaks-common.toml'])
     for(const section of ['sorting','transfer','refill']) assert.match(tomlSection(read(file),section),/^\s*enabled = true$/m);
   assert.match(read('config/defaultoptions/keybindings.txt'),/^key_key.evileye_client.sort:key.mouse.middle$/m);
-  assert.match(read('mods/evileye-client.pw.toml'),/neoforge-0\.8\.0\.jar/);
-  assert.match(read('mods/evileye-tweaks.pw.toml'),/neoforge-0\.10\.0\.jar/);
-  assert.match(read('mods/evileye-essentials.pw.toml'),/neoforge-0\.2\.0\.jar/);
+  // Exact local pins are covered across source, lock and metafiles by local_pin_consistency.
+  for (const mod of ['client', 'tweaks', 'essentials'])
+    assert.ok(fs.existsSync(path.join(ROOT, `mods/evileye-${mod}.pw.toml`)));
+});
+
+test('FPS defaults remain opt-in with a string corner and no forced personal HUD choices', () => {
+  const fps = tomlSection(read('config/evileye_client-client.toml'), 'fps');
+  for (const key of ['enabled', 'showMin', 'showAverage']) assert.match(fps, new RegExp(`^\\s*${key} = false$`, 'm'));
+  assert.match(fps, /^\s*corner = "TOP_LEFT"$/m);
+  for (const key of ['offsetX', 'offsetY']) assert.match(fps, new RegExp(`^\\s*${key} = 4$`, 'm'));
+  const owned = JSON.parse(read('tools/packwiz/install/pack-owned-keys.json')).keys;
+  assert.equal(owned.some(e => e.file === 'config/evileye_client-client.toml' && e.section[0] === 'fps'), false);
+  assert.equal(owned.find(e => e.section[0] === 'actionRail' && e.key === 'side').value, 'RIGHT');
 });

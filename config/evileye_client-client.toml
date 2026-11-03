@@ -416,3 +416,22 @@
 	allowFastPlacement = true
 	bypassUseBlock = false
 	normalPlacementBlocks = ["minecraft:scaffolding"]
+
+#Small FPS HUD; hidden with the GUI or debug overlay.
+[fps]
+	#Show FPS.
+	enabled = false
+	#Screen corner: TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT or BOTTOM_RIGHT.
+	corner = "TOP_LEFT"
+	#Horizontal inset in GUI pixels.
+	# Default: 4
+	# Range: 0 ~ 512
+	offsetX = 4
+	#Vertical inset in GUI pixels.
+	# Default: 4
+	# Range: 0 ~ 512
+	offsetY = 4
+	#Minimum of up to 60 one-second samples while visible.
+	showMin = false
+	#Average of up to 60 one-second samples while visible.
+	showAverage = false
