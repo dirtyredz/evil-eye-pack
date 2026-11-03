@@ -4,7 +4,16 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { inside, noLinks, output } = require('../path_guard.cjs');
+const { inside, noLinks, output, artifactJob } = require('../path_guard.cjs');
+
+test('artifactJob accepts the jobs root and descendants, but rejects escapes and siblings', () => {
+  const root = 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs';
+  assert.doesNotThrow(() => artifactJob(root));
+  assert.doesNotThrow(() => artifactJob(path.join(root, 'guard-test', 'closure')));
+  for (const dir of [path.dirname(root), root + '-other', path.join(root, '..', 'outside')]) {
+    assert.throws(() => artifactJob(dir), /^Error: Job must be in artifact jobs$/);
+  }
+});
 
 test('inside is containment, case-insensitive, and rejects siblings', () => {
   assert.equal(inside('/a/b/c', '/a/b'), true);

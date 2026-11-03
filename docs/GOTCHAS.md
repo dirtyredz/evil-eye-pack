@@ -16,6 +16,7 @@
   are separate from the foreground FPS limit.
 
 
+- **Wave-7 evidence is a historical snapshot only:** `.mcc` cannot be certified, and `complete:false` is not by itself a removal blocker.
 - **Wave-7 storage evidence is not a conversion.** Preserve `createdrawerscompat:drawer`
   and all four `mounted_drawer_*` menu IDs in any eventual replacement. Never blacklist
   the retained namespace through `removedMods`. The pinned NeoForge addon targets

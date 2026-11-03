@@ -15,7 +15,7 @@ await runScript({ name:'wave7-evidence', from:import.meta.url }, async log => {
   }
   if (!options['--job']) throw Error('Required --job <snapshot job>');
   const job = path.resolve(options['--job']);
-  if (!guards.inside(job, 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs')) throw Error('Job must be in artifact jobs');
+  guards.artifactJob(job);
   const out = path.join(job, 'wave7-evidence.json');
   guards.output(out, job);
   const recordPath = path.join(job, 'source-manifest.json');

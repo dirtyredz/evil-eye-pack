@@ -5,11 +5,6 @@ metadata, configs and client scripts that packwiz installs into an instance. It 
 unshipped tooling and docs, which `.packwizignore` keeps out of the index.
 
 ## Layout
-`resourcepacks/evil-eye-cozy-overrides/` owns the top-priority thirst, legacy
-silver, Curios and New Hearts GUI assets. Its selection policy is
-`config/evileye_client/resourcepacks.json`; the pack data contract guards both.
-
-
 
 Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 
@@ -36,6 +31,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |   `-- startup_scripts/
 |-- mods/
 |-- resourcepacks/
+|   `-- evil-eye-cozy-overrides/
 |-- shaderpacks/
 |-- scripts/
 |   |-- migration/
@@ -43,12 +39,16 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |   `-- owner/
 `-- tools/
     |-- analysis/
+    |   |-- consolidation/
+    |   |   `-- tests/
     |   |-- dedup/
     |   |   `-- tests/
     |   |-- emi_coverage/
     |   |-- emi_curation/
     |   |   `-- tests/
     |   |       `-- support/
+    |   |-- library_closure/
+    |   |   `-- tests/
     |   |-- malware_guard/
     |   |   |-- data/
     |   |   |-- scanning/
@@ -108,6 +108,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `mods/` — packwiz metafiles (`*.pw.toml`), one per mod jar (CurseForge, Modrinth, direct URL, or private migration `metadata:local` hash pins)
 - `shaderpacks/` — shaderpack metafiles and saved shader options
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
+- `resourcepacks/evil-eye-cozy-overrides/` — top-priority thirst, legacy silver, Curios and New Hearts GUI assets; `assets/.../gui/sprites/` is intentionally flat. Selection policy lives in `config/evileye_client/resourcepacks.json`; the pack data contract guards both.
 - `config/` — mod configs installed as plain files
 - `config/modernui/client.toml` - enables Modern UI zoom; its Z default is in `config/defaultoptions/keybindings.txt`.
 - `config/defaultoptions/keybindings.txt` — default keymap applied by Evil Eye Client (Default Options syntax; new instances and unsaved keys only; see GOTCHAS)
@@ -129,7 +130,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte hashing (`hashBytes`, `sha256`), and `path_guard.cjs`, the shared no-link / containment / protected-output guard used by world_trial, client_mixin and the installers.
 - `tools/testing/` — tools that boot or exercise the pack: `client_mixin/`, `world_trial/`, `server_smoke/`, `pack_test/`, `showcase/`.
 - `tools/runtime_env/` — shared machine environment (`env.cjs`: Java per major, packwiz jars, artifacts root; `FIXED` ignores `SMOKE_*` overrides, used by the install route) and hidden child-process scopes (`procs.cjs`); imported by `testing/`, `analysis/` and `packwiz/`.
-- `tools/analysis/` — tools that read the pack's files and jars without booting it: `dedup/`, `emi_curation/` (tests), `emi_coverage/`, `mod_map/`, `malware_guard/`.
+- `tools/analysis/` — tools that read the pack's files and jars without booting it: `dedup/`, `emi_curation/` (tests), `emi_coverage/`, `mod_map/`, `malware_guard/`, `library_closure/`, `consolidation/`.
 - `tools/testing/client_mixin/` — offline CLIENT mixin audit: `stage.cjs` copies pinned pack files and cached
     client libraries, `run.cjs` compiles and supervises the bounded JVM, `verdict.cjs` rejects incomplete
     evidence, and `allowlist.json` records exact reviewed findings with reasons and separately tagged
@@ -158,12 +159,23 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `docs/` — unshipped living docs (development workflow, decisions, gotchas, EMI guide and integration coverage)
 - `docs/items/`, `docket.json` — Docket work-item store (use `dk`); `AGENTS.md` — agent instructions. All unshipped.
 
+- `tools/analysis/library_closure/` — owns recursive pinned-jar closure: `scan.cjs` follows every nested jar with full archive paths and `class_references.cjs` reads constant-pool strings conservatively. `targets.cjs` owns candidate profiles and physical-removal verdicts. `run.mjs` is the artifact-only script-run CLI; `tests/` covers arbitrary nesting, duplicate providers, dependencies, malformed/truncated inputs and incomplete scans.
+
+- `tools/analysis/consolidation/` — `run.mjs` verifies an existing world-trial snapshot and writes artifact-only wave-7 evidence; `wave7_evidence.cjs` interprets candidate payloads through the world-trial inventory visitor. `tests/` covers historical/new selections, packed versus unused palette entries, structures, train/player payloads, large quantities and incomplete inputs. It never converts a save or certifies native runtime parity.
+
+- `tools/testing/world_trial/inventory.cjs` exposes a `visit` hook used by `tools/analysis/consolidation/wave7_evidence.cjs`.
+
 ## Components
 
 Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 
 | Component | Responsibility |
 |---|---|
+| `tools/analysis/library_closure/scan.cjs` | recursive pinned-jar closure with full nested archive paths |
+| `tools/analysis/library_closure/class_references.cjs` | conservative constant-pool string references |
+| `tools/analysis/library_closure/targets.cjs` | candidate profiles and physical-removal verdicts |
+| `tools/analysis/consolidation/wave7_evidence.cjs` | candidate payload interpretation through the world-trial inventory visitor |
+| `tools/data_io/path_guard.cjs` | shared containment, no-link and protected-output guards; `artifactJob(dir)` owns the artifact-jobs root and containment rule |
 | `kubejs/server_scripts/showcase/plan.js` | pure plan bounds, shared floor, placement/sign helpers, registry, rig dispatch and multi-section layout/source-to-origin math |
 | `kubejs/server_scripts/showcase/sections/*.js` | one self-registering content plan per section; no world access |
 | `kubejs/server_scripts/showcase/plots.js` | persistent records, plot keys, overlap replacement and serialized rig ownership |
@@ -298,9 +310,3 @@ Baseline review 2026-10-12. Remaining debt is filed in Docket (`docs/items/`, `d
 - The EMI views rely on public-but-internal EMI fields. A custom mod would avoid that but would need building and hosting. Rejected for now; see `docs/DECISIONS.md`.
 
 Last full review: 2026-10-12
-
-## IPN replacement (2026-11-02, round 4)
-
-tools/analysis/library_closure/ owns recursive pinned-jar closure: scan.cjs follows every nested jar with full archive paths and class_references.cjs reads constant-pool strings conservatively. targets.cjs owns candidate profiles and physical-removal verdicts. run.mjs is the artifact-only script-run CLI; tests cover arbitrary nesting, duplicate providers, dependencies, malformed/truncated inputs and incomplete scans.
-
-- `tools/analysis/consolidation/` — `run.mjs` verifies an existing world-trial snapshot and writes artifact-only wave-7 evidence; `wave7_evidence.cjs` interprets candidate payloads through the world-trial inventory visitor. `tests/` covers historical/new selections, packed versus unused palette entries, structures, train/player payloads, large quantities and incomplete inputs. It never converts a save or certifies native runtime parity.

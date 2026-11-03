@@ -11,7 +11,7 @@ await runScript({ name:'library-closure', from:import.meta.url }, async log => {
  if(log.dryRun) return;
  const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../..');
  const out=path.resolve(value('--out'));
- if(!guards.inside(out,'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs')) throw Error('Output must be in artifact jobs');
+ guards.artifactJob(out);
  guards.output(path.join(out,'library-closure.json'),out);
  if(fs.existsSync(path.join(out,'library-closure.json'))) throw Error('Closure report already exists');
  const selected=targets.profile(args.includes('--profile') ? value('--profile') : 'ipn');
