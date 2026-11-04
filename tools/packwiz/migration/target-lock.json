@@ -3188,7 +3188,7 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client-only Evil Eye Client 0.10.1, private local pin: equipment slot backgrounds follow the active vanilla inventory texture (including CozyUI). Retains the owned client features and Tweaks 0.11.0 compatibility; no config or protocol change. Release history: docs/neoforge-migration.md.",
+   "rationale": "Owned client-only Evil Eye Client 0.10.2, private local pin: equipment-panel slot groups paint like CozyUI (alternating cells, dividers, group outlines) from the active inventory texture. Retains the owned client features and Tweaks 0.11.0 compatibility; no config or protocol change. Release history: docs/neoforge-migration.md.",
    "target": {
     "declares": [
      "evileye_client optional curios [9.5.1,) (client)",
@@ -3196,16 +3196,16 @@
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.10.1.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.10.2.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.10.1"
+     "evileye_client@0.10.2"
     ],
     "name": "Evil Eye Client",
-    "sha256": "a59d2eef55d26dfd84cb8f0394973de72b44407011b33600c1f2f06a98d585aa",
+    "sha256": "7a496274bdbfb9068b85fd3a09c0f4531a88b91b0e21d0a41568846c8bb8e6a3",
     "side": "client",
-    "size": 657353,
+    "size": 663857,
     "source": "local"
    }
   },

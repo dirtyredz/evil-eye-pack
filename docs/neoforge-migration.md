@@ -924,3 +924,9 @@ Client 0.10.1 paints inventory, hotbar, crafting/result, offhand, armour, cosmet
 Private local pin: 657353 bytes, SHA-256 `a59d2eef55d26dfd84cb8f0394973de72b44407011b33600c1f2f06a98d585aa`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar is verified in both the world-trial-final and migration caches. Upstream `docs/releases/0.10.1.md` describes this painter-only release.
 
 Pack verification: `jobs/2026-11-03-pin-client-0.10.1/handoff.md`. Rendered CozyUI slot acceptance remains an owner check; no game launch, Stable installation or publication is part of this pin.
+
+## Client 0.10.2 slot grid (2026-11-04)
+
+Client 0.10.2 paints inventory, hotbar, crafting grid/result, armour, cosmetic, offhand and curio slot groups like CozyUI: alternating light/dark cells, row dividers and a thin rounded outline per group, sampled from the active inventory texture (vanilla falls back to plain slots). The crafting grid is four cells with a themed arrow and the result slot moved 14px right. Tweaks stays 0.11.0; no config change.
+
+Private local pin: 663857 bytes, SHA-256 `7a496274bdbfb9068b85fd3a09c0f4531a88b91b0e21d0a41568846c8bb8e6a3`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar is in both the world-trial-final and migration caches. Upstream `docs/releases/0.10.2.md` describes the release. Rendered slot acceptance remains an owner check; no game launch, Stable installation or publication is part of this pin.
