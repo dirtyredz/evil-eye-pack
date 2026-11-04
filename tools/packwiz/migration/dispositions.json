@@ -419,11 +419,11 @@
    "side": "client",
    "target": {
     "source": "local",
-    "filename": "evileye_client-1.21.1-neoforge-0.10.2.jar",
-    "sha256": "7a496274bdbfb9068b85fd3a09c0f4531a88b91b0e21d0a41568846c8bb8e6a3",
-    "size": 663857
+    "filename": "evileye_client-1.21.1-neoforge-0.10.3.jar",
+    "sha256": "427ca7a9d640f921551a925883a0e56c159b51b572fad19c145a87139f7da3ac",
+    "size": 668903
    },
-   "reason": "Owned client-only Evil Eye Client 0.10.2, private local pin: equipment-panel slot groups paint like CozyUI (alternating cells, dividers, group outlines) from the active inventory texture. Retains the owned client features and Tweaks 0.11.0 compatibility; no config or protocol change. Release history: docs/neoforge-migration.md."
+   "reason": "Owned client-only Evil Eye Client 0.10.3, private local pin: equipment-panel slot groups use flat square cells, genuinely rounded group outline corners and a crafting arrow without a grey box. Retains the owned client features and Tweaks 0.11.0 compatibility; no config or protocol change. Release history: docs/neoforge-migration.md."
   },
   {
    "metafile": "mods/evileye-essentials.pw.toml",

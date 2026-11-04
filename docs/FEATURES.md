@@ -34,3 +34,5 @@ Client 0.9.0 + Tweaks 0.11.0 add Equipment/Cosmetics/Attributes & Effects tabs, 
 Equipment tabs join the panel frame; Attributes & Effects provides paged attributes and active effects with icons and live durations, and the pause eye follows the active button texture. Client 0.10.1 also themes equipment-slot backgrounds from the active inventory texture, including CozyUI. See [Client slot styling](neoforge-migration.md#client-0101-equipment-slot-styling-2026-11-03).
 
 Client 0.10.2 repaints equipment-panel slot groups like CozyUI (alternating cells, row dividers, rounded group outlines, theme crafting arrow); no Tweaks or config change. See [Client slot grid](neoforge-migration.md#client-0102-slot-grid-2026-11-04).
+
+Client 0.10.3 fixes the 0.10.2 slot grid: flat square cells, truly rounded group outline corners with the outside left clear, and no grey box behind the crafting arrow; no Tweaks or config change. See [Client 0.10.3 slot fix](neoforge-migration.md#client-0103-slot-grid-fix-2026-11-04).

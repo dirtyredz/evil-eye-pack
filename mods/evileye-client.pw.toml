@@ -1,8 +1,8 @@
 name = "Evil Eye Client"
-filename = "evileye_client-1.21.1-neoforge-0.10.2.jar"
+filename = "evileye_client-1.21.1-neoforge-0.10.3.jar"
 side = "client"
 
 [download]
 mode = "metadata:local"
 hash-format = "sha256"
-hash = "7a496274bdbfb9068b85fd3a09c0f4531a88b91b0e21d0a41568846c8bb8e6a3"
+hash = "427ca7a9d640f921551a925883a0e56c159b51b572fad19c145a87139f7da3ac"

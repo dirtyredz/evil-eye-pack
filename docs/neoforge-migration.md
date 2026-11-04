@@ -930,3 +930,9 @@ Pack verification: `jobs/2026-11-03-pin-client-0.10.1/handoff.md`. Rendered Cozy
 Client 0.10.2 paints inventory, hotbar, crafting grid/result, armour, cosmetic, offhand and curio slot groups like CozyUI: alternating light/dark cells, row dividers and a thin rounded outline per group, sampled from the active inventory texture (vanilla falls back to plain slots). The crafting grid is four cells with a themed arrow and the result slot moved 14px right. Tweaks stays 0.11.0; no config change.
 
 Private local pin: 663857 bytes, SHA-256 `7a496274bdbfb9068b85fd3a09c0f4531a88b91b0e21d0a41568846c8bb8e6a3`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar is in both the world-trial-final and migration caches. Upstream `docs/releases/0.10.2.md` describes the release. Rendered slot acceptance remains an owner check; no game launch, Stable installation or publication is part of this pin.
+
+## Client 0.10.3 slot grid fix (2026-11-04)
+
+Client 0.10.3 corrects the 0.10.2 equipment-panel slot painting: cells are clean flat squares (no curved corner fragments), the group outline's outer corners are genuinely rounded with the area outside left clear, and the crafting arrow draws without a grey box behind it. Tweaks stays 0.11.0; no config change.
+
+Private local pin: 668903 bytes, SHA-256 `427ca7a9d640f921551a925883a0e56c159b51b572fad19c145a87139f7da3ac`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar is in both the world-trial-final and migration caches. Upstream `docs/releases/0.10.3.md` describes the release. Rendered slot acceptance remains an owner check; no game launch, Stable installation or publication is part of this pin.
