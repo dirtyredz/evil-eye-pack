@@ -4545,6 +4545,10 @@ file = "kubejs/data/minecraft/recipe/copper_catwalk_railing_forge.json"
 hash = "f963d85f729ed8f71564179b333eb66a27d94226df8b213d134db92ef4b58c3b"
 
 [[files]]
+file = "kubejs/data/minecraft/recipe/fermented_spider_eye.json"
+hash = "38cd240bef032d109dccb7d5c46edfa6b108b9ea02558445e7dc1f6190b44503"
+
+[[files]]
 file = "kubejs/data/productivebees/recipe/bottler/milk_bottle.json"
 hash = "4ed27aefd426a95274d99be945b8d0907856c6cd809704031f869c1ab044955e"
 
