@@ -1,8 +1,8 @@
 name = "Evil Eye Tweaks"
-filename = "evileye_tweaks-1.21.1-neoforge-0.11.0.jar"
+filename = "evileye_tweaks-1.21.1-neoforge-0.11.1.jar"
 side = "both"
 
 [download]
 mode = "metadata:local"
 hash-format = "sha256"
-hash = "3605c41b264a75f332862aa199460428998447e4923749f05d0124bb65936c1b"
+hash = "6b6ac0884c469d28940c967727c2b28188c1134324b9d4ce631c372643d06768"

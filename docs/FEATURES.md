@@ -37,3 +37,5 @@ Equipment tabs join the panel frame; Attributes & Effects provides paged attribu
 Client 0.10.2 repaints equipment-panel slot groups like CozyUI (alternating cells, row dividers, rounded group outlines, theme crafting arrow); no Tweaks or config change. See [Client slot grid](neoforge-migration.md#client-0102-slot-grid-2026-11-04).
 
 Client 0.10.3 fixes the 0.10.2 slot grid: flat square cells, truly rounded group outline corners with the outside left clear, and no grey box behind the crafting arrow; no Tweaks or config change. See [Client 0.10.3 slot fix](neoforge-migration.md#client-0103-slot-grid-fix-2026-11-04).
+
+Tweaks 0.11.1 keeps the equipment panel open (it reopens itself) when a slot-granting curio such as the Ender Pouch is equipped or removed; no Client or config change. See [Tweaks 0.11.1](neoforge-migration.md#tweaks-0111-curio-panel-stays-open-2026-11-05).

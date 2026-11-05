@@ -936,3 +936,9 @@ Private local pin: 663857 bytes, SHA-256 `7a496274bdbfb9068b85fd3a09c0f4531a88b9
 Client 0.10.3 corrects the 0.10.2 equipment-panel slot painting: cells are clean flat squares (no curved corner fragments), the group outline's outer corners are genuinely rounded with the area outside left clear, and the crafting arrow draws without a grey box behind it. Tweaks stays 0.11.0; no config change.
 
 Private local pin: 668903 bytes, SHA-256 `427ca7a9d640f921551a925883a0e56c159b51b572fad19c145a87139f7da3ac`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar is in both the world-trial-final and migration caches. Upstream `docs/releases/0.10.3.md` describes the release. Rendered slot acceptance remains an owner check; no game launch, Stable installation or publication is part of this pin.
+
+## Tweaks 0.11.1 curio panel stays open (2026-11-05)
+
+Tweaks 0.11.1 (minecraft-mods `eef9cc7`) reopens the equipment panel when a curio that grants slots (such as the EnderChests Ender Pouch) is equipped or removed, instead of closing it with "Your equipment slots changed...". Client stays 0.10.3; no config or protocol change.
+
+Private local pin: 385284 bytes, SHA-256 `6b6ac0884c469d28940c967727c2b28188c1134324b9d4ce631c372643d06768`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar is in both the world-trial-final and migration caches. Rendered acceptance remains an owner check; no game launch, Stable installation or publication is part of this pin.
