@@ -31,6 +31,8 @@
 
 ## Tool layout
 
+- **Pack-test ANU sync is broken since the tools/ regroup.** `remote/anu.cjs` builds the sync label as `tools-${d}` with `d` like `testing/server_smoke`, so the scp target `incoming	ools-testing/server_smoke-<pid>.tar` has a missing directory and the run ends exit 2 after uploading the stage (seen 2026-11-05). Use `--local` until the label replaces `/` with `-`.
+
 - **ANU runs a synced copy of `tools/` with the same relative layout.** `pack_test/remote/anu.cjs` `CODE_DIRS` and
   `remote/scripts.cjs` `AGENT_SCRIPT` name `testing/server_smoke`, `testing/pack_test`, `analysis/emi_coverage`,
   `analysis/dedup` and `data_io`; moving any of them means updating those, or the remote agent's relative requires

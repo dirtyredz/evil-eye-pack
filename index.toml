@@ -4629,10 +4629,6 @@ file = "kubejs/server_scripts/showcase/sections/mekanism_machines.js"
 hash = "33e6957a449382ce4ac4dec1a7c48e175152417661f6c96087d25c76e7144479"
 
 [[files]]
-file = "kubejs/server_scripts/showcase/sections/sophisticated_backpacks.js"
-hash = "9ed533720ba972210480d043a9210a32bb1d0e91d5ff469a63273244264e46c5"
-
-[[files]]
 file = "kubejs/server_scripts/tag_compat.js"
 hash = "ed46363bccd87a9482d8955cb5c95f362110ffbcd4cb3c7de4cfc60265d758b9"
 

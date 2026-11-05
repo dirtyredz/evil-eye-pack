@@ -1855,6 +1855,16 @@
    "key": "acquisition|no-known-source|supplementaries:iceandfire/way_sign_dreadwood|",
    "reason": "Supplementaries generates compat way signs for registered wood types. Its sign-post crafting handler makes them in code, as for the other reviewed way_sign variants; dreadwood planks have a native recipe and logs occur in I&F structures (CE 2.1.4).",
    "since": "2026-10-30"
+  },
+  {
+   "key": "acquisition|no-known-source|sophisticatedbackpacks:infinity_upgrade|",
+   "reason": "Creative-only operator item (reviewed 2026-11-05 from the mod jar): Sophisticated Backpacks ships no recipe for it; only players with the configured permission level can use an infinity upgrade, so it is by design not obtainable in survival.",
+   "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|sophisticatedbackpacks:survival_infinity_upgrade|",
+   "reason": "Creative-only operator item (reviewed 2026-11-05 from the mod jar): Sophisticated Backpacks ships no recipe for it; only players with the configured permission level can use an infinity upgrade, so it is by design not obtainable in survival.",
+   "since": "2026-11-05"
   }
  ],
  "logSignatures": []

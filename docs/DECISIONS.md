@@ -1,4 +1,8 @@
 # Decisions
+## Sophisticated Backpacks (2026-11-05)
+
+Owner request: one large backpack worn in the Curios back slot to replace a pile of small Dank Storages. Added Sophisticated Backpacks 3.26.20, its required library Sophisticated Core 1.5.28 and the official Create Integration addon 0.2.3 (Modrinth sources, newest NeoForge 1.21.1 releases; Create 6.0.8+ satisfies the addon). Dank Storage stays. Upstream defaults are untouched except one key: `toggle_upgrade_1` defaults to Z, which clashes with Modern UI zoom, so Default Options unbinds it (X for upgrade 2 is a context-limited share with dragon riding, kept; B opens the worn backpack, C runs interaction upgrades). The backpack tiers are in the `curios:back` item tag, so the stock Curios `back` slot accepts them with no slot config. Evil Eye Tweaks `[pickup] backpackReceipts` covers the pickup upgrade (Backpacks fires its pickup on `ItemEntityPickupEvent.Pre` at normal priority, between Tweaks' highest/lowest listeners) but not the magnet upgrade, which moves items directly and fires only the Post event. The two infinity upgrades are operator-only and recorded in the pack-test baseline. **Rejected:** a showcase section for this (owner scope cut).
+
 ## Stable visual priority (2026-11-02)
 
 Require and fix the Cozy override folder at TOP on every launch, including saved
