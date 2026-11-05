@@ -41,3 +41,5 @@ Client 0.10.3 fixes the 0.10.2 slot grid: flat square cells, truly rounded group
 Tweaks 0.11.1 keeps the equipment panel open (it reopens itself) when a slot-granting curio such as the Ender Pouch is equipped or removed; no Client or config change. See [Tweaks 0.11.1](neoforge-migration.md#tweaks-0111-curio-panel-stays-open-2026-11-05).
 
 Client 0.10.4 hides the status-effect overlay on Sophisticated Backpacks, Dank Storage and EnderChests (Ender Bag) screens and moves the trash/action rail below Sophisticated Backpacks' settings tabs; no Tweaks or config change. See [Client 0.10.4 storage screens](neoforge-migration.md#client-0104-storage-screens-2026-11-05).
+
+Client 0.11.0 adds tabs on the inventory and Curios/equipment screens that open the Sophisticated Backpack and the EnderChests Ender Pouch; each tab shows only when its item is present. No Tweaks or config change. See [Client 0.11.0 backpack tabs](neoforge-migration.md#client-0110-backpack-and-pouch-tabs-2026-11-05).

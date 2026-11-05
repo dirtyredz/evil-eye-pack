@@ -419,11 +419,11 @@
    "side": "client",
    "target": {
     "source": "local",
-    "filename": "evileye_client-1.21.1-neoforge-0.10.4.jar",
-    "sha256": "69da0ff89edb874ac272a8112b1cdc33603034e8bc54a0e398975c81e3bf09d8",
-    "size": 674479
+    "filename": "evileye_client-1.21.1-neoforge-0.11.0.jar",
+    "sha256": "0c33a2b816b7d0e21b5dd976030db28218a586a3e58d6dd0506a822415468bd5",
+    "size": 700946
    },
-   "reason": "Owned client-only Evil Eye Client 0.10.4, private local pin: hides status effects on Sophisticated Backpacks, Dank Storage and EnderChests (Ender Bag) screens and keeps the trash/action rail below Sophisticated Backpacks' settings tabs. Retains the owned client features and Tweaks 0.11.0 compatibility; no config or protocol change. Release history: docs/neoforge-migration.md."
+   "reason": "Owned client-only Evil Eye Client 0.11.0, private local pin: adds inventory and Curios/equipment screen tabs that open the Sophisticated Backpack and the EnderChests Ender Pouch, each shown only when its item is present. Retains the owned client features and Tweaks 0.11.0 compatibility; no config or protocol change. Release history: docs/neoforge-migration.md."
   },
   {
    "metafile": "mods/evileye-essentials.pw.toml",

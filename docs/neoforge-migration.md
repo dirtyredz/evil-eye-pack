@@ -948,3 +948,9 @@ Private local pin: 385284 bytes, SHA-256 `6b6ac0884c469d28940c967727c2b28188c113
 Client 0.10.4 hides status effects on Sophisticated Backpacks, Dank Storage and EnderChests (Ender Bag) screens, and moves the trash/action rail below Sophisticated Backpacks' settings tabs. Tweaks stays 0.11.1; no config change.
 
 Private local pin: 674479 bytes, SHA-256 `69da0ff89edb874ac272a8112b1cdc33603034e8bc54a0e398975c81e3bf09d8`. Built from minecraft-mods EvilEyeClient main e4b1c6d (`gradlew build verifyReleaseJar`; identical hash to the fix-backpack-screen-overlap worktree build). Source dispositions, target lock and packwiz metadata agree; the hash-named jar is in both the world-trial-final (Stable) and migration caches, with the old 0.10.3 jar left in place. No game launch, Stable installation or publication is part of this pin.
+
+## Client 0.11.0 backpack and pouch tabs (2026-11-05)
+
+Client 0.11.0 adds tabs on the inventory and Curios/equipment screens that open the Sophisticated Backpack and the EnderChests Ender Pouch. Each tab shows only when its item is present. Tweaks stays 0.11.1; no config change.
+
+Private local pin: 700946 bytes, SHA-256 `0c33a2b816b7d0e21b5dd976030db28218a586a3e58d6dd0506a822415468bd5`. Built from minecraft-mods EvilEyeClient main 9cba909 (`gradlew build verifyReleaseJar`). Source dispositions, target lock and packwiz metadata agree; the hash-named jar is in both the world-trial-final (Stable) and migration caches, with the old 0.10.4 jar left in place. No game launch, Stable installation or publication is part of this pin.
