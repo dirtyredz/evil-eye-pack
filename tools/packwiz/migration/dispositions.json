@@ -419,11 +419,11 @@
    "side": "client",
    "target": {
     "source": "local",
-    "filename": "evileye_client-1.21.1-neoforge-0.10.3.jar",
-    "sha256": "427ca7a9d640f921551a925883a0e56c159b51b572fad19c145a87139f7da3ac",
-    "size": 668903
+    "filename": "evileye_client-1.21.1-neoforge-0.10.4.jar",
+    "sha256": "69da0ff89edb874ac272a8112b1cdc33603034e8bc54a0e398975c81e3bf09d8",
+    "size": 674479
    },
-   "reason": "Owned client-only Evil Eye Client 0.10.3, private local pin: equipment-panel slot groups use flat square cells, genuinely rounded group outline corners and a crafting arrow without a grey box. Retains the owned client features and Tweaks 0.11.0 compatibility; no config or protocol change. Release history: docs/neoforge-migration.md."
+   "reason": "Owned client-only Evil Eye Client 0.10.4, private local pin: hides status effects on Sophisticated Backpacks, Dank Storage and EnderChests (Ender Bag) screens and keeps the trash/action rail below Sophisticated Backpacks' settings tabs. Retains the owned client features and Tweaks 0.11.0 compatibility; no config or protocol change. Release history: docs/neoforge-migration.md."
   },
   {
    "metafile": "mods/evileye-essentials.pw.toml",

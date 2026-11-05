@@ -942,3 +942,9 @@ Private local pin: 668903 bytes, SHA-256 `427ca7a9d640f921551a925883a0e56c159b51
 Tweaks 0.11.1 (minecraft-mods `eef9cc7`) reopens the equipment panel when a curio that grants slots (such as the EnderChests Ender Pouch) is equipped or removed, instead of closing it with "Your equipment slots changed...". Client stays 0.10.3; no config or protocol change.
 
 Private local pin: 385284 bytes, SHA-256 `6b6ac0884c469d28940c967727c2b28188c1134324b9d4ce631c372643d06768`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar is in both the world-trial-final and migration caches. Rendered acceptance remains an owner check; no game launch, Stable installation or publication is part of this pin.
+
+## Client 0.10.4 storage screens (2026-11-05)
+
+Client 0.10.4 hides status effects on Sophisticated Backpacks, Dank Storage and EnderChests (Ender Bag) screens, and moves the trash/action rail below Sophisticated Backpacks' settings tabs. Tweaks stays 0.11.1; no config change.
+
+Private local pin: 674479 bytes, SHA-256 `69da0ff89edb874ac272a8112b1cdc33603034e8bc54a0e398975c81e3bf09d8`. Built from minecraft-mods EvilEyeClient main e4b1c6d (`gradlew build verifyReleaseJar`; identical hash to the fix-backpack-screen-overlap worktree build). Source dispositions, target lock and packwiz metadata agree; the hash-named jar is in both the world-trial-final (Stable) and migration caches, with the old 0.10.3 jar left in place. No game launch, Stable installation or publication is part of this pin.
