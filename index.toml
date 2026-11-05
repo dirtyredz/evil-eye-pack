@@ -1671,7 +1671,7 @@ hash = "a7444e9071ebe7e1306e83141f9b4c53fbd6f99730f9d29f587b959b54f07a82"
 
 [[files]]
 file = "config/defaultoptions/keybindings.txt"
-hash = "885840decf1b0f28d78e3e26d4b64c5ab57e798f591ba5b3046cb663eeecc2ef"
+hash = "e851076cbc35c655fd826b74e5fbaad9fd016d70a18d3617dff41c876334a12f"
 
 [[files]]
 file = "config/dramaticdoors-common.toml"
@@ -4627,6 +4627,10 @@ hash = "b7b3692b57c5b5c4a553c1b627b5e330b0bf48e8082afaaee78d123b74b3a4cb"
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/mekanism_machines.js"
 hash = "33e6957a449382ce4ac4dec1a7c48e175152417661f6c96087d25c76e7144479"
+
+[[files]]
+file = "kubejs/server_scripts/showcase/sections/sophisticated_backpacks.js"
+hash = "9ed533720ba972210480d043a9210a32bb1d0e91d5ff469a63273244264e46c5"
 
 [[files]]
 file = "kubejs/server_scripts/tag_compat.js"

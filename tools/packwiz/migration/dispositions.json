@@ -458,6 +458,39 @@
     "version": "6ZQz5Ow2"
    },
    "reason": "Flywheel 1.0.6 marks its instancing and indirect backends unsupported while an Iris shaderpack is active (Backends.java supported() checks !ShadersModHelper.isShaderPackInUse), so Create kinetic block entities fall back to the CPU. This mod (2.4.0 release, NeoForge 1.21.1, requires Iris and Sodium) merges Flywheel shaders into the pack gbuffer_block program so instancing runs with shaders on. Owner profiling request 2026-11-01."
+  },
+  {
+   "metafile": "mods/sophisticated-core.pw.toml",
+   "name": "Sophisticated Core",
+   "side": "both",
+   "target": {
+    "source": "modrinth",
+    "project": "nmoqTijg",
+    "version": "fp75rxsS"
+   },
+   "reason": "Owner request 2026-11-04: one large backpack worn in the Curios back slot to replace a pile of small Dank Storages (Dank Storage stays). Library required by Sophisticated Backpacks; 1.5.28 is the newest NeoForge 1.21.1 release."
+  },
+  {
+   "metafile": "mods/sophisticated-backpacks.pw.toml",
+   "name": "Sophisticated Backpacks",
+   "side": "both",
+   "target": {
+    "source": "modrinth",
+    "project": "TyCTlI4b",
+    "version": "DY0e8WVr"
+   },
+   "reason": "Owner request 2026-11-04: one large backpack worn in the Curios back slot to replace a pile of small Dank Storages (Dank Storage stays). 3.26.20 is the newest NeoForge 1.21.1 release (requires Core 1.5.28 or newer); its curios:back item tag puts every tier in the Curios back slot."
+  },
+  {
+   "metafile": "mods/sophisticated-backpacks-create-integration.pw.toml",
+   "name": "Sophisticated Backpacks Create Integration",
+   "side": "both",
+   "target": {
+    "source": "modrinth",
+    "project": "s85zLEDe",
+    "version": "PWwbiDmx"
+   },
+   "reason": "Owner request 2026-11-04: one large backpack worn in the Curios back slot to replace a pile of small Dank Storages (Dank Storage stays). Official addon (0.2.3; needs Create 6.0.7 or newer and Backpacks 3.26.10 or newer): backpacks mounted on contraptions."
   }
  ],
  "waivers": {},
