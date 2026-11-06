@@ -3262,7 +3262,7 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client-only Evil Eye Client 0.11.1, private local pin: fixes the Sophisticated Backpack and Ender Pouch tabs being hidden on the equipment screen (the panel's own tabs are now icons and the storage tabs sit at the right end of that strip) and logs a WARN on adapter failures. Retains the owned client features and Tweaks 0.11.0 compatibility; no config or protocol change. Release history: docs/neoforge-migration.md.",
+   "rationale": "Owned client-only Evil Eye Client 0.12.0, private local pin: the Backpack and Ender storage tabs open inside the equipment panel (Sophisticated Backpacks' own menu; Ender Pouch else Bag grid), and E opens the equipment panel in survival. Requires Tweaks 0.12.0 on server and client for the storage tabs; older Tweaks falls back to the 0.11.x tab squares. Retains the owned client features; no config change. Release history: docs/neoforge-migration.md.",
    "target": {
     "declares": [
      "evileye_client optional curios [9.5.1,) (client)",
@@ -3270,16 +3270,16 @@
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.11.1.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.12.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.11.1"
+     "evileye_client@0.12.0"
     ],
     "name": "Evil Eye Client",
-    "sha256": "546500637a448eb847b197a3fafedb9adaa00c4e75231bc6a95ff4a7e9a1cbb7",
+    "sha256": "78e3af884a82eed3703eca813168b3e85f6c55993d8bdde0e9014ef92ed9dcbf",
     "side": "client",
-    "size": 708382,
+    "size": 747818,
     "source": "local"
    }
   },
@@ -3342,23 +3342,23 @@
    "metafile": "mods/evileye-tweaks.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.9.0 from minecraft-mods 42406c6; settings screen/service metadata. IPN replacement retained. Paired Stable release: Tweaks 0.10.0 repairs IMC dispatch and admits ordinary/trapped Iron Chests physical storage up to 108 slots; Dirt stays excluded. Inventory sorting negotiates protocol 2. Paired Stable release 2026-11-03: Tweaks 0.11.0 adds optional inventory_transfer_v2 matching transfers alongside compatible v1 ALL; common config is unchanged. Tweaks 0.11.1 (minecraft-mods eef9cc7) reopens the equipment panel when a slot-granting curio (such as the EnderChests Ender Pouch) is equipped or removed instead of closing it; no config or protocol change.",
+   "rationale": "Owned mod (minecraft-mods/mods/EvilEyeTweaks fce93f3, private local pin until a canonical release): forced-fuel furnace routing and paired doors/gates/trapdoors (consolidation wave 1), pick-up receipts and food snapshots for Evil Eye Client (wave 2), and attribute limits, pet rules, tree felling, flat bedrock, day length, orb clumping and despawn rules (wave 4); 0.6.1 adds the Slow Falling drop threshold (owner request, not a replacement).; 0.7.0 adds owned cosmetic armour storage (player persistent data, replaces Cosmetic Armor Reworked) and the evileye_tweaks:equipment menu (equipment panel wave). Round-4 owned sorting and physical-storage/Dank transfers complete the bounded IPN replacement; both-hand refill remains enabled. IPN/libIPN removed together, Kotlin retained. Release 2026-11-02: 0.9.0 from minecraft-mods 42406c6; settings screen/service metadata. IPN replacement retained. Paired Stable release: Tweaks 0.10.0 repairs IMC dispatch and admits ordinary/trapped Iron Chests physical storage up to 108 slots; Dirt stays excluded. Inventory sorting negotiates protocol 2. Paired Stable release 2026-11-03: Tweaks 0.11.0 adds optional inventory_transfer_v2 matching transfers alongside compatible v1 ALL; common config is unchanged. Tweaks 0.11.1 (minecraft-mods eef9cc7) reopens the equipment panel when a slot-granting curio (such as the EnderChests Ender Pouch) is equipped or removed instead of closing it; no config or protocol change. Tweaks 0.12.0 (minecraft-mods f63cc0c) adds the server-side evileye_tweaks:equipment_storage menu and optional equipment_storage v1 channel behind the Client 0.12.0 Backpack and Ender tabs (Sophisticated Backpacks, Sophisticated Core and EnderChests: all optional and loader-gated; compiled against Core 1.21.1-1.5.28.2458, Backpacks 1.21.1-3.26.20.2244, EnderChests 1.21.1-1.0). Server and client must both run 0.12.0; no config change.",
    "target": {
     "declares": [
      "evileye_tweaks optional curios [9.5.1,)",
      "evileye_tweaks required minecraft [1.21.1,1.21.2)",
      "evileye_tweaks required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_tweaks-1.21.1-neoforge-0.11.1.jar",
+    "filename": "evileye_tweaks-1.21.1-neoforge-0.12.0.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-tweaks.pw.toml",
     "mods": [
-     "evileye_tweaks@0.11.1"
+     "evileye_tweaks@0.12.0"
     ],
     "name": "Evil Eye Tweaks",
-    "sha256": "6b6ac0884c469d28940c967727c2b28188c1134324b9d4ce631c372643d06768",
+    "sha256": "88512c32b992b058fc3fd463b83a7ffb6ee8c394fabc29aa24e4b0517161e1fe",
     "side": "both",
-    "size": 385284,
+    "size": 456831,
     "source": "local"
    }
   },

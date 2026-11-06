@@ -968,3 +968,15 @@ Pack test (`--local`, seed 20261020, fresh world): Done in 74 s, no new WARN/ERR
 Client 0.11.1 fixes the backpack and pouch tabs being hidden on the equipment screen. The panel's own tabs are now icons, and the storage tabs sit at the right end of that strip. Adapter failures now log a WARN. Tweaks stays 0.11.1; no config change.
 
 Private local pin: 708382 bytes, SHA-256 `546500637a448eb847b197a3fafedb9adaa00c4e75231bc6a95ff4a7e9a1cbb7`. Built from minecraft-mods EvilEyeClient main 4952a4f (`gradlew build verifyReleaseJar`). Source dispositions, target lock and packwiz metadata agree; the hash-named jar is in both the world-trial-final (Stable) and migration caches, with the old 0.11.0 jar left in place. No game launch, Stable installation or publication is part of this pin.
+
+## Storage tabs: Tweaks 0.12.0 + Client 0.12.0 (2026-11-06)
+
+Backpack and Ender storage open inside the equipment panel instead of replacing it. Tweaks 0.12.0 adds the server menu `evileye_tweaks:equipment_storage` and an optional `equipment_storage` v1 channel (equipment-v1 and protocol 2 unchanged); Client 0.12.0 adds the tabs and makes E open the equipment panel in survival (creative unchanged, vanilla inventory fallback after 0.5 s). The source item is locked while its tab is open. Release notes: `docs/releases/0.12.0.md` in both minecraft-mods repos.
+
+New runtime relationship: Tweaks uses Sophisticated Backpacks/Core and EnderChests, all optional and loader-gated (the declared dependencies are unchanged). Both mods compiled against Core 1.21.1-1.5.28.2458, Backpacks 1.21.1-3.26.20.2244 and EnderChests 1.21.1-1.0 NeoForge; the pack pins the same files (`sophisticated-core.pw.toml`, `sophisticated-backpacks.pw.toml`, `enderchests-neoforge-1.21.1-1.0.jar`). Both server and client must run Tweaks 0.12.0: old Client + new Tweaks keeps the panel and native storage screens; new Client + old Tweaks has no storage tabs.
+
+Private local pins (both built with `gradlew build verifyReleaseJar`):
+- Tweaks: 456831 bytes, SHA-256 `88512c32b992b058fc3fd463b83a7ffb6ee8c394fabc29aa24e4b0517161e1fe`, minecraft-mods EvilEyeTweaks main f63cc0c.
+- Client: 747818 bytes, SHA-256 `78e3af884a82eed3703eca813168b3e85f6c55993d8bdde0e9014ef92ed9dcbf`, minecraft-mods EvilEyeClient main 0ff765c.
+
+Source dispositions, target lock and packwiz metadata agree; the hash-named jars are in the world-trial-final (Stable) and migration caches, old jars left in place. The `evileye_equipment` showcase section gained a STORAGE TABS pad and its check now requires the `equipment_storage` menu type. Owner in-game checks (no visible client was run) are listed in Client 0.12.0's release notes: both resource-pack looks and small GUI scales, 12-column and tall backpacks, Ender scrolling, every tab transition including the Sophisticated settings round trip, a shared Ender Bag between two players, removing the source item with its tab open, E/Esc with the panel and with a container open.

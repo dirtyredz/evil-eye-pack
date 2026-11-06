@@ -21,7 +21,7 @@ test('the section is static, vanilla-only, at least the hostile-terrain size, an
   assert.equal(p.fills.length, 0);
   for (const b of p.blocks) assert.ok(b.state.startsWith('minecraft:'), `${b.state} is vanilla`);
   const text = p.blocks.filter((b) => b.state.startsWith('minecraft:oak_sign')).map(signText).join(' | ');
-  for (const phrase of ['EQUIPMENT', 'press G', 'Curios button', 'LEFT: equipped', 'RIGHT: cosmetic', 'ARMOUR', 'COSMETIC ARMOUR', 'VISIBILITY', 'skin']) {
+  for (const phrase of ['EQUIPMENT', 'press G', 'Curios button', 'LEFT: equipped', 'RIGHT: cosmetic', 'ARMOUR', 'COSMETIC ARMOUR', 'VISIBILITY', 'skin', 'STORAGE TABS']) {
     assert.ok(text.includes(phrase), `a label names ${phrase}`);
   }
 });
@@ -44,7 +44,7 @@ function runCheck(loaded, menus) {
 }
 
 test('the check builds, sees the owned menu type, Cosmetic Armor Reworked absent, then clears', () => {
-  const r = runCheck(new Set(['evileye_tweaks']), new Set(['evileye_tweaks:equipment']));
+  const r = runCheck(new Set(['evileye_tweaks']), new Set(['evileye_tweaks:equipment', 'evileye_tweaks:equipment_storage']));
   assert.equal(r.done, true);
   assert.equal(r.cleared, true);
   assert.ok(r.checks.includes('Cosmetic Armor Reworked is not loaded'));
@@ -52,5 +52,6 @@ test('the check builds, sees the owned menu type, Cosmetic Armor Reworked absent
 
 test('a missing menu type or a loaded Cosmetic Armor Reworked fails the check', () => {
   assert.throws(() => runCheck(new Set(['evileye_tweaks']), new Set()), /equipment menu type/);
-  assert.throws(() => runCheck(new Set(['evileye_tweaks', 'cosmeticarmorreworked']), new Set(['evileye_tweaks:equipment'])), /not loaded/);
+  assert.throws(() => runCheck(new Set(['evileye_tweaks']), new Set(['evileye_tweaks:equipment'])), /equipment_storage menu type/);
+  assert.throws(() => runCheck(new Set(['evileye_tweaks', 'cosmeticarmorreworked']), new Set(['evileye_tweaks:equipment', 'evileye_tweaks:equipment_storage'])), /not loaded/);
 });
