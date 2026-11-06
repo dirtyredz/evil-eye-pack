@@ -3825,6 +3825,74 @@ file = "kubejs/data/createdeco/recipe/locked_brass_door.json"
 hash = "1c53a0cb30c8169b4d793b2c0b609748647bdee98b38c67b6f85a4eee761be62"
 
 [[files]]
+file = "kubejs/data/curios/curios/slots/an_focus.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/back.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/belt.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/body.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/bracelet.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/bundle.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/charm.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/curio.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/feet.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/hands.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/head.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/heart_amulet.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/necklace.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/ring.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/rings.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/talisman.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
+file = "kubejs/data/curios/curios/slots/waist.json"
+hash = "543e89c9c0d68ba00156325f4116a3e35202cfc2f2dbb05a06117ac36c60ca4f"
+
+[[files]]
 file = "kubejs/data/diagonalfences/tags/block/non_diagonal_fences.json"
 hash = "2abaf88259e91ea81d293ea7fc2a3eb076006fbfe76bc547ee1b2f8d3da067b7"
 
