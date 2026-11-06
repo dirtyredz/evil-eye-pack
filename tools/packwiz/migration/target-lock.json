@@ -3262,7 +3262,7 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client-only Evil Eye Client 0.11.0, private local pin: adds inventory and Curios/equipment screen tabs that open the Sophisticated Backpack and the EnderChests Ender Pouch, each shown only when its item is present. Retains the owned client features and Tweaks 0.11.0 compatibility; no config or protocol change. Release history: docs/neoforge-migration.md.",
+   "rationale": "Owned client-only Evil Eye Client 0.11.1, private local pin: fixes the Sophisticated Backpack and Ender Pouch tabs being hidden on the equipment screen (the panel's own tabs are now icons and the storage tabs sit at the right end of that strip) and logs a WARN on adapter failures. Retains the owned client features and Tweaks 0.11.0 compatibility; no config or protocol change. Release history: docs/neoforge-migration.md.",
    "target": {
     "declares": [
      "evileye_client optional curios [9.5.1,) (client)",
@@ -3270,16 +3270,16 @@
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.11.0.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.11.1.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.11.0"
+     "evileye_client@0.11.1"
     ],
     "name": "Evil Eye Client",
-    "sha256": "0c33a2b816b7d0e21b5dd976030db28218a586a3e58d6dd0506a822415468bd5",
+    "sha256": "546500637a448eb847b197a3fafedb9adaa00c4e75231bc6a95ff4a7e9a1cbb7",
     "side": "client",
-    "size": 700946,
+    "size": 708382,
     "source": "local"
    }
   },

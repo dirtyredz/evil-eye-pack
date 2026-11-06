@@ -44,3 +44,5 @@ Tweaks 0.11.1 keeps the equipment panel open (it reopens itself) when a slot-gra
 Client 0.10.4 hides the status-effect overlay on Sophisticated Backpacks, Dank Storage and EnderChests (Ender Bag) screens and moves the trash/action rail below Sophisticated Backpacks' settings tabs; no Tweaks or config change. See [Client 0.10.4 storage screens](neoforge-migration.md#client-0104-storage-screens-2026-11-05).
 
 Client 0.11.0 adds tabs on the inventory and Curios/equipment screens that open the Sophisticated Backpack and the EnderChests Ender Pouch; each tab shows only when its item is present. No Tweaks or config change. See [Client 0.11.0 backpack tabs](neoforge-migration.md#client-0110-backpack-and-pouch-tabs-2026-11-05).
+
+Client 0.11.1 fixes the backpack and pouch tabs being hidden on the equipment screen: the panel's own tabs are now icons and the storage tabs sit at the right end of that strip. Adapter failures now log a WARN. No Tweaks or config change. See [Client 0.11.1 tab fix](neoforge-migration.md#client-0111-equipment-screen-tab-fix-2026-11-05).
