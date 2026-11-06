@@ -125,6 +125,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/config/dedup_sources.json` — generated recipe removals, survivor tags and block-tag removals derived from pinned jar block loot tables.
 - `kubejs/data/*/recipes/`, `kubejs/data/*/loot_tables/` — generated dedup overrides alongside hand-written data recipes.
 - `kubejs/assets/emi/index/stacks/dedup.json` — generated permanent EMI removals.
+- `kubejs/data/curios/curios/slots/<id>.json` — one `{"add_cosmetic": true}` file per curio slot type (enables the Cosmetics tab slots); guarded by `tools/testing/pack_test/tests/data/curios_cosmetic_slots.test.cjs`, which derives the ids from the pinned jars.
 - `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override. On the NeoForge branch it also restores 1.21-path copies of data mods ship only in 1.20 folders (MCA, Citadel, Waddles, Interiors, three block tags; see `docs/neoforge-migration.md`)
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
 - `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte hashing (`hashBytes`, `sha256`), and `path_guard.cjs`, the shared no-link / containment / protected-output guard used by world_trial, client_mixin and the installers.
