@@ -28,6 +28,9 @@ key_keybinding.enderio.probe_mode:key.keyboard.unknown
 key_key.nextDestination:key.keyboard.unknown
 key_key.modernui.zoom:key.keyboard.z
 key_key.sophisticatedbackpacks.toggle_upgrade_1:key.keyboard.unknown
+key_key.bookofdragons.open_inventory:key.keyboard.backslash
+key_key.bookofdragons.debug_toggle:key.keyboard.unknown
+key_key.bookofdragons.roost_lines:key.keyboard.unknown
 
 key_key.evileye_client.sort:key.mouse.middle
 

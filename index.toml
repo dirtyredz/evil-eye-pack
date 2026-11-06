@@ -1671,7 +1671,7 @@ hash = "a7444e9071ebe7e1306e83141f9b4c53fbd6f99730f9d29f587b959b54f07a82"
 
 [[files]]
 file = "config/defaultoptions/keybindings.txt"
-hash = "e851076cbc35c655fd826b74e5fbaad9fd016d70a18d3617dff41c876334a12f"
+hash = "5bd009296770fd67116dd0d8e827878a28f4aae304180c08d10125244760176e"
 
 [[files]]
 file = "config/dramaticdoors-common.toml"
@@ -4735,6 +4735,11 @@ hash = "5d9bdb9a8bcd02fe6f867d52c52a8f20100422de6db324b02543a1d2aff362fa"
 metafile = true
 
 [[files]]
+file = "mods/azurelib.pw.toml"
+hash = "a7acc3836c683e8e833bba7eabf64d9322b5ca54c25d83606f634960e022e08c"
+metafile = true
+
+[[files]]
 file = "mods/baubley-heart-canisters.pw.toml"
 hash = "bab7057ca78b619cae4bde7b35ceac1eb836e3858df95ef73bf4e4cfd6aa2b2e"
 metafile = true
@@ -4747,6 +4752,11 @@ metafile = true
 [[files]]
 file = "mods/blockui.pw.toml"
 hash = "643c88ee26ec68650091c395c5c4fbd33d534a9c493e3cc05da3c793cc7ab9db"
+metafile = true
+
+[[files]]
+file = "mods/book-of-dragons.pw.toml"
+hash = "a8b957c155987bf408332f0af3ab337885ee7881253af2af68ca748ed667ea76"
 metafile = true
 
 [[files]]
@@ -4997,6 +5007,11 @@ metafile = true
 [[files]]
 file = "mods/fastworkbench.pw.toml"
 hash = "0d13e70b59a7f4623237f6b03e22368235d123030f36f18312fd20a8f7d2e459"
+metafile = true
+
+[[files]]
+file = "mods/fauna-engine.pw.toml"
+hash = "979c1b364930e9a0226381b1860d4ad5eebba1a9ff94d7b42996e46500c4aaa6"
 metafile = true
 
 [[files]]

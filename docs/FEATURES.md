@@ -15,6 +15,7 @@ duplicate-cleanup guides.
 | Evil Eye Essentials commands (homes, warps, /back, tpa, kits, trash can; replaced FTB Essentials) and the inventory sidebar (NeoForge branch) | `/evileye showcase evileye_essentials` | [Sections](showcases.md#evil-eye-essentials-section-neoforge-branch) |
 | Evil Eye equipment panel (curios, armour, cosmetic armour in one screen; replaced Cosmetic Armor Reworked; NeoForge branch) | `/evileye showcase evileye_equipment` | [Sections](showcases.md#evil-eye-equipment-panel-section-neoforge-branch) |
 | Sophisticated Backpacks 3.26.20 + Core 1.5.28 + Create Integration 0.2.3: one large backpack worn in the Curios back slot (tiers copper to netherite, upgrades, mounted on Create contraptions); Dank Storage stays | Craft a Backpack (chest, leather, string); open Curios (G), put it in the Back slot, press B | [Decision](DECISIONS.md#sophisticated-backpacks-2026-11-05) |
+| Book of Dragons 1.4 + AzureLib 3.2.0 + FAUNA Engine 1.0: tameable How to Train Your Dragon dragons (Night Fury, Nadder, Skrill, Monstrous Nightmare, Zippleback, Gronckle, Whispering Death), genetics, Dragon Whistle, optional 3D flight; Ice and Fire stays | Find a wild dragon and tame it (letter-sequence taming); in-game manual | [Decision](DECISIONS.md#book-of-dragons-2026-11-05) |
 | One-boot showcase acceptance | `node tools/testing/showcase/check.cjs --all` | [Headless checks](showcases.md#run-the-headless-check) |
 
 Private migration trial prelaunch: `node tools/packwiz/install/install_local.cjs --instance <trial/.minecraft>`

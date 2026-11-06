@@ -491,6 +491,39 @@
     "version": "PWwbiDmx"
    },
    "reason": "Owner request 2026-11-04: one large backpack worn in the Curios back slot to replace a pile of small Dank Storages (Dank Storage stays). Official addon (0.2.3; needs Create 6.0.7 or newer and Backpacks 3.26.10 or newer): backpacks mounted on contraptions."
+  },
+  {
+   "metafile": "mods/azurelib.pw.toml",
+   "name": "AzureLib",
+   "side": "both",
+   "target": {
+    "source": "modrinth",
+    "project": "7zlUOZvb",
+    "version": "GC73cg3K"
+   },
+   "reason": "Owner request 2026-11-05: HTTYD-style tameable dragons beside Ice and Fire (survey 2026-11-05-dragon-mod-survey; Ice and Fire stays). Animation library required by Book of Dragons at exactly 3.2.0 ([3.2.0] in its neoforge.mods.toml), so not the newer 3.2.x builds."
+  },
+  {
+   "metafile": "mods/fauna-engine.pw.toml",
+   "name": "FAUNA Engine",
+   "side": "both",
+   "target": {
+    "source": "curseforge",
+    "project": "1766276",
+    "file": "9327835"
+   },
+   "reason": "Owner request 2026-11-05: HTTYD-style tameable dragons beside Ice and Fire (survey 2026-11-05-dragon-mod-survey; Ice and Fire stays). Creature library required by Book of Dragons (liberanimalium [1.0,)); CurseForge only, 1.0 for NeoForge 1.21.1 is the only build."
+  },
+  {
+   "metafile": "mods/book-of-dragons.pw.toml",
+   "name": "Book of Dragons",
+   "side": "both",
+   "target": {
+    "source": "modrinth",
+    "project": "fJee0CPJ",
+    "version": "V19mixjo"
+   },
+   "reason": "Owner request 2026-11-05: HTTYD-style tameable dragons beside Ice and Fire (survey 2026-11-05-dragon-mod-survey; Ice and Fire stays). 1.4 (2026-10-27) is the newest NeoForge 1.21.1 release; requires AzureLib 3.2.0 and FAUNA Engine 1.0+."
   }
  ],
  "waivers": {},
