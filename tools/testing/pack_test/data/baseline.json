@@ -1865,6 +1865,61 @@
    "key": "acquisition|no-known-source|sophisticatedbackpacks:survival_infinity_upgrade|",
    "reason": "Creative-only operator item (reviewed 2026-11-05 from the mod jar): Sophisticated Backpacks ships no recipe for it; only players with the configured permission level can use an infinity upgrade, so it is by design not obtainable in survival.",
    "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|bookofdragons:barrens_roost_map|",
+   "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: sold or handed out by the Hooligan Drifter wandering trader (HooliganDrifterEntity, ModForgeEvents trade registration) in Java code, so no recipe, loot table or worldgen drop exists.",
+   "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|bookofdragons:cave_roost_map|",
+   "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: sold or handed out by the Hooligan Drifter wandering trader (HooliganDrifterEntity, ModForgeEvents trade registration) in Java code, so no recipe, loot table or worldgen drop exists.",
+   "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|bookofdragons:cliff_roost_map|",
+   "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: sold or handed out by the Hooligan Drifter wandering trader (HooliganDrifterEntity, ModForgeEvents trade registration) in Java code, so no recipe, loot table or worldgen drop exists.",
+   "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|bookofdragons:glade_roost_map|",
+   "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: sold or handed out by the Hooligan Drifter wandering trader (HooliganDrifterEntity, ModForgeEvents trade registration) in Java code, so no recipe, loot table or worldgen drop exists.",
+   "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|bookofdragons:strike_roost_map|",
+   "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: sold or handed out by the Hooligan Drifter wandering trader (HooliganDrifterEntity, ModForgeEvents trade registration) in Java code, so no recipe, loot table or worldgen drop exists.",
+   "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|bookofdragons:wetland_roost_map|",
+   "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: sold or handed out by the Hooligan Drifter wandering trader (HooliganDrifterEntity, ModForgeEvents trade registration) in Java code, so no recipe, loot table or worldgen drop exists.",
+   "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|bookofdragons:book_of_dragons|",
+   "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: sold or handed out by the Hooligan Drifter wandering trader (HooliganDrifterEntity, ModForgeEvents trade registration) in Java code, so no recipe, loot table or worldgen drop exists.",
+   "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|bookofdragons:skrill_egg|",
+   "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: this egg has no recipe, loot table or structure chest (only gronckle, zippleback, nadder, nightmare and night fury eggs appear in roost chests); it is created by dragon code (DragonEggEntity/DragonEggItem, laid by dragons). In-game acquisition check requested from the owner.",
+   "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|bookofdragons:speed_stinger_egg|",
+   "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: this egg has no recipe, loot table or structure chest (only gronckle, zippleback, nadder, nightmare and night fury eggs appear in roost chests); it is created by dragon code (DragonEggEntity/DragonEggItem, laid by dragons). In-game acquisition check requested from the owner.",
+   "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|bookofdragons:terrible_terror_egg|",
+   "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: this egg has no recipe, loot table or structure chest (only gronckle, zippleback, nadder, nightmare and night fury eggs appear in roost chests); it is created by dragon code (DragonEggEntity/DragonEggItem, laid by dragons). In-game acquisition check requested from the owner.",
+   "since": "2026-11-05"
+  },
+  {
+   "key": "acquisition|no-known-source|bookofdragons:whispering_death_egg|",
+   "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: this egg has no recipe, loot table or structure chest (only gronckle, zippleback, nadder, nightmare and night fury eggs appear in roost chests); it is created by dragon code (DragonEggEntity/DragonEggItem, laid by dragons). In-game acquisition check requested from the owner.",
+   "since": "2026-11-05"
   }
  ],
  "logSignatures": []

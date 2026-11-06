@@ -954,3 +954,11 @@ Private local pin: 674479 bytes, SHA-256 `69da0ff89edb874ac272a8112b1cdc33603034
 Client 0.11.0 adds tabs on the inventory and Curios/equipment screens that open the Sophisticated Backpack and the EnderChests Ender Pouch. Each tab shows only when its item is present. Tweaks stays 0.11.1; no config change.
 
 Private local pin: 700946 bytes, SHA-256 `0c33a2b816b7d0e21b5dd976030db28218a586a3e58d6dd0506a822415468bd5`. Built from minecraft-mods EvilEyeClient main 9cba909 (`gradlew build verifyReleaseJar`). Source dispositions, target lock and packwiz metadata agree; the hash-named jar is in both the world-trial-final (Stable) and migration caches, with the old 0.10.4 jar left in place. No game launch, Stable installation or publication is part of this pin.
+
+## Book of Dragons (2026-11-05)
+
+Book of Dragons 1.4 (Modrinth `fJee0CPJ`, version `V19mixjo`), AzureLib 3.2.0 (`7zlUOZvb`, `GC73cg3K`, the `azurelib-neo` build; Book of Dragons and FAUNA Engine both require exactly `[3.2.0]`) and FAUNA Engine 1.0 (CurseForge 1766276 / 9327835). Ice and Fire stays. The three jars are in the world-trial-final (Stable) and migration caches.
+
+FAUNA Engine is a private patched pin, `liberanimalium-1.0+1.21.1-neoforge-eepatch1.jar` (3171332 bytes, SHA-256 `70a45218a3b7aa095ebc4f7f65d94604c9070f1c817fecf0e542b0011e770eb1`, hash-named in both caches): `CraftingLockedRecipeMixin` is removed from `liberanimalium.neoforge.mixins.json`, nothing else changed. Without it the server dies before Done with `@Redirect conflict ... already redirected by interstellaris.mixins.json:CraftingMenuMixin` (critical injection failure; evidence `jobs/2026-11-05-book-of-dragons/packtest/`). The unpatched CurseForge jar is also kept in both caches under its own name for a future revert.
+
+Pack test (`--local`, seed 20261020, fresh world): Done in 74 s, no new WARN/ERROR lines against the Sophisticated Backpacks run (`jobs/2026-11-05-book-of-dragons/packtest2/`). Eleven Book of Dragons acquisition gaps (trader-sold maps and manual, four eggs with no data source) are in the pack-test baseline with reasons. Dragon spawning is data-driven (`data/bookofdragons/spawn`, its own radius caps), not NeoForge biome modifiers; its data names no Ice and Fire entity. Key defaults: see the decision. Taming, flight and Ice and Fire interaction are owner in-game checks.
