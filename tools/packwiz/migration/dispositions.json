@@ -508,11 +508,12 @@
    "name": "FAUNA Engine",
    "side": "both",
    "target": {
-    "source": "curseforge",
-    "project": "1766276",
-    "file": "9327835"
+    "source": "local",
+    "filename": "liberanimalium-1.0+1.21.1-neoforge-eepatch1.jar",
+    "sha256": "70a45218a3b7aa095ebc4f7f65d94604c9070f1c817fecf0e542b0011e770eb1",
+    "size": 3171332
    },
-   "reason": "Owner request 2026-11-05: HTTYD-style tameable dragons beside Ice and Fire (survey 2026-11-05-dragon-mod-survey; Ice and Fire stays). Creature library required by Book of Dragons (liberanimalium [1.0,)); CurseForge only, 1.0 for NeoForge 1.21.1 is the only build."
+   "reason": "Owner request 2026-11-05: HTTYD-style tameable dragons beside Ice and Fire (survey 2026-11-05-dragon-mod-survey; Ice and Fire stays). Creature library required by Book of Dragons (liberanimalium [1.0,)); CurseForge only (project 1766276, file 9327835, liberanimalium-1.0+1.21.1-neoforge.jar). PRIVATE PATCH: stock 1.0 crashes the server at boot because its CraftingLockedRecipeMixin @Redirects ResultContainer.setRecipeUsed in CraftingMenu.slotChangedCraftingGrid, the same call Interstellaris' CraftingMenuMixin (research gate) redirects (Mixin: '@Redirect conflict ... already redirected by interstellaris.mixins.json:CraftingMenuMixin', critical injection failure with defaultRequire 1). The pin removes CraftingLockedRecipeMixin from liberanimalium.neoforge.mixins.json and changes nothing else; FAUNA then no longer hides its own locked recipes in the crafting table grid (CrafterLockedRecipeMixin stays). Revert to the CurseForge pin if either mod ships a fix. Local hash pin, no redistribution URL (personal pack)."
   },
   {
    "metafile": "mods/book-of-dragons.pw.toml",

@@ -1,13 +1,8 @@
 name = "FAUNA Engine"
-filename = "liberanimalium-1.0+1.21.1-neoforge.jar"
+filename = "liberanimalium-1.0+1.21.1-neoforge-eepatch1.jar"
 side = "both"
 
 [download]
-hash-format = "sha1"
-hash = "52a989e7f3d536342ffc7c596507124aa206e8dd"
-mode = "metadata:curseforge"
-
-[update]
-[update.curseforge]
-file-id = 9327835
-project-id = 1766276
+mode = "metadata:local"
+hash-format = "sha256"
+hash = "70a45218a3b7aa095ebc4f7f65d94604c9070f1c817fecf0e542b0011e770eb1"

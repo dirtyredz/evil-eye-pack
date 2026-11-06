@@ -3606,33 +3606,24 @@
    "metafile": "mods/fauna-engine.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owner request 2026-11-05: HTTYD-style tameable dragons beside Ice and Fire (survey 2026-11-05-dragon-mod-survey; Ice and Fire stays). Creature library required by Book of Dragons (liberanimalium [1.0,)); CurseForge only, 1.0 for NeoForge 1.21.1 is the only build.",
+   "rationale": "Owner request 2026-11-05: HTTYD-style tameable dragons beside Ice and Fire (survey 2026-11-05-dragon-mod-survey; Ice and Fire stays). Creature library required by Book of Dragons (liberanimalium [1.0,)); CurseForge only (project 1766276, file 9327835, liberanimalium-1.0+1.21.1-neoforge.jar). PRIVATE PATCH: stock 1.0 crashes the server at boot because its CraftingLockedRecipeMixin @Redirects ResultContainer.setRecipeUsed in CraftingMenu.slotChangedCraftingGrid, the same call Interstellaris' CraftingMenuMixin (research gate) redirects (Mixin: '@Redirect conflict ... already redirected by interstellaris.mixins.json:CraftingMenuMixin', critical injection failure with defaultRequire 1). The pin removes CraftingLockedRecipeMixin from liberanimalium.neoforge.mixins.json and changes nothing else; FAUNA then no longer hides its own locked recipes in the crafting table grid (CrafterLockedRecipeMixin stays). Revert to the CurseForge pin if either mod ships a fix. Local hash pin, no redistribution URL (personal pack).",
    "target": {
-    "channel": "release",
     "declares": [
      "liberanimalium required azurelib [3.2.0]",
      "liberanimalium required minecraft [1.21.1]",
      "liberanimalium required neoforge [21.1,)"
     ],
-    "file": "9327835",
-    "filename": "liberanimalium-1.0+1.21.1-neoforge.jar",
+    "filename": "liberanimalium-1.0+1.21.1-neoforge-eepatch1.jar",
     "loader": "neoforge",
     "metafile": "mods/fauna-engine.pw.toml",
     "mods": [
      "liberanimalium@1.0"
     ],
     "name": "FAUNA Engine",
-    "project": "1766276",
-    "publisher": {
-     "size": 3144466
-    },
-    "sha1": "52a989e7f3d536342ffc7c596507124aa206e8dd",
-    "sha256": "ed835d8e40fedf8915f7d7dd4e8884360cc722345e4cc78bb741bf277596efc6",
-    "sha512": "463fa83ca7f63ab697f4b859cc50f083b2d040318c62e5a0823da49d867cc444e6da71e3ed07cb683d4b0b05ed8579bc8a33b2f617145d6b1be5f15326a9f5eb",
+    "sha256": "70a45218a3b7aa095ebc4f7f65d94604c9070f1c817fecf0e542b0011e770eb1",
     "side": "both",
-    "size": 3144466,
-    "source": "curseforge",
-    "versionNumber": "FAUNA Engine 1.0 - Neoforge 1.21.1"
+    "size": 3171332,
+    "source": "local"
    }
   },
   {
