@@ -1,5 +1,5 @@
 // priority: 20
-// Evil Eye equipment panel (Client 0.4.0 + Tweaks 0.7.0, storage tabs 0.12.0, trash and action rail 0.13.0, recipe fill 0.14.0, replaces Cosmetic Armor Reworked): labelled pads
+// Evil Eye equipment panel (Client 0.4.0 + Tweaks 0.7.0, storage tabs 0.12.0, trash and action rail 0.13.0, recipe fill 0.14.0, backpack controls 0.15.0, replaces Cosmetic Armor Reworked): labelled pads
 // naming what the panel holds. The panel is a client screen, so the labels tell the owner what to look for.
 // Static: no rig, no inventories.
 ;(function () {
@@ -27,6 +27,8 @@
     p.label(14, 14, ['ACTION RAIL', 'sort / move-all /', 'transfer on Backpack', 'and Ender tabs'])
     p.block(2, 0, 17, 'minecraft:crafting_table')
     p.label(4, 17, ['RECIPE FILL', 'EMI + fills from the', 'carried backpack and', 'Ender Pouch'])
+    p.block(12, 0, 17, 'minecraft:chest[facing=north]')
+    p.label(14, 17, ['BACKPACK CONTROLS', 'upgrades + settings', 'right of inventory', 'on the Backpack tab'])
     return p
   })
 })();

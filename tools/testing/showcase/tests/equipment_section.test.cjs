@@ -20,8 +20,12 @@ test('the section is static, vanilla-only, at least the hostile-terrain size, an
   assert.equal(p.rig, null);
   assert.equal(p.fills.length, 0);
   for (const b of p.blocks) assert.ok(b.state.startsWith('minecraft:'), `${b.state} is vanilla`);
+  assert.ok(p.blocks.some((b) => b.x === 12 && b.y === 0 && b.z === 17 && b.state === 'minecraft:chest[facing=north]'), 'a chest pad at 12,0,17');
+  const label = p.blocks.find((b) => b.x === 14 && b.z === 17 && b.state.startsWith('minecraft:oak_sign'));
+  assert.ok(label && signText(label).startsWith('BACKPACK CONTROLS'), 'the BACKPACK CONTROLS label sits at 14,17');
+  assert.ok(label.x < p.width && label.z < p.depth && label.y < p.height, 'the label is inside the plan bounds');
   const text = p.blocks.filter((b) => b.state.startsWith('minecraft:oak_sign')).map(signText).join(' | ');
-  for (const phrase of ['EQUIPMENT', 'press G', 'Curios button', 'LEFT: equipped', 'RIGHT: cosmetic', 'ARMOUR', 'COSMETIC ARMOUR', 'VISIBILITY', 'skin', 'STORAGE TABS', 'TRASH CAN', 'ACTION RAIL', 'RECIPE FILL']) {
+  for (const phrase of ['EQUIPMENT', 'press G', 'Curios button', 'LEFT: equipped', 'RIGHT: cosmetic', 'ARMOUR', 'COSMETIC ARMOUR', 'VISIBILITY', 'skin', 'STORAGE TABS', 'TRASH CAN', 'ACTION RAIL', 'RECIPE FILL', 'BACKPACK CONTROLS']) {
     assert.ok(text.includes(phrase), `a label names ${phrase}`);
   }
 });
@@ -44,14 +48,15 @@ function runCheck(loaded, menus) {
 }
 
 test('the check builds, sees the owned menu type, Cosmetic Armor Reworked absent, then clears', () => {
-  const r = runCheck(new Set(['evileye_tweaks']), new Set(['evileye_tweaks:equipment', 'evileye_tweaks:equipment_storage']));
+  const r = runCheck(new Set(['evileye_tweaks', 'sophisticatedbackpacks']), new Set(['evileye_tweaks:equipment', 'evileye_tweaks:equipment_storage']));
   assert.equal(r.done, true);
   assert.equal(r.cleared, true);
   assert.ok(r.checks.includes('Cosmetic Armor Reworked is not loaded'));
 });
 
 test('a missing menu type or a loaded Cosmetic Armor Reworked fails the check', () => {
-  assert.throws(() => runCheck(new Set(['evileye_tweaks']), new Set()), /equipment menu type/);
-  assert.throws(() => runCheck(new Set(['evileye_tweaks']), new Set(['evileye_tweaks:equipment'])), /equipment_storage menu type/);
-  assert.throws(() => runCheck(new Set(['evileye_tweaks', 'cosmeticarmorreworked']), new Set(['evileye_tweaks:equipment', 'evileye_tweaks:equipment_storage'])), /not loaded/);
+  assert.throws(() => runCheck(new Set(['evileye_tweaks', 'sophisticatedbackpacks']), new Set()), /equipment menu type/);
+  assert.throws(() => runCheck(new Set(['evileye_tweaks', 'sophisticatedbackpacks']), new Set(['evileye_tweaks:equipment'])), /equipment_storage menu type/);
+  assert.throws(() => runCheck(new Set(['evileye_tweaks', 'sophisticatedbackpacks', 'cosmeticarmorreworked']), new Set(['evileye_tweaks:equipment', 'evileye_tweaks:equipment_storage'])), /not loaded/);
+  assert.throws(() => runCheck(new Set(['evileye_tweaks']), new Set(['evileye_tweaks:equipment', 'evileye_tweaks:equipment_storage'])), /Sophisticated Backpacks/);
 });

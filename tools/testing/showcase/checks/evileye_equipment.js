@@ -15,6 +15,7 @@ global.evilEyeShowcaseCheck.checks.evileye_equipment = function (h) {
   check(Registries.MENU.containsKey(Rl.parse('evileye_tweaks:equipment')), 'the server registers the evileye_tweaks:equipment menu type')
   check(Registries.MENU.containsKey(Rl.parse('evileye_tweaks:equipment_storage')), 'the server registers the evileye_tweaks:equipment_storage menu type (Backpack and Ender tabs)')
   check(Platform.isLoaded('evileye_tweaks'), 'Evil Eye Tweaks is loaded')
+  check(Platform.isLoaded('sophisticatedbackpacks'), 'Sophisticated Backpacks is loaded (Backpack tab upgrade controls)')
   check(!Platform.isLoaded('cosmeticarmorreworked'), 'Cosmetic Armor Reworked is not loaded')
 
   later(5, function () {
