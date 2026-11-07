@@ -34,6 +34,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |   `-- evil-eye-cozy-overrides/
 |-- shaderpacks/
 |-- scripts/
+|   |-- diagnostics/
 |   |-- migration/
 |   |-- mod-map/
 |   `-- owner/
