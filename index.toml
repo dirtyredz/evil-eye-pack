@@ -4687,7 +4687,7 @@ hash = "f67008197a69ca92125d4734f5df10c6aca1d6f50f14c2efd101215aff7391aa"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/evileye_equipment.js"
-hash = "0f8820dcac9e53516a17ed6a872cd735a11f754f135e50cd095bca497a64894d"
+hash = "f0a926029f72a09b3fc0e3f215c9db8801f86f3a3c61baa53d8603bfd5365ae3"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/evileye_essentials.js"
