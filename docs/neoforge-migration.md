@@ -980,3 +980,9 @@ Private local pins (both built with `gradlew build verifyReleaseJar`):
 - Client: 747818 bytes, SHA-256 `78e3af884a82eed3703eca813168b3e85f6c55993d8bdde0e9014ef92ed9dcbf`, minecraft-mods EvilEyeClient main 0ff765c.
 
 Source dispositions, target lock and packwiz metadata agree; the hash-named jars are in the world-trial-final (Stable) and migration caches, old jars left in place. The `evileye_equipment` showcase section gained a STORAGE TABS pad and its check now requires the `equipment_storage` menu type. Owner in-game checks (no visible client was run) are listed in Client 0.12.0's release notes: both resource-pack looks and small GUI scales, 12-column and tall backpacks, Ender scrolling, every tab transition including the Sophisticated settings round trip, a shared Ender Bag between two players, removing the source item with its tab open, E/Esc with the panel and with a container open.
+
+## Client 0.12.1 storage-tab layout fix (2026-11-06)
+
+Client 0.12.1 (minecraft-mods EvilEyeClient main fae25be) lays the Backpack tab out inside the equipment panel the same way as the Ender tab and fixes the tab strip going inactive after a tab switch. Tweaks stays 0.12.0; no config or protocol change.
+
+Private local pin: 746465 bytes, SHA-256 `0e9f5353c20db26919a531d7f8227a5848ab4c396a6a542da20264757bc0497a`. Built with `gradlew build verifyReleaseJar`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar and the filename copy are in the world-trial-final (Stable) and migration caches, old jars left in place. Evil Eye Local installs it from the checkout on its next launch. No game launch or Stable installation is part of this pin.

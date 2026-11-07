@@ -3262,7 +3262,7 @@
    "metafile": "mods/evileye-client.pw.toml",
    "old": null,
    "provisional": false,
-   "rationale": "Owned client-only Evil Eye Client 0.12.0, private local pin: the Backpack and Ender storage tabs open inside the equipment panel (Sophisticated Backpacks' own menu; Ender Pouch else Bag grid), and E opens the equipment panel in survival. Requires Tweaks 0.12.0 on server and client for the storage tabs; older Tweaks falls back to the 0.11.x tab squares. Retains the owned client features; no config change. Release history: docs/neoforge-migration.md.",
+   "rationale": "Owned client-only Evil Eye Client 0.12.1, private local pin: the Backpack and Ender storage tabs open inside the equipment panel (Sophisticated Backpacks' own menu; Ender Pouch else Bag grid), and E opens the equipment panel in survival. Requires Tweaks 0.12.0 on server and client for the storage tabs; older Tweaks falls back to the 0.11.x tab squares. Retains the owned client features; no config change. 0.12.1 (minecraft-mods fae25be) lays the Backpack tab out in the panel like Ender and fixes the tab strip going inactive after a switch; no Tweaks, config or protocol change (Tweaks stays 0.12.0). Release history: docs/neoforge-migration.md.",
    "target": {
     "declares": [
      "evileye_client optional curios [9.5.1,) (client)",
@@ -3270,16 +3270,16 @@
      "evileye_client required minecraft [1.21.1,1.21.2)",
      "evileye_client required neoforge [21.1.265,21.2)"
     ],
-    "filename": "evileye_client-1.21.1-neoforge-0.12.0.jar",
+    "filename": "evileye_client-1.21.1-neoforge-0.12.1.jar",
     "loader": "neoforge",
     "metafile": "mods/evileye-client.pw.toml",
     "mods": [
-     "evileye_client@0.12.0"
+     "evileye_client@0.12.1"
     ],
     "name": "Evil Eye Client",
-    "sha256": "78e3af884a82eed3703eca813168b3e85f6c55993d8bdde0e9014ef92ed9dcbf",
+    "sha256": "0e9f5353c20db26919a531d7f8227a5848ab4c396a6a542da20264757bc0497a",
     "side": "client",
-    "size": 747818,
+    "size": 746465,
     "source": "local"
    }
   },
