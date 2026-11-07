@@ -5044,7 +5044,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "65184b6235213968c52b5ebed0e881ff2786aff163af8b0c985836c40cd28912"
+hash = "113bce941d54cbbeddf6a9b5dfd6b748cb72ae271153fc1d8b7186bbf0f1e9e3"
 metafile = true
 
 [[files]]
@@ -5059,7 +5059,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-tweaks.pw.toml"
-hash = "a3691baaf9540335b23a968e56bab3eaab46cd5dac6404dd5333c1d2de76d278"
+hash = "7d6ef63c0407ebcf76b24422c4e4cc6ed5a34ad21f2df676d173aaa5998b9c29"
 metafile = true
 
 [[files]]

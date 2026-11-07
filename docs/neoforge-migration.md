@@ -1008,3 +1008,14 @@ Private local pins (built on ANU with `evileyetweaks-build` and `evileyeclient-b
 - Client: 766856 bytes, SHA-256 `7af7b2600279131f338d73ca361dc87b4f10b259d98c6a85d27fb81b3168f1ca`, SHA-1 `eae3c2eaeb790f6aa4a58c3a66376a9edfe2526a`.
 
 Source dispositions, target lock and packwiz metadata agree; the hash-named jars and filename copies are in the world-trial-final (Stable) and migration caches, old jars left in place. The `evileye_equipment` showcase section gained a RECIPE FILL pad; its check is unchanged otherwise (no new menu type). Owner in-game checks are in both 0.14.0 release notes (press "+" in EMI with ingredients only in the carried backpack or Ender Pouch, at a crafting table, the inventory grid and the equipment panel; Shift fill; a fill that cannot complete moves nothing). The ANU gate ran unit tests and 156 default GameTests on the feature branch; the opt-in storage contract GameTests were not run. No game launch or Stable installation is part of this pin.
+
+## Backpack upgrade dock: Client 0.15.0 + Tweaks 0.14.1 (2026-11-07, Local test build)
+
+Client 0.15.0 (minecraft-mods EvilEyeClient main, merge of `info-footer-room` 0.14.1, `fix/recipe-fill-refresh` 0.14.2 and `backpack-side-tabs`; 0.14.1/0.14.2 were never released and are folded into 0.15.0's notes) shows Sophisticated Backpacks' upgrade slots, enable switches and upgrade tabs in a dock inside the equipment panel's Backpack tab (four scoped client mixins; native Sophisticated screens unchanged), drops the info-tab footer and rebuilds EMI's recipe screen when Tweaks' carried availability changes. Tweaks 0.14.1 (EvilEyeTweaks main: `fix/recipe-fill-carried` plus the test-only `backpack-upgrade-tests`) publishes the availability revision. No config change.
+
+Private local pins (built on ANU with `evileyeclient-build` / `evileyetweaks-build` at the merged main SHAs; jars fetched with scp; a local Valhalla build of the Client is not byte-identical, so the ANU bytes are the pin):
+
+- Tweaks: 548682 bytes, SHA-256 `2e7cdb833d3acc0b9c5126cec7b2ed5ad75a2f20363d4eb41115ed7738301740`, SHA-1 `95100df92dc548db3102330f9964dea947b09e97`.
+- Client: 809015 bytes, SHA-256 `a53ff4c34f40d749ea8d15b1ed73cf67b9e90c290f1d3cefb48f282f6a0ccf3e`, SHA-1 `662678dce7a7c9b5d4cb48faba23499d32ec0507`.
+
+Gate: Client unit tests + build and 17 GameTests, Tweaks build and 156 GameTests passed on ANU; Client client-mixin audit and a server smoke ran on this pin (see the job folder `jobs/2026-11-07-local-test-build`). Hash-named jars and filename copies are in the world-trial-final and migration caches. Owner in-game checks: Backpack tab dock (switches, slot install/remove, upgrade tabs, paging, Escape), info tab without footer, EMI "+" refresh after moving items in/out of a carried backpack. The showcase equipment section has a BACKPACK CONTROLS pad.
