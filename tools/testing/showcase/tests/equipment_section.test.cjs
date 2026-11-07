@@ -21,7 +21,7 @@ test('the section is static, vanilla-only, at least the hostile-terrain size, an
   assert.equal(p.fills.length, 0);
   for (const b of p.blocks) assert.ok(b.state.startsWith('minecraft:'), `${b.state} is vanilla`);
   const text = p.blocks.filter((b) => b.state.startsWith('minecraft:oak_sign')).map(signText).join(' | ');
-  for (const phrase of ['EQUIPMENT', 'press G', 'Curios button', 'LEFT: equipped', 'RIGHT: cosmetic', 'ARMOUR', 'COSMETIC ARMOUR', 'VISIBILITY', 'skin', 'STORAGE TABS', 'TRASH CAN', 'ACTION RAIL']) {
+  for (const phrase of ['EQUIPMENT', 'press G', 'Curios button', 'LEFT: equipped', 'RIGHT: cosmetic', 'ARMOUR', 'COSMETIC ARMOUR', 'VISIBILITY', 'skin', 'STORAGE TABS', 'TRASH CAN', 'ACTION RAIL', 'RECIPE FILL']) {
     assert.ok(text.includes(phrase), `a label names ${phrase}`);
   }
 });

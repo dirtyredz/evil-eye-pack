@@ -997,3 +997,14 @@ Private local pins (both built with `gradlew build verifyReleaseJar`):
 - Client: 756035 bytes, SHA-256 `0a1ecbf32a43135fdad5bf76f0c68ec7688694dc47347a3b899700de0cddd8dd`, SHA-1 `7c29d2c4d786bd604a6b81a0e6f63e6ea9fee18a`.
 
 Source dispositions, target lock and packwiz metadata agree; the hash-named jars and filename copies are in the world-trial-final (Stable) and migration caches, old jars left in place. The `evileye_equipment` showcase section gained TRASH CAN and ACTION RAIL pads; its check is unchanged because the trash tab reuses the `equipment_storage` menu type. Owner in-game checks are in both 0.13.0 release notes (rail placement, sort and move-all from the rail, opening/leaving/returning from the Trash Can, scrolling the info columns at several GUI scales).
+
+## Recipe fill from carried storage: Tweaks 0.14.0 + Client 0.14.0 (2026-11-07)
+
+Client 0.14.0 (minecraft-mods EvilEyeClient main 7235b0d) routes EMI's "+" (and JEI recipes shown through EMI) to Tweaks, and Tweaks 0.14.0 (EvilEyeTweaks main be01ed9) plans the fill on the server from the grid, main inventory, hotbar, the carried Sophisticated Backpack and the Ender Pouch (never a Bag), for ordinary shaped and shapeless recipes into the crafting table, the inventory 2x2 grid and the equipment panel's 2x2 grid. "+" adds one batch, Shift fills as many as fit; the fill is all or nothing and never takes the result. Optional `recipe_fill` v1 channel; no new menu type; no config change. Server and client should both run 0.14.0; an older Client or Tweaks keeps EMI's own fill. Limits: one backpack, one Pouch, no nested containers, no compacting/infinite/memory-only backpack partitions.
+
+Private local pins (built on ANU with `evileyetweaks-build` and `evileyeclient-build` at the merged main SHAs; jars fetched with scp, `version="0.14.0"` in neoforge.mods.toml):
+
+- Tweaks: 547918 bytes, SHA-256 `3ba49a612ae29bbcb979e90f2edd7d2e471e8ee07851d4160df4d117cbecad65`, SHA-1 `48c3fe8a500a6b3c7361be90927d532de0f6b12e`.
+- Client: 766856 bytes, SHA-256 `7af7b2600279131f338d73ca361dc87b4f10b259d98c6a85d27fb81b3168f1ca`, SHA-1 `eae3c2eaeb790f6aa4a58c3a66376a9edfe2526a`.
+
+Source dispositions, target lock and packwiz metadata agree; the hash-named jars and filename copies are in the world-trial-final (Stable) and migration caches, old jars left in place. The `evileye_equipment` showcase section gained a RECIPE FILL pad; its check is unchanged otherwise (no new menu type). Owner in-game checks are in both 0.14.0 release notes (press "+" in EMI with ingredients only in the carried backpack or Ender Pouch, at a crafting table, the inventory grid and the equipment panel; Shift fill; a fill that cannot complete moves nothing). The ANU gate ran unit tests and 156 default GameTests on the feature branch; the opt-in storage contract GameTests were not run. No game launch or Stable installation is part of this pin.

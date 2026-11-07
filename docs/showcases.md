@@ -90,7 +90,7 @@ Rockets, the Fabrication Unit and multiblock machines need a player (research, l
 `evileye_equipment` (24 × 22 × 6): labelled pads for the equipment panel that replaced Cosmetic Armor Reworked (press G
 or the inventory's Curios button; equipped curios on the left, cosmetic curios on the right; real armour beside the
 model, cosmetic armour opposite; the Visibility... button with Show equipment / Show skin). The panel is a client
-screen, so the signs tell the owner what to look for; the check confirms the server side. A STORAGE TABS pad covers the Backpack and Ender tabs (Tweaks/Client 0.12.0; carry the item), a TRASH CAN pad (panel button, Tweaks/Client 0.13.0) and an ACTION RAIL pad (sort, move-all, transfer) cover the 0.13.0 panel polish, and the check requires the `evileye_tweaks:equipment_storage` menu type.
+screen, so the signs tell the owner what to look for; the check confirms the server side. A STORAGE TABS pad covers the Backpack and Ender tabs (Tweaks/Client 0.12.0; carry the item), a TRASH CAN pad (panel button, Tweaks/Client 0.13.0) and an ACTION RAIL pad (sort, move-all, transfer) cover the 0.13.0 panel polish, a RECIPE FILL pad covers EMI "+" from carried storage (Tweaks/Client 0.14.0), and the check requires the `evileye_tweaks:equipment_storage` menu type.
 
 ## Evil Eye Essentials section (NeoForge branch)
 
