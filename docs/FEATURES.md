@@ -54,3 +54,5 @@ Tweaks 0.12.0 + Client 0.12.0 open the Backpack and Ender storage tabs inside th
 Client 0.12.1 lays the Backpack storage tab out inside the equipment panel like the Ender tab and fixes the tab strip going inactive after a switch. Tweaks stays 0.12.0; no config change. See [Client 0.12.1](neoforge-migration.md#client-0121-storage-tab-layout-fix-2026-11-06).
 
 Tweaks 0.13.0 + Client 0.13.0 add a Trash Can button inside the equipment panel (36 disposal slots, destroyed on leave; needs Essentials `/trashcan`), move the action rail (sort, move-all, transfer) inside the panel on the Backpack and Ender tabs, fix middle-click sort and move-all in the panel, and make the Attributes & Effects columns scroll. Server and client should both run 0.13.0; no config change. See [Panel polish 0.13.0](neoforge-migration.md#panel-polish-tweaks-0130--client-0130-2026-11-07).
+
+Second heart row is pink (`#FA7DEB`) instead of orange, forced into existing client configs as a pack-owned key. See [Decisions](DECISIONS.md#second-heart-row-pink-2026-11-07).
