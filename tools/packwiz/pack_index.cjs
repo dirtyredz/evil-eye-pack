@@ -34,6 +34,7 @@ const PRESERVE_PATHS = new Set([
   'config/connectivity.json',
   'config/cull-less-leaves.json',
   'config/cupboard.json',
+  'config/cwb.json',
   'config/emi.css',
   'config/entityculling.json',
   'config/ferritecore-mixin.toml',
