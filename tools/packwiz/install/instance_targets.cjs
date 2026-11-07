@@ -11,8 +11,11 @@ const { noLinks } = require('../../data_io/path_guard.cjs');
 const INSTANCES = 'C:/Users/dirty/MultiMC/instances';
 const STABLE_INSTANCE = INSTANCES + '/Evil Eye Stable';
 const TRIAL_INSTANCE = INSTANCES + '/Evil Eye NeoForge Trial';
+const LOCAL_INSTANCE = INSTANCES + '/Evil Eye Local';
+const MAIN_CHECKOUT = 'C:/Users/dirty/projects/evil-eye-pack';
 const STABLE = STABLE_INSTANCE + '/.minecraft';
 const TRIAL = TRIAL_INSTANCE + '/.minecraft';
+const LOCAL = LOCAL_INSTANCE + '/.minecraft';
 const NAMES = { local: 'evil eye local', trial: 'evil eye neoforge trial', stable: 'evil eye stable' };
 
 const slash = p => path.resolve(p).split(path.sep).join('/');
@@ -55,6 +58,12 @@ function trialTarget(instance) {
   return path.resolve(instance);
 }
 
+function localTarget(instance) {
+  if (!same(instance, LOCAL)) throw Error('Only Evil Eye Local is allowed');
+  noLinks(instance);
+  return path.resolve(instance);
+}
+
 // Private pins must never install into Stable or Local.
 function assertPinTarget(instance) {
   const kind = instanceKind(instance);
@@ -79,4 +88,4 @@ if (require.main === module) {
   else if (cmd !== 'classify' || !target) { console.error('usage: instance_targets.cjs classify <path> | stable'); process.exitCode = 3; }
   else console.log(JSON.stringify(classify(target)));
 }
-module.exports = { STABLE, TRIAL, STABLE_INSTANCE, TRIAL_INSTANCE, instanceKind, isRealStable, assertNotLocalOrTrial, stableTarget, trialTarget, assertPinTarget, allowedAsStable, classify };
+module.exports = { STABLE, TRIAL, LOCAL, STABLE_INSTANCE, TRIAL_INSTANCE, LOCAL_INSTANCE, MAIN_CHECKOUT, localTarget, instanceKind, isRealStable, assertNotLocalOrTrial, stableTarget, trialTarget, assertPinTarget, allowedAsStable, classify };

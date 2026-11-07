@@ -19,7 +19,8 @@ function machine(e) {
   BOOTSTRAP: e.SMOKE_BOOTSTRAP_JAR || 'C:/Users/dirty/MultiMC/packwiz/packwiz-installer-bootstrap.jar',
   // The owner's Evil Eye Local instance mods folder: read-only pinned-jar input for scanners.
   LOCAL_MODS: e.SMOKE_LOCAL_MODS || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods',
-  INSTALLER_JAR_SOURCES: [e.SMOKE_INSTALLER_JAR || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/packwiz-installer.jar'],
+  // Same packwiz-installer bytes in every instance; Stable's copy is the fallback so a rebuilt (empty) Local still installs. Read only.
+  INSTALLER_JAR_SOURCES: [e.SMOKE_INSTALLER_JAR || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/packwiz-installer.jar', 'C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft/packwiz-installer.jar'],
   ARTIFACTS: e.SMOKE_ARTIFACTS || 'C:/Users/dirty/projects/artifacts/evil-eye-pack',
   // Verified NeoForge 1.21.1 target jars (tools/packwiz/migration/migrate.mjs resolve): the read-only pinned-jar input
   // for scanners while no instance has installed the target pack.

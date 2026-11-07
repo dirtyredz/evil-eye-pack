@@ -11,7 +11,7 @@ and how to test a change in the game before it is pushed.
 | `projects/.worktrees/evil-eye-pack/<branch>/` | Linked worktrees for isolated experiments and implementation branches (the harness blocks `git worktree add` anywhere else). |
 | `projects/artifacts/evil-eye-pack/jobs/<date-task>/` | Dispatch prompts, plans, reports and their `.events.jsonl` / `.job.json` / `.stderr.log` sidecars. |
 | `MultiMC/instances/Evil Eye Stable/` | Display name **Evil Eye (Stable)**. The owner's real worlds. Installs published `main`. |
-| `MultiMC/instances/Evil Eye Local/` | Disposable copy of Stable (no saves). Installs the main checkout from its `pack.toml` file path. |
+| `MultiMC/instances/Evil Eye Local/` | Disposable copy of Stable (no saves): NeoForge 1.21.1, Java 21, Stable's JVM args. Installs the main checkout through the verified-cache route on every launch (`scripts/instances/local-instance.ps1`; rebuild with `-Create` after moving the old folder to `MultiMC/backups/evil-eye/`). |
 | `MultiMC/instances/Evil Eye NeoForge Trial/` | Fresh NeoForge 1.21.1 trial (no saves). Java 21 at `C:/Tools/evil-eye-pack/temurin-21`. Installs the `migration/neoforge-1.21.1` worktree. See [NeoForge migration](neoforge-migration.md). |
 | `MultiMC/packwiz/packwiz-installer-bootstrap.jar` | Shared installer bootstrap used by every instance. |
 | `MultiMC/backups/evil-eye/<instance>/<timestamp>/` | Instance backups (`instance/`, `launcher/`, `SHA256SUMS.txt`). Older `MultiMC/backups/Evil Eye 2026-10-11/` is kept as is. |
@@ -31,7 +31,7 @@ directly on every launch (verified headless 2026-10-11: full install, exit 0), s
 | Instance | `<PACK>` | Installs from |
 |---|---|---|
 | Evil Eye (Stable) | `https://raw.githubusercontent.com/dirtyredz/evil-eye-pack/main/pack.toml` | GitHub (after a push) |
-| Evil Eye Local | `C:/Users/dirty/projects/evil-eye-pack/pack.toml` | the main checkout on disk |
+| Evil Eye Local | `scripts/instances/local-instance.ps1 -Cache <world-trial-final cache>` (main has `metadata:local` pins, so a bare `pack.toml` path cannot install) | the main checkout on disk |
 | Evil Eye NeoForge Trial | `C:/Users/dirty/projects/.worktrees/evil-eye-pack/migration/neoforge-1.21.1/pack.toml` | the migration worktree on disk |
 
 Each test instance's path belongs to one checkout; never point an instance at another checkout's `pack.toml`.
