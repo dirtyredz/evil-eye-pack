@@ -81,3 +81,21 @@ test('Stable preserved configs receive the rail and left effects without resetti
     assert.deepEqual(applyOwnedKeys(dir), []);
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
+
+test('Stable preserved configs get the pink second heart row and the shipped colours match', () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'owned-hearts-'));
+  const file = path.join(dir, 'config/evileye_client-client.toml');
+  const colors = text => JSON.parse(text.split('[health.hearts]')[1].match(/^\s*colors = (\[.*\])$/m)[1]);
+  try {
+    fs.mkdirSync(path.dirname(file), { recursive: true });
+    fs.writeFileSync(file, '[health]\n\t[health.hearts]\n\t\tvanillaHearts = true\n\t\tcolors = ["#F06E14", "#F5DC23"]\n\t\tpoisonedColors = ["#739B00"]\n');
+    applyOwnedKeys(dir);
+    const installed = fs.readFileSync(file, 'utf8');
+    const shipped = colors(fs.readFileSync(path.join(ROOT, 'config/evileye_client-client.toml'), 'utf8'));
+    assert.equal(shipped[0], '#FA7DEB');
+    assert.equal(shipped[5], '#F06E14');
+    assert.deepEqual(colors(installed), shipped);
+    assert.match(installed, /poisonedColors = \["#739B00"\]/);
+    assert.deepEqual(applyOwnedKeys(dir), []);
+  } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});

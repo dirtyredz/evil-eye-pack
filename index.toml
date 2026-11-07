@@ -1773,7 +1773,7 @@ hash = "19e1a12a90c2b6c0df9fb3152c19a21eb4c9d84c49d496377eacfca0855b324f"
 
 [[files]]
 file = "config/evileye_client-client.toml"
-hash = "35b909655a0727ac4d8c9d2ff3de783e5ab39455bd8406b14ab67c1a63fec469"
+hash = "b8803815e3ff444acd358c3ac24419686295cb36b089e9fe43e78b9f083359b4"
 preserve = true
 
 [[files]]

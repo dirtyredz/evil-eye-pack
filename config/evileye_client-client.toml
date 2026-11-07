@@ -278,7 +278,7 @@
 		#The first row uses the resource pack's own hearts.
 		vanillaHearts = true
 		#One colour per further row of 10 hearts.
-		colors = ["#F06E14", "#F5DC23", "#2DB928", "#1EAFBE", "#7346E1", "#FA7DEB", "#EB375A", "#FF8278", "#AAFFFA", "#EBEBFF"]
+		colors = ["#FA7DEB", "#F5DC23", "#2DB928", "#1EAFBE", "#7346E1", "#F06E14", "#EB375A", "#FF8278", "#AAFFFA", "#EBEBFF"]
 		#While poisoned. One or two colours; with one, the first row keeps the resource pack's own heart (extra colours are ignored).
 		poisonedColors = ["#739B00"]
 		#While withered. One or two colours; with one, the first row keeps the resource pack's own heart (extra colours are ignored).

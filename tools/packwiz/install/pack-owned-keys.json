@@ -100,6 +100,27 @@
       "key": "offsetY",
       "value": 0,
       "tomlType": "integer"
+    },
+    {
+      "file": "config/evileye_client-client.toml",
+      "format": "toml",
+      "section": [
+        "health",
+        "hearts"
+      ],
+      "key": "colors",
+      "value": [
+        "#FA7DEB",
+        "#F5DC23",
+        "#2DB928",
+        "#1EAFBE",
+        "#7346E1",
+        "#F06E14",
+        "#EB375A",
+        "#FF8278",
+        "#AAFFFA",
+        "#EBEBFF"
+      ]
     }
   ]
 }
