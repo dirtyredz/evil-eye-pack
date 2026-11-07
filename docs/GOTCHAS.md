@@ -7,9 +7,9 @@
   resource-pack policy. The contract test guards these flags and the installed id.
 - **Heart style follows resource priority.** CozyUI+ supplies the HUD heart sprites
   and stays above New Hearts. Do not copy heart sprites into the top override;
-  its contract forbids the `gui/sprites/hud/heart/` folder. The two extra Heart
-  Canister hearts needing yellow tint are an Evil Eye Client issue, not a texture
-  replacement. Baubley supplies health; it does not draw this HUD.
+  its contract forbids the `gui/sprites/hud/heart/` folder. Extra-row heart colours
+  come from Evil Eye Client `[health.hearts] colors`, forced as a pack-owned key
+  (second row pink; DECISIONS 2026-11-07), never a texture replacement. Baubley supplies health; it does not draw this HUD.
 - **FPS settings moved into Sodium's screen.** Sodium 0.8.13 registers Max Framerate
   on General (`sodium:general.framerate_limit`), bound to vanilla's saved maxFps.
   Clear search/dismiss any prompt, then Shift+P opens vanilla Video Settings with
