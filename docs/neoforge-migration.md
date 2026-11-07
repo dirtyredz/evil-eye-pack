@@ -986,3 +986,14 @@ Source dispositions, target lock and packwiz metadata agree; the hash-named jars
 Client 0.12.1 (minecraft-mods EvilEyeClient main fae25be) lays the Backpack tab out inside the equipment panel the same way as the Ender tab and fixes the tab strip going inactive after a tab switch. Tweaks stays 0.12.0; no config or protocol change.
 
 Private local pin: 746465 bytes, SHA-256 `0e9f5353c20db26919a531d7f8227a5848ab4c396a6a542da20264757bc0497a`. Built with `gradlew build verifyReleaseJar`. Source dispositions, target lock and packwiz metadata agree; the hash-named jar and the filename copy are in the world-trial-final (Stable) and migration caches, old jars left in place. Evil Eye Local installs it from the checkout on its next launch. No game launch or Stable installation is part of this pin.
+
+## Panel polish: Tweaks 0.13.0 + Client 0.13.0 (2026-11-07)
+
+Client 0.13.0 (minecraft-mods EvilEyeClient main 8c29f61) moves the action rail inside the equipment panel on the Backpack and Ender tabs, adds a Trash Can button in the panel's bottom-right corner (36 disposal slots, destroyed on leave) and makes the Attributes & Effects columns scroll. Tweaks 0.13.0 (EvilEyeTweaks main bac93d5) adds the Trash Can storage tab (Essentials `/trashcan` rules apply; optional `equipment_trash` v1 channel; the existing `equipment_storage` menu type, no new one) and fixes middle-click sort and move-all in the panel and storage tabs. Server and client should both run 0.13.0; Client 0.13.0 on an older Tweaks runs `/trashcan` and has no rail actions on the storage tabs, and an older Client keeps working. No config change.
+
+Private local pins (both built with `gradlew build verifyReleaseJar`):
+
+- Tweaks: 470119 bytes, SHA-256 `809f3d4e9df35e4f27e62ffeee14d87b3e25d16e1eef565433fc79e40a9322d3`, SHA-1 `ed41445391d3ed02fb71f2334a0fbba21b02ebae`.
+- Client: 756035 bytes, SHA-256 `0a1ecbf32a43135fdad5bf76f0c68ec7688694dc47347a3b899700de0cddd8dd`, SHA-1 `7c29d2c4d786bd604a6b81a0e6f63e6ea9fee18a`.
+
+Source dispositions, target lock and packwiz metadata agree; the hash-named jars and filename copies are in the world-trial-final (Stable) and migration caches, old jars left in place. The `evileye_equipment` showcase section gained TRASH CAN and ACTION RAIL pads; its check is unchanged because the trash tab reuses the `equipment_storage` menu type. Owner in-game checks are in both 0.13.0 release notes (rail placement, sort and move-all from the rail, opening/leaving/returning from the Trash Can, scrolling the info columns at several GUI scales).

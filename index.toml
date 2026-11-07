@@ -4682,7 +4682,7 @@ hash = "f67008197a69ca92125d4734f5df10c6aca1d6f50f14c2efd101215aff7391aa"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/evileye_equipment.js"
-hash = "3002dd22d2788a9008f1ac75037d5a848e0b3a2788713a50bcf8bd19d08afb54"
+hash = "6d50b3bcf58292684fb6f727b9efe4b6afee7367593bbf61e427e144fb349f97"
 
 [[files]]
 file = "kubejs/server_scripts/showcase/sections/evileye_essentials.js"
@@ -5034,7 +5034,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "1af6264d681533e27948aa65f7221bc739e21324dacabdbf7084dc13f9f5bba6"
+hash = "f3cbcc99f5d0e2bdc17457324a09436eb0d8d44ea84180971ce64bb3fd66931d"
 metafile = true
 
 [[files]]
@@ -5049,7 +5049,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-tweaks.pw.toml"
-hash = "c0bdcfc0dc95c9f891e9ad33c8ccccecb11a49e601f34d59ea27d239c2d3c3a7"
+hash = "0a68c6cf97761dc36a04ec4e4318957475ce71e63e61a4756b915ebd04ee7d38"
 metafile = true
 
 [[files]]

@@ -1,5 +1,5 @@
 // priority: 20
-// Evil Eye equipment panel (Client 0.4.0 + Tweaks 0.7.0, storage tabs 0.12.0, replaces Cosmetic Armor Reworked): labelled pads
+// Evil Eye equipment panel (Client 0.4.0 + Tweaks 0.7.0, storage tabs 0.12.0, trash and action rail 0.13.0, replaces Cosmetic Armor Reworked): labelled pads
 // naming what the panel holds. The panel is a client screen, so the labels tell the owner what to look for.
 // Static: no rig, no inventories.
 ;(function () {
@@ -21,6 +21,10 @@
     p.label(14, 8, ['COSMETIC ITEMS', 'stay stored if', 'display is off', '(keep on death: off)'])
     p.block(12, 0, 11, 'minecraft:barrel[facing=up]')
     p.label(14, 11, ['STORAGE TABS', 'Backpack and Ender', 'open inside the', 'panel (carry the item)'])
+    p.block(2, 0, 14, 'minecraft:cauldron')
+    p.label(4, 14, ['TRASH CAN', 'button, bottom-right', 'of the panel: 36', 'slots, destroyed on leave'])
+    p.block(12, 0, 14, 'minecraft:hopper')
+    p.label(14, 14, ['ACTION RAIL', 'sort / move-all /', 'transfer on Backpack', 'and Ender tabs'])
     return p
   })
 })();
