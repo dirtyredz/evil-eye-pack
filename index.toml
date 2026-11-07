@@ -1666,6 +1666,11 @@ file = "config/curios-common.toml"
 hash = "541ee90994c1cf3d4e132df2ac3ff74004bc3952d3914ae843b5089a4dda8a95"
 
 [[files]]
+file = "config/cwb.json"
+hash = "1cb37ba6999e772bb7561b59b2d53a09f6d078898f220157bf256c0863878fc6"
+preserve = true
+
+[[files]]
 file = "config/cyclopscore-common.toml"
 hash = "a7444e9071ebe7e1306e83141f9b4c53fbd6f99730f9d29f587b959b54f07a82"
 
@@ -4930,6 +4935,11 @@ metafile = true
 [[files]]
 file = "mods/cristel-lib.pw.toml"
 hash = "c76891545fb28fbcd2c280cf451ad98a463f8a17a50e0eee8a33b3b410743711"
+metafile = true
+
+[[files]]
+file = "mods/cubes-without-borders.pw.toml"
+hash = "2484b38bf65c7eceef1902fa2a1c3de97333a18d220dab213390da887c4141ee"
 metafile = true
 
 [[files]]

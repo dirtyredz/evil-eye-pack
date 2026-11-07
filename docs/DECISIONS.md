@@ -1,4 +1,8 @@
 # Decisions
+## Borderless fullscreen (2026-11-07)
+
+Owner request: exclusive fullscreen kept freezing on alt-tab (driver hang on focus loss, hybrid RTX 4050 Laptop + Intel) and Sodium 0.8.13 has no borderless mode. Added Cubes Without Borders 5.0.0 (Modrinth `ETlrkaYF` / `fmf8ZA2N`, MIT, client-only; the CurseForge twin is 975120). It adds Borderless and Windowed entries to Sodium's and vanilla's Fullscreen setting, F11 uses Borderless. `config/cwb.json` ships `fullscreenMode: BORDERLESS` and is a preserved path, so the first install starts borderless and later in-game changes stick. Cloth Config (already in the pack) gives it a settings screen. It declares Borderless Window, Concentration and Borderless Mining Updated incompatible (none installed). **Rejected:** Borderless Window 1.7.5 (Forge/NeoForge, older, no Sodium integration), Minecraft Borderless Window and Instant Borderless (tiny, young), Windowed Fullscreen (all rights reserved), Borderless Fullscreen / Borderless Windowed (Fabric only).
+
 ## Second heart row pink (2026-11-07)
 
 Owner request: the second row of health hearts (Heart Canister extra hearts) is pink, not orange. Evil Eye Client `[health.hearts] colors` swaps entries 0 and 5 (pink `#FA7DEB` first, orange `#F06E14` moves to row 7), forced into preserved client configs through `tools/packwiz/install/pack-owned-keys.json`. This supersedes the yellow canister-heart wish recorded under Stable visual priority (2026-11-02); the CozyUI+ heart sprites stay. **Rejected:** replacing heart art.

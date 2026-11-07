@@ -2283,6 +2283,45 @@
    }
   },
   {
+   "action": "add",
+   "metafile": "mods/cubes-without-borders.pw.toml",
+   "old": null,
+   "provisional": false,
+   "rationale": "Owner request 2026-11-07: Sodium 0.8.13 has no borderless mode and exclusive fullscreen freezes on alt-tab (driver hang on focus loss, hybrid RTX 4050 + Intel). Client-only; 5.0.0 (2026-10-24, MIT) is the newest NeoForge 1.21.1 release, adds a Borderless/Windowed entry to Sodium and vanilla Video Settings. Shipped config/cwb.json starts the game borderless.",
+   "target": {
+    "channel": "release",
+    "declares": [
+     "cwb incompatible borderlessmining *",
+     "cwb incompatible borderlesswindow *",
+     "cwb incompatible concentration *",
+     "cwb required minecraft [1.21,1.21.2)",
+     "cwb required neoforge [21.0.143,)"
+    ],
+    "filename": "cwb-5.0.0+1.21.0.neoforge.jar",
+    "loader": "neoforge",
+    "metafile": "mods/cubes-without-borders.pw.toml",
+    "mods": [
+     "cwb@5.0.0+1.21.0.neoforge"
+    ],
+    "name": "Cubes Without Borders",
+    "project": "ETlrkaYF",
+    "publisher": {
+     "sha1": "79ac03f9a6928cfb3e4b20b43d4ae1203e73dd2a",
+     "sha512": "909b3c8f4351260a3d4e260c5260bf8690a54e6d1b1ea21231b237d6fa5f31554f766aea754b07e97c573894adae5b074b85a1e070fbcc625b4cd15b5986afa5",
+     "size": 88984
+    },
+    "sha1": "79ac03f9a6928cfb3e4b20b43d4ae1203e73dd2a",
+    "sha256": "6c687b0415202f054724576cc64e6618cff784f0eb8d98a480286f3de37b7557",
+    "sha512": "909b3c8f4351260a3d4e260c5260bf8690a54e6d1b1ea21231b237d6fa5f31554f766aea754b07e97c573894adae5b074b85a1e070fbcc625b4cd15b5986afa5",
+    "side": "client",
+    "size": 88984,
+    "source": "modrinth",
+    "url": "https://cdn.modrinth.com/data/ETlrkaYF/versions/fmf8ZA2N/cwb-5.0.0%2B1.21.0.neoforge.jar",
+    "version": "fmf8ZA2N",
+    "versionNumber": "5.0.0+1.21.0.neoforge"
+   }
+  },
+  {
    "action": "replace",
    "metafile": "mods/culllessleaves-reforged.pw.toml",
    "old": {
