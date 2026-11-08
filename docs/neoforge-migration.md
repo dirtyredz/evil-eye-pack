@@ -1030,3 +1030,13 @@ Private local pins (ANU `evileyeclient-build` / `evileyetweaks-build` at merged 
 - Client: 811026 bytes, SHA-256 `edb0e27006986f1ea7bd95133b9569f18bec3c854df6a5dade7f4a559c51eca2`, SHA-1 `7dab649236349a4311d12d91a87fae7f782542d4`.
 
 Gate: both mods `build` + `runGameTestServer` on ANU (Tweaks 158 GameTests, Client 17), and `test build verifyReleaseJar` on Valhalla; Client client-mixin audit and server smoke on this pin (job folder `jobs/2026-11-08-combined-update`).
+
+## Recipe fill in the Ars Nouveau craft window: Tweaks 0.14.4 (2026-11-08)
+
+Tweaks 0.14.4 (EvilEyeTweaks main, `fix/recipefill-ars-craft-menu`) makes recipe fill work in the crafting window summoned by an Ars Nouveau spell (the craft glyph). Ars opens `EffectCraft$CustomWorkbench`, a `CraftingMenu` subclass, and the fill only accepted the exact vanilla class, so the server logged `not eligible (craftingGrid=false)` and EMI's "+" saw only Dank Storage. `CraftingTableMenus` now names the accepted subclasses by class name (no Ars dependency) and the menu's own `stillValid` still gates every fill. Server-only: Client 0.15.1 is unchanged. No config change.
+
+Private local pin (ANU `evileyetweaks-build` at merged main `9280441`, jar fetched with scp; the Valhalla build is byte-identical):
+
+- Tweaks: 564209 bytes, SHA-256 `a4cedd696f33ac3f63c9dd0830e78b68cf31973dc6af590fee726f047684006c`, SHA-1 `127886a5f2a31095c667cc45a4d673b2fafec05f`.
+
+Gate: Tweaks `build` + `runGameTestServer` on ANU (159 GameTests; one unrelated Slow Falling stairs test flaked on a first run that overlapped a Valhalla build, and the rerun passed all 159), `build verifyReleaseJar` on Valhalla; server smoke on this pin (job folder `jobs/2026-11-08-tweaks-0.14.4`).
