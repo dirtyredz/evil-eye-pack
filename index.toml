@@ -2288,6 +2288,10 @@ hash = "2c248957470f6a15784cf06290597ce581049e77bfd757971cdae3c36bdf1217"
 preserve = true
 
 [[files]]
+file = "config/terralith.json"
+hash = "e5790b2df8e75f3ed990b16e5aabdd0fc623cc717d9a3c330c8fe1db418a0d9c"
+
+[[files]]
 file = "config/towns_and_towers/structure_enable_or_disable_new.json5"
 hash = "f8eaa7335e212c026b51f0ece3cc0725407f0df35f47b67ba0a1e37435d5cd6c"
 
