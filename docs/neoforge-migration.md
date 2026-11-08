@@ -1019,3 +1019,14 @@ Private local pins (built on ANU with `evileyeclient-build` / `evileyetweaks-bui
 - Client: 809015 bytes, SHA-256 `a53ff4c34f40d749ea8d15b1ed73cf67b9e90c290f1d3cefb48f282f6a0ccf3e`, SHA-1 `662678dce7a7c9b5d4cb48faba23499d32ec0507`.
 
 Gate: Client unit tests + build and 17 GameTests, Tweaks build and 156 GameTests passed on ANU; Client client-mixin audit and a server smoke ran on this pin (see the job folder `jobs/2026-11-07-local-test-build`). Hash-named jars and filename copies are in the world-trial-final and migration caches. Owner in-game checks: Backpack tab dock (switches, slot install/remove, upgrade tabs, paging, Escape), info tab without footer, EMI "+" refresh after moving items in/out of a carried backpack. The showcase equipment section has a BACKPACK CONTROLS pad.
+
+## Recipe-fill diagnostics + Dank gadget preview: Client 0.15.1 + Tweaks 0.14.3 (2026-11-08, combined update)
+
+Tweaks 0.14.3 (EvilEyeTweaks main: `fix/dank-gadget-preview` 0.14.2, never released alone, plus `fix/recipefill-live-diagnostics`) sends the contents of carried Dank Storages to dedicated-server clients so the Building Gadgets 2 preview counts them (optional `dank_contents` channel, optional `dankstorage` dependency ordering), and logs recipe-fill menu eligibility and request outcomes. Client 0.15.1 (EvilEyeClient main, `fix/recipefill-live-diagnostics`) logs preview and handler choice; no behaviour change. Pack side: `config/terralith.json` enables `vanilla_stone_gen` (andesite, diorite and granite generate again) and `scripts/server/` carries the ANU world-server tooling.
+
+Private local pins (ANU `evileyeclient-build` / `evileyetweaks-build` at merged main `88d0dcf` / `6965cb1`, jars fetched with scp; the Valhalla Client build is again not byte-identical, 810918 bytes, so the ANU bytes are the pin; the Tweaks jar is byte-identical on both):
+
+- Tweaks: 563126 bytes, SHA-256 `ddfd5757b54f38e3384d4a555f7d97ce1b1d21a50229cced6529896c91d19af7`, SHA-1 `ad1e33c1e0f6f374e346991e9a8a23bd2202655f`.
+- Client: 811026 bytes, SHA-256 `edb0e27006986f1ea7bd95133b9569f18bec3c854df6a5dade7f4a559c51eca2`, SHA-1 `7dab649236349a4311d12d91a87fae7f782542d4`.
+
+Gate: both mods `build` + `runGameTestServer` on ANU (Tweaks 158 GameTests, Client 17), and `test build verifyReleaseJar` on Valhalla; Client client-mixin audit and server smoke on this pin (job folder `jobs/2026-11-08-combined-update`).
