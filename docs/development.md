@@ -22,11 +22,12 @@ worlds. Switch branches in a checkout only for quick reading, never while its fe
 
 ## Instance and feed mapping
 
-Every instance runs the same pre-launch command; only the pack location differs:
-`"$INST_JAVA" -jar "C:/Users/dirty/MultiMC/packwiz/packwiz-installer-bootstrap.jar" <PACK>`
-
-Local instances point `<PACK>` at a `pack.toml` file path, not a URL. The installer reads that checkout
-directly on every launch (verified headless 2026-10-11: full install, exit 0), so there is no server to start.
+Stable and Trial install through the neutral cache route (`stable_target.cjs`, `trial_target.cjs`); Stable's
+prelaunch is `scripts/migration/stable-prelaunch.ps1`. Evil Eye Local runs the wrapper
+`scripts/instances/local-instance.ps1 -Cache <cache>` as its PreLaunchCommand, which reinstalls the main
+checkout through `local_target.cjs` on every launch. A bare `pack.toml` path cannot install main (it carries
+`metadata:local` pins), so there is no server to start. Create or rebuild Local with
+`local-instance.ps1 -Create`.
 
 | Instance | `<PACK>` | Installs from |
 |---|---|---|

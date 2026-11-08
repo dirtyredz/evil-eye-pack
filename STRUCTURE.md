@@ -35,6 +35,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |-- shaderpacks/
 |-- scripts/
 |   |-- diagnostics/
+|   |-- instances/
 |   |-- migration/
 |   |-- mod-map/
 |   `-- owner/
@@ -144,7 +145,9 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
   (`compare.cjs`) and isolated headless boot/restart (`boot.cjs`, `probe/`). `run.cjs` is
   the CLI; tests cover path isolation, manifests, NBT and storage/ownership loss.
 - `tools/analysis/mod_map/` — offline mod map. `build.mjs` (entry) and `run.cjs` (orchestration, artifact guards, saved-evidence replay) at the top; `inventory/` pinned-jar inventory and the `mods.toml`-only reader; `model/` dependency graph, classification, cost, families, categories and their checked-in data (`overrides.json` reasoned kind/family corrections, undeclared dependencies and pack-wide fixes; `categories.json` family/standalone ID → category); `capture/` the one-boot instrumented capture and TRACE timing; `page/` the pure view, HTML builders, document shell, CSS and browser controls. `tests/` mirrors those folders; `tests/fixtures.cjs` is a shared helper outside the `*/*.test.cjs` glob.
-- `scripts/` — owner-run PowerShell entry points, one `scripts/<area>/<verb>.ps1` per owner command; Node tooling sits underneath in `tools/`. Scripts and their logs (ignored `.tmp/`) are packwiz-excluded.
+- `scripts/` — owner-run PowerShell entry points, one `scripts/<area>/<verb>.ps1` per owner command (areas: mod-map, migration, owner, diagnostics, instances); Node tooling sits underneath in `tools/`. Scripts and their logs (ignored `.tmp/`) are packwiz-excluded.
+- `scripts/instances/` — `local-instance.ps1`, the Evil Eye Local create/refresh entry point (`-Create` builds the instance; as Local's PreLaunchCommand it reinstalls the main checkout through `local_target.cjs`).
+- `scripts/diagnostics/` — `capture-freeze.ps1`, two `jstack` thread dumps of a hung Stable client into the artifacts job folder.
 - `scripts/mod-map/` — `build.ps1`, the mod map owner entry point (wraps `tools/analysis/mod_map/build.mjs`).
 - `scripts/migration/` — owner entry points for the NeoForge cutover: `trial-walkthrough.ps1` (offline installer for Evil Eye NeoForge Trial), `cutover.ps1` / `rollback.ps1` / `stable-prelaunch.ps1` for Stable, and `cutover-lib.ps1`, their shared guards and archive plumbing.
 - `scripts/owner/` — `owner-run.ps1`, the verbatim owner-run 1.0.0 template every owner script dot-sources (logging, OK/FAILED line).
@@ -157,7 +160,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `tools/testing/showcase/` — offline headless runner, probe lifecycle, assertion helpers, shared terrain and registry-wide command checks; `checks/` holds section behaviour checks and `tests/` the focused Node VM/runner tests.
 - `tools/testing/server_smoke/` — unshipped: headless server compatibility smoke (NeoForge 1.21.1 runtime from `pack.toml`) (`smoke.cjs`), with `verdict.cjs`, `log_report.cjs` and `known_noise.json` at the top; `process/` (boot supervisor, shutdown, CPU sampler, progress watchdog, host wait) and `runtime/` (runtime descriptor, loader base and pack install, pinned offline server preparation).
 - `tools/testing/pack_test/` — unshipped: one-boot automated pack test (`run.cjs` and `analyze.cjs`); `recipe_json.cjs`, `stage_runtime.cjs`, `session/`, `checks/` (including security checks in `checks/security/`), `verdict/`, `probe/`, `remote/` (with the `lease/` cluster), `data/`, `tests/`. See the Components table below for module responsibilities; `data/` holds baseline, crafts, machines and policy JSON (`policy.json` carries `removedMods` and `requiredMods`); `tests/` mirrors the source with `checks/`, `data/`, `remote/`, `verdict/` and `session/`.
-- `tools/packwiz/` — unshipped: hash-chain verifier, index rebuild, localhost pack server, tests; `install/` holds the neutral local-copy install route (including strict plain-file drift restoration and retained backups) and its Trial and Stable targets, `migration/` the NeoForge migration lock tooling.
+- `tools/packwiz/` — unshipped: hash-chain verifier, index rebuild, localhost pack server, tests; `install/` holds the neutral local-copy install route (including strict plain-file drift restoration and retained backups) and its Trial, Stable and Local targets, `migration/` the NeoForge migration lock tooling.
 - `docs/` — unshipped living docs (development workflow, decisions, gotchas, EMI guide and integration coverage)
 - `docs/items/`, `docket.json` — Docket work-item store (use `dk`); `AGENTS.md` — agent instructions. All unshipped.
 

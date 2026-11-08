@@ -277,10 +277,14 @@ any URL or server. Original metafile provenance stays attached to prepared entri
 non-preserved plain files that differ are backed up under the run's `.tmp/trial-install-*/drift-backup/`
 and restored to pack bytes; backups survive overlay cleanup. Jar entries are never repaired by this
 step. Installed artifact hashes are checked before a target's prelaunch is updated.
-Two thin targets sit on it: `trial_target.cjs` (only Evil Eye NeoForge Trial) and
+Three thin targets sit on it: `trial_target.cjs` (only Evil Eye NeoForge Trial),
 `stable_target.cjs` (the real Stable instance or a rehearsal copy; `--fresh` first removes every
-file the old install tracked). `pack_owned_keys.cjs` forces the keys in `pack-owned-keys.json`
-into installed configs after each sync, for both targets.
+file the old install tracked) and `local_target.cjs` (Evil Eye Local only). Local creation
+(`--create`) copies Stable's `instance.cfg`/`mmc-pack.json` with the name changed and play history
+dropped, no saves; the default run installs the main checkout through the same neutral route and sets
+a prelaunch that calls `scripts/instances/local-instance.ps1`. Each target guards itself in
+`instance_targets.cjs` (`localTarget` accepts only the Local path). `pack_owned_keys.cjs` forces the keys
+in `pack-owned-keys.json` into installed configs after each sync, for all targets.
 
 **Guard authority.** `tools/packwiz/install/instance_targets.cjs` alone decides which MultiMC
 instance is which. `stableTarget` is an allowlist: the real Stable `.minecraft`, or a path outside
