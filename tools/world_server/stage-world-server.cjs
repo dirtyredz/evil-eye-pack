@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 // Builds the persistent world server's files (loader libraries + `packwiz -s server` mods/config/kubejs)
-// into a directory on Valhalla, reusing the pack-test staging code. No world, no server.properties
+// into a directory on Valhalla, using the shared tools/server_stage/stage.cjs. No world, no server.properties
 // opinions beyond the pack-test defaults: anu-world-server.ps1 ships this folder to ANU and writes the real
 // settings there. Usage: node stage-world-server.cjs --out <dir> --private-cache <dir of <sha256>.jar> [--pack <pack.toml>]
 const path = require('node:path');
@@ -18,7 +18,7 @@ async function main(argv) {
   const env = T('runtime_env/env.cjs');
   const procs = T('runtime_env/procs.cjs');
   const { readRuntime, javaPaths } = T('testing/server_smoke/runtime/runtime.cjs');
-  const { ensureStage } = T('testing/pack_test/session/prepare.cjs');
+  const { ensureStage } = T('server_stage/stage.cjs');
   const runtime = readRuntime(pack);
   const { java } = javaPaths(runtime, env.JAVAS);
   const cache = path.join(env.ARTIFACTS, 'server-smoke/cache');

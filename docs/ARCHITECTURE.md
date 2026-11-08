@@ -145,6 +145,16 @@ booting on ANU. Commands, options and artifact locations are in
 [development](development.md); module ownership is in [STRUCTURE](../STRUCTURE.md).
 The [EMI architecture](emi.md) covers the separate client subsystem.
 
+### Persistent staging and the ANU world server
+
+`tools/server_stage/stage.cjs` (`ensureStage`) is the one neutral builder of a persistent server stage (loader base
+libraries plus an incremental `packwiz -s server` install, stamped with the runtime). The pack test reaches it
+through `session/prepare.cjs` and syncs it to ANU; the world server uses it directly. The world server is a
+separate, long-lived deployment (not a test): `scripts/server/anu-world-server.ps1` on Valhalla routes actions over
+ssh/scp to `server-ctl.ps1` on ANU (config, detached JVM, RCON stop, backup, world manifest), stages the pack with
+`tools/world_server/stage-world-server.cjs` and talks to the server with `tools/world_server/mc-net.cjs`
+(ping/RCON). Operations and traps: [development](development.md), [GOTCHAS](GOTCHAS.md).
+
 1. **Verify and stage on Valhalla.** Create an artifact run directory and record the
    checkout identity, pack/index hashes, seed, probe token and the runtime descriptor
    (`tools/testing/server_smoke/runtime/runtime.cjs`: loader, versions, Java major, id from `pack.toml`).

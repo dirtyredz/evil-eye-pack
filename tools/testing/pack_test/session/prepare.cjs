@@ -1,30 +1,13 @@
 'use strict';
-// Before the boot: the persistent staged server (incremental packwiz install), the per-run server copy
-// (hard-linked jars) and probe injection. Run identity is run_meta.cjs, the world cache world_cache.cjs.
+// Before the boot: the per-run server copy (hard-linked jars) and probe injection. The persistent stage
+// (ensureStage) is the shared tools/server_stage/stage.cjs. Run identity is run_meta.cjs, the world cache world_cache.cjs.
 // Used on Valhalla by run.cjs and on ANU by remote/agent.cjs, so it depends only on Node and server_smoke.
 const fs = require('node:fs');
 const path = require('node:path');
-const { ensureLoaderBase, prepareRunDir, installPack } = require('../../server_smoke/runtime/setup.cjs');
-const { readStamp } = require('../../server_smoke/runtime/runtime.cjs');
+const { ensureStage } = require('../../../server_stage/stage.cjs'); // re-exported below for run.cjs and the tests
 const { WORLD, isStageRuntime } = require('../stage_runtime.cjs');
 
 const PROBE_DIR = path.join(__dirname, '../probe');
-
-// The staged server: loader base libraries plus an incremental `-s server` packwiz install. Never booted,
-// so its files stay exactly what packwiz installed. A stage is reused only when its runtime.json names
-// this runtime; one without a stamp, or stamped for another runtime, is rebuilt from the base.
-async function ensureStage(stageDir, { cache, runtime, java, pack, log, scope, seed, port, heap }) {
-  const base = await ensureLoaderBase(cache, runtime, java, log, scope);
-  const stamp = readStamp(stageDir);
-  if (fs.existsSync(stageDir) && (!stamp || stamp.id !== runtime.id || stamp.java !== runtime.java)) {
-    if (fs.existsSync(path.join(stageDir, '.git'))) throw new Error(`refusing to rebuild ${stageDir}: it is a checkout`);
-    log(`stage ${stageDir} was built for ${stamp ? stamp.id : 'an unknown runtime'}; rebuilding for ${runtime.id}`);
-    fs.rmSync(stageDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 500 });
-  }
-  if (!fs.existsSync(path.join(stageDir, 'libraries'))) prepareRunDir(base, stageDir, port, heap, seed);
-  await installPack(stageDir, pack, java, cache, log, scope);
-  return stageDir;
-}
 
 // The run's own server copy. Jars are hard-linked (the server only reads them); everything else is copied.
 function makeRunServer(stageDir, serverDir, { seed, port, heap }) {

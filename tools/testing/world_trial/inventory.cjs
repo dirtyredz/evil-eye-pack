@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs'), path=require('node:path'), crypto=require('node:crypto');
 const { files }=require('./copy.cjs');
-const { parseNbt,gunzipMaybe,decompressChunk,dimensionFor,paletteCounts }=require('./nbt.cjs');
+const { parseNbt,gunzipMaybe,decompressChunk,dimensionFor,paletteCounts }=require('../../data_io/nbt.cjs');
 const json=v=>JSON.stringify(v,(_k,x)=>typeof x==='bigint'?x.toString():x);
 const digest=v=>crypto.createHash('sha256').update(json(v)).digest('hex');
 const add=(map,id,n=1)=>{map[id]=(map[id]||0)+n;};

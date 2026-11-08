@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert');
-const { addEntry } = require('./add-server-entry.cjs');
+const { addEntry } = require('../add-server-entry.cjs');
 
 // A real one-entry Minecraft servers.dat (hidden=1, ip, name).
 const ONE = Buffer.from('0a0000090007' + '736572766572730a00000001' + '0100066869646465' + '6e0008000269700014' + Buffer.from('apx2181221.apexmc.co').toString('hex') + '08000' + '46e616d65000845766' + '96c457965370000', 'hex');

@@ -77,132 +77,42 @@ $AnuBackup = 'G:\evil-eye-pack-ci\server-backups'
 $AnuAddr   = '192.168.1.251'
 $Ctl       = "$AnuCtl\server-ctl.ps1"
 $Jobs      = 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs'
+# Node helpers live under tools/world_server (shared with ANU: mc-net.cjs is shipped there by Send-Ctl).
+$WorldTools  = Join-Path $PSScriptRoot '../../tools/world_server'
+$McNet       = Join-Path $WorldTools 'mc-net.cjs'
+$StageCli    = Join-Path $WorldTools 'stage-world-server.cjs'
+$PlayerCheck = Join-Path $WorldTools 'player-data-check.cjs'
+$AddEntry    = Join-Path $WorldTools 'add-server-entry.cjs'
 
-function Invoke-Ssh([string]$Command, [int]$FailCode = 3) {
-  $rc = Invoke-Native 'ssh' @($AnuHost, $Command)
-  if ($rc -ne 0) { Complete-OwnerRun $FailCode "ssh command failed (exit $rc): $Command" }
-}
-function Invoke-Ctl([string]$CtlArgs, [int]$FailCode = 3) {
-  Invoke-Ssh "powershell -NoProfile -ExecutionPolicy Bypass -File $Ctl $CtlArgs" $FailCode
-}
-function Send-Ctl {
-  if ($DryRun) { Write-Log "DryRun: would copy server-ctl.ps1 and mc-net.cjs to ${AnuHost}:$AnuCtl"; return }
-  Invoke-Ssh "New-Item -ItemType Directory -Force $AnuCtl | Out-Null"
-  foreach ($f in 'server-ctl.ps1', 'mc-net.cjs') {
-    $rc = Invoke-Native 'scp' @('-q', (Join-Path $PSScriptRoot $f), "${AnuHost}:$($AnuCtl.Replace('\','/'))/$f")
-    if ($rc -ne 0) { Complete-OwnerRun 3 "scp $f failed (exit $rc)" }
-  }
-}
-function Test-ValhallaGameRunning {
-  @(Get-CimInstance Win32_Process -Filter "Name='java.exe' OR Name='javaw.exe'" |
-    Where-Object { $_.CommandLine -and $_.CommandLine -match 'Evil Eye|MultiMC|net\.minecraft|neoforge' })
-}
-function Get-LocalManifest([string]$Root) {
-  Get-ChildItem -LiteralPath $Root -Recurse -File -Force | Where-Object { $_.Name -ne 'session.lock' } | ForEach-Object {
-    $rel = $_.FullName.Substring($Root.Length + 1).Replace('\', '/')
-    '{0}  ./{1}' -f (Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash.ToLower(), $rel
-  } | Sort-Object { $_.Substring(66) }
-}
-function Test-ServerRunning {
-  $out = & ssh $AnuHost "powershell -NoProfile -ExecutionPolicy Bypass -File $Ctl -Op Status" 2>&1 | Out-String
-  return ($out -match 'State: RUNNING')
-}
+# Transport (ssh/scp, remote controller, ping), Deploy, and world copy/backup live in dot-sourced modules.
+. (Join-Path $PSScriptRoot 'anu-transport-lib.ps1')
+. (Join-Path $PSScriptRoot 'anu-deploy-lib.ps1')
+. (Join-Path $PSScriptRoot 'anu-world-lib.ps1')
 
 try {
   switch ($Action) {
     'Status' {
       Send-Ctl
       Invoke-Ctl '-Op Status'
-      $ping = & node (Join-Path $PSScriptRoot 'mc-net.cjs') ping $AnuAddr 25565 2>&1 | Out-String
-      Write-Log ("Ping from Valhalla to {0}:25565 -> {1}" -f $AnuAddr, $ping.Trim())
-      if ($LASTEXITCODE -ne 0) { Complete-OwnerRun 2 'server list ping failed' }
+      Test-ServerPing
     }
     'Start' {
       if ($DryRun) { Write-Log 'DryRun: would start the server on ANU and wait for Done'; Complete-OwnerRun 0 }
       Send-Ctl
       Invoke-Ctl '-Op Start' 2
-      $ping = & node (Join-Path $PSScriptRoot 'mc-net.cjs') ping $AnuAddr 25565 2>&1 | Out-String
-      Write-Log ("Ping from Valhalla -> {0}" -f $ping.Trim())
-      if ($LASTEXITCODE -ne 0) { Complete-OwnerRun 2 'server list ping failed' }
+      Test-ServerPing
     }
     'Stop' {
       if ($DryRun) { Write-Log 'DryRun: would save-all flush and stop the server'; Complete-OwnerRun 0 }
       Send-Ctl
       Invoke-Ctl '-Op Stop'
     }
-    'Backup' {
-      if ($DryRun) { Write-Log "DryRun: would stop the server if running, archive evil-eye-world to $AnuBackup, then start it again"; Complete-OwnerRun 0 }
-      Send-Ctl
-      $wasRunning = Test-ServerRunning
-      if ($wasRunning) { Invoke-Ctl '-Op Stop' }
-      try { Invoke-Ctl '-Op Backup' 4 }
-      finally { if ($wasRunning) { Write-Log 'Restarting the server'; Invoke-Ctl '-Op Start' 2 } }
-    }
-    'Pull' {
-      $newest = (& ssh $AnuHost "(Get-ChildItem $AnuBackup -Filter 'world-*.tar.gz' | Sort-Object Name | Select-Object -Last 1).Name" | Out-String).Trim()
-      if (-not $newest) { Complete-OwnerRun 1 'No backup on ANU yet; run Backup first.' }
-      Write-Log "Newest ANU backup: $newest -> $OutDir"
-      if ($DryRun) { Complete-OwnerRun 0 }
-      New-Item -ItemType Directory -Force $OutDir | Out-Null
-      $rc = Invoke-Native 'scp' @('-q', "${AnuHost}:$($AnuBackup.Replace('\','/'))/$newest", (Join-Path $OutDir $newest))
-      if ($rc -ne 0) { Complete-OwnerRun 3 "scp failed (exit $rc)" }
-      Write-Log ("Pulled {0:n0} MB" -f ((Get-Item (Join-Path $OutDir $newest)).Length / 1MB))
-    }
-    'Deploy' {
-      $stage = "$Jobs/$(Get-Date -Format 'yyyy-MM-dd')-anu-world-server/stage"
-      Write-Log "Plan: stage the pack server files in $stage, tar, ship to ${AnuHost}:$AnuRoot (mods replaced, world/ctl/ops untouched), then Configure (heap ${HeapGb}G, op $OpName, LAN firewall rule)."
-      if ($DryRun) { Complete-OwnerRun 0 }
-      Send-Ctl
-      if (Test-ServerRunning) { Complete-OwnerRun 1 'The server is running; run Stop first.' }
-      $rc = Invoke-Native 'node' @((Join-Path $PSScriptRoot 'stage-world-server.cjs'), '--out', $stage, '--private-cache', $PrivateCache)
-      if ($rc -ne 0) { Complete-OwnerRun 3 'staging failed' }
-      $tar = "$stage/../stage.tar"
-      $rc = Invoke-Native 'tar' @('-cf', $tar, '-C', $stage, '.')
-      if ($rc -ne 0) { Complete-OwnerRun 3 'tar failed' }
-      Invoke-Ssh "New-Item -ItemType Directory -Force $AnuRoot\incoming | Out-Null"
-      $rc = Invoke-Native 'scp' @('-q', $tar, "${AnuHost}:$($AnuRoot.Replace('\','/'))/incoming/stage.tar")
-      if ($rc -ne 0) { Complete-OwnerRun 3 'scp stage failed' }
-      Invoke-Ssh "foreach (`$d in 'mods','config','kubejs','libraries') { if (Test-Path $AnuRoot\`$d) { Remove-Item -Recurse -Force $AnuRoot\`$d } }; tar -xf $AnuRoot\incoming\stage.tar -C $AnuRoot; Remove-Item $AnuRoot\incoming\stage.tar"
-      Invoke-Ctl "-Op Configure -HeapGb $HeapGb -OpUuid $OpUuid -OpName $OpName"
-    }
-    'CopyWorld' {
-      $game = @(Test-ValhallaGameRunning)
-      foreach ($g in $game) { Write-Log ("  running: pid {0} {1}" -f $g.ProcessId, $g.Name) }
-      if ($game.Count -gt 0) { Complete-OwnerRun 1 'An Evil Eye / Minecraft java process is running on Valhalla. Quit to title or close the game first.' }
-      if (-not (Test-Path -LiteralPath (Join-Path $SourceWorld 'level.dat'))) { Complete-OwnerRun 1 "No level.dat in $SourceWorld" }
-      Write-Log "Plan: tar $SourceWorld (read only) -> ${AnuHost}:$AnuRoot\evil-eye-world, then compare sha256 of every file. The original is never modified."
-      if ($DryRun) { Complete-OwnerRun 0 }
-      Send-Ctl
-      if (Test-ServerRunning) { Complete-OwnerRun 1 'The server is running; run Stop first.' }
-      $exists = (& ssh $AnuHost "Test-Path $AnuRoot\evil-eye-world" | Out-String).Trim()
-      if ($exists -eq 'True') {
-        if (-not $ReplaceWorld) { Complete-OwnerRun 1 'ANU already has evil-eye-world (the live world). Use -ReplaceWorld to move it aside and copy again.' }
-        Invoke-Ssh "Rename-Item $AnuRoot\evil-eye-world evil-eye-world.replaced-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
-      }
-      $job = "$Jobs/$(Get-Date -Format 'yyyy-MM-dd')-anu-world-server"
-      New-Item -ItemType Directory -Force $job | Out-Null
-      $src = (Get-LocalManifest $SourceWorld)
-      Set-Content -LiteralPath "$job/source-world.sha256" -Value $src -Encoding ascii
-      Write-Log "Source manifest: $(@($src).Count) files"
-      $rc = Invoke-Native 'tar' @('-cf', "$job/world.tar", '--exclude=session.lock', '-C', $SourceWorld, '.')
-      if ($rc -ne 0) { Complete-OwnerRun 3 'tar failed' }
-      Invoke-Ssh "New-Item -ItemType Directory -Force $AnuRoot\incoming, $AnuRoot\evil-eye-world | Out-Null"
-      $rc = Invoke-Native 'scp' @('-q', "$job/world.tar", "${AnuHost}:$($AnuRoot.Replace('\','/'))/incoming/world.tar")
-      if ($rc -ne 0) { Complete-OwnerRun 3 'scp world failed' }
-      Invoke-Ssh "tar -xf $AnuRoot\incoming\world.tar -C $AnuRoot\evil-eye-world; Remove-Item $AnuRoot\incoming\world.tar"
-      Invoke-Ctl '-Op Manifest'
-      $rc = Invoke-Native 'scp' @('-q', "${AnuHost}:$($AnuCtl.Replace('\','/'))/world.sha256", "$job/dest-world.sha256")
-      if ($rc -ne 0) { Complete-OwnerRun 3 'scp manifest failed' }
-      $diff = Compare-Object @($src) @(Get-Content "$job/dest-world.sha256")
-      if ($diff) { Complete-OwnerRun 3 ("Hash mismatch on {0} entries; first: {1}" -f @($diff).Count, $diff[0].InputObject) }
-      Write-Log "Hash-verified: $(@($src).Count) files identical on ANU."
-      # Player data check (see .DESCRIPTION): is playerdata/<uuid>.dat present and identical to level.dat's Player tag?
-      $chk = & node (Join-Path $PSScriptRoot 'player-data-check.cjs') $SourceWorld $OpUuid 2>&1 | Out-String
-      Write-Log $chk.Trim()
-      if ($LASTEXITCODE -ne 0) { Write-Log 'WARNING: player data needs attention before the owner joins (see above).' }
-    }
+    'Backup'    { Invoke-Backup }
+    'Pull'      { Invoke-Pull }
+    'Deploy'    { Invoke-Deploy }
+    'CopyWorld' { Invoke-CopyWorld }
     'AddLauncherEntry' {
-      $nodeArgs = @((Join-Path $PSScriptRoot 'add-server-entry.cjs'), $LauncherServersDat, 'Evil Eye (ANU)', $AnuAddr)
+      $nodeArgs = @($AddEntry, $LauncherServersDat, 'Evil Eye (ANU)', $AnuAddr)
       if ($DryRun) { $nodeArgs += '--dry-run' }
       $rc = Invoke-Native 'node' $nodeArgs
       if ($rc -ne 0) { Complete-OwnerRun 3 'servers.dat edit failed' }

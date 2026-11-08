@@ -75,6 +75,9 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |   `-- tests/
     |-- runtime_env/
     |-- script-run/
+    |-- server_stage/
+    |-- world_server/
+    |   `-- tests/
     `-- testing/
         |-- client_mixin/
         |   |-- probe/
@@ -131,7 +134,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/data/curios/curios/slots/<id>.json` — one `{"add_cosmetic": true}` file per curio slot type (enables the Cosmetics tab slots); guarded by `tools/testing/pack_test/tests/data/curios_cosmetic_slots.test.cjs`, which derives the ids from the pinned jars.
 - `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override. On the NeoForge branch it also restores 1.21-path copies of data mods ship only in 1.20 folders (MCA, Citadel, Waddles, Interiors, three block tags; see `docs/neoforge-migration.md`)
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
-- `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading and byte hashing (`hashBytes`, `sha256`), and `path_guard.cjs`, the shared no-link / containment / protected-output guard used by world_trial, client_mixin and the installers.
+- `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading, byte hashing (`hashBytes`, `sha256`) and `nbt.cjs` (NBT/region-chunk reading, used by world_trial and the world-server player check), and `path_guard.cjs`, the shared no-link / containment / protected-output guard used by world_trial, client_mixin and the installers.
 - `tools/testing/` — tools that boot or exercise the pack: `client_mixin/`, `world_trial/`, `server_smoke/`, `pack_test/`, `showcase/`.
 - `tools/runtime_env/` — shared machine environment (`env.cjs`: Java per major, packwiz jars, artifacts root; `FIXED` ignores `SMOKE_*` overrides, used by the install route) and hidden child-process scopes (`procs.cjs`); imported by `testing/`, `analysis/` and `packwiz/`.
 - `tools/analysis/` — tools that read the pack's files and jars without booting it: `dedup/`, `emi_curation/` (tests), `emi_coverage/`, `mod_map/`, `malware_guard/`, `library_closure/`, `consolidation/`.
@@ -142,21 +145,24 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     `probe/ClientMixinLaunch.java` uses NeoForge's production client discovery and transformer without
     entering Minecraft's main method; `tests/` covers staging arguments, allow-list validation and verdicts.
 - `tools/testing/world_trial/` — guarded independent snapshots (`copy.cjs`, `snapshot.cjs`), offline
-  NBT/region inventories (`nbt.cjs`, `inventory.cjs`, domain views in `semantics.cjs`), conservative semantic comparison
+  NBT/region inventories (`inventory.cjs` over `data_io/nbt.cjs`, domain views in `semantics.cjs`), conservative semantic comparison
   (`compare.cjs`) and isolated headless boot/restart (`boot.cjs`, `probe/`). `run.cjs` is
   the CLI; tests cover path isolation, manifests, NBT and storage/ownership loss.
 - `tools/analysis/mod_map/` — offline mod map. `build.mjs` (entry) and `run.cjs` (orchestration, artifact guards, saved-evidence replay) at the top; `inventory/` pinned-jar inventory and the `mods.toml`-only reader; `model/` dependency graph, classification, cost, families, categories and their checked-in data (`overrides.json` reasoned kind/family corrections, undeclared dependencies and pack-wide fixes; `categories.json` family/standalone ID → category); `capture/` the one-boot instrumented capture and TRACE timing; `page/` the pure view, HTML builders, document shell, CSS and browser controls. `tests/` mirrors those folders; `tests/fixtures.cjs` is a shared helper outside the `*/*.test.cjs` glob.
-- `scripts/` — owner-run PowerShell entry points, one `scripts/<area>/<verb>.ps1` per owner command (areas: mod-map, migration, owner, diagnostics, instances); Node tooling sits underneath in `tools/`. Scripts and their logs (ignored `.tmp/`) are packwiz-excluded.
+- `scripts/` — owner-run PowerShell entry points, one `scripts/<area>/<verb>.ps1` per owner command (areas: mod-map, migration, owner, diagnostics, instances, server); Node tooling sits underneath in `tools/`. Scripts and their logs (ignored `.tmp/`) are packwiz-excluded.
 - `scripts/instances/` — `local-instance.ps1`, the Evil Eye Local create/refresh entry point (`-Create` builds the instance; as Local's PreLaunchCommand it reinstalls the main checkout through `local_target.cjs`).
 - `scripts/diagnostics/` — `capture-freeze.ps1`, two `jstack` thread dumps of a hung Stable client into the artifacts job folder.
 - `scripts/mod-map/` — `build.ps1`, the mod map owner entry point (wraps `tools/analysis/mod_map/build.mjs`).
 - `scripts/migration/` — owner entry points for the NeoForge cutover: `trial-walkthrough.ps1` (offline installer for Evil Eye NeoForge Trial), `cutover.ps1` / `rollback.ps1` / `stable-prelaunch.ps1` for Stable, and `cutover-lib.ps1`, their shared guards and archive plumbing.
+- `scripts/server/` — the ANU world-server owner entry points: `anu-world-server.ps1` (thin action router: Status, Start, Stop, Backup, Pull, Deploy, CopyWorld, AddLauncherEntry), its dot-sourced modules `anu-transport-lib.ps1` (ssh/scp, ping, shipping the controller), `anu-deploy-lib.ps1` (Deploy) and `anu-world-lib.ps1` (CopyWorld verify, Backup, Pull), and `server-ctl.ps1`, the controller that runs on ANU (configure, JVM lifecycle, status, manifest, backup archive). Node helpers sit in `tools/world_server/`.
+- `tools/world_server/` — Node helpers of the ANU world server: `mc-net.cjs` (server-list ping and RCON client; also shipped to ANU), `stage-world-server.cjs` (CLI: stage the pack's server files via `server_stage/`), `add-server-entry.cjs` (launcher `servers.dat` entry) and `player-data-check.cjs` (level.dat Player vs playerdata/<uuid>.dat); `tests/` covers the servers.dat edit.
+- `tools/server_stage/` — `stage.cjs`, the neutral persistent server stage (`ensureStage`: loader base plus incremental `-s server` packwiz install, runtime-stamped). Used by `testing/pack_test/session/prepare.cjs` (re-exports it), `tools/world_server/`, and synced to ANU with the pack test (`remote/anu.cjs` `CODE_DIRS`). The loader and install primitives it calls still live in `testing/server_smoke/runtime/`.
 - `scripts/owner/` — `owner-run.ps1`, the verbatim owner-run 1.0.0 template every owner script dot-sources (logging, OK/FAILED line).
 - `tools/script-run/` — the verbatim Node script-run 1.1.0 template (`script-run.mjs`) and its test from `~/.claude/templates/scripts/`; Node entry points such as `tools/analysis/mod_map/build.mjs` run through it.
 - `tools/analysis/malware_guard/` — offline content scanner, instance drift and metadata source/known-bad gate; opt-in cached Modrinth status, approval CLI, `data/` policies and synthetic `tests/`. Local reports/cache are ignored under `.local/`.
 - `tools/analysis/dedup/` — pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions; `hidden_reasons.json` holds the reason for every `hiddenOnly` id (see docs/development.md "Known exceptions registry").
 - `tools/analysis/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
-- `tools/analysis/malware_guard/tests/`, `tools/packwiz/tests/`, `tools/testing/server_smoke/tests/`, `tools/testing/pack_test/tests/`, `tools/testing/showcase/tests/`, `tools/analysis/mod_map/tests/`, `tools/script-run/` — Node test suites, run together with the `tools/analysis/emi_curation/tests/` ones (`node --test tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.cjs tools/testing/showcase/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs`)
+- `tools/analysis/malware_guard/tests/`, `tools/packwiz/tests/`, `tools/testing/server_smoke/tests/`, `tools/testing/pack_test/tests/`, `tools/testing/showcase/tests/`, `tools/analysis/mod_map/tests/`, `tools/script-run/` — Node test suites, run together with the `tools/analysis/emi_curation/tests/` ones (`node --test tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.cjs tools/testing/showcase/tests/*.cjs tools/world_server/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/data_io/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs`)
 - `tools/analysis/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
 - `tools/testing/showcase/` — offline headless runner, probe lifecycle, assertion helpers, shared terrain and registry-wide command checks; `checks/` holds section behaviour checks and `tests/` the focused Node VM/runner tests.
 - `tools/testing/server_smoke/` — unshipped: headless server compatibility smoke (NeoForge 1.21.1 runtime from `pack.toml`) (`smoke.cjs`), with `verdict.cjs`, `log_report.cjs` and `known_noise.json` at the top; `process/` (boot supervisor, shutdown, CPU sampler, progress watchdog, host wait) and `runtime/` (runtime descriptor, loader base and pack install, pinned offline server preparation).
@@ -181,6 +187,12 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `tools/analysis/library_closure/class_references.cjs` | conservative constant-pool string references |
 | `tools/analysis/library_closure/targets.cjs` | candidate profiles and physical-removal verdicts |
 | `tools/analysis/consolidation/wave7_evidence.cjs` | candidate payload interpretation through the world-trial inventory visitor |
+| `scripts/server/anu-world-server.ps1` | owner dispatcher for the ANU world server: parameters, help, logging, action routing only |
+| `scripts/server/anu-transport-lib.ps1`, `anu-deploy-lib.ps1`, `anu-world-lib.ps1` | dot-sourced modules: ssh/scp/ping transport; Deploy; CopyWorld, Backup and Pull |
+| `scripts/server/server-ctl.ps1` | remote controller on ANU (config files, JVM start/stop over RCON, status, world manifest, backup archive) |
+| `tools/world_server/mc-net.cjs` | network client: server list ping and RCON |
+| `tools/server_stage/stage.cjs` | shared persistent server stage (pack test and world server) |
+| `tools/world_server/add-server-entry.cjs`, `player-data-check.cjs`, `stage-world-server.cjs` | launcher entry edit, host player-data check, staging CLI |
 | `tools/data_io/path_guard.cjs` | shared containment, no-link and protected-output guards; `artifactJob(dir)` owns the artifact-jobs root and containment rule |
 | `kubejs/server_scripts/showcase/plan.js` | pure plan bounds, shared floor, placement/sign helpers, registry, rig dispatch and multi-section layout/source-to-origin math |
 | `kubejs/server_scripts/showcase/sections/*.js` | one self-registering content plan per section; no world access |

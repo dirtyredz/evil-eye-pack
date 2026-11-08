@@ -20,7 +20,7 @@ const { isStageRuntime } = require('../stage_runtime.cjs');
 
 const TOOLS_DIR = path.resolve(__dirname, '../../..');
 // Synced under the same relative layout as tools/, so remote relative requires resolve as on Valhalla.
-const CODE_DIRS = ['testing/server_smoke', 'testing/pack_test', 'analysis/emi_coverage', 'analysis/dedup', 'data_io'];
+const CODE_DIRS = ['testing/server_smoke', 'testing/pack_test', 'analysis/emi_coverage', 'analysis/dedup', 'data_io', 'server_stage'];
 
 // Reads ANU's load and decides alone / shared / fallback (capacity.cjs).
 async function checkCapacity(ssh, log) {

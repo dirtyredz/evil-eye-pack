@@ -426,9 +426,10 @@ Everything runs from Valhalla through `scripts/server/anu-world-server.ps1 <Acti
 logs under `.tmp/owner-runs/`, ends `OK`/`FAILED`): `Status` (also pings from Valhalla), `Start`, `Stop`,
 `Backup`, `Pull` (newest backup to Valhalla `artifacts/evil-eye-pack/world-backups`), `Deploy` (re-stage the pack
 from the checkout and ship it; refuses while running; keeps the world), `CopyWorld` (one-off copy with sha256
-verification), `AddLauncherEntry`. The helpers beside it: `server-ctl.ps1` (runs on ANU, shipped on every call),
-`mc-net.cjs` (server-list ping and RCON), `stage-world-server.cjs` (reuses the pack-test staging code),
-`add-server-entry.cjs` (+ test), `player-data-check.cjs`.
+verification), `AddLauncherEntry`. The dispatcher is a thin router over dot-sourced modules beside it (`anu-transport-lib.ps1`, `anu-deploy-lib.ps1`,
+`anu-world-lib.ps1`) and `server-ctl.ps1` (runs on ANU, shipped on every call). The Node helpers are in
+`tools/world_server/`: `mc-net.cjs` (server-list ping and RCON), `stage-world-server.cjs` (stages through the
+shared `tools/server_stage/stage.cjs`), `add-server-entry.cjs` (+ test), `player-data-check.cjs`.
 
 - The JVM is started through `Win32_Process.Create` with output to `logs\console.log`, so it survives ssh
   disconnects; it is found by the marker `-Dewl.server=anu-world` on its command line. There is no Windows
