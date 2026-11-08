@@ -331,6 +331,15 @@
 - Move a linked worktree only with `git worktree move`. An Explorer move breaks the `.git` file link and the main repo's `worktrees/` record; `git worktree prune` would then delete the record.
 - Local instance pre-launch commands hold the worktree's path: after `git worktree move`, update the `PreLaunchCommand` in that instance's `instance.cfg` (MultiMC closed).
 
+## World server on ANU (`scripts/server/`)
+
+- **Singleplayer to dedicated: the host's data is in level.dat.** A singleplayer host is stored in `level.dat`'s `Player` tag; a dedicated server reads only `playerdata/<uuid>.dat`. 1.21.1 also writes the .dat when singleplayer saves, so a world left by a clean quit has both identical (checked 2026-11-07: all 53 Player keys equal, including Curios and backpack attachments). `player-data-check.cjs` compares them; if it reports MISSING or DIFFERENT, open the world once in singleplayer and quit to title, then copy again. Never write the .dat from level.dat by hand without a backup.
+- **A running world cannot be copied on Windows.** Java holds the region files open without sharing, so `tar`/`Copy-Item` fail with Permission denied (seen 2026-11-07). `anu-world-server.ps1 Backup` therefore stops the server, archives and restarts it.
+- **Copy the world only from a stopped game.** `CopyWorld` refuses while any Evil Eye / Minecraft java process runs on Valhalla; `session.lock` is excluded.
+- **The pack's "Can't keep up" stalls follow it to ANU.** The i7-4820K is slower than Valhalla; expect tick lag under load (many entities, Create contraptions, dragons). Tuning knobs are `view-distance`/`simulation-distance` in `server.properties` and the heap; `max-tick-time=-1` keeps the watchdog from killing a slow tick.
+- **Xaero maps and waypoints do not follow the world to the server (2026-11-07).** They are client-side, keyed by save name (`xaero/world-map/New World/`, `xaero/minimap/New World/`) for singleplayer and by address (`Multiplayer_192.168.1.251/`) for a server, so the first join starts blank. With the game closed (Xaero rewrites on exit), back up `xaero/` then carry over: world-map `New World/null/*` into `Multiplayer_192.168.1.251/null/mw$<id>/` and `New World/DIM-1/*` into `.../DIM-1/mw$<id>/` (`<id>` is the folder Xaero created on the first join; same-named region caches `*.xwmc[.outdated]`, keep the newer file), minimap `New World/dim%0` and `dim%-1` `waypoints.txt` into `Multiplayer_192.168.1.251/dim%0` / `dim%-1`. Regions the server already explored keep the server copy; the old copy of those regions is lost. Done by hand once; not scripted in `CopyWorld`.
+- **Mod versions must match.** The server installs the pack's current `main`; a client on an older install (Stable updates only when launched) can be refused. Launch Stable once after each push.
+
 ## KubeJS 2001.6.5 / Rhino
 
 - `ForgeEvents` is startup-only. Client scripts register with `MinecraftForge.EVENT_BUS.addListener(...)`.
