@@ -407,6 +407,39 @@ changed.
 
 `node tools/testing/server_smoke/smoke.cjs [--pack <pack.toml>] [--out <dir>] [--drop oculus]` boots the checkout headless on the dedicated server its `pack.toml` declares (Forge 47.4.10 on `main`, NeoForge 21.1.265 on the migration branch; `-s server` install, nogui, hidden, localhost:25599, offline, fresh world; about 2.5 min on an idle host, 9+ min on a busy one, see GOTCHAS) and prints PASS/FAIL, time to `Done (`, crash causes and error groups (known noise vs new). Agents use this to check pack compatibility; the owner verifies in game. It never opens a window or touches MultiMC. Cache and runs live under the artifacts root in `server-smoke/` (pass `--out` to put a run in a job folder). The loader and its version come from `pack.toml` through `tools/testing/server_smoke/runtime/runtime.cjs`, which also picks the Java major (17 for 1.20.1, 21 for 1.21.1) and verifies the executable is that major before any install or boot. Java per major, the packwiz jars and the artifacts root are defined in `tools/runtime_env/env.cjs` (override with `SMOKE_JAVA_17`, `SMOKE_JCMD_17`, `SMOKE_JAVA_21`, `SMOKE_JCMD_21`, `SMOKE_BOOTSTRAP_JAR`, `SMOKE_INSTALLER_JAR`, `SMOKE_INSTALLER_URL` (checksum still verified), `SMOKE_ARTIFACTS`). `--seed <n>` (default `20261020`) sets `level-seed` so boots are repeatable; the seed is printed in the PASS/FAIL/STALL header and on every failure. A random seed made two of four boots stall in "Preparing spawn area". A timeout inside that phase with no crash and no new errors is reported as `STALL` (exit 3, "WORLDGEN STALL ... seed N"), not a pack FAIL: retry with another `--seed`. On such a timeout the smoke also saves a `jcmd Thread.print` to `stall-threads.txt` in the run dir (`SMOKE_JCMD_<major>` overrides the jcmd path). The wall-clock timeout is gone: a progress watchdog samples the JVM's CPU time every `--sample` s (default 10) and stops the boot only when the log is silent AND CPU is flat for `--silent` s (default 180), with `--timeout` (default 1800 s) as a hard cap. Right after spawn the server JVM (the spawned `java.exe` itself, no wrapper) is raised to `--priority` (default `AboveNormal`; `Idle|BelowNormal|Normal|AboveNormal|High|none`) because Windows starves it while the host is busy. The header prints `JVM CPU` seconds, wall seconds and priority. A non-finishing boot with no crash and no new errors where the JVM averaged under `--starved` cores (default 0.25) per wall second is labelled `HOST STARVED` (exit 4), distinct from `STALL` (worldgen, exit 3) and `FAIL`: retry on an idle host or with `--priority High`. `--drop` deletes installed jars from the throwaway server only, to find the next offender; `--analyze <run dir>` re-reports a finished run.
 
+## World server on ANU (the owner's real world, LAN only)
+
+Since 2026-11-07 the owner's Stable world also runs as a dedicated server on ANU, so play can continue while
+Valhalla is reinstalled and the world survives the wipe. **The original stays untouched on Valhalla** in
+`Evil Eye Stable/.minecraft/saves/New World` (fallback); the ANU copy is the live one and diverges from it.
+
+| Item | Value |
+|---|---|
+| Address | `192.168.1.251:25565` (LAN only; firewall rule "Evil Eye World Server (LAN 25565)" allows `192.168.1.0/24`) |
+| Server dir | `G:\evil-eye-pack-ci\server\` (NeoForge 21.1.265, MC 1.21.1, Temurin 21 from `C:\Tools\evil-eye-pack`), world `evil-eye-world\` |
+| Settings | online-mode, 6 players, view/simulation distance 8/6, `max-tick-time=-1`, `allow-flight`, difficulty normal, op DirtyRedz; JVM `-Xms4G -Xmx10G` with Stable's G1 flags (ANU has 32 GB) |
+| Mods | `packwiz -s server` of the pack's `main` plus the private Evil Eye jars from the world-trial cache (client-only mods and Evil Eye Client are not installed; Tweaks and Essentials are) |
+| Backups | `G:\evil-eye-pack-ci\server-backups\world-<stamp>.tar.gz`, newest 8 kept |
+| Join | Stable launcher, Multiplayer, "Evil Eye (ANU)" (added to Stable's `servers.dat`) |
+
+Everything runs from Valhalla through `scripts/server/anu-world-server.ps1 <Action>` (comment-based help, `-DryRun`,
+logs under `.tmp/owner-runs/`, ends `OK`/`FAILED`): `Status` (also pings from Valhalla), `Start`, `Stop`,
+`Backup`, `Pull` (newest backup to Valhalla `artifacts/evil-eye-pack/world-backups`), `Deploy` (re-stage the pack
+from the checkout and ship it; refuses while running; keeps the world), `CopyWorld` (one-off copy with sha256
+verification), `AddLauncherEntry`. The helpers beside it: `server-ctl.ps1` (runs on ANU, shipped on every call),
+`mc-net.cjs` (server-list ping and RCON), `stage-world-server.cjs` (reuses the pack-test staging code),
+`add-server-entry.cjs` (+ test), `player-data-check.cjs`.
+
+- The JVM is started through `Win32_Process.Create` with output to `logs\console.log`, so it survives ssh
+  disconnects; it is found by the marker `-Dewl.server=anu-world` on its command line. There is no Windows
+  scheduled task (schedules go through Command Deck); after an ANU reboot run `Start`.
+- Stop is graceful over RCON (`127.0.0.1:25575`, password in `ctl\rcon.secret`, never opened in the firewall).
+- Updating the pack: push `main`, `Stop`, `Backup`, `Deploy`, `Start`. Players launch Stable to receive the
+  matching client jars; a client/server mod mismatch refuses the join.
+- Boot measured 2026-11-07 on ANU (i7-4820K): 68 s to `Done` (world load 5.7 s), 0 new error groups against the
+  smoke's known-noise list (286 known occurrences), one "Can't keep up" at boot. See GOTCHAS for the stall behaviour.
+- To move the world back to Valhalla: `Stop`, `Backup`, `Pull`, extract the archive into a `saves` folder.
+
 ## Custom mods
 
 The owner's own mods are built in the `minecraft-mods` workspace (`C:/Users/dirty/projects/minecraft-mods`, one repo per mod under `mods/`, e.g. `mods/DankRecipeTransfer` = `dirtyredz/dank-recipe-transfer`). Release workflow: tag and publish the jar as a GitHub release, compute its sha256, then edit the pack's `mods/<id>.pw.toml` (`filename`, `url`, `hash-format = "sha256"`, `hash`; no `[update]` section), run `rehash.cjs` and `verify_hashes.cjs`, and run the server smoke. The pack never stores the jar.

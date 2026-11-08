@@ -38,7 +38,8 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |   |-- instances/
 |   |-- migration/
 |   |-- mod-map/
-|   `-- owner/
+|   |-- owner/
+|   `-- server/
 `-- tools/
     |-- analysis/
     |   |-- consolidation/
