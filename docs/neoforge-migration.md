@@ -1041,8 +1041,14 @@ Private local pin (ANU `evileyetweaks-build` at merged main `9280441`, jar fetch
 
 Gate: Tweaks `build` + `runGameTestServer` on ANU (159 GameTests; one unrelated Slow Falling stairs test flaked on a first run that overlapped a Valhalla build, and the rerun passed all 159), `build verifyReleaseJar` on Valhalla; server smoke on this pin (job folder `jobs/2026-11-08-tweaks-0.14.4`).
 
-## Client 0.15.2: "+" fills from a carried Dank again (2026-11-08)
+## Client 0.15.2 + Tweaks 0.14.5 + Dank Recipe Transfer 0.2.2: Dank "+" fill (2026-11-08)
 
-Client 0.15.2 (EvilEyeClient `fix/dank-plus-fill`, commit `b1f0bab`, not yet merged) leaves the EMI "+" to the originally selected handler (Dank Recipe Transfer's) when Tweaks previews 0 batches and no Tweaks request is pending; positive previews still go to Tweaks. Diagnosis: `.tmp/diag-report.md` in the diag-jei-dank worktree (Docket dk-9aa94c48). Tweaks stays 0.14.4.
+Client 0.15.2 (EvilEyeClient main `b1f0bab`) leaves the EMI "+" to the originally selected handler (Dank Recipe Transfer's) when Tweaks previews 0 batches and no Tweaks request is pending; positive previews still go to Tweaks. Tweaks 0.14.5 (EvilEyeTweaks main `3c2eab2`) fixes recipe fill leaving a missing required cell empty and validates previews. Dank Recipe Transfer 0.2.2 (DankRecipeTransfer main `e7494da`) adds gated equipment-menu support for Dank EMI transfers; its pin moves from the 0.2.1 GitHub release to a private local pin (`metadata:local`). Diagnosis: Docket dk-9aa94c48, summary in dk-cc7d1ba6. Owner confirmed in game on test jars (Stable plus ANU server), 2026-11-08.
 
-PROVISIONAL private local pin: this jar is the Valhalla build of the unmerged branch (812422 bytes, SHA-256 `6d0a411ef5b618c959044514c8e8b400930ff35296a2835230376e0f4312fb36`, SHA-1 `1b593e6c49b6b48ca3bac87733a51c58c00a632f`). The Valhalla Client build is not byte-identical to ANU's, so after the branch is merged to EvilEyeClient main and rebuilt on ANU (`evileyeclient-build`), re-pin to the ANU bytes (as for 0.15.1). Gate run: `test build verifyReleaseJar` on Valhalla (BUILD SUCCESSFUL). Not run: GameTests, client-mixin audit, server smoke, in-game check.
+Private local pins (ANU `evileyeclient-build` / `evileyetweaks-build` / `dankrecipetransfer-build` at the merged main SHAs above, jars fetched with scp; the ANU bytes are the pin):
+
+- Client: 812530 bytes, SHA-256 `62f77bdfbdc99dce680e01ed1ba039807783c1827b0092ddaac7dbcbfc1efdf7`, SHA-1 `1a73b5edfa7e1be3e083757b549b149990f62d43`.
+- Tweaks: 565683 bytes, SHA-256 `0ff3939e3d142eea37095e681b904fb7c431fc60462142a150d6a8143f4b3dab`, SHA-1 `c84ee7278cd7d030d1e0bf6f66c43158f59f1ee0`.
+- Dank Recipe Transfer: 120947 bytes, SHA-256 `fc627285c60f469c70620d05bea2a2e5eb0eb134665def8482b1935b4c13f0d4`, SHA-1 `953a78e77ca277c694846a12f3d7149d8975f73c`.
+
+Gate: ANU `build` (compile, unit tests, release jar) for all three; pack rehash, verify_hashes and tools/packwiz tests. Not run: GameTests, client-mixin audit. Hash-named jars and filename copies are in the world-trial-final (Stable) and migration caches. The Tweaks 0.14.4 ANU rebuild no longer matches its earlier pinned bytes, so ANU builds are not byte-reproducible over time; the pin is the bytes, not the source.

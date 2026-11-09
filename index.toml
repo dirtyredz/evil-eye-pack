@@ -4973,7 +4973,7 @@ metafile = true
 
 [[files]]
 file = "mods/dank-recipe-transfer.pw.toml"
-hash = "aab66e8e8f3c15ba950c6f7aed932631164f0befd67afe27de7cf5f420e6df8a"
+hash = "627867c9bfa3970a52a112144ccaa9e2fcb0d84c08ec2f85debb9a85ab1c115f"
 metafile = true
 
 [[files]]
@@ -5048,7 +5048,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-client.pw.toml"
-hash = "75d24d08e91715e95ad72d68a30aad6b9716465a9a737eea4dd58ed89ccd5c32"
+hash = "35a7c3a3f7d79badfe65bb86234161e3f11a118f9cfcf6096c8ce23d5caeb23c"
 metafile = true
 
 [[files]]
@@ -5063,7 +5063,7 @@ metafile = true
 
 [[files]]
 file = "mods/evileye-tweaks.pw.toml"
-hash = "ae426c1d1783c9c3d3de0a4e6f02fd7887ab473045aa539711672127560697e8"
+hash = "130b2cc749d35e03edf7a8c27580863d679050c380d4f97d0a5cb1a913b2e9a8"
 metafile = true
 
 [[files]]

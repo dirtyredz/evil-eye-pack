@@ -1,8 +1,8 @@
 name = "Dank Recipe Transfer"
-filename = "dank_recipe_transfer-1.21.1-neoforge-0.2.1.jar"
+filename = "dank_recipe_transfer-1.21.1-neoforge-0.2.2.jar"
 side = "both"
 
 [download]
-url = "https://github.com/dirtyredz/dank-recipe-transfer/releases/download/neoforge-1.21.1-v0.2.1/dank_recipe_transfer-1.21.1-neoforge-0.2.1.jar"
+mode = "metadata:local"
 hash-format = "sha256"
-hash = "9921f8fd09c0a84da8305492ecdcf2f028f22007a8785563b043278030fcb8ef"
+hash = "fc627285c60f469c70620d05bea2a2e5eb0eb134665def8482b1935b4c13f0d4"
