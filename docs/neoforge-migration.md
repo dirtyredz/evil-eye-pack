@@ -1052,3 +1052,7 @@ Private local pins (ANU `evileyeclient-build` / `evileyetweaks-build` / `dankrec
 - Dank Recipe Transfer: 120947 bytes, SHA-256 `fc627285c60f469c70620d05bea2a2e5eb0eb134665def8482b1935b4c13f0d4`, SHA-1 `953a78e77ca277c694846a12f3d7149d8975f73c`.
 
 Gate: ANU `build` (compile, unit tests, release jar) for all three; pack rehash, verify_hashes and tools/packwiz tests. Not run: GameTests, client-mixin audit. Hash-named jars and filename copies are in the world-trial-final (Stable) and migration caches. The Tweaks 0.14.4 ANU rebuild no longer matches its earlier pinned bytes, so ANU builds are not byte-reproducible over time; the pin is the bytes, not the source.
+
+## Client 0.15.4: full-height Sophisticated dock, settings in panel (2026-11-09)
+
+Client 0.15.4 (EvilEyeClient main `ac1854c`, folds unreleased 0.15.3) makes the Sophisticated upgrade dock full height and moves the settings into the panel. No config change; Tweaks stays 0.14.5. Pinned as a private local pin to the published GitHub release asset (release `neoforge-1.21.1-v0.15.4`, built by `release.yml` run 42682500314 after verify and GameTests passed; SHA-256 read back by the workflow): 832093 bytes, SHA-256 `02873a3faeec759554b26e901d41b5394506c6cf0b100248bb2aa9b9c76e04c9`. The jar is in the world-trial-final (Stable) and migration caches as hash-named and filename copies. Gate: pack rehash and verify_hashes. Not run: server smoke, client-mixin audit, in-game check (owner tests in Stable).
