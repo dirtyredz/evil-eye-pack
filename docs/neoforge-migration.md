@@ -1040,3 +1040,9 @@ Private local pin (ANU `evileyetweaks-build` at merged main `9280441`, jar fetch
 - Tweaks: 564209 bytes, SHA-256 `a4cedd696f33ac3f63c9dd0830e78b68cf31973dc6af590fee726f047684006c`, SHA-1 `127886a5f2a31095c667cc45a4d673b2fafec05f`.
 
 Gate: Tweaks `build` + `runGameTestServer` on ANU (159 GameTests; one unrelated Slow Falling stairs test flaked on a first run that overlapped a Valhalla build, and the rerun passed all 159), `build verifyReleaseJar` on Valhalla; server smoke on this pin (job folder `jobs/2026-11-08-tweaks-0.14.4`).
+
+## Client 0.15.2: "+" fills from a carried Dank again (2026-11-08)
+
+Client 0.15.2 (EvilEyeClient `fix/dank-plus-fill`, commit `b1f0bab`, not yet merged) leaves the EMI "+" to the originally selected handler (Dank Recipe Transfer's) when Tweaks previews 0 batches and no Tweaks request is pending; positive previews still go to Tweaks. Diagnosis: `.tmp/diag-report.md` in the diag-jei-dank worktree (Docket dk-9aa94c48). Tweaks stays 0.14.4.
+
+PROVISIONAL private local pin: this jar is the Valhalla build of the unmerged branch (812422 bytes, SHA-256 `6d0a411ef5b618c959044514c8e8b400930ff35296a2835230376e0f4312fb36`, SHA-1 `1b593e6c49b6b48ca3bac87733a51c58c00a632f`). The Valhalla Client build is not byte-identical to ANU's, so after the branch is merged to EvilEyeClient main and rebuilt on ANU (`evileyeclient-build`), re-pin to the ANU bytes (as for 0.15.1). Gate run: `test build verifyReleaseJar` on Valhalla (BUILD SUCCESSFUL). Not run: GameTests, client-mixin audit, server smoke, in-game check.
