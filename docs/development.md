@@ -23,7 +23,7 @@ worlds. Switch branches in a checkout only for quick reading, never while its fe
 ## Instance and feed mapping
 
 Stable and Trial install through the neutral cache route (`stable_target.cjs`, `trial_target.cjs`); Stable's
-prelaunch is `scripts/migration/stable-prelaunch.ps1`. Evil Eye Local runs the wrapper
+prelaunch is `scripts/migration/stable-prelaunch.ps1` (verify with `node tools/packwiz/install/stable_prelaunch_check.cjs`; a blank value freezes Stable). Evil Eye Local runs the wrapper
 `scripts/instances/local-instance.ps1 -Cache <cache>` as its PreLaunchCommand, which reinstalls the main
 checkout through `local_target.cjs` on every launch. A bare `pack.toml` path cannot install main (it carries
 `metadata:local` pins), so there is no server to start. Create or rebuild Local with
