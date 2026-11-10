@@ -27,3 +27,5 @@ Acceptance:
 - After a test reboot, or a simulated boot trigger, the server reaches `Done` without anyone starting it.
 
 Also for the owner: check ANU's power path (outlet, power strip, UPS, PSU, heat). That's three unexpected reboots in four days.
+
+Separate network problem, 2026-11-09: ANU is on Wi-Fi only (ASUS PCE-AC68 PCIe card, SSID EvilEye7, channel 44, 80% signal; adapter power saving is already at maximum performance). At about 23:40 the link degraded (pings 0.5 to 2.4 s with loss, while the router answered in 15 ms). The owner timed out of the world server at 23:41:43, and then WLAN-AutoConfig disconnected at 23:45:53 and reconnected at 23:46:15. There were five Wi-Fi connects in 12 hours (one at the 14:18 boot). The server itself never stopped. Fix for the owner: wire ANU to the router with Ethernet.
