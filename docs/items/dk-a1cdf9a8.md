@@ -15,13 +15,15 @@ relates: []
 # Auto-start the ANU world server after a reboot
 
 
-ANU rebooted without warning on 2026-11-06 at 12:02 and again on 2026-11-09 at 08:49 (Kernel-Power 41 and EventLog 6008, with no crash dump; it looks like power loss or a hard reset). Each time, the Evil Eye world server (`G:\evil-eye-pack-ci\server`, `server\ctl\server-ctl.ps1`) stayed down until someone started it by hand.
+ANU rebooted without warning on 2026-11-06 at 12:02, and twice on 2026-11-09, at 08:49 and 14:18 (Kernel-Power 41 and EventLog 6008, with no crash dump; it looks like power loss or a hard reset). Each time, the Evil Eye world server (`G:\evil-eye-pack-ci\server`, `server\ctl\server-ctl.ps1`) stayed down until someone started it by hand. After the 14:18 reboot it was restarted by hand at 22:12 on 2026-11-09.
 
-The owner approved a start-at-boot job on 2026-11-09. Owner rules say it must be registered through Command Deck's schedule tool, never `schtasks` or `Register-ScheduledTask`. It is blocked because Command Deck can't schedule on ANU yet: on 2026-11-09, `discover` returned `SCHEDULE_UNAVAILABLE` for ANU's task scheduler, coverage state `never`.
+The owner approved a start-at-boot job on 2026-11-09. Owner rules say it must be registered through Command Deck's schedule tool, never `schtasks` or `Register-ScheduledTask`.
+
+Status 2026-11-09: ANU is now provisioned in Command Deck (profile `anu-default`, principal `anu-david-interactive`; discover coverage is `fresh`). The create (schedule_job operationId `evileye-anu-boot-world-server-create-01`, id `evil-eye-anu-world-server-boot`, cadence boot with a 60 s delay, below-normal priority, duration 900000 ms, overlap and missed both skip) was refused with `SCHEDULE_FORBIDDEN`, because boot, session-state and event-log cadences are owner-only. The owner chose to wait for the proper fix rather than register the job with owner authority, so this item is blocked on command-deck dk-b341556d (P1), which lets project sessions create those cadences for their own project. When that ships, retry the same create. Don't work around it.
 
 Acceptance:
 - A Command Deck-managed schedule on ANU starts the server at boot by running `server-ctl.ps1 -Op Start`, at BelowNormal priority, as a hidden window.
 - It stays clear of Plex, the `cd-ci` runner and `G:\Work`.
 - After a test reboot, or a simulated boot trigger, the server reaches `Done` without anyone starting it.
 
-Also for the owner: check ANU's power path (outlet, power strip, UPS, PSU, heat).
+Also for the owner: check ANU's power path (outlet, power strip, UPS, PSU, heat). That's three unexpected reboots in four days.
