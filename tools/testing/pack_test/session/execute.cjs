@@ -42,7 +42,7 @@ function collectEvidence(serverDir, evidenceDir) {
 async function execute(o, log) {
   if (!o.runtime) throw new Error('execute needs the run runtime descriptor');
   const serverDir = path.join(o.runDir, 'server');
-  return withStaged({ runDir: o.runDir, dirs: [serverDir], keep: o.keepServer, log }, () => runOnServer(o, log, serverDir));
+  return withStaged({ root: o.runDir, dirs: [serverDir], keep: o.keepServer, log }, () => runOnServer(o, log, serverDir));
 }
 
 async function runOnServer(o, log, serverDir) {

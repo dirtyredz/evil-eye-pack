@@ -7,12 +7,11 @@
 //   node tools/packwiz/install/instance_targets.cjs stable     (prints the real Stable instance folder)
 const path = require('node:path');
 const { noLinks } = require('../../data_io/path_guard.cjs');
+const { INSTANCES, MAIN_CHECKOUT } = require('../../runtime_env/env.cjs').FIXED;
 
-const INSTANCES = 'C:/Users/dirty/MultiMC/instances';
 const STABLE_INSTANCE = INSTANCES + '/Evil Eye Stable';
 const TRIAL_INSTANCE = INSTANCES + '/Evil Eye NeoForge Trial';
 const LOCAL_INSTANCE = INSTANCES + '/Evil Eye Local';
-const MAIN_CHECKOUT = 'C:/Users/dirty/projects/evil-eye-pack';
 const STABLE = STABLE_INSTANCE + '/.minecraft';
 const TRIAL = TRIAL_INSTANCE + '/.minecraft';
 const LOCAL = LOCAL_INSTANCE + '/.minecraft';

@@ -22,7 +22,7 @@ const evidenceKept = (f) => assert.ok(fs.existsSync(path.join(f.run, 'evidence/c
 
 test('cleans the staged copy on success and keeps the evidence', async (t) => {
   const f = fixture(t);
-  const r = await withStaged({ runDir: f.run, dirs: [f.server] }, async () => 'ok');
+  const r = await withStaged({ root: f.run, dirs: [f.server] }, async () => 'ok');
   assert.equal(r, 'ok');
   assert.equal(fs.existsSync(f.server), false);
   evidenceKept(f);
@@ -30,20 +30,20 @@ test('cleans the staged copy on success and keeps the evidence', async (t) => {
 
 test('cleans the staged copy when the run throws, and the error still propagates', async (t) => {
   const f = fixture(t);
-  await assert.rejects(withStaged({ runDir: f.run, dirs: [f.server] }, async () => { throw new Error('boom'); }), /boom/);
+  await assert.rejects(withStaged({ root: f.run, dirs: [f.server] }, async () => { throw new Error('boom'); }), /boom/);
   assert.equal(fs.existsSync(f.server), false);
   evidenceKept(f);
 });
 
 test('dirs may be supplied lazily', async (t) => {
   const f = fixture(t);
-  await withStaged({ runDir: f.run, dirs: () => [f.server] }, async () => {});
+  await withStaged({ root: f.run, dirs: () => [f.server] }, async () => {});
   assert.equal(fs.existsSync(f.server), false);
 });
 
 test('keep (--keep-stage) leaves the staged copy in place', async (t) => {
   const f = fixture(t);
-  await withStaged({ runDir: f.run, dirs: [f.server], keep: true }, async () => {});
+  await withStaged({ root: f.run, dirs: [f.server], keep: true }, async () => {});
   assert.ok(fs.existsSync(path.join(f.server, 'mods/a.jar')));
 });
 
@@ -63,7 +63,7 @@ test('refuses to delete outside the run directory, the run directory itself, or 
 test('a refused target is logged by withStaged, not thrown, and nothing is deleted', async (t) => {
   const f = fixture(t);
   const logs = [];
-  await withStaged({ runDir: f.run, dirs: [f.root], log: (m) => logs.push(m) }, async () => {});
+  await withStaged({ root: f.run, dirs: [f.root], log: (m) => logs.push(m) }, async () => {});
   assert.ok(fs.existsSync(f.run));
   assert.match(logs.join('\n'), /staged cleanup skipped/);
 });
@@ -79,7 +79,7 @@ test('withStaged installs no SIGINT/SIGTERM handlers (the runner owns the signal
   const f = fixture(t);
   const count = () => ['SIGINT', 'SIGTERM', 'exit'].map((e) => process.listenerCount(e));
   const before = count();
-  await withStaged({ runDir: f.run, dirs: [f.server] }, async () => {
+  await withStaged({ root: f.run, dirs: [f.server] }, async () => {
     assert.equal(process.listenerCount('SIGINT'), before[0]);
     assert.equal(process.listenerCount('SIGTERM'), before[1]);
   });

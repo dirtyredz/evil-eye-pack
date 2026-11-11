@@ -36,7 +36,7 @@ function stage({root,loader,jarDirs,job,name}) {
 // `boot` that a `restart` will continue from needs keepStage. Evidence (`<name>-<label>*`) always stays.
 function trialBoot(o) {
   const server=path.join(o.job,o.name+'-server');
-  return withStaged({runDir:o.job,dirs:[server],keep:o.keepStage,log:console.log},()=>trialBootIn(o));
+  return withStaged({root:o.job,dirs:[server],keep:o.keepStage,log:console.log},()=>trialBootIn(o));
 }
 async function trialBootIn({root,cache,job,name,targets,restart=false,coverage=null,players=[]}) {
   if(!/^[a-z][a-z0-9-]*$/.test(name))throw new Error('Invalid run name');
@@ -78,7 +78,7 @@ async function trialBootIn({root,cache,job,name,targets,restart=false,coverage=n
     const probe=JSON.parse(fs.readFileSync(complete,'utf8'));if(probe.errors.length||probe.visited.length!==targets.length)throw new Error('Probe incomplete: '+complete);
     const playerResult=JSON.parse(fs.readFileSync(path.join(server,'world-trial-players.json'),'utf8'));
     if(playerResult.token!==token||playerResult.errors.length||playerResult.players.length!==players.length)throw new Error('Player round-trip incomplete: '+evidence);
-    return {server,evidence,result};
+    return {evidence,result};
   }catch(e){
     // The server copy is about to be deleted: keep its logs and crash reports even when the run died before the normal evidence step.
     scope.killAll();if(!saved&&fs.existsSync(server))try{saveEvidence(null);}catch{}

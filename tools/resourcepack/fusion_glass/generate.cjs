@@ -15,11 +15,12 @@ const fs = require('fs');
 const path = require('path');
 const { listEntries, readEntry } = require('../../data_io/zip_reader.cjs');
 const png = require('./png.cjs');
+const { MULTIMC_ROOT } = require('../../runtime_env/env.cjs').FIXED;
 
 const REPO = path.resolve(__dirname, '..', '..', '..');
 const PACK = path.join(REPO, 'resourcepacks', 'evil-eye-cozy-overrides', 'assets');
 const NS = 'evileye_glass';
-const DEFAULT_JAR = 'C:/Users/dirty/MultiMC/libraries/com/mojang/minecraft/1.21.1/minecraft-1.21.1-client.jar';
+const DEFAULT_JAR = `${MULTIMC_ROOT}/libraries/com/mojang/minecraft/1.21.1/minecraft-1.21.1-client.jar`;
 const COLOURS = ['white', 'orange', 'magenta', 'light_blue', 'yellow', 'lime', 'pink', 'gray',
   'light_gray', 'cyan', 'purple', 'blue', 'brown', 'green', 'red', 'black'];
 const KINDS = [{ block: 'glass', pane: 'glass_pane' }]

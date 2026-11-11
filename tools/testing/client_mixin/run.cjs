@@ -22,7 +22,7 @@ async function main(argv) {
   const out = path.resolve(options.out);
   artifactJob(out);
   output(out, env.FIXED.ARTIFACT_JOBS);
-  for (const input of [root, options.cache, options.launcher || 'C:/Users/dirty/MultiMC']) {
+  for (const input of [root, options.cache, options.launcher || env.FIXED.MULTIMC_ROOT]) {
     noLinks(input);
     if (inside(out, input) || inside(input, out)) throw Error('Output overlaps an input');
   }
@@ -34,7 +34,7 @@ async function main(argv) {
   try {
     fs.mkdirSync(path.dirname(out), { recursive: true });
     fs.mkdirSync(out);
-    const { version, libraries, cp } = stage(root, out, options.cache, options.launcher || 'C:/Users/dirty/MultiMC', options.exclude);
+    const { version, libraries, cp } = stage(root, out, options.cache, options.launcher || env.FIXED.MULTIMC_ROOT, options.exclude);
     const run = async (exe, args) => {
       const r = await s.run(jdk[exe], args, { cwd: out, timeoutMs: 60000 });
       if (r.code !== 0) throw Error(r.out);

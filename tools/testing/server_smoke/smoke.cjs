@@ -64,7 +64,7 @@ async function main() {
   const interrupt = () => scope.killAll();
   process.once('SIGINT', interrupt); process.once('SIGTERM', interrupt);
   // The server copy is 1-4 GB: pruned to the evidence on every exit path (after the report is read).
-  await withStaged({ runDir: o.out, prune: { dir: runDir, keep: (n) => KEEP.test(n) }, keep: o.keepStage, log }, async () => {
+  await withStaged({ root: o.out, prune: { dir: runDir, keep: (n) => KEEP.test(n) }, keep: o.keepStage, log }, async () => {
     try {
       const runtime = readRuntime(o.pack);
       const { java, jcmd } = javaPaths(runtime, JAVAS);
