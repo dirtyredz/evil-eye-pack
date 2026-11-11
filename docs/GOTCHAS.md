@@ -500,7 +500,9 @@ Client 0.5.1 and Tweaks 0.8.1 own sorting, safe physical-storage/Dank transfers 
 
 ## Zoom after Chloride removal
 
-Modern UI is enabled and defaults to Z. Saved `options.txt` bindings win over shipped defaults, so existing C bindings still clash with vanilla creative save-hotbar. The pack-owned-key installer currently supports JSON/TOML only; it cannot force this key. See the Chloride retirement entry in [Decisions](DECISIONS.md#chloride-retirement-2026-11-02) for the narrow follow-up.
+Modern UI is enabled and defaults to Z. Saved `options.txt` bindings win over shipped defaults, so an existing C binding would clash with vanilla creative save-hotbar. The pack-owned-key installer therefore has an `options` format (`key:value` lines) and forces only `key_key.modernui.zoom:key.keyboard.z` at every Trial/Stable sync (a saved modifier suffix is dropped too). An absent `options.txt` is left alone (fresh instances get Z from defaultoptions); an absent key is appended; line endings and every other line are kept. A Z the owner rebinds in game is reset at the next sync, like the other forced keys. Stable's dry-run lists it as `Would force pack-owned key: options.txt key_key.modernui.zoom`.
+
+- **`config/modernui/client.toml` shows `Would restore pack-owned file` on every launch.** Not caused by the zoom key. The file ships strictly pack-owned (`preserve = false`, two lines), but Modern UI rewrites it on every launch with its full commented config (~217 lines), so the installed hash never matches the shipped one and sync restores it, then the game rewrites it again. Harmless today (`zoom = true` survives the rewrite) but it is a restore loop; the consecutive-run WARNING in `installed_files.cjs` is the same symptom. `config/terralith.json` behaves alike. Fixing it means changing the file's preserve policy (and moving `general.zoom` to a pack-owned key), which is a separate index-policy change.
 
 ## Pro Placer replacement
 

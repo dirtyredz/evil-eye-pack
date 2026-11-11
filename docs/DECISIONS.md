@@ -813,6 +813,8 @@ Ship the owner-approved IPN replacement, settings screen and action rail togethe
 
 ## Chloride retirement (2026-11-02)
 
+*Follow-up (2026-11-11, dk-382e202b):* the narrow installer extension shipped: pack-owned keys gained an `options` format, used only for `key_key.modernui.zoom:key.keyboard.z`. Rejected: rewriting Stable's `options.txt` by hand, and forcing the whole keymap (would erase personal bindings).
+
 Owner decision supersedes the wave-6 retention proposal: remove Chloride and its unused graphics tweaks; retain Modern UI, Quick Skin and 3D Skin Layers. Modern UI zoom is explicitly enabled in `config/modernui/client.toml` and defaults to Z. Physical mod metafiles: **159 -> 158**. Sodium stays (Iris requires it); bundled WaterConfig leaves with Chloride, with no separate library drop.
 
 Existing instances preserve saved keybindings, including Stable's Modern UI C binding. `pack-owned-keys.json` only supports JSON/TOML, not `options.txt`; no forcing entry or Stable edit is made. Follow-up `dk-382e202b`: add an exact-key colon-delimited options setter to the existing prelaunch installer, tested for missing/saved/duplicate bindings and idempotence, preserving every unrelated line, then force only `key_key.modernui.zoom:key.keyboard.z`. Until then, existing players can rebind Modern UI zoom to Z in Controls.

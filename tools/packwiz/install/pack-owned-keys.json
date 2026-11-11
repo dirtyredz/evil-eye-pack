@@ -1,6 +1,13 @@
 {
-  "_comment": "Keys the pack forces into Trial and Stable installed configs on every sync, even for preserve = true files (which packwiz only writes when missing). Each entry: file (relative to .minecraft), format (json|toml), section (json: path of nested objects; toml: table name, [] for top-level keys), key, value. See docs/GOTCHAS.md 'Preserved configs ignore later pack changes'. Optional tomlType=integer writes an integer literal (legacy numeric entries remain floats).",
+  "_comment": "Keys the pack forces into Trial and Stable installed configs on every sync, even for preserve = true files (which packwiz only writes when missing). Each entry: file (relative to .minecraft), format (json|toml|options), section (json: path of nested objects; toml: table name, [] for top-level keys; options: []), key, value. The options format is options.txt's `key:value` lines: the whole value is forced (a saved modifier suffix is dropped), an absent key is appended, an absent file is left alone. See docs/GOTCHAS.md 'Preserved configs ignore later pack changes'. Optional tomlType=integer writes an integer literal (legacy numeric entries remain floats).",
   "keys": [
+    {
+      "file": "options.txt",
+      "format": "options",
+      "section": [],
+      "key": "key_key.modernui.zoom",
+      "value": "key.keyboard.z"
+    },
     {
       "file": "config/amendments-client.toml",
       "format": "toml",

@@ -46,24 +46,50 @@ function setToml(text, e) {
   return lines.join('\n');
 }
 
-const SETTERS = { json: setJson, toml: setToml };
+// options.txt is `key:value` per line (Minecraft writes CRLF on Windows). Only lines that start with
+// exactly `<key>:` are replaced, every occurrence in place, so any saved binding or modifier suffix
+// (`key.keyboard.c:SHIFT`) for the key is overwritten. Every other byte, including line endings, is
+// kept. An absent or empty file is left alone: a fresh instance gets the key from defaultoptions.
+function setOptions(text, e) {
+  if (!text) return text;
+  const parts = text.split(/(\r?\n)/); // even indexes are lines, odd are their separators
+  const want = `${e.key}:${e.value}`;
+  let found = false;
+  for (let i = 0; i < parts.length; i += 2) {
+    if (parts[i].startsWith(e.key + ':')) { parts[i] = want; found = true; }
+  }
+  if (found) return parts.join('');
+  const eol = parts[1] || '\n';
+  return parts[parts.length - 1] === '' ? text + want + eol : text + eol + want;
+}
+setOptions.raw = true; // no CRLF normalisation: unrelated lines stay byte-identical
 
-/** Applies every entry under `instance` (a .minecraft folder); returns the files changed. */
-function applyOwnedKeys(instance, entries = loadEntries()) {
-  const changed = new Set();
+const SETTERS = { json: setJson, toml: setToml, options: setOptions };
+
+// Walks the entries in order; each sees the text the previous entry left. dryRun keeps that text in
+// memory instead of writing. Returns the entries that change something.
+function walk(instance, entries, dryRun) {
+  const changed = [];
+  const pending = new Map();
   for (const e of entries) {
     if (!SETTERS[e.format]) throw Error('Unknown owned-key format: ' + e.format);
     if (path.isAbsolute(e.file) || e.file.split(/[\/]/).includes('..')) throw Error('Unsafe owned-key path');
     const file = path.join(instance, e.file);
-    const before = fs.existsSync(file) ? fs.readFileSync(file, 'utf8').replace(/\r\n/g, '\n') : '';
+    const raw = pending.has(file) ? pending.get(file) : fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
+    const before = SETTERS[e.format].raw ? raw : raw.replace(/\r\n/g, '\n');
     const after = SETTERS[e.format](before, e);
-    if (after !== before) {
-      fs.mkdirSync(path.dirname(file), { recursive: true });
-      fs.writeFileSync(file, after);
-      changed.add(e.file);
-    }
+    if (after === before) continue;
+    if (dryRun) pending.set(file, after);
+    else { fs.mkdirSync(path.dirname(file), { recursive: true }); fs.writeFileSync(file, after); }
+    changed.push(e);
   }
-  return [...changed];
+  return changed;
 }
 
-module.exports = { loadEntries, applyOwnedKeys, setJson, setToml };
+/** Applies every entry under `instance` (a .minecraft folder); returns the files changed. */
+const applyOwnedKeys = (instance, entries = loadEntries()) => [...new Set(walk(instance, entries, false).map(e => e.file))];
+
+/** Read-only: the `file key` labels a sync would force right now. */
+const previewOwnedKeys = (instance, entries = loadEntries()) => walk(instance, entries, true).map(e => `${e.file} ${e.key}`);
+
+module.exports = { loadEntries, applyOwnedKeys, previewOwnedKeys, setJson, setToml, setOptions };

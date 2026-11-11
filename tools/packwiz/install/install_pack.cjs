@@ -9,7 +9,7 @@ const { sha256 } = require('../../data_io/files.cjs');
 const { verifyInstalledLocal } = require('./local_source.cjs');
 const { clientArtifacts } = require('./client_artifacts.cjs');
 const { noLinks } = require('../../data_io/path_guard.cjs');
-const { applyOwnedKeys } = require('./pack_owned_keys.cjs');
+const { applyOwnedKeys, previewOwnedKeys } = require('./pack_owned_keys.cjs');
 const { verifyInstalledFiles, restorePackFiles, previewPackFiles } = require('./installed_files.cjs');
 const env = require('../../runtime_env/env.cjs').FIXED;
 const { setInstanceCfgValue } = require('./instance_cfg.cjs');
@@ -53,7 +53,12 @@ async function installPack({ instance, cache, dryRun, prelaunch, backupName, lab
   const files = prepareFiles(ROOT, cache);
   for (const f of files) noLinks(path.join(instance, f.file));
   console.log(`Verified ${files.length} local files; destination ${instance}; no host or downloads.`);
-  if (dryRun) { previewPackFiles(instance, files); console.log(`Dry run: would install local files and set this ${label} prelaunch to the same command.`); return; }
+  if (dryRun) {
+    previewPackFiles(instance, files);
+    for (const owned of previewOwnedKeys(instance)) console.log('Would force pack-owned key: ' + owned);
+    console.log(`Dry run: would install local files and set this ${label} prelaunch to the same command.`);
+    return;
+  }
   // This is the owner's client pre-launch path. It must not wait on unrelated JVMs.
   const scope = require('../../runtime_env/procs.cjs').scope();
   const stop = () => scope.killAll();
