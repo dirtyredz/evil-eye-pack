@@ -12,7 +12,6 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 |-- config/
 |   |-- defaultoptions/
 |   `-- emi-curation/
-|-- defaultconfigs/
 |-- docs/
 |   `-- items/
 |-- kubejs/
@@ -242,7 +241,7 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `tools/packwiz/install/client_artifacts.cjs` | shared client inventory: validates index and source hashes, filters sides, resolves public/private cached artifacts and rejects duplicate installed paths; consumed by installer and Stable cache guard |
 | `tools/packwiz/install/install_pack.cjs` | the neutral install route (no instance rules): uses the shared client inventory to verify cache pins, indexes artifacts as ordinary local files in a temporary pack, runs the cached headless installer, verifies every non-preserve installed hash (including all mod jars), applies the owned keys and sets the target's prelaunch; no host or downloads. Also `prepareFiles`, `writePack` |
 | `tools/packwiz/install/instance_cfg.cjs` | pure instance.cfg reading, safe value normalization and key mutation: `instanceCfgGet`, `instanceCfgValue`, `setInstanceCfgValue`; shared by the installer, targets and prelaunch checker |
-| `tools/packwiz/install/installed_files.cjs` | strict installed-file verification (`verifyInstalledFiles`), plain-file drift previews and restoration, bounded per-instance backups and repeated-drift warnings |
+| `tools/packwiz/install/installed_files.cjs` | strict installed-file verification (`verifyInstalledFiles`), plain-file drift previews (`previewPackFiles`) and restoration (`restorePackFiles`), bounded per-instance backups and repeated-drift warnings |
 | `tools/packwiz/install/instance_targets.cjs` | the one authority for which MultiMC instance is which (real Stable path, Local/Trial names, forbidden sets): `stableTarget`, `trialTarget`, `assertPinTarget`, `isRealStable`, `allowedAsStable` (the pure allowlist: real Stable or a path outside the MultiMC instances folder; `stableTarget` enforces it), and `classify <path>` / `stable` CLI commands that `cutover-lib.ps1` calls |
 | `tools/packwiz/install/targets/trial_target.cjs`, `stable_target.cjs` | thin targets of `installPack`: Trial (only Evil Eye NeoForge Trial; entry for `trial-walkthrough.ps1`) and Stable (real Stable or a rehearsal copy, `--fresh` clean-start of old tracked files; entry for `cutover.ps1` and `stable-prelaunch.ps1`), each with its own prelaunch command |
 | `tools/packwiz/install/checks/stable_prelaunch_check.cjs` | guard: fails (exit 1) when Stable's `PreLaunchCommand` is blank or not `stable-prelaunch.ps1`; `--fix` rewrites it (MultiMC closed), with the fixed environment Stable cache as fallback. Test: `tests/install/checks/stable_prelaunch_check.test.cjs` |
