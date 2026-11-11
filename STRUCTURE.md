@@ -70,6 +70,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |   `-- tests/
     |-- packwiz/
     |   |-- install/
+    |   |   |-- checks/
     |   |   `-- targets/
     |   |-- migration/
     |   |   `-- deferred/
