@@ -1080,3 +1080,7 @@ Client 0.15.8 (EvilEyeClient main `c9cf209`) extends the 0.15.7 settings-return 
 ## Client 0.15.9: scrollbar gap; settings button left of the grid (2026-11-10)
 
 Client 0.15.9 (EvilEyeClient main `d31e568`) leaves a 4 px gap between the Backpack upgrade slot column and the storage scrollbar (the action rail and trash button move 3 px toward the panel edge) and moves the settings button to the empty area left of the storage grid. No config change; Tweaks stays 0.14.5. Pinned as a private local pin to the published GitHub release asset (release `neoforge-1.21.1-v0.15.9`, built by `release.yml` run 42858311438 after CI run 42858088240 passed; asset digest SHA-256 matches): 840236 bytes, SHA-256 `9f146474946601027b008a331432d14381fe30f8de135336c6a533d62b8923fb`, SHA-1 `97b99c7ad00480dff9776d31b74d863cc499d0e3`. The jar is in the world-trial-final (Stable) cache as hash-named and filename copies. Gate: pack rehash, verify_hashes and tools/packwiz tests. Not run: server smoke, client-mixin audit, in-game check (owner tests in Stable).
+
+## Client 0.15.10: Railways Controls-screen key conflicts (2026-11-11)
+
+Client 0.15.10 (EvilEyeClient main `f208808`) re-applies Steam 'n' Rails' non-conflicting-key rule on the real 1.21.1 `KeyBindsList$KeyEntry` (Railways 0.3.0-beta.2 targets the pre-1.21 class, so its own mixin never applied; `dk-2d33cee0`). Client only, active only with Railways installed; no config change; Tweaks stays 0.14.5. Railways' stale mixin still reports as a missing target and stays allow-listed.
