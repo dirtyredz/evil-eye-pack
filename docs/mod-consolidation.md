@@ -18,7 +18,7 @@ Client stays 0.7.0; no replacement gameplay or renderer is shipped here.
 New offline tooling separates candidate closure profiles from archive traversal and
 records all eleven storage codec IDs, Polymorph selections, placed diagonal counts
 and full mounted payloads from a verified historical snapshot. Evidence lives under
-`artifacts/evil-eye-pack/jobs/2026-11-02-drawers-compat/`; the handoff records actual
+`~/.local-state/evil-eye-pack/artifacts/jobs/2026-11-02-drawers-compat/`; the handoff records actual
 gate results and missing offline prerequisites. This does not complete the absorption.
 
 Small gameplay, presentation and compatibility mods are replaced by three owned mods built in the
@@ -174,7 +174,7 @@ Round 2 ships the authorized bounded subset in Client 0.5.0/Tweaks 0.8.0: vanill
 Round 3 repeated the ad hoc audit against the subset jars: 161 hash-verified roots, 239 archives
 (78 nested jars), 85,097 classes and 215 metadata files, with no scan errors. Excluding IPN/libIPN
 leaves 84,013 classes and no targeted IPN references or dependencies. Create Jetpack, nested FlightLib
-and Cull Less Leaves still require Kotlin. Evidence: `artifacts/evil-eye-pack/jobs/2026-11-02-ipn-round3/`.
+and Cull Less Leaves still require Kotlin. Evidence: `~/.local-state/evil-eye-pack/artifacts/jobs/2026-11-02-ipn-round3/`.
 This verifies the bounded candidate, not full-removal acceptance. Both mod gates, 574 pack Node tests,
 the client transformation audit and a cached-only headless smoke passed. Migration-lock validation
 still fails on the pre-existing Mekanism size record; see the handoff.
@@ -201,4 +201,4 @@ Client 0.7.0 independently implements reach-around bridging, continuous row/colu
 
 Pro Placer is removed: **158 -> 157** physical mod metafiles. Puzzles Lib stays for Diagonal Fences and its nested Diagonal Blocks. Modern UI, Quick Skin and 3D Skin Layers stay. Chloride was already removed by the later owner decision in the supplied base; this change does not restore or otherwise alter it. Exact-ID exclusions replace the unused matcher grammar; block items only and stronger lifecycle cleanup are deliberate differences.
 
-Evidence: artifacts/evil-eye-pack/jobs/2026-11-02-pro-placer; full handoff: artifacts/minecraft-mods/jobs/2026-11-02-pro-placer/handoff.md. No push, merge, instance writes or promotion. Owner client input and multiplayer acceptance remain required.
+Evidence: ~/.local-state/evil-eye-pack/artifacts/jobs/2026-11-02-pro-placer; full handoff: artifacts/minecraft-mods/jobs/2026-11-02-pro-placer/handoff.md. No push, merge, instance writes or promotion. Owner client input and multiplayer acceptance remain required.

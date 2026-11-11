@@ -5,7 +5,7 @@ Current baseline (2026-11-02): supplied main is NeoForge 1.21.1 / 21.1.265. Phas
 Moves Evil Eye from Forge 47.4.10 / Minecraft 1.20.1 / Java 17 to NeoForge 21.1.265 /
 Minecraft 1.21.1 / Java 21 on the long-lived branch `migration/neoforge-1.21.1`. `main` and
 the Stable instance stay on Forge until the owner declares the candidate 100% (Phase 10).
-Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`; Docket parent
+Plan: `~/.local-state/evil-eye-pack/artifacts/jobs/2026-10-29-neoforge-migration-plan/plan.md`; Docket parent
 `dk-876bc6ca`.
 
 ## Phase status
@@ -29,10 +29,10 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 |---|---|
 | Branch / worktree | `migration/neoforge-1.21.1` at `C:/Users/dirty/projects/.worktrees/evil-eye-pack/migration/neoforge-1.21.1` |
 | Trial instance | `C:/Users/dirty/MultiMC/instances/Evil Eye NeoForge Trial/`: fresh (no saves, mods, logs or `options.txt`); `mmc-pack.json` components `net.minecraft` 1.21.1 + `net.neoforged` 21.1.265 (the packwiz installer never sets the loader) |
-| Java 21 | `C:/Tools/evil-eye-pack/temurin-21/bin/java.exe`: Temurin 21.0.13+9, zip SHA-256 `a4dbaa05fca4bd89d84584e58c459bd732efebb1722af80ab13c6516832004f9` checked against the Adoptium API. The trial instance and `tools/runtime_env/env.cjs` name it explicitly; global Java, PATH and JAVA_HOME are untouched |
+| Java 21 | `C:/Users/dirty/.local-state/tools/evil-eye-pack/temurin-21/bin/java.exe`: Temurin 21.0.13+9, zip SHA-256 `a4dbaa05fca4bd89d84584e58c459bd732efebb1722af80ab13c6516832004f9` checked against the Adoptium API. The trial instance and `tools/runtime_env/env.cjs` name it explicitly; global Java, PATH and JAVA_HOME are untouched |
 | Trial prelaunch | the shared packwiz bootstrap with this worktree's `pack.toml` file path |
-| Migration jobs | `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-*/` |
-| Verified target artifacts | `artifacts/evil-eye-pack/migration/neoforge-1.21.1/cache/{mods,resourcepacks,shaderpacks,installers}/` |
+| Migration jobs | `~/.local-state/evil-eye-pack/artifacts/jobs/2026-10-29-neoforge-*/` |
+| Verified target artifacts | `~/.local-state/evil-eye-pack/artifacts/migration/neoforge-1.21.1/cache/{mods,resourcepacks,shaderpacks,installers}/` |
 
 Since Phase 5 the migration worktree's `pack.toml` is the NeoForge 1.21.1 target. Phase 6 and
 Phase 7 acceptance boots are recorded below. The private-port integration uses the dev/trial
@@ -249,7 +249,7 @@ The malware guard scans NeoForge jars the same way, and approvals stay bound to 
 ## First clean boot (Phase 6)
 
 Every boot ran as an ANU pack test (`node tools/testing/pack_test/run.cjs`, shared lease, BelowNormal, alone).
-Evidence for each is in `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-first-boot/` (`run<N>.log`
+Evidence for each is in `~/.local-state/evil-eye-pack/artifacts/jobs/2026-10-29-neoforge-first-boot/` (`run<N>.log`
 plus `run-<time>/`).
 
 | Boot | Outcome | Cause found, fix |
@@ -296,7 +296,7 @@ reported it as info; since 2026-10-30 it is restored or reasoned, and anything e
 ## Interstellaris stack (Phase 7)
 
 Added in dependency order as lock `additions` (`dispositions.json`), each resolved, applied, malware-scanned and
-booted on ANU before the next. Evidence: `artifacts/evil-eye-pack/jobs/2026-10-30-neoforge-phase7/boots/`.
+booted on ANU before the next. Evidence: `~/.local-state/evil-eye-pack/artifacts/jobs/2026-10-30-neoforge-phase7/boots/`.
 
 | Boot | Change | Outcome |
 |---|---|---|
@@ -372,7 +372,7 @@ wrapper remains available for server staging; the owner Trial does not need it.
 Both malware scans have zero findings (Mobs: 5106 files; Caves: 8189). Parked configs, curation
 reasons, acquisition baselines, chocolate sanding and uranium recipes are restored. Uranium and
 sulfur decisions are in DECISIONS and duplicate-cleanup. Evidence lives under
-`artifacts/evil-eye-pack/jobs/2026-10-30-alexsmobs-pin/`.
+`~/.local-state/evil-eye-pack/artifacts/jobs/2026-10-30-alexsmobs-pin/`.
 
 First integration boot reached Done and completed all probes, with two empty-tag recipes and
 twelve added End Pirate/purpur blocks lacking acquisition. The pack now bridges `c:concrete`
@@ -483,7 +483,7 @@ passes 517/517; this does not override failed world acceptance.
 
 ## Phase 9 previous re-run (2026-10-30; superseded below)
 
-Job: `artifacts/evil-eye-pack/jobs/2026-10-30-world-trial-2/`. The private
+Job: `~/.local-state/evil-eye-pack/artifacts/jobs/2026-10-30-world-trial-2/`. The private
 `evileye_migration` 0.1.0-dev.1 pin (minecraft-mods 8b30349, SHA-256
 `dc072b8969960a5e3aac49016a48c9912ee558ee598d3415c8185a78968460a8`)
 is required by pack-test. Keep it installed until every legacy chunk has been loaded and saved.
@@ -505,7 +505,7 @@ Do not install diagnostic copies; no owner copy is validated while any LOSS rema
 
 ## Phase 9 final dev.4 check and owner walk-through (2026-10-31 brief)
 
-Evidence: `artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/` (machine timestamps
+Evidence: `~/.local-state/evil-eye-pack/artifacts/jobs/2026-10-31-world-trial-final/` (machine timestamps
 are 2026-10-30). One new working copy of the immutable snapshot; Forge baseline reused
 read-only. Private bridge dev.4, minecraft-mods bd5f1ce, SHA-256
 `bc150d3a9af7a102de2a39614f7f2a4458465c6f65f4f22a9b20b97e88f4a262`, 52,329 bytes.
@@ -844,7 +844,7 @@ Private local pins advance to Evil Eye Client 0.5.0 and Tweaks 0.8.0, with verif
 
 The no-download dispatch updates only the two local lock targets from their built bytes using the existing metadata reader/serializer, then runs migration check offline. Full resolve is not used because it fetches platform metadata. Acceptance evidence and exact remaining work: artifacts/minecraft-mods/jobs/2026-11-02-ipn-build/handoff.md. No owner-instance writes or visible client launch.
 
-Round-3 evidence: `artifacts/evil-eye-pack/jobs/2026-11-02-ipn-round3/`. Client/Tweaks fast gates pass
+Round-3 evidence: `~/.local-state/evil-eye-pack/artifacts/jobs/2026-11-02-ipn-round3/`. Client/Tweaks fast gates pass
 (14/110 GameTests); all 574 Node tests, hash verification, recursive candidate closure, client audit
 (243 configs, 1808 targets, existing allowlist) and the cached-only server smoke pass. The smoke reaches
 Done in 71.916 seconds wall time with no new error groups and exits cleanly. A first wrapper attempt
@@ -859,7 +859,7 @@ in its own change. No runtime jar, upstream pin or migration validator was chang
 
 Client 0.5.1 and Tweaks 0.8.1 replace IPN sorting, directional move-all (including Dank) and both-hand refill. IPN/libIPN become migration drops; their configs and forcing keys leave. Kotlin stays. Mod count is 159. Both authorized caches receive filename and SHA-256 copies of verified local artifacts. Final verification and private artifact digests: artifacts/minecraft-mods/jobs/2026-11-02-ipn-build/handoff.md.
 
-Round-4 automated acceptance: Client 243 JUnit / 15 GameTests; Tweaks 141 JUnit / 112 ordinary GameTests and 114 with Dank; pack 578 Node tests; both migration caches and hash chain pass. Closure: 159 roots, 237 archives, 84,027 classes, zero IPN consumers/errors. One offline headless boot passed (27.007 seconds server startup, 80.241 seconds to Done, normal shutdown). No client mixins changed; owner rendering/input/multiplayer acceptance remains manual. Evidence: artifacts/evil-eye-pack/jobs/2026-11-02-ipn-round4/.
+Round-4 automated acceptance: Client 243 JUnit / 15 GameTests; Tweaks 141 JUnit / 112 ordinary GameTests and 114 with Dank; pack 578 Node tests; both migration caches and hash chain pass. Closure: 159 roots, 237 archives, 84,027 classes, zero IPN consumers/errors. One offline headless boot passed (27.007 seconds server startup, 80.241 seconds to Done, normal shutdown). No client mixins changed; owner rendering/input/multiplayer acceptance remains manual. Evidence: ~/.local-state/evil-eye-pack/artifacts/jobs/2026-11-02-ipn-round4/.
 
 ## Stable IPN, settings and action rail release (2026-11-02)
 
@@ -885,7 +885,7 @@ Client 0.7.0 independently implements reach-around bridging, continuous row/colu
 
 Pro Placer is removed: **158 -> 157** physical mod metafiles. Puzzles Lib stays for Diagonal Fences and its nested Diagonal Blocks. Modern UI, Quick Skin and 3D Skin Layers stay. Chloride was already removed by the later owner decision in the supplied base; this change does not restore or otherwise alter it. Exact-ID exclusions replace the unused matcher grammar; block items only and stronger lifecycle cleanup are deliberate differences.
 
-Evidence: artifacts/evil-eye-pack/jobs/2026-11-02-pro-placer; full handoff: artifacts/minecraft-mods/jobs/2026-11-02-pro-placer/handoff.md. No push, merge, instance writes or promotion. Owner client input and multiplayer acceptance remain required.
+Evidence: ~/.local-state/evil-eye-pack/artifacts/jobs/2026-11-02-pro-placer; full handoff: artifacts/minecraft-mods/jobs/2026-11-02-pro-placer/handoff.md. No push, merge, instance writes or promotion. Owner client input and multiplayer acceptance remain required.
 
 ## Stable feedback: Client 0.7.1 (2026-11-02)
 

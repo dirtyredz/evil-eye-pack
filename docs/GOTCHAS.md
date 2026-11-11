@@ -1,5 +1,13 @@
 # Gotchas
 
+- **A local-state cutover must land in main before deleting the old toolchain.**
+  Stable and Local's launcher commands execute scripts in the main checkout. The
+  installer uses `tools/runtime_env/env.cjs`'s `FIXED.JAVAS[21]`, independently of
+  `instance.cfg`'s `JavaPath`. A prelaunch dry-run verifies pack/cache bytes but does
+  not execute Java. Copy and verify first; update the cache argument and JavaPath
+  with MultiMC closed, land the environment change in main, and only then remove
+  legacy roots. Never redirect Stable to an unpushed worktree to bypass this order.
+
 ## ANU world server
 
 - **Native stderr is not a failure code.** OpenSSH 10.6 prints a post-quantum warning on stderr.

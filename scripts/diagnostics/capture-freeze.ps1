@@ -5,7 +5,7 @@ Capture two jstack thread dumps (10 s apart) of a hung Evil Eye Stable client.
 Finds the java/javaw process whose command line names the "Evil Eye Stable" instance, then runs
 jstack -l twice, 10 seconds apart, so a stuck render thread shows as identical frames in both.
 Dumps go to <artifacts>/jobs/<date>-freeze-dump/ (default
-C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/<yyyy-MM-dd>-freeze-dump/), never into the repo.
+C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/<yyyy-MM-dd>-freeze-dump/), never into the repo.
 Works from any directory; resolves the repo from $PSScriptRoot and logs to .tmp/owner-runs/.
 Run it while the game is frozen (from another window, or over ssh). It only reads the JVM.
 Exit codes: 0 success or dry-run, 1 jstack missing, 2 no Stable client process found,
@@ -15,7 +15,7 @@ Report the process found, the jstack path and the planned output files; run noth
 .PARAMETER InstanceName
 Text that must appear in the java command line. Default "Evil Eye Stable".
 .PARAMETER Jstack
-Path to jstack.exe. Default C:\Tools\evil-eye-pack\temurin-21\bin\jstack.exe.
+Path to jstack.exe. Default C:\Users\dirty\.local-state\tools\evil-eye-pack\temurin-21\bin\jstack.exe.
 .PARAMETER OutDir
 Output directory. Default is the dated freeze-dump job folder under the artifacts root.
 .PARAMETER IntervalSeconds
@@ -25,7 +25,7 @@ Seconds between the two dumps. Default 10.
 param(
   [switch]$DryRun,
   [string]$InstanceName = 'Evil Eye Stable',
-  [string]$Jstack = 'C:\Tools\evil-eye-pack\temurin-21\bin\jstack.exe',
+  [string]$Jstack = 'C:\Users\dirty\.local-state\tools\evil-eye-pack\temurin-21\bin\jstack.exe',
   [string]$OutDir,
   [int]$IntervalSeconds = 10
 )
@@ -35,7 +35,7 @@ $ErrorActionPreference = 'Stop'
 Initialize-OwnerRun 'capture-freeze'
 try {
   if (-not $OutDir) {
-    $OutDir = 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/{0}-freeze-dump' -f (Get-Date -Format 'yyyy-MM-dd')
+    $OutDir = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/{0}-freeze-dump' -f (Get-Date -Format 'yyyy-MM-dd')
   }
   if (-not (Test-Path -LiteralPath $Jstack)) { Complete-OwnerRun 1 "jstack not found: $Jstack" }
 

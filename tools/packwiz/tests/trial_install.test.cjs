@@ -16,13 +16,13 @@ function multimcBackslashUnescape(value) {
 
 test('Trial instance.cfg values use forward slashes and survive MultiMC unescaping', () => {
   const root = 'C:\\Users\\dirty\\projects\\.worktrees\\evil-eye-pack\\migration\\neoforge-1.21.1';
-  const cache = 'C:\\Users\\dirty\\projects\\artifacts\\evil-eye-pack\\jobs\\2026-10-31-world-trial-final\\cache';
+  const cache = 'C:\\Users\\dirty\\.local-state\\evil-eye-pack\\artifacts\\jobs\\2026-10-31-world-trial-final\\cache';
   const command = trialPreLaunchCommand(root, cache);
   const changed = setInstanceCfgValue('name=Trial\nPreLaunchCommand=old\niconKey=default\n', 'PreLaunchCommand', command);
   const value = changed.match(/^PreLaunchCommand=(.*)$/m)[1];
   assert.doesNotMatch(value, /\\/);
   assert.equal(multimcBackslashUnescape(value), value);
-  assert.equal(value, 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:/Users/dirty/projects/.worktrees/evil-eye-pack/migration/neoforge-1.21.1/scripts/migration/trial-walkthrough.ps1" -Cache "C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache"');
+  assert.equal(value, 'powershell.exe -NoProfile -ExecutionPolicy Bypass -File "C:/Users/dirty/projects/.worktrees/evil-eye-pack/migration/neoforge-1.21.1/scripts/migration/trial-walkthrough.ps1" -Cache "C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/2026-10-31-world-trial-final/cache"');
   assert.equal(changed, `name=Trial\nPreLaunchCommand=${value}\niconKey=default\n`);
   assert.equal(instanceCfgValue('C:\\one\\two'), 'C:/one/two');
 });

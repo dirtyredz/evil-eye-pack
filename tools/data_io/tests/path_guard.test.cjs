@@ -7,7 +7,7 @@ const path = require('node:path');
 const { inside, noLinks, output, artifactJob } = require('../path_guard.cjs');
 
 test('artifactJob accepts the jobs root and descendants, but rejects escapes and siblings', () => {
-  const root = 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs';
+  const root = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs';
   assert.doesNotThrow(() => artifactJob(root));
   assert.doesNotThrow(() => artifactJob(path.join(root, 'guard-test', 'closure')));
   for (const dir of [path.dirname(root), root + '-other', path.join(root, '..', 'outside')]) {

@@ -9,10 +9,10 @@ and how to test a change in the game before it is pushed.
 |---|---|
 | `projects/evil-eye-pack/` | Main checkout (`main`). Pack files keep their layout. |
 | `projects/.worktrees/evil-eye-pack/<branch>/` | Linked worktrees for isolated experiments and implementation branches (the harness blocks `git worktree add` anywhere else). |
-| `projects/artifacts/evil-eye-pack/jobs/<date-task>/` | Dispatch prompts, plans, reports and their `.events.jsonl` / `.job.json` / `.stderr.log` sidecars. |
+| `~/.local-state/evil-eye-pack/artifacts/jobs/<date-task>/` | Dispatch prompts, plans, reports and their `.events.jsonl` / `.job.json` / `.stderr.log` sidecars. |
 | `MultiMC/instances/Evil Eye Stable/` | Display name **Evil Eye (Stable)**. The owner's real worlds. Installs published `main`. |
 | `MultiMC/instances/Evil Eye Local/` | Disposable copy of Stable (no saves): NeoForge 1.21.1, Java 21, Stable's JVM args. Installs the main checkout through the verified-cache route on every launch (`scripts/instances/local-instance.ps1`; rebuild with `-Create` after moving the old folder to `MultiMC/backups/evil-eye/`). |
-| `MultiMC/instances/Evil Eye NeoForge Trial/` | Fresh NeoForge 1.21.1 trial (no saves). Java 21 at `C:/Tools/evil-eye-pack/temurin-21`. Installs the `migration/neoforge-1.21.1` worktree. See [NeoForge migration](neoforge-migration.md). |
+| `MultiMC/instances/Evil Eye NeoForge Trial/` | Fresh NeoForge 1.21.1 trial (no saves). Java 21 at `C:/Users/dirty/.local-state/tools/evil-eye-pack/temurin-21`. Installs the `migration/neoforge-1.21.1` worktree. See [NeoForge migration](neoforge-migration.md). |
 | `MultiMC/packwiz/packwiz-installer-bootstrap.jar` | Shared installer bootstrap used by every instance. |
 | `MultiMC/backups/evil-eye/<instance>/<timestamp>/` | Instance backups (`instance/`, `launcher/`, `SHA256SUMS.txt`). Older `MultiMC/backups/Evil Eye 2026-10-11/` is kept as is. |
 
@@ -57,7 +57,7 @@ node --test tools/runtime_env/tests/*.cjs tools/analysis/malware_guard/tests/*.t
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
 # node tools/analysis/dedup/generate.cjs [--dry-run] <pinned jar folder>   (main: Evil Eye Local mods; migration branch:
-#   C:/Users/dirty/projects/artifacts/evil-eye-pack/migration/neoforge-1.21.1/cache/mods). It removes only
+#   C:/Users/dirty/.local-state/evil-eye-pack/artifacts/migration/neoforge-1.21.1/cache/mods). It removes only
 #   its own stale outputs (tools/analysis/dedup/generated.json); the dedup tests pick the folder from pack.toml.
 node tools/packwiz/rehash.cjs --dry-run      # a second run after rehash must show +0 -0 ~0
 node tools/packwiz/verify_hashes.cjs
@@ -73,7 +73,7 @@ below also uses JDK 21 to compile its unshipped launch service.
 Before handing a migration build to the owner, run the isolated client transformer check:
 
 ```powershell
-node tools/testing/client_mixin/run.cjs --out C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/<job>/client-audit --cache C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache
+node tools/testing/client_mixin/run.cjs --out C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/<job>/client-audit --cache C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/2026-10-31-world-trial-final/cache
 node --test tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs
 ```
 
@@ -81,7 +81,7 @@ node --test tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closur
 overrides the root on another host). `--cache` supplies a complete offline pack cache,
 including private pins. `--launcher` defaults to `C:/Users/dirty/MultiMC`: only its
 cached libraries and Minecraft metadata are read, never its instances. `--jdk` defaults
-to `C:/Tools/evil-eye-pack/temurin-21`; Java 21's compiler builds the small audit service
+to `C:/Users/dirty/.local-state/tools/evil-eye-pack/temurin-21`; Java 21's compiler builds the small audit service
 using cached dependencies. Nothing downloads, launches MultiMC or opens a game window.
 
 The check waits up to 45 minutes for an idle Minecraft JVM slot, then bounds the audit
@@ -130,7 +130,7 @@ showcase acceptance run; do not also run the unrelated full pack-test tier.
 ## World trial (copy only)
 
 `node tools/testing/world_trial/run.cjs <command> --job <artifact job>` runs offline tooling;
-all outputs must remain under `artifacts/evil-eye-pack/jobs/`. Never use an instance as output.
+all outputs must remain under `~/.local-state/evil-eye-pack/artifacts/jobs/`. Never use an instance as output.
 
 - `snapshot --source <stopped world>` waits for an idle Minecraft JVM slot, rejects links and
   overlaps, writes an independent read-only `snapshot/` and `source-manifest.json`, and checks
@@ -177,12 +177,12 @@ scripts/mod-map/build.ps1 -DryRun
 scripts/mod-map/build.ps1
 # If the exact mod-set world cache is absent, explicitly select an older cached
 # world to COPY into the disposable server; the report records this limitation:
-scripts/mod-map/build.ps1 -World C:/Users/dirty/projects/artifacts/evil-eye-pack/pack-test/cache/worlds/2497b2d8a8270a64/smoke-world
+scripts/mod-map/build.ps1 -World C:/Users/dirty/.local-state/evil-eye-pack/artifacts/pack-test/cache/worlds/2497b2d8a8270a64/smoke-world
 # Re-render the same boot after a presentation change, without another JVM:
-scripts/mod-map/build.ps1 -Evidence C:/Users/dirty/projects/artifacts/evil-eye-pack/mod-map/runs/<timestamp>
+scripts/mod-map/build.ps1 -Evidence C:/Users/dirty/.local-state/evil-eye-pack/artifacts/mod-map/runs/<timestamp>
 ```
 
-Outputs are `artifacts/evil-eye-pack/mod-map/mod-map.html` and
+Outputs are `~/.local-state/evil-eye-pack/artifacts/mod-map/mod-map.html` and
 `mod-map-<timestamp>.html`, both complete offline pages. Raw trace, registry
 snapshot, boot/provenance records and the stopped disposable server remain in
 `mod-map/runs/<timestamp>/`. `-Out` selects another directory under the artifacts
@@ -334,7 +334,7 @@ and writes `report.json` + `summary.txt` into its run folder. Run it after any p
   `local (fallback: <reason>)` (`local (--local)` when asked for). An unreachable ANU, a held pack-test
   lock or no room beside another project's job falls back to Valhalla at once; there is no waiting for
   ANU to become idle (`--anu-wait` is gone).
-- **Output.** `C:/Users/dirty/projects/artifacts/evil-eye-pack/pack-test/runs/run-<time>/` by default;
+- **Output.** `C:/Users/dirty/.local-state/evil-eye-pack/artifacts/pack-test/runs/run-<time>/` by default;
   pass `--out <job folder>` to put the run there. A run folder holds `run.json` (what was tested: commit,
   dirty flag, pack/index hashes, seed, timings, boot result), `evidence/` (probe payloads, raw-resource
   scan, pack policy copies, logs, crash reports), `report.json`, `summary.txt` and, when there are new
@@ -424,7 +424,7 @@ Valhalla is reinstalled and the world survives the wipe. **The original stays un
 
 Everything runs from Valhalla through `scripts/server/anu-world-server.ps1 <Action>` (comment-based help, `-DryRun`,
 logs under `.tmp/owner-runs/`, ends `OK`/`FAILED`): `Status` (also pings from Valhalla), `Start`, `Stop`,
-`Backup`, `Pull` (newest backup to Valhalla `artifacts/evil-eye-pack/world-backups`), `Deploy` (re-stage the pack
+`Backup`, `Pull` (newest backup to Valhalla `~/.local-state/evil-eye-pack/artifacts/world-backups`), `Deploy` (re-stage the pack
 from the checkout and ship it; refuses while running; keeps the world), `CopyWorld` (one-off copy with sha256
 verification), `AddLauncherEntry`. The dispatcher is a thin router over dot-sourced modules beside it (`anu-transport-lib.ps1`, `anu-deploy-lib.ps1`,
 `anu-world-lib.ps1`) and `server-ctl.ps1` (runs on ANU, shipped with its sibling `server-process.ps1`
@@ -459,7 +459,13 @@ The owner's own mods are built in the `minecraft-mods` workspace (`C:/Users/dirt
 
 ## Job artifacts (agent dispatches)
 
-Every dispatch gets its own `projects/artifacts/evil-eye-pack/jobs/<YYYY-MM-DD-task>/`.
+Valhalla project state lives under `C:/Users/dirty/.local-state/evil-eye-pack/`:
+`artifacts/` holds jobs, migration caches, reports and runtime data; the sibling
+`jar-backups/` remains independent. Portable Java lives at
+`C:/Users/dirty/.local-state/tools/evil-eye-pack/temurin-21/`. ANU retains its own
+`C:\Tools\evil-eye-pack` toolchains; these are separate machines and roots.
+
+Every dispatch gets its own `~/.local-state/evil-eye-pack/artifacts/jobs/<YYYY-MM-DD-task>/`.
 `--prompt-file`, `--output-file` and any shell redirection go inside it, never in
 `projects/` or the repo. Test runners delete their staged pack/server/world copy when they exit (success, error or Ctrl-C) and keep reports, logs and crash reports; `--keep-stage` keeps the copy for debugging (`pack_test` also accepts `--keep-server`). The helper is `tools/runtime_env/staged_dir.cjs`: it refuses any path outside the run directory, and any `cache` directory. `world_trial boot` deletes `<name>-server` too, so pass `--keep-stage` to a `boot` that a `restart` will continue from. The migration record of the files moved there on 2026-10-11 is in
 `jobs/2026-10-11-layout-migration/artifact-moves.md`.
@@ -516,8 +522,8 @@ Repeat removal closure with `node tools/analysis/library_closure/run.mjs --out <
 Create a new snapshot with the world-trial commands above, then run:
 
 ```
-node tools/analysis/consolidation/run.mjs --job C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/<snapshot-job>
-node tools/analysis/library_closure/run.mjs --profile wave7-drawers --cache C:/Users/dirty/projects/artifacts/evil-eye-pack/migration/neoforge-1.21.1/cache/mods --out C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/<job>/closure
+node tools/analysis/consolidation/run.mjs --job C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/<snapshot-job>
+node tools/analysis/library_closure/run.mjs --profile wave7-drawers --cache C:/Users/dirty/.local-state/evil-eye-pack/artifacts/migration/neoforge-1.21.1/cache/mods --out C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/<job>/closure
 ```
 
 The evidence command requires source-manifest.json and snapshot/ in the job, refuses

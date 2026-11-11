@@ -118,7 +118,7 @@ a player source, so headless probes use a Forge fake player instead of a bare
 
 Requires Node 22, the runtime's Java from `tools/runtime_env/env.cjs`, and a prepared server
 cache stamped for the pack's runtime. **No installer/download runs.** Cache defaults to
-`artifacts/evil-eye-pack/pack-test/stage/<runtime id>/server`; override with `SHOWCASE_CACHE`
+`~/.local-state/evil-eye-pack/artifacts/pack-test/stage/<runtime id>/server`; override with `SHOWCASE_CACHE`
 or `--cache <prepared-server-directory>`. Server jars/resource archives must match
 current packwiz hashes. Missing/stale inputs fail before boot; client-only jars
 are unnecessary. Pack source files come from this checkout. Stable/Local are never written.
