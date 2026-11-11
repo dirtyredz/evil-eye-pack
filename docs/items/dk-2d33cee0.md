@@ -28,3 +28,9 @@ Acceptance: an upstream NeoForge 1.21.1 artifact corrects the target (and inject
 The orchestrator accepted this as a known minor cosmetic issue for the owner trial: Railways keybinds may appear conflicting on the Controls screen; there is no crash risk. The exact current mod/config/mixin/target tuple is separately marked known-minor in tools/client_mixin/allowlist.json with this Docket id, so any changed or additional finding still fails. Keep this item open and re-check on a new Railways build.
 
 Complete-pin evidence: C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-drt-021/client-audit-all-pins/report.json (PASS; 1,819/1,819 targets verified).
+
+## Notes
+
+### 2026-11-11T01:12:57.351Z · open · agent
+
+Re-checked 2026-11-10: no new upstream release (latest v0.3.0-beta.2, 2026-07-27). The default branch (last commit 2026-09-25) still has @Mixin(targets = "net.minecraft.client.gui.screens.controls.KeyBindsList$KeyEntry"), so nothing to lock yet. Options for the owner: file an upstream issue/PR, or carry the corrected mixin in an owned mod.
