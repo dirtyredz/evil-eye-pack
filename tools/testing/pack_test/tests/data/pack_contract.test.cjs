@@ -25,6 +25,44 @@ test('owned keys leave every strictly pack-owned shipped target byte-identical',
   assert.deepEqual(applyOwnedKeys(copy, entries), [], 'owned keys must not cause repair loops');
   for (const file of targets) assert.deepEqual(fs.readFileSync(path.join(copy, file)), fs.readFileSync(path.join(ROOT, file)), file);
 });
+
+test('pack-owned keys that target a shipped file match the shipped bytes', () => {
+  const { loadEntries } = require('../../../../packwiz/install/owned_keys/pack_owned_keys.cjs');
+  for (const e of loadEntries().filter(x => x.format === 'json' && fs.existsSync(path.join(ROOT, x.file)))) {
+    let node = JSON.parse(read(e.file));
+    for (const s of e.section) node = node[s];
+    assert.equal(node[e.key], e.value, `${e.file} ${e.key} must equal the owned value`);
+  }
+});
+
+test('Flywheel backend is a registered Flywheel 1.0 id in the shipped config and the owned keys', () => {
+  const { loadEntries } = require('../../../../packwiz/install/owned_keys/pack_owned_keys.cjs');
+  const owned = loadEntries().find(x => x.file === 'config/flywheel-client.toml' && x.key === 'backend');
+  assert.equal(owned.value, 'DEFAULT');
+  assert.match(read('config/flywheel-client.toml'), /^backend = "DEFAULT"$/m, 'legacy "INSTANCING" parses as minecraft:INSTANCING and is not registered');
+});
+
+test('shipped Evil Eye Client config already carries the owned rail and left-effects values', () => {
+  const shipped = read('config/evileye_client-client.toml');
+  for (const [section, key, value] of [
+    ['effects.inventory', 'screenSideRight', 'false'],
+    ['actionRail', 'enabled', 'true'], ['actionRail', 'side', '"RIGHT"'],
+    ['actionRail', 'offsetX', '0'], ['actionRail', 'offsetY', '0']
+  ]) {
+    const table = shipped.split(`[${section}]`)[1]?.split(/\n\s*\[/)[0];
+    assert.match(table, new RegExp(`^\\s*${key} = ${value}$`, 'm'), `${section} ${key}`);
+  }
+});
+
+test('shipped heart palette has the pink second row and equals the owned colours', () => {
+  const { loadEntries } = require('../../../../packwiz/install/owned_keys/pack_owned_keys.cjs');
+  const shipped = JSON.parse(read('config/evileye_client-client.toml').split('[health.hearts]')[1].match(/^\s*colors = (\[.*\])$/m)[1]);
+  assert.equal(shipped[0], '#FA7DEB');
+  assert.equal(shipped[5], '#F06E14');
+  const owned = loadEntries().find(x => x.file === 'config/evileye_client-client.toml' && x.key === 'colors').value;
+  assert.deepEqual(shipped, owned);
+});
+
 // Historical CurseForge slug differs from the jar's mod ID.
 const modId = (file) => file === 'ice-and-fire-dragons.pw.toml' ? 'iceandfire' : path.basename(file, '.pw.toml').replace(/[^a-z0-9]/g, '');
 

@@ -5,15 +5,9 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { loadEntries, applyOwnedKeys, setToml } = require('../../../install/owned_keys/pack_owned_keys.cjs');
-const ROOT = path.resolve(__dirname, '../../../../..');
 
-test('pack-owned keys that target a shipped file match the shipped bytes', () => {
-  for (const e of loadEntries().filter(x => x.format === 'json' && fs.existsSync(path.join(ROOT, x.file)))) {
-    let node = JSON.parse(fs.readFileSync(path.join(ROOT, e.file), 'utf8'));
-    for (const s of e.section) node = node[s];
-    assert.equal(node[e.key], e.value, `${e.file} ${e.key} must equal the owned value`);
-  }
-});
+// Mechanism tests only. Contracts on the shipped config files live in
+// tools/testing/pack_test/tests/data/pack_contract.test.cjs.
 
 test('sync never creates retired IPN configs or changes owner-local data', () => {
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'owned-retired-'));
@@ -35,13 +29,6 @@ test('TOML setter handles top-level keys (empty section) without touching tables
   const out = setToml(stale, { section: [], key: 'backend', value: 'DEFAULT' });
   assert.equal(out, '#c\nbackend = "DEFAULT"\nlimitUpdates = true\n\n[flw_backends]\n\tbackend = "x"\n');
   assert.equal(setToml('[t]\n\ta = 1\n', { section: [], key: 'k', value: 'v' }), 'k = "v"\n[t]\n\ta = 1\n');
-});
-
-test('Flywheel backend is a registered Flywheel 1.0 id in the shipped config and the owned keys', () => {
-  const owned = loadEntries().find(x => x.file === 'config/flywheel-client.toml' && x.key === 'backend');
-  assert.equal(owned.value, 'DEFAULT');
-  const shipped = fs.readFileSync(path.join(ROOT, 'config/flywheel-client.toml'), 'utf8');
-  assert.match(shipped, /^backend = "DEFAULT"$/m, 'legacy "INSTANCING" parses as minecraft:INSTANCING and is not registered');
 });
 
 test('preserved client configuration enables all owned inventory actions', () => {
@@ -72,9 +59,7 @@ test('Stable preserved configs receive the rail and left effects without resetti
       ['actionRail', 'offsetX', '0'], ['actionRail', 'offsetY', '0']
     ]) {
       const table = text => text.split(`[${section}]`)[1]?.split(/\n\s*\[/)[0];
-      const expected = new RegExp(`^\\s*${key} = ${value}$`, 'm');
-      assert.match(table(installed), expected);
-      assert.match(table(fs.readFileSync(path.join(ROOT, 'config/evileye_client-client.toml'), 'utf8')), expected);
+      assert.match(table(installed), new RegExp(`^\\s*${key} = ${value}$`, 'm'));
     }
     assert.match(installed, /\[effects.hud\]\n screenSideRight = true/);
     assert.match(installed, /\[sidebar\]\n enabled = false/);
@@ -82,7 +67,7 @@ test('Stable preserved configs receive the rail and left effects without resetti
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
 });
 
-test('Stable preserved configs get the pink second heart row and the shipped colours match', () => {
+test('Stable preserved configs get the owned heart colours and keep poisonedColors', () => {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'owned-hearts-'));
   const file = path.join(dir, 'config/evileye_client-client.toml');
   const colors = text => JSON.parse(text.split('[health.hearts]')[1].match(/^\s*colors = (\[.*\])$/m)[1]);
@@ -91,10 +76,8 @@ test('Stable preserved configs get the pink second heart row and the shipped col
     fs.writeFileSync(file, '[health]\n\t[health.hearts]\n\t\tvanillaHearts = true\n\t\tcolors = ["#F06E14", "#F5DC23"]\n\t\tpoisonedColors = ["#739B00"]\n');
     applyOwnedKeys(dir);
     const installed = fs.readFileSync(file, 'utf8');
-    const shipped = colors(fs.readFileSync(path.join(ROOT, 'config/evileye_client-client.toml'), 'utf8'));
-    assert.equal(shipped[0], '#FA7DEB');
-    assert.equal(shipped[5], '#F06E14');
-    assert.deepEqual(colors(installed), shipped);
+    const owned = loadEntries().find(x => x.file === 'config/evileye_client-client.toml' && x.key === 'colors').value;
+    assert.deepEqual(colors(installed), owned);
     assert.match(installed, /poisonedColors = \["#739B00"\]/);
     assert.deepEqual(applyOwnedKeys(dir), []);
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
