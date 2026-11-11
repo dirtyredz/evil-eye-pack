@@ -17,14 +17,14 @@ const { readJson } = require('../../data_io/files.cjs');
 const fs = require('node:fs');
 const path = require('node:path');
 const { ARTIFACTS, JAVAS } = require('../../runtime_env/env.cjs');
-const { readRuntime, javaPaths, checkJava } = require('./runtime/runtime.cjs');
-const { ensureLoaderBase, prepareRunDir, readRunSeed, installPack, dropMods } = require('./runtime/setup.cjs');
-const { analyze } = require('./log_report.cjs');
-const { boot } = require('./process/boot.cjs');
-const { DEFAULT_STARVED_CORES } = require('./process/watchdog.cjs');
+const { readRuntime, javaPaths, checkJava } = require('../../runtime_env/server/runtime.cjs');
+const { ensureLoaderBase, prepareRunDir, readRunSeed, installPack, dropMods } = require('../../server_stage/setup.cjs');
+const { analyze } = require('../../data_io/server_log.cjs');
+const { boot } = require('../../runtime_env/server/boot.cjs');
+const { DEFAULT_STARVED_CORES } = require('../../runtime_env/server/watchdog.cjs');
 const { crashReports, crashCauses, decide, EXIT_CODES } = require('./verdict.cjs');
 const procs = require('../../runtime_env/procs.cjs');
-const { waitForServer } = require('./process/host_wait.cjs');
+const { waitForServer } = require('../../runtime_env/server/host_wait.cjs');
 const { withStaged } = require('../../runtime_env/staged_dir.cjs');
 
 // What a finished smoke run keeps from its server copy: the evidence the report and a re-analysis read.

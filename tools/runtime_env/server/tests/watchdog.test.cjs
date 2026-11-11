@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert');
-const { watchdog, cpuGrew, cpuPerWall, isStarved } = require('../process/watchdog.cjs');
+const { watchdog, cpuGrew, cpuPerWall, isStarved } = require('../watchdog.cjs');
 
 const cfg = { silentMs: 180000, hardCapMs: 1800000 };
 

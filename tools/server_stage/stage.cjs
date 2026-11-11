@@ -1,11 +1,11 @@
 'use strict';
 // The persistent staged server shared by the pack test and the ANU world server: loader base libraries plus
 // an incremental `-s server` packwiz install. Neutral ops tooling: no test or probe logic lives here.
-// Loader download and pack install primitives still live in server_smoke/runtime (setup.cjs, runtime.cjs).
+// Loader and pack install primitives live in setup.cjs; runtime descriptors in runtime_env/server.
 const fs = require('node:fs');
 const path = require('node:path');
-const { ensureLoaderBase, prepareRunDir, installPack } = require('../testing/server_smoke/runtime/setup.cjs');
-const { readStamp } = require('../testing/server_smoke/runtime/runtime.cjs');
+const { ensureLoaderBase, prepareRunDir, installPack } = require('./setup.cjs');
+const { readStamp } = require('../runtime_env/server/runtime.cjs');
 
 // The staged server: loader base libraries plus an incremental `-s server` packwiz install. Never booted,
 // so its files stay exactly what packwiz installed. A stage is reused only when its runtime.json names

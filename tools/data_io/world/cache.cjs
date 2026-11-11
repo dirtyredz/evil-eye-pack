@@ -5,10 +5,10 @@
 // it was generated under, and restoring into a server of another runtime is refused.
 const fs = require('node:fs');
 const path = require('node:path');
-const { sha256 } = require('../../../data_io/files.cjs');
-const { readStamp, STAMP } = require('../../server_smoke/runtime/runtime.cjs');
+const { sha256 } = require('../files.cjs');
+const { readStamp, STAMP } = require('../../runtime_env/server/runtime.cjs');
 
-const { WORLD } = require('../stage_runtime.cjs');
+const { WORLD } = require('../../server_stage/stage_runtime.cjs');
 // Server content that can change generated terrain besides the jars themselves.
 const CONTENT = ['config', 'defaultconfigs', 'kubejs/data'];
 

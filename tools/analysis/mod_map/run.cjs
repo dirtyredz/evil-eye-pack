@@ -2,8 +2,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const env = require('../../runtime_env/env.cjs');
-const { readRuntime } = require('../../testing/server_smoke/runtime/runtime.cjs');
-const { stageDirFor } = require('../../testing/pack_test/stage_runtime.cjs');
+const { readRuntime } = require('../../runtime_env/server/runtime.cjs');
+const { stageDirFor } = require('../../server_stage/stage_runtime.cjs');
 const { inventory } = require('./inventory/inventory.cjs');
 const { connect } = require('./model/graph.cjs');
 const { familyModel } = require('./model/families.cjs');
@@ -13,7 +13,7 @@ const { parseTiming } = require('./capture/timing.cjs');
 const { capture } = require('./capture/capture.cjs');
 const { render } = require('./page/document.cjs');
 const { verify } = require('../../packwiz/verify_hashes.cjs');
-const { runMeta, checkDestination } = require('../../testing/pack_test/session/run_meta.cjs');
+const { runMeta, checkDestination } = require('../../data_io/run_meta.cjs');
 const { execFileSync } = require('node:child_process');
 async function run(argv, { dryRun = false, log = console.log } = {}) {
   const opts = {};

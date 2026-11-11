@@ -4,17 +4,17 @@ const {copy}=require('./copy.cjs');
 const {files}=require('../../data_io/world/world_tree.cjs');
 const {output}=require('../../data_io/path_guard.cjs');
 const {verify}=require('../../data_io/world/manifest.cjs');
-const {prepare}=require('../server_smoke/runtime/offline_server.cjs');
-const {prepareRunDir}=require('../server_smoke/runtime/setup.cjs');
+const {prepare}=require('../../server_stage/offline_server.cjs');
+const {prepareRunDir}=require('../../server_stage/setup.cjs');
 const {parseIndex,readMetafileSide}=require('../../packwiz/pack_index.cjs');
 const {resolvePinnedJar}=require('../../packwiz/pinned_jar.cjs');
-const {readRuntime,writeStamp}=require('../server_smoke/runtime/runtime.cjs');
-const {boot}=require('../server_smoke/process/boot.cjs');
-const {waitForServer}=require('../server_smoke/process/host_wait.cjs');
-const {localLock}=require('../pack_test/session/lock.cjs');
+const {readRuntime,writeStamp}=require('../../runtime_env/server/runtime.cjs');
+const {boot}=require('../../runtime_env/server/boot.cjs');
+const {waitForServer}=require('../../runtime_env/server/host_wait.cjs');
+const {localLock}=require('../../runtime_env/lock.cjs');
 const procs=require('../../runtime_env/procs.cjs');
 const {withStaged}=require('../../runtime_env/staged_dir.cjs');
-const {WORLD}=require('../pack_test/stage_runtime.cjs');
+const {WORLD}=require('../../server_stage/stage_runtime.cjs');
 // Compose a private offline cache. Neither shared caches nor instances receive stamps or writes.
 function stage({root,loader,jarDirs,job,name}) {
   if(!/^[a-z][a-z0-9-]*$/.test(name))throw new Error('Invalid stage name');

@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { cpuSampler } = require('../process/cpu_sampler.cjs');
+const { cpuSampler } = require('../cpu_sampler.cjs');
 
 function setup(values) {
   const clock = { t: 0 };

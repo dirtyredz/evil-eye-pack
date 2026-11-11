@@ -1,7 +1,7 @@
 'use strict';
 // Pair exact Forge TRACE boundaries by mod + thread + phase/event identity.
 // Never infer a duration from neighbouring log messages or count missing data as zero.
-const { DONE_RE } = require('../../../testing/server_smoke/log_report.cjs');
+const { DONE_RE } = require('../../../data_io/server_log.cjs');
 const FML_LOGGERS = ['net.minecraftforge.fml.javafmlmod.FMLModContainer', 'net.neoforged.fml.javafmlmod.FMLModContainer'];
 
 function parseTiming(text) {

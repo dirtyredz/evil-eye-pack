@@ -4,10 +4,10 @@ const { setTimeout: sleep } = require('node:timers/promises');
 // (`Done (`, or Done plus the caller's own condition) or a crash, under the progress watchdog. Then stop it.
 const fs = require('node:fs');
 const path = require('node:path');
-const procs = require('../../../runtime_env/procs.cjs');
-const env = require('../../../runtime_env/env.cjs');
-const runtimes = require('../runtime/runtime.cjs');
-const { DONE_RE } = require('../log_report.cjs');
+const procs = require('../procs.cjs');
+const env = require('../env.cjs');
+const runtimes = require('./runtime.cjs');
+const { DONE_RE } = require('../../data_io/server_log.cjs');
 const { watchdog } = require('./watchdog.cjs');
 const { cpuSampler } = require('./cpu_sampler.cjs');
 const { threadDump, stopServer, closeStream } = require('./shutdown.cjs');

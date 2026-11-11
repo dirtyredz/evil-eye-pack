@@ -11,11 +11,11 @@ test('smoke CLI owns installer processes and cleans them up on an install failur
   const modules = {
     '../../data_io/files.cjs': {}, 'node:fs': { mkdirSync() {} }, 'node:path': path,
     '../../runtime_env/env.cjs': { ARTIFACTS: '/fixture', JAVAS: {} },
-    './runtime/runtime.cjs': { readRuntime: () => ({ id: 'fixture', java: 21 }), javaPaths: () => ({ java: 'java' }), checkJava() {} },
-    './runtime/setup.cjs': { ensureLoaderBase: async (...args) => { calls.push(args[4]); return '/base'; }, prepareRunDir() {},
+    '../../runtime_env/server/runtime.cjs': { readRuntime: () => ({ id: 'fixture', java: 21 }), javaPaths: () => ({ java: 'java' }), checkJava() {} },
+    '../../server_stage/setup.cjs': { ensureLoaderBase: async (...args) => { calls.push(args[4]); return '/base'; }, prepareRunDir() {},
       installPack: async (...args) => { calls.push(args[5]); throw Error('fixture installation failure'); } },
-    '../../runtime_env/procs.cjs': { scope: () => scope }, '../../runtime_env/staged_dir.cjs': { withStaged: async (_o, fn) => fn() }, './process/host_wait.cjs': { waitForServer: async () => {} },
-    './log_report.cjs': {}, './process/boot.cjs': {}, './process/watchdog.cjs': {}, './verdict.cjs': {}
+    '../../runtime_env/procs.cjs': { scope: () => scope }, '../../runtime_env/staged_dir.cjs': { withStaged: async (_o, fn) => fn() }, '../../runtime_env/server/host_wait.cjs': { waitForServer: async () => {} },
+    '../../data_io/server_log.cjs': {}, '../../runtime_env/server/boot.cjs': {}, '../../runtime_env/server/watchdog.cjs': {}, './verdict.cjs': {}
   };
   vm.runInNewContext(fs.readFileSync(path.join(__dirname, '../smoke.cjs'), 'utf8'), {
     require: id => { if (!(id in modules)) throw Error(id); return modules[id]; },

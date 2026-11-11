@@ -3,7 +3,7 @@
 // file, plus a stable identity (`id`) used to key loader bases, stages and world caches. Read from
 // pack.toml [versions]; ambiguous or unsupported declarations are rejected. Also the runtime stamp
 // (runtime.json) every base, stage and run server carries, and Java verification by the JDK's
-// `release` file. Node built-ins only: it also runs on ANU inside the synced server_smoke code.
+// `release` file. Node built-ins only: it also runs on ANU inside the synced runtime_env code.
 const fs = require('node:fs');
 const path = require('node:path');
 

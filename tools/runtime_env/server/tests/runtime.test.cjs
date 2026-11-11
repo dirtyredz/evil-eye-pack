@@ -7,8 +7,8 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const rt = require('../runtime/runtime.cjs');
-const { ensureLoaderBase, prepareRunDir } = require('../runtime/setup.cjs');
+const rt = require('../runtime.cjs');
+const { ensureLoaderBase, prepareRunDir } = require('../../../server_stage/setup.cjs');
 
 const tmp = (t) => { const d = fs.mkdtempSync(path.join(os.tmpdir(), 'runtime-')); t.after(() => fs.rmSync(d, { recursive: true, force: true })); return d; };
 const pack = (versions) => `name = "X"\n\n[index]\nfile = "index.toml"\n\n[versions]\n${versions}\n`;

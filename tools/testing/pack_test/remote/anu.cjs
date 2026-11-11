@@ -16,11 +16,11 @@ const { probeScript, parseProbe, decide } = require('./capacity.cjs');
 const { acquire, releaseScript } = require('./lease/dir_lock.cjs');
 const { launchScript, statusScript, killScript } = require('./scripts.cjs');
 const { pullEvidence } = require('./evidence.cjs');
-const { isStageRuntime } = require('../stage_runtime.cjs');
+const { isStageRuntime } = require('../../../server_stage/stage_runtime.cjs');
 
 const TOOLS_DIR = path.resolve(__dirname, '../../..');
 // Synced under the same relative layout as tools/, so remote relative requires resolve as on Valhalla.
-const CODE_DIRS = ['testing/server_smoke', 'testing/pack_test', 'analysis/emi_coverage', 'analysis/dedup', 'data_io', 'server_stage'];
+const CODE_DIRS = ['testing/server_smoke', 'testing/pack_test', 'analysis/emi_coverage', 'analysis/dedup', 'data_io', 'server_stage', 'runtime_env'];
 
 // Reads ANU's load and decides alone / shared / fallback (capacity.cjs).
 async function checkCapacity(ssh, log) {
@@ -69,7 +69,7 @@ async function runOnAnu(o) {
     if (early.mode === 'fallback') return { fallback: early.reason };
     t = Date.now();
     const st = await syncDir(ssh, scope, o.stageDir, lane.STAGE, { incoming: cfg.INCOMING, skip: isStageRuntime, log, label: 'stage' });
-    for (const d of CODE_DIRS) await syncDir(ssh, scope, path.join(TOOLS_DIR, d), `${lane.CODE}\\${d.replaceAll('/', '\\')}`, { incoming: cfg.INCOMING, skip: (r) => /^tests(\/|$)/.test(r), log, label: `tools-${d}` });
+    for (const d of CODE_DIRS) await syncDir(ssh, scope, path.join(TOOLS_DIR, d), `${lane.CODE}\\${d.replaceAll('/', '\\')}`, { incoming: cfg.INCOMING, skip: (r) => /(^|\/)tests(\/|$)/.test(r), log, label: `tools-${d}` });
     timings.sync = (Date.now() - t) / 1000;
     if (o.onSynced) o.onSynced(); // the local stage may change again now
     log(`synced stage (${st.changed} changed, ${st.removed} removed, ${(st.bytes / 1048576).toFixed(1)} MiB) in ${Math.round(timings.sync)} s`);

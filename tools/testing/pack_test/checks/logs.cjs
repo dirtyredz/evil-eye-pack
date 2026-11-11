@@ -1,7 +1,7 @@
 'use strict';
 // Log evidence: the existing smoke grouping (unchanged), plus per-resource load failures pulled out of
 // latest.log and KubeJS's server.log so they keep their own identity (broad noise rules cannot hide them).
-const { analyze } = require('../../server_smoke/log_report.cjs');
+const { analyze } = require('../../../data_io/server_log.cjs');
 
 const TAG_RE = /Couldn't load tag (\S+) as it is missing following references: (.*)$/;
 const LOOT_RE = /Couldn't parse element loot_tables:(\S+)/;

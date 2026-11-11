@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert');
-const { analyze } = require('../log_report.cjs');
+const { analyze } = require('../server_log.cjs');
 
 const noise = [{ pattern: 'Athena', why: 'known' }];
 

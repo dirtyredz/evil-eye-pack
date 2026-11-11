@@ -10,9 +10,9 @@ const { spawn, spawnSync } = require('node:child_process');
 const { abortRegistry } = require('../../session/aborts.cjs');
 const { killScript } = require('../../remote/scripts.cjs');
 const { lockScript, refreshDirLock } = require('../../remote/lease/dir_lock.cjs');
-const { makeRunServer } = require('../../session/prepare.cjs');
-const { STAGE_RUNTIME } = require('../../stage_runtime.cjs');
-const { describe: runtimeOf } = require('../../../server_smoke/runtime/runtime.cjs');
+const { makeRunServer } = require('../../../../server_stage/run_server.cjs');
+const { STAGE_RUNTIME } = require('../../../../server_stage/stage_runtime.cjs');
+const { describe: runtimeOf } = require('../../../../runtime_env/server/runtime.cjs');
 const cfg = require('../../remote/config.cjs');
 const { javaFor } = require('../../remote/provision.cjs');
 const NEO = runtimeOf({ loader: 'neoforge', minecraft: '1.21.1', loaderVersion: '21.1.265' });
@@ -95,6 +95,7 @@ test('local copies and remote sync exclude the same stage runtime paths', async 
   const serverDir = path.join(root, 'server');
   const stubs = fakeAnu([]);
   let stageSyncs = 0;
+  const codeSyncs = new Set();
   stubs.sync.syncDir = async (ssh, scope, from, to, opts) => {
     if (opts.label === 'stage') {
       stageSyncs++;
@@ -104,6 +105,14 @@ test('local copies and remote sync exclude the same stage runtime paths', async 
         assert.equal(opts.skip(`${name}-kept`), false);
         assert.equal(opts.skip(`config/${name}`), false);
       }
+    }
+    if (opts.label.startsWith('tools-')) {
+      codeSyncs.add(opts.label);
+      assert.equal(opts.skip('tests/example.test.cjs'), true);
+      assert.equal(opts.skip('server/tests/example.test.cjs'), true);
+      assert.equal(opts.skip('world/tests/example.test.cjs'), true);
+      assert.equal(opts.skip('server/runtime.cjs'), false);
+      assert.equal(opts.skip('world/cache.cjs'), false);
     }
     return { changed: 0, removed: 0, bytes: 0 };
   };
@@ -122,6 +131,7 @@ test('local copies and remote sync exclude the same stage runtime paths', async 
     }
     await runOnAnu({ runtime: NEO, stageDir, runDir, input: {}, boot: { timeout: 10, probeTimeout: 10 }, scope: {}, log() {}, pollMs: 1 });
     assert.equal(stageSyncs, 1);
+    for (const name of ['data_io', 'runtime_env', 'server_stage']) assert.ok(codeSyncs.has(`tools-${name}`), `sync shared ${name}`);
   } finally { restore(); fs.rmSync(root, { recursive: true, force: true }); }
 });
 
