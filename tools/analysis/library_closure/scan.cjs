@@ -8,8 +8,11 @@ const { parseMods, manifestVersion, METADATA } = require('../../data_io/mod_meta
 const { strings } = require('./class_references.cjs');
 const { verdict } = require('./targets.cjs');
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
-function scanArchive(bytes, archivePath, pin, result, depth = 0, definitions) {
+function scanArchive(bytes, archivePath, pin, result, definitions) {
   if (!definitions || typeof definitions !== 'object' || Array.isArray(definitions)) throw new TypeError('definitions are required');
+  scanNested(bytes, archivePath, pin, result, definitions, 0);
+}
+function scanNested(bytes, archivePath, pin, result, definitions, depth) {
   if (depth > 32) throw new Error('Recursion limit reached: ' + archivePath);
   const entries = listEntries(bytes);
   const archive = { path: archivePath, root: pin, sha256: hash(bytes), classCount: 0, metadata: [], references: [] };
@@ -26,7 +29,7 @@ function scanArchive(bytes, archivePath, pin, result, depth = 0, definitions) {
   }
   for (const entry of entries) {
     if (entry.name.toLowerCase().endsWith('.jar')) {
-      scanArchive(read(entry), archivePath + '!' + entry.name, pin, result, depth + 1, definitions);
+      scanNested(read(entry), archivePath + '!' + entry.name, pin, result, definitions, depth + 1);
     } else if (Object.values(METADATA).includes(entry.name)) {
       const raw = read(entry).toString('utf8');
       const mods = parseMods(raw, { version });
@@ -52,7 +55,7 @@ for (const file of fs.readdirSync(path.join(root, 'mods')).filter(f => f.endsWit
   try {
     const { bytes, ...pin } = resolvePinnedJar(fs.readFileSync(path.join(root, 'mods', file), 'utf8'), caches, file);
     result.pins.push({ ...pin, metafile: file, excludedFromRetainedScan: removed.has(file) });
-    scanArchive(bytes, pin.filename, file, result, 0, selected.definitions);
+    scanArchive(bytes, pin.filename, file, result, selected.definitions);
   } catch (error) {
     result.complete = false; result.errors.push({ file, error: error.message });
   }
