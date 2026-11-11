@@ -10,6 +10,9 @@ const { LOCAL_TAR } = require('./config.cjs');
 
 const MANIFEST = '.sync-manifest.json';
 
+// Labels name remote files in the flat incoming dir, so a label like 'tools-testing/server_smoke' must not carry a path separator.
+const fileLabel = (label) => label.replace(/[^A-Za-z0-9._-]/g, '_');
+
 // rel path (forward slashes) -> "size:mtimeMs". skip(rel) excludes paths (the world, logs...).
 function buildManifest(dir, skip = () => false) {
   const out = {};
@@ -51,7 +54,7 @@ async function syncDir(ssh, scope, localDir, remoteDir, { incoming, skip, log, l
       const tar = path.join(tmp, 'payload.tar');
       const t = await scope.run(LOCAL_TAR, ['-cf', tar, '-C', localDir, '-T', list], { timeoutMs: 1800000 });
       if (t.code !== 0) throw new Error(`tar failed: ${t.out.slice(0, 300)}`);
-      const remoteTar = `${incoming}\\${label}-${process.pid}.tar`;
+      const remoteTar = `${incoming}\\${fileLabel(label)}-${process.pid}.tar`;
       await ssh.must(`New-Item -ItemType Directory -Force ${q(incoming)}, ${q(remoteDir)} | Out-Null`);
       const s = await ssh.scpTo(tar, remoteTar);
       if (s.code !== 0) throw new Error(`scp failed: ${s.out.slice(0, 300)}`);
@@ -61,7 +64,7 @@ async function syncDir(ssh, scope, localDir, remoteDir, { incoming, skip, log, l
       log(`${label}: deleting ${removed.length} file(s) no longer in the pack`);
       const listFile = path.join(tmp, 'removed.json');
       fs.writeFileSync(listFile, JSON.stringify(removed));
-      const remoteList = `${incoming}\\${label}-removed-${process.pid}.json`;
+      const remoteList = `${incoming}\\${fileLabel(label)}-removed-${process.pid}.json`;
       await ssh.must(`New-Item -ItemType Directory -Force ${q(incoming)} | Out-Null`);
       const s = await ssh.scpTo(listFile, remoteList);
       if (s.code !== 0) throw new Error(`scp failed: ${s.out.slice(0, 300)}`);
@@ -77,4 +80,4 @@ async function syncDir(ssh, scope, localDir, remoteDir, { incoming, skip, log, l
   return { changed: changed.length, removed: removed.length, bytes, seconds: (Date.now() - t0) / 1000 };
 }
 
-module.exports = { buildManifest, diffManifest, syncDir, MANIFEST };
+module.exports = { buildManifest, diffManifest, syncDir, fileLabel, MANIFEST };
