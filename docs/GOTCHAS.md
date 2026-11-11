@@ -9,6 +9,14 @@
   use `Continue` and return the native exit code for callers to check. SSH queries use `Invoke-SshQuery`; keep
   stderr separate from stdout when the result is a path or query value.
 
+- **Scriptblocks passed to owner-run helpers see the helper's variables.** PowerShell scopes
+  dynamically: a block run by `Invoke-NativeCapture` resolves names in the helper's scope first.
+  On 2026-11-11 its parameter was named `$Command`, so `Invoke-SshQuery`'s block
+  `{ & ssh $AnuHost $Command }` passed the scriptblock itself to ssh (`-EncodedCommand`,
+  "Bad escape character") and Backup/Deploy failed live. The parameter is now `$NativeBlock`. Never
+  read a variable in such a block that shares a name with a helper parameter or local (`$NativeBlock`,
+  `$prevEap`). Regression test: `tools/world_server/tests/transport.test.cjs` (real-PowerShell fake ssh).
+
 - **A Limited scheduled token cannot read an elevated JVM's command line.** On 2026-11-10,
   Command Deck's scheduled Start returned 2 while the server was already running. A read-only
   impersonation of David's interactive token reproduced a null `Win32_Process.CommandLine` while
