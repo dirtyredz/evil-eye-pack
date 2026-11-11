@@ -12,28 +12,16 @@
 // rehash -> verify_hashes step before a push catches it.
 const fs = require('node:fs');
 const path = require('node:path');
-const P = require('../pack_index.cjs');
-const { resolvePinnedJar } = require('../pinned_jar.cjs');
-const { localPin, cachedLocal } = require('./local_source.cjs');
+const { clientArtifacts } = require('./client_artifacts.cjs');
+const env = require('../../runtime_env/env.cjs').FIXED;
 
 const ROOT = path.resolve(__dirname, '../../..');
-const JOBS = 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs';
-const DEFAULT_CACHE = JOBS + '/2026-10-31-world-trial-final/cache';
+const JOBS = path.join(env.ARTIFACTS, 'jobs');
+const DEFAULT_CACHE = env.STABLE_CACHE;
 
 // The jar every client/both metafile needs, as { file, dir, name, resolve(dir) } (resolve throws when the folder lacks a matching jar).
 function pinnedJars(root) {
-  const out = [];
-  for (const f of P.parseIndex(fs.readFileSync(path.join(root, 'index.toml'), 'utf8')).files) {
-    if (!f.metafile) continue;
-    const text = fs.readFileSync(path.join(root, f.file), 'utf8');
-    if (P.readMetafileSide(text) === 'server') continue;
-    const dir = path.posix.dirname(f.file), pin = P.readMetafileDownload(text);
-    if (pin.mode === 'metadata:local') {
-      const t = localPin(root, f.file, text);
-      out.push({ file: f.file, dir, name: t.sha256 + '.jar', resolve: (d) => ({ path: path.join(d, t.sha256 + '.jar'), bytes: cachedLocal(t, d) }) });
-    } else out.push({ file: f.file, dir, name: pin.filename, resolve: (d) => resolvePinnedJar(text, [d], f.file) });
-  }
-  return out;
+  return Array.from(clientArtifacts(root)).filter(a => a.sourceMetafile);
 }
 
 // Local folders that may hold a missing jar for index dir `dir`.

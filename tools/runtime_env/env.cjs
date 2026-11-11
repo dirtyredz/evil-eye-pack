@@ -21,6 +21,8 @@ function machine(e) {
   LOCAL_MODS: e.SMOKE_LOCAL_MODS || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/mods',
   // Same packwiz-installer bytes in every instance; Stable's copy is the fallback so a rebuilt (empty) Local still installs. Read only.
   INSTALLER_JAR_SOURCES: [e.SMOKE_INSTALLER_JAR || 'C:/Users/dirty/MultiMC/instances/Evil Eye Local/.minecraft/packwiz-installer.jar', 'C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft/packwiz-installer.jar'],
+  // Stable's offline install cache. Install guards use FIXED, unaffected by smoke overrides.
+  STABLE_CACHE: e.SMOKE_STABLE_CACHE || 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache',
   ARTIFACTS: e.SMOKE_ARTIFACTS || 'C:/Users/dirty/projects/artifacts/evil-eye-pack',
   // Verified NeoForge 1.21.1 target jars (tools/packwiz/migration/migrate.mjs resolve): the read-only pinned-jar input
   // for scanners while no instance has installed the target pack.

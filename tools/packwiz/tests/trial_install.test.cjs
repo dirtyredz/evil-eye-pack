@@ -7,6 +7,7 @@ const { sha256 } = require('../../data_io/files.cjs');
 const P = require('../pack_index.cjs');
 const { renderMetafile } = require('../migration/repoint.cjs');
 const { instanceCfgValue, setInstanceCfgValue, prepareFiles, writePack, verifyInstalledFiles, restorePackFiles } = require('../install/install_pack.cjs');
+const { checkCache } = require('../install/stable_cache_check.cjs');
 const { trialPreLaunchCommand, trialInstance } = require('../install/trial_target.cjs');
 
 function multimcBackslashUnescape(value) {
@@ -47,6 +48,7 @@ test('offline trial indexes verified private bytes as ordinary installer-owned f
   fs.writeFileSync(path.join(root, 'index.toml'), index);
   fs.writeFileSync(path.join(root, 'pack.toml'), `[index]\nfile = "index.toml"\nhash-format = "sha256"\nhash = "${sha256(index)}"\n`);
   const files = prepareFiles(root, path.join(root, 'cache'));
+  assert.deepEqual(checkCache(root, path.join(root, 'cache')).missing, []);
   assert.equal(files.length, 1);
   assert.equal(files[0].file, 'mods/private.jar');
   assert.equal(files[0].sourceMetafile, true);
@@ -58,6 +60,7 @@ test('offline trial indexes verified private bytes as ordinary installer-owned f
   assert.equal(fs.readFileSync(path.join(root, pin.metafile), 'utf8'), meta);
   fs.writeFileSync(path.join(root, 'cache/mods', pin.sha256 + '.jar'), 'corrupt');
   assert.throws(() => prepareFiles(root, path.join(root, 'cache')), /differs from lock/);
+  assert.match(checkCache(root, path.join(root, 'cache')).missing[0].reason, /differs from lock/);
   fs.writeFileSync(path.join(root, 'cache/mods', pin.sha256 + '.jar'), bytes);
   fs.appendFileSync(path.join(root, pin.metafile), '\n');
   assert.throws(() => prepareFiles(root, path.join(root, 'cache')), /Stale index/);
