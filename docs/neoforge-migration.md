@@ -1083,4 +1083,4 @@ Client 0.15.9 (EvilEyeClient main `d31e568`) leaves a 4 px gap between the Backp
 
 ## Client 0.15.10: Railways Controls-screen key conflicts (2026-11-11)
 
-Client 0.15.10 (EvilEyeClient main `f208808`) re-applies Steam 'n' Rails' non-conflicting-key rule on the real 1.21.1 `KeyBindsList$KeyEntry` (Railways 0.3.0-beta.2 targets the pre-1.21 class, so its own mixin never applied; `dk-2d33cee0`). Client only, active only with Railways installed; no config change; Tweaks stays 0.14.5. Railways' stale mixin still reports as a missing target and stays allow-listed.
+Client 0.15.10 (EvilEyeClient main `325f0a0`) re-applies Steam 'n' Rails' non-conflicting-key rule on the real 1.21.1 `KeyBindsList$KeyEntry` (Railways 0.3.0-beta.2 targets the pre-1.21 class, so its own mixin never applied; `dk-2d33cee0`). Client only, active only with Railways installed; no config change; Tweaks stays 0.14.5. Railways' stale mixin still reports as a missing target and stays allow-listed.

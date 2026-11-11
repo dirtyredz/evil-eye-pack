@@ -3278,9 +3278,9 @@
      "evileye_client@0.15.10"
     ],
     "name": "Evil Eye Client",
-    "sha256": "8940c2623a7aeca35d3d82ae5ff7c80a15b19e084b83faf1ac9cb4b177a5f6fc",
+    "sha256": "385bcdc51fb05d07bb7fb7be98e0d6b65ef9c9c7e1f03d7242357038f0a88b9d",
     "side": "client",
-    "size": 844776,
+    "size": 842858,
     "source": "local"
    }
   },
