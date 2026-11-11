@@ -38,11 +38,11 @@ function Invoke-CopyWorld {
   $src = (Get-LocalManifest $SourceWorld)
   Set-Content -LiteralPath "$job/source-world.sha256" -Value $src -Encoding ascii
   Write-Log "Source manifest: $(@($src).Count) files"
-  $rc = Invoke-Native 'tar' @('-cf', "$job/world.tar", '--exclude=session.lock', '-C', $SourceWorld, '.')
+  $rc = Invoke-Native (Get-WindowsTar) @('-cf', "$job/world.tar", '--exclude=session.lock', '-C', $SourceWorld, '.')
   if ($rc -ne 0) { Complete-OwnerRun 3 'tar failed' }
   Invoke-Ssh "New-Item -ItemType Directory -Force $AnuRoot\incoming, $AnuRoot\evil-eye-world | Out-Null"
   Send-ToAnu "$job/world.tar" "$AnuRoot\incoming\world.tar" 'world'
-  Invoke-Ssh "tar -xf $AnuRoot\incoming\world.tar -C $AnuRoot\evil-eye-world; Remove-Item $AnuRoot\incoming\world.tar"
+  Invoke-Ssh "& `"`$env:SystemRoot\System32\tar.exe`" -xf$AnuRoot\incoming\world.tar -C $AnuRoot\evil-eye-world; Remove-Item $AnuRoot\incoming\world.tar"
   Invoke-Ctl '-Op Manifest'
   Get-FromAnu "$AnuCtl\world.sha256" "$job/dest-world.sha256" 'manifest'
   $diff = Compare-Object @($src) @(Get-Content "$job/dest-world.sha256")

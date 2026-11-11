@@ -2,8 +2,8 @@
 id: dk-046ccfd2
 type: bug
 created: 2026-11-08
-status: todo
-since: 2026-11-08
+status: done
+since: 2026-11-11
 area:
 priority: P2
 rank: zzzzzzzzzzzzzzy

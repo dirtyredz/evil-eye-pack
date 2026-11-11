@@ -425,7 +425,8 @@ Valhalla is reinstalled and the world survives the wipe. **The original stays un
 Everything runs from Valhalla through `scripts/server/anu-world-server.ps1 <Action>` (comment-based help, `-DryRun`,
 logs under `.tmp/owner-runs/`, ends `OK`/`FAILED`): `Status` (also pings from Valhalla), `Start`, `Stop`,
 `Backup`, `Pull` (newest backup to Valhalla `~/.local-state/evil-eye-pack/artifacts/world-backups`), `Deploy` (re-stage the pack
-from the checkout and ship it; refuses while running; keeps the world), `CopyWorld` (one-off copy with sha256
+from the checkout and ship it; refuses while running; keeps the world; uses Windows `System32\tar.exe`, never a PATH `tar`;
+a failure before the files on ANU are replaced starts the server again, a failure after that leaves it stopped and says so), `CopyWorld` (one-off copy with sha256
 verification), `AddLauncherEntry`. The dispatcher is a thin router over dot-sourced modules beside it (`anu-transport-lib.ps1`, `anu-deploy-lib.ps1`,
 `anu-world-lib.ps1`) and `server-ctl.ps1` (runs on ANU, shipped with its sibling `server-process.ps1`
 on every controller call). The sibling exposes Start/Stop/Status as functions; the controller preserves
