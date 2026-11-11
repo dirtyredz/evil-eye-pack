@@ -1,22 +1,9 @@
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
-const crypto = require('node:crypto');
-const { files, copy } = require('./copy.cjs');
+const { copy } = require('./copy.cjs');
+const { manifest, verify } = require('../../data_io/world/manifest.cjs');
 const { output } = require('../../data_io/path_guard.cjs');
-function manifest(root) {
-  return Object.fromEntries(files(root).map(rel => {
-    const bytes = fs.readFileSync(path.join(root, rel));
-    return [rel, { bytes: bytes.length, sha256: crypto.createHash('sha256').update(bytes).digest('hex') }];
-  }));
-}
-function verify(root, expected) {
-  const actual = manifest(root);
-  const changed = [...new Set([...Object.keys(actual), ...Object.keys(expected)])]
-    .filter(k => JSON.stringify(actual[k]) !== JSON.stringify(expected[k]));
-  if (changed.length) throw new Error('Manifest mismatch: ' + changed.join(', '));
-  return { files: Object.keys(actual).length, bytes: Object.values(actual).reduce((n,v) => n+v.bytes,0) };
-}
 function snapshot(source, job) {
   const dest = path.join(job,'snapshot'), record = path.join(job,'source-manifest.json');
   output(record,job);
@@ -29,4 +16,4 @@ function snapshot(source, job) {
   fs.chmodSync(record,0o444);
   return { source, snapshot:dest, files:before };
 }
-module.exports = { manifest, verify, snapshot };
+module.exports = { snapshot };

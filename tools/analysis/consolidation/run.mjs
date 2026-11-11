@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { runScript } from '../../script-run/script-run.mjs';
 import guards from '../../data_io/path_guard.cjs';
-import snapshots from '../../testing/world_trial/snapshot.cjs';
-import inventory from '../../testing/world_trial/inventory.cjs';
+import snapshots from '../../data_io/world/manifest.cjs';
+import inventory from '../../data_io/world/inventory.cjs';
 import evidence from './wave7_evidence.cjs';
 
 await runScript({ name:'wave7-evidence', from:import.meta.url }, async log => {

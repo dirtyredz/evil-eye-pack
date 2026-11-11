@@ -1,6 +1,6 @@
 'use strict';
-const { inventory, digest } = require('../../testing/world_trial/inventory.cjs');
-const { files } = require('../../testing/world_trial/copy.cjs');
+const { inventory, digest, classifyFile } = require('../../data_io/world/inventory.cjs');
+const { files } = require('../../data_io/world/files.cjs');
 const storageIds = new Set(['createdrawerscompat:drawer', ...[
   'uncooperative', 'furniture_refurbished', 'repository', 'closet', 'iron_chest',
   'crystal_chest', 'iron_shulker_box', 'crate', 'sound', 'sound_uncooperative'
@@ -61,17 +61,9 @@ function report(world) {
   // Unknown formats invalidate completeness; known auxiliary/backup files stay listed.
   result.excludedFiles = [];
   for (const file of files(world)) {
-    if (/\.(dat|nbt)$/.test(file) && !file.includes('/backups/')) continue;
-    if (/\/(region|entities)\/[^/]+\.mca$/.test('/' + file)) continue;
-    if (/\.(dat_old|zip)$/.test(file) || file.includes('/backups/') ||
-        /(^|\/)(session.lock|icon.png)$/.test(file) || /^(advancements|stats)\/[^/]+\.json$/.test(file) ||
-        /^serverconfig\/[^/]+\.(toml|snbt)$/.test(file) ||
-        /\/(poi)\/[^/]+\.mca$/.test('/' + file)) {
-      result.excludedFiles.push({file, reason:'Backup or auxiliary non-inventory data'});
-    } else if (file.endsWith('.mcc')) {
-      result.excludedFiles.push({file, reason:'External chunk payload; read through its region reference, orphan status unverified'});
-      result.unsupportedFiles.push({file, reason:'Cannot certify absence of orphan external chunks'});
-    } else result.unsupportedFiles.push({file, reason:'Unsupported world file'});
+    const classification = classifyFile(file);
+    if (classification.excludedReason) result.excludedFiles.push({file, reason:classification.excludedReason});
+    if (classification.unsupportedReason) result.unsupportedFiles.push({file, reason:classification.unsupportedReason});
   }
   result.complete = result.errors.length === 0 && result.unsupportedFiles.length === 0;
   return result;
