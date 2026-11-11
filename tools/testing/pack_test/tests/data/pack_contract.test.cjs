@@ -9,7 +9,7 @@ const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
 
 test('owned keys leave every strictly pack-owned shipped target byte-identical', t => {
   const { parseIndex } = require('../../../../packwiz/pack_index.cjs');
-  const { loadEntries, applyOwnedKeys } = require('../../../../packwiz/install/pack_owned_keys.cjs');
+  const { loadEntries, applyOwnedKeys } = require('../../../../packwiz/install/owned_keys/pack_owned_keys.cjs');
   const { isStrictlyPackOwned } = require('../../../../packwiz/install/installed_files.cjs');
   const strict = new Set(parseIndex(read('index.toml')).files.filter(isStrictlyPackOwned).map(f => f.file));
   const entries = loadEntries().filter(e => strict.has(e.file));
@@ -171,7 +171,7 @@ test('FPS defaults remain opt-in with a string corner and no forced personal HUD
   for (const key of ['enabled', 'showMin', 'showAverage']) assert.match(fps, new RegExp(`^\\s*${key} = false$`, 'm'));
   assert.match(fps, /^\s*corner = "TOP_LEFT"$/m);
   for (const key of ['offsetX', 'offsetY']) assert.match(fps, new RegExp(`^\\s*${key} = 4$`, 'm'));
-  const owned = JSON.parse(read('tools/packwiz/install/pack-owned-keys.json')).keys;
+  const owned = JSON.parse(read('tools/packwiz/install/owned_keys/pack-owned-keys.json')).keys;
   assert.equal(owned.some(e => e.file === 'config/evileye_client-client.toml' && e.section[0] === 'fps'), false);
   assert.equal(owned.find(e => e.section[0] === 'actionRail' && e.key === 'side').value, 'RIGHT');
 });

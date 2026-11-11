@@ -6,11 +6,11 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const P = require('../../pack_index.cjs');
-const { packFileDrift } = require('../../install/installed_files.cjs');
-const { loadEntries, applyOwnedKeys, previewOwnedKeys } = require('../../install/pack_owned_keys.cjs');
+const P = require('../../../pack_index.cjs');
+const { packFileDrift } = require('../../../install/installed_files.cjs');
+const { loadEntries, applyOwnedKeys, previewOwnedKeys } = require('../../../install/owned_keys/pack_owned_keys.cjs');
 
-const ROOT = path.resolve(__dirname, '../../../..');
+const ROOT = path.resolve(__dirname, '../../../../..');
 const MODERN = 'config/modernui/client.toml';
 const TERRALITH = 'config/terralith.json';
 
