@@ -2,8 +2,8 @@
 id: dk-e9c3d82d
 type: bug
 created: 2026-10-23
-status: todo
-since: 2026-10-23
+status: done
+since: 2026-11-11
 area:
 priority: P2
 rank: zzzt
@@ -32,3 +32,9 @@ Acceptance: identify the registering mod (instrument or bisect), then either rep
 - **Fallback:** `config/fml.toml maxThreads = 1`.
 
 **Update 2026-10-25: fix installed in the pack at commit 6c64748ed0d38947548d63c5f3873af09c5ff397.** CorgiKubeJSCompat 1.0.0 is pinned to the GitHub release with SHA-256 a53230f6087654395a88bf03331b7ebad092a0061a7dd1a262b0a8730276e4f1. Its hard dependencies match the pack: KubeJS 2001.6.5-build.26 and CorgiLib 4.0.3.5. Rehash, hash verification (including both supplied release jars), the malware source gate (0 findings), and all 34 malware-guard/packwiz tests passed. The orchestrator will run the pack test; no client or server was launched here. Awaiting confirmation through normal launches. Keep this item open; the owner closes it once launches show no recurrence.
+
+## Notes
+
+### 2026-11-11T15:03:39.941Z · open · agent
+
+Closed 2026-11-11 as superseded by the NeoForge 1.21.1 cutover. The bug was in KubeJS 2001.6.5 (Forge 1.20.1) racing CorgiLib 4.0.3.5's root-registry writes. main now pins kubejs-neoforge-2101.7.2-build.377, with no CorgiLib and no CorgiKubeJSCompat in mods/. ANU world server: 0 ConcurrentModificationException in latest.log/console.log, no crash-reports dir; boots on 2026-11-10/11 all reached Done. If a CME at mod construction reappears on 1.21.1, file a new item with the stack.
