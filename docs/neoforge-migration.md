@@ -21,7 +21,7 @@ Plan: `artifacts/evil-eye-pack/jobs/2026-10-29-neoforge-migration-plan/plan.md`;
 | 7 Interstellaris stack | dk-7bcd9303 | done 2026-10-30 (ANU boots green; showcase checks below) |
 | 8 Seven owned ports | dk-279913bb | done 2026-10-30 (ANU and full showcase PASS; config/worldgen follow-ups below) |
 | 9 World conversion on a copy | dk-064ce2a5 | done 2026-10-31 brief: dev.4 conversion/restart 68/68; owner Trial copy ready |
-| 10 Qualify 100% and cutover | — | tooling ready 2026-11-01 (dry-run + copy rehearsal proven); cutover waits for owner sign-off |
+| 10 Qualify 100% and cutover | dk-b03510e8 | done 2026-11-11 on shipped-and-in-use evidence (main NeoForge, Stable + ANU world server on main, owner playing since 2026-11-10); no recorded owner 100% declaration — Skippy closed it; follow-ups stay as their own items |
 
 ## Isolation (Phase 1)
 
