@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { buildManifest, diffManifest, MANIFEST } = require('../../remote/sync.cjs');
+const { buildManifest, diffManifest, fileLabel, MANIFEST } = require('../../remote/sync.cjs');
 const { encode, q } = require('../../remote/ssh.cjs');
 const { lockScript, refreshDirLock, releaseDirLock } = require('../../remote/lease/dir_lock.cjs');
 
@@ -15,6 +15,12 @@ test('sync sends only new or changed files and deletes files gone locally', () =
   assert.deepEqual(diffManifest(local, remote), { changed: ['config/c.toml', 'mods/b.jar'], removed: ['mods/old.jar'] });
   assert.deepEqual(diffManifest(local, {}).changed.length, 3, 'first sync sends everything');
   assert.deepEqual(diffManifest(local, local), { changed: [], removed: [] });
+});
+
+test('sync file labels never carry a path separator (tools-testing/server_smoke broke the scp into the flat incoming dir)', () => {
+  assert.equal(fileLabel('tools-testing/server_smoke'), 'tools-testing_server_smoke');
+  assert.equal(fileLabel('stage'), 'stage');
+  assert.doesNotMatch(fileLabel('tools-analysis\dedup'), /[\/]/);
 });
 
 test('buildManifest walks the tree with forward slashes, skips its own manifest and skipped paths', () => {
@@ -62,4 +68,23 @@ test('the lock script guards only our own runs and never looks at a neighbour', 
   assert.doesNotMatch(s, /BUSY neighbour/);
   assert.match(s, /BUSY pack-test run/);
   assert.match(s, /owner = 'run-x'/);
+});
+
+test('every tools/ directory the ANU agent requires is in the synced CODE_DIRS (runtime_env was missing after the tools regroup and the agent died on start)', () => {
+  const { CODE_DIRS } = require('../../remote/anu.cjs');
+  const tools = path.resolve(__dirname, '../../../..');
+  const seen = new Set();
+  const walk = (f) => {
+    if (seen.has(f)) return;
+    seen.add(f);
+    for (const m of fs.readFileSync(f, 'utf8').matchAll(/require\(\s*'(\.[^']+)'\s*\)/g)) {
+      let p = path.resolve(path.dirname(f), m[1]);
+      if (fs.existsSync(p) && fs.statSync(p).isDirectory()) p = path.join(p, 'index.js');
+      for (const ext of ['', '.cjs', '.js']) if (fs.existsSync(p + ext) && fs.statSync(p + ext).isFile()) { walk(p + ext); break; }
+    }
+  };
+  walk(path.join(tools, 'testing/pack_test/remote/agent.cjs'));
+  const outside = [...seen].map((f) => path.relative(tools, f).split(path.sep).join('/'))
+    .filter((rel) => !CODE_DIRS.some((d) => rel === d || rel.startsWith(`${d}/`)));
+  assert.deepEqual(outside, [], 'files the agent loads but ANU never receives');
 });

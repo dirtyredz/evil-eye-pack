@@ -1920,6 +1920,11 @@
    "key": "acquisition|no-known-source|bookofdragons:whispering_death_egg|",
    "reason": "Reviewed 2026-11-05 from the Book of Dragons 1.4 jar: this egg has no recipe, loot table or structure chest (only gronckle, zippleback, nadder, nightmare and night fury eggs appear in roost chests); it is created by dragon code (DragonEggEntity/DragonEggItem, laid by dragons). In-game acquisition check requested from the owner.",
    "since": "2026-11-05"
+  },
+  {
+   "key": "references|removed-mod-reference|evileye_essentials:ignore_rtp|ftbessentials:ignore_rtp",
+   "reason": "Deliberate optional import (reviewed 2026-11-11 from the Evil Eye Essentials 0.2.0 source, data/evileye_essentials/tags/block/ignore_rtp.json): the tag lists #ftbessentials:ignore_rtp with required=false, so any FTB-style ignore_rtp tag is honoured; with FTB Essentials gone it resolves to nothing and is harmless.",
+   "since": "2026-11-11"
   }
  ],
  "logSignatures": []

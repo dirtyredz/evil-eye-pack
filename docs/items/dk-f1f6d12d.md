@@ -2,8 +2,8 @@
 id: dk-f1f6d12d
 type: bug
 created: 2026-11-06
-status: todo
-since: 2026-11-06
+status: done
+since: 2026-11-11
 area: pack
 priority: P2
 rank: zzzzzzzzzzzzzzt
