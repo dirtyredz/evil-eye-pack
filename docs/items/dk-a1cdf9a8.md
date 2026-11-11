@@ -2,7 +2,7 @@
 id: dk-a1cdf9a8
 type: task
 created: 2026-11-09
-status: todo
+status: done
 since: 2026-11-10
 area: world-server
 priority: P2
@@ -51,3 +51,7 @@ Run evidence 2026-11-10: Skippy run-now (skippy-ee-boot-runnow-20261110, rev 2).
 ### 2026-11-11T04:34:26.125Z · open · agent
 
 Reopened 2026-11-10 22:34: Command Deck recorded Skippy's 22:16 run-now as FAILED (exit 2), while ANU Task Scheduler shows LastTaskResult 0. Under diagnosis (Astra job 2026-11-10-boot-run-and-parity). Closes only after a run that both sides record as a success.
+
+### 2026-11-11T04:50:52.103Z · open · agent
+
+Closed 2026-11-10 22:50 with evidence. Root cause of the 22:16 failure: server-ctl detected the JVM only via Win32_Process.CommandLine, which is null to the schedule's limited (RunLevel Limited) principal. Start saw no server and exited 2; the CD receipt run-849e22fc was right, and Task Scheduler's 0 is the conhost wrapper's result. Fixed in 4791c75 (port-ownership detection, idempotent Start) and shipped to ANU. Re-run skippy-ee-boot-runnow-20261110b: CD receipt run-2c059cf2… outcome succeeded, exitCode 0, 1361 ms; ANU java PID 21272 unchanged with the owner online (Status 22:49, DirtyRedz 1/6). Both sides now record success. Cold start from down is covered by the same script's manual Start runs; the next real reboot is the end-to-end check.
