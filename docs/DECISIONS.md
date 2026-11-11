@@ -51,6 +51,12 @@ remove the addon based on static closure alone. Track remaining work in dk-375ad
 
 **Decision.** Owner-approved plan 2026-11-01: Cosmetic Armor Reworked leaves the NeoForge pack. Evil Eye Tweaks 0.7.0 owns the cosmetic armour storage and the `evileye_tweaks:equipment` menu; Evil Eye Client 0.4.0 owns the equipment panel (Curios key G and the inventory button open one screen for curios, armour, cosmetic armour and cosmetic curios) and the cosmetic armour rendering; Evil Eye World Migration 0.1.0-dev.11 imports the old `playerdata/<uuid>.cosarmor` sidecars. **Why:** one equipment screen instead of two mods with separate screens and buttons, and fewer third-party jars (consolidation wave 7). **Rejected:** keeping Cosmetic Armor Reworked beside the Curios screen (two inventories to open, no shared visibility controls). Existing items are carried by the migration, not lost.
 
+## 2026-11-02 - Connected Glass dropped; vanilla glass connects through Fusion resources
+
+**Decision.** `mods/connected-glass.pw.toml` (1.1.14, 119 `connectedglass:` blocks) is removed outright. Vanilla glass, the 16 stained glasses and their 17 panes get Fusion `fusion:connecting` models (pieced 5-tile texture, `is_same_block` for full blocks and pane posts, per-arm `match_state` for pane arms, plus Fusion's `pane_culling_fix` modifier) shipped in the pack-owned `resourcepacks/evil-eye-cozy-overrides` (namespace `evileye_glass`, blockstate overrides in `minecraft`). Tinted glass is left alone: its texture has no frame, so there is no seam to remove.
+**Why.** The owner wants seamless vanilla glass, not 119 extra blocks; no Connected Glass block was ever placed, so no conversion code (unknown ids simply drop). Connected Glass added only its own blocks and never touched vanilla glass.
+**How.** The pieced textures are derived procedurally from vanilla's own glass textures by `tools/resourcepack/fusion_glass/generate.cjs` (frame pixels stay on unconnected sides, connected sides get the interior fill; nothing is copied from Connected Glass, and the pack is never published). The model JSON shape follows the Fusion 1.x data format. **Rejected:** overriding the `minecraft:block/glass*` models in place (any mod parenting them would inherit a Fusion model) and overriding vanilla textures (the 80x16 sheet would break the glass item sprites).
+
 ## 2026-11-01 - Tool tree regrouped; one install route and one instance-target authority
 
 **Decision.** Push-review structure fixes (no behaviour change). `tools/` is grouped into `testing/` (client_mixin,
@@ -385,7 +391,7 @@ removal: Common Capabilities 2.9.11; the RFTools family (Base 5.0.7, Builder
 6.0.10, Control 7.0.4, Dimensions 11.0.11, Utility 6.0.7) and McJtyLib 8.0.8;
 Iron Furnaces 4.1.8; Chunky 1.3.146; Charging Gadgets 1.11.0; Tesseract 1.0.38
 and SuperMartijn642's Config Lib 1.1.8, which only Tesseract required.
-SuperMartijn642's Core Lib stays: Additional Lanterns and Connected Glass need it.
+SuperMartijn642's Core Lib stays: Additional Lanterns needs it (Connected Glass, its other consumer, was removed 2026-11-02).
 
 Why: load time (about 2.4 s for RFTools, 0.46 s for Tesseract, 0.24 s for Iron
 Furnaces, the rest under 0.1 s each) and the owner's choice. The 2026-10-28 scan
@@ -637,7 +643,7 @@ Large Ore Deposits keeps its explicit survivors and disabled dead-end deposits. 
 
 **Decision.**
 - `mods/fusion.pw.toml` pins SuperMartijn642's Fusion 1.2.12 (Modrinth direct URL, sha512). The previous Alexndr/Sinhika "SimpleOres: Fusion" 6.0.0.3, its only dependency SimpleCore API, and `config/fusion-common.toml` are removed. The two mods share mod id `fusion` and cannot coexist.
-- 1.2.12 rather than 1.3.16: Connected Glass 1.1.14 references Fusion API classes that 1.3.x no longer has.
+- 1.2.12 rather than 1.3.16: Connected Glass 1.1.14 references Fusion API classes that 1.3.x no longer has. (Superseded: the NeoForge pack pins 1.3.16 and Connected Glass was removed 2026-11-02, see the entry above.)
 
 **Why.** Connected Glass (and Ender IO glass) need the `fusion:model` loader; the old jar logged 425 "Model loader 'fusion:model' not found" errors. Nothing in the pack (recipes, KubeJS, configs, other jars) referenced the alloy add-on; its only trace was a chest-loot toggle added to suppress its duplicate bronze/steel. Consequence: items such as `fusion:bronze_*`/`steel_*` in existing worlds become unidentified.
 

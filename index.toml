@@ -1688,7 +1688,7 @@ hash = "a712842cceb7cf78792d8d74cb2c6e81351b5308b94388e7144fcdea4976f091"
 
 [[files]]
 file = "config/emi-curation/colours.json"
-hash = "7f24c23660df62deb15a473cb07689bc3471f75ec9ef933ac8933a7421033ed2"
+hash = "60db5c8ec9aeabd6d6b5008463486334079bea62962e895d4b7344f9208898f4"
 
 [[files]]
 file = "config/emi-curation/creative.json"
@@ -1696,7 +1696,7 @@ hash = "d32208672d13f6042f5ef1f2d849f423cecd0b526b5ee50340d649096d67fa75"
 
 [[files]]
 file = "config/emi-curation/decor.json"
-hash = "b10e772ce55b23dbd83665ec93a9f0b15f4087d281d1cc329480f4cc5939f983"
+hash = "b5c206de0aa3b942b51edc5f2f9db9a8c26b7dd9fed44135fac443e4d3545f8b"
 
 [[files]]
 file = "config/emi-curation/enderio-glass.json"
@@ -4862,11 +4862,6 @@ hash = "503569d1bccf50d580e517550e8f66574d881deac197f30fedb0a18ebb5d3ff4"
 metafile = true
 
 [[files]]
-file = "mods/connected-glass.pw.toml"
-hash = "ba633190e61bd7b32e412cb628a83fdd09b53b7ef8a036f1669687c719a99cc2"
-metafile = true
-
-[[files]]
 file = "mods/connectivity.pw.toml"
 hash = "89340330d49ebf646a46af0da4cd457c98e0dca4337490981421d86bfcd2fd94"
 metafile = true
@@ -5565,12 +5560,832 @@ file = "resourcepacks/evil-eye-cozy-overrides/assets/curios/textures/gui/invento
 hash = "e7fa5937f6be374c9c7ec91f44ce1efcf4d9c06e23992917af31ceb70f146630"
 
 [[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/fusion/model_modifiers/blocks/pane_culling_fix.json"
+hash = "db39d9d9d2cc7f73395f737edd7092d241004834410343591ad8f30373ba8045"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/black_stained_glass.json"
+hash = "f975b40db6b0d026c1f5f9a6f6df532a777f27da1c59ba6ce965e4bdfb581c49"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/black_stained_glass_pane_noside.json"
+hash = "2d0d0ca63f825473a6d09cc38634099ed3b5f0fab29ca5ec1de1a25f7fb43988"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/black_stained_glass_pane_noside_alt.json"
+hash = "b79cf77a72ac292820eeada2d98f3ca4b0f4d5f72f64a2a3b3bb538e225d18c9"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/black_stained_glass_pane_post.json"
+hash = "60d135c0ba7d50edb27751b202a71fe696dda4e6f3658dc2769ffe09de97e9f4"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/black_stained_glass_pane_side_east.json"
+hash = "150eded6dd70697a86dc709487d23300f166d8ace49865f7dc72a742a6baa69b"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/black_stained_glass_pane_side_north.json"
+hash = "63bf632a3ef2ce416000a3b1ce050fc9eb964794b52bae39cb06ecec93f5710c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/black_stained_glass_pane_side_south.json"
+hash = "a9e7bd1a3e1eaadd010b4f7f3e2944f8fc97a8fb16ae393affa8f6b923aabd4f"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/black_stained_glass_pane_side_west.json"
+hash = "75ea7ce6ebe182fc53a0c94b78bf9c7c84d86d96e507754c3403a18a63afc2a4"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/blue_stained_glass.json"
+hash = "e29113cbfd96d6cb3e8617686d95ead38d7d23d1c61d770a471be26a69d10871"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/blue_stained_glass_pane_noside.json"
+hash = "e04eacb4318f885e4a5c35d5c86520a87c5e6e22c3f50170ff7490837bc4bde4"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/blue_stained_glass_pane_noside_alt.json"
+hash = "d2fe4e6cb5b2eb47f8886e736617a1b7ebde9752114cf7a07eba7cc0a9898893"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/blue_stained_glass_pane_post.json"
+hash = "4e9bc67dd83e4c31dd89170193d92a5075781cf9462b5891b45145d9d8c143a8"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/blue_stained_glass_pane_side_east.json"
+hash = "15f2877adc2caea39241ee50fba1da9ecefc18dc40868e2de3c48c638d0672d8"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/blue_stained_glass_pane_side_north.json"
+hash = "8b395829677ce8574984c69a7cd3a062059aa22a653b17a183a4433a06a76494"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/blue_stained_glass_pane_side_south.json"
+hash = "675fecae248094e7c702c6e740ff5b9c63175ccad210eccd6d877bb6feda2ca7"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/blue_stained_glass_pane_side_west.json"
+hash = "040853d6ea496b6d7d8919facc0272a59149159007964e71a25de6401e332482"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/brown_stained_glass.json"
+hash = "8db6c1d948c49745ab888c5171aa462051aa01cdd2dea4b0178c04a0703316f7"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/brown_stained_glass_pane_noside.json"
+hash = "2a9d650217218c18a7cd76405b5ff09e2cc0c473047e6a73ca48eb35f488ad14"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/brown_stained_glass_pane_noside_alt.json"
+hash = "6fd59b55c5057a631d4730043f00004529a0e094d93c9539f2ef6731426a32f9"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/brown_stained_glass_pane_post.json"
+hash = "81b61be80add6d382f04934858cc2b1fadc3e96cbdb2e0dde86fe3bac1877262"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/brown_stained_glass_pane_side_east.json"
+hash = "cd11f98acb8f4163765f300ff507dff4f213dd981f105563810378a85df6a38b"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/brown_stained_glass_pane_side_north.json"
+hash = "62a6bc0b176582d8ec2128b681f1a6796cbd6b1c8534ba4beb1db973d0304d59"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/brown_stained_glass_pane_side_south.json"
+hash = "725b3a8679ab9e0ee0c885fe9c51f95762efb40990417b52580112ccfeea9d40"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/brown_stained_glass_pane_side_west.json"
+hash = "ab1b0c842740a62c378adab7f3848be2344fd722d75847b7e0eb659e0ea91b99"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/cyan_stained_glass.json"
+hash = "ac8c3ccb54a890c79195ac15cc86804bd97a558f0d2e3022ed33cc7ebfe38842"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/cyan_stained_glass_pane_noside.json"
+hash = "24a35b266ef605ee9973e2a0b534c83914466bd361990ef309a9d6ad62b71585"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/cyan_stained_glass_pane_noside_alt.json"
+hash = "2a2ed363e2cbbd5105b156fd7e763441537e9f75de9daf7f3123c5ae6b3ea1ae"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/cyan_stained_glass_pane_post.json"
+hash = "f6be0df7d2ce0b1f00b9dfb059a297c65e08144b63eab71d4c191c967c2680f9"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/cyan_stained_glass_pane_side_east.json"
+hash = "6c639c82a8e2c9924a113e48b41f171f0465cd9b0c116c5f187c090d60c1125e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/cyan_stained_glass_pane_side_north.json"
+hash = "0bcefa73220af385e2db667d541c25dd96d9a4a95e8aa6de29c23fbe1c22d565"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/cyan_stained_glass_pane_side_south.json"
+hash = "3a3293d2f5496480f8acf61f1762e7d3de35a28df87435d5a25c1be5bcddf645"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/cyan_stained_glass_pane_side_west.json"
+hash = "433856aecc42239654ba53b2b753754cffe77be7dd44f8fbdc90740a40198bfd"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/glass.json"
+hash = "b6034140c7b43f351264356f28b0e4233b759d84707ec19429ed96cbfa4e3e27"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/glass_pane_noside.json"
+hash = "bb7cc972cf964283a29fb54d2616c935bb3c283d8a2cc93d79c224302873889e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/glass_pane_noside_alt.json"
+hash = "af9900ff68642034f9d63265652367569a2a7e407a63989f915bb197790bab51"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/glass_pane_post.json"
+hash = "01ca0ad1744c32470a46f6217cad7544d7322e5c3d86c4418b5c6308450564e6"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/glass_pane_side_east.json"
+hash = "bb4ad31c847c3277e4d0fe0d6c6cda8d5d4dfc207273f3d18dc5369e69bd18f7"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/glass_pane_side_north.json"
+hash = "9446d7925e3c66c4fc4c3cbc8dd04ce9ccc0ea8d9f4620e40170c901fe98ac7e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/glass_pane_side_south.json"
+hash = "82c9032a6e91b136620b6db6d914d40401a0756de0d703620ef9cc8ede2cbe7b"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/glass_pane_side_west.json"
+hash = "3da08df369f2c8fb125afa8d27afbd48acffa4e51708e25d542cf4424328312a"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/gray_stained_glass.json"
+hash = "b7202c3c7bd2a853be5ff376482e66e37a4381168ee3724153ba88a4f8b80a62"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/gray_stained_glass_pane_noside.json"
+hash = "3dac3be7c7c14e84540dabf0d316df9eaf3903e96b9ec8f6eae1365aec335e83"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/gray_stained_glass_pane_noside_alt.json"
+hash = "7e6337c421fa13ce429a4d4823af3cb1da78f62d580dabafc406a2d243866fdd"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/gray_stained_glass_pane_post.json"
+hash = "e362468183103a10ec6ffae2c89be48236ab6c67f058b9843fbf9ddd354ddd87"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/gray_stained_glass_pane_side_east.json"
+hash = "e4ca9531c35f1e2073cf9d9ea9003db9bdbc91a34db439395cc2e9583774f4c2"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/gray_stained_glass_pane_side_north.json"
+hash = "31447059b77e2267021e6d6a8d2b34b1e52794c137e939c0f644e48416b2ff62"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/gray_stained_glass_pane_side_south.json"
+hash = "e44ccce4c3b150dbbc1982bd46d7a4b70cdfa93ae6c4953138a2af113d2163e5"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/gray_stained_glass_pane_side_west.json"
+hash = "9908bcd122972fa8badc0caa41de0327e066bebb5af81434af34ba94fcefd56a"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/green_stained_glass.json"
+hash = "69cc7aeabaef436a4e8492b045b6bfa80fe7a580e37b66051ffcaf1c1c1019ea"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/green_stained_glass_pane_noside.json"
+hash = "7b33aaa368f6701187f2cd5c541bb2c327fb8e9599296176e3c1d2d825bb924c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/green_stained_glass_pane_noside_alt.json"
+hash = "1a61e54637f3f2ee214a76a9ab17995a5eb0040a11af8b3978df2d998cb9b3a4"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/green_stained_glass_pane_post.json"
+hash = "35b58aa38ecb13d47d9debd97ae3359c6499ea42e522b2ff71e8d523a54fbd99"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/green_stained_glass_pane_side_east.json"
+hash = "d66d2ecb8699f7a0583a561c8905bb13be8b95fd27035c14cd1ec6acb00d19eb"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/green_stained_glass_pane_side_north.json"
+hash = "4a32d9774607c6eca2429b5d782bbd136c9cd9e9e11da71b2f2c983393fc8755"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/green_stained_glass_pane_side_south.json"
+hash = "f1840487193786afb68abd41d3c3c664bd13af5d54d9c348bac65ad713e23cce"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/green_stained_glass_pane_side_west.json"
+hash = "7efbafb68362a0ba9b66469227c873f8d1d551880fb7bf281113b05b725ab8f8"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_blue_stained_glass.json"
+hash = "edb8a22e76f1149fd525bcdf80f4d9801ed9f3a2aeaf070f4b72f7552fd13dda"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_blue_stained_glass_pane_noside.json"
+hash = "1db9051be56cd74ca4fb83adaa7c5ffcb3ae47093a3fdeb3953a391830e814ab"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_blue_stained_glass_pane_noside_alt.json"
+hash = "5b65c9afe849dfb37240776da10177e59ed822b3a71ced0c4b16f22071eec8e2"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_blue_stained_glass_pane_post.json"
+hash = "a7ad433a56be0a152b7766ff570b9e7ea4c9b392ad2259b664212427a91df57d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_blue_stained_glass_pane_side_east.json"
+hash = "61ef9dd554597dac2e6b45fb63c8a8930f27d7fb24473b6ae7b7f154219c6200"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_blue_stained_glass_pane_side_north.json"
+hash = "ca65726f59726fde0bd36f28fe1b7cb90548b7a887a045b49907d19156efda39"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_blue_stained_glass_pane_side_south.json"
+hash = "a7d9440e537aa369cfe77139930ea933804a3e44dfb2df8904023f15ee870a2e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_blue_stained_glass_pane_side_west.json"
+hash = "cdfb6d1b5a922de5f17cc504d58b1a44be4928bf4e2d0b09a0b656db83d5adbc"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_gray_stained_glass.json"
+hash = "4e8c92fe4d46c4b202d3f97792d0131ca7a4363adf57cf290ffa65b91d8d81b1"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_gray_stained_glass_pane_noside.json"
+hash = "62f7a2c8587111eee001b96af94ace3109173d5d2aecf25f4da22c1e89b6a3e5"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_gray_stained_glass_pane_noside_alt.json"
+hash = "1f9e4f746674ccd656eee4fd7bbc440fddc14c9a1f71f3eefa611abdfcfab3b7"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_gray_stained_glass_pane_post.json"
+hash = "49f1ab2f2386ce2b9ddaf8ed06f05aaf425f4d26ee0fa5c9c404b7fdee3ae49c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_gray_stained_glass_pane_side_east.json"
+hash = "9efaac0d0bd8847ac0b25dcb917bf53902b1d0f4285788c403878e79b740d035"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_gray_stained_glass_pane_side_north.json"
+hash = "f9ddeda148d9f4b318a7ec5d8a41f9f666f4de036e07a436769fdd4ae592fb52"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_gray_stained_glass_pane_side_south.json"
+hash = "6cffb43ce9c1ed4c03cb5a67baa834c87af2771ba144b3e0ff41c715828557ea"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/light_gray_stained_glass_pane_side_west.json"
+hash = "9ea2becd057110660e43004d066c6c73baa9f77eb6e40de2056d7606d65b14bc"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/lime_stained_glass.json"
+hash = "176ff83f6db8083cab72dffba285ae74bc257543d8f3efdde3dea437118fd895"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/lime_stained_glass_pane_noside.json"
+hash = "c6efcbfbd74ef0730bce1f737bfb0085a43cad0475c1d7495bf1ac299b3f44dc"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/lime_stained_glass_pane_noside_alt.json"
+hash = "f0b5d2ef80303d0fc766ba33e7e32aad67ecf8de3a0ff7477736c86922da1d82"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/lime_stained_glass_pane_post.json"
+hash = "0dde4802c81ddfc3e192c6bd6b0f586fea83b98c267a83689596a3c43f0f8271"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/lime_stained_glass_pane_side_east.json"
+hash = "df34a92c0d1f535c7e5c3509be3c41d19ce95b991944f14bae381a7fad769ab0"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/lime_stained_glass_pane_side_north.json"
+hash = "e048497208f0bcb13974f470ec3abc10df276bbecb19d5e301aa55965516cbe7"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/lime_stained_glass_pane_side_south.json"
+hash = "01e066fcf5799517727a862646c63d1ab8e56e006867342e3f755a4e6031beb2"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/lime_stained_glass_pane_side_west.json"
+hash = "09f467ef2084110f855dc709e001a3db69b9b5e93a41aa2f45aded5187eab264"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/magenta_stained_glass.json"
+hash = "dd340cdb8b4a8cd41e2bd4404a63c7b451ba99baadae01ea07310d5378da07fe"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/magenta_stained_glass_pane_noside.json"
+hash = "e05c485b763a72e849cb6c23375260e0a3f4bb858d182fafb37351a812af3cfb"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/magenta_stained_glass_pane_noside_alt.json"
+hash = "835217dd59523ce8a78343a9f6668bfad38eb137c3a76a1bb54bc8fac067744e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/magenta_stained_glass_pane_post.json"
+hash = "434c95cae6804a26b44f47efa64f895b844f697aa17ef25d2304a91708f57125"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/magenta_stained_glass_pane_side_east.json"
+hash = "939e01bc121955ecb592965e598c6e084fa609ebfc0655dbc26e2e99be5bbf06"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/magenta_stained_glass_pane_side_north.json"
+hash = "5dfee3ce2a0e0052e9af574bd2ac745636abe2d5d6c4a0be4057cfbac75f8b2e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/magenta_stained_glass_pane_side_south.json"
+hash = "0ca18235d7b7bc6418948a9a36649d1f8e4a048338b29226861222fa13477a88"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/magenta_stained_glass_pane_side_west.json"
+hash = "c2089d88e3b319f0c784d9a35a9cfb0d83c3638c584fb73ade63e2239d4c2ac6"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/orange_stained_glass.json"
+hash = "46f1f068f78a054057fc0bfca61701a94208bf9ae04c00379170c26054fc8577"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/orange_stained_glass_pane_noside.json"
+hash = "83fc5ef7f32c84a9e10ae8dde9f707e8c9a8737e161ac2169e59cc39e807899c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/orange_stained_glass_pane_noside_alt.json"
+hash = "096a404403da1e8fd094290300ae8c4c01c985a31a56d762d2c101b018229907"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/orange_stained_glass_pane_post.json"
+hash = "81c2dd12e491390e53821c15068145665a40c374d71cf096d9719709c1419591"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/orange_stained_glass_pane_side_east.json"
+hash = "02375ea4cf91ed23b66075c4a03fe254f9f22f644d560438fa70b0469d8265f9"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/orange_stained_glass_pane_side_north.json"
+hash = "5ae026e0fa45516779412fe59832f9d410619e2f5a8626f9f644666c24f4696e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/orange_stained_glass_pane_side_south.json"
+hash = "4cd6406db91cf79bbc4b2215ceb1e2319fff7cb1221a271b87f273e3557ff623"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/orange_stained_glass_pane_side_west.json"
+hash = "5184487c6c3014be32025f62d59b309805057874da72c393b1f44a5453c29619"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/pink_stained_glass.json"
+hash = "250ffd05674b2d720fc350dc1c4803ce0fd5d5076311d39c30a246e4f2cd1bc1"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/pink_stained_glass_pane_noside.json"
+hash = "17066758edae6c8543ee5dfb87b4ba7c252a6713fb7ff222422809095ed650c4"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/pink_stained_glass_pane_noside_alt.json"
+hash = "ab810bfa3d81a1f77e1099364ac0cd0feb51899554863e706a0af6ba82c7d5c9"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/pink_stained_glass_pane_post.json"
+hash = "2e107f3c0861e77f74d2576148ba0cd730db85e2e33ed6080e427847d84fd3c9"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/pink_stained_glass_pane_side_east.json"
+hash = "083c8f72f59772404565a8bcf56fbadf52723aff02e2d6aadfecb3e5543ce4e1"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/pink_stained_glass_pane_side_north.json"
+hash = "54e9cd202dadc3c9ed5f73ed97e5505404ca1874dd620e4d59c7862f6da44b69"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/pink_stained_glass_pane_side_south.json"
+hash = "705495c0dceca5fa2161c19e04c663720dfed2e3c7148d5052a98ee9794d569d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/pink_stained_glass_pane_side_west.json"
+hash = "8fd322d7f6aa6383e32292263ec94a4026fa09a465a41798d9073d209a25e2d5"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/purple_stained_glass.json"
+hash = "ad678ac9e73d9fb369a92bba4a29a6d8d7b04c20e59d6a18ce3d709b88334543"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/purple_stained_glass_pane_noside.json"
+hash = "e1cff71e83865b94fd44863ad9d436a627fe2cf1c6522334afb4c8e3ab15864f"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/purple_stained_glass_pane_noside_alt.json"
+hash = "e8e23cbaaf57952a26dc7211f708e535f91de575a6a79b3ed6ee0f1e67d6bde5"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/purple_stained_glass_pane_post.json"
+hash = "2adc239d5351f9da4e3dc94b0d4562c1a92b73bde8299e0bdb60975a626503e8"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/purple_stained_glass_pane_side_east.json"
+hash = "782fc6403f2f5c5a12acbafdbcbbea56e03e1b89e4daf531a1f769a53a4726b7"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/purple_stained_glass_pane_side_north.json"
+hash = "b68b8aec160a61f3f472fcbc96496ff34683613c6a32ffa730b64a7a653e48c2"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/purple_stained_glass_pane_side_south.json"
+hash = "f49033d207c0cced8d20b7834f8bd668741612888bba0d021860ce3def03a763"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/purple_stained_glass_pane_side_west.json"
+hash = "12e73c0177616dcd111d5c77e8b592288212d2121ada6c5cd8600a916a88db52"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/red_stained_glass.json"
+hash = "f1d51e56c044efea8a154014099aa9e6afb96243c894b95d06e3c3dbbcb4325a"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/red_stained_glass_pane_noside.json"
+hash = "f38012af1a3d3d0296bd6e1e55d3f9f8d8f5a704f2fcd69a4b9eaa0f75fde1eb"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/red_stained_glass_pane_noside_alt.json"
+hash = "da136dd4b4808269ddf4867248efdfc47b3dde0e1b48fdc6b4286157f2c79dba"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/red_stained_glass_pane_post.json"
+hash = "757283ad48fa2efba5246aeeb26d94e00b6f6a9acc135321d5349aa279b0e38a"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/red_stained_glass_pane_side_east.json"
+hash = "3dbc116cff28fccf9a0d6526a2753f3d861b4c49a68ebf800ffed7480febfff2"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/red_stained_glass_pane_side_north.json"
+hash = "5aa6686e2f14415d5065010ad17fd45554ac706550e0f60d4bee1c6000a4117f"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/red_stained_glass_pane_side_south.json"
+hash = "f5ac5e98a4d9ee149a785c80ab4fd46ce6b0432b34907a73f7ed9641d9e8955c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/red_stained_glass_pane_side_west.json"
+hash = "31965c9c939b83f666b357c45d4f0c5a017b0db9477bee5b105e26d244776c1e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/white_stained_glass.json"
+hash = "48d983189257da64bb34ae11be7bd4b5f21761b80639db21d65e0bf95a440277"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/white_stained_glass_pane_noside.json"
+hash = "9c185e748d776f39c9275f296508763ed94e33525f3e178f62950e53f45acf6c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/white_stained_glass_pane_noside_alt.json"
+hash = "50866846c9969d88556e6ce8a82ecd7e46ac56c567464d4501fe07ec2da9154a"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/white_stained_glass_pane_post.json"
+hash = "5c08c8c5e9db267f475c2aa12a9681debdc337483b6ab6b54d396ee000afbfe7"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/white_stained_glass_pane_side_east.json"
+hash = "171fa27db5a5fff9078549b7d695f9d3868c56a84facb7ba729392202ff1d74a"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/white_stained_glass_pane_side_north.json"
+hash = "eb7c4e4b005642dbe79e13701303da0786399a294a50f20b09b1388f336d494c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/white_stained_glass_pane_side_south.json"
+hash = "264efd58c06e7c021e1cc6a7ea7e8bae4a5d4e796c86ab9c37a12633454af7d4"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/white_stained_glass_pane_side_west.json"
+hash = "fb02732042402f70a919ccaab782981312475e17fda3743492d3fbe08fe3672b"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/yellow_stained_glass.json"
+hash = "cfbcfd429194db7cf42e3930011c376e18e7d20abc26c59c15665d613803f6c6"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/yellow_stained_glass_pane_noside.json"
+hash = "bc984ef273ca2b53a64a30ed6eca0d704cb4cb3690339147930d4e5023da89df"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/yellow_stained_glass_pane_noside_alt.json"
+hash = "eed04f645b509caf9aed7e49c749f14f790127cbc54036c1a5d2523a57d46ff9"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/yellow_stained_glass_pane_post.json"
+hash = "2c41feb7f6431d429e7d698755d91dcc13142e25759dd219c62201b8ccb32827"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/yellow_stained_glass_pane_side_east.json"
+hash = "39729cc5660b94fe9a7284e95c9e30c06c666c40ab4681c12a9cae705a2a77be"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/yellow_stained_glass_pane_side_north.json"
+hash = "853658a9e532e904933a730f953cd19c5293c1a94de82fb9a0f8d2cc36a156a0"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/yellow_stained_glass_pane_side_south.json"
+hash = "1065386fedd73f4c137b2cffe1fca7fe2932d809085e1ef73ec76f9f8ec953a9"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/models/block/yellow_stained_glass_pane_side_west.json"
+hash = "194f02b3a38b379f2680118dbddbc50a596ee920f36ed4ed3aeb579654a6f2ad"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/black_stained_glass.png"
+hash = "d82b347ba8ac88f319b781b107f92dc01043693e8cb2d0670a250bd39ee481f6"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/black_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/blue_stained_glass.png"
+hash = "1e40c02d4f0349167d7b4662d74838f6b915fbdd20c06343c476cbae334dcdc2"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/blue_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/brown_stained_glass.png"
+hash = "18d3890bedb867aa1bde3753d31766de8779533b46a346abd9e6d7902cc12b42"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/brown_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/cyan_stained_glass.png"
+hash = "573a8d9b72fb76d09a89681fb170fa983fd353ea01b36bba502d3674f1aaca72"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/cyan_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/glass.png"
+hash = "494cb1b381785d6b1210c039f7e1438200699c99115bc8d76a02924c1caead0d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/gray_stained_glass.png"
+hash = "2d939445300a3e199e2868f66a925cb92c57fad2a6c0825f6dd4b1f2ac30d989"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/gray_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/green_stained_glass.png"
+hash = "867dd488f410590d701c9469d3ec570b7347e231260398e3cdf073d3d8cd080e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/green_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/light_blue_stained_glass.png"
+hash = "7ef935c5fbda4a0b98a51efe731e688d51367cd48c4e427f813d051833eba157"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/light_blue_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/light_gray_stained_glass.png"
+hash = "30b39280191a033ed76314d3b2062834fc3b9e872519457fc630eb8e3a1d4221"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/light_gray_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/lime_stained_glass.png"
+hash = "ab83748e10ce00eff09eff0cfa0652d2777ee442b686e2dd0230b7ec279f3c98"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/lime_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/magenta_stained_glass.png"
+hash = "14917c5a3b10ea09b7464e6d05a74a102e176b232105230cc1088cc418141c73"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/magenta_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/orange_stained_glass.png"
+hash = "5661c7e42ff614813c7b20f870c4d84454136a3c1a748e7ce02cf8a0dd7446cc"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/orange_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/pink_stained_glass.png"
+hash = "90f03167e144a5ff7eec767d0a3ef3fc13d9505a9bdd05483d6cf19f69718d9f"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/pink_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/purple_stained_glass.png"
+hash = "3bd2bc7fe260196de7072b8e188b1291149185689ce1fbdad817c9933e4957dc"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/purple_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/red_stained_glass.png"
+hash = "15f53a4326bd69c7ab0e8f392777cb70509d00b9878f032fc4da7abc6797f450"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/red_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/white_stained_glass.png"
+hash = "835336d6bac42ed41b2adf0a60c44d9530e8893880c5df1a0655d68261387ccf"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/white_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/yellow_stained_glass.png"
+hash = "a5e1a273327c34b6874f65cbe45ffd79774ad763117ccc6e648ebb9d17618c41"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/textures/block/yellow_stained_glass.png.mcmeta"
+hash = "f7d805fe9c69922f3e2396cb4e420cc1c9e02b5028ffa2b6b1bc71159645f63d"
+
+[[files]]
 file = "resourcepacks/evil-eye-cozy-overrides/assets/iceandfire/textures/block/raw_silver_block.png"
 hash = "b27b44a7898ccef08bb51b282301070199d77959b4d0e3352a2939e4bf33a00a"
 
 [[files]]
 file = "resourcepacks/evil-eye-cozy-overrides/assets/iceandfire/textures/item/raw_silver.png"
 hash = "7a3212bb64be3ec2e5143517a552b9c135201f4d063290a460d96c421b7c2349"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/black_stained_glass.json"
+hash = "07ed99265294f07a7b5198d86e56248948ef8b5bbf43a7b8ee0e8d98e4578cab"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/black_stained_glass_pane.json"
+hash = "f5983d9232fdbf743b06a815c4e091a372ce0c596f023f26fd9531ad7df9cf89"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/blue_stained_glass.json"
+hash = "575fbd52e8e013d1d709df740be1c9e407cc26d1ca2425ea564bbeac3ed98d8d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/blue_stained_glass_pane.json"
+hash = "4588a243a8e8e99e4a19f51dfcabfd14b71d6a262ea76022eb7e8cf7885ad1e6"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/brown_stained_glass.json"
+hash = "5fe62c4e54c4f5d776665fdfb0a397a3cab133b1da954257cfe51b1a3a18d439"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/brown_stained_glass_pane.json"
+hash = "c4371e4ea22178412a2745e9169c8ce3c850b729441ee1fbdbcdc5f0e0631091"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/cyan_stained_glass.json"
+hash = "2fe049dcec96d9a9c9baff14a141346e24c6457110485ca8ef2ae0be640412bc"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/cyan_stained_glass_pane.json"
+hash = "8c4b74dc0b0fc00dc188205424295a0fb378fa352f3ba71f9f24002076282612"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/glass.json"
+hash = "a3021bfaedd6d44bbc311d662ddf9c03c577f22918fd43fa3d0e07af8fbb3ec7"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/glass_pane.json"
+hash = "e49ea20dda8a711a990b0d05749c5eaf737aabdcc9643132de72a12d44c62709"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/gray_stained_glass.json"
+hash = "62e746b57c11d87a5fab4c47b9094f49dceb883fa911fece2647e3a8281b56b2"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/gray_stained_glass_pane.json"
+hash = "529b996cb7c2ae4ea7a543650c984195f79de9103229b8eee2a10faff3d89062"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/green_stained_glass.json"
+hash = "6a997a8b55eb5873a8211ed8bb126f362483cd89c497db240de5b5b54be9d669"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/green_stained_glass_pane.json"
+hash = "e0e0aca72e8b985c3c9130bd6308b653f9876b92d37d7292b75d6abb8ee1b82c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/light_blue_stained_glass.json"
+hash = "879c53bce531e40ec3aa9935edddba8c3ffdfafc54c8b329975bc79c04823c94"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/light_blue_stained_glass_pane.json"
+hash = "bd70dddca1eabe14405ec47b11c120d54c95448be05cb7f8169d4ef58ae05b3b"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/light_gray_stained_glass.json"
+hash = "6d72435d8e6e1aa27457a0b2deef75f851bd936cf42aa6eeb22e38495c7e1e27"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/light_gray_stained_glass_pane.json"
+hash = "be1e70b8db5be54273c2237b7619831aea7b2ccb75273a59008b1e665d8daada"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/lime_stained_glass.json"
+hash = "59e76f830d919a0e6750007920946edf4c4e1b679be35643abf70a9aad97fbf6"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/lime_stained_glass_pane.json"
+hash = "47c61bb5abd7398a0188e4a7b55967ca232c3296fb533513cc8a2f598e1b07e1"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/magenta_stained_glass.json"
+hash = "0702ea141282287cf4ba016fb0da6cd257de2351931255dd191b36e3fed0d40d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/magenta_stained_glass_pane.json"
+hash = "382421fcca905030369684bf55c7b614d0b413e4d62bb764f73eb8f350c54b46"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/orange_stained_glass.json"
+hash = "e01cf372adfb332d35fbfee58adfe04193ff3c1794dd51690197d4a88178fe0e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/orange_stained_glass_pane.json"
+hash = "f832abbaca832d75d3e266866f38f696891f4e07d909a245403c86bd3388180b"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/pink_stained_glass.json"
+hash = "ad0abb6fe41044dbde87f67d4984c0299d3a382304936cdbd1851295c5c21956"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/pink_stained_glass_pane.json"
+hash = "393fb0f6254cdbf7593dca7a2028d2db1efe7520169da884e99bd1b9bc71e6b1"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/purple_stained_glass.json"
+hash = "9bdd69ceb79cb9af73b87801084727d75e14110746f5f7e7c90dec8dce44499f"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/purple_stained_glass_pane.json"
+hash = "38148b96a8b2541057fcd037f8a498a95b2289dfe96128681f5085612489d80e"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/red_stained_glass.json"
+hash = "70c2e18346d50e21c55aaf6111c49115b4c9faeb47c54799b2439186313f2639"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/red_stained_glass_pane.json"
+hash = "dee0479790b84358e5b1542781c8d24b7697c9130ad9ee8e65bbae934d21a03d"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/white_stained_glass.json"
+hash = "a636a44b31e7e1eb6b91def1996e9640b28a4fef2d29873092e1ea5731226f7b"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/white_stained_glass_pane.json"
+hash = "f14be23f65d7b71872e541f008ef467e6e1996f28c60f7bbe1f09e2fcaaddf3c"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/yellow_stained_glass.json"
+hash = "ccd3dbd789d8c3220664a2978f85e1e96c5d5a6071d7cde7789743bc087f78b1"
+
+[[files]]
+file = "resourcepacks/evil-eye-cozy-overrides/assets/minecraft/blockstates/yellow_stained_glass_pane.json"
+hash = "c55727ad64ec886187c0569568e3fe92117242a5dbfb46b66b2cd3e26f1919d2"
 
 [[files]]
 file = "resourcepacks/evil-eye-cozy-overrides/assets/thirst/textures/gui/appleskin_icons.png"

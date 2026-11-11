@@ -1,0 +1,17 @@
+{
+  "type": "fusion:connecting",
+  "parent": "minecraft:block/template_glass_pane_noside",
+  "connections": {
+    "type": "fusion:or",
+    "predicates": [
+      {
+        "type": "fusion:is_same_block"
+      }
+    ]
+  },
+  "textures": {
+    "edge": "minecraft:block/magenta_stained_glass_pane_top",
+    "pane": "evileye_glass:block/magenta_stained_glass"
+  },
+  "loader": "fusion:model"
+}

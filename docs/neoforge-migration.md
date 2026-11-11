@@ -202,6 +202,10 @@ Owner does not use it. `mods/light-overlay.pw.toml` (12.0.0), `config/lightoverl
 
 Owner decision. `mods/tool-belt.pw.toml` (ToolBelt-1.21.1-2.2.10, items `toolbelt:belt` and `toolbelt:pouch`), `config/toolbelt-client.toml`, `config/toolbelt-common.toml`, its two default keybindings (open R, belt slot apostrophe) and its mod-map category are gone; the lock records a `drop`, both configs are `dropped` in config-decisions and `toolbelt` is in `removedMods`. R now has no in-world binding (EMI's view-recipes R works only inside screens). No KubeJS, recipe, EMI or showcase file referenced it. The owner ruled removal without a world rescue: a read-only byte scan (`jobs/2026-11-01-remove-tool-belt/scan-*.json`) found `toolbelt` in both players' playerdata and advancements and in five entity chunks of the Stable snapshot, the live Stable save and the converted Trial; those references were not decoded, so any belt or pouch there (and its stored tools) will not survive the converted world.
 
+## Connected Glass removed (2026-11-02)
+
+Owner decision (dk-037aa406). `mods/connected-glass.pw.toml` (connectedglass-1.1.14-neoforge-mc1.21: clear, borderless, scratched and tinted-borderless glass and panes, 119 blocks) is gone; the lock records a `drop`, `dispositions.json` has the matching drop, and `connectedglass` is in `removedMods`. Its 112 EMI colour-hide ids (`config/emi-curation/colours.json`, 1,168 -> 1,056 explicit ids), its decor mark and its mod-map category are removed. The owner never placed a Connected Glass block, so there is no world rescue: unknown ids simply drop. It shipped no config file. SuperMartijn642 Core Lib stays for Additional Lanterns; Fusion stays (Ender IO glass) at 1.3.16. Vanilla glass, stained glass and all panes now connect through Fusion models generated into `evil-eye-cozy-overrides` (`tools/resourcepack/fusion_glass/`, see DECISIONS 2026-11-02). Mod metafiles 162 -> 161.
+
 ## 100% checklist
 
 See plan Phase 10. Every criterion there is required. Temporary absences, a successful boot on

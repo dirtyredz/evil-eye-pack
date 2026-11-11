@@ -1396,7 +1396,7 @@
    "rationale": "Replaced by the owned Evil Eye Tweaks 0.4.0 (entity/pets/: shoulder dismount rules, portal/respawn/chunk-unload/follow-failure teleports, injured-pet rules and sweep protection with Companion 6.3.0's defaults, which equal config/companion-common.yaml). Its three game rules sat at their defaults in the converted world (petFriendlyFire true, immortalPets false, alwaysTeleportHorses false) and are not carried as game rules. No entity data."
   },
   {
-   "action": "repoint",
+   "action": "drop",
    "metafile": "mods/connected-glass.pw.toml",
    "old": {
     "file": "6811804",
@@ -1409,36 +1409,7 @@
     "source": "curseforge"
    },
    "provisional": false,
-   "rationale": "survey-selected exact NeoForge 1.21.1 file",
-   "target": {
-    "channel": "release",
-    "declares": [
-     "connectedglass required fusion [1.2.9,) (client)",
-     "connectedglass required minecraft [1.21,1.21.2)",
-     "connectedglass required neoforge [21.0.78-beta,)",
-     "connectedglass required supermartijn642corelib [1.1.17,1.2.0)"
-    ],
-    "file": "6811960",
-    "filename": "connectedglass-1.1.14-neoforge-mc1.21.jar",
-    "loader": "neoforge",
-    "metafile": "mods/connected-glass.pw.toml",
-    "mods": [
-     "connectedglass@1.1.14"
-    ],
-    "name": "Connected Glass",
-    "project": "383129",
-    "publisher": {
-     "md5": "978a7bee8daa65f9e3b480405e6da41c",
-     "size": 819976
-    },
-    "sha1": "0a44c13d6744e0eeec5bf38f58756a8e86e96f55",
-    "sha256": "e5b2a1cd8ef1b8a49a322aeccfc5cd9a53d8303613b9f30718f12a1e525d49fe",
-    "sha512": "c0db64151d850d568386b4c287e75fa882a4590802a0a9bc0eec7d47240e56dbc3215b4edede97204d7817afc097cba5e438a66eb58b956213b2289e342823a5",
-    "side": "both",
-    "size": 819976,
-    "source": "curseforge",
-    "versionNumber": "Connected Glass 1.1.14 for NeoForge 1.21"
-   }
+   "rationale": "Owner request 2026-11-02: removed. Connected Glass (119 connectedglass: blocks and items) is dropped with no world rescue; the owner never placed any, so unknown ids are simply dropped. Vanilla glass, stained glass and their panes now connect through Fusion resources in evil-eye-cozy-overrides."
   },
   {
    "action": "repoint",

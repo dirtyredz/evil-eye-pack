@@ -73,6 +73,9 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |   |-- migration/
     |   |   `-- deferred/
     |   `-- tests/
+    |-- resourcepack/
+    |   `-- fusion_glass/
+    |       `-- tests/
     |-- runtime_env/
     |-- script-run/
     |-- server_stage/
@@ -136,6 +139,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
 - `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading, byte hashing (`hashBytes`, `sha256`) and `nbt.cjs` (NBT/region-chunk reading, used by world_trial and the world-server player check), and `path_guard.cjs`, the shared no-link / containment / protected-output guard used by world_trial, client_mixin and the installers.
 - `tools/testing/` — tools that boot or exercise the pack: `client_mixin/`, `world_trial/`, `server_smoke/`, `pack_test/`, `showcase/`.
+- `tools/resourcepack/fusion_glass/` — unshipped generator (`generate.cjs`, `png.cjs`) for the Fusion glass resources in `resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/` and the matching `minecraft/blockstates/*glass*.json`, plus `tests/`; output is committed, never hand-edited
 - `tools/runtime_env/` — shared machine environment (`env.cjs`: Java per major, packwiz jars, artifacts root; `FIXED` ignores `SMOKE_*` overrides, used by the install route) and hidden child-process scopes (`procs.cjs`); imported by `testing/`, `analysis/` and `packwiz/`.
 - `tools/analysis/` — tools that read the pack's files and jars without booting it: `dedup/`, `emi_curation/` (tests), `emi_coverage/`, `mod_map/`, `malware_guard/`, `library_closure/`, `consolidation/`.
 - `tools/testing/client_mixin/` — offline CLIENT mixin audit: `stage.cjs` copies pinned pack files and cached
