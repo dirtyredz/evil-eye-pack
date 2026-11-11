@@ -52,7 +52,7 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/runtime_env/tests/*.cjs tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/packwiz/tests/*/*.cjs tools/packwiz/tests/*/*/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.cjs tools/testing/showcase/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/resourcepack/fusion_glass/tests/*.cjs tools/data_io/tests/*.cjs tools/world_server/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs
+node --test tools/runtime_env/tests/*.cjs tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/packwiz/tests/*/*.cjs tools/packwiz/tests/*/*/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.test.cjs tools/testing/showcase/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/resourcepack/fusion_glass/tests/*.cjs tools/data_io/tests/*.test.cjs tools/data_io/world/tests/*.test.cjs tools/world_server/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs
 # NeoForge migration lock (offline): node tools/packwiz/migration/migrate.mjs check  (see neoforge-migration.md)
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
@@ -256,7 +256,7 @@ full report, including entry hashes, and prints counts. Policies live under
 node tools/analysis/malware_guard/cli.cjs scan "C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft" --out tools/analysis/malware_guard/.local/scan.json
 node tools/analysis/malware_guard/cli.cjs drift "C:/Users/dirty/MultiMC/instances/Evil Eye Stable/.minecraft"
 node tools/analysis/malware_guard/cli.cjs gate
-node --test tools/analysis/malware_guard/tests/*.test.cjs tools/testing/pack_test/tests/*/*.cjs tools/analysis/dedup/tests/*.cjs
+node --test tools/analysis/malware_guard/tests/*.test.cjs tools/testing/pack_test/tests/*/*.test.cjs tools/analysis/dedup/tests/*.cjs
 ```
 
 `scan` also accepts a mods directory, jar, ZIP or folder resource pack. A folder
@@ -548,7 +548,7 @@ The evidence command requires source-manifest.json and snapshot/ in the job, ref
 an existing report, verifies both source and snapshot before and after inspection,
 and fails on unsupported files or parse errors. Keep raw snapshot bytes for fixtures;
 JSON preserves values but not every original NBT numeric tag type. No live world is read.
-Closure defaults to the existing IPN/Kotlin profile; wave7 is an assessment with all
+The closure CLI defaults to the existing IPN/Kotlin profile (the scanner requires an explicit profile); wave7 is an assessment with all
 candidates retained, while wave7-drawers evaluates only physical drawer-addon removal.
 Both scan all pinned bytes, including proposed exclusions. A clear closure never
 qualifies storage decoding, menus, rendering or an addon drop.

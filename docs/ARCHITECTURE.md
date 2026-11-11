@@ -3,7 +3,8 @@
 ## Consolidation evidence
 
 Library closure keeps candidate definitions and proposed physical exclusions in
-`analysis/library_closure/targets.cjs`. Every pin is hash checked before recursive
+`analysis/library_closure/targets.cjs`. The CLI and tests select a profile; the scanner
+requires explicit definitions/profile arguments. Every pin is hash checked before recursive
 archive traversal, including excluded roots. Reports retain archive SHA-256, provider
 provenance, required/optional edges and conservative constant-pool references. Missing
 inputs, malformed metadata and ambiguous target providers fail closed. A clear closure
@@ -11,7 +12,7 @@ is only dependency evidence, not behavioral replacement acceptance.
 
 `analysis/consolidation/run.mjs` reads a manifest-backed historical world snapshot,
 verifies source and copy before and after inspection, and writes only a new job report.
-The generic world-trial inventory visitor supplies whole NBT documents from all region,
+The shared `data_io/world/inventory.cjs` visitor supplies whole NBT documents from all region,
 entity, `.dat` and structure `.nbt` files. Candidate interpretation stays in
 `wave7_evidence.cjs`: eleven mounted-storage IDs, Polymorph selections and diagonal
 references versus actual packed-palette counts. Equal payloads retain every owning
@@ -59,7 +60,9 @@ instances, overlapping paths and symlinks/junctions in ancestors or descendants.
 use independent file copies, SHA-256 manifests and read-only file attributes. The source and
 snapshot are verified again before and after each boot; neither is booted.
 
-The offline inventory decodes all current region/entity files and `.dat` saved data, including
+`data_io/world/` owns NBT decoding, guarded file walking, manifest verification and
+the supported-file classifier used by both inventory and consolidation reporting.
+World-trial owns snapshot creation and mutable copies. The offline inventory decodes all current region/entity files and `.dat` saved data, including
 unloaded chunks. It retains full entity, block-entity, player and mod saved data alongside item
 counts, block palette quantities, biome references and chunk terrain digests. Parse errors
 invalidate input. Comparisons conservatively flag unexplained differences as LOSS; a raw
