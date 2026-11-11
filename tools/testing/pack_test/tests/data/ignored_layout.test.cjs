@@ -10,7 +10,7 @@ const path = require('node:path');
 const { pinnedJars, defaultJarDirs, root } = require('../../../../analysis/dedup/catalog.cjs');
 const { listEntries, readEntry } = require('../../../../data_io/zip_reader.cjs');
 const { classify, dataPath, layoutFor } = require('../../../../data_io/resource_layout.cjs');
-const { readRuntime } = require('../../../server_smoke/runtime/runtime.cjs');
+const { readRuntime } = require('../../../../runtime_env/server/runtime.cjs');
 const { triageIgnoredLayout } = require('../../checks/ignored_layout.cjs');
 
 const policy = JSON.parse(fs.readFileSync(path.join(root, 'tools/testing/pack_test/data/policy.json'), 'utf8'));

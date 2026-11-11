@@ -4,9 +4,9 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { writeStamp, readStamp, assertStamp } = require('./runtime.cjs');
+const { writeStamp, readStamp, assertStamp } = require('../runtime_env/server/runtime.cjs');
 
-const { BOOTSTRAP, INSTALLER_JAR_SOURCES, INSTALLER_URL } = require('../../../runtime_env/env.cjs');
+const { BOOTSTRAP, INSTALLER_JAR_SOURCES, INSTALLER_URL } = require('../runtime_env/env.cjs');
 
 async function fetchBytes(url, http) {
   const res = await http(url);
@@ -78,7 +78,7 @@ function readRunSeed(runDir) {
 }
 
 async function installPack(runDir, packToml, java, cache, log, scope) {
-  const { withLocalPack, verifyInstalledLocal } = require('../../../packwiz/install/local_source.cjs');
+  const { withLocalPack, verifyInstalledLocal } = require('../packwiz/install/local_source.cjs');
   const cachedInstaller = path.join(cache, 'packwiz-installer.jar');
   if (!fs.existsSync(cachedInstaller)) {
     const src = INSTALLER_JAR_SOURCES.find((p) => fs.existsSync(p));
@@ -88,7 +88,7 @@ async function installPack(runDir, packToml, java, cache, log, scope) {
   if (fs.existsSync(cachedInstaller)) args.push('--bootstrap-main-jar', cachedInstaller);
   args.push('--bootstrap-no-update', '-g', '-s', 'server');
   log('packwiz install (-s server)');
-  const r = await withLocalPack(packToml, require('../../../runtime_env/env.cjs').MIGRATION_MODS,
+  const r = await withLocalPack(packToml, require('../runtime_env/env.cjs').MIGRATION_MODS,
     overlay => scope.run(java, [...args, overlay], { cwd: runDir }));
   fs.writeFileSync(path.join(runDir, 'packwiz-install.log'), r.out);
   if (r.code !== 0) throw new Error(`packwiz install exited ${r.code} (see ${path.join(runDir, 'packwiz-install.log')})`);

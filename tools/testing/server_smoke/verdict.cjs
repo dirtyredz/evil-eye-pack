@@ -2,7 +2,7 @@
 // PASS/STALL/HOST STARVED/FAIL decision and crash-report parsing for the server smoke. No process handling.
 const fs = require('node:fs');
 const path = require('node:path');
-const { isStarved } = require('./process/watchdog.cjs');
+const { isStarved } = require('../../runtime_env/server/watchdog.cjs');
 
 function crashReports(runDir) {
   const d = path.join(runDir, 'crash-reports');

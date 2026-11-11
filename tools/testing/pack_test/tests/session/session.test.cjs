@@ -5,37 +5,14 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const prep = require('../../session/prepare.cjs');
-const { checkDestination } = require('../../session/run_meta.cjs');
-const { WORLD } = require('../../stage_runtime.cjs');
+const { WORLD } = require('../../../../server_stage/stage_runtime.cjs');
 const { execute } = require('../../session/execute.cjs');
 const { analyzeRun } = require('../../analyze.cjs');
-const { describe: runtimeOf, writeStamp } = require('../../../server_smoke/runtime/runtime.cjs');
-const { worldKey, restoreWorld, saveWorld } = require('../../session/world_cache.cjs');
-const NEO = runtimeOf({ loader: 'neoforge', minecraft: '1.21.1', loaderVersion: '21.1.265' });
-const FORGE = runtimeOf({ loader: 'forge', minecraft: '1.20.1', loaderVersion: '47.4.10' });
 const { loadToolData } = require('../../verdict/policy.cjs');
 
+const { fakeStage, NEO } = require('../../../../server_stage/tests/fixtures.cjs');
+
 function tmp() { return fs.mkdtempSync(path.join(os.tmpdir(), 'packtest-session-')); }
-
-function fakeStage(root) {
-  const stage = path.join(root, 'stage');
-  for (const d of ['mods', 'libraries/x', 'config', 'kubejs/server_scripts']) fs.mkdirSync(path.join(stage, d), { recursive: true });
-  fs.writeFileSync(path.join(stage, 'mods/a.jar'), 'jar');
-  fs.writeFileSync(path.join(stage, 'libraries/x/lib.jar'), 'lib');
-  fs.writeFileSync(path.join(stage, 'config/c.toml'), 'k = 1\n');
-  fs.mkdirSync(path.join(stage, 'logs'));
-  fs.writeFileSync(path.join(stage, 'logs/old.log'), 'stale');
-  writeStamp(stage, NEO);
-  return stage;
-}
-
-test('writable run folders must be under the artifacts root and outside every checkout', () => {
-  const artifacts = 'C:/a/artifacts';
-  assert.doesNotThrow(() => checkDestination('C:/a/artifacts/pack-test/runs/r1', { artifacts, checkouts: ['C:/a/repo'] }));
-  assert.throws(() => checkDestination('C:/a/elsewhere/r1', { artifacts, checkouts: [] }), /outside the artifacts root/);
-  assert.throws(() => checkDestination('C:/a/artifacts/repo/r1', { artifacts, checkouts: ['C:/a/artifacts/repo'] }), /inside a checkout/);
-});
 
 test('execute boots exactly once, injects the probe before the boot and keeps the evidence after it', async () => {
   const root = tmp();
@@ -102,74 +79,5 @@ test('offline analysis of a run without a probe manifest is an invalid run (exit
     assert.equal(model.verdict.exit, 2);
     assert.ok(fs.existsSync(path.join(runDir, 'report.json')));
     assert.match(fs.readFileSync(path.join(runDir, 'summary.txt'), 'utf8'), /INVALID RUN/);
-  } finally { fs.rmSync(root, { recursive: true, force: true }); }
-});
-
-test('world cache identity: runtime, seed, profile and jar bytes, not just filenames', () => {
-  const root = tmp();
-  try {
-    const stage = fakeStage(root);
-    const key = worldKey(stage, '1', NEO);
-    assert.equal(worldKey(stage, '1', NEO), key, 'stable for identical inputs');
-    assert.notEqual(worldKey(stage, '1', FORGE), key, 'another loader runtime');
-    assert.notEqual(worldKey(stage, '2', NEO), key, 'another seed');
-    assert.notEqual(worldKey(stage, '1', NEO, 'showcase'), key, 'another generation profile');
-    fs.writeFileSync(path.join(stage, 'mods/a.jar'), 'jar with new bytes, same filename');
-    const changedJar = worldKey(stage, '1', NEO);
-    assert.notEqual(changedJar, key, 'same filename, changed hash');
-    fs.writeFileSync(path.join(stage, 'config/c.toml'), 'k = 2\n');
-    assert.notEqual(worldKey(stage, '1', NEO), changedJar, 'world-shaping config');
-    assert.throws(() => worldKey(stage, '1'), /needs the server runtime/);
-  } finally { fs.rmSync(root, { recursive: true, force: true }); }
-});
-
-test('a cached world is never restored into a server of another runtime', () => {
-  const root = tmp();
-  try {
-    const cache = path.join(root, 'worlds');
-    const forgeServer = path.join(root, 'forge');
-    fs.mkdirSync(path.join(forgeServer, WORLD), { recursive: true });
-    fs.writeFileSync(path.join(forgeServer, WORLD, 'level.dat'), 'w');
-    writeStamp(forgeServer, FORGE);
-    assert.equal(saveWorld(cache, 'k1', forgeServer), true);
-    const neoServer = path.join(root, 'neo');
-    fs.mkdirSync(neoServer);
-    writeStamp(neoServer, NEO);
-    assert.throws(() => restoreWorld(cache, 'k1', neoServer), /generated under forge-1\.20\.1-47\.4\.10, not neoforge-1\.21\.1-21\.1\.265/);
-    const sameServer = path.join(root, 'forge2');
-    fs.mkdirSync(sameServer);
-    writeStamp(sameServer, FORGE);
-    assert.equal(restoreWorld(cache, 'k1', sameServer), true);
-    fs.mkdirSync(path.join(cache, 'legacy', WORLD), { recursive: true });
-    assert.throws(() => restoreWorld(cache, 'legacy', sameServer), /unrecorded runtime/);
-  } finally { fs.rmSync(root, { recursive: true, force: true }); }
-});
-
-test('a stage built for another runtime, or never stamped, is rebuilt rather than reused', async () => {
-  const root = tmp();
-  try {
-    const cache = path.join(root, 'cache');
-    const base = path.join(cache, 'loader-base', NEO.id);
-    fs.mkdirSync(path.join(base, path.dirname(NEO.argsFile)), { recursive: true });
-    fs.writeFileSync(path.join(base, NEO.argsFile), 'args');
-    fs.mkdirSync(path.join(base, 'libraries/neo'), { recursive: true });
-    fs.writeFileSync(path.join(base, 'libraries/neo/lib.jar'), 'neo');
-    writeStamp(base, NEO);
-    const stage = path.join(root, 'stage');
-    fs.mkdirSync(path.join(stage, 'libraries/forge'), { recursive: true });
-    fs.writeFileSync(path.join(stage, 'libraries/forge/old.jar'), 'forge libs from the old hazard');
-    const scope = { run: async () => ({ code: 0, out: '' }) };
-    const logs = [];
-    // This fake installer tests runtime reuse, not the real checkout's private artifact pins.
-    const pack = path.join(root, 'pack.toml');
-    fs.writeFileSync(pack, 'name = "fixture"\n');
-    await prep.ensureStage(stage, { cache, runtime: NEO, java: 'java', pack, log: (m) => logs.push(m), scope, seed: '1', port: 1, heap: '1G' });
-    assert.ok(!fs.existsSync(path.join(stage, 'libraries/forge/old.jar')), 'unstamped Forge libraries are not reused');
-    assert.ok(fs.existsSync(path.join(stage, 'libraries/neo/lib.jar')));
-    assert.equal(JSON.parse(fs.readFileSync(path.join(stage, 'runtime.json'), 'utf8')).id, NEO.id);
-    assert.match(logs.join('\n'), /rebuilding for neoforge-1\.21\.1-21\.1\.265/);
-    fs.writeFileSync(path.join(stage, 'libraries/neo/kept.txt'), 'kept');
-    await prep.ensureStage(stage, { cache, runtime: NEO, java: 'java', pack, log: () => {}, scope, seed: '1', port: 1, heap: '1G' });
-    assert.ok(fs.existsSync(path.join(stage, 'libraries/neo/kept.txt')), 'a matching stage is reused');
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });

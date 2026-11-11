@@ -68,13 +68,22 @@ counts, block palette quantities, biome references and chunk terrain digests. Pa
 invalidate input. Comparisons conservatively flag unexplained differences as LOSS; a raw
 NBT-to-component representation change still needs domain review.
 
-`boot.cjs` reuses the offline server preparer, process scope, idle-host guard and smoke
+`boot.cjs` reuses the offline server preparer, process scope, idle-host guard and shared `runtime_env/server/`
 supervisor. Its private caches contain hash-verified pinned jars and copied loader libraries.
 Only the working server gets `probe/capture.js`: live registries, one existing forced chunk
 at a time, bounded entity-ticking readiness, save, stop, then a separately recorded restart.
 Saved citizen chunks are additionally held for 400 ticks before the normal sweep; a separate token-bound colony record reports native bindings and ticking readiness, including unsupported observations honestly. Portable Dank stacks resolve their real frequency through DankItem.getInventoryFrom and retain live slot totals in player evidence.
 Owner worlds never enter the ordinary generated-world caches. A complete probe and clean
 shutdown establish coverage, not preservation; semantic and log review remains mandatory.
+
+## Shared capture mechanisms
+
+Analysis never imports testing, directly or through a shared module; the mod-map
+fast gate checks that dependency boundary. `runtime_env/server/` owns runtime
+identity and process supervision, `server_stage/` owns preparation and disposable
+copies, and `data_io/` owns run metadata, server-log parsing and generated-world
+caches. Testing owns probes, verdicts and runner orchestration. The ANU code sync
+includes all three neutral homes and excludes test folders at every depth.
 
 ## Mod map
 
@@ -102,9 +111,9 @@ placement, input identity checks and saved-evidence replay.
   `overrides.json` holds reasoned kind/family corrections, undeclared
   dependencies and pack-wide fixes.
 - `capture/` — `capture.cjs` prepares the disposable server through
-  `tools/testing/server_smoke/runtime/offline_server.cjs` with the `ordinary` world profile, waits on
-  `tools/testing/server_smoke/process/host_wait.cjs`, reuses pack-test's cached-world copy and
-  registry collector and server-smoke's JVM supervision. Only that server gets a
+  `tools/server_stage/offline_server.cjs` with the `ordinary` world profile, waits on
+  `tools/runtime_env/server/host_wait.cjs`, uses `data_io/world/cache.cjs` for cached-world copies and
+  `runtime_env/server/` for JVM supervision. Only that server gets a
   narrow Forge TRACE logger and the registry snapshot callback. `timing.cjs`
   pairs boundaries before the server `DONE_RE` marker.
 - `page/` — `render` is a pure view over finished data (`classifications`,
@@ -136,9 +145,9 @@ adapter handles old motor-only records by reading existing glue when starting;
 a rebuild stores the complete descriptor. Missing rig implementations skip ticks.
 
 `tools/testing/showcase/check.cjs` discovers matching checks and sequences them in one
-dedicated server. `tools/testing/server_smoke/runtime/offline_server.cjs` validates pinned cached
-bytes, applies the flat `showcase` profile and reuses pack-test server-copy/evidence
-modules; server-smoke also owns watchdog and shutdown.
+dedicated server. `tools/server_stage/offline_server.cjs` validates pinned cached
+bytes, applies the flat `showcase` profile and uses `server_stage/run_server.cjs` for disposable copies.
+`runtime_env/server/` owns watchdog and shutdown.
 The injected harness sequences checks and records lifecycle/completion;
 `helpers.js` owns fixture access and assertions. Domain checks live in
 `checks/<section>.js`; `command_forms.js` runs once afterward against all registry
@@ -177,7 +186,7 @@ On Valhalla, `anu-transport-lib.ps1` owns SSH queries (stdout result and checked
 
 1. **Verify and stage on Valhalla.** Create an artifact run directory and record the
    checkout identity, pack/index hashes, seed, probe token and the runtime descriptor
-   (`tools/testing/server_smoke/runtime/runtime.cjs`: loader, versions, Java major, id from `pack.toml`).
+   (`tools/runtime_env/server/runtime.cjs`: loader, versions, Java major, id from `pack.toml`).
    Verify the hash chain and the runtime's Java, take the local stage lock, then
    incrementally install the server-side pack over the cached per-runtime loader base
    into that runtime's stage (stamped `runtime.json`; a mismatched stage is rebuilt). The stage is never booted. Scan its installed resources

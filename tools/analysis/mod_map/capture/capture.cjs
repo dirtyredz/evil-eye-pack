@@ -4,13 +4,13 @@ const fs = require('node:fs');
 const path = require('node:path');
 const env = require('../../../runtime_env/env.cjs');
 const procs = require('../../../runtime_env/procs.cjs');
-const { boot } = require('../../../testing/server_smoke/process/boot.cjs');
-const { prepare } = require('../../../testing/server_smoke/runtime/offline_server.cjs');
-const { waitForServer } = require('../../../testing/server_smoke/process/host_wait.cjs');
-const { localLock } = require('../../../testing/pack_test/session/lock.cjs');
-const { worldKey, restoreWorld } = require('../../../testing/pack_test/session/world_cache.cjs');
-const { readRuntime, readStamp } = require('../../../testing/server_smoke/runtime/runtime.cjs');
-const { WORLD } = require('../../../testing/pack_test/stage_runtime.cjs');
+const { boot } = require('../../../runtime_env/server/boot.cjs');
+const { prepare } = require('../../../server_stage/offline_server.cjs');
+const { waitForServer } = require('../../../runtime_env/server/host_wait.cjs');
+const { localLock } = require('../../../runtime_env/lock.cjs');
+const { worldKey, restoreWorld } = require('../../../data_io/world/cache.cjs');
+const { readRuntime, readStamp } = require('../../../runtime_env/server/runtime.cjs');
+const { WORLD } = require('../../../server_stage/stage_runtime.cjs');
 const { FML_LOGGERS } = require('./timing.cjs');
 
 const LOG_CONFIG = `<?xml version="1.0" encoding="UTF-8"?>

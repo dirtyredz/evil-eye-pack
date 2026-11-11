@@ -5,7 +5,7 @@ const {snapshot}=require('./snapshot.cjs');
 const {verify}=require('../../data_io/world/manifest.cjs');
 const {inventory,json}=require('../../data_io/world/inventory.cjs');
 const {compare}=require('./compare.cjs');
-const {waitForServer}=require('../server_smoke/process/host_wait.cjs');
+const {waitForServer}=require('../../runtime_env/server/host_wait.cjs');
 const procs=require('../../runtime_env/procs.cjs');
 async function main(args) {
   const [command,...rest]=args,opts={};

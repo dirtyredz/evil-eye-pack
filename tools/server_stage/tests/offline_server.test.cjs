@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { inventory, prepare } = require('../runtime/offline_server.cjs');
+const { inventory, prepare } = require('../offline_server.cjs');
 
 test('offline inventory verifies server pins and never needs client-only jars', t => {
   const root = fs.mkdtempSync(path.join(__dirname, 'offline-server-test-'));

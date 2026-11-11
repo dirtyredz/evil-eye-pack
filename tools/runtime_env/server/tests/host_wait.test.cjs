@@ -1,7 +1,7 @@
 'use strict';
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
-const { waitForServer } = require('../process/host_wait.cjs');
+const { waitForServer } = require('../host_wait.cjs');
 
 test('host guard waits through busy and inconclusive process inventories; only an observed idle host passes', async () => {
   let now = 0, calls = 0;

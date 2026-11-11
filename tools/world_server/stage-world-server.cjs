@@ -17,7 +17,7 @@ async function main(argv) {
   process.env.SMOKE_MIGRATION_MODS = path.resolve(opt['private-cache']); // read by runtime_env/env.cjs
   const env = T('runtime_env/env.cjs');
   const procs = T('runtime_env/procs.cjs');
-  const { readRuntime, javaPaths } = T('testing/server_smoke/runtime/runtime.cjs');
+  const { readRuntime, javaPaths } = T('runtime_env/server/runtime.cjs');
   const { ensureStage } = T('server_stage/stage.cjs');
   const runtime = readRuntime(pack);
   const { java } = javaPaths(runtime, env.JAVAS);

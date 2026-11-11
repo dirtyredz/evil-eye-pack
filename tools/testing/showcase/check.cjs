@@ -2,18 +2,18 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
-const { boot } = require('../server_smoke/process/boot.cjs');
+const { boot } = require('../../runtime_env/server/boot.cjs');
 const procs = require('../../runtime_env/procs.cjs');
-const { waitForServer } = require('../server_smoke/process/host_wait.cjs');
+const { waitForServer } = require('../../runtime_env/server/host_wait.cjs');
 const env = require('../../runtime_env/env.cjs');
-const { readRuntime } = require('../server_smoke/runtime/runtime.cjs');
-const { stageDirFor } = require('../pack_test/stage_runtime.cjs');
+const { readRuntime } = require('../../runtime_env/server/runtime.cjs');
+const { stageDirFor } = require('../../server_stage/stage_runtime.cjs');
 const { verify } = require('../../packwiz/verify_hashes.cjs');
-const { localLock } = require('../pack_test/session/lock.cjs');
-const { checkDestination, runMeta } = require('../pack_test/session/run_meta.cjs');
+const { localLock } = require('../../runtime_env/lock.cjs');
+const { checkDestination, runMeta } = require('../../data_io/run_meta.cjs');
 const { collectEvidence } = require('../pack_test/session/execute.cjs');
-const { prepare } = require('../server_smoke/runtime/offline_server.cjs');
-const { normalize } = require('../server_smoke/log_report.cjs');
+const { prepare } = require('../../server_stage/offline_server.cjs');
+const { normalize } = require('../../data_io/server_log.cjs');
 
 function sections(root) {
   const names = fs.readdirSync(path.join(root, 'kubejs/server_scripts/showcase/sections')).filter(f => f.endsWith('.js')).map(f => f.slice(0, -3)).sort();

@@ -6,9 +6,9 @@ const os = require('node:os');
 const path = require('node:path');
 const { EventEmitter } = require('node:events');
 const { PassThrough, Writable } = require('node:stream');
-const procs = require('../../../runtime_env/procs.cjs');
-const { boot, lineWatcher } = require('../process/boot.cjs');
-const runtimes = require('../runtime/runtime.cjs');
+const procs = require('../../procs.cjs');
+const { boot, lineWatcher } = require('../boot.cjs');
+const runtimes = require('../runtime.cjs');
 const NEO = runtimes.describe({ loader: 'neoforge', minecraft: '1.21.1', loaderVersion: '21.1.265' });
 
 const DONE = 'Done (1.5s)! For help, type "help"\n';

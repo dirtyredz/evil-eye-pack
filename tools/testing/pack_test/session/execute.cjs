@@ -4,11 +4,12 @@
 // Shared by the local target (run.cjs) and the ANU agent (remote/agent.cjs).
 const fs = require('node:fs');
 const path = require('node:path');
-const { boot } = require('../../server_smoke/process/boot.cjs');
+const { boot } = require('../../../runtime_env/server/boot.cjs');
 const { manifestReady } = require('../verdict/protocol.cjs');
-const { makeRunServer, injectProbe } = require('./prepare.cjs');
-const { worldKey, restoreWorld, saveWorld } = require('./world_cache.cjs');
-const { WORLD } = require('../stage_runtime.cjs');
+const { injectProbe } = require('./prepare.cjs');
+const { makeRunServer } = require('../../../server_stage/run_server.cjs');
+const { worldKey, restoreWorld, saveWorld } = require('../../../data_io/world/cache.cjs');
+const { WORLD } = require('../../../server_stage/stage_runtime.cjs');
 const { withStaged } = require('../../../runtime_env/staged_dir.cjs');
 
 // The files analysis needs, copied out of the server dir (relative source -> relative destination).

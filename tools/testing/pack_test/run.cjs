@@ -16,18 +16,18 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const env = require('../../runtime_env/env.cjs');
-const { readRuntime, javaPaths, checkJava, identity } = require('../server_smoke/runtime/runtime.cjs');
-const { stageDirFor } = require('./stage_runtime.cjs');
+const { readRuntime, javaPaths, checkJava, identity } = require('../../runtime_env/server/runtime.cjs');
+const { stageDirFor } = require('../../server_stage/stage_runtime.cjs');
 const procs = require('../../runtime_env/procs.cjs');
 const { verify } = require('../../packwiz/verify_hashes.cjs');
-const prep = require('./session/prepare.cjs');
-const { checkDestination, runId, runMeta } = require('./session/run_meta.cjs');
+const { ensureStage } = require('../../server_stage/stage.cjs');
+const { checkDestination, runId, runMeta } = require('../../data_io/run_meta.cjs');
 const { runTarget } = require('./session/target.cjs');
 const { analyzeRun, EXIT } = require('./analyze.cjs');
 const { loadToolData } = require('./verdict/policy.cjs');
 const { writeResourceScan } = require('./session/resources.cjs');
 const { writeMalwareEvidence } = require('./session/security.cjs');
-const { localLock } = require('./session/lock.cjs');
+const { localLock } = require('../../runtime_env/lock.cjs');
 const { abortRegistry } = require('./session/aborts.cjs');
 
 const ROOT = path.resolve(__dirname, '../../..');
@@ -83,7 +83,7 @@ async function main() {
     log(`runtime ${runtime.id} (Java ${runtime.java})`);
     lock = localLock(`${env.ARTIFACTS}/pack-test/stage.lock`);
     let t = Date.now();
-    const stageDir = await prep.ensureStage(stageDirFor(env.ARTIFACTS, runtime), { cache: `${env.ARTIFACTS}/server-smoke/cache`, runtime, java, pack: o.pack, log, scope, seed: o.seed, port: o.port, heap: o.heap });
+    const stageDir = await ensureStage(stageDirFor(env.ARTIFACTS, runtime), { cache: `${env.ARTIFACTS}/server-smoke/cache`, runtime, java, pack: o.pack, log, scope, seed: o.seed, port: o.port, heap: o.heap });
     run.timings.stage = (Date.now() - t) / 1000;
     t = Date.now();
     writeResourceScan(stageDir, path.join(runDir, 'evidence'), data);
