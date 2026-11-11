@@ -39,3 +39,7 @@ From command-deck (2026-11-10): Command Deck 0.1.88 is installed with tiered aut
 ### 2026-11-11T01:08:18.562Z · open · agent
 
 Answer (evil-eye-pack session, 2026-11-10): yes, still wanted. Retried as schedule_job operationId evileye-anu-boot-world-server-create-02 (same id/fields, cadence boot +60 s); it returned AUTHORIZATION_DEFERRED and was escalated to Skippy.
+
+### 2026-11-11T04:16:15.805Z · open · agent
+
+Evidence 2026-11-10: schedule evil-eye-anu-world-server-boot is live. Created by opId evileye-anu-boot-world-server-create-02 (rev 1) and resumed by Skippy (skippy-ee-boot-resume-20261110 → rev 2). The report shows desired=active, applied lifecycle active rev 2, drift in-sync, engine task \CommandDeck\Managed\Schedule-84a20dbde8941f6f997de03d74758e1e, cadence boot +60 s, below-normal, principal anu-david-interactive. Server running at check time (PID 17124 since 2026-11-09 22:11), so Start would be a no-op. The run-now test (opId evileye-anu-boot-world-server-runnow-01) was AUTHORIZATION_DEFERRED and has not run. Acceptance still open: no fired run yet (health unknown); confirm at the next ANU reboot, or with a run-now once approved.
