@@ -3,7 +3,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { EventEmitter } = require('node:events');
 const { PassThrough } = require('node:stream');
-const { scope } = require('../../../runtime_env/procs.cjs');
+const { scope } = require('../procs.cjs');
 
 // Fake spawn: records every call and hands back an EventEmitter child.
 function fakes() {

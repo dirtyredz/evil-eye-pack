@@ -2,8 +2,8 @@
 id: dk-e3380fee
 type: task
 created: 2026-11-01
-status: todo
-since: 2026-11-01
+status: done
+since: 2026-11-11
 area: structure
 priority: P2
 rank: zzzzzzzz

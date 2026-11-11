@@ -5,7 +5,7 @@ const { spawnSync } = require('node:child_process');
 const path = require('node:path');
 const T = require('../install/instance_targets.cjs');
 
-const I = 'C:/Users/dirty/MultiMC/instances';
+const I = require('../../runtime_env/env.cjs').FIXED.INSTANCES;
 
 test('kinds are decided by instance name; only the exact path is the real Stable', () => {
   assert.equal(T.instanceKind(`${I}/Evil Eye Stable`), 'stable');
@@ -55,4 +55,27 @@ test('classify CLI is the PowerShell entry point', () => {
   const r = spawnSync(process.execPath, [path.resolve(__dirname, '../install/instance_targets.cjs'), 'classify', `${I}/Evil Eye Local`], { encoding: 'utf8' });
   assert.equal(r.status, 0);
   assert.deepEqual(JSON.parse(r.stdout), { kind: 'local', realStable: false, forbiddenForStable: true, allowedAsStable: false });
+});
+
+test('classification resolves junctions and non-existing descendants', t => {
+  const fs = require('node:fs');
+  const scratch = path.resolve(__dirname, '../../../.tmp');
+  fs.mkdirSync(scratch, { recursive: true });
+  const root = fs.mkdtempSync(path.join(scratch, 'target-alias-'));
+  t.after(() => fs.rmSync(root, { recursive: true, force: true }));
+  const local = path.join(root, 'Evil Eye Local');
+  fs.mkdirSync(local);
+  const alias = path.join(root, 'alias');
+  fs.symlinkSync(local, alias, 'junction');
+  assert.equal(T.classify(path.join(alias, 'not-created', '.minecraft')).forbiddenForStable, true);
+  assert.equal(T.allowedAsStable(alias), false);
+  assert.throws(() => T.stableTarget(path.join(alias, '.minecraft')), /never targets|junction/);
+  // Creating a link here does not create or modify anything in the real instances folder.
+  const instancesAlias = path.join(root, 'instances-alias');
+  fs.symlinkSync(I, instancesAlias, 'junction');
+  assert.equal(T.allowedAsStable(path.join(instancesAlias, 'Other Pack', '.minecraft')), false);
+  assert.equal(T.isRealStable(path.join(instancesAlias, 'Evil Eye Stable')), true);
+  if (process.platform === 'win32') {
+    assert.equal(T.allowedAsStable(path.toNamespacedPath(path.join(instancesAlias, 'Other Pack'))), false);
+  }
 });

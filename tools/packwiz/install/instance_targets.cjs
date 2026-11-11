@@ -6,6 +6,7 @@
 //   node tools/packwiz/install/instance_targets.cjs classify <instance folder or .minecraft>
 //   node tools/packwiz/install/instance_targets.cjs stable     (prints the real Stable instance folder)
 const path = require('node:path');
+const fs = require('node:fs');
 const { noLinks } = require('../../data_io/path_guard.cjs');
 const { INSTANCES, MAIN_CHECKOUT } = require('../../runtime_env/env.cjs').FIXED;
 
@@ -17,7 +18,26 @@ const TRIAL = TRIAL_INSTANCE + '/.minecraft';
 const LOCAL = LOCAL_INSTANCE + '/.minecraft';
 const NAMES = { local: 'evil eye local', trial: 'evil eye neoforge trial', stable: 'evil eye stable' };
 
-const slash = p => path.resolve(p).split(path.sep).join('/');
+// Resolve aliases through the deepest existing ancestor, including future descendants.
+function canonical(p) {
+  let current = path.resolve(p);
+  const tail = [];
+  for (;;) {
+    try { return path.join(fs.realpathSync.native(current), ...tail); }
+    catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+      // A dangling junction is not a missing directory: fail closed.
+      let exists = false;
+      try { fs.lstatSync(current); exists = true; }
+      catch (statError) { if (statError.code !== 'ENOENT') throw statError; }
+      if (exists) throw error;
+      const parent = path.dirname(current);
+      if (parent === current) return path.join(current, ...tail);
+      tail.unshift(path.basename(current)); current = parent;
+    }
+  }
+}
+const slash = p => canonical(p).split(path.sep).join('/');
 const same = (a, b) => slash(a).toLowerCase() === slash(b).toLowerCase();
 
 // Name-based kind: 'local' and 'trial' match any path segment containing the instance name (so a
@@ -38,7 +58,7 @@ function assertNotLocalOrTrial(p, what = 'Cutover') {
   if (kind === 'local' || kind === 'trial') throw Error(`${what} never targets Evil Eye Local or the NeoForge Trial instance`);
 }
 
-const insideInstances = p => (slash(p).toLowerCase() + '/').startsWith(INSTANCES.toLowerCase() + '/');
+const insideInstances = p => (slash(p).toLowerCase() + '/').startsWith(slash(INSTANCES).toLowerCase() + '/');
 
 // Allowlist: the real Stable .minecraft, or a rehearsal copy OUTSIDE the MultiMC instances folder.
 // Any other MultiMC instance (and Local/Trial, or copies of them) is refused.
@@ -69,7 +89,7 @@ function assertPinTarget(instance) {
   if (kind === 'stable' || kind === 'local') throw Error('Private pins must never install into Stable or Local');
 }
 
-// Pure (no filesystem) form of the stableTarget allowlist, for an instance folder or its .minecraft.
+// Canonical form of the stableTarget allowlist, for an instance folder or its .minecraft.
 function allowedAsStable(p) {
   const kind = instanceKind(p);
   if (kind === 'local' || kind === 'trial') return false;
