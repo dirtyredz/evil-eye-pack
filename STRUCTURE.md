@@ -307,7 +307,7 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `tools/runtime_env/server/host_wait.cjs` | `waitForServer`: fail-closed wait (bounded, cancellable) until no other Minecraft JVM runs on the host; used by showcase checks and the mod map capture |
 | `tools/runtime_env/server/watchdog.cjs` | pure watchdog decision (log silent AND CPU flat, hard cap) and CPU-per-wall starvation test |
 | `tools/testing/server_smoke/verdict.cjs` | pure PASS/STALL/HOST STARVED/FAIL decision (worldgen-stall classification) and crash-report parsing (mod name and failure message) |
-| `tools/data_io/server_log.cjs`, `known_noise.json` | pure log grouping: errors and exceptions by signature, known boot noise vs new; the `DONE_RE` and `SPAWN_RE` regexes |
+| `tools/data_io/server_log.cjs` (callers supply `testing/server_smoke/known_noise.json`) | pure log grouping: errors and exceptions by signature, known boot noise vs new; the `DONE_RE` and `SPAWN_RE` regexes |
 | `tools/analysis/dedup/guard.cjs` | duplicate-group allowance comparison (unexplained, changed, stale) shared by the cached-jar test and the pack test's live check |
 | `tools/testing/pack_test/run.cjs`, `analyze.cjs` | CLI and orchestration (verify, stage, scan, select target through `session/target`, analyse); offline analysis of a run folder: load evidence, run every check, write report/summary/candidate baseline |
 | `tools/testing/pack_test/recipe_json.cjs` | pure readers over recipe JSON (`ingredientRefs`, `declaredOutputRefs`, `declaredOutputs`, `isResourceId`); used by `session/resources` and the checks (including `snapshot`), so `session/` never depends on `checks/` |

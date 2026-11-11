@@ -89,12 +89,16 @@ Client 0.7.0 adds placement defaults through config correction; a shipped preser
 
 ## Tool layout
 
-- **Pack-test ANU sync is broken since the tools/ regroup.** `remote/anu.cjs` builds the sync label as `tools-${d}` with `d` like `testing/server_smoke`, so the scp target `incoming	ools-testing/server_smoke-<pid>.tar` has a missing directory and the run ends exit 2 after uploading the stage (seen 2026-11-05). Use `--local` until the label replaces `/` with `-`.
+- **Remote sync file names go through `remote/sync.cjs` `fileLabel`**, which turns a nested label like
+  `tools-testing/server_smoke` into a flat file name. A label containing `/` used to send scp to a missing
+  directory (exit 2 on every ANU run from 2026-11-05 to 2026-11-11).
 
-- **ANU runs a synced copy of `tools/` with the same relative layout.** `pack_test/remote/anu.cjs` `CODE_DIRS` and
-  `remote/scripts.cjs` `AGENT_SCRIPT` name `testing/server_smoke`, `testing/pack_test`, `analysis/emi_coverage`,
-  `analysis/dedup` and `data_io`; moving any of them means updating those, or the remote agent's relative requires
-  and its kill-guard command-line match break (the `signoff` test covers the kill guard).
+- **ANU runs a synced copy of `tools/` with the same relative layout.** `pack_test/remote/anu.cjs` `CODE_DIRS` is the
+  source of truth (currently `testing/server_smoke`, `testing/pack_test`, `analysis/emi_coverage`, `analysis/dedup`,
+  `data_io`, `server_stage`, `runtime_env`, `packwiz`); `tests/` folders are skipped at every depth. Moving code the
+  remote agent requires means updating `CODE_DIRS` and `remote/scripts.cjs` `AGENT_SCRIPT`, or the agent's relative
+  requires and its kill-guard command-line match break. The `remote` test fails if the agent requires an unsynced
+  `tools/` dir; the `signoff` test covers the kill guard.
 
 ## Client mixin verification
 
