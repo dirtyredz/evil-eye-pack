@@ -6,10 +6,9 @@
 //   (default)  install the pack into Local and set its PreLaunchCommand
 const fs = require('node:fs');
 const path = require('node:path');
-const { installPack } = require('../install_pack.cjs');
+const { installPack, prepareFiles } = require('../install_pack.cjs');
 const { instanceCfgValue, setInstanceCfgValue } = require('../instance_cfg.cjs');
 const { LOCAL, LOCAL_INSTANCE, STABLE_INSTANCE, localTarget } = require('../instance_targets.cjs');
-const { noLinks } = require('../../../data_io/path_guard.cjs');
 
 const { MAIN_CHECKOUT } = require('../../../runtime_env/env.cjs').FIXED;
 const ROOT = path.resolve(__dirname, '../../../..');
@@ -53,7 +52,6 @@ async function main(argv) {
   if (!cache) throw Error('A complete offline --cache is required');
   if (create) createInstance(dryRun);
   if (create && dryRun) { // nothing exists yet: verify the pack and cache against a scratch-free dry install
-    const { prepareFiles } = require('../install_pack.cjs');
     console.log(`Verified ${prepareFiles(ROOT, cache).length} local files from ${ROOT}; dry run, nothing written.`);
     return;
   }

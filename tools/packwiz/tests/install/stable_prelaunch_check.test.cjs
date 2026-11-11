@@ -6,7 +6,7 @@ const path = require('node:path');
 const { spawnSync } = require('node:child_process');
 const { FIXED } = require('../../../runtime_env/env.cjs');
 const { stablePreLaunchCommand } = require('../../install/targets/stable_target.cjs');
-const { stablePrelaunchProblems, fixStableCfg } = require('../../install/stable_prelaunch_check.cjs');
+const { stablePrelaunchProblems, fixStableCfg } = require('../../install/checks/stable_prelaunch_check.cjs');
 
 const BLANK = 'JavaPath=x\nOverrideCommands=true\nPreLaunchCommand=\nWrapperCommand=\n';
 
@@ -44,7 +44,7 @@ test('--fix inserts missing keys and targets the rehearsal cfg folder', t => {
   const cfg = path.join(copy, 'instance.cfg');
   for (const text of [BLANK, 'name=Rehearsal\r\nWrapperCommand=']) {
     fs.writeFileSync(cfg, text);
-    const result = spawnSync(process.execPath, [path.resolve(__dirname, '../../install/stable_prelaunch_check.cjs'), '--cfg', cfg, '--fix'], { encoding: 'utf8' });
+    const result = spawnSync(process.execPath, [path.resolve(__dirname, '../../install/checks/stable_prelaunch_check.cjs'), '--cfg', cfg, '--fix'], { encoding: 'utf8' });
     assert.equal(result.status, 0, result.stderr);
     const fixed = fs.readFileSync(cfg, 'utf8');
     assert.ok(fixed.includes(stablePreLaunchCommand(FIXED.MAIN_CHECKOUT, FIXED.STABLE_CACHE, copy)));

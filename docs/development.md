@@ -23,7 +23,7 @@ worlds. Switch branches in a checkout only for quick reading, never while its fe
 ## Instance and feed mapping
 
 Stable and Trial install through the neutral cache route (`tools/packwiz/install/targets/stable_target.cjs`, `trial_target.cjs`); Stable's
-prelaunch is `scripts/migration/stable-prelaunch.ps1` (verify with `node tools/packwiz/install/stable_prelaunch_check.cjs`; a blank value freezes Stable). Evil Eye Local runs the wrapper
+prelaunch is `scripts/migration/stable-prelaunch.ps1` (verify with `node tools/packwiz/install/checks/stable_prelaunch_check.cjs`; a blank value freezes Stable). Evil Eye Local runs the wrapper
 `scripts/instances/local-instance.ps1 -Cache <cache>` as its PreLaunchCommand, which reinstalls the main
 checkout through `tools/packwiz/install/targets/local_target.cjs` on every launch. A bare `pack.toml` path cannot install main (it carries
 `metadata:local` pins), so there is no server to start. Create or rebuild Local with
@@ -42,7 +42,7 @@ Each test instance's path belongs to one checkout; never point an instance at an
 
 1. Edit the pack file. Save it as UTF-8 with LF line endings.
 2. `node tools/packwiz/rehash.cjs` (rebuilds `index.toml`, then the index hash in `pack.toml`).
-3. `node tools/packwiz/verify_hashes.cjs` must print `OK 0 mismatches`. It also checks that every pinned jar is in the Stable jar cache (`jobs/2026-10-31-world-trial-final/cache`), because Stable's prelaunch never downloads: a mod add must stock the cache before the push. If it lists `MISSING` jars, run `node tools/packwiz/install/stable_cache_check.cjs --stock` (copies hash-verified jars from `jobs/*/jars`; it also stocks the dev/migration cache `MIGRATION_MODS` from the Stable cache and the same sources, and verify_hashes reports a jar missing there as `MISSING`/`FAIL` before dedup and pack_test data tests hit "Missing cached jar") or copy the verified jars in yourself; never purge the cache. `--no-stable-cache` skips the check (other caches, e.g. the migration branch).
+3. `node tools/packwiz/verify_hashes.cjs` must print `OK 0 mismatches`. It also checks that every pinned jar is in the Stable jar cache (`jobs/2026-10-31-world-trial-final/cache`), because Stable's prelaunch never downloads: a mod add must stock the cache before the push. If it lists `MISSING` jars, run `node tools/packwiz/install/checks/stable_cache_check.cjs --stock` (copies hash-verified jars from `jobs/*/jars`; it also stocks the dev/migration cache `MIGRATION_MODS` from the Stable cache and the same sources, and verify_hashes reports a jar missing there as `MISSING`/`FAIL` before dedup and pack_test data tests hit "Missing cached jar") or copy the verified jars in yourself; never purge the cache. `--no-stable-cache` skips the check (other caches, e.g. the migration branch).
 4. Click Launch on the matching **test** instance in MultiMC. Do not edit source files while it installs.
    If the installer fails (bad path, hash mismatch), abort; never click past it to play on stale files.
 

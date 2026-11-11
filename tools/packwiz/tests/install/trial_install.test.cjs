@@ -9,7 +9,7 @@ const { renderMetafile } = require('../../migration/repoint.cjs');
 const { prepareFiles, writePack } = require('../../install/install_pack.cjs');
 const { instanceCfgValue, setInstanceCfgValue } = require('../../install/instance_cfg.cjs');
 const { verifyInstalledFiles, restorePackFiles, driftBackupDirectory } = require('../../install/installed_files.cjs');
-const { checkCache } = require('../../install/stable_cache_check.cjs');
+const { checkCache } = require('../../install/checks/stable_cache_check.cjs');
 const { trialPreLaunchCommand, trialInstance } = require('../../install/targets/trial_target.cjs');
 
 function multimcBackslashUnescape(value) {

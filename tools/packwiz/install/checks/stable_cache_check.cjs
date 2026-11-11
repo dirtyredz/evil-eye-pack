@@ -2,8 +2,8 @@
 // Guard for the Stable jar cache. Stable's prelaunch (stable-prelaunch.ps1 -> install_pack.cjs) copies
 // every pinned jar from <cache>/<index dir> and never downloads, so a mod pushed to main without its jars
 // in the cache stops Stable launching ("Missing pinned jar (no download attempted)", 2026-11-05).
-//   node tools/packwiz/install/stable_cache_check.cjs            exit 1 listing every pinned jar missing or differing
-//   node tools/packwiz/install/stable_cache_check.cjs --stock    first copy missing jars from local sources (verified, never downloads)
+//   node tools/packwiz/install/checks/stable_cache_check.cjs     exit 1 listing every pinned jar missing or differing
+//   node tools/packwiz/install/checks/stable_cache_check.cjs --stock   first copy missing jars from local sources (verified, never downloads)
 //   --cache <dir>   cache to check (default: the world-trial-final cache Stable's prelaunch uses)
 //   --root <dir>    pack checkout (default: this one)
 //   --source <dir>  extra folder holding jars (repeatable); defaults also scan jobs/*/jars and jobs/*/cache/<index dir>
@@ -12,14 +12,14 @@
 // rehash -> verify_hashes step before a push catches it.
 const fs = require('node:fs');
 const path = require('node:path');
-const { clientArtifacts } = require('./client_artifacts.cjs');
-const env = require('../../runtime_env/env.cjs').FIXED;
+const { clientArtifacts } = require('../client_artifacts.cjs');
+const env = require('../../../runtime_env/env.cjs').FIXED;
 
-const ROOT = path.resolve(__dirname, '../../..');
+const ROOT = path.resolve(__dirname, '../../../..');
 const JOBS = env.ARTIFACT_JOBS;
 const DEFAULT_CACHE = env.STABLE_CACHE;
 // Dev/migration jar cache (env MIGRATION_MODS: read by dedup/catalog defaultJarDirs and the pack_test data tests). Holds mods/ only.
-const DEV_CACHE = path.dirname(require('../../runtime_env/env.cjs').MIGRATION_MODS);
+const DEV_CACHE = path.dirname(require('../../../runtime_env/env.cjs').MIGRATION_MODS);
 
 // The jar every client/both metafile needs, as { file, dir, name, resolve(dir) } (resolve throws when the folder lacks a matching jar).
 function pinnedJars(root) {

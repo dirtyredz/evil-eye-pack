@@ -15,7 +15,7 @@ const { sha256 } = require('../data_io/files.cjs');
 //   - each entry's `preserve` flag agrees with the owner/game-owned path policy;
 //   - every metafile has a concrete [download] hash, hash-format and source;
 //   - with --jars: each jar named by a metafile's `filename` hashes to its download hash.
-//   - unless --no-stable-cache (or --jars): every pinned jar is in the Stable jar cache (install/stable_cache_check.cjs), when that cache exists
+//   - unless --no-stable-cache (or --jars): every pinned jar is in the Stable jar cache (install/checks/stable_cache_check.cjs), when that cache exists
 //   - server jars/pins match the last ANU Deploy receipt (explicit skip when ANU/receipt is unavailable).
 
 const crypto = require('node:crypto');
@@ -115,7 +115,7 @@ function main(argv) {
 // machine (so the rehash -> verify step before a push catches an unstocked mod add); --no-stable-cache skips.
 function stableCacheStatus(root, argv) {
   if (argv.includes('--no-stable-cache') || argv.includes('--jars')) return 0;
-  const S = require('./install/stable_cache_check.cjs');
+  const S = require('./install/checks/stable_cache_check.cjs');
   if (!fs.existsSync(S.DEFAULT_CACHE)) { console.log('SKIP stable jar cache check: ' + S.DEFAULT_CACHE + ' not found on this machine'); return 0; }
   const stable = S.report(S.checkCache(root, S.DEFAULT_CACHE), S.DEFAULT_CACHE);
   // The dev/migration cache (MIGRATION_MODS) feeds dedup and pack_test data tests: report a missing jar now, not as a test failure later.

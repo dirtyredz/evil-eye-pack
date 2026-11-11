@@ -3,7 +3,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { checkCache } = require('../../install/stable_cache_check.cjs');
+const { checkCache } = require('../../install/checks/stable_cache_check.cjs');
 const { sha256 } = require('../../../data_io/files.cjs');
 
 const JAR = Buffer.from('pinned jar bytes');
@@ -77,7 +77,7 @@ test('dev cache check reports a missing mods jar and --stock fills it from the S
   fs.mkdirSync(path.join(dev, 'mods'), { recursive: true });
   fs.writeFileSync(path.join(f.cache, 'mods/a.jar'), JAR);
   fs.writeFileSync(path.join(f.cache, 'mods/b.jar'), JAR);
-  const { checkDevCache } = require('../../install/stable_cache_check.cjs');
+  const { checkDevCache } = require('../../install/checks/stable_cache_check.cjs');
   const opts = { cache: dev, stable: f.cache, jobs: f.jobs };
   assert.deepEqual(checkDevCache(f.root, opts).missing.map((m) => m.name), ['a.jar', 'b.jar']);
   const r = checkDevCache(f.root, { ...opts, stock: true });
@@ -88,5 +88,5 @@ test('dev cache check reports a missing mods jar and --stock fills it from the S
 
 test('Stable cache default comes from the fixed machine environment', () => {
   const env = require('../../../runtime_env/env.cjs');
-  assert.equal(require('../../install/stable_cache_check.cjs').DEFAULT_CACHE, env.FIXED.STABLE_CACHE);
+  assert.equal(require('../../install/checks/stable_cache_check.cjs').DEFAULT_CACHE, env.FIXED.STABLE_CACHE);
 });

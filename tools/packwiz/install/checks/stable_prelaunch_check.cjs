@@ -3,19 +3,19 @@
 // PreLaunchCommand runs scripts/migration/stable-prelaunch.ps1; MultiMC rewrites instance.cfg from
 // memory, so a blank value (2026-11-08: an empty value was in memory by 23:06 and every launch since
 // skipped the install) silently freezes Stable on old jars. Nothing else notices.
-//   node tools/packwiz/install/stable_prelaunch_check.cjs            exit 1 and print the problem when the command is wrong or missing
-//   node tools/packwiz/install/stable_prelaunch_check.cjs --fix      rewrite it (only the PreLaunchCommand and OverrideCommands lines)
+//   node tools/packwiz/install/checks/stable_prelaunch_check.cjs            exit 1 and print the problem when the command is wrong or missing
+//   node tools/packwiz/install/checks/stable_prelaunch_check.cjs --fix      rewrite it (only the PreLaunchCommand and OverrideCommands lines)
 //   --cache <dir>   cache for --fix (default: runtime_env/env.cjs FIXED.STABLE_CACHE)
 //   --cfg <file>    check a copy instead of the real Stable instance.cfg
 // --fix while MultiMC is open is overwritten the next time MultiMC saves: close MultiMC first.
 const fs = require('node:fs');
 const path = require('node:path');
-const { instanceCfgGet, setInstanceCfgValue } = require('./instance_cfg.cjs');
-const { stablePreLaunchCommand, stableCommandProblems, STABLE_SCRIPT: SCRIPT } = require('./targets/stable_target.cjs');
-const { MAIN_CHECKOUT } = require('../../runtime_env/env.cjs').FIXED;
-const { STABLE_INSTANCE } = require('./instance_targets.cjs');
+const { instanceCfgGet, setInstanceCfgValue } = require('../instance_cfg.cjs');
+const { stablePreLaunchCommand, stableCommandProblems, STABLE_SCRIPT: SCRIPT } = require('../targets/stable_target.cjs');
+const { MAIN_CHECKOUT } = require('../../../runtime_env/env.cjs').FIXED;
+const { STABLE_INSTANCE } = require('../instance_targets.cjs');
 
-const DEFAULT_CACHE = require('../../runtime_env/env.cjs').FIXED.STABLE_CACHE;
+const DEFAULT_CACHE = require('../../../runtime_env/env.cjs').FIXED.STABLE_CACHE;
 // Pure: problems with Stable's instance.cfg text (empty list when it will run the install).
 function stablePrelaunchProblems(cfgText) {
   const problems = [];
