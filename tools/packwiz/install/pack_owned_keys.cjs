@@ -13,6 +13,9 @@ function setJson(text, e) {
   const doc = text ? JSON.parse(text) : {};
   let node = doc;
   for (const s of e.section) node = (node[s] = node[s] && typeof node[s] === 'object' ? node[s] : {});
+  // A mod may rewrite its JSON with its own formatting; an already-correct value must not
+  // count as a change, or the dry-run reports (and sync rewrites) it on every launch.
+  if (text && JSON.stringify(node[e.key]) === JSON.stringify(e.value)) return text;
   node[e.key] = e.value;
   return JSON.stringify(doc, null, 4) + '\n';
 }

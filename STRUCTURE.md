@@ -123,7 +123,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `resourcepacks/` — resource pack metafiles (`*.pw.toml`) installed into the instance
 - `resourcepacks/evil-eye-cozy-overrides/` — top-priority thirst, legacy silver, Curios GUI assets; CozyUI+ owns HUD hearts, with no `gui/sprites/hud/heart/` folder in this override; `assets/.../gui/sprites/` is intentionally flat. Selection policy lives in `config/evileye_client/resourcepacks.json`; the pack data contract guards both.
 - `config/` — mod configs installed as plain files
-- `config/modernui/client.toml` - enables Modern UI zoom; its Z default is in `config/defaultoptions/keybindings.txt`.
+- `config/modernui/client.toml` - enables Modern UI zoom; preserved (the mod rewrites it), `general.zoom` is a pack-owned key. Its Z default is in `config/defaultoptions/keybindings.txt`. `config/terralith.json` follows the same policy (`modules.*` owned keys).
 - `config/defaultoptions/keybindings.txt` — default keymap applied by Evil Eye Client (Default Options syntax; new instances and unsaved keys only; see GOTCHAS)
 - `config/evileye_client/resourcepacks.json` — first-launch resource-pack order and required/force-compatible packs, read by Evil Eye Client
 - `config/emi-curation/` — EMI curation data: `rules.json`, seven explicit item lists (including `roundwood-legacy.json`, `alexsmobs-creative.json` and `iceandfire-creative.json`), `decor.json` (the DECOR toggle's rules), `mods.json` (Mods menu overrides: rename, hide, pin); the owner's `decor-local.json` is created in game and never shipped

@@ -42,10 +42,12 @@ const PRESERVE_PATHS = new Set([
   'config/immediatelyfast.json',
   'config/iris.properties',
   'config/modernfix-mixins.properties',
+  'config/modernui/client.toml',
   'config/multibeds.toml',
   'config/storagedrawers-common.v2.toml',
   'config/supplementaries-common.toml',
   'config/terrablender.toml',
+  'config/terralith.json',
   'config/xaerohud.txt',
   'config/xaeropatreon.txt',
 ]);

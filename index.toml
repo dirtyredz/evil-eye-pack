@@ -2202,6 +2202,7 @@ preserve = true
 [[files]]
 file = "config/modernui/client.toml"
 hash = "7a5e6730f80a3853130859838553c3bd52277587d63f93dd4871668a587c45cb"
+preserve = true
 
 [[files]]
 file = "config/multibeds-client.toml"
@@ -2290,6 +2291,7 @@ preserve = true
 [[files]]
 file = "config/terralith.json"
 hash = "e5790b2df8e75f3ed990b16e5aabdd0fc623cc717d9a3c330c8fe1db418a0d9c"
+preserve = true
 
 [[files]]
 file = "config/towns_and_towers/structure_enable_or_disable_new.json5"

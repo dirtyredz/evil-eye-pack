@@ -9,6 +9,60 @@
       "value": "key.keyboard.z"
     },
     {
+      "file": "config/modernui/client.toml",
+      "format": "toml",
+      "section": [
+        "general"
+      ],
+      "key": "zoom",
+      "value": true
+    },
+    {
+      "file": "config/terralith.json",
+      "format": "json",
+      "section": [
+        "modules"
+      ],
+      "key": "vanilla_stone_gen",
+      "value": true
+    },
+    {
+      "file": "config/terralith.json",
+      "format": "json",
+      "section": [
+        "modules"
+      ],
+      "key": "recipe_changes",
+      "value": false
+    },
+    {
+      "file": "config/terralith.json",
+      "format": "json",
+      "section": [
+        "modules"
+      ],
+      "key": "custom_structures",
+      "value": true
+    },
+    {
+      "file": "config/terralith.json",
+      "format": "json",
+      "section": [
+        "modules"
+      ],
+      "key": "skylands",
+      "value": true
+    },
+    {
+      "file": "config/terralith.json",
+      "format": "json",
+      "section": [
+        "modules"
+      ],
+      "key": "terrain_slabs",
+      "value": true
+    },
+    {
       "file": "config/amendments-client.toml",
       "format": "toml",
       "section": [
