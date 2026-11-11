@@ -46,7 +46,7 @@
 .PARAMETER OpUuid
   Deploy: that player's UUID. Default 90486bf9-1855-4113-8ab9-35ef878c5a5c.
 .PARAMETER OutDir
-  Pull: destination folder on Valhalla. Default C:\Users\dirty\.local-state\evil-eye-pack\artifacts\world-backups.
+  Pull: destination folder on Valhalla. Default env FIXED.ARTIFACTS/world-backups.
 .PARAMETER LauncherServersDat
   AddLauncherEntry: servers.dat to edit. Default Evil Eye Stable's.
 .PARAMETER AnuHost
@@ -58,17 +58,18 @@ param(
   [switch]$DryRun,
   [string]$SourceWorld = 'C:\Users\dirty\MultiMC\instances\Evil Eye Stable\.minecraft\saves\New World',
   [switch]$ReplaceWorld,
-  [string]$PrivateCache = 'C:\Users\dirty\.local-state\evil-eye-pack\artifacts\jobs\2026-10-31-world-trial-final\cache\mods',
+  [string]$PrivateCache,
   [int]$HeapGb = 10,
   [string]$OpName = 'DirtyRedz',
   [string]$OpUuid = '90486bf9-1855-4113-8ab9-35ef878c5a5c',
-  [string]$OutDir = 'C:\Users\dirty\.local-state\evil-eye-pack\artifacts\world-backups',
+  [string]$OutDir,
   [string]$LauncherServersDat = 'C:\Users\dirty\MultiMC\instances\Evil Eye Stable\.minecraft\servers.dat',
   [string]$AnuHost = 'anu'
 )
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot '../owner/owner-run.ps1')
+. (Join-Path $PSScriptRoot '../../tools/runtime_env/paths.ps1')
 Initialize-OwnerRun "anu-world-$($Action.ToLower())"
 
 $AnuRoot   = 'G:\evil-eye-pack-ci\server'
@@ -76,7 +77,7 @@ $AnuCtl    = "$AnuRoot\ctl"
 $AnuBackup = 'G:\evil-eye-pack-ci\server-backups'
 $AnuAddr   = '192.168.1.251'
 $Ctl       = "$AnuCtl\server-ctl.ps1"
-$Jobs      = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs'
+$Jobs      = $null
 # Node helpers live under tools/world_server (shared with ANU: mc-net.cjs is shipped there by Send-Ctl).
 $WorldTools  = Join-Path $PSScriptRoot '../../tools/world_server'
 $McNet       = Join-Path $WorldTools 'mc-net.cjs'
@@ -90,6 +91,9 @@ $AddEntry    = Join-Path $WorldTools 'add-server-entry.cjs'
 . (Join-Path $PSScriptRoot 'anu-world-lib.ps1')
 
 try {
+  $Jobs = Get-RuntimePath 'FIXED.ARTIFACT_JOBS'
+  if (-not $PrivateCache) { $PrivateCache = Join-Path (Get-RuntimePath 'FIXED.STABLE_CACHE') 'mods' }
+  if (-not $OutDir) { $OutDir = Join-Path (Get-RuntimePath 'FIXED.ARTIFACTS') 'world-backups' }
   switch ($Action) {
     'Status' {
       Send-Ctl

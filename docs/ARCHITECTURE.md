@@ -48,6 +48,10 @@ Timeout or absent completion is incomplete evidence. Inputs are read-only; all l
 mods, configs, logs and compiler outputs are copied into a new artifact run. The host guard
 waits for the Minecraft JVM slot and the process scope stops owned children.
 
+Artifact containment for both audit and world-trial entry points goes through
+`data_io/path_guard.cjs` using `runtime_env/env.cjs`'s fixed jobs root. The client
+audit uses env's JDK descriptor (or derives it from an explicit `--jdk` home).
+
 ## World conversion trials
 
 `tools/testing/world_trial/run.cjs` confines outputs to an artifact job. Copy guards reject protected

@@ -26,13 +26,15 @@ Complete offline cache root (mods, resourcepacks, shaderpacks). Default: Stable'
 param(
   [switch]$Create,
   [switch]$DryRun,
-  [string]$Cache = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/2026-10-31-world-trial-final/cache'
+  [string]$Cache
 )
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot '../owner/owner-run.ps1')
+. (Join-Path $PSScriptRoot '../../tools/runtime_env/paths.ps1')
 Initialize-OwnerRun 'local-instance'
 try {
+  if (-not $Cache) { $Cache = Get-RuntimePath 'FIXED.STABLE_CACHE' }
   $node = Find-Tool 'node'
   if (-not $node) { Complete-OwnerRun 1 'Node 22 is required.' }
   $arguments = @((Join-Path $script:RepoRoot 'tools/packwiz/install/local_target.cjs'), '--cache', $Cache)

@@ -16,7 +16,7 @@ const { clientArtifacts } = require('./client_artifacts.cjs');
 const env = require('../../runtime_env/env.cjs').FIXED;
 
 const ROOT = path.resolve(__dirname, '../../..');
-const JOBS = path.join(env.ARTIFACTS, 'jobs');
+const JOBS = env.ARTIFACT_JOBS;
 const DEFAULT_CACHE = env.STABLE_CACHE;
 
 // The jar every client/both metafile needs, as { file, dir, name, resolve(dir) } (resolve throws when the folder lacks a matching jar).

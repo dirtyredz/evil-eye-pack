@@ -16,5 +16,5 @@ test('cached metadata cannot escape the copied library tree', () => {
 test('missing arguments, unknown switches and instance outputs fail before staging', async () => {
   await assert.rejects(main([]), /required/);
   await assert.rejects(main(['--download', 'true']), /Expected/);
-  await assert.rejects(main(['--out', 'C:/Users/dirty/MultiMC/instances/test', '--cache', '.']), /Output must be below job/);
+  await assert.rejects(main(['--out', 'C:/Users/dirty/MultiMC/instances/test', '--cache', '.']), /Job must be in artifact jobs/);
 });

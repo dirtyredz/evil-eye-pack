@@ -457,6 +457,23 @@ shared `tools/server_stage/stage.cjs`), `add-server-entry.cjs` (+ test), `player
 
 The owner's own mods are built in the `minecraft-mods` workspace (`C:/Users/dirty/projects/minecraft-mods`, one repo per mod under `mods/`, e.g. `mods/DankRecipeTransfer` = `dirtyredz/dank-recipe-transfer`). Release workflow: tag and publish the jar as a GitHub release, compute its sha256, then edit the pack's `mods/<id>.pw.toml` (`filename`, `url`, `hash-format = "sha256"`, `hash`; no `[update]` section), run `rehash.cjs` and `verify_hashes.cjs`, and run the server smoke. The pack never stores the jar.
 
+## Machine path authority
+
+`tools/runtime_env/env.cjs` owns Valhalla's machine layout. Java descriptors have
+`home`, `java`, `javac`, `jar`, `jcmd` and `jstack`; `javaHome(home)` derives
+these tools for an explicit JDK (the client audit's `--jdk`). Existing
+`SMOKE_JAVA_<major>` / `SMOKE_JCMD_<major>` overrides still replace only those tools.
+`ARTIFACT_JOBS` derives from `ARTIFACTS`; cache overrides remain independent of
+`SMOKE_ARTIFACTS`. Install/owner defaults and artifact containment use `FIXED`,
+which ignores smoke overrides. `path_guard.artifactJob(dir, jobsRoot?)` defaults
+to `FIXED.ARTIFACT_JOBS`; world-trial and client-audit use that shared guard.
+
+PowerShell entry points dot-source `tools/runtime_env/paths.ps1` and call
+`Get-RuntimePath 'FIXED.STABLE_CACHE'` (or another scalar key) for omitted parameters.
+The underlying CLI, `node tools/runtime_env/paths.cjs <key>`, prints one value;
+unknown/non-scalar keys fail with exit 2. Explicit script parameters still win.
+ANU's remote toolchains remain separate in its remote configuration/controller.
+
 ## Job artifacts (agent dispatches)
 
 Valhalla project state lives under `C:/Users/dirty/.local-state/evil-eye-pack/`:

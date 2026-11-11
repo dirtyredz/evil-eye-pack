@@ -6,7 +6,9 @@ const { scope } = require('../../runtime_env/procs.cjs');
 const { waitForServer } = require('../server_smoke/process/host_wait.cjs');
 const { verdict } = require('./verdict.cjs');
 const { loadAllowlist } = require('./allowlist.cjs');
-const { output, inside, noLinks } = require('../../data_io/path_guard.cjs');
+const { output, inside, noLinks, artifactJob } = require('../../data_io/path_guard.cjs');
+
+const env = require('../../runtime_env/env.cjs');
 
 async function main(argv) {
   const options = {};
@@ -18,14 +20,14 @@ async function main(argv) {
   const allowlist = loadAllowlist(path.join(__dirname, 'allowlist.json'));
   if (!options.out || !options.cache) throw Error('--out and --cache are required');
   const out = path.resolve(options.out);
-  const jobs = path.resolve(require('../../runtime_env/env.cjs').ARTIFACTS, 'jobs');
-  output(out, jobs);
+  artifactJob(out);
+  output(out, env.FIXED.ARTIFACT_JOBS);
   for (const input of [root, options.cache, options.launcher || 'C:/Users/dirty/MultiMC']) {
     noLinks(input);
     if (inside(out, input) || inside(input, out)) throw Error('Output overlaps an input');
   }
   if (fs.existsSync(out)) throw Error('Output already exists: ' + out);
-  const jdk = options.jdk || 'C:/Users/dirty/.local-state/tools/evil-eye-pack/temurin-21';
+  const jdk = options.jdk ? env.javaHome(options.jdk) : env.JAVAS[21];
   const s = scope();
   const stop = () => s.killAll();
   process.once('SIGINT', stop); process.once('SIGTERM', stop);
@@ -34,7 +36,7 @@ async function main(argv) {
     fs.mkdirSync(out);
     const { version, libraries, cp } = stage(root, out, options.cache, options.launcher || 'C:/Users/dirty/MultiMC', options.exclude);
     const run = async (exe, args) => {
-      const r = await s.run(path.join(jdk, 'bin', exe + '.exe'), args, { cwd: out, timeoutMs: 60000 });
+      const r = await s.run(jdk[exe], args, { cwd: out, timeoutMs: 60000 });
       if (r.code !== 0) throw Error(r.out);
     };
     const classes = path.join(out, 'classes');
@@ -53,13 +55,13 @@ async function main(argv) {
       ...version.arguments.game.map(a => a === 'forgeclient' ? 'packclientaudit' : a), '--gameDir', path.join(out, 'game')];
     fs.writeFileSync(path.join(out, 'java.args'), args.map(a => '"' + a.replaceAll('\\', '/').replaceAll('"', '\\"') + '"').join('\n'));
     await waitForServer(s);
-    const fixture = await s.run(path.join(jdk, 'bin/java.exe'), ['-Xverify:all', '-cp', classes, 'packcheck.VerifierFixture'], { cwd: out, timeoutMs: 30000 });
+    const fixture = await s.run(jdk.java, ['-Xverify:all', '-cp', classes, 'packcheck.VerifierFixture'], { cwd: out, timeoutMs: 30000 });
     fs.writeFileSync(path.join(out, 'fixture.log'), fixture.out);
     if (fixture.code !== 0 || !fixture.out.includes('FIXTURE PASS:')) throw Error('Verifier regression failed: ' + fixture.out);
     console.log('Starting isolated CLIENT audit: ' + out);
     const started = Date.now();
     // Keep "minecraft" on the real command line: shared host guards cannot inspect @argfiles.
-    const result = await s.run(path.join(jdk, 'bin/java.exe'), ['-Dpackcheck.minecraft.clientAudit=true', '@' + path.join(out, 'java.args')], { cwd: path.join(out, 'game'), timeoutMs: 300000 });
+    const result = await s.run(jdk.java, ['-Dpackcheck.minecraft.clientAudit=true', '@' + path.join(out, 'java.args')], { cwd: path.join(out, 'game'), timeoutMs: 300000 });
     fs.writeFileSync(path.join(out, 'console.log'), result.out);
     const summary = result.out.split(/\r?\n/).filter(l => /PACK_AUDIT (CLIENT|CONFIGS|FAILED|UNHANDLED|COMPLETE)|VerifyError|Bad type on operand stack|@Mixin target .* was not found/.test(l));
     console.log(summary.join('\n'));
