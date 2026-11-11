@@ -4,7 +4,7 @@ Newest first.
 
 ## Resaved configs are restored, not marked preserve (2026-11-02)
 
-Stable/Trial prelaunch restores pack bytes for non-preserve, non-metafile files that a game launch rewrote, before strict verification (`restorePackFiles` in `tools/packwiz/install/install_pack.cjs`). It logs each restored path, keeps the last five backup generations per instance under `.tmp/installer-drift/<canonical-instance-hash>/`, and warns on consecutive repairs so game-written bytes get reviewed before shipped configs change. **Why:** the shipped file stays the single source of truth, and a hash mismatch cannot silently hide a real edit. **Rejected:** marking every game-resaved config `preserve = true`, which would stop the pack ever correcting it again and hide drift. Preserve stays for genuinely player-owned files; see the later exception where Modern UI and Terralith, which a mod rewrites on every launch, moved to preserve with the needed settings as owned keys (GOTCHAS, "Files a mod rewrites on every launch").
+Stable/Trial prelaunch restores pack bytes for non-preserve, non-metafile files that a game launch rewrote, before strict verification (`restorePackFiles` in `tools/packwiz/install/installed_files.cjs`, called by `install_pack.cjs`). It logs each restored path, keeps the last five backup generations per instance under `.tmp/installer-drift/<canonical-instance-hash>/`, and warns on consecutive repairs so game-written bytes get reviewed before shipped configs change. **Why:** the shipped file stays the single source of truth, and a hash mismatch cannot silently hide a real edit. **Rejected:** marking every game-resaved config `preserve = true`, which would stop the pack ever correcting it again and hide drift. Preserve stays for genuinely player-owned files; see the later exception where Modern UI and Terralith, which a mod rewrites on every launch, moved to preserve with the needed settings as owned keys (GOTCHAS, "Files a mod rewrites on every launch").
 
 ## Valhalla local state (2026-11-11)
 
@@ -22,7 +22,7 @@ Owner request: exclusive fullscreen kept freezing on alt-tab (driver hang on foc
 
 ## Second heart row pink (2026-11-07)
 
-Owner request: the second row of health hearts (Heart Canister extra hearts) is pink, not orange. Evil Eye Client `[health.hearts] colors` swaps entries 0 and 5 (pink `#FA7DEB` first, orange `#F06E14` moves to row 7), forced into preserved client configs through `tools/packwiz/install/pack-owned-keys.json`. This supersedes the yellow canister-heart wish recorded under Stable visual priority (2026-11-02); the CozyUI+ heart sprites stay. **Rejected:** replacing heart art.
+Owner request: the second row of health hearts (Heart Canister extra hearts) is pink, not orange. Evil Eye Client `[health.hearts] colors` swaps entries 0 and 5 (pink `#FA7DEB` first, orange `#F06E14` moves to row 7), forced into preserved client configs through `tools/packwiz/install/owned_keys/pack-owned-keys.json`. This supersedes the yellow canister-heart wish recorded under Stable visual priority (2026-11-02); the CozyUI+ heart sprites stay. **Rejected:** replacing heart art.
 
 ## Book of Dragons (2026-11-05)
 
