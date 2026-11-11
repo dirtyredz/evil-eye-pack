@@ -2,7 +2,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { files } = require('./files.cjs');
+const { files } = require('./world_tree.cjs');
 function manifest(root) {
   return Object.fromEntries(files(root).map(rel => {
     const bytes = fs.readFileSync(path.join(root, rel));

@@ -317,7 +317,7 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `tools/data_io/walk.cjs` | ordered jar traversal, optional jarjar recursion, caller-owned selection and parsing |
 | `tools/data_io/world/nbt.cjs` | NBT decoding, compressed region chunks, dimension and palette decoding |
 | `tools/data_io/world/inventory.cjs` | neutral offline world inventory (entities, block entities, stacks, blocks, biomes, terrain digests), whole-document/chunk `visit` hook and shared supported/auxiliary/unsupported file classification; no trial target policy |
-| `tools/data_io/world/files.cjs` | deterministic relative file walk, rejecting links and non-regular world entries |
+| `tools/data_io/world/world_tree.cjs` | deterministic relative file walk, rejecting links and non-regular world entries |
 | `tools/data_io/world/manifest.cjs` | byte/hash manifests and exact source/snapshot verification |
 | `tools/testing/pack_test/tests/data/contract.cjs` | shared pack-contract file access and TOML section extraction; cross-cutting contracts in `pack_contract.test.cjs`, removal/replacement contracts in `consolidation_contracts.test.cjs` |
 | `tools/data_io/files.cjs` | strict JSON file reading (`readJson`) and byte SHA-256 (`sha256`) |

@@ -1,6 +1,6 @@
 'use strict';
 const { inventory, digest, classifyFile } = require('../../data_io/world/inventory.cjs');
-const { files } = require('../../data_io/world/files.cjs');
+const { files } = require('../../data_io/world/world_tree.cjs');
 const storageIds = new Set(['createdrawerscompat:drawer', ...[
   'uncooperative', 'furniture_refurbished', 'repository', 'closet', 'iron_chest',
   'crystal_chest', 'iron_shulker_box', 'crate', 'sound', 'sound_uncooperative'

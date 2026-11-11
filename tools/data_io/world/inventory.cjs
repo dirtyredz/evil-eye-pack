@@ -1,6 +1,6 @@
 'use strict';
 const fs=require('node:fs'), path=require('node:path'), crypto=require('node:crypto');
-const { files }=require('./files.cjs');
+const { files }=require('./world_tree.cjs');
 const { parseNbt,gunzipMaybe,decompressChunk,dimensionFor,paletteCounts }=require('./nbt.cjs');
 const json=v=>JSON.stringify(v,(_k,x)=>typeof x==='bigint'?x.toString():x);
 const digest=v=>crypto.createHash('sha256').update(json(v)).digest('hex');
@@ -52,23 +52,26 @@ function inventory(world, { visit = () => {} } = {}) {
         if(len<1||len>sectors*4096-4||off+4+len>bytes.length)throw new Error('invalid chunk length');
         const external=path.join(path.dirname(file),`c.${cx}.${cz}.mcc`);
         const nbt=parseNbt(decompressChunk(bytes.subarray(off+4,off+4+len),external));out.chunks++;
-        inspect(nbt,context);visit(nbt,context);
-        const n=nbt.Level||nbt;
-        context.status=n.Status??null;
-        const entities=n.Entities||n.entities||[];
-        for(const e of entities){out.entities.push({...context,id:e.id,uuid:json(e.UUID??e.UUIDMost??null),nbt:e});}
-        const bes=n.block_entities||n.TileEntities||[];
-        for(const e of bes){out.blockEntities.push({...context,id:e.id,position:[e.x,e.y,e.z],nbt:e});}
-        const terrain=[];
-        for(const s of n.sections||n.Sections||[]) {
-          const palette=s.block_states?.palette||s.Palette;
-          if(palette){for(const row of paletteCounts(s)){
-            if(!palette[row.index])throw new Error('palette index out of range');
-            const id=palette[row.index].Name;add(out.blocks,id,row.count);
-          }terrain.push({y:s.Y,states:s.block_states||{palette:s.Palette,data:s.BlockStates}});}
-          for(const b of s.biomes?.palette||[])add(out.biomes,b);
-        }
-        if(terrain.length)out.terrain[dim+':'+cx+':'+cz]=digest(terrain);
+        inspect(nbt,context);
+        const blockIds=new Set();
+        try { // visit runs even when a palette is malformed (reported below), with the ids decoded so far
+          const n=nbt.Level||nbt;
+          context.status=n.Status??null;
+          const entities=n.Entities||n.entities||[];
+          for(const e of entities){out.entities.push({...context,id:e.id,uuid:json(e.UUID??e.UUIDMost??null),nbt:e});}
+          const bes=n.block_entities||n.TileEntities||[];
+          for(const e of bes){out.blockEntities.push({...context,id:e.id,position:[e.x,e.y,e.z],nbt:e});}
+          const terrain=[];
+          for(const s of n.sections||n.Sections||[]) {
+            const palette=s.block_states?.palette||s.Palette;
+            if(palette){for(const row of paletteCounts(s)){
+              if(!palette[row.index])throw new Error('palette index out of range');
+              const id=palette[row.index].Name;add(out.blocks,id,row.count);blockIds.add(id);
+            }terrain.push({y:s.Y,states:s.block_states||{palette:s.Palette,data:s.BlockStates}});}
+            for(const b of s.biomes?.palette||[])add(out.biomes,b);
+          }
+          if(terrain.length)out.terrain[dim+':'+cx+':'+cz]=digest(terrain);
+        } finally { visit(nbt,{file:rel,dimension:dim,chunk:[cx,cz],blockIds}); }
       }catch(e){out.errors.push({...context,error:e.message});}
     }
   }

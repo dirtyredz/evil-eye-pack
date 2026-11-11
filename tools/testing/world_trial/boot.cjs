@@ -1,7 +1,7 @@
 'use strict';
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {copy}=require('./copy.cjs');
-const {files}=require('../../data_io/world/files.cjs');
+const {files}=require('../../data_io/world/world_tree.cjs');
 const {output}=require('../../data_io/path_guard.cjs');
 const {verify}=require('../../data_io/world/manifest.cjs');
 const {prepare}=require('../server_smoke/runtime/offline_server.cjs');

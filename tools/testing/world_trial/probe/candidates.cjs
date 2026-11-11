@@ -4,7 +4,6 @@
 // shared reader knows nothing about trials, probe reasons or ported-mod namespaces.
 // plan.cjs then narrows these candidates to what the trial actually visits.
 const PORT_BLOCKS = /^(iceandfire|roundwood|ars_instrumentum|alexsmobs|alexscaves):/;
-const { paletteCounts } = require('../../../data_io/world/nbt.cjs');
 
 function candidateCollector() {
   const targets = new Map();
@@ -19,23 +18,15 @@ function candidateCollector() {
     if (Array.isArray(p.Pos) && typeof p.Dimension === 'string') target(p.Dimension, Math.floor(p.Pos[0] / 16), Math.floor(p.Pos[2] / 16), 'player');
     if (file === 'level.dat') target('minecraft:overworld', Math.floor(v.Data.SpawnX / 16), Math.floor(v.Data.SpawnZ / 16), 'spawn');
   }
-  function chunk(nbt, dim, [cx, cz]) {
+  function chunk(nbt, dim, [cx, cz], blockIds) {
     const n = nbt.Level || nbt;
     for (const _ of n.Entities || n.entities || []) target(dim, cx, cz, 'entity');
     for (const _ of n.block_entities || n.TileEntities || []) target(dim, cx, cz, 'block entity');
-    try { // a malformed palette is reported by the inventory itself; keep targets found before it
-      for (const s of n.sections || n.Sections || []) {
-        const palette = s.block_states?.palette || s.Palette;
-        if (!palette) continue;
-        for (const row of paletteCounts(s)) {
-          if (!palette[row.index]) throw new Error('palette index out of range');
-          if (PORT_BLOCKS.test(palette[row.index].Name)) target(dim, cx, cz, 'port blocks');
-        }
-      }
-    } catch { /* see above */ }
+    // blockIds: ids the inventory decoded from the chunk palettes (a malformed palette is reported by the inventory itself)
+    for (const id of blockIds) if (PORT_BLOCKS.test(id)) { target(dim, cx, cz, 'port blocks'); break; }
   }
   return {
-    visit(v, context) { if (context.chunk) chunk(v, context.dimension, context.chunk); else document(v, context.file); },
+    visit(v, context) { if (context.chunk) chunk(v, context.dimension, context.chunk, context.blockIds || []); else document(v, context.file); },
     targets: () => [...targets.values()].sort((a, b) => a.dimension.localeCompare(b.dimension) || a.x - b.x || a.z - b.z)
   };
 }

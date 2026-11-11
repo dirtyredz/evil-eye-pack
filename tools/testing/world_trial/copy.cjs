@@ -3,7 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { inside, noLinks, output, PROTECTED } = require('../../data_io/path_guard.cjs');
-const { files } = require('../../data_io/world/files.cjs');
+const { files } = require('../../data_io/world/world_tree.cjs');
 function copy(source, dest, job, protectedPaths = PROTECTED) {
   output(dest, job, protectedPaths); noLinks(source);
   if (inside(source,dest) || inside(dest,source)) throw new Error('Overlapping copy paths');
