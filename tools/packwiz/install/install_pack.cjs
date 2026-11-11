@@ -6,8 +6,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const P = require('../pack_index.cjs');
 const { sha256 } = require('../../data_io/files.cjs');
-const { localPin, cachedLocal, verifyInstalledLocal } = require('./local_source.cjs');
-const { resolvePinnedJar } = require('../pinned_jar.cjs');
+const { verifyInstalledLocal } = require('./local_source.cjs');
+const { clientArtifacts } = require('./client_artifacts.cjs');
 const { noLinks } = require('../../data_io/path_guard.cjs');
 const { applyOwnedKeys } = require('./pack_owned_keys.cjs');
 const env = require('../../runtime_env/env.cjs').FIXED;
@@ -26,25 +26,10 @@ function setInstanceCfgValue(text, key, value) {
 }
 
 function prepareFiles(root, cache) {
-  const indexText = fs.readFileSync(path.join(root, 'index.toml'), 'utf8');
-  if (P.readPackIndexRef(fs.readFileSync(path.join(root, 'pack.toml'), 'utf8')).hash !== sha256(indexText)) throw Error('Stale pack index');
-  const files = [], paths = new Set();
-  for (const f of P.parseIndex(indexText).files) {
-    if (path.isAbsolute(f.file) || f.file.split(/[\\/]/).includes('..')) throw Error('Unsafe index path');
-    let file = f.file, bytes = fs.readFileSync(path.join(root, file));
-    if (sha256(bytes) !== f.hash) throw Error('Stale index: ' + file);
-    if (f.metafile) {
-      const text = bytes.toString('utf8'), pin = P.readMetafileDownload(text);
-      if (P.readMetafileSide(text) === 'server') continue;
-      if (pin.mode === 'metadata:local') {
-        const t = localPin(root, file, text);
-        bytes = cachedLocal(t, path.join(cache, path.dirname(file)));
-      } else bytes = resolvePinnedJar(text, [path.join(cache, path.dirname(file))], file).bytes;
-      file = path.posix.join(path.posix.dirname(file), pin.filename);
-    }
-    if (paths.has(file.toLowerCase())) throw Error('Duplicate installed path: ' + file);
-    paths.add(file.toLowerCase());
-    files.push({ file, hash: sha256(bytes), bytes, preserve: f.preserve, sourceMetafile: f.metafile });
+  const files = [];
+  for (const artifact of clientArtifacts(root)) {
+    const bytes = artifact.resolve(path.join(cache, artifact.dir)).bytes;
+    files.push({ file: artifact.installedFile, hash: sha256(bytes), bytes, preserve: artifact.preserve, sourceMetafile: artifact.sourceMetafile });
   }
   return files;
 }

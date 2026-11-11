@@ -14,7 +14,7 @@ const { setInstanceCfgValue } = require('./install_pack.cjs');
 const { stablePreLaunchCommand } = require('./stable_target.cjs');
 const { STABLE_INSTANCE, LOCAL_INSTANCE, MAIN_CHECKOUT } = require('./instance_targets.cjs');
 
-const DEFAULT_CACHE = 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache';
+const DEFAULT_CACHE = require('../../runtime_env/env.cjs').FIXED.STABLE_CACHE;
 const SCRIPT = 'scripts/migration/stable-prelaunch.ps1';
 const cfgValue = (text, key) => (text.match(new RegExp(`^${key}=([^\r\n]*)`, 'm')) || [])[1];
 

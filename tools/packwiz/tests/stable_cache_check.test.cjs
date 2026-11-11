@@ -1,9 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const crypto = require('node:crypto');
 const fs = require('node:fs');
-const os = require('node:os');
 const path = require('node:path');
 const { checkCache } = require('../install/stable_cache_check.cjs');
 const { sha256 } = require('../../data_io/files.cjs');
@@ -13,7 +11,9 @@ const meta = (filename, side = 'both') => `name = "x"\nfilename = "${filename}"\
 
 // A tiny pack root (index.toml + metafiles), an empty cache, and a jobs folder with one source jar.
 function fixture(t) {
-  const base = fs.mkdtempSync(path.join(os.tmpdir(), 'stable-cache-'));
+  const scratch = path.resolve(__dirname, '../../../.tmp');
+  fs.mkdirSync(scratch, { recursive: true });
+  const base = fs.mkdtempSync(path.join(scratch, 'stable-cache-'));
   t.after(() => fs.rmSync(base, { recursive: true, force: true }));
   const root = path.join(base, 'pack'), cache = path.join(base, 'cache'), jobs = path.join(base, 'jobs');
   fs.mkdirSync(path.join(root, 'mods'), { recursive: true });
@@ -25,6 +25,7 @@ function fixture(t) {
     index += `\n[[files]]\nfile = "${rel}"\nhash = "${sha256(Buffer.from(text))}"\nmetafile = true\n`;
   }
   fs.writeFileSync(path.join(root, 'index.toml'), index);
+  fs.writeFileSync(path.join(root, 'pack.toml'), `[index]\nfile = "index.toml"\nhash-format = "sha256"\nhash = "${sha256(index)}"\n`);
   return { root, cache, jobs };
 }
 
@@ -55,4 +56,22 @@ test('--stock copies only hash-verified jars from local sources and never overwr
   const again = checkCache(f.root, f.cache, { stock: true, jobs: f.jobs });
   assert.deepEqual(again.missing.map((m) => m.name), ['a.jar', 'b.jar']);
   assert.equal(fs.readFileSync(path.join(f.cache, 'mods/a.jar'), 'utf8'), 'tampered');
+});
+
+for (const target of ['pack.toml', 'mods/srv.pw.toml']) {
+  test('cache guard rejects stale ' + target + ' just like the installer', t => {
+    const f = fixture(t);
+    fs.writeFileSync(path.join(f.cache, 'mods/a.jar'), JAR);
+    fs.writeFileSync(path.join(f.cache, 'mods/b.jar'), JAR);
+    if (target === 'pack.toml') fs.writeFileSync(path.join(f.root, target), '[index]\nhash = "stale"\n');
+    else fs.appendFileSync(path.join(f.root, target), '\n');
+    const { prepareFiles } = require('../install/install_pack.cjs');
+    assert.throws(() => prepareFiles(f.root, f.cache), /Stale/);
+    assert.throws(() => checkCache(f.root, f.cache), /Stale/);
+  });
+}
+
+test('Stable cache default comes from the fixed machine environment', () => {
+  const env = require('../../runtime_env/env.cjs');
+  assert.equal(require('../install/stable_cache_check.cjs').DEFAULT_CACHE, env.FIXED.STABLE_CACHE);
 });
