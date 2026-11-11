@@ -8,6 +8,18 @@
 
 function Convert-ToScpPath([string]$WindowsPath) { $WindowsPath.Replace('\', '/') }
 
+# Runs a native command (scriptblock) capturing its text output; returns @{ Output; ExitCode }.
+# Windows PowerShell 5.1 turns native stderr into terminating errors under 'Stop' (e.g. OpenSSH's post-quantum
+# warning on every ssh), so EAP is 'Continue' around the call, as in Invoke-Native.
+function Invoke-NativeCapture([scriptblock]$Command) {
+  $prevEap = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try {
+    $out = (& $Command | ForEach-Object { [string]$_ } | Out-String)   # stringify so stderr records print as plain text
+    return @{ Output = $out; ExitCode = [int]$LASTEXITCODE }
+  } finally { $ErrorActionPreference = $prevEap }
+}
+
 function Invoke-Ssh([string]$Command, [int]$FailCode = 3) {
   $rc = Invoke-Native 'ssh' @($AnuHost, $Command)
   if ($rc -ne 0) { Complete-OwnerRun $FailCode "ssh command failed (exit $rc): $Command" }
@@ -31,13 +43,14 @@ function Send-Ctl {
   Send-ToAnu $McNet "$AnuCtl\mc-net.cjs" 'mc-net.cjs'
 }
 function Test-ServerRunning {
-  $out = & ssh $AnuHost "powershell -NoProfile -ExecutionPolicy Bypass -File $Ctl -Op Status" 2>&1 | Out-String
-  return ($out -match 'State: RUNNING')
+  $r = Invoke-NativeCapture { & ssh $AnuHost "powershell -NoProfile -ExecutionPolicy Bypass -File $Ctl -Op Status" 2>&1 }
+  return ($r.Output -match 'State: RUNNING')
 }
 # Server list ping from Valhalla; fails the run (exit 2) when the server does not answer.
 function Test-ServerPing {
-  $ping = & node $McNet ping $AnuAddr 25565 2>&1 | Out-String
-  $rc = $LASTEXITCODE
+  $r = Invoke-NativeCapture { & node $McNet ping $AnuAddr 25565 2>&1 }
+  $ping = $r.Output
+  $rc = $r.ExitCode
   Write-Log ("Ping from Valhalla to {0}:25565 -> {1}" -f $AnuAddr, $ping.Trim())
   if ($rc -ne 0) { Complete-OwnerRun 2 'server list ping failed' }
 }
