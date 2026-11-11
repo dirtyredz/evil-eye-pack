@@ -1,22 +1,12 @@
 'use strict';
-// Run identity: the artifact-root guard for writable run folders, the run id and what was tested (checkout
+// Run identity: the run id and what was tested (checkout
 // commit, dirty state, pack and index hashes).
 const fs = require('node:fs');
 const path = require('node:path');
 const { sha256 } = require('./files.cjs');
 const { execFileSync } = require('node:child_process');
 
-const norm = (p) => path.resolve(p).replace(/\\/g, '/').toLowerCase();
-const inside = (child, parent) => norm(child) === norm(parent) || norm(child).startsWith(`${norm(parent)}/`);
-
-// Writable run folders must sit under the artifacts root and never inside a checkout.
-function checkDestination(dir, { artifacts, checkouts }) {
-  if (!inside(dir, artifacts)) throw new Error(`refusing to write outside the artifacts root ${artifacts}: ${dir}`);
-  for (const c of checkouts) if (inside(dir, c)) throw new Error(`refusing to write inside a checkout (${c}): ${dir}`);
-}
-
 const runId = (d = new Date()) => `run-${d.toISOString().replace(/[:.]/g, '-')}`;
-
 
 function git(root, args) {
   try { return execFileSync('git', args, { cwd: root, windowsHide: true, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch { return null; }
@@ -36,4 +26,4 @@ function runMeta(packToml) {
   };
 }
 
-module.exports = { checkDestination, runId, runMeta };
+module.exports = { runId, runMeta };

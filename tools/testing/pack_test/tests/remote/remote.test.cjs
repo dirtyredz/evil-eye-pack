@@ -88,3 +88,13 @@ test('every tools/ directory the ANU agent requires is in the synced CODE_DIRS (
     .filter((rel) => !CODE_DIRS.some((d) => rel === d || rel.startsWith(`${d}/`)));
   assert.deepEqual(outside, [], 'files the agent loads but ANU never receives');
 });
+
+test('the shared registry snapshot probe reaches ANU through a synced code dir and is injected with the pack-test probe', () => {
+  const { CODE_DIRS } = require('../../remote/anu.cjs');
+  const { REGISTRIES_PROBE } = require('../../../../runtime_env/server/capture/registries_probe.cjs');
+  const tools = path.resolve(__dirname, '../../../..');
+  const rel = path.relative(tools, REGISTRIES_PROBE).split(path.sep).join('/');
+  assert.ok(fs.existsSync(REGISTRIES_PROBE), 'probe file exists');
+  assert.ok(CODE_DIRS.some((d) => rel.startsWith(`${d}/`)), `${rel} is in no synced CODE_DIR`);
+  assert.match(fs.readFileSync(path.join(tools, 'testing/pack_test/session/prepare.cjs'), 'utf8'), /REGISTRIES_PROBE/);
+});

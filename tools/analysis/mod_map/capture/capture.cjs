@@ -11,6 +11,7 @@ const { localLock } = require('../../../runtime_env/lock.cjs');
 const { worldKey, restoreWorld } = require('../../../data_io/world/cache.cjs');
 const { readRuntime, readStamp } = require('../../../runtime_env/server/runtime.cjs');
 const { WORLD } = require('../../../server_stage/stage_runtime.cjs');
+const { REGISTRIES_PROBE } = require('../../../runtime_env/server/capture/registries_probe.cjs');
 const { FML_LOGGERS } = require('./timing.cjs');
 
 const LOG_CONFIG = `<?xml version="1.0" encoding="UTF-8"?>
@@ -41,9 +42,9 @@ async function capture(root, cache, run, log, worldSource) {
     fs.mkdirSync(path.join(server, 'logs'), { recursive: true });
     fs.writeFileSync(path.join(server, 'mod-map-log4j.xml'), LOG_CONFIG);
     fs.appendFileSync(path.join(server, 'user_jvm_args.txt'), '-Dlog4j.configurationFile=mod-map-log4j.xml\n');
-    // Reuse the pack-test registry collector, without the unrelated full acceptance suite.
+    // The shared registry collector (runtime_env/server/capture), without the pack test's acceptance suite.
     const scripts = path.join(server, 'kubejs/server_scripts/mod_map'); fs.mkdirSync(scripts, { recursive: true });
-    fs.copyFileSync(path.join(root, 'tools/testing/pack_test/probe/registries.js'), path.join(scripts, 'registries.js'));
+    fs.copyFileSync(REGISTRIES_PROBE, path.join(scripts, 'registries.js'));
     fs.writeFileSync(path.join(scripts, 'capture.js'), '// priority: -20\nServerEvents.loaded(event => { JsonIO.write("mod-map-registries.json", global.packTest.registries.collect(event.server).data); })\n');
     log('Local offline capture; cached world: ' + (reused ? key : worldSource + ' (different mod set)'));
     await waitForServer(scope, { log });

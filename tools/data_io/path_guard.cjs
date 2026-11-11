@@ -9,6 +9,11 @@ function inside(a, b) {
   const rel = path.relative(path.resolve(b), path.resolve(a)).toLowerCase();
   return rel === '' || (!rel.startsWith('..' + path.sep) && rel !== '..' && !path.isAbsolute(rel));
 }
+// Writable run folders must sit under the artifacts root and never inside a checkout.
+function checkDestination(dir, { artifacts, checkouts }) {
+  if (!inside(dir, artifacts)) throw new Error(`refusing to write outside the artifacts root ${artifacts}: ${dir}`);
+  for (const c of checkouts) if (inside(dir, c)) throw new Error(`refusing to write inside a checkout (${c}): ${dir}`);
+}
 function artifactJob(dir, jobsRoot = ARTIFACT_JOBS) {
   if (!inside(dir, jobsRoot)) throw new Error('Job must be in artifact jobs');
 }
@@ -27,4 +32,4 @@ function output(target, job, protectedPaths = PROTECTED) {
   if (!inside(target, job) || path.resolve(target).toLowerCase() === path.resolve(job).toLowerCase()) throw new Error('Output must be below job: ' + target);
   if (protectedPaths.some(p => inside(target,p) || inside(p,target))) throw new Error('Protected output: ' + target);
 }
-module.exports = { inside, artifactJob, noLinks, output, PROTECTED };
+module.exports = { inside, checkDestination, artifactJob, noLinks, output, PROTECTED };
