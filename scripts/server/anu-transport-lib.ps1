@@ -6,6 +6,13 @@
   Not an entry point: dot-sourced, no parameters of its own.
 #>
 
+# Windows' own bsdtar. A bare 'tar' under Git Bash resolves to GNU /usr/bin/tar, which reads 'C:/...' as host 'C'.
+function Get-WindowsTar {
+  $exe = Join-Path $env:SystemRoot 'System32\tar.exe'
+  if (-not (Test-Path -LiteralPath $exe)) { throw "Windows tar not found at $exe" }
+  return $exe
+}
+
 function Convert-ToScpPath([string]$WindowsPath) { $WindowsPath.Replace('\', '/') }
 
 function Invoke-Ssh([string]$Command, [int]$FailCode = 3) {
