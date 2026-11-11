@@ -6,9 +6,10 @@ const { resolvePinnedJar } = require('../../packwiz/pinned_jar.cjs');
 const { listEntries, readEntry } = require('../../data_io/zip_reader.cjs');
 const { parseMods, manifestVersion, METADATA } = require('../../data_io/mod_metadata.cjs');
 const { strings } = require('./class_references.cjs');
-const { profile, verdict } = require('./targets.cjs');
+const { verdict } = require('./targets.cjs');
 const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
-function scanArchive(bytes, archivePath, pin, result, depth = 0, definitions = profile().definitions) {
+function scanArchive(bytes, archivePath, pin, result, depth = 0, definitions) {
+  if (!definitions || typeof definitions !== 'object' || Array.isArray(definitions)) throw new TypeError('definitions are required');
   if (depth > 32) throw new Error('Recursion limit reached: ' + archivePath);
   const entries = listEntries(bytes);
   const archive = { path: archivePath, root: pin, sha256: hash(bytes), classCount: 0, metadata: [], references: [] };
@@ -42,7 +43,8 @@ function scanArchive(bytes, archivePath, pin, result, depth = 0, definitions = p
   }
 }
 
-function audit(root,caches,removed = new Set(), selected = profile()) {
+function audit(root,caches,removed = new Set(), selected) {
+if (!selected || typeof selected.definitions !== 'object' || !selected.definitions) throw new TypeError('selected profile is required');
 const result = { complete:true, profile:selected.name, removed:[...removed], pins:[], archives:[], errors:[],
  consumers:Object.fromEntries(Object.keys(selected.definitions).map(k => [k, []])), providers:Object.create(null), duplicateProviders:[],
  method:'All nested jars and class constant-pool strings; conservative references, no local-package suppression.' };

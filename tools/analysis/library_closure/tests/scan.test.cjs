@@ -2,6 +2,8 @@
 const test=require('node:test'), assert=require('node:assert/strict');
 const {strings}=require('../class_references.cjs');
 const {scanArchive,audit}=require('../scan.cjs');
+const {profile}=require('../targets.cjs');
+const ipn=profile('ipn');
 function klass(values) {
  const head=Buffer.alloc(10);head.writeUInt32BE(0xcafebabe);head.writeUInt16BE(65,6);head.writeUInt16BE(values.length+1,8);
  return Buffer.concat([head,...values.map(s=>{const b=Buffer.from(s),h=Buffer.alloc(3);h[0]=1;h.writeUInt16BE(b.length,1);return Buffer.concat([h,b]);}),Buffer.alloc(8)]);
@@ -24,26 +26,25 @@ test('descriptors and reflection strings survive conservative constant-pool pars
 });
 test('all nested paths and duplicate basenames preserve archive ownership',()=>{
  const nested=zip({'x.class':klass(['org.anti_ad.Other'])});const r=result();
- scanArchive(zip({'arbitrary/a.jar':nested,'elsewhere/a.jar':nested,'org/anti_ad/Local.class':klass(['org/anti_ad/Missing'])}),'root.jar','root',r);
+ scanArchive(zip({'arbitrary/a.jar':nested,'elsewhere/a.jar':nested,'org/anti_ad/Local.class':klass(['org/anti_ad/Missing'])}),'root.jar','root',r,0,ipn.definitions);
  assert.equal(r.archives.length,3);assert.notEqual(r.archives[1].path,r.archives[2].path);
  assert.equal(r.archives[0].references.length,1,'local definition must not suppress another class in the package');
  assert.ok(r.archives.slice(1).every(a=>a.references[0].kind==='ipn'));
 });
 test('nested metadata distinguishes required and optional consumers',()=>{
  const metadata='[[mods]]\nmodId="consumer"\nversion="1"\n[[dependencies.consumer]]\nmodId="libipn"\ntype="required"\nversionRange="*"\n[[dependencies.consumer]]\nmodId="kotlinforforge"\ntype="optional"\nversionRange="*"\n';
- const r=result();scanArchive(zip({'nested/dependency.jar':zip({'META-INF/neoforge.mods.toml':metadata})}),'root','root',r);
+ const r=result();scanArchive(zip({'nested/dependency.jar':zip({'META-INF/neoforge.mods.toml':metadata})}),'root','root',r,0,ipn.definitions);
  const deps=r.archives[1].metadata[0].mods[0].dependencies;assert.equal(deps[0].type,'required');assert.equal(deps[1].type,'optional');
 });
 test('malformed and recursion-limited archives cannot count as complete',()=>{
- assert.throws(()=>scanArchive(zip({'bad.class':Buffer.from('bad')}),'x','x',result()),/header/);
- assert.throws(()=>scanArchive(zip({}),'x','x',result(),33),/Recursion/);
+ assert.throws(()=>scanArchive(zip({'bad.class':Buffer.from('bad')}),'x','x',result(),0,ipn.definitions),/header/);
+ assert.throws(()=>scanArchive(zip({}),'x','x',result(),33,ipn.definitions),/Recursion/);
  const fs=require('node:fs'),os=require('node:os'),path=require('node:path');const root=fs.mkdtempSync(path.join(os.tmpdir(),'closure-'));
  try {fs.mkdirSync(path.join(root,'mods'));fs.writeFileSync(path.join(root,'mods/missing.pw.toml'),'name="Missing"\nfilename = "missing.jar"\n[download]\nhash-format = "sha256"\nhash = "'+'0'.repeat(64)+'"\nmode = "metadata:local"\n');
- const r=audit(root,[]);assert.equal(r.complete,false);assert.equal(r.errors.length,1);
+ const r=audit(root,[],new Set(),ipn);assert.equal(r.complete,false);assert.equal(r.errors.length,1);
  } finally {fs.rmSync(root,{recursive:true,force:true});}
 });
 
-const {profile}=require('../targets.cjs');
 test('wave 7 recognizes each candidate in nested references and dependency metadata',()=>{
  const selected=profile('wave7'), r=result();
  const metadata='[[mods]]\nmodId="consumer"\nversion="1"\n[[dependencies.consumer]]\nmodId="createdrawerscompat"\ntype="required"\n';
@@ -95,5 +96,12 @@ test('duplicate target providers and empty metadata fail closed',t=>{
 });
 test('missing or malformed declared nested archives fail closed',()=>{
  for (const metadata of ['broken','{}','{"jars":[{"path":"missing.jar"}]}'])
-  assert.throws(()=>scanArchive(zip({'META-INF/jarjar/metadata.json':metadata}),'x','x',result()));
+  assert.throws(()=>scanArchive(zip({'META-INF/jarjar/metadata.json':metadata}),'x','x',result(),0,ipn.definitions));
+});
+
+test('scan and audit require explicit policy even with empty inputs',()=>{
+ assert.throws(()=>scanArchive(zip({}),'empty.jar','empty',result()),/definitions are required/);
+ assert.throws(()=>audit('unused',[]),/selected profile is required/);
+ const r=result();scanArchive(zip({'x.class':klass(['org/anti_ad/Thing'])}),'empty.jar','empty',r,0,{});
+ assert.deepEqual(r.archives[0].references,[],'empty explicit definitions must not select IPN');
 });
