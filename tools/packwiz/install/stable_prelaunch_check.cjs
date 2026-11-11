@@ -5,41 +5,29 @@
 // skipped the install) silently freezes Stable on old jars. Nothing else notices.
 //   node tools/packwiz/install/stable_prelaunch_check.cjs            exit 1 and print the problem when the command is wrong or missing
 //   node tools/packwiz/install/stable_prelaunch_check.cjs --fix      rewrite it (only the PreLaunchCommand and OverrideCommands lines)
-//   --cache <dir>   cache for --fix (default: the cache Evil Eye Local's cfg already names, else the world-trial-final cache)
+//   --cache <dir>   cache for --fix (default: runtime_env/env.cjs FIXED.STABLE_CACHE)
 //   --cfg <file>    check a copy instead of the real Stable instance.cfg
 // --fix while MultiMC is open is overwritten the next time MultiMC saves: close MultiMC first.
 const fs = require('node:fs');
 const path = require('node:path');
-const { setInstanceCfgValue } = require('./install_pack.cjs');
-const { stablePreLaunchCommand } = require('./stable_target.cjs');
-const { STABLE_INSTANCE, LOCAL_INSTANCE, MAIN_CHECKOUT } = require('./instance_targets.cjs');
+const { instanceCfgGet, setInstanceCfgValue } = require('./install_pack.cjs');
+const { stablePreLaunchCommand, stableCommandProblems, STABLE_SCRIPT: SCRIPT } = require('./stable_target.cjs');
+const { STABLE_INSTANCE, MAIN_CHECKOUT } = require('./instance_targets.cjs');
 
 const DEFAULT_CACHE = require('../../runtime_env/env.cjs').FIXED.STABLE_CACHE;
-const SCRIPT = 'scripts/migration/stable-prelaunch.ps1';
-const cfgValue = (text, key) => (text.match(new RegExp(`^${key}=([^\r\n]*)`, 'm')) || [])[1];
-
 // Pure: problems with Stable's instance.cfg text (empty list when it will run the install).
 function stablePrelaunchProblems(cfgText) {
   const problems = [];
-  if (cfgValue(cfgText, 'OverrideCommands') !== 'true') problems.push('OverrideCommands is not true (MultiMC ignores the instance PreLaunchCommand)');
-  const cmd = cfgValue(cfgText, 'PreLaunchCommand');
-  if (!cmd) problems.push('PreLaunchCommand is empty: Stable will not update on launch');
-  else if (!cmd.includes(SCRIPT)) problems.push(`PreLaunchCommand does not run ${SCRIPT}: ${cmd}`);
-  else if (!/-Cache "[^"]+"/.test(cmd)) problems.push('PreLaunchCommand has no -Cache argument');
+  if (instanceCfgGet(cfgText, 'OverrideCommands') !== 'true') problems.push('OverrideCommands is not true (MultiMC ignores the instance PreLaunchCommand)');
+  const cmd = instanceCfgGet(cfgText, 'PreLaunchCommand');
+  problems.push(...stableCommandProblems(cmd));
   return problems;
 }
 
 // Pure: the repaired text.
-function fixStableCfg(cfgText, cache) {
+function fixStableCfg(cfgText, cache, instance = STABLE_INSTANCE) {
   const withOverride = setInstanceCfgValue(cfgText, 'OverrideCommands', 'true');
-  return setInstanceCfgValue(withOverride, 'PreLaunchCommand', stablePreLaunchCommand(MAIN_CHECKOUT, cache, STABLE_INSTANCE));
-}
-
-function localCache() {
-  try {
-    const m = /-Cache "([^"]+)"/.exec(cfgValue(fs.readFileSync(path.join(LOCAL_INSTANCE, 'instance.cfg'), 'utf8'), 'PreLaunchCommand') || '');
-    return m && m[1];
-  } catch { return null; }
+  return setInstanceCfgValue(withOverride, 'PreLaunchCommand', stablePreLaunchCommand(MAIN_CHECKOUT, cache, instance));
 }
 
 function main(argv) {
@@ -55,7 +43,7 @@ function main(argv) {
   if (!problems.length) { console.log(`OK Stable prelaunch runs ${SCRIPT}`); return 0; }
   for (const p of problems) console.log('PROBLEM ' + p);
   if (!fix) return 1;
-  fs.writeFileSync(cfg, fixStableCfg(text, cache || localCache() || DEFAULT_CACHE));
+  fs.writeFileSync(cfg, fixStableCfg(text, cache || DEFAULT_CACHE, path.dirname(path.resolve(cfg))));
   console.log(`FIXED ${cfg}. MultiMC must be closed while this is done, or it writes its in-memory (old) value back.`);
   return 0;
 }

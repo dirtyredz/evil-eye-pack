@@ -6,6 +6,25 @@ const path = require('node:path');
 
 const ROOT = path.resolve(__dirname, '../../../../..');
 const read = (rel) => fs.readFileSync(path.join(ROOT, rel), 'utf8');
+
+test('owned keys leave every strictly pack-owned shipped target byte-identical', t => {
+  const { parseIndex } = require('../../../../packwiz/pack_index.cjs');
+  const { loadEntries, applyOwnedKeys } = require('../../../../packwiz/install/pack_owned_keys.cjs');
+  const { isStrictlyPackOwned } = require('../../../../packwiz/install/installed_files.cjs');
+  const strict = new Set(parseIndex(read('index.toml')).files.filter(isStrictlyPackOwned).map(f => f.file));
+  const entries = loadEntries().filter(e => strict.has(e.file));
+  const scratch = path.join(ROOT, '.tmp');
+  fs.mkdirSync(scratch, { recursive: true });
+  const copy = fs.mkdtempSync(path.join(scratch, 'owned-contract-'));
+  t.after(() => fs.rmSync(copy, { recursive: true, force: true }));
+  const targets = [...new Set(entries.map(e => e.file))];
+  for (const file of targets) {
+    fs.mkdirSync(path.dirname(path.join(copy, file)), { recursive: true });
+    fs.copyFileSync(path.join(ROOT, file), path.join(copy, file));
+  }
+  assert.deepEqual(applyOwnedKeys(copy, entries), [], 'owned keys must not cause repair loops');
+  for (const file of targets) assert.deepEqual(fs.readFileSync(path.join(copy, file)), fs.readFileSync(path.join(ROOT, file)), file);
+});
 // Historical CurseForge slug differs from the jar's mod ID.
 const modId = (file) => file === 'ice-and-fire-dragons.pw.toml' ? 'iceandfire' : path.basename(file, '.pw.toml').replace(/[^a-z0-9]/g, '');
 

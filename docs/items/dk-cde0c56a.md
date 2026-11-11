@@ -2,8 +2,8 @@
 id: dk-cde0c56a
 type: task
 created: 2026-11-02
-status: todo
-since: 2026-11-02
+status: done
+since: 2026-11-11
 area: packwiz
 priority: P2
 rank: zzzzzzzzzzzzn

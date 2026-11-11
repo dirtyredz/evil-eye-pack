@@ -11,9 +11,19 @@ const { STABLE, isRealStable, stableTarget } = require('./instance_targets.cjs')
 
 const ROOT = path.resolve(__dirname, '../../..');
 
+const STABLE_SCRIPT = 'scripts/migration/stable-prelaunch.ps1';
+
+function stableCommandProblems(cmd) {
+  if (!cmd) return ['PreLaunchCommand is empty: Stable will not update on launch'];
+  if (!cmd.includes(STABLE_SCRIPT)) return ['PreLaunchCommand does not run ' + STABLE_SCRIPT + ': ' + cmd];
+  if (!/-Cache "[^"]+"/.test(cmd)) return ['PreLaunchCommand has no -Cache argument'];
+  return [];
+}
+
 function stablePreLaunchCommand(root, cache, instance) {
-  const script = path.join(root, 'scripts/migration/stable-prelaunch.ps1');
-  const target = isRealStable(instance) ? null : instance;
+  const script = path.join(root, STABLE_SCRIPT);
+  // Cfg repair starts with an instance folder; installer targets already name .minecraft.
+  const target = isRealStable(instance) ? null : path.basename(instance) === '.minecraft' ? instance : path.join(instance, '.minecraft');
   if ([script, cache, target || ''].some(s => /["\r\n]/.test(s))) throw Error('Unsafe launcher argument');
   const extra = target ? ` -Instance "${target}"` : '';
   return instanceCfgValue(`powershell.exe -NoProfile -ExecutionPolicy Bypass -File "${script}" -Cache "${cache}"${extra}`);
@@ -60,4 +70,4 @@ async function main(argv) {
   await installPack({ instance: target, cache, dryRun, prelaunch: stablePreLaunchCommand(ROOT, cache, target), backupName: 'stable-instance-before.cfg', label: 'Evil Eye Stable' });
 }
 if (require.main === module) main(process.argv.slice(2)).catch(e => { console.error(e.stack); process.exitCode = 1; });
-module.exports = { clearOldTracked, stablePreLaunchCommand };
+module.exports = { clearOldTracked, stablePreLaunchCommand, stableCommandProblems, STABLE_SCRIPT };

@@ -6,7 +6,8 @@ const path = require('node:path');
 const { sha256 } = require('../../data_io/files.cjs');
 const P = require('../pack_index.cjs');
 const { renderMetafile } = require('../migration/repoint.cjs');
-const { instanceCfgValue, setInstanceCfgValue, prepareFiles, writePack, verifyInstalledFiles, restorePackFiles } = require('../install/install_pack.cjs');
+const { instanceCfgValue, setInstanceCfgValue, prepareFiles, writePack } = require('../install/install_pack.cjs');
+const { verifyInstalledFiles, restorePackFiles, driftBackupDirectory } = require('../install/installed_files.cjs');
 const { checkCache } = require('../install/stable_cache_check.cjs');
 const { trialPreLaunchCommand, trialInstance } = require('../install/trial_target.cjs');
 
@@ -113,13 +114,15 @@ test('game re-saves of strict configs are restored before verification', t => {
   const messages = [];
   assert.deepEqual(restorePackFiles(instance, files, run, line => messages.push(line)),
     [files[0].file, files[1].file, files[4].file]);
-  assert.deepEqual(messages, [files[0], files[1], files[4]].map(f => 'Restored pack-owned file: ' + f.file));
+  assert.deepEqual(messages.filter(m => m.startsWith('Restored')), [files[0], files[1], files[4]].map(f => 'Restored pack-owned file: ' + f.file));
+  const history = driftBackupDirectory(instance, run);
+  const backup = path.join(history, fs.readdirSync(history).find(n => n.startsWith('run-')));
   for (let i = 0; i < 2; i++) {
-    assert.equal(fs.readFileSync(path.join(run, 'drift-backup', files[i].file), 'utf8'), drift[i]);
+    assert.equal(fs.readFileSync(path.join(backup, files[i].file), 'utf8'), drift[i]);
     assert.deepEqual(fs.readFileSync(path.join(instance, files[i].file)), files[i].bytes);
   }
   assert.equal(fs.readFileSync(path.join(instance, files[2].file), 'utf8'), 'personal');
-  for (const f of files.slice(2)) assert.equal(fs.existsSync(path.join(run, 'drift-backup', f.file)), false);
+  for (const f of files.slice(2)) assert.equal(fs.existsSync(path.join(backup, f.file)), false);
   assert.deepEqual(restorePackFiles(instance, files, run), []);
   assert.doesNotThrow(() => verifyInstalledFiles(instance, files));
   fs.writeFileSync(path.join(instance, 'mods/private.jar'), 'tampered');
