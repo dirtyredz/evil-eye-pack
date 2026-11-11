@@ -31,7 +31,7 @@ Explicit dry run (the default without -Execute). Wins over -Execute.
 .PARAMETER Instance
 The instance folder (the one holding instance.cfg and .minecraft). Default: the real Evil Eye Stable.
 .PARAMETER ArchiveRoot
-Parent of the dated archive folder. Default: C:/Users/dirty/projects/artifacts/evil-eye-pack.
+Parent of the dated archive folder. Default: C:/Users/dirty/.local-state/evil-eye-pack/artifacts.
 .PARAMETER Cache
 Complete offline migration cache root (mods, resourcepacks, shaderpacks) containing the bridge jar.
 .PARAMETER Java
@@ -46,9 +46,9 @@ param(
   [switch]$Execute,
   [switch]$DryRun,
   [string]$Instance,
-  [string]$ArchiveRoot = 'C:/Users/dirty/projects/artifacts/evil-eye-pack',
-  [string]$Cache = 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache',
-  [string]$Java = 'C:/Tools/evil-eye-pack/temurin-21/bin/java.exe'
+  [string]$ArchiveRoot = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts',
+  [string]$Cache = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/2026-10-31-world-trial-final/cache',
+  [string]$Java = 'C:/Users/dirty/.local-state/tools/evil-eye-pack/temurin-21/bin/java.exe'
 )
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'

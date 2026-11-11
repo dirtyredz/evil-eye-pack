@@ -3,7 +3,7 @@
 // junctions anywhere on the path, containment checks, and protected-output refusal.
 const fs = require('node:fs');
 const path = require('node:path');
-const ARTIFACT_JOBS = 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs';
+const ARTIFACT_JOBS = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs';
 const PROTECTED = ['C:/Users/dirty/MultiMC/instances', 'C:/Users/dirty/projects/evil-eye-pack'];
 function inside(a, b) {
   const rel = path.relative(path.resolve(b), path.resolve(a)).toLowerCase();

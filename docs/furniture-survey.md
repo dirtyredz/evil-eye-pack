@@ -17,7 +17,7 @@ was launched. Runtime registry totals, state totals, actual EMI master/visible c
 retained memory, baked quads and startup/bake timing remain **unmeasured**, except for
 the explicitly reconstructed Roundwood registrations below.
 
-Job evidence: `C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-11-02-furniture-survey/`.
+Job evidence: `C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/2026-11-02-furniture-survey/`.
 The local files are deliberately outside the pack; they contain private world evidence.
 
 | Evidence | Contents |

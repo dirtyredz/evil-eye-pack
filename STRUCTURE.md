@@ -142,6 +142,9 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `tools/testing/` — tools that boot or exercise the pack: `client_mixin/`, `world_trial/`, `server_smoke/`, `pack_test/`, `showcase/`.
 - `tools/resourcepack/fusion_glass/` — unshipped generator (`generate.cjs`, `png.cjs`) for the Fusion glass resources in `resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/` and the matching `minecraft/blockstates/*glass*.json`, plus `tests/`; output is committed, never hand-edited
 - `tools/runtime_env/` — shared machine environment (`env.cjs`: Java per major, packwiz jars, Stable cache, artifacts root; `FIXED` ignores `SMOKE_*` overrides, used by the install route) hidden child-process scopes (`procs.cjs`) and the run-exit cleanup of staged copies (`staged_dir.cjs`); imported by `testing/`, `analysis/` and `packwiz/`.
+- Valhalla's external artifacts live under `~/.local-state/evil-eye-pack/artifacts/`;
+  its portable JDK is under `~/.local-state/tools/evil-eye-pack/temurin-21/`.
+  ANU's separate roots are owned by `testing/pack_test/remote/config.cjs`.
 - `tools/analysis/` — tools that read the pack's files and jars without booting it: `dedup/`, `emi_curation/` (tests), `emi_coverage/`, `mod_map/`, `malware_guard/`, `library_closure/`, `consolidation/`.
 - `tools/testing/client_mixin/` — offline CLIENT mixin audit: `stage.cjs` copies pinned pack files and cached
     client libraries, `run.cjs` compiles and supervises the bounded JVM, `verdict.cjs` rejects incomplete

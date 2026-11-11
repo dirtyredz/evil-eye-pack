@@ -11,7 +11,7 @@ async function main(args) {
   for(let i=0;i<rest.length;i+=2){if(rest[i]==='--keep-stage'){opts.keepStage=true;i--;continue;}if(!rest[i].startsWith('--')||!rest[i+1])throw new Error('Expected --option value');const key=rest[i].slice(2);if(!['job','source','root','cache','inventory','name','world','out','before','after','registries','loader','jars'].includes(key)||Object.hasOwn(opts,key))throw new Error('Unknown or repeated option: '+key);opts[key]=['name','jars'].includes(key)?rest[i+1]:path.resolve(rest[i+1]);}
   if(!opts.job)throw new Error('Required --job <artifact directory>');
   const job=opts.job;
-  if(!inside(job,'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs'))throw new Error('World trials must live under the artifact jobs directory');
+  if(!inside(job,'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs'))throw new Error('World trials must live under the artifact jobs directory');
   output(path.join(job,'guard'),job);
   if(command==='snapshot') {
     if(!opts.source)throw new Error('Required --source');

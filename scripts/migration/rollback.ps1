@@ -20,7 +20,7 @@ The cutover-archive-<date-time> folder to restore. Default: the newest under -Ar
 .PARAMETER Instance
 Instance folder to restore into. Default: the real Evil Eye Stable.
 .PARAMETER ArchiveRoot
-Where archives and the rollback quarantine live. Default: C:/Users/dirty/projects/artifacts/evil-eye-pack.
+Where archives and the rollback quarantine live. Default: C:/Users/dirty/.local-state/evil-eye-pack/artifacts.
 .EXAMPLE
 powershell -NoProfile -ExecutionPolicy Bypass -File C:\path\to\checkout\scripts\migration\rollback.ps1 -Execute
 #>
@@ -30,7 +30,7 @@ param(
   [switch]$DryRun,
   [string]$Archive,
   [string]$Instance,
-  [string]$ArchiveRoot = 'C:/Users/dirty/projects/artifacts/evil-eye-pack'
+  [string]$ArchiveRoot = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts'
 )
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'

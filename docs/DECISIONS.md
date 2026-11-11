@@ -1,4 +1,15 @@
 # Decisions
+
+## Valhalla local state (2026-11-11)
+
+The 2026-11-08 owner ruling places external project state in
+`~/.local-state/evil-eye-pack/` and portable tools in `~/.local-state/tools/`.
+Artifacts retain their subtree layout under `evil-eye-pack/artifacts/`; Temurin
+retains `tools/evil-eye-pack/temurin-21/` so the copied project tool bundle has one
+recognizable home. `jar-backups/` is unchanged. ANU's toolchains are independent
+and retain their existing paths. The migration copies and verifies before switching;
+legacy roots remain until main's launcher installer has the new environment paths.
+
 ## Borderless fullscreen (2026-11-07)
 
 Owner request: exclusive fullscreen kept freezing on alt-tab (driver hang on focus loss, hybrid RTX 4050 Laptop + Intel) and Sodium 0.8.13 has no borderless mode. Added Cubes Without Borders 5.0.0 (Modrinth `ETlrkaYF` / `fmf8ZA2N`, MIT, client-only; the CurseForge twin is 975120). It adds Borderless and Windowed entries to Sodium's and vanilla's Fullscreen setting, F11 uses Borderless. `config/cwb.json` ships `fullscreenMode: BORDERLESS` and is a preserved path, so the first install starts borderless and later in-game changes stick. Cloth Config (already in the pack) gives it a settings screen. It declares Borderless Window, Concentration and Borderless Mining Updated incompatible (none installed). **Rejected:** Borderless Window 1.7.5 (Forge/NeoForge, older, no Sodium integration), Minecraft Borderless Window and Instant Borderless (tiny, young), Windowed Fullscreen (all rights reserved), Borderless Fullscreen / Borderless Windowed (Fabric only).
@@ -326,7 +337,7 @@ Branch `migration/neoforge-1.21.1` only; `main`/Stable stay on Forge. Status and
 
 - **Separate trial instance with explicit Java 21.** A fresh `Evil Eye NeoForge Trial`
   (MultiMC components set in `mmc-pack.json`; packwiz never sets the loader), with portable
-  Temurin 21 at `C:/Tools/evil-eye-pack/temurin-21`. Rejected: reusing Local (shares the
+  Temurin 21 at `C:/Users/dirty/.local-state/tools/evil-eye-pack/temurin-21`. Rejected: reusing Local (shares the
   main checkout's feed) and the machine-installed Microsoft JDK 21 (not checksum-verified, not
   ours to rely on).
 - **A reviewed, hash-verified lock before any pack edit.** `tools/packwiz/migration/target-lock.json`
@@ -584,7 +595,7 @@ Node tools share `tools/data_io/`: `zip_reader.cjs` reads ZIP entries, `walk.cjs
 
 ## 2026-10-23 — Acquisition baseline reviewed item by item (dk-e4cc1e7b)
 
-**Decision.** The 439 `acquisition/no-known-source` entries accepted in bulk were each classified from the mod jar (classes, lang, data). The full table (item, class, mechanism and evidence, action) is `classification.md` in the job folder `artifacts/evil-eye-pack/jobs/2026-10-23-acquisition-review/`.
+**Decision.** The 439 `acquisition/no-known-source` entries accepted in bulk were each classified from the mod jar (classes, lang, data). The full table (item, class, mechanism and evidence, action) is `classification.md` in the job folder `~/.local-state/evil-eye-pack/artifacts/jobs/2026-10-23-acquisition-review/`.
 - **Kept in the baseline (307)** with a per-item reason naming the mechanism: made in Java with no recipe (special-recipe serializers, machine/block-entity output, in-world interactions, rituals, NBT or filled variants, tablets, packages, paint pitchers, presents; 226) or a mob drop, villager/colonist trade, boss or structure loot, loot modifier (81). Policy: a baseline entry says what produces the item, never just "mod code"; a mechanism that could not be confirmed says so in the reason.
 - **Hidden (131)** through `dedup.json` `hiddenOnly` (regenerated EMI index): creative-only, icon, render-state and placed-only technical items (106, plus six placed-only encased Create blocks) and items with no source in this pack (18, plus `dankstorage:red_print`, whose jar ships no recipe). Hiding removes them from EMI only. To un-hide an item, remove it from `hiddenOnly` and regenerate.
 - **Fixed (1):** `supplementaries:bomb_spiky` was craftable only with lead ingots (or Oreganized), neither in the pack; `kubejs/data/supplementaries/recipes/spiky_bomb_2.json` overrides it with iron ingots (the Oreganized variant's own ingredient).
@@ -697,7 +708,7 @@ Large Ore Deposits keeps its explicit survivors and disabled dead-end deposits. 
 - Removed at the owner's request: Bad Wither No Cookie - Reloaded, MrCrayfish's Furniture (Legacy), Mob Despawn Timers and Craft Shack. **Terralith is kept** (owner ruling 2026-10-18; it is baked into existing worlds). **Craft Shack's metafile installs `FallingTree-1.20.1-4.3.4.jar`**, so tree felling goes too. None declared a library dependency, so no library was orphaned. Their configs and Mods menu entries were dropped; Terralith's ForgeEndertech files and Mods menu entry stay.
 - **FallingTree re-added standalone (owner request 2026-10-19).** `mods/fallingtree.pw.toml` is FallingTree 1.20.1-4.3.4 (Modrinth `Fb4jn8m6`, the same jar as the CurseForge file Craft Shack installed; side both, since Modrinth lists it server-only with optional client). `config/fallingtree.json` is restored unchanged. Craft Shack itself stays removed.
 
-**How it was checked.** Every installed jar's class constants were scanned for `com/simibubi/create/` references missing from Create 6 and its bundled jars (only Supplementaries 2.5.21 failed), and every mandatory `mods.toml` dependency was resolved against the installed set (scripts in `artifacts/evil-eye-pack/jobs/2026-10-18-create6/tools/`).
+**How it was checked.** Every installed jar's class constants were scanned for `com/simibubi/create/` references missing from Create 6 and its bundled jars (only Supplementaries 2.5.21 failed), and every mandatory `mods.toml` dependency was resolved against the installed set (scripts in `~/.local-state/evil-eye-pack/artifacts/jobs/2026-10-18-create6/tools/`).
 
 **Consequences for existing worlds.**
 - **A world created with Terralith does not open without it** ("Overworld settings missing"): `level.dat` stores the overworld's multi-noise biome list inline, ~880 of its entries are `terralith:` biomes. The Stable world's `level.dat` has 890 Terralith references. Detaching the biome list (GOTCHAS) was verified on a copy of the trial world, which then opened and the player joined; the owner chose to keep Terralith, so no migration is needed.
@@ -734,7 +745,7 @@ Large Ore Deposits keeps its explicit survivors and disabled dead-end deposits. 
 ## 2026-10-11 — Source, experiments, artifacts and instances kept apart
 
 **Decision.**
-- The main checkout stays at `projects/evil-eye-pack/`. Experiments are linked worktrees under `projects/worktrees/evil-eye-pack/<name>/`. Job prompts, plans and reports go to `projects/artifacts/evil-eye-pack/jobs/<date-task>/`.
+- The main checkout stays at `projects/evil-eye-pack/`. Experiments are linked worktrees under `projects/worktrees/evil-eye-pack/<name>/`. Job prompts, plans and reports go to `~/.local-state/evil-eye-pack/artifacts/jobs/<date-task>/`.
 - Each experiment gets its own MultiMC instance. **Evil Eye (Stable)** (folder `Evil Eye Stable`, formerly `Evil Eye Dev1`) installs published `main` and holds the owner's worlds. **Evil Eye Local** installs the main checkout straight from its file path (no server, 2026-10-11). **Evil Eye EMI Trial** installs the `emi-trial` worktree from its file path.
 - Generic pack tooling (`tools/packwiz/`, `.gitattributes`, `.packwizignore`) was promoted from `emi-trial` to `main` alone, without the EMI gameplay change.
 
@@ -812,4 +823,4 @@ Client 0.7.0 independently implements reach-around bridging, continuous row/colu
 
 Pro Placer is removed: **158 -> 157** physical mod metafiles. Puzzles Lib stays for Diagonal Fences and its nested Diagonal Blocks. Modern UI, Quick Skin and 3D Skin Layers stay. Chloride was already removed by the later owner decision in the supplied base; this change does not restore or otherwise alter it. Exact-ID exclusions replace the unused matcher grammar; block items only and stronger lifecycle cleanup are deliberate differences.
 
-Evidence: artifacts/evil-eye-pack/jobs/2026-11-02-pro-placer; full handoff: artifacts/minecraft-mods/jobs/2026-11-02-pro-placer/handoff.md. No push, merge, instance writes or promotion. Owner client input and multiplayer acceptance remain required.
+Evidence: ~/.local-state/evil-eye-pack/artifacts/jobs/2026-11-02-pro-placer; full handoff: artifacts/minecraft-mods/jobs/2026-11-02-pro-placer/handoff.md. No push, merge, instance writes or promotion. Owner client input and multiplayer acceptance remain required.

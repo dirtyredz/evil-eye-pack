@@ -25,7 +25,7 @@ async function main(argv) {
     if (inside(out, input) || inside(input, out)) throw Error('Output overlaps an input');
   }
   if (fs.existsSync(out)) throw Error('Output already exists: ' + out);
-  const jdk = options.jdk || 'C:/Tools/evil-eye-pack/temurin-21';
+  const jdk = options.jdk || 'C:/Users/dirty/.local-state/tools/evil-eye-pack/temurin-21';
   const s = scope();
   const stop = () => s.killAll();
   process.once('SIGINT', stop); process.once('SIGTERM', stop);

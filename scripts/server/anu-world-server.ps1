@@ -46,7 +46,7 @@
 .PARAMETER OpUuid
   Deploy: that player's UUID. Default 90486bf9-1855-4113-8ab9-35ef878c5a5c.
 .PARAMETER OutDir
-  Pull: destination folder on Valhalla. Default C:\Users\dirty\projects\artifacts\evil-eye-pack\world-backups.
+  Pull: destination folder on Valhalla. Default C:\Users\dirty\.local-state\evil-eye-pack\artifacts\world-backups.
 .PARAMETER LauncherServersDat
   AddLauncherEntry: servers.dat to edit. Default Evil Eye Stable's.
 .PARAMETER AnuHost
@@ -58,11 +58,11 @@ param(
   [switch]$DryRun,
   [string]$SourceWorld = 'C:\Users\dirty\MultiMC\instances\Evil Eye Stable\.minecraft\saves\New World',
   [switch]$ReplaceWorld,
-  [string]$PrivateCache = 'C:\Users\dirty\projects\artifacts\evil-eye-pack\jobs\2026-10-31-world-trial-final\cache\mods',
+  [string]$PrivateCache = 'C:\Users\dirty\.local-state\evil-eye-pack\artifacts\jobs\2026-10-31-world-trial-final\cache\mods',
   [int]$HeapGb = 10,
   [string]$OpName = 'DirtyRedz',
   [string]$OpUuid = '90486bf9-1855-4113-8ab9-35ef878c5a5c',
-  [string]$OutDir = 'C:\Users\dirty\projects\artifacts\evil-eye-pack\world-backups',
+  [string]$OutDir = 'C:\Users\dirty\.local-state\evil-eye-pack\artifacts\world-backups',
   [string]$LauncherServersDat = 'C:\Users\dirty\MultiMC\instances\Evil Eye Stable\.minecraft\servers.dat',
   [string]$AnuHost = 'anu'
 )
@@ -76,7 +76,7 @@ $AnuCtl    = "$AnuRoot\ctl"
 $AnuBackup = 'G:\evil-eye-pack-ci\server-backups'
 $AnuAddr   = '192.168.1.251'
 $Ctl       = "$AnuCtl\server-ctl.ps1"
-$Jobs      = 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs'
+$Jobs      = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs'
 # Node helpers live under tools/world_server (shared with ANU: mc-net.cjs is shipped there by Send-Ctl).
 $WorldTools  = Join-Path $PSScriptRoot '../../tools/world_server'
 $McNet       = Join-Path $WorldTools 'mc-net.cjs'

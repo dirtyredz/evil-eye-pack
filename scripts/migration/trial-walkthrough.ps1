@@ -18,7 +18,7 @@ Complete offline migration cache root (mods, resourcepacks and shaderpacks).
 [CmdletBinding()]
 param(
   [switch]$DryRun,
-  [string]$Cache = 'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026-10-31-world-trial-final/cache'
+  [string]$Cache = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/2026-10-31-world-trial-final/cache'
 )
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'
