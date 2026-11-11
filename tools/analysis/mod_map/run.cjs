@@ -13,7 +13,8 @@ const { parseTiming } = require('./capture/timing.cjs');
 const { capture } = require('./capture/capture.cjs');
 const { render } = require('./page/document.cjs');
 const { verify } = require('../../packwiz/verify_hashes.cjs');
-const { runMeta, checkDestination } = require('../../data_io/run_meta.cjs');
+const { runMeta } = require('../../data_io/run_meta.cjs');
+const { checkDestination } = require('../../data_io/path_guard.cjs');
 const { execFileSync } = require('node:child_process');
 async function run(argv, { dryRun = false, log = console.log } = {}) {
   const opts = {};
