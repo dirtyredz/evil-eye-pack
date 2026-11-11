@@ -33,6 +33,7 @@
   bytes and publishes its receipt only after extraction and Configure succeed.
 
 ## Pack and client
+- **An idle MultiMC can block moves and installs.** The owner often leaves MultiMC open. When it blocks work (e.g. moving the Stable cache, dk-2032523a), check for a running game first: a java process whose command line points into the MultiMC instances folder. If there is none, the session may close MultiMC itself (graceful close first): owner standing permission, 2026-11-11. If a game is running, close nothing and report it.
 - **Curios cosmetic slots need `add_cosmetic`.** Curios 9.5.1 gives a slot type a cosmetic slot only when its slot data sets `"add_cosmetic": true`; none of Curios's own slot files do, so the equipment screen's Cosmetics tab is empty without `kubejs/data/curios/curios/slots/<id>.json` (merge-only: `replace` defaults false, so sizes and icons from mod files stay). A new mod that adds a curio slot type needs its own file there; `tools/testing/pack_test/tests/data/curios_cosmetic_slots.test.cjs` lists the expected ids. Saved `HasCosmetic` in a player .dat is ignored: `CurioInventory.init` rebuilds each handler from the slot data on every load, so players pick the change up on next login.
 - **A newly compatible folder pack can be skipped for one launch.** Vanilla 1.21.1
   removes a stale incompatible acknowledgement without adding that entry to its
