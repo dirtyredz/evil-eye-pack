@@ -34,3 +34,7 @@ Complete-pin evidence: C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs/2026
 ### 2026-11-11T01:12:57.351Z · open · agent
 
 Re-checked 2026-11-10: no new upstream release (latest v0.3.0-beta.2, 2026-07-27). The default branch (last commit 2026-09-25) still has @Mixin(targets = "net.minecraft.client.gui.screens.controls.KeyBindsList$KeyEntry"), so nothing to lock yet. Options for the owner: file an upstream issue/PR, or carry the corrected mixin in an owned mod.
+
+### 2026-11-11T15:35:24.282Z · open · agent
+
+2026-11-11: implemented and pinned (not yet pushed). EvilEyeClient 0.15.10 (main 325f0a0) carries a corrected mixin on options.controls.KeyBindsList$KeyEntry, gated on railways being loaded. Release neoforge-1.21.1-v0.15.10, sha256 385bcdc5…8b9d. Pack pin afa7fcb, merged locally. Headless client mixin audit PASS: the new config is VERIFIED on the 1.21.1 target; Railways' stale warning stays allow-listed. States: implemented and pinned; NOT yet pushed to Stable; NOT confirmed in game (owner: the Controls screen should no longer show Railways keys conflicting).
