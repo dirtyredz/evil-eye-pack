@@ -78,9 +78,11 @@ shutdown establish coverage, not preservation; semantic and log review remains m
 
 ## Shared capture mechanisms
 
-Analysis never imports testing, directly or through a shared module; the mod-map
-fast gate checks that dependency boundary. `runtime_env/server/` owns runtime
-identity and process supervision, `server_stage/` owns preparation and disposable
+Analysis never imports or names a path into testing, directly or through a shared
+module; the mod-map fast gate (`dependencies.test.cjs`) checks both require()s and
+file paths. `runtime_env/server/` owns runtime identity and process supervision and,
+in `capture/`, the registry snapshot script that mod-map capture and the pack-test
+probe both inject, `server_stage/` owns preparation and disposable
 copies, and `data_io/` owns run metadata, server-log parsing and generated-world
 caches. Testing owns probes, verdicts and runner orchestration. The ANU code sync
 includes all three neutral homes and excludes test folders at every depth.
