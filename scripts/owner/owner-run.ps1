@@ -80,11 +80,11 @@ function Invoke-Native([string]$Exe, [string[]]$Arguments, [string]$WorkingDirec
 # Runs a native command (scriptblock) capturing its text output; returns @{ Output; ExitCode }.
 # Windows PowerShell 5.1 turns native stderr into terminating errors under 'Stop' (e.g. OpenSSH's post-quantum
 # warning on every ssh), so EAP is 'Continue' around the call, as in Invoke-Native.
-function Invoke-NativeCapture([scriptblock]$Command) {
+function Invoke-NativeCapture([scriptblock]$NativeBlock) {
   $prevEap = $ErrorActionPreference
   $ErrorActionPreference = 'Continue'
   try {
-    $out = (& $Command | ForEach-Object { [string]$_ } | Out-String)   # stringify so stderr records print as plain text
+    $out = (& $NativeBlock | ForEach-Object { [string]$_ } | Out-String)   # stringify so stderr records print as plain text
     return @{ Output = $out; ExitCode = [int]$LASTEXITCODE }
   } finally { $ErrorActionPreference = $prevEap }
 }

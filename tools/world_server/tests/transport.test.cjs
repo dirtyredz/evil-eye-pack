@@ -63,3 +63,12 @@ if ($sent[0].Local -ne '${psPath('scripts/server/server-process.ps1')}' -or $sen
 `);
   assert.equal(r.status, 0, r.stdout + r.stderr);
 });
+test('SSH query passes the caller command string to ssh, not the capture scriptblock (dynamic scoping)', win, () => {
+  const r = probe(`
+function ssh { $script:got = @($args); $global:LASTEXITCODE = 0; 'ok' }
+$r = Invoke-SshQuery 'echo hi'
+if ($got.Count -ne 2 -or $got[0] -ne 'fixture-host') { throw "wrong ssh args: $($got -join '|')" }
+if ($got[1] -isnot [string] -or $got[1] -ne 'echo hi') { throw "ssh received $($got[1].GetType().Name): $($got[1])" }
+`);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+});
