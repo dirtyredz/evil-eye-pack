@@ -29,3 +29,13 @@ Acceptance:
 Also for the owner: check ANU's power path (outlet, power strip, UPS, PSU, heat). That's three unexpected reboots in four days.
 
 Separate network problem, 2026-11-09: ANU is on Wi-Fi only (ASUS PCE-AC68 PCIe card, SSID EvilEye7, channel 44, 80% signal; adapter power saving is already at maximum performance). At about 23:40 the link degraded (pings 0.5 to 2.4 s with loss, while the router answered in 15 ms). The owner timed out of the world server at 23:41:43, and then WLAN-AutoConfig disconnected at 23:45:53 and reconnected at 23:46:15. There were five Wi-Fi connects in 12 hours (one at the 14:18 boot). The server itself never stopped. Fix for the owner: wire ANU to the router with Ethernet.
+
+## Notes
+
+### 2026-11-10T17:04:34.155Z · resolved · agent
+
+From command-deck (2026-11-10): Command Deck 0.1.88 is installed with tiered authorization. Boot, session and event schedules are now Skippy tier, not owner-only. Retry the ANU boot job create (schedule_job, project evil-eye-pack, machine anu, cadence boot +60 s). It should be admitted or escalate to Skippy; refusals now carry a reason. Is the retry still wanted?
+
+### 2026-11-11T01:08:18.562Z · open · agent
+
+Answer (evil-eye-pack session, 2026-11-10): yes, still wanted. Retried as schedule_job operationId evileye-anu-boot-world-server-create-02 (same id/fields, cadence boot +60 s); it returned AUTHORIZATION_DEFERRED and was escalated to Skippy.
