@@ -20,13 +20,7 @@ function classifyFile(file) {
   return { kind:'unsupported', unsupportedReason:'Unsupported world file' };
 }
 function inventory(world, { visit = () => {} } = {}) {
-  const out={schema:1,world,files:0,chunks:0,errors:[],blocks:{},biomes:{},entities:[],blockEntities:[],data:{},items:[],references:{},targets:[],terrain:{}};
-  const targets=new Map();
-  function target(dimension,x,z,reason) {
-    const key=dimension+':'+x+':'+z;
-    if(!targets.has(key))targets.set(key,{dimension,x,z,reasons:[]});
-    const row=targets.get(key);if(!row.reasons.includes(reason))row.reasons.push(reason);
-  }
+  const out={schema:1,world,files:0,chunks:0,errors:[],blocks:{},biomes:{},entities:[],blockEntities:[],data:{},items:[],references:{},terrain:{}};
   function inspect(v,context,trail='') {
     if(typeof v==='string') { if(/^[a-z][\w.-]*:[\w./-]+$/.test(v))add(out.references,v);return; }
     if(!v||typeof v!=='object'||Buffer.isBuffer(v))return;
@@ -40,9 +34,6 @@ function inventory(world, { visit = () => {} } = {}) {
     if(kind === 'nbt') {
       try {
         const v=parseNbt(gunzipMaybe(fs.readFileSync(file)));out.data[rel]=v;inspect(v,{file:rel});visit(v,{file:rel});
-        const p=v.Data?.Player||v;
-        if(Array.isArray(p.Pos)&&typeof p.Dimension==='string')target(p.Dimension,Math.floor(p.Pos[0]/16),Math.floor(p.Pos[2]/16),'player');
-        if(rel==='level.dat')target('minecraft:overworld',Math.floor(v.Data.SpawnX/16),Math.floor(v.Data.SpawnZ/16),'spawn');
       }catch(e){out.errors.push({file:rel,error:e.message});}
       continue;
     }
@@ -65,16 +56,15 @@ function inventory(world, { visit = () => {} } = {}) {
         const n=nbt.Level||nbt;
         context.status=n.Status??null;
         const entities=n.Entities||n.entities||[];
-        for(const e of entities){out.entities.push({...context,id:e.id,uuid:json(e.UUID??e.UUIDMost??null),nbt:e});target(dim,cx,cz,'entity');}
+        for(const e of entities){out.entities.push({...context,id:e.id,uuid:json(e.UUID??e.UUIDMost??null),nbt:e});}
         const bes=n.block_entities||n.TileEntities||[];
-        for(const e of bes){out.blockEntities.push({...context,id:e.id,position:[e.x,e.y,e.z],nbt:e});target(dim,cx,cz,'block entity');}
+        for(const e of bes){out.blockEntities.push({...context,id:e.id,position:[e.x,e.y,e.z],nbt:e});}
         const terrain=[];
         for(const s of n.sections||n.Sections||[]) {
           const palette=s.block_states?.palette||s.Palette;
           if(palette){for(const row of paletteCounts(s)){
             if(!palette[row.index])throw new Error('palette index out of range');
             const id=palette[row.index].Name;add(out.blocks,id,row.count);
-            if(/^(iceandfire|roundwood|ars_instrumentum|alexsmobs|alexscaves):/.test(id))target(dim,cx,cz,'port blocks');
           }terrain.push({y:s.Y,states:s.block_states||{palette:s.Palette,data:s.BlockStates}});}
           for(const b of s.biomes?.palette||[])add(out.biomes,b);
         }
@@ -82,7 +72,6 @@ function inventory(world, { visit = () => {} } = {}) {
       }catch(e){out.errors.push({...context,error:e.message});}
     }
   }
-  out.targets=[...targets.values()].sort((a,b)=>a.dimension.localeCompare(b.dimension)||a.x-b.x||a.z-b.z);
   return out;
 }
 module.exports={inventory,classifyFile,json,digest};

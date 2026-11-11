@@ -32,7 +32,7 @@ async function main(args) {
     console.log('Original:',verify(r.source,r.files));console.log('Snapshot:',verify(r.snapshot,r.files));
   }else if(command==='inventory') {
     if(!opts.world||!opts.out)throw new Error('Required --world and --out');output(opts.out,job);output(opts.out+'.semantics.json',job);
-    const r=inventory(opts.world);fs.writeFileSync(opts.out,json(r)+'\n');fs.writeFileSync(opts.out+'.semantics.json',json(require('./semantics.cjs').semantics(r))+'\n');console.log(json({files:r.files,chunks:r.chunks,errors:r.errors,targets:r.targets.length,entities:r.entities.length,blockEntities:r.blockEntities.length,items:r.items.length}));
+    const candidates=require('./probe/candidates.cjs').candidateCollector(),r=inventory(opts.world,{visit:candidates.visit});r.targets=candidates.targets();fs.writeFileSync(opts.out,json(r)+'\n');fs.writeFileSync(opts.out+'.semantics.json',json(require('./semantics.cjs').semantics(r))+'\n');console.log(json({files:r.files,chunks:r.chunks,errors:r.errors,targets:r.targets.length,entities:r.entities.length,blockEntities:r.blockEntities.length,items:r.items.length}));
     if(r.errors.length)process.exitCode=2;
   }else if(command==='compare') {
     if(!opts.before||!opts.after||!opts.out)throw new Error('Required --before, --after, --out');output(opts.out,job);
