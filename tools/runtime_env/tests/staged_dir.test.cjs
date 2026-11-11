@@ -74,3 +74,14 @@ test('pruneStaged keeps claimed entries and removes the rest', (t) => {
   pruneStaged(f.run, path.join(f.run, '..'), (n) => ['logs', 'run.json', 'evidence'].includes(n));
   assert.deepEqual(fs.readdirSync(f.run).sort(), ['evidence', 'logs', 'run.json']);
 });
+
+test('withStaged installs no SIGINT/SIGTERM handlers (the runner owns the signal path) and leaves no exit listener behind', async (t) => {
+  const f = fixture(t);
+  const count = () => ['SIGINT', 'SIGTERM', 'exit'].map((e) => process.listenerCount(e));
+  const before = count();
+  await withStaged({ runDir: f.run, dirs: [f.server] }, async () => {
+    assert.equal(process.listenerCount('SIGINT'), before[0]);
+    assert.equal(process.listenerCount('SIGTERM'), before[1]);
+  });
+  assert.deepEqual(count(), before);
+});

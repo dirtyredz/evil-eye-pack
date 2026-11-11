@@ -77,6 +77,7 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |   `-- fusion_glass/
     |       `-- tests/
     |-- runtime_env/
+    |   `-- tests/
     |-- script-run/
     |-- server_stage/
     |-- world_server/

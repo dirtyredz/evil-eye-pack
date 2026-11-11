@@ -41,7 +41,9 @@ function pruneStaged(dir, runDir, keep, { log = () => {} } = {}) {
 }
 
 // Runs fn(); then, unless `keep`, removes `dirs` (a function may supply them, for paths known only after the
-// run starts) and prunes `prune` = { dir, keep(name) } down to the entries `keep` claims on success, on a thrown error, on process exit and on SIGINT/SIGTERM. Removal failures are
+// run starts) and prunes `prune` = { dir, keep(name) } down to the entries `keep` claims on success, on a thrown error, and on process 'exit'. It installs no SIGINT/SIGTERM handlers: the runner owns the signal path (kills
+// its child servers, picks the exit code) and either unwinds through the finally below or calls process.exit,
+// which fires 'exit'. Removal failures are
 // logged, never thrown: they must not mask the run's own error.
 async function withStaged({ runDir, dirs = [], prune = null, keep = false, log = () => {} }, fn) {
   const targets = () => (typeof dirs === 'function' ? dirs() : dirs);
@@ -52,13 +54,11 @@ async function withStaged({ runDir, dirs = [], prune = null, keep = false, log =
       try { removeStaged(d, runDir, { log }); } catch (e) { log(`staged cleanup skipped for ${d}: ${e.message}`); }
     }
   };
-  const onSignal = (sig) => () => { clean(); process.exit(sig === 'SIGINT' ? 130 : 143); };
-  const sigint = onSignal('SIGINT'), sigterm = onSignal('SIGTERM');
-  process.once('SIGINT', sigint); process.once('SIGTERM', sigterm); process.once('exit', clean);
+  process.once('exit', clean);
   try {
     return await fn();
   } finally {
-    process.removeListener('SIGINT', sigint); process.removeListener('SIGTERM', sigterm); process.removeListener('exit', clean);
+    process.removeListener('exit', clean);
     clean();
   }
 }
