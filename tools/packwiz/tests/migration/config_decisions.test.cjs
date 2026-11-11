@@ -4,10 +4,10 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { listRepoFiles } = require('../pack_index.cjs');
+const { listRepoFiles } = require('../../pack_index.cjs');
 
-const ROOT = path.resolve(__dirname, '../../..');
-const decisions = JSON.parse(fs.readFileSync(path.join(__dirname, '../migration/config-decisions.json'), 'utf8'));
+const ROOT = path.resolve(__dirname, '../../../..');
+const decisions = JSON.parse(fs.readFileSync(path.join(__dirname, '../../migration/config-decisions.json'), 'utf8'));
 const TREATMENTS = new Set(['carry', 'regenerate', 'preserve-intent']);
 
 test('every shipped config and default config matches a decision rule with a reason', () => {

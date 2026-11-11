@@ -3,15 +3,15 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { checkCache } = require('../install/stable_cache_check.cjs');
-const { sha256 } = require('../../data_io/files.cjs');
+const { checkCache } = require('../../install/stable_cache_check.cjs');
+const { sha256 } = require('../../../data_io/files.cjs');
 
 const JAR = Buffer.from('pinned jar bytes');
 const meta = (filename, side = 'both') => `name = "x"\nfilename = "${filename}"\nside = "${side}"\n\n[download]\nhash-format = "sha256"\nhash = "${sha256(JAR)}"\nurl = "https://example.invalid/${filename}"\n`;
 
 // A tiny pack root (index.toml + metafiles), an empty cache, and a jobs folder with one source jar.
 function fixture(t) {
-  const scratch = path.resolve(__dirname, '../../../.tmp');
+  const scratch = path.resolve(__dirname, '../../../../.tmp');
   fs.mkdirSync(scratch, { recursive: true });
   const base = fs.mkdtempSync(path.join(scratch, 'stable-cache-'));
   t.after(() => fs.rmSync(base, { recursive: true, force: true }));
@@ -65,7 +65,7 @@ for (const target of ['pack.toml', 'mods/srv.pw.toml']) {
     fs.writeFileSync(path.join(f.cache, 'mods/b.jar'), JAR);
     if (target === 'pack.toml') fs.writeFileSync(path.join(f.root, target), '[index]\nhash = "stale"\n');
     else fs.appendFileSync(path.join(f.root, target), '\n');
-    const { prepareFiles } = require('../install/install_pack.cjs');
+    const { prepareFiles } = require('../../install/install_pack.cjs');
     assert.throws(() => prepareFiles(f.root, f.cache), /Stale/);
     assert.throws(() => checkCache(f.root, f.cache), /Stale/);
   });
@@ -77,7 +77,7 @@ test('dev cache check reports a missing mods jar and --stock fills it from the S
   fs.mkdirSync(path.join(dev, 'mods'), { recursive: true });
   fs.writeFileSync(path.join(f.cache, 'mods/a.jar'), JAR);
   fs.writeFileSync(path.join(f.cache, 'mods/b.jar'), JAR);
-  const { checkDevCache } = require('../install/stable_cache_check.cjs');
+  const { checkDevCache } = require('../../install/stable_cache_check.cjs');
   const opts = { cache: dev, stable: f.cache, jobs: f.jobs };
   assert.deepEqual(checkDevCache(f.root, opts).missing.map((m) => m.name), ['a.jar', 'b.jar']);
   const r = checkDevCache(f.root, { ...opts, stock: true });
@@ -87,6 +87,6 @@ test('dev cache check reports a missing mods jar and --stock fills it from the S
 });
 
 test('Stable cache default comes from the fixed machine environment', () => {
-  const env = require('../../runtime_env/env.cjs');
-  assert.equal(require('../install/stable_cache_check.cjs').DEFAULT_CACHE, env.FIXED.STABLE_CACHE);
+  const env = require('../../../runtime_env/env.cjs');
+  assert.equal(require('../../install/stable_cache_check.cjs').DEFAULT_CACHE, env.FIXED.STABLE_CACHE);
 });

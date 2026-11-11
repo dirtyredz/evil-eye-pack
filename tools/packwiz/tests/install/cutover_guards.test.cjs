@@ -7,10 +7,10 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const { spawnSync } = require('node:child_process');
-const { stablePreLaunchCommand } = require('../install/stable_target.cjs');
-const { STABLE, stableTarget: cutoverInstance } = require('../install/instance_targets.cjs');
+const { stablePreLaunchCommand } = require('../../install/targets/stable_target.cjs');
+const { STABLE, stableTarget: cutoverInstance } = require('../../install/instance_targets.cjs');
 
-const LIB = path.resolve(__dirname, '../../../scripts/migration/cutover-lib.ps1');
+const LIB = path.resolve(__dirname, '../../../../scripts/migration/cutover-lib.ps1');
 const ps = process.platform === 'win32' ? 'powershell.exe' : null;
 
 function run(body) {

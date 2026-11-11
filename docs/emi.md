@@ -92,7 +92,7 @@ recipe-book suppression and Stylish Effects' right-side placement.
 
 ```
 node --test tools/analysis/emi_curation/tests/*.cjs
-node --test tools/packwiz/tests/*.cjs
+node --test tools/packwiz/tests/*.cjs tools/packwiz/tests/*/*.cjs
 node tools/packwiz/verify_hashes.cjs
 node tools/packwiz/verify_hashes.cjs --jars <dir with the downloaded jars>
 # PowerShell: include every nested client module.

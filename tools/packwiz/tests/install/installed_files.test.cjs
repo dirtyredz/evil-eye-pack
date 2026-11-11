@@ -3,11 +3,11 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { sha256 } = require('../../data_io/files.cjs');
-const { previewPackFiles, restorePackFiles, driftBackupDirectory, DRIFT_BACKUP_LIMIT } = require('../install/installed_files.cjs');
+const { sha256 } = require('../../../data_io/files.cjs');
+const { previewPackFiles, restorePackFiles, driftBackupDirectory, DRIFT_BACKUP_LIMIT } = require('../../install/installed_files.cjs');
 
 function fixture(t) {
-  const scratch = path.resolve(__dirname, '../../../.tmp');
+  const scratch = path.resolve(__dirname, '../../../../.tmp');
   fs.mkdirSync(scratch, { recursive: true });
   const root = fs.mkdtempSync(path.join(scratch, 'installed-files-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));

@@ -115,7 +115,7 @@ try {
   }
 
   # --- dry-run verification of the pack/cache (read-only) ------------------------------------
-  $installerArgs = @((Join-Path $script:RepoRoot 'tools/packwiz/install/stable_target.cjs'), '--cache', $Cache, '--instance', $mc, '--fresh')
+  $installerArgs = @((Join-Path $script:RepoRoot 'tools/packwiz/install/targets/stable_target.cjs'), '--cache', $Cache, '--instance', $mc, '--fresh')
   if ($plan -or $blockers.Count -eq 0) {
     Write-Log 'Verifying the pack and every cached artifact (read-only):'
     $code = Invoke-Native $node ($installerArgs + '--dry-run') $script:RepoRoot

@@ -3,15 +3,15 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { sha256 } = require('../../data_io/files.cjs');
-const P = require('../pack_index.cjs');
-const { validate } = require('../migration/manifest.cjs');
-const { renderMetafile } = require('../migration/repoint.cjs');
-const { resolveSelector } = require('../migration/fetch.cjs');
-const { withLocalPack, localPin, verifyInstalledLocal } = require('../install/local_source.cjs');
+const { sha256 } = require('../../../data_io/files.cjs');
+const P = require('../../pack_index.cjs');
+const { validate } = require('../../migration/manifest.cjs');
+const { renderMetafile } = require('../../migration/repoint.cjs');
+const { resolveSelector } = require('../../migration/fetch.cjs');
+const { withLocalPack, localPin, verifyInstalledLocal } = require('../../install/local_source.cjs');
 
 function fixture(t) {
-  const scratch = path.resolve(__dirname, '../../../.tmp'); fs.mkdirSync(scratch, { recursive: true });
+  const scratch = path.resolve(__dirname, '../../../../.tmp'); fs.mkdirSync(scratch, { recursive: true });
   const root = fs.mkdtempSync(path.join(scratch, 'local-test-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const bytes = Buffer.from('private fixture');

@@ -18,6 +18,29 @@ ${body}
 `;
   return spawnSync('powershell.exe', ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')], { encoding: 'utf8', timeout: 15000, windowsHide: true });
 }
+test('controller transport returns native status for recovery and terminates ordinary failed calls', win, () => {
+  const r = probe(`
+function Invoke-Native([string]$Exe, [string[]]$Arguments) {
+  if ($Exe -ne 'ssh' -or $Arguments.Count -ne 2 -or $Arguments[0] -ne $AnuHost -or $Arguments[1] -ne "powershell -NoProfile -ExecutionPolicy Bypass -File $Ctl -Op Start") { throw 'wrong controller invocation' }
+  return $script:code
+}
+function Complete-OwnerRun([int]$Code, [string]$Reason) { throw "COMPLETE $Code $Reason" }
+foreach ($script:code in 0,17) {
+  $rc = Invoke-CtlExitCode '-Op Start'
+  if ($rc -ne $script:code) { throw 'lost native exit code' }
+}
+$script:code=0
+Invoke-Ctl '-Op Start' 2
+$script:code=17
+$failed=$false
+try { Invoke-Ctl '-Op Start' 2 } catch {
+  if ($_.Exception.Message -notlike 'COMPLETE 2 ssh command failed (exit 17):*') { throw }
+  $failed=$true
+}
+if (-not $failed) { throw 'ordinary failure did not terminate' }
+`);
+  assert.equal(r.status, 0, r.stdout + r.stderr);
+});
 test('native capture preserves exit code and stdout despite native stderr under EAP Stop', win, () => {
   const r = probe(`
 $r = Invoke-NativeCapture { & '${process.execPath.replaceAll("'", "''")}' -e 'process.stdout.write(String.fromCharCode(118,97,108,117,101));process.stderr.write(String.fromCharCode(119,97,114,110,105,110,103));process.exitCode=7' }

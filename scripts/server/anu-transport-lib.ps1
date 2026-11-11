@@ -26,8 +26,13 @@ function Invoke-SshQuery([string]$Command) {
   if ($result.ExitCode -ne 0) { throw "ssh query failed (exit $($result.ExitCode)): $Command" }
   return $result
 }
+# Recovery callers need the native exit code without terminating the original failed run.
+function Invoke-CtlExitCode([string]$CtlArgs) {
+  return (Invoke-Native 'ssh' @($AnuHost, "powershell -NoProfile -ExecutionPolicy Bypass -File $Ctl $CtlArgs"))
+}
 function Invoke-Ctl([string]$CtlArgs, [int]$FailCode = 3) {
-  Invoke-Ssh "powershell -NoProfile -ExecutionPolicy Bypass -File $Ctl $CtlArgs" $FailCode
+  $rc = Invoke-CtlExitCode $CtlArgs
+  if ($rc -ne 0) { Complete-OwnerRun $FailCode "ssh command failed (exit ${rc}): powershell -NoProfile -ExecutionPolicy Bypass -File $Ctl $CtlArgs" }
 }
 function Send-ToAnu([string]$LocalPath, [string]$RemotePath, [string]$What) {
   $rc = Invoke-Native 'scp' @('-q', $LocalPath, "${AnuHost}:$(Convert-ToScpPath $RemotePath)")

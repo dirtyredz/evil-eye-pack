@@ -2,10 +2,11 @@
 // Trial target of the neutral install route: Evil Eye NeoForge Trial only, with its own prelaunch.
 // Entry for scripts/migration/trial-walkthrough.ps1.
 const path = require('node:path');
-const { installPack, instanceCfgValue } = require('./install_pack.cjs');
-const { TRIAL, trialTarget } = require('./instance_targets.cjs');
+const { installPack } = require('../install_pack.cjs');
+const { instanceCfgValue } = require('../instance_cfg.cjs');
+const { TRIAL, trialTarget } = require('../instance_targets.cjs');
 
-const ROOT = path.resolve(__dirname, '../../..');
+const ROOT = path.resolve(__dirname, '../../../..');
 
 function trialPreLaunchCommand(root, cache) {
   const script = path.join(root, 'scripts/migration/trial-walkthrough.ps1');

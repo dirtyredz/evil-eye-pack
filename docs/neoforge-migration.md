@@ -754,8 +754,8 @@ Scripts (all in `scripts/migration/`, owner-run standard: help, dry run, `.tmp/o
 - `cutover.ps1` - **dry run unless `-Execute`**. Guards, then: archive, switch loader/Java, trial-route install.
 - `rollback.ps1` - same convention; restores the newest (or `-Archive`) `cutover-archive-*`.
 - `stable-prelaunch.ps1` - becomes Stable's PreLaunchCommand; repeats the verified private-jar install each launch.
-- `cutover-lib.ps1` - guards/archive/restore functions (tested by `tools/packwiz/tests/cutover_guards.test.cjs`).
-- `tools/packwiz/install/stable_target.cjs` - Stable target for the shared `installPack` in `install_pack.cjs`
+- `cutover-lib.ps1` - guards/archive/restore functions (tested by `tools/packwiz/tests/install/cutover_guards.test.cjs`).
+- `tools/packwiz/install/targets/stable_target.cjs` - Stable target for the shared `installPack` in `install_pack.cjs`
   (Trial behaviour unchanged). `--fresh` first deletes every file the old install tracked in `packwiz.json`
   except files the new index marks `preserve`.
 

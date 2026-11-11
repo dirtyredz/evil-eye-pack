@@ -3,13 +3,14 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
-const { sha256 } = require('../../data_io/files.cjs');
-const P = require('../pack_index.cjs');
-const { renderMetafile } = require('../migration/repoint.cjs');
-const { instanceCfgValue, setInstanceCfgValue, prepareFiles, writePack } = require('../install/install_pack.cjs');
-const { verifyInstalledFiles, restorePackFiles, driftBackupDirectory } = require('../install/installed_files.cjs');
-const { checkCache } = require('../install/stable_cache_check.cjs');
-const { trialPreLaunchCommand, trialInstance } = require('../install/trial_target.cjs');
+const { sha256 } = require('../../../data_io/files.cjs');
+const P = require('../../pack_index.cjs');
+const { renderMetafile } = require('../../migration/repoint.cjs');
+const { prepareFiles, writePack } = require('../../install/install_pack.cjs');
+const { instanceCfgValue, setInstanceCfgValue } = require('../../install/instance_cfg.cjs');
+const { verifyInstalledFiles, restorePackFiles, driftBackupDirectory } = require('../../install/installed_files.cjs');
+const { checkCache } = require('../../install/stable_cache_check.cjs');
+const { trialPreLaunchCommand, trialInstance } = require('../../install/targets/trial_target.cjs');
 
 function multimcBackslashUnescape(value) {
   return value.replace(/\\(.)/g, '$1');
@@ -29,12 +30,12 @@ test('Trial instance.cfg values use forward slashes and survive MultiMC unescapi
 });
 
 test('Trial install path never waits for other JVMs', () => {
-  const source = fs.readFileSync(path.resolve(__dirname, '../install/install_pack.cjs'), 'utf8');
+  const source = fs.readFileSync(path.resolve(__dirname, '../../install/install_pack.cjs'), 'utf8');
   assert.doesNotMatch(source, /host_wait|waitForServer/);
 });
 
 test('offline trial indexes verified private bytes as ordinary installer-owned files', t => {
-  const scratch = path.resolve(__dirname, '../../../.tmp');
+  const scratch = path.resolve(__dirname, '../../../../.tmp');
   fs.mkdirSync(scratch, { recursive: true });
   const root = fs.mkdtempSync(path.join(scratch, 'trial-test-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
@@ -74,7 +75,7 @@ test('trial destination rejects Stable, Local and other instances', () => {
 });
 
 test('post-install verification ignores changed preserve files but rejects a tampered mod jar', t => {
-  const instance = fs.mkdtempSync(path.join(path.resolve(__dirname, '../../../.tmp'), 'trial-verify-'));
+  const instance = fs.mkdtempSync(path.join(path.resolve(__dirname, '../../../../.tmp'), 'trial-verify-'));
   t.after(() => fs.rmSync(instance, { recursive: true, force: true }));
   const files = [
     { file: 'shaderpacks/example.zip.txt', bytes: Buffer.from('pack default'), preserve: true },
@@ -93,7 +94,7 @@ test('post-install verification ignores changed preserve files but rejects a tam
 });
 
 test('game re-saves of strict configs are restored before verification', t => {
-  const run = fs.mkdtempSync(path.join(path.resolve(__dirname, '../../../.tmp'), 'drift-test-'));
+  const run = fs.mkdtempSync(path.join(path.resolve(__dirname, '../../../../.tmp'), 'drift-test-'));
   t.after(() => fs.rmSync(run, { recursive: true, force: true }));
   const instance = path.join(run, 'instance');
   const files = [

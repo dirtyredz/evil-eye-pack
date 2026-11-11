@@ -29,7 +29,7 @@ try {
   if (-not $Cache) { $Cache = Get-RuntimePath 'FIXED.STABLE_CACHE' }
   $node = Find-Tool 'node'
   if (-not $node) { Complete-OwnerRun 1 'Node 22 is required.' }
-  $arguments = @((Join-Path $script:RepoRoot 'tools/packwiz/install/trial_target.cjs'), '--cache', $Cache)
+  $arguments = @((Join-Path $script:RepoRoot 'tools/packwiz/install/targets/trial_target.cjs'), '--cache', $Cache)
   if ($DryRun) { $arguments += '--dry-run' }
   $code = Invoke-Native $node $arguments $script:RepoRoot
   if ($code -ne 0) { Complete-OwnerRun 2 "Trial preparation failed (Node exit $code)." }

@@ -1,8 +1,8 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const T = require('../install/instance_targets.cjs');
-const L = require('../install/local_target.cjs');
+const T = require('../../install/instance_targets.cjs');
+const L = require('../../install/targets/local_target.cjs');
 
 test('localTarget accepts only the real Local .minecraft', () => {
   assert.equal(T.localTarget(T.LOCAL), require('node:path').resolve(T.LOCAL));
