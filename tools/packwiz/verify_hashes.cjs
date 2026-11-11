@@ -16,6 +16,7 @@ const { sha256 } = require('../data_io/files.cjs');
 //   - every metafile has a concrete [download] hash, hash-format and source;
 //   - with --jars: each jar named by a metafile's `filename` hashes to its download hash.
 //   - unless --no-stable-cache (or --jars): every pinned jar is in the Stable jar cache (install/stable_cache_check.cjs), when that cache exists
+//   - server jars/pins match the last ANU Deploy receipt (explicit skip when ANU/receipt is unavailable).
 
 const crypto = require('node:crypto');
 const fs = require('node:fs');
@@ -103,10 +104,11 @@ function main(argv) {
   const r = verify(root, { jars: arg('--jars') });
   for (const p of r.problems) console.error('MISMATCH ' + p);
   const cacheStatus = stableCacheStatus(root, argv);
+  const parityStatus = require('../world_server/check-parity.cjs').reportParity(root);
   console.log((r.problems.length ? 'FAIL' : 'OK') + ' ' + r.problems.length + ' mismatches; ' + r.entries +
     ' index entries (' + r.metafiles + ' metafiles), ' + r.publishable + ' publishable files, index sha256 ' +
     r.indexHash + (arg('--jars') ? ', ' + r.jarsChecked + ' jars checked against metafiles' : ''));
-  return r.problems.length || cacheStatus ? 1 : 0;
+  return r.problems.length || cacheStatus || parityStatus ? 1 : 0;
 }
 
 // Stable's prelaunch needs every pinned jar in its cache. Checked by default when that cache exists on this

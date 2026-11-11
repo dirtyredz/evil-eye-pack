@@ -1,4 +1,23 @@
 # Gotchas
+
+## ANU world server
+
+- **A Limited scheduled token cannot read an elevated JVM's command line.** On 2026-11-10,
+  Command Deck's scheduled Start returned 2 while the server was already running. A read-only
+  impersonation of David's interactive token reproduced a null `Win32_Process.CommandLine` while
+  both listeners still identified the Java PID. The controller now uses that fallback; ambiguous
+  identities refuse the operation. Stop follows the original PID plus creation time after ports
+  close, and force-kill still requires a readable marker. Task Scheduler's conhost result 0 is not
+  the child's result: use Command Deck's terminal receipt. No second-JVM world-lock failure was
+  found in the incident log; Task Scheduler history was disabled.
+- **Removing a registry mod requires a server Deploy too.** Connected Glass was absent from the
+  client pack but remained on ANU on 2026-11-10, rejecting the owner's join with a registry mismatch.
+  The hash fast gate now compares the checkout's both/server jars and pins with the last successful
+  Deploy manifest. A mismatch says `server needs Deploy: added ... / removed ...`; an unreachable
+  ANU or absent manifest prints SKIP, which is not evidence of parity. Deploy validates staged jar
+  bytes and publishes its receipt only after extraction and Configure succeed.
+
+## Pack and client
 - **Curios cosmetic slots need `add_cosmetic`.** Curios 9.5.1 gives a slot type a cosmetic slot only when its slot data sets `"add_cosmetic": true`; none of Curios's own slot files do, so the equipment screen's Cosmetics tab is empty without `kubejs/data/curios/curios/slots/<id>.json` (merge-only: `replace` defaults false, so sizes and icons from mod files stay). A new mod that adds a curio slot type needs its own file there; `tools/testing/pack_test/tests/data/curios_cosmetic_slots.test.cjs` lists the expected ids. Saved `HasCosmetic` in a player .dat is ignored: `CurioInventory.init` rebuilds each handler from the slot data on every load, so players pick the change up on next login.
 - **A newly compatible folder pack can be skipped for one launch.** Vanilla 1.21.1
   removes a stale incompatible acknowledgement without adding that entry to its

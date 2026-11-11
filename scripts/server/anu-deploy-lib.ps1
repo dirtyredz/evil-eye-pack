@@ -19,6 +19,8 @@ function Invoke-Deploy {
   if ($rc -ne 0) { Complete-OwnerRun 3 'tar failed' }
   Invoke-Ssh "New-Item -ItemType Directory -Force $AnuRoot\incoming | Out-Null"
   Send-ToAnu $tar "$AnuRoot\incoming\stage.tar" 'stage'
-  Invoke-Ssh "foreach (`$d in 'mods','config','kubejs','libraries') { if (Test-Path $AnuRoot\`$d) { Remove-Item -Recurse -Force $AnuRoot\`$d } }; tar -xf $AnuRoot\incoming\stage.tar -C $AnuRoot; Remove-Item $AnuRoot\incoming\stage.tar"
+  # Invalidate previous evidence before replacement. Publish only after extraction + Configure succeed.
+  Invoke-Ssh "`$ErrorActionPreference='Stop'; if (Test-Path -LiteralPath '$AnuRoot\ctl\deployed-mods.json') { Remove-Item -LiteralPath '$AnuRoot\ctl\deployed-mods.json' -Force }; foreach (`$d in 'mods','config','kubejs','libraries') { if (Test-Path $AnuRoot\`$d) { Remove-Item -Recurse -Force $AnuRoot\`$d } }; tar -xf $AnuRoot\incoming\stage.tar -C $AnuRoot; if (`$LASTEXITCODE -ne 0) { exit `$LASTEXITCODE }; Remove-Item $AnuRoot\incoming\stage.tar"
   Invoke-Ctl "-Op Configure -HeapGb $HeapGb -OpUuid $OpUuid -OpName $OpName"
+  Invoke-Ssh "Copy-Item -LiteralPath '$AnuRoot\world-server-stage.json' -Destination '$AnuRoot\ctl\deployed-mods.json' -Force -ErrorAction Stop"
 }
