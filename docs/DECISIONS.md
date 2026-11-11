@@ -380,9 +380,12 @@ Recorded at the mod map's structure review, for choices made while building it.
   can cause are kept visible. It is never modified in place, and without it the
   run fails before Java starts.
 - **Vendored script templates.** `scripts/owner/owner-run.ps1` (owner-run 1.0.0)
-  and `tools/script-run/script-run.mjs` (script-run 1.1.0) are verbatim copies
+  and `tools/script-run/script-run.mjs` (script-run 1.1.0) originated as verbatim copies
   of `~/.claude/templates/scripts/`, so the repo works on any checkout without the
-  harness. They are updated by re-copying the template, never edited locally.
+  harness. The Node template is updated by re-copying, never edited locally. As of 2026-11-10, the
+  owner-run copy has an explicitly requested local 1.1.0 extension: `Invoke-NativeCapture`
+  lives beside `Invoke-Native` so transport and world workflows share the PowerShell 5.1
+  native-stderr workaround. Preserve that extension when refreshing the upstream template.
 
 ## 2026-10-28 - Pack trim: remove twelve unused mods
 

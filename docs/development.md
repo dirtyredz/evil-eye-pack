@@ -427,7 +427,9 @@ logs under `.tmp/owner-runs/`, ends `OK`/`FAILED`): `Status` (also pings from Va
 `Backup`, `Pull` (newest backup to Valhalla `artifacts/evil-eye-pack/world-backups`), `Deploy` (re-stage the pack
 from the checkout and ship it; refuses while running; keeps the world), `CopyWorld` (one-off copy with sha256
 verification), `AddLauncherEntry`. The dispatcher is a thin router over dot-sourced modules beside it (`anu-transport-lib.ps1`, `anu-deploy-lib.ps1`,
-`anu-world-lib.ps1`) and `server-ctl.ps1` (runs on ANU, shipped on every call). The Node helpers are in
+`anu-world-lib.ps1`) and `server-ctl.ps1` (runs on ANU, shipped with its sibling `server-process.ps1`
+on every controller call). The sibling exposes Start/Stop/Status as functions; the controller preserves
+the direct `-Op Start -Priority BelowNormal` entry point used by Command Deck and its exit codes. The Node helpers are in
 `tools/world_server/`: `mc-net.cjs` (server-list ping and RCON), `stage-world-server.cjs` (stages through the
 shared `tools/server_stage/stage.cjs`), `add-server-entry.cjs` (+ test), `player-data-check.cjs`.
 

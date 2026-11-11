@@ -2,6 +2,13 @@
 
 ## ANU world server
 
+- **Native stderr is not a failure code.** OpenSSH 10.6 prints a post-quantum warning on stderr.
+  Windows PowerShell 5.1 with `$ErrorActionPreference = 'Stop'` turns native stderr into a
+  terminating error, even when SSH succeeds. All native captures must go through
+  `Invoke-Native` / `Invoke-NativeCapture` in `scripts/owner/owner-run.ps1`, which temporarily
+  use `Continue` and return the native exit code for callers to check. SSH queries use `Invoke-SshQuery`; keep
+  stderr separate from stdout when the result is a path or query value.
+
 - **A Limited scheduled token cannot read an elevated JVM's command line.** On 2026-11-10,
   Command Deck's scheduled Start returned 2 while the server was already running. A read-only
   impersonation of David's interactive token reproduced a null `Win32_Process.CommandLine` while
