@@ -508,7 +508,9 @@ Modern UI is enabled and defaults to Z. Saved `options.txt` bindings win over sh
 
 Client 0.7.0 adds placement defaults through config correction; a shipped preserved TOML does not replace saved preferences. The toggle state lasts for the application session, while the legacy binding is adopted through the two-load options path. Puzzles Lib remains required by Diagonal Fences. Quick Skin local appearance files are persistent and untouched.
 
-- **Client 0.7.1 does not enable Iron Chests sorting/transfers by itself.** Its stable rail and Dank sync fixes retain server capability negotiation; the pinned Tweaks storage classifier still needs companion support. No config or owned-key change grants that capability.
+- **Client 0.7.1 alone did not enable Iron Chests sorting/transfers.** Companion support arrived with the paired Client 0.8.0 / Tweaks 0.10.0 release (negotiated sorting and transfers for ordinary and trapped Iron Chests); no config or owned-key change grants that capability.
+
+## Local mod releases and installer behaviour
 
 - **Local mod releases must update the migration source pin too.** Keep `dispositions.json` target filename, SHA-256 and size aligned with `target-lock.json` and the `.pw.toml` filename/hash; otherwise a later resolve can downgrade the release. `local_pin_consistency.test.cjs` guards every local mod across all three records.
 

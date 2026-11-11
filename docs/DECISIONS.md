@@ -1,5 +1,11 @@
 # Decisions
 
+Newest first.
+
+## Resaved configs are restored, not marked preserve (2026-11-02)
+
+Stable/Trial prelaunch restores pack bytes for non-preserve, non-metafile files that a game launch rewrote, before strict verification (`restorePackFiles` in `tools/packwiz/install/install_pack.cjs`). It logs each restored path, keeps the last five backup generations per instance under `.tmp/installer-drift/<canonical-instance-hash>/`, and warns on consecutive repairs so game-written bytes get reviewed before shipped configs change. **Why:** the shipped file stays the single source of truth, and a hash mismatch cannot silently hide a real edit. **Rejected:** marking every game-resaved config `preserve = true`, which would stop the pack ever correcting it again and hide drift. Preserve stays for genuinely player-owned files; see the later exception where Modern UI and Terralith, which a mod rewrites on every launch, moved to preserve with the needed settings as owned keys (GOTCHAS, "Files a mod rewrites on every launch").
+
 ## Valhalla local state (2026-11-11)
 
 The 2026-11-08 owner ruling places external project state in
@@ -38,10 +44,6 @@ Heart Canister hearts were not yellow. Canister tint is owned by Evil Eye Client
 and is handled separately; replacing the heart art is not the fix. The pack
 contract forbids the override's `gui/sprites/hud/heart/` folder so CozyUI+ provides
 these sprites.
-
-
-
-Newest first.
 
 ## Wave 7 preservation boundary (2026-11-02)
 
@@ -152,7 +154,7 @@ Companion's game rules (at their defaults they change nothing).
 Descriptions and AppleSkin are replaced by the owned client-only Evil Eye Client 0.1.0, with server data
 (backpack pick-up receipts, saturation/exhaustion) from Evil Eye Tweaks 0.3.0. Effective settings are carried
 into `config/evileye_client-client.toml`; AppleSkin's texture path is kept so CozyUI+ still re-skins the food
-sheet; coloured hearts derive from the active pack's (New Hearts) sprites. Bookshelf is kept because
+sheet; coloured hearts derive from the active pack's (New Hearts) sprites (superseded 2026-11-02: CozyUI+ now owns the heart sprites, see Stable visual priority). Bookshelf is kept because
 AttributeFix requires it. **Rejected:** keeping AppleSkin for Thirst Was Taken's overlays (redrawn by the
 client mod instead); dropping Bookshelf (would break AttributeFix).
 

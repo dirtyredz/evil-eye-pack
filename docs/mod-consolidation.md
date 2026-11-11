@@ -110,8 +110,8 @@ are removed only after a full dependency and consumer audit.
 - **Thirst Was Taken** only drew its quenched overlay, drink preview, thirst exhaustion bar and drink
   tooltips when AppleSkin was installed; Evil Eye Client redraws them (`integration/thirst/`).
 - **Resource paths kept**: the food sheet stays at `appleskin:textures/icons.png` so CozyUI+'s re-skin
-  applies; coloured hearts are tinted from the active pack's hearts, so New Hearts' shapes carry to
-  every row.
+  applies; coloured hearts are tinted from the active pack's hearts (CozyUI+ since 2026-11-02; the New
+  Hearts copy was removed), so its shapes carry to every row.
 - Configs: `stylisheffects-client.toml`, `colorfulhearts.toml`, `appleskin-client.toml` and
   `enchdesc.json` are carried into `config/evileye_client-client.toml` (see config-decisions).
 
