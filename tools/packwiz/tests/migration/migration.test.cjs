@@ -7,13 +7,13 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { validate, fingerprint, serialize, sourceMetafiles } = require('../migration/manifest.cjs');
-const { compareVersions, inRange, parseRange, checkClosure } = require('../migration/dependencies.cjs');
-const { renderMetafile, plan, apply } = require('../migration/repoint.cjs');
-const { client, resolveSelector } = require('../migration/fetch.cjs');
-const { oldIdentity, packSelector } = require('../migration/resolve.cjs');
+const { validate, fingerprint, serialize, sourceMetafiles } = require('../../migration/manifest.cjs');
+const { compareVersions, inRange, parseRange, checkClosure } = require('../../migration/dependencies.cjs');
+const { renderMetafile, plan, apply } = require('../../migration/repoint.cjs');
+const { client, resolveSelector } = require('../../migration/fetch.cjs');
+const { oldIdentity, packSelector } = require('../../migration/resolve.cjs');
 
-const REPO = path.resolve(__dirname, '../../..');
+const REPO = path.resolve(__dirname, '../../../..');
 const h = (a, b) => crypto.createHash(a).update(b).digest('hex');
 const tmp = (t) => { const d = fs.mkdtempSync(path.join(os.tmpdir(), 'migrate-')); t.after(() => fs.rmSync(d, { recursive: true, force: true })); return d; };
 
@@ -201,7 +201,7 @@ test('the committed target lock covers this checkout exactly while its source is
   const lock = JSON.parse(fs.readFileSync(file, 'utf8'));
   if (lock.source.fingerprint !== fingerprint(REPO)) {
     // Applied (Phase 5 onward): the checkout must be exactly the lock's target state.
-    assert.deepEqual(require('../migration/repoint.cjs').appliedDifferences(REPO, lock), []);
+    assert.deepEqual(require('../../migration/repoint.cjs').appliedDifferences(REPO, lock), []);
     assert.equal(fs.readFileSync(file, 'utf8'), serialize(lock));
     return;
   }
@@ -224,8 +224,8 @@ test('a bundled Forge-metadata game library is ignored like NeoForge ignores it;
 
 test('after apply, an updated lock re-resolves from its recorded source commit and applies as an update', (t) => {
   const { execFileSync } = require('node:child_process');
-  const { exportSource, sourceRoot } = require('../migration/source_tree.cjs');
-  const { planApplied } = require('../migration/repoint.cjs');
+  const { exportSource, sourceRoot } = require('../../migration/source_tree.cjs');
+  const { planApplied } = require('../../migration/repoint.cjs');
   const root = fixturePack(t);
   const git = (...a) => execFileSync('git', a, { cwd: root, stdio: 'pipe' });
   git('init', '-q'); git('add', '.'); git('-c', 'user.name=t', '-c', 'user.email=t@t', 'commit', '-qm', 'source');

@@ -4,12 +4,13 @@
 // to repeat it on every launch. Which instance is Stable is decided in instance_targets.cjs.
 const fs = require('node:fs');
 const path = require('node:path');
-const P = require('../pack_index.cjs');
-const { installPack, instanceCfgValue } = require('./install_pack.cjs');
-const { noLinks } = require('../../data_io/path_guard.cjs');
-const { STABLE, isRealStable, stableTarget } = require('./instance_targets.cjs');
+const P = require('../../pack_index.cjs');
+const { installPack } = require('../install_pack.cjs');
+const { instanceCfgValue } = require('../instance_cfg.cjs');
+const { noLinks } = require('../../../data_io/path_guard.cjs');
+const { STABLE, isRealStable, stableTarget } = require('../instance_targets.cjs');
 
-const ROOT = path.resolve(__dirname, '../../..');
+const ROOT = path.resolve(__dirname, '../../../..');
 
 const STABLE_SCRIPT = 'scripts/migration/stable-prelaunch.ps1';
 

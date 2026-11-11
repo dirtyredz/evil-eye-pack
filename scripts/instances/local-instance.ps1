@@ -37,7 +37,7 @@ try {
   if (-not $Cache) { $Cache = Get-RuntimePath 'FIXED.STABLE_CACHE' }
   $node = Find-Tool 'node'
   if (-not $node) { Complete-OwnerRun 1 'Node 22 is required.' }
-  $arguments = @((Join-Path $script:RepoRoot 'tools/packwiz/install/local_target.cjs'), '--cache', $Cache)
+  $arguments = @((Join-Path $script:RepoRoot 'tools/packwiz/install/targets/local_target.cjs'), '--cache', $Cache)
   if ($Create) { $arguments += '--create' }
   if ($DryRun) { $arguments += '--dry-run' }
   $code = Invoke-Native $node $arguments $script:RepoRoot

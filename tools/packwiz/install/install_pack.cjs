@@ -12,27 +12,8 @@ const { noLinks } = require('../../data_io/path_guard.cjs');
 const { applyOwnedKeys } = require('./pack_owned_keys.cjs');
 const { verifyInstalledFiles, restorePackFiles, previewPackFiles } = require('./installed_files.cjs');
 const env = require('../../runtime_env/env.cjs').FIXED;
+const { setInstanceCfgValue } = require('./instance_cfg.cjs');
 const ROOT = path.resolve(__dirname, '../../..');
-
-function instanceCfgValue(value) {
-  if (typeof value !== 'string' || /[\r\n]/.test(value)) throw Error('Unsafe instance.cfg value');
-  return value.replaceAll('\\', '/');
-}
-
-function instanceCfgGet(text, key) {
-  if (!/^[A-Za-z][A-Za-z0-9]*$/.test(key)) throw Error('Unsafe instance.cfg key');
-  return (text.match(new RegExp('^' + key + '=([^\r\n]*)', 'm')) || [])[1];
-}
-
-function setInstanceCfgValue(text, key, value) {
-  if (!/^[A-Za-z][A-Za-z0-9]*$/.test(key)) throw Error('Unsafe instance.cfg key');
-  const line = new RegExp(`^${key}=[^\\r\\n]*$`, 'm');
-  if (!line.test(text)) {
-    const eol = text.includes('\r\n') ? '\r\n' : '\n';
-    return text + (text && !text.endsWith('\n') ? eol : '') + key + '=' + instanceCfgValue(value) + eol;
-  }
-  return text.replace(line, `${key}=${instanceCfgValue(value)}`);
-}
 
 function prepareFiles(root, cache) {
   const files = [];
@@ -103,4 +84,4 @@ async function installPack({ instance, cache, dryRun, prelaunch, backupName, lab
   }
 }
 
-module.exports = { installPack, instanceCfgGet, instanceCfgValue, setInstanceCfgValue, prepareFiles, writePack };
+module.exports = { installPack, prepareFiles, writePack };

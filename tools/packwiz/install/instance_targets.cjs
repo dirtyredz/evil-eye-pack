@@ -8,7 +8,7 @@
 const path = require('node:path');
 const fs = require('node:fs');
 const { noLinks } = require('../../data_io/path_guard.cjs');
-const { INSTANCES, MAIN_CHECKOUT } = require('../../runtime_env/env.cjs').FIXED;
+const { INSTANCES } = require('../../runtime_env/env.cjs').FIXED;
 
 const STABLE_INSTANCE = INSTANCES + '/Evil Eye Stable';
 const TRIAL_INSTANCE = INSTANCES + '/Evil Eye NeoForge Trial';
@@ -107,4 +107,4 @@ if (require.main === module) {
   else if (cmd !== 'classify' || !target) { console.error('usage: instance_targets.cjs classify <path> | stable'); process.exitCode = 3; }
   else console.log(JSON.stringify(classify(target)));
 }
-module.exports = { STABLE, TRIAL, LOCAL, STABLE_INSTANCE, TRIAL_INSTANCE, LOCAL_INSTANCE, MAIN_CHECKOUT, localTarget, instanceKind, isRealStable, assertNotLocalOrTrial, stableTarget, trialTarget, assertPinTarget, allowedAsStable, classify };
+module.exports = { STABLE, TRIAL, LOCAL, STABLE_INSTANCE, TRIAL_INSTANCE, LOCAL_INSTANCE, localTarget, instanceKind, isRealStable, assertNotLocalOrTrial, stableTarget, trialTarget, assertPinTarget, allowedAsStable, classify };

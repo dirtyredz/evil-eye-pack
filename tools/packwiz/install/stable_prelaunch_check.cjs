@@ -10,9 +10,10 @@
 // --fix while MultiMC is open is overwritten the next time MultiMC saves: close MultiMC first.
 const fs = require('node:fs');
 const path = require('node:path');
-const { instanceCfgGet, setInstanceCfgValue } = require('./install_pack.cjs');
-const { stablePreLaunchCommand, stableCommandProblems, STABLE_SCRIPT: SCRIPT } = require('./stable_target.cjs');
-const { STABLE_INSTANCE, MAIN_CHECKOUT } = require('./instance_targets.cjs');
+const { instanceCfgGet, setInstanceCfgValue } = require('./instance_cfg.cjs');
+const { stablePreLaunchCommand, stableCommandProblems, STABLE_SCRIPT: SCRIPT } = require('./targets/stable_target.cjs');
+const { MAIN_CHECKOUT } = require('../../runtime_env/env.cjs').FIXED;
+const { STABLE_INSTANCE } = require('./instance_targets.cjs');
 
 const DEFAULT_CACHE = require('../../runtime_env/env.cjs').FIXED.STABLE_CACHE;
 // Pure: problems with Stable's instance.cfg text (empty list when it will run the install).

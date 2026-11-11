@@ -3,9 +3,9 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { spawnSync } = require('node:child_process');
 const path = require('node:path');
-const T = require('../install/instance_targets.cjs');
+const T = require('../../install/instance_targets.cjs');
 
-const I = require('../../runtime_env/env.cjs').FIXED.INSTANCES;
+const I = require('../../../runtime_env/env.cjs').FIXED.INSTANCES;
 
 test('kinds are decided by instance name; only the exact path is the real Stable', () => {
   assert.equal(T.instanceKind(`${I}/Evil Eye Stable`), 'stable');
@@ -47,19 +47,19 @@ test('allowedAsStable mirrors the allowlist for folders and .minecraft', () => {
 });
 
 test('stable CLI prints the real Stable instance', () => {
-  const r = spawnSync(process.execPath, [path.resolve(__dirname, '../install/instance_targets.cjs'), 'stable'], { encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [path.resolve(__dirname, '../../install/instance_targets.cjs'), 'stable'], { encoding: 'utf8' });
   assert.equal(r.stdout.trim(), T.STABLE_INSTANCE);
 });
 
 test('classify CLI is the PowerShell entry point', () => {
-  const r = spawnSync(process.execPath, [path.resolve(__dirname, '../install/instance_targets.cjs'), 'classify', `${I}/Evil Eye Local`], { encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [path.resolve(__dirname, '../../install/instance_targets.cjs'), 'classify', `${I}/Evil Eye Local`], { encoding: 'utf8' });
   assert.equal(r.status, 0);
   assert.deepEqual(JSON.parse(r.stdout), { kind: 'local', realStable: false, forbiddenForStable: true, allowedAsStable: false });
 });
 
 test('classification resolves junctions and non-existing descendants', t => {
   const fs = require('node:fs');
-  const scratch = path.resolve(__dirname, '../../../.tmp');
+  const scratch = path.resolve(__dirname, '../../../../.tmp');
   fs.mkdirSync(scratch, { recursive: true });
   const root = fs.mkdtempSync(path.join(scratch, 'target-alias-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));

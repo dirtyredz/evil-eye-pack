@@ -309,7 +309,7 @@ generations per instance; a clean run clears the consecutive-restoration history
 warn with the file path so game-written bytes can be reviewed. Temporary overlays are always removed;
 legacy `trial-install-*/drift-backup/` archives remain untouched. Installed artifact hashes are checked
 before a target's prelaunch is updated.
-Three thin targets sit on it: `trial_target.cjs` (only Evil Eye NeoForge Trial),
+Three thin targets in `tools/packwiz/install/targets/` sit on it: `trial_target.cjs` (only Evil Eye NeoForge Trial),
 `stable_target.cjs` (the real Stable instance or a rehearsal copy; `--fresh` first removes every
 file the old install tracked) and `local_target.cjs` (Evil Eye Local only). Local creation
 (`--create`) copies Stable's `instance.cfg`/`mmc-pack.json` with the name changed and play history
@@ -318,7 +318,7 @@ a prelaunch that calls `scripts/instances/local-instance.ps1`. Each target guard
 `instance_targets.cjs` (`localTarget` accepts only the Local path). `pack_owned_keys.cjs` forces the keys
 in `pack-owned-keys.json` into installed configs after each sync, for all targets. A pack contract test
 requires these edits to leave non-preserved shipped bytes identical. Stable command generation and
-validation share `stable_target.cjs`; cfg reads/writes share `install_pack.cjs`. The checker repairs
+validation share `stable_target.cjs`; cfg reads/writes share `instance_cfg.cjs`. The checker repairs
 missing keys and points rehearsal cfg repairs at their own instance folder, using `FIXED.STABLE_CACHE`.
 
 **Guard authority.** `tools/packwiz/install/instance_targets.cjs` alone decides which MultiMC
