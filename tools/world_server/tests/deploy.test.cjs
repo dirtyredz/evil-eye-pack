@@ -69,3 +69,14 @@ Invoke-Deploy
   assert.doesNotMatch(r.stdout, /-Op Start/);
   assert.match(r.stdout, /NOT restarting/);
 });
+
+test('failed recovery reports the controller exit code and preserves the original Deploy failure', win, () => {
+  const r = probe(`
+function Invoke-Native([string]$Exe, [string[]]$Arguments) { if ($Exe -eq 'node') { return 5 }; throw 'recovery bypassed transport' }
+function Invoke-CtlExitCode([string]$CtlArgs) { if ($CtlArgs -ne '-Op Start') { throw 'wrong recovery operation' }; return 17 }
+Invoke-Deploy
+`);
+  assert.equal(r.status, 3, r.stdout + r.stderr);
+  assert.match(r.stdout, /COMPLETE 3 staging failed/);
+  assert.match(r.stdout, /WARNING: restart after failed Deploy failed \(exit 17\); run Start manually\./);
+});

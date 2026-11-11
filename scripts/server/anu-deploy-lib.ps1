@@ -42,6 +42,6 @@ function Restart-AfterFailedDeploy {
     return
   }
   Write-Log 'Deploy failed before the server files on ANU changed; starting the server again (it was stopped for this Deploy).'
-  $rc = Invoke-Native 'ssh' @($AnuHost, "powershell -NoProfile -ExecutionPolicy Bypass -File $Ctl -Op Start")
+  $rc = Invoke-CtlExitCode '-Op Start'
   if ($rc -eq 0) { Write-Log 'Server restarted after the failed Deploy.' } else { Write-Log "WARNING: restart after failed Deploy failed (exit $rc); run Start manually." }
 }
