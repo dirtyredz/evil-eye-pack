@@ -52,7 +52,7 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.cjs tools/testing/showcase/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/resourcepack/fusion_glass/tests/*.cjs tools/data_io/tests/*.cjs tools/world_server/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs
+node --test tools/runtime_env/tests/*.cjs tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.cjs tools/testing/showcase/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/resourcepack/fusion_glass/tests/*.cjs tools/data_io/tests/*.cjs tools/world_server/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs
 # NeoForge migration lock (offline): node tools/packwiz/migration/migrate.mjs check  (see neoforge-migration.md)
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
@@ -461,7 +461,7 @@ The owner's own mods are built in the `minecraft-mods` workspace (`C:/Users/dirt
 
 Every dispatch gets its own `projects/artifacts/evil-eye-pack/jobs/<YYYY-MM-DD-task>/`.
 `--prompt-file`, `--output-file` and any shell redirection go inside it, never in
-`projects/` or the repo. The migration record of the files moved there on 2026-10-11 is in
+`projects/` or the repo. Test runners delete their staged pack/server/world copy when they exit (success, error or Ctrl-C) and keep reports, logs and crash reports; `--keep-stage` keeps the copy for debugging (`pack_test` also accepts `--keep-server`). The helper is `tools/runtime_env/staged_dir.cjs`: it refuses any path outside the run directory, and any `cache` directory. `world_trial boot` deletes `<name>-server` too, so pass `--keep-stage` to a `boot` that a `restart` will continue from. The migration record of the files moved there on 2026-10-11 is in
 `jobs/2026-10-11-layout-migration/artifact-moves.md`.
 
 ## Worktrees

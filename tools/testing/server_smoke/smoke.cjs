@@ -11,6 +11,7 @@ const { readJson } = require('../../data_io/files.cjs');
 //        [--seed 20261020]  level-seed of the fresh world (pinned default; a random seed made boots non-repeatable)
 //        [--heap 4G] [--out <dir>] [--cache <dir>]
 //        [--analyze <run dir>]  re-report an existing run without booting
+//        [--keep-stage]  keep the whole staged server (mods, libraries, world); default keeps only logs, crash reports and settings
 //        [--drop oculus,embeddium]  delete installed jars whose name contains a term (to find the next offender)
 // Nothing here may show a window: nogui, windowsHide, piped stdio, no launcher, no client.
 const fs = require('node:fs');
@@ -24,14 +25,19 @@ const { DEFAULT_STARVED_CORES } = require('./process/watchdog.cjs');
 const { crashReports, crashCauses, decide, EXIT_CODES } = require('./verdict.cjs');
 const procs = require('../../runtime_env/procs.cjs');
 const { waitForServer } = require('./process/host_wait.cjs');
+const { withStaged } = require('../../runtime_env/staged_dir.cjs');
+
+// What a finished smoke run keeps from its server copy: the evidence the report and a re-analysis read.
+const KEEP = /^(logs|crash-reports|console.log|packwiz-install.log|server.properties|runtime.json|stall-threads.txt|hs_err.*|user_jvm_args.txt)$/;
 
 function parseArgs(argv) {
   const o = {
     pack: path.resolve(__dirname, '../../../pack.toml'), timeout: 1800, silent: 180, sample: 10, priority: 'AboveNormal', starved: DEFAULT_STARVED_CORES, port: 25599, heap: '4G', seed: '20261020',
-    cache: `${ARTIFACTS}/server-smoke/cache`, drop: '', analyze: '', out: `${ARTIFACTS}/server-smoke/runs`
+    cache: `${ARTIFACTS}/server-smoke/cache`, drop: '', analyze: '', keepStage: false, out: `${ARTIFACTS}/server-smoke/runs`
   };
   for (let i = 0; i < argv.length; i++) {
     const k = argv[i].replace(/^--/, '');
+    if (k === 'keep-stage') { o.keepStage = true; continue; }
     if (!(k in o)) throw new Error(`unknown option ${argv[i]}`);
     o[k] = ['timeout', 'silent', 'sample', 'starved', 'port'].includes(k) ? Number(argv[++i]) : argv[++i];
   }
@@ -57,27 +63,30 @@ async function main() {
   const scope = procs.scope();
   const interrupt = () => scope.killAll();
   process.once('SIGINT', interrupt); process.once('SIGTERM', interrupt);
-  try {
-    const runtime = readRuntime(o.pack);
-    const { java, jcmd } = javaPaths(runtime, JAVAS);
-    checkJava(java, runtime);
-    log(`runtime ${runtime.id} (Java ${runtime.java}: ${java})`);
-    const base = await ensureLoaderBase(o.cache, runtime, java, log, scope);
-    prepareRunDir(base, runDir, o.port, o.heap, o.seed);
-    await installPack(runDir, o.pack, java, o.cache, log, scope);
-    dropMods(runDir, o.drop.split(',').filter(Boolean), log);
-    log(`mods installed: ${fs.readdirSync(path.join(runDir, 'mods')).filter((f) => f.endsWith('.jar')).length}`);
-    await waitForServer(scope, { log });
-    result = await boot(runDir, o, log, { runtime, java, jcmd, scope });
-  } catch (e) {
-    console.log(`FAIL (setup): ${e.message}`);
-    process.exitCode = 2;
-    return;
-  } finally {
-    scope.killAll();
-    process.removeListener('SIGINT', interrupt); process.removeListener('SIGTERM', interrupt);
-  }
-  report(o, runDir, result);
+  // The server copy is 1-4 GB: pruned to the evidence on every exit path (after the report is read).
+  await withStaged({ runDir: o.out, prune: { dir: runDir, keep: (n) => KEEP.test(n) }, keep: o.keepStage, log }, async () => {
+    try {
+      const runtime = readRuntime(o.pack);
+      const { java, jcmd } = javaPaths(runtime, JAVAS);
+      checkJava(java, runtime);
+      log(`runtime ${runtime.id} (Java ${runtime.java}: ${java})`);
+      const base = await ensureLoaderBase(o.cache, runtime, java, log, scope);
+      prepareRunDir(base, runDir, o.port, o.heap, o.seed);
+      await installPack(runDir, o.pack, java, o.cache, log, scope);
+      dropMods(runDir, o.drop.split(',').filter(Boolean), log);
+      log(`mods installed: ${fs.readdirSync(path.join(runDir, 'mods')).filter((f) => f.endsWith('.jar')).length}`);
+      await waitForServer(scope, { log });
+      result = await boot(runDir, o, log, { runtime, java, jcmd, scope });
+    } catch (e) {
+      console.log(`FAIL (setup): ${e.message}`);
+      process.exitCode = 2;
+      return;
+    } finally {
+      scope.killAll();
+      process.removeListener('SIGINT', interrupt); process.removeListener('SIGTERM', interrupt);
+    }
+    report(o, runDir, result);
+  });
 }
 
 function report(o, runDir, result) {

@@ -8,7 +8,7 @@ const {waitForServer}=require('../server_smoke/process/host_wait.cjs');
 const procs=require('../../runtime_env/procs.cjs');
 async function main(args) {
   const [command,...rest]=args,opts={};
-  for(let i=0;i<rest.length;i+=2){if(!rest[i].startsWith('--')||!rest[i+1])throw new Error('Expected --option value');const key=rest[i].slice(2);if(!['job','source','root','cache','inventory','name','world','out','before','after','registries','loader','jars'].includes(key)||Object.hasOwn(opts,key))throw new Error('Unknown or repeated option: '+key);opts[key]=['name','jars'].includes(key)?rest[i+1]:path.resolve(rest[i+1]);}
+  for(let i=0;i<rest.length;i+=2){if(rest[i]==='--keep-stage'){opts.keepStage=true;i--;continue;}if(!rest[i].startsWith('--')||!rest[i+1])throw new Error('Expected --option value');const key=rest[i].slice(2);if(!['job','source','root','cache','inventory','name','world','out','before','after','registries','loader','jars'].includes(key)||Object.hasOwn(opts,key))throw new Error('Unknown or repeated option: '+key);opts[key]=['name','jars'].includes(key)?rest[i+1]:path.resolve(rest[i+1]);}
   if(!opts.job)throw new Error('Required --job <artifact directory>');
   const job=opts.job;
   if(!inside(job,'C:/Users/dirty/projects/artifacts/evil-eye-pack/jobs'))throw new Error('World trials must live under the artifact jobs directory');
@@ -25,7 +25,7 @@ async function main(args) {
     if(inv.errors.length)throw new Error('Inventory is incomplete');
     const coverage=require('./probe/plan.cjs').plan(inv);
     const players=Object.keys(inv.data).filter(f=>/^playerdata\/[a-f0-9-]+\.dat$/.test(f)).map(f=>path.basename(f,'.dat'));
-    await require('./boot.cjs').trialBoot({root:opts.root,cache:opts.cache,job,name:opts.name,targets:coverage.targets,coverage,players,restart:command==='restart'});
+    await require('./boot.cjs').trialBoot({root:opts.root,cache:opts.cache,job,name:opts.name,targets:coverage.targets,coverage,players,restart:command==='restart',keepStage:opts.keepStage});
   }else if(command==='verify') {
     const r=JSON.parse(fs.readFileSync(path.join(job,'source-manifest.json'),'utf8'));
     console.log('Original:',verify(r.source,r.files));console.log('Snapshot:',verify(r.snapshot,r.files));
