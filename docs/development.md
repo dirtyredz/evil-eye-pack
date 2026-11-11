@@ -52,7 +52,7 @@ The installer reads exact disk bytes and does not rehash. Steps 2 and 3 come bef
 
 ```
 node --test tools/packwiz/tests/verify_hashes.test.cjs
-node --test tools/runtime_env/tests/*.cjs tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/packwiz/tests/*/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.cjs tools/testing/showcase/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/resourcepack/fusion_glass/tests/*.cjs tools/data_io/tests/*.cjs tools/world_server/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs
+node --test tools/runtime_env/tests/*.cjs tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/packwiz/tests/*/*.cjs tools/packwiz/tests/*/*/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.cjs tools/testing/showcase/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/resourcepack/fusion_glass/tests/*.cjs tools/data_io/tests/*.cjs tools/world_server/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs
 # NeoForge migration lock (offline): node tools/packwiz/migration/migrate.mjs check  (see neoforge-migration.md)
 # DEDUP_MODS may override the cached Local mods path (semicolon-separated cache folders).
 # After changing duplicate policy or a pinned source jar, review and regenerate:
@@ -113,7 +113,7 @@ provisioned; a Valhalla result does not claim an observed ANU pass.
 For showcase changes, the focused fast gate is:
 
 ```powershell
-node --test tools/testing/showcase/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs tools/packwiz/tests/*/*.cjs
+node --test tools/testing/showcase/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs tools/packwiz/tests/*/*.cjs tools/packwiz/tests/*/*/*.cjs
 node tools/packwiz/rehash.cjs
 node tools/packwiz/rehash.cjs --dry-run
 node tools/packwiz/verify_hashes.cjs
@@ -237,7 +237,7 @@ and client-only costs remain unmeasured. See [timing caveats](GOTCHAS.md#mod-map
 Focused fast gate (no build or lint command exists for this Node-only tooling):
 
 ```powershell
-node --test tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/testing/server_smoke/tests/*.cjs tools/testing/showcase/tests/*.cjs tools/testing/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs tools/packwiz/tests/*/*.cjs
+node --test tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/testing/server_smoke/tests/*.cjs tools/testing/showcase/tests/*.cjs tools/testing/pack_test/tests/session/*.cjs tools/packwiz/tests/*.cjs tools/packwiz/tests/*/*.cjs tools/packwiz/tests/*/*/*.cjs
 node tools/packwiz/rehash.cjs --dry-run
 node tools/packwiz/verify_hashes.cjs
 git diff --check

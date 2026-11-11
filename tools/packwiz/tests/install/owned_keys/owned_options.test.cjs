@@ -5,7 +5,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const { loadEntries, applyOwnedKeys, previewOwnedKeys, setOptions } = require('../../install/pack_owned_keys.cjs');
+const { loadEntries, applyOwnedKeys, previewOwnedKeys, setOptions } = require('../../../install/owned_keys/pack_owned_keys.cjs');
 
 const entry = { key: 'key_key.modernui.zoom', value: 'key.keyboard.z' };
 const WANT = 'key_key.modernui.zoom:key.keyboard.z';
