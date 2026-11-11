@@ -155,6 +155,15 @@ ssh/scp to `server-ctl.ps1` on ANU (config, detached JVM, RCON stop, backup, wor
 `tools/world_server/stage-world-server.cjs` and talks to the server with `tools/world_server/mc-net.cjs`
 (ping/RCON). Operations and traps: [development](development.md), [GOTCHAS](GOTCHAS.md).
 
+`server_stage/mod-set.cjs` owns the metadata-only both/server jar inventory and staged-byte validation.
+The world-server stager uses it after `ensureStage`; Deploy publishes the verified stage's jar names
+and pins as `ctl/deployed-mods.json` only after successful extraction/configuration. The fast hash gate
+calls `world_server/check-parity.cjs`, a bounded read-only SSH comparison with that last deployment
+receipt (explicit skip when unavailable). It neither stages nor installs nor ships controller code.
+The controller detects elevated JVMs from a Limited token through both listeners on one Java PID,
+refuses ambiguous identities, and serializes starts with an exclusive file handle. Stop preserves
+PID/creation-time identity across listener shutdown; forced kills additionally require the marker.
+
 1. **Verify and stage on Valhalla.** Create an artifact run directory and record the
    checkout identity, pack/index hashes, seed, probe token and the runtime descriptor
    (`tools/testing/server_smoke/runtime/runtime.cjs`: loader, versions, Java major, id from `pack.toml`).

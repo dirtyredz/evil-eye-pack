@@ -27,7 +27,8 @@ async function main(argv) {
   try {
     await ensureStage(path.resolve(opt.out), { cache, runtime, java, pack, log, scope, seed: 1, port: 25565, heap: '6G' });
   } finally { scope.killAll(); }
-  fs.writeFileSync(path.join(path.resolve(opt.out), 'world-server-stage.json'), JSON.stringify({ runtime: runtime.id, built: new Date().toISOString() }) + '\n');
+  const mods = T('server_stage/mod-set.cjs').verifyStagedMods(path.dirname(pack), path.resolve(opt.out));
+  fs.writeFileSync(path.join(path.resolve(opt.out), 'world-server-stage.json'), JSON.stringify({ version: 1, runtime: runtime.id, built: new Date().toISOString(), mods }) + '\n');
   log(`staged ${runtime.id} in ${path.resolve(opt.out)}`);
 }
 main(process.argv.slice(2)).catch((e) => { console.error(`FAILED: ${e.message}`); process.exitCode = 1; });

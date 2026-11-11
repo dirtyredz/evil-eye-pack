@@ -44,6 +44,9 @@ function Send-Ctl {
 }
 function Test-ServerRunning {
   $r = Invoke-NativeCapture { & ssh $AnuHost "powershell -NoProfile -ExecutionPolicy Bypass -File $Ctl -Op Status" 2>&1 }
+  if ($r.ExitCode -ne 0 -or $r.Output -notmatch 'State: (RUNNING|STOPPED)') {
+    throw ('Cannot determine server state safely: ' + $r.Output.Trim())
+  }
   return ($r.Output -match 'State: RUNNING')
 }
 # Server list ping from Valhalla; fails the run (exit 2) when the server does not answer.

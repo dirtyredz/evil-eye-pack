@@ -432,11 +432,21 @@ verification), `AddLauncherEntry`. The dispatcher is a thin router over dot-sour
 shared `tools/server_stage/stage.cjs`), `add-server-entry.cjs` (+ test), `player-data-check.cjs`.
 
 - The JVM is started through `Win32_Process.Create` with output to `logs\console.log`, so it survives ssh
-  disconnects; it is found by the marker `-Dewl.server=anu-world` on its command line. There is no Windows
-  scheduled task (schedules go through Command Deck); after an ANU reboot run `Start`.
+  disconnects. Detection uses `-Dewl.server=anu-world`, or both listeners (25565 and 25575) owned by the
+  same Java PID when a Limited token cannot read its command line. Ambiguous ports/hidden Java fail
+  closed; retry elevated. A shared `ctl/start.guard` handle serializes starts. Boot scheduling belongs
+  to Command Deck (`anu-david-interactive`, Limited); never create or edit its Windows tasks directly.
 - Stop is graceful over RCON (`127.0.0.1:25575`, password in `ctl\rcon.secret`, never opened in the firewall).
-- Updating the pack: push `main`, `Stop`, `Backup`, `Deploy`, `Start`. Players launch Stable to receive the
+- Updating the pack: `Stop`, `Backup`, `Deploy` the intended checkout, rerun the fast gate, push `main`,
+  then `Start`. Players launch Stable to receive the
   matching client jars; a client/server mod mismatch refuses the join.
+  `node tools/packwiz/verify_hashes.cjs` also checks server mod parity against ANU's last Deploy receipt
+  (`ctl/deployed-mods.json`): `server needs Deploy: added ... / removed ...` blocks the gate until Deploy
+  matches the checkout. It skips explicitly when ANU/the receipt is unavailable (first receipt needs a
+  Deploy with the updated tooling). For planned mod changes, deploy the intended checkout during the
+  maintenance window before publishing to Stable; then rerun the gate and push. The receipt covers jar
+  names and pins from the verified stage, not subsequent manual changes on ANU. Standalone check:
+  `node tools/world_server/check-parity.cjs` (`--manifest <file>` for an offline receipt).
 - Boot measured 2026-11-07 on ANU (i7-4820K): 68 s to `Done` (world load 5.7 s), 0 new error groups against the
   smoke's known-noise list (286 known occurrences), one "Can't keep up" at boot. See GOTCHAS for the stall behaviour.
 - To move the world back to Valhalla: `Stop`, `Backup`, `Pull`, extract the archive into a `saves` folder.
