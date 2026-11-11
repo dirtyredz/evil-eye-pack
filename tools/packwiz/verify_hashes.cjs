@@ -117,7 +117,11 @@ function stableCacheStatus(root, argv) {
   if (argv.includes('--no-stable-cache') || argv.includes('--jars')) return 0;
   const S = require('./install/stable_cache_check.cjs');
   if (!fs.existsSync(S.DEFAULT_CACHE)) { console.log('SKIP stable jar cache check: ' + S.DEFAULT_CACHE + ' not found on this machine'); return 0; }
-  return S.report(S.checkCache(root, S.DEFAULT_CACHE), S.DEFAULT_CACHE);
+  const stable = S.report(S.checkCache(root, S.DEFAULT_CACHE), S.DEFAULT_CACHE);
+  // The dev/migration cache (MIGRATION_MODS) feeds dedup and pack_test data tests: report a missing jar now, not as a test failure later.
+  if (!fs.existsSync(S.DEV_CACHE)) { console.log('SKIP dev jar cache check: ' + S.DEV_CACHE + ' not found on this machine'); return stable; }
+  const dev = S.report(S.checkDevCache(root), S.DEV_CACHE, S.DEV_CONSEQUENCE);
+  return stable || dev ? 1 : 0;
 }
 
 if (require.main === module) process.exitCode = main(process.argv.slice(2));

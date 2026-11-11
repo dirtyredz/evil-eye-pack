@@ -18,6 +18,8 @@ const env = require('../../runtime_env/env.cjs').FIXED;
 const ROOT = path.resolve(__dirname, '../../..');
 const JOBS = env.ARTIFACT_JOBS;
 const DEFAULT_CACHE = env.STABLE_CACHE;
+// Dev/migration jar cache (env MIGRATION_MODS: read by dedup/catalog defaultJarDirs and the pack_test data tests). Holds mods/ only.
+const DEV_CACHE = path.dirname(require('../../runtime_env/env.cjs').MIGRATION_MODS);
 
 // The jar every client/both metafile needs, as { file, dir, name, resolve(dir) } (resolve throws when the folder lacks a matching jar).
 function pinnedJars(root) {
@@ -34,9 +36,10 @@ function sourceDirs(dir, extra = [], jobs = JOBS) {
 }
 
 // Pure-ish: { missing: [{file, name, reason}], stocked: [name] }. With `stock`, missing jars found (hash-verified) in `sources` are copied in.
-function checkCache(root, cache, { stock = false, sources = [], jobs = JOBS } = {}) {
+function checkCache(root, cache, { stock = false, sources = [], jobs = JOBS, dirs = null } = {}) {
   const missing = [], stocked = [];
   for (const jar of pinnedJars(root)) {
+    if (dirs && !dirs.includes(jar.dir)) continue;
     const target = path.join(cache, jar.dir);
     try { jar.resolve(target); continue; } catch (e) { var reason = e.message.replace(/ \(no download attempted\).*/, ''); }
     let fixed = false;
@@ -55,10 +58,16 @@ function checkCache(root, cache, { stock = false, sources = [], jobs = JOBS } = 
   return { missing, stocked };
 }
 
-function report(r, cache) {
+// The dev cache, stocked (when `stock`) from the Stable cache plus the usual local sources, so one --stock fills both.
+function checkDevCache(root, { stock = false, sources = [], jobs = JOBS, cache = DEV_CACHE, stable = DEFAULT_CACHE } = {}) {
+  return checkCache(root, cache, { stock, jobs, dirs: ['mods'], sources: [...sources, path.join(stable, 'mods')] });
+}
+const DEV_CONSEQUENCE = 'pack_test/dedup data tests would fail with "Missing cached jar"';
+
+function report(r, cache, consequence = 'Stable prelaunch would refuse to launch') {
   for (const n of r.stocked) console.log('STOCKED ' + n);
   for (const m of r.missing) console.log(`MISSING ${m.name} (${m.file}): ${m.reason}`);
-  if (r.missing.length) console.log(`FAIL ${r.missing.length} pinned jar(s) not usable from ${cache}. Stable prelaunch would refuse to launch. Add the verified jars (or run with --stock to copy them from jobs/*/jars); never purge the cache.`);
+  if (r.missing.length) console.log(`FAIL ${r.missing.length} pinned jar(s) not usable from ${cache}. ${consequence}. Add the verified jars (or run with --stock to copy them from jobs/*/jars); never purge the cache.`);
   else console.log(`OK every pinned jar is in ${cache}` + (r.stocked.length ? ` (${r.stocked.length} stocked)` : ''));
   return r.missing.length ? 1 : 0;
 }
@@ -72,7 +81,9 @@ function main(argv) {
     else if (argv[i] === '--source' && argv[i + 1]) sources.push(path.resolve(argv[++i]));
     else throw Error('Usage: stable_cache_check.cjs [--stock] [--cache <dir>] [--root <pack>] [--source <dir>]...');
   }
-  return report(checkCache(root, cache, { stock, sources }), cache);
+  const stable = report(checkCache(root, cache, { stock, sources }), cache);
+  const dev = report(checkDevCache(root, { stock, sources }), DEV_CACHE, DEV_CONSEQUENCE);
+  return stable || dev ? 1 : 0;
 }
 if (require.main === module) { try { process.exitCode = main(process.argv.slice(2)); } catch (e) { console.error(e.message); process.exitCode = 2; } }
-module.exports = { checkCache, pinnedJars, report, DEFAULT_CACHE };
+module.exports = { checkCache, checkDevCache, pinnedJars, report, DEFAULT_CACHE, DEV_CACHE, DEV_CONSEQUENCE };
