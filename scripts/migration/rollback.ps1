@@ -20,7 +20,7 @@ The cutover-archive-<date-time> folder to restore. Default: the newest under -Ar
 .PARAMETER Instance
 Instance folder to restore into. Default: the real Evil Eye Stable.
 .PARAMETER ArchiveRoot
-Where archives and the rollback quarantine live. Default: C:/Users/dirty/.local-state/evil-eye-pack/artifacts.
+Where archives and the rollback quarantine live. Default: env FIXED.ARTIFACTS.
 .EXAMPLE
 powershell -NoProfile -ExecutionPolicy Bypass -File C:\path\to\checkout\scripts\migration\rollback.ps1 -Execute
 #>
@@ -30,11 +30,12 @@ param(
   [switch]$DryRun,
   [string]$Archive,
   [string]$Instance,
-  [string]$ArchiveRoot = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts'
+  [string]$ArchiveRoot
 )
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot '../owner/owner-run.ps1')
+. (Join-Path $PSScriptRoot '../../tools/runtime_env/paths.ps1')
 . (Join-Path $PSScriptRoot 'cutover-lib.ps1')
 Initialize-OwnerRun 'rollback'
 if (-not $Instance) { $Instance = Get-StableInstancePath }
@@ -42,6 +43,7 @@ if (-not $Instance) { $Instance = Get-StableInstancePath }
 $plan = -not $Execute -or $DryRun
 
 try {
+  if (-not $ArchiveRoot) { $ArchiveRoot = Get-RuntimePath 'FIXED.ARTIFACTS' }
   Write-Log ("Rollback {0}: instance {1}" -f $(if ($plan) { 'DRY RUN (nothing will be written)' } else { 'EXECUTE' }), $Instance)
   $blockers = New-Object System.Collections.Generic.List[string]
   if (-not $Archive) {

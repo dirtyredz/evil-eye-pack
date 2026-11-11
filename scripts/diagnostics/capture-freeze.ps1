@@ -5,7 +5,7 @@ Capture two jstack thread dumps (10 s apart) of a hung Evil Eye Stable client.
 Finds the java/javaw process whose command line names the "Evil Eye Stable" instance, then runs
 jstack -l twice, 10 seconds apart, so a stuck render thread shows as identical frames in both.
 Dumps go to <artifacts>/jobs/<date>-freeze-dump/ (default
-C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/<yyyy-MM-dd>-freeze-dump/), never into the repo.
+env FIXED.ARTIFACT_JOBS/<yyyy-MM-dd>-freeze-dump/), never into the repo.
 Works from any directory; resolves the repo from $PSScriptRoot and logs to .tmp/owner-runs/.
 Run it while the game is frozen (from another window, or over ssh). It only reads the JVM.
 Exit codes: 0 success or dry-run, 1 jstack missing, 2 no Stable client process found,
@@ -15,7 +15,7 @@ Report the process found, the jstack path and the planned output files; run noth
 .PARAMETER InstanceName
 Text that must appear in the java command line. Default "Evil Eye Stable".
 .PARAMETER Jstack
-Path to jstack.exe. Default C:\Users\dirty\.local-state\tools\evil-eye-pack\temurin-21\bin\jstack.exe.
+Path to jstack.exe. Default env FIXED.JAVAS.21.jstack.
 .PARAMETER OutDir
 Output directory. Default is the dated freeze-dump job folder under the artifacts root.
 .PARAMETER IntervalSeconds
@@ -25,17 +25,19 @@ Seconds between the two dumps. Default 10.
 param(
   [switch]$DryRun,
   [string]$InstanceName = 'Evil Eye Stable',
-  [string]$Jstack = 'C:\Users\dirty\.local-state\tools\evil-eye-pack\temurin-21\bin\jstack.exe',
+  [string]$Jstack,
   [string]$OutDir,
   [int]$IntervalSeconds = 10
 )
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot '../owner/owner-run.ps1')
+. (Join-Path $PSScriptRoot '../../tools/runtime_env/paths.ps1')
 Initialize-OwnerRun 'capture-freeze'
 try {
+  if (-not $Jstack) { $Jstack = Get-RuntimePath 'FIXED.JAVAS.21.jstack' }
   if (-not $OutDir) {
-    $OutDir = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/{0}-freeze-dump' -f (Get-Date -Format 'yyyy-MM-dd')
+    $OutDir = Join-Path (Get-RuntimePath 'FIXED.ARTIFACT_JOBS') ('{0}-freeze-dump' -f (Get-Date -Format 'yyyy-MM-dd'))
   }
   if (-not (Test-Path -LiteralPath $Jstack)) { Complete-OwnerRun 1 "jstack not found: $Jstack" }
 

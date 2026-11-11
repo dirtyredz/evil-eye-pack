@@ -3,14 +3,14 @@
 // junctions anywhere on the path, containment checks, and protected-output refusal.
 const fs = require('node:fs');
 const path = require('node:path');
-const ARTIFACT_JOBS = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs';
+const { ARTIFACT_JOBS } = require('../runtime_env/env.cjs').FIXED;
 const PROTECTED = ['C:/Users/dirty/MultiMC/instances', 'C:/Users/dirty/projects/evil-eye-pack'];
 function inside(a, b) {
   const rel = path.relative(path.resolve(b), path.resolve(a)).toLowerCase();
   return rel === '' || (!rel.startsWith('..' + path.sep) && rel !== '..' && !path.isAbsolute(rel));
 }
-function artifactJob(dir) {
-  if (!inside(dir, ARTIFACT_JOBS)) throw new Error('Job must be in artifact jobs');
+function artifactJob(dir, jobsRoot = ARTIFACT_JOBS) {
+  if (!inside(dir, jobsRoot)) throw new Error('Job must be in artifact jobs');
 }
 function noLinks(target) {
   let p = path.resolve(target);

@@ -31,7 +31,7 @@ Explicit dry run (the default without -Execute). Wins over -Execute.
 .PARAMETER Instance
 The instance folder (the one holding instance.cfg and .minecraft). Default: the real Evil Eye Stable.
 .PARAMETER ArchiveRoot
-Parent of the dated archive folder. Default: C:/Users/dirty/.local-state/evil-eye-pack/artifacts.
+Parent of the dated archive folder. Default: env FIXED.ARTIFACTS.
 .PARAMETER Cache
 Complete offline migration cache root (mods, resourcepacks, shaderpacks) containing the bridge jar.
 .PARAMETER Java
@@ -46,13 +46,14 @@ param(
   [switch]$Execute,
   [switch]$DryRun,
   [string]$Instance,
-  [string]$ArchiveRoot = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts',
-  [string]$Cache = 'C:/Users/dirty/.local-state/evil-eye-pack/artifacts/jobs/2026-10-31-world-trial-final/cache',
-  [string]$Java = 'C:/Users/dirty/.local-state/tools/evil-eye-pack/temurin-21/bin/java.exe'
+  [string]$ArchiveRoot,
+  [string]$Cache,
+  [string]$Java
 )
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'
 . (Join-Path $PSScriptRoot '../owner/owner-run.ps1')
+. (Join-Path $PSScriptRoot '../../tools/runtime_env/paths.ps1')
 . (Join-Path $PSScriptRoot 'cutover-lib.ps1')
 Initialize-OwnerRun 'cutover'
 if (-not $Instance) { $Instance = Get-StableInstancePath }
@@ -63,6 +64,9 @@ function Block([string]$m) { $blockers.Add($m); Write-Log "  BLOCKED: $m" }
 function Fmt([long]$b) { return ('{0:N2} GiB' -f ($b / 1GB)) }
 
 try {
+  if (-not $ArchiveRoot) { $ArchiveRoot = Get-RuntimePath 'FIXED.ARTIFACTS' }
+  if (-not $Cache) { $Cache = Get-RuntimePath 'FIXED.STABLE_CACHE' }
+  if (-not $Java) { $Java = Get-RuntimePath 'FIXED.JAVAS.21.java' }
   Write-Log ("Cutover {0}: instance {1}" -f $(if ($plan) { 'DRY RUN (nothing will be written)' } else { 'EXECUTE' }), $Instance)
   $node = Find-Tool 'node'
   if (-not $node) { Complete-OwnerRun 1 'Node 22 is required.' }

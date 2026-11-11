@@ -24,8 +24,8 @@ const HERE = __dirname;
 const DEFAULTS = {
   lock: path.join(HERE, 'target-lock.json'),
   dispositions: path.join(HERE, 'dispositions.json'),
-  survey: `${env.ARTIFACTS}/jobs/2026-10-29-neoforge-availability/bulk-results.json`,
-  job: `${env.ARTIFACTS}/jobs/2026-10-29-neoforge-lock`,
+  survey: `${env.ARTIFACT_JOBS}/2026-10-29-neoforge-availability/bulk-results.json`,
+  job: `${env.ARTIFACT_JOBS}/2026-10-29-neoforge-lock`,
   cache: `${env.ARTIFACTS}/migration/neoforge-1.21.1/cache`
 };
 
