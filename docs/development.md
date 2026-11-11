@@ -42,7 +42,7 @@ Each test instance's path belongs to one checkout; never point an instance at an
 
 1. Edit the pack file. Save it as UTF-8 with LF line endings.
 2. `node tools/packwiz/rehash.cjs` (rebuilds `index.toml`, then the index hash in `pack.toml`).
-3. `node tools/packwiz/verify_hashes.cjs` must print `OK 0 mismatches`.
+3. `node tools/packwiz/verify_hashes.cjs` must print `OK 0 mismatches`. It also checks that every pinned jar is in the Stable jar cache (`jobs/2026-10-31-world-trial-final/cache`), because Stable's prelaunch never downloads: a mod add must stock the cache before the push. If it lists `MISSING` jars, run `node tools/packwiz/install/stable_cache_check.cjs --stock` (copies hash-verified jars from `jobs/*/jars`) or copy the verified jars in yourself; never purge the cache. `--no-stable-cache` skips the check (other caches, e.g. the migration branch).
 4. Click Launch on the matching **test** instance in MultiMC. Do not edit source files while it installs.
    If the installer fails (bad path, hash mismatch), abort; never click past it to play on stale files.
 

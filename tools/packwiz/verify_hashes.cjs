@@ -15,6 +15,7 @@ const { sha256 } = require('../data_io/files.cjs');
 //   - each entry's `preserve` flag agrees with the owner/game-owned path policy;
 //   - every metafile has a concrete [download] hash, hash-format and source;
 //   - with --jars: each jar named by a metafile's `filename` hashes to its download hash.
+//   - unless --no-stable-cache (or --jars): every pinned jar is in the Stable jar cache (install/stable_cache_check.cjs), when that cache exists
 
 const crypto = require('node:crypto');
 const fs = require('node:fs');
@@ -101,10 +102,20 @@ function main(argv) {
   const root = path.resolve(arg('--root') || path.join(__dirname, '..', '..'));
   const r = verify(root, { jars: arg('--jars') });
   for (const p of r.problems) console.error('MISMATCH ' + p);
+  const cacheStatus = stableCacheStatus(root, argv);
   console.log((r.problems.length ? 'FAIL' : 'OK') + ' ' + r.problems.length + ' mismatches; ' + r.entries +
     ' index entries (' + r.metafiles + ' metafiles), ' + r.publishable + ' publishable files, index sha256 ' +
     r.indexHash + (arg('--jars') ? ', ' + r.jarsChecked + ' jars checked against metafiles' : ''));
-  return r.problems.length ? 1 : 0;
+  return r.problems.length || cacheStatus ? 1 : 0;
+}
+
+// Stable's prelaunch needs every pinned jar in its cache. Checked by default when that cache exists on this
+// machine (so the rehash -> verify step before a push catches an unstocked mod add); --no-stable-cache skips.
+function stableCacheStatus(root, argv) {
+  if (argv.includes('--no-stable-cache') || argv.includes('--jars')) return 0;
+  const S = require('./install/stable_cache_check.cjs');
+  if (!fs.existsSync(S.DEFAULT_CACHE)) { console.log('SKIP stable jar cache check: ' + S.DEFAULT_CACHE + ' not found on this machine'); return 0; }
+  return S.report(S.checkCache(root, S.DEFAULT_CACHE), S.DEFAULT_CACHE);
 }
 
 if (require.main === module) process.exitCode = main(process.argv.slice(2));
