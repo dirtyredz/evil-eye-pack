@@ -2,7 +2,7 @@
 id: dk-a1cdf9a8
 type: task
 created: 2026-11-09
-status: done
+status: todo
 since: 2026-11-10
 area: world-server
 priority: P2
@@ -47,3 +47,7 @@ Evidence 2026-11-10: schedule evil-eye-anu-world-server-boot is live. Created by
 ### 2026-11-11T04:17:24.586Z · open · agent
 
 Run evidence 2026-11-10: Skippy run-now (skippy-ee-boot-runnow-20261110, rev 2). The ANU task \CommandDeck\Managed\Schedule-84a20dbde8941f6f997de03d74758e1e last ran at 22:16 ANU time with LastTaskResult 0 and returned to Ready. The world server stayed on PID 17124 (started 2026-11-09 22:11), so server-ctl Start correctly took its 'Already running.' no-op path. server-ctl writes no log of its own (stdout only), and the Command Deck report at 04:16:39Z still showed lastAttempt null and health unknown, just after the run. Caveat: this proves the schedule fires and the command runs clean as the provisioned principal. The cold-start path (server down → Done) is proven by the earlier manual Start runs of the same script, not by this trigger; the next real ANU reboot is the first end-to-end confirmation.
+
+### 2026-11-11T04:34:26.125Z · open · agent
+
+Reopened 2026-11-10 22:34: Command Deck recorded Skippy's 22:16 run-now as FAILED (exit 2), while ANU Task Scheduler shows LastTaskResult 0. Under diagnosis (Astra job 2026-11-10-boot-run-and-parity). Closes only after a run that both sides record as a success.
