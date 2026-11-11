@@ -3,6 +3,17 @@ const test=require('node:test'), assert=require('node:assert/strict');
 const fs=require('node:fs'), os=require('node:os'), path=require('node:path');
 const {collector,report,storageIds}=require('../wave7_evidence.cjs');
 
+test('auxiliary files remain listed and external chunk uncertainty prevents completeness', t => {
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'wave7-excluded-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ fs.writeFileSync(path.join(root,'level.dat_old'),'historical');
+ fs.writeFileSync(path.join(root,'session.lock'),'lock');
+ const clean=report(root);assert.equal(clean.complete,true);assert.equal(clean.excludedFiles.length,2);
+ fs.writeFileSync(path.join(root,'orphan.mcc'),'external');
+ const uncertain=report(root);assert.equal(uncertain.complete,false);assert.equal(uncertain.excludedFiles.length,3);
+ assert.deepEqual(uncertain.unsupportedFiles,[{file:'orphan.mcc',reason:'Cannot certify absence of orphan external chunks'}]);
+ assert.deepEqual(uncertain.errors,[]);
+});
+
 test('all eleven mounted identities retain full documents, large counts and locations',()=>{
  const {result,visit}=collector();
  const payload={type:'createdrawerscompat:drawer',drawer_data:{

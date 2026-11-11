@@ -66,7 +66,9 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     |           |-- model/
     |           `-- page/
     |-- data_io/
-    |   `-- tests/
+    |   |-- tests/
+    |   `-- world/
+    |       `-- tests/
     |-- packwiz/
     |   |-- install/
     |   |   |-- checks/
@@ -144,14 +146,21 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `kubejs/data/curios/curios/slots/<id>.json` — one `{"add_cosmetic": true}` file per curio slot type (enables the Cosmetics tab slots); guarded by `tools/testing/pack_test/tests/data/curios_cosmetic_slots.test.cjs`, which derives the ids from the pinned jars.
 - `kubejs/data/` — hand-written and generated data overrides (recipes, loot tables, tags), one folder per owning mod (`kubejs/data/<mod>/...`); flat by design, one folder per mod that has an override. On the NeoForge branch it also restores 1.21-path copies of data mods ship only in 1.20 folders (MCA, Citadel, Waddles, Interiors, three block tags; see `docs/neoforge-migration.md`)
 - `kubejs/assets/emi/` — EMI resource overrides; today only `index/stacks/` (permanent EMI removals written by the dedup generator)
-- `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading, byte hashing (`hashBytes`, `sha256`) and `nbt.cjs` (NBT/region-chunk reading, used by world_trial and the world-server player check), and `path_guard.cjs`, the shared no-link / containment / protected-output guard used by world_trial, client_mixin and the installers.
+- `tools/data_io/` — shared Node data I/O: ZIP reading, ordered jar traversal, strict JSON file reading, byte hashing (`hashBytes`, `sha256`), `world/` (NBT/region reading, offline inventory, supported-file classification, guarded file walking and manifest verification, shared by world_trial, consolidation and the world-server player check), and `path_guard.cjs`, the shared no-link / containment / protected-output guard used by world_trial, client_mixin and the installers.
 - `tools/testing/` — tools that boot or exercise the pack: `client_mixin/`, `world_trial/`, `server_smoke/`, `pack_test/`, `showcase/`.
 - `tools/resourcepack/fusion_glass/` — unshipped generator (`generate.cjs`, `png.cjs`) for the Fusion glass resources in `resourcepacks/evil-eye-cozy-overrides/assets/evileye_glass/` and the matching `minecraft/blockstates/*glass*.json`, plus `tests/`; output is committed, never hand-edited
+- `tools/analysis/` — tools that analyse pack files and jars (mod_map also offers an opt-in boot capture): `dedup/`, `emi_curation/` (tests), `emi_coverage/`, `mod_map/`, `malware_guard/`, `library_closure/`, `consolidation/`.
+- `tools/analysis/mod_map/` — offline mod map. `build.mjs` (entry) and `run.cjs` (orchestration, artifact guards, saved-evidence replay) at the top; `inventory/` pinned-jar inventory and the `mods.toml`-only reader; `model/` dependency graph, classification, cost, families, categories and their checked-in data (`overrides.json` reasoned kind/family corrections, undeclared dependencies and pack-wide fixes; `categories.json` family/standalone ID → category); `capture/` the one-boot instrumented capture and TRACE timing; `page/` the pure view, HTML builders, document shell, CSS and browser controls. `tests/` mirrors those folders; `tests/fixtures.cjs` is a shared helper outside the `*/*.test.cjs` glob.
+- `tools/analysis/malware_guard/` — offline content scanner, instance drift and metadata source/known-bad gate; opt-in cached Modrinth status, approval CLI, `data/` policies and synthetic `tests/`. Local reports/cache are ignored under `.local/`.
+- `tools/analysis/dedup/` — pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions; `hidden_reasons.json` holds the reason for every `hiddenOnly` id (see docs/development.md "Known exceptions registry").
+- `tools/analysis/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
+- `tools/analysis/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
+- `tools/analysis/library_closure/` — owns recursive pinned-jar closure: `scan.cjs` follows every nested jar with full archive paths and `class_references.cjs` reads constant-pool strings conservatively. `targets.cjs` owns candidate profiles and physical-removal verdicts. `run.mjs` is the artifact-only script-run CLI; `tests/` covers arbitrary nesting, duplicate providers, dependencies, malformed/truncated inputs and incomplete scans.
+- `tools/analysis/consolidation/` — `run.mjs` verifies an existing world-trial snapshot and writes artifact-only wave-7 evidence; `wave7_evidence.cjs` interprets candidate payloads through the shared `data_io/world/` inventory visitor. `tests/` covers historical/new selections, packed versus unused palette entries, structures, train/player payloads, large quantities and incomplete inputs. It never converts a save or certifies native runtime parity.
 - `tools/runtime_env/` — shared machine environment (`env.cjs`: JDK homes and derived tools per major, packwiz jars, Stable cache, artifacts/jobs roots; `paths.cjs` exposes scalar keys to shells, `paths.ps1` is its fail-closed PowerShell bridge; `FIXED` ignores `SMOKE_*` overrides, used by the install route) hidden child-process scopes (`procs.cjs`) and the run-exit cleanup of staged copies (`staged_dir.cjs`); imported by `testing/`, `analysis/` and `packwiz/`.
 - Valhalla's external artifacts live under `~/.local-state/evil-eye-pack/artifacts/`;
   its portable JDK is under `~/.local-state/tools/evil-eye-pack/temurin-21/`.
   ANU's separate roots are owned by `testing/pack_test/remote/config.cjs`.
-- `tools/analysis/` — tools that read the pack's files and jars without booting it: `dedup/`, `emi_curation/` (tests), `emi_coverage/`, `mod_map/`, `malware_guard/`, `library_closure/`, `consolidation/`.
 - `tools/testing/client_mixin/` — offline CLIENT mixin audit: `stage.cjs` copies pinned pack files and cached
     client libraries, `run.cjs` compiles and supervises the bounded JVM, `verdict.cjs` rejects incomplete
     evidence, and `allowlist.json` records exact reviewed findings with reasons and separately tagged
@@ -159,10 +168,10 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
     `probe/ClientMixinLaunch.java` uses NeoForge's production client discovery and transformer without
     entering Minecraft's main method; `tests/` covers staging arguments, allow-list validation and verdicts.
 - `tools/testing/world_trial/` — guarded independent snapshots (`copy.cjs`, `snapshot.cjs`), offline
-  NBT/region inventories (`inventory.cjs` over `data_io/nbt.cjs`, domain views in `semantics.cjs`), conservative semantic comparison
+  NBT/region inventories (shared `data_io/world/inventory.cjs`, domain views in `semantics.cjs`), conservative semantic comparison
   (`compare.cjs`) and isolated headless boot/restart (`boot.cjs`, `probe/`). `run.cjs` is
-  the CLI; tests cover path isolation, manifests, NBT and storage/ownership loss.
-- `tools/analysis/mod_map/` — offline mod map. `build.mjs` (entry) and `run.cjs` (orchestration, artifact guards, saved-evidence replay) at the top; `inventory/` pinned-jar inventory and the `mods.toml`-only reader; `model/` dependency graph, classification, cost, families, categories and their checked-in data (`overrides.json` reasoned kind/family corrections, undeclared dependencies and pack-wide fixes; `categories.json` family/standalone ID → category); `capture/` the one-boot instrumented capture and TRACE timing; `page/` the pure view, HTML builders, document shell, CSS and browser controls. `tests/` mirrors those folders; `tests/fixtures.cjs` is a shared helper outside the `*/*.test.cjs` glob.
+  the CLI; tests cover path isolation, snapshots and storage/ownership loss. The shared inventory
+  exposes a `visit` hook for consolidation payload analysis; decoder and inventory tests live in `data_io/world/tests/`.
 - `scripts/` — owner-run PowerShell entry points, one `scripts/<area>/<verb>.ps1` per owner command (areas: mod-map, migration, owner, diagnostics, instances, server); Node tooling sits underneath in `tools/`. Scripts and their logs (ignored `.tmp/`) are packwiz-excluded.
 - `scripts/instances/` — `local-instance.ps1`, the Evil Eye Local create/refresh entry point (`-Create` builds the instance; as Local's PreLaunchCommand it reinstalls the main checkout through `local_target.cjs`).
 - `scripts/diagnostics/` — `capture-freeze.ps1`, two `jstack` thread dumps of a hung Stable client into the artifacts job folder.
@@ -173,11 +182,6 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `tools/server_stage/` — `stage.cjs`, the neutral persistent server stage (`ensureStage`: loader base plus incremental `-s server` packwiz install, runtime-stamped), and `mod-set.cjs`, the server jar inventory and staged-byte validation shared by world-server deployment and parity checks. The stage is used by `testing/pack_test/session/prepare.cjs` (re-exports it), `tools/world_server/`, and synced to ANU with the pack test (`remote/anu.cjs` `CODE_DIRS`). The loader and install primitives it calls still live in `testing/server_smoke/runtime/`.
 - `scripts/owner/` — `owner-run.ps1`, the owner-run 1.0.0 template with the local 1.1.0 native-capture extension every owner script dot-sources (Invoke-Native/Invoke-NativeCapture, logging, OK/FAILED line).
 - `tools/script-run/` — the verbatim Node script-run 1.1.0 template (`script-run.mjs`) and its test from `~/.claude/templates/scripts/`; Node entry points such as `tools/analysis/mod_map/build.mjs` run through it.
-- `tools/analysis/malware_guard/` — offline content scanner, instance drift and metadata source/known-bad gate; opt-in cached Modrinth status, approval CLI, `data/` policies and synthetic `tests/`. Local reports/cache are ignored under `.local/`.
-- `tools/analysis/dedup/` — pinned cached-jar scanner, data override generator, duplicate-material guard and tests; `allowed_groups.json` records narrow exceptions; `hidden_reasons.json` holds the reason for every `hiddenOnly` id (see docs/development.md "Known exceptions registry").
-- `tools/analysis/emi_curation/` — unshipped: Node tests for the curation scripts (`tests/`)
-- `tools/analysis/malware_guard/tests/`, `tools/packwiz/tests/`, `tools/testing/server_smoke/tests/`, `tools/testing/pack_test/tests/`, `tools/testing/showcase/tests/`, `tools/analysis/mod_map/tests/`, `tools/script-run/` — Node test suites, run together with the `tools/analysis/emi_curation/tests/` ones (`node --test tools/runtime_env/tests/*.test.cjs tools/analysis/malware_guard/tests/*.test.cjs tools/analysis/dedup/tests/*.cjs tools/packwiz/tests/*.cjs tools/packwiz/tests/*/*.cjs tools/packwiz/tests/*/*/*.cjs tools/analysis/emi_curation/tests/*.cjs tools/testing/server_smoke/tests/*.cjs tools/testing/pack_test/tests/*/*.cjs tools/testing/showcase/tests/*.cjs tools/world_server/tests/*.cjs tools/analysis/mod_map/tests/*/*.test.cjs tools/script-run/*.test.mjs tools/resourcepack/fusion_glass/tests/*.cjs tools/data_io/tests/*.cjs tools/testing/world_trial/tests/*.cjs tools/testing/client_mixin/tests/*.cjs tools/analysis/library_closure/tests/*.test.cjs tools/analysis/consolidation/tests/*.test.cjs`)
-- `tools/analysis/emi_coverage/` — unshipped: read-only jar scanner for viewer plugin coverage
 - `tools/testing/showcase/` — offline headless runner, probe lifecycle, assertion helpers, shared terrain and registry-wide command checks; `checks/` holds section behaviour checks and `tests/` the focused Node VM/runner tests.
 - `tools/testing/server_smoke/` — unshipped: headless server compatibility smoke (NeoForge 1.21.1 runtime from `pack.toml`) (`smoke.cjs`), with `verdict.cjs`, `log_report.cjs` and `known_noise.json` at the top; `process/` (boot supervisor, shutdown, CPU sampler, progress watchdog, host wait) and `runtime/` (runtime descriptor, loader base and pack install, pinned offline server preparation).
 - `tools/testing/pack_test/` — unshipped: one-boot automated pack test (`run.cjs` and `analyze.cjs`); `recipe_json.cjs`, `stage_runtime.cjs`, `session/`, `checks/` (including security checks in `checks/security/`), `verdict/`, `probe/`, `remote/` (with the `lease/` cluster), `data/`, `tests/`. See the Components table below for module responsibilities; `data/` holds baseline, crafts, machines and policy JSON (`policy.json` carries `removedMods` and `requiredMods`); `tests/` mirrors the source with `checks/`, `data/`, `remote/`, `verdict/` and `session/`.
@@ -185,22 +189,16 @@ Folder map derived from `git ls-files`; expanded at the busy subtrees below.
 - `docs/` — unshipped living docs (development workflow, decisions, gotchas, EMI guide and integration coverage)
 - `docs/items/`, `docket.json` — Docket work-item store (use `dk`); `AGENTS.md` — agent instructions. All unshipped.
 
-- `tools/analysis/library_closure/` — owns recursive pinned-jar closure: `scan.cjs` follows every nested jar with full archive paths and `class_references.cjs` reads constant-pool strings conservatively. `targets.cjs` owns candidate profiles and physical-removal verdicts. `run.mjs` is the artifact-only script-run CLI; `tests/` covers arbitrary nesting, duplicate providers, dependencies, malformed/truncated inputs and incomplete scans.
-
-- `tools/analysis/consolidation/` — `run.mjs` verifies an existing world-trial snapshot and writes artifact-only wave-7 evidence; `wave7_evidence.cjs` interprets candidate payloads through the world-trial inventory visitor. `tests/` covers historical/new selections, packed versus unused palette entries, structures, train/player payloads, large quantities and incomplete inputs. It never converts a save or certifies native runtime parity.
-
-- `tools/testing/world_trial/inventory.cjs` exposes a `visit` hook used by `tools/analysis/consolidation/wave7_evidence.cjs`.
-
 ## Components
 
 Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 
 | Component | Responsibility |
 |---|---|
-| `tools/analysis/library_closure/scan.cjs` | recursive pinned-jar closure with full nested archive paths |
+| `tools/analysis/library_closure/scan.cjs` | recursive pinned-jar closure with full nested archive paths; explicit definitions/profile required |
 | `tools/analysis/library_closure/class_references.cjs` | conservative constant-pool string references |
 | `tools/analysis/library_closure/targets.cjs` | candidate profiles and physical-removal verdicts |
-| `tools/analysis/consolidation/wave7_evidence.cjs` | candidate payload interpretation through the world-trial inventory visitor |
+| `tools/analysis/consolidation/wave7_evidence.cjs` | candidate payload interpretation through the shared `data_io/world/` inventory visitor |
 | `scripts/server/anu-world-server.ps1` | owner dispatcher for the ANU world server: parameters, help, logging, action routing only |
 | `scripts/server/anu-transport-lib.ps1`, `anu-deploy-lib.ps1`, `anu-world-lib.ps1` | dot-sourced modules: ssh/scp/ping transport, including non-terminating `Invoke-CtlExitCode` for recovery; Deploy; CopyWorld, Backup and Pull |
 | `scripts/server/server-ctl.ps1` | remote controller on ANU (config files, JVM start/stop over RCON, status, world manifest, backup archive) |
@@ -312,11 +310,16 @@ Showcase layout and extension guide: [docs/showcases.md](docs/showcases.md).
 | `tools/testing/pack_test/checks/` | pure checks over the evidence: `recipes` (+ `conditions` evaluator), `references` (removed mods must not be loaded; required mods must be present), `acquisition`, `bees` (Productive Bees outputs), `machines`, `crafting`, `dedup`, `logs`, `security/` (malware today; future runtime-egress checks belong here); `snapshot` indexes probe registries/tags and recipe/bee products for the checks; each check builds findings with `verdict/finding` |
 | `tools/testing/pack_test/verdict/` | `protocol` (probe contract and validation), `baseline` (finding identity, new/known/resolved), `report` (report.json, summary.txt, exit code), `mode` (run mode label, starved-boot rule), `policy` (tool data, the acquisition exclusion policy, the pack config files copied as evidence), `finding` (`makeFinding(check)` and `sectionResult`, the one finding shape) |
 | `tools/testing/pack_test/remote/` | ANU target: `config` (hosts, paths, per-runtime `lane()` stage/worlds/code with one shared lock), `ssh` (encoded PowerShell over SSH, scp), `sync` (manifest-diff tar sync), `provision` (portable Node and one JDK per Java major, README), `capacity` (alone/shared/fallback decision + read-only load probe), `lease/` (`dir_lock`: owner.json contract, stale rule incl. unreadable owners, PowerShell take/release, `{ runId, claimId }` lease values, `ownsLease` and atomic Node heartbeat; `lifecycle`: `startLease`, heartbeat and terminal stop/cleanup), `scripts` (launch, status, command-line-guarded kill PowerShell), `evidence` (pull the run's evidence home), `anu` (the sync, launch, poll, pull orchestrator), `agent` (runs on ANU with the job's runtime descriptor, Java/jcmd and lane run/cache paths; lease loss kills owned children and exits 2) |
-| `tools/testing/pack_test/tests/` | `checks/`: pure evidence checks (including `malware.test.cjs`) and recipe/bee product indexing; `data/pack_contract.test.cjs`: real pack metafiles, policy and the day-length config pins; `remote/`: `dir_lock.test.cjs`, capacity, sync, lease lifecycle and guarded process cleanup; `verdict/`: protocol, baseline, finding and report; `session/`: locks, `jar_walk.test.cjs`, resource extraction, boot lifecycle and target sequencing. Run all five with `node --test tools/testing/pack_test/tests/*/*.cjs`. |
+| `tools/testing/pack_test/tests/` | `checks/`: pure evidence checks (including `malware.test.cjs`) and recipe/bee product indexing; `data/pack_contract.test.cjs`: real pack metafiles, policy and the day-length config pins; `remote/`: `dir_lock.test.cjs`, capacity, sync, lease lifecycle and guarded process cleanup; `verdict/`: protocol, baseline, finding and report; `session/`: locks, `jar_walk.test.cjs`, resource extraction, boot lifecycle and target sequencing. Run all five with `node --test tools/testing/pack_test/tests/*/*.test.cjs`. |
 | `tools/analysis/dedup/catalog.cjs`, `generate.cjs`, `overrides.cjs`, `hidden_reasons.json` | `catalog`: scan of the pinned jars (duplicate groups); `generate`: writes `kubejs/data/<mod>/` overrides and the EMI removals from `dedup.json` after a jar change, never downloads; `overrides`: computes `dedup.json` block-tag removals and data-only patches for custom serializers (counts, chances, conditions kept); `hidden_reasons.json`: one recorded reason per `hiddenOnly` id (guarded by its test) |
 | `tools/analysis/emi_coverage/scan_jars.cjs` | read-only scan of mod jars for viewer plugin coverage using data_io's ZIP reader |
 | `tools/data_io/zip_reader.cjs` | dependency-free ZIP entry listing and decompression; shared by coverage and jar traversal |
 | `tools/data_io/walk.cjs` | ordered jar traversal, optional jarjar recursion, caller-owned selection and parsing |
+| `tools/data_io/world/nbt.cjs` | NBT decoding, compressed region chunks, dimension and palette decoding |
+| `tools/data_io/world/inventory.cjs` | offline world inventory, whole-document visitor and shared supported/auxiliary/unsupported file classification |
+| `tools/data_io/world/files.cjs` | deterministic relative file walk, rejecting links and non-regular world entries |
+| `tools/data_io/world/manifest.cjs` | byte/hash manifests and exact source/snapshot verification |
+| `tools/testing/pack_test/tests/data/contract.cjs` | shared pack-contract file access and TOML section extraction; cross-cutting contracts in `pack_contract.test.cjs`, removal/replacement contracts in `consolidation_contracts.test.cjs` |
 | `tools/data_io/files.cjs` | strict JSON file reading (`readJson`) and byte SHA-256 (`sha256`) |
 | `tools/data_io/resource_layout.cjs` | versioned data-path recognition: 1.20 plural and 1.21 singular folders (`recipe/`, `loot_table/`, `tags/item|block|fluid`, `neoforge/biome_modifier`) to one canonical kind, `dataPath`, and `neoforge:conditions`/`conditions` plus loader-neutral condition types; shared by the pack-test raw scan and dedup |
 | `tools/analysis/dedup/policy.cjs` | ordered retired ids for Node consumers; shipped KubeJS mirror pinned by `tests/policy.test.cjs` |

@@ -5,7 +5,7 @@
 //   node player-data-check.cjs <world dir> <uuid>      exit 0 identical, 1 missing or different (reason printed)
 const fs = require('node:fs');
 const path = require('node:path');
-const { parseNbt, gunzipMaybe } = require('../data_io/nbt.cjs');
+const { parseNbt, gunzipMaybe } = require('../data_io/world/nbt.cjs');
 
 function main([world, uuid]) {
   if (!world || !uuid) throw new Error('usage: player-data-check.cjs <world dir> <uuid>');

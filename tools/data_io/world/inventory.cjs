@@ -1,10 +1,24 @@
 'use strict';
 const fs=require('node:fs'), path=require('node:path'), crypto=require('node:crypto');
-const { files }=require('./copy.cjs');
-const { parseNbt,gunzipMaybe,decompressChunk,dimensionFor,paletteCounts }=require('../../data_io/nbt.cjs');
+const { files }=require('./files.cjs');
+const { parseNbt,gunzipMaybe,decompressChunk,dimensionFor,paletteCounts }=require('./nbt.cjs');
 const json=v=>JSON.stringify(v,(_k,x)=>typeof x==='bigint'?x.toString():x);
 const digest=v=>crypto.createHash('sha256').update(json(v)).digest('hex');
 const add=(map,id,n=1)=>{map[id]=(map[id]||0)+n;};
+// Paths are slash-separated, relative to the world root (as returned by files()).
+// External chunks are decoded through region references; orphan absence is not certified.
+function classifyFile(file) {
+  if (/\.(dat|nbt)$/.test(file) && !file.includes('/backups/')) return { kind:'nbt' };
+  if (/\/(region|entities)\/[^/]+\.mca$/.test('/' + file)) return { kind:'region' };
+  if (/\.(dat_old|zip)$/.test(file) || file.includes('/backups/') ||
+      /(^|\/)(session.lock|icon.png)$/.test(file) || /^(advancements|stats)\/[^/]+\.json$/.test(file) ||
+      /^serverconfig\/[^/]+\.(toml|snbt)$/.test(file) || /\/poi\/[^/]+\.mca$/.test('/' + file))
+    return { kind:'auxiliary', excludedReason:'Backup or auxiliary non-inventory data' };
+  if (file.endsWith('.mcc')) return { kind:'external',
+    excludedReason:'External chunk payload; read through its region reference, orphan status unverified',
+    unsupportedReason:'Cannot certify absence of orphan external chunks' };
+  return { kind:'unsupported', unsupportedReason:'Unsupported world file' };
+}
 function inventory(world, { visit = () => {} } = {}) {
   const out={schema:1,world,files:0,chunks:0,errors:[],blocks:{},biomes:{},entities:[],blockEntities:[],data:{},items:[],references:{},targets:[],terrain:{}};
   const targets=new Map();
@@ -22,7 +36,8 @@ function inventory(world, { visit = () => {} } = {}) {
   }
   for(const rel of files(world)) {
     const file=path.join(world,rel);out.files++;
-    if((rel.endsWith('.dat')||rel.endsWith('.nbt'))&&!rel.includes('/backups/')) {
+    const kind = classifyFile(rel).kind;
+    if(kind === 'nbt') {
       try {
         const v=parseNbt(gunzipMaybe(fs.readFileSync(file)));out.data[rel]=v;inspect(v,{file:rel});visit(v,{file:rel});
         const p=v.Data?.Player||v;
@@ -31,7 +46,7 @@ function inventory(world, { visit = () => {} } = {}) {
       }catch(e){out.errors.push({file:rel,error:e.message});}
       continue;
     }
-    if(!rel.endsWith('.mca')||!['region','entities'].includes(path.basename(path.dirname(file))))continue;
+    if(kind !== 'region')continue;
     const dim=dimensionFor(rel.split('/').join(path.sep)), m=/r\.(-?\d+)\.(-?\d+)\.mca$/.exec(rel),bytes=fs.readFileSync(file);
     if(!m){out.errors.push({file:rel,error:'invalid region filename'});continue;}
     if(!bytes.length)continue;
@@ -70,4 +85,4 @@ function inventory(world, { visit = () => {} } = {}) {
   out.targets=[...targets.values()].sort((a,b)=>a.dimension.localeCompare(b.dimension)||a.x-b.x||a.z-b.z);
   return out;
 }
-module.exports={inventory,json,digest};
+module.exports={inventory,classifyFile,json,digest};

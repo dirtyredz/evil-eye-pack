@@ -2,7 +2,7 @@
 id: dk-b59d11ce
 type: task
 created: 2026-11-11
-status: todo
+status: done
 since: 2026-11-11
 area:
 priority: P2

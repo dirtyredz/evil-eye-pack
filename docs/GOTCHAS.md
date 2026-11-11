@@ -1,13 +1,5 @@
 # Gotchas
 
-- **A local-state cutover must land in main before deleting the old toolchain.**
-  Stable and Local's launcher commands execute scripts in the main checkout. The
-  installer uses `tools/runtime_env/env.cjs`'s `FIXED.JAVAS[21]`, independently of
-  `instance.cfg`'s `JavaPath`. A prelaunch dry-run verifies pack/cache bytes but does
-  not execute Java. Copy and verify first; update the cache argument and JavaPath
-  with MultiMC closed, land the environment change in main, and only then remove
-  legacy roots. Never redirect Stable to an unpushed worktree to bypass this order.
-
 ## ANU world server
 
 - **Native stderr is not a failure code.** OpenSSH 10.6 prints a post-quantum warning on stderr.
@@ -40,7 +32,17 @@
   ANU or absent manifest prints SKIP, which is not evidence of parity. Deploy validates staged jar
   bytes and publishes its receipt only after extraction and Configure succeed.
 
+### World server on ANU (`scripts/server/`)
+
+- **Singleplayer to dedicated: the host's data is in level.dat.** A singleplayer host is stored in `level.dat`'s `Player` tag; a dedicated server reads only `playerdata/<uuid>.dat`. 1.21.1 also writes the .dat when singleplayer saves, so a world left by a clean quit has both identical (checked 2026-11-07: all 53 Player keys equal, including Curios and backpack attachments). `player-data-check.cjs` compares them; if it reports MISSING or DIFFERENT, open the world once in singleplayer and quit to title, then copy again. Never write the .dat from level.dat by hand without a backup.
+- **A running world cannot be copied on Windows.** Java holds the region files open without sharing, so `tar`/`Copy-Item` fail with Permission denied (seen 2026-11-07). `anu-world-server.ps1 Backup` therefore stops the server, archives and restarts it.
+- **Copy the world only from a stopped game.** `CopyWorld` refuses while any Evil Eye / Minecraft java process runs on Valhalla; `session.lock` is excluded.
+- **The pack's "Can't keep up" stalls follow it to ANU.** The i7-4820K is slower than Valhalla; expect tick lag under load (many entities, Create contraptions, dragons). Tuning knobs are `view-distance`/`simulation-distance` in `server.properties` and the heap; `max-tick-time=-1` keeps the watchdog from killing a slow tick.
+- **Xaero waypoints carry over to the server; the explored map does not (2026-11-08).** Xaero data is client-side, keyed by save name (`xaero/world-map/New World/`, `xaero/minimap/New World/`) for singleplayer and by address (`Multiplayer_192.168.1.251/`) for a server. **Waypoints:** with the game closed (Xaero rewrites on exit), back up `xaero/`, then copy minimap `New World/dim%0` and `dim%-1` `waypoints.txt` into `Multiplayer_192.168.1.251/dim%0` / `dim%-1`; this works. **World map:** copying `New World/{null,DIM-1}` into `Multiplayer_192.168.1.251/<dim>/mw$<id>/` does NOT work (tried 2026-11-07, 277 files; the map stayed black). Xaero WM 1.47 finds regions only by `<x>_<z>.zip` (`region.xaero`) files at the `mw$<id>/` root (`caves/<n>/` for cave layers); a singleplayer world has none, because it renders from the save's `region/*.mca`, and its `cache_N/*.xwmc` files are only derived display caches. Without a zip a region is never detected, and where a zip exists the client checks the cache against the zip and, on mismatch, renames the cache to `.xwmc.outdated` and regenerates it from the zip (it did that to the overlap files on exit). So the old explored map cannot be moved by file copy; it is rebuilt by exploring on the server (high render distance and elytra flights cover ground fast). The copied `.xwmc` files in `mw$<id>/` are inert and can be deleted. Converting `.mca` to Xaero zips would need a purpose-built tool; none exists.
+- **Mod versions must match.** The server installs the pack's current `main`; a client on an older install (Stable updates only when launched) can be refused. Launch Stable once after each push.
+
 ## Pack and client
+
 - **An idle MultiMC can block moves and installs.** The owner often leaves MultiMC open. When it blocks work (e.g. moving the Stable cache, dk-2032523a), check for a running game first: a java process whose command line points into the MultiMC instances folder. If there is none, the session may close MultiMC itself (graceful close first): owner standing permission, 2026-11-11. If a game is running, close nothing and report it.
 - **Curios cosmetic slots need `add_cosmetic`.** Curios 9.5.1 gives a slot type a cosmetic slot only when its slot data sets `"add_cosmetic": true`; none of Curios's own slot files do, so the equipment screen's Cosmetics tab is empty without `kubejs/data/curios/curios/slots/<id>.json` (merge-only: `replace` defaults false, so sizes and icons from mod files stay). A new mod that adds a curio slot type needs its own file there; `tools/testing/pack_test/tests/data/curios_cosmetic_slots.test.cjs` lists the expected ids. Saved `HasCosmetic` in a player .dat is ignored: `CurioInventory.init` rebuilds each handler from the slot data on every load, so players pick the change up on next login.
 - **A newly compatible folder pack can be skipped for one launch.** Vanilla 1.21.1
@@ -60,18 +62,30 @@
   still needs a screen-level reproduction. Modern UI's inactive/minimized limits
   are separate from the foreground FPS limit.
 
+- **Terralith zeroes vanilla andesite/diorite/granite worldgen by default.** Its `vanilla_stone_gen` module (`config/terralith.json`, default `false`) leaves `minecraft:ore_{andesite,diorite,granite}_{upper,lower}` at `count: 0`; `true` enables an overlay restoring the vanilla blobs. The pack ships `vanilla_stone_gen: true`. Only chunks generated afterwards get the blobs; the server/instance needs the file and a restart (datapack reload condition).
 
-- **Wave-7 evidence is a historical snapshot only:** `.mcc` cannot be certified, and `complete:false` is not by itself a removal blocker.
-- **Wave-7 storage evidence is not a conversion.** Preserve `createdrawerscompat:drawer`
-  and all four `mounted_drawer_*` menu IDs in any eventual replacement. Never blacklist
-  the retained namespace through `removedMods`. The pinned NeoForge addon targets
-  Create 6.0.10 and Storage Drawers 13.11.4; the older Forge notes below are historical.
-  The NeoForge renderer exception is virtual-world-only. Native inventories need both
-  fixture families and source-absent acceptance before the physical addon can leave.
-- **Compacting drawer views are alternate quantities of one inventory.** The wave-7
-  evidence report preserves raw documents and locations, never adds their view counts
-  or collapses matching payloads into one physical holding. Its JSON does not replace
-  the byte-exact snapshot as a decoder fixture.
+- **Resource-pack ids differ between Forge and NeoForge.** NeoForge names a mod's built-in pack
+  `mod/<namespace>:<path>` (Town Talk is `mod/towntalk:respack`, not Forge's `builtin/towntalk`), and a pack
+  file's id is its exact installed file name (`file/Eat Quiet 1.0.0_1.20-1.21.zip` on the migration branch). A
+  stale id is silently skipped; the pack contract test checks every id in `config/evileye_client/resourcepacks.json`.
+
+- **Cozy-mods trial UI (2026-10-20):** TipTheScales is removed on `trial-cozy-mods` only (Modern UI warns it duplicates its features; main keeps it). CozyUI+ is the `no-fonts` build so Modern UI's fonts show. CozyUI Ex 0.4 does not cover Cosmetic Armor Reworked or Curios (it covers Create, Cloth Config, Better Advancements, Chat Patches and others), so `resourcepacks/evil-eye-cozy-overrides/` (a folder pack, indexed file by file, listed after CozyUI+ in `options.txt` so it sits above it) re-themes `cosmeticarmorreworked:textures/gui/cosarmorinventory.png` (1024x1024, Cozy inventory plus a four-slot cosmetic row at the original slot positions, UVs stay 256-space) and recolors `curios:textures/gui/inventory.png` / `inventory_revamp.png` to the Cozy palette (256x256, geometry untouched, corners not rounded). New Hearts declares `pack_format 2`, which 1.20.1 lists as incompatible and drops from `options.txt`; 1.20.1 ignores `supported_formats`. Modern UI's own screens (Forge warning screen) draw CozyUI+ button textures stretched; unfixed.
+
+- **First-install key and resource-pack defaults only reach fresh instances.** Evil Eye Client (`options/defaults`, which replaced Default Options) sets a key from `config/defaultoptions/keybindings.txt` only where `options.txt` had no saved value for it at startup (the keymap still becomes the key's "Reset" default), and the `default_packs` of `config/evileye_client/resourcepacks.json` (which replaced Resource Pack Overrides) apply only when `options.txt` has no `resourcePacks`; `required` packs are added on every launch. Existing instances keep their old keys and packs until rebound by hand. Do not copy an old `options.txt` into a new instance if the new keymap is wanted. Keys not listed in `keybindings.txt` keep each mod's own default. Re-check the keymap for new collisions after adding a mod with keybinds (compare `key_` lines in a played instance's `options.txt`).
+
+### IPN cutover (round 4)
+
+Client 0.5.1 and Tweaks 0.8.1 own sorting, safe physical-storage/Dank transfers and both-hand refill. IPN/libIPN and their shipped configs are removed; Kotlin remains. Pack-owned keys enable the three owned sections and never recreate or edit personal IPN data. The sort binding defaults to middle mouse; existing saved choices remain respected.
+
+- **Client 0.7.1 alone did not enable Iron Chests sorting/transfers.** Companion support arrived with the paired Client 0.8.0 / Tweaks 0.10.0 release (negotiated sorting and transfers for ordinary and trapped Iron Chests); no config or owned-key change grants that capability.
+
+### Zoom after Chloride removal
+
+Modern UI is enabled and defaults to Z. Saved `options.txt` bindings win over shipped defaults, so an existing C binding would clash with vanilla creative save-hotbar. The pack-owned-key installer therefore has an `options` format (`key:value` lines) and forces only `key_key.modernui.zoom:key.keyboard.z` at every Trial/Stable sync (a saved modifier suffix is dropped too). An absent `options.txt` is left alone (fresh instances get Z from defaultoptions); an absent key is appended; line endings and every other line are kept. A Z the owner rebinds in game is reset at the next sync, like the other forced keys. Stable's dry-run lists it as `Would force pack-owned key: options.txt key_key.modernui.zoom`.
+
+### Pro Placer replacement
+
+Client 0.7.0 adds placement defaults through config correction; a shipped preserved TOML does not replace saved preferences. The toggle state lasts for the application session, while the legacy binding is adopted through the two-load options path. Puzzles Lib remains required by Diagonal Fences. Quick Skin local appearance files are persistent and untouched.
 
 ## Tool layout
 
@@ -123,6 +137,20 @@
   `save` is protected and `getPlayers()` is unmodifiable. The world probe uses the public
   `remove(player)` logout path, verified in pinned bytecode to invoke save first, for
   original-UUID stand-in players. It never adds them to the active player list.
+
+- **Wave-7 evidence is a historical snapshot only:** `.mcc` cannot be certified, and `complete:false` is not by itself a removal blocker.
+
+- **Wave-7 storage evidence is not a conversion.** Preserve `createdrawerscompat:drawer`
+  and all four `mounted_drawer_*` menu IDs in any eventual replacement. Never blacklist
+  the retained namespace through `removedMods`. The pinned NeoForge addon targets
+  Create 6.0.10 and Storage Drawers 13.11.4; the older Forge notes below are historical.
+  The NeoForge renderer exception is virtual-world-only. Native inventories need both
+  fixture families and source-absent acceptance before the physical addon can leave.
+
+- **Compacting drawer views are alternate quantities of one inventory.** The wave-7
+  evidence report preserves raw documents and locations, never adds their view counts
+  or collapses matching payloads into one physical holding. Its JSON does not replace
+  the byte-exact snapshot as a decoder fixture.
 
 ## Mod map timing
 
@@ -212,6 +240,19 @@
   on disassembly, so teardown removes that restored glue before adding a new
   payload. See [showcases](showcases.md) for boundaries and commands.
 
+- **Planet terrain loaded does not mean entity sections are ready.** A height lookup can load
+  moon terrain while the asynchronous destination tracker is still catching up. The showcase
+  now waits on `ServerLevel.isPositionEntityTicking(BlockPos)` before teleporting (up to 200
+  ticks), then retains its exact arrival assertion. Integration evidence: the failed run saved
+  the traveller in the correct moon region at (8.5, 93, 8.5); the readiness run passes all 1279
+  assertions (`jobs/2026-10-30-iaf-integration/showcase-all-ready`).
+
+- **Create: Storage Drawers Compat 1.1.0 needs an unsided drawer item handler.** Storage Drawers 12.15.0 returned null for the unsided Forge capability: placed sided access worked, but real bearing contraptions had no mounted storage. The pack pins 12.15.1, which fixes that interface. An isolated headless probe verified real assembly, automatic PSI docking, insertion/extraction and restoration for standard, two-slot and compacting drawers, including conversion. Client rendering and drill/harvester collection remain unverified.
+
+- **Create: Storage Drawers Compat 1.1.0 has a global client renderer mixin.** `BlockEntityDrawersRendererMixin` returns false for `playerBehindBlock` and zero for the player-distance check without testing whether the drawer is mounted. This restores contraption icons but also changes those checks for stationary drawers. Its author tested Storage Drawers 12.14.3; the pack uses 12.15.1 within the declared `[12.0.0,13.0.0)` range. Headless tests do not verify client rendering.
+
+- Brigadier rejects trailing text after a finished literal/word argument (`/evileye showcase x ` gave "Incorrect argument for command"), and a bare node without `.executes` says "Unknown or incomplete command". The showcase command therefore takes one greedy string and parses it in script.
+
 ## Packwiz hashes (no packwiz CLI here)
 
 - Hashes cover **LF bytes**. Git stores and GitHub serves LF (`core.autocrlf=input`, plus `.gitattributes`). A file saved with CRLF or a BOM hashes differently from what the installer downloads.
@@ -231,6 +272,37 @@
 - MultiMC's instance ID is the **folder name**; the display name is `name=` in `instance.cfg`. Renaming the display name does not rename the folder. Rename folders only with MultiMC closed, and update `SelectedInstance` in `multimc.cfg`.
 - **MultiMC `instance.cfg` eats backslashes; owner launch paths must not wait on JVMs.** Its INI reader treats backslashes as escapes, so every value tooling writes must use forward-slash paths and remain unchanged by backslash unescaping. Owner client pre-launch/install commands run immediately even when unrelated Java processes exist; the one-Minecraft-JVM host wait belongs only to agent headless server boots.
 
+- **A local-state cutover must land in main before deleting the old toolchain.**
+  Stable and Local's launcher commands execute scripts in the main checkout. The
+  installer uses `tools/runtime_env/env.cjs`'s `FIXED.JAVAS[21]`, independently of
+  `instance.cfg`'s `JavaPath`. A prelaunch dry-run verifies pack/cache bytes but does
+  not execute Java. Copy and verify first; update the cache argument and JavaPath
+  with MultiMC closed, land the environment change in main, and only then remove
+  legacy roots. Never redirect Stable to an unpushed worktree to bypass this order.
+
+- **Rail offsets are TOML integers.** Pack-owned numeric entries historically emitted floats. Declare `tomlType: "integer"` for actionRail offsets; otherwise sync writes `0.0` instead of the mod's integer `0`. Other numeric entries retain their previous formatting. The rail and inventory-effect side are pack-owned and reset at each sync, including after edits in the settings screen.
+
+- **Files a mod rewrites on every launch must be preserved, with the needed settings as owned keys.** `config/modernui/client.toml` (Modern UI expands it to ~217 commented lines) and `config/terralith.json` used to ship strictly pack-owned, so the installed hash never matched and every Stable prelaunch showed `Would restore pack-owned file` (and the consecutive-run WARNING in `installed_files.cjs`). Both are now in `PRESERVE_PATHS` (`pack_index.cjs`, `preserve = true`): a fresh install still gets the shipped file, an existing one is never restored. The settings the pack needs are in `pack-owned-keys.json`: Modern UI `[general] zoom = true`; Terralith `modules.vanilla_stone_gen = true`, `recipe_changes = false`, `custom_structures`, `skylands`, `terrain_slabs = true` (`intro_message` is left to the player). The JSON setter leaves a file untouched when the value is already right, so a differently formatted rewrite is not a perpetual "force". Do the same for any other mod-rewritten config. Test: `tools/packwiz/tests/install/owned_keys/mod_rewritten_configs.test.cjs`.
+
+### Local mod releases and installer behaviour
+
+- **Local mod releases must update the migration source pin too.** Keep `dispositions.json` target filename, SHA-256 and size aligned with `target-lock.json` and the `.pw.toml` filename/hash; otherwise a later resolve can downgrade the release. `local_pin_consistency.test.cjs` guards every local mod across all three records.
+
+- **Game config re-saves can leave unchanged packwiz index entries dirty.** Stable/Trial prelaunch restores pack bytes for non-preserve, non-metafile files before strict verification, logs each restored path and retains the last five backup generations per instance under `.tmp/installer-drift/<canonical-instance-hash>/`. Consecutive repairs warn with each file path; review those game-written bytes before changing shipped configs. Dry runs list would-be repairs without writing. Legacy `.tmp/trial-install-*/drift-backup/` archives are not automatically removed. Tweaks common and Modern UI stay pack-owned; preserved preferences and jar verification are unchanged.
+
+- **Local's installer jar is shared.** `env.INSTALLER_JAR_SOURCES` lists Local's `.minecraft/packwiz-installer.jar` first and Stable's identical copy second (read only). Moving or rebuilding Local used to break Stable's prelaunch ("Cached installer/bootstrap missing"). Local's prelaunch script lives in the MAIN checkout: merge `scripts/instances/` there before launching Local.
+
+- **Stable can silently stop updating: its `PreLaunchCommand` went blank (2026-11-08).** Stable only picks up pushed pins because `PreLaunchCommand` runs `scripts/migration/stable-prelaunch.ps1`. MultiMC keeps instance settings in memory and rewrites `instance.cfg` from them, and by 23:06 on 2026-11-08 its in-memory value was empty (launches 3 and 4 of that MultiMC session logged no `PreLaunchCommand` task), so Stable stayed on Client 0.15.2 after 0.15.4 was pushed. No repo script writes an empty value. Check with `node tools/packwiz/install/checks/stable_prelaunch_check.cjs` (exit 1 on a blank/foreign command); repair with `--fix` **with MultiMC closed**, or MultiMC writes its old value back. Run the check after any session where Stable looks stale or after editing Stable's instance settings in MultiMC.
+- **A pinned jar missing from the Stable cache stops Stable launching (2026-11-05, Sophisticated Backpacks).** Stable prelaunch installs only from `jobs/2026-10-31-world-trial-final/cache` and refuses with `Missing pinned jar (no download attempted)`. `verify_hashes.cjs` now fails listing the missing jars (`install/checks/stable_cache_check.cjs`, `--stock` copies verified ones from `jobs/*/jars`). Never purge or rewrite that cache; only add jars. Evil Eye Local's mods folder is a different thing: the dedup/pack_test "Missing cached jar" failures read it.
+
+- **Private migration pins need an installer wrapper.** The cached packwiz installer rejects
+  `file:///` download URLs and does not recognize `metadata:local`; copying jars beside those
+  metafiles is insufficient. The owner Trial script instead indexes verified cached jars as
+  ordinary files in a temporary local pack, so packwiz copies and tracks them without a host.
+  Its prelaunch must keep using `scripts/migration/trial-walkthrough.ps1`; the raw checkout
+  metadata is not installer-compatible. Pack-test/server-smoke retain the loopback overlay.
+  Missing or changed cache bytes fail before installation.
+
 ## Mod updates and removals
 
 - **Day length is global now, and NeoForge remembers it per world.** Evil Eye Tweaks reads `[time]` from
@@ -247,7 +319,6 @@
 - **Cluttered's jar mis-tags `cluttered:willow_door` as a trapdoor.** Duplicate replacement copies jar tags to the survivor, so `dedup.json` `tagFixes` corrects the target after mapping.
 - **Permanent duplicate hiding uses EMI native index removals** (`item:namespace:path`), so ALL cannot reveal retired copies. This is separate from reversible cosmetic curation. Registered copies can still exist in old inventories/creative; no runtime converter is installed.
 
-
 - **Two unrelated mods are both called "Fusion" and both use mod id `fusion`.** CurseForge project 226139 is Alexndr/Sinhika's SimpleOres alloy add-on (`Fusion-1.20.1-6.0.0.3.jar`, needs SimpleCoreLib); SuperMartijn642's Fusion (Modrinth `p19vrgc2`, CurseForge "fusion-connected-textures") is the connected-texture/model library Ender IO's glass (and, until 2026-11-02, Connected Glass) needed. The pack shipped the wrong one from the initial commit, so every `connectedglass:` model (then in the pack) failed with `Model loader 'fusion:model' not found` (425 errors) and the glass rendered as missing textures. Pin SuperMartijn642's by Modrinth direct URL, and check `META-INF/mods.toml` (`authors`, `description`) when a metafile is named only "Fusion". Fusion 1.3.x removed API classes (`fusion/api/model/data/*`, `api/predicate/*`) that Connected Glass 1.1.14 references; the NeoForge pack pins Fusion 1.3.16 and Connected Glass is gone (2026-11-02). **Fusion glass models live in the pack-owned `evil-eye-cozy-overrides` resource pack** (`assets/evileye_glass/`, regenerated by `tools/resourcepack/fusion_glass/generate.cjs`, never hand-edited). A Fusion model that does not parse or whose texture lacks the `.png.mcmeta` pieced block renders as the missing texture, and the headless server cannot prove the client render; check glass walls in a client after any Fusion bump. Tinted glass is deliberately not overridden (its vanilla texture has no frame, so no seams).
 - **Forge hits a missing class only when the code runs.** A mod compiled against an older API loads, then throws `NoClassDefFoundError` from its compat setup (a deferred task), which leaves mod loading "broken" and crashes the client later with an unrelated-looking NPE. Before a big API bump (Create 0.5 → 6), scan every installed jar's class constants for references the new jar no longer has (`jobs/2026-10-18-create6/tools/createrefs.mjs`).
 - **Ender IO below 6.2.11 cannot run with Create 6.** `EnderIO-1.20.1-6.0.23-alpha` calls `com.jozufozu.flywheel.core.virtual.VirtualRenderWorld` (Flywheel 0.6) from `FlywheelCompat.getExistingBlockEntity`, reached from `MachineBlock.getLightEmission`; with Flywheel 1.0 it throws `ClassNotFoundException` during Embeddium chunk meshing, so any chunk holding an Ender IO machine never meshes and the world hangs on "Loading terrain". Ender IO 6.2.11-beta is the first release with Create 6 compatibility (and is incompatible with older Create); the pack pins 6.2.18-beta (latest 1.20.1 build, Modrinth direct URL). The 6.1+/6.2 line reworked conduits, so check old conduit networks in existing worlds. 6.2.18 adds config keys (`machines-common` stirling fuelEfficiency*, aversion capacity/usage; `machines-client` aversionRangeColor) that Forge writes as defaults on first boot; they are copied into `config/enderio/`. Athena/Fusion "model loader not found" errors for Ender IO capacitor-bank and glass models also appear on 6.0.23 and are not caused by the update.
@@ -256,11 +327,42 @@
 - **The library closure script's metadata check must split `unzip -Z1` output on `\r?\n`.** The wave-1 version split on `\n` only, so on Windows its metadata branch never matched (class references still did). Always confirm a library drop with `migrate.mjs resolve`, which checks declared dependencies (it caught AttributeFix requiring Bookshelf).
 - **The "Unidentified mapping" list in `latest.log` is the content a world loses** after a removal or rewrite: every registry ID the world knew that no longer exists. Read it before shipping a removal.
 
+- **FAUNA Engine (Book of Dragons' library) 1.0 and Interstellaris clash on `CraftingMenu.slotChangedCraftingGrid`.** Both `@Redirect` `ResultContainer.setRecipeUsed`; stock FAUNA kills the server at boot ("@Redirect conflict ... Critical injection failure"). The pack ships a private patched FAUNA (`-eepatch1`, mixin removed). A new FAUNA or Interstellaris build can change this: re-check before swapping either pin back to stock.
+
+### Ice and Fire CE config format
+
+CE 2.1.4 uses Jupiter JSON (`config/iceandfire/iaf-common.json`, `iaf-client.json`), not
+the Forge `iceandfire-*.toml`. Restoring only the TOML silently leaves CE defaults active,
+including griefing. First boot logs missing-config errors before writing defaults; ship the
+reconciled JSON plus `config/jupiter.json`. Legacy biome JSON filters also have no CE reader;
+CE uses biome tags and structure sets. Do not convert an old 1/N per-chunk spawn rate into
+a CE per-structure-candidate probability without accounting for spacing (dk-e7b276f4).
+
+- **I&F dragon roosts/caves are gated by distance from world spawn, not by the legacy biome JSON.**
+  CE places roosts/caves via structure sets (`dragon_roost` spacing 15/sep 6, `dragon_cave` 18/12) and
+  biome tags `#iceandfire:structure_gen/*`; `DragonRoostStructure`/`DragonCaveStructure.findGenerationPoint`
+  also reject any point within `worldgen.dangerousDistanceLimit` blocks (horizontal) of world spawn
+  (pack value 800; CE default 1000), then roll `generate<Type>Chance`. Nothing within that radius ever generates.
+  The `config/iceandfire/*_biomes.json` files are not read by CE (provenance only), but their
+  `forge:` tags were rewritten to NeoForge `c:` names and are guarded by
+  `tools/testing/pack_test/tests/checks/iaf_biome_tags.test.cjs` (tag list: `pack_test/data/biome_tags.json`).
+  Renames: is_dense -> c:is_dense_vegetation, is_sparse -> c:is_sparse_vegetation, is_peak/is_slope ->
+  c:is_mountain/peak and /slope, is_water -> c:is_aquatic (closest). Other `forge:` tags remain in
+  `config/alexsmobs/*_spawns.json` (not audited).
+
+- **Cozy-mods trial pins (2026-10-20, branch `trial-cozy-mods`):** Cozy's Improved Cats 2.0.0 requires Forge 47.4.26+ (pack is 47.4.10), so 1.3.0 is pinned. Hexalia (which clashed with Thirst Was Taken's `FoodData` mixin) and Enchanted: Witchcraft, with its StateObserver and SmartBrainLib dependencies, were removed from the trial on 2026-10-21, so that pin is moot. Benign boot errors from the new mods: Thirst loot tables name Brewin' and Chewin' / Farmer's Respite items (not shipped), Cozy Cafe's `menu/vinery/kelp_cider.json` is malformed JSON, and AstikorCarts Redux's mixin config has no `minVersion`. Companion needs Kiwi; Handcrafted needs Resourceful Lib; Refurbished Furniture needs Framework (CurseForge).
+
+- **Create: Dragons Plus 1.11.9 generates its sandpaper polishing recipes with a thread race, so the pack ships them as static data instead.** Its runtime pack (`AddPackFindersEvent`) runs a `RecipeProvider` whose `DataProvider.saveStable` writes happen on `Util.backgroundExecutor()` threads, and every write ends in `DynamicPack.put` on Create's plain, unsynchronised `HashMap`. Concurrent `put`s lose entries at random (and a resize race loses dozens at once), so each game or server start loaded 256-270 of the 269 `create_dragons_plus:sandpaper_polishing/*` recipes (one boot lost 85: total recipes 23064 instead of 23147). Players saw random missing waxed-to-unwaxed, oxidized-to-clean and `polished_X`-to-`X` sanding recipes. Nothing else varied across nine boots. Fix (2026-10-23): `config/create_dragons_plus-common.toml` turns off all three `recipe/sand_paper_polishing/*` generators and `kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/**` holds the 269 recipes under the same ids. Consequence: a mod that adds waxed/oxidized/`polished_` blocks later gets no automatic sanding recipe; add its JSON beside the others (`machines.json` min 270 will flag a drop). To refresh, set the three keys back to `true` for a few boots and take the union of the loaded `create_dragons_plus:sandpaper_polishing/*` recipes from the pack-test `recipes.json` probe.
+
 ## Server smoke (`tools/testing/server_smoke/`)
 
 - **A mod marked `side = "both"` can still be client-only.** packwiz `-s server` installs every `both` mod, and Forge aborts server boot at the first one that touches client classes. Oculus 1.8.0 (`side = "both"`) crashes the server: `Attempted to load class net/minecraft/client/gui/screens/Screen for invalid dist DEDICATED_SERVER`. Forge reports only the first failing mod and leaves the JVM alive after "Crash report saved", so the smoke stops on that line. Use `--drop <name>` to find the next offender, then fix the metafile's `side`.
 - **Known server boot noise** (observed 2026-10-18 on a successful boot, listed in `tools/testing/server_smoke/known_noise.json`): datapack tags, recipes and advancements from dramaticdoors, productivebees and totw_modded that reference mods the pack does not ship (Mekanism and others); Radium probing Minecolonies `BlockHutTownHall` (`RuntimeDistCleaner ... ClientLevel`); Structurize's ModernFix `LazyDataFixer` banner; HammerLib's test recipe extension. Mixin "Error loading class ... ClassNotFoundException" lines are WARN, not errors.
 - Time to `Done (` with a fresh world, measured 2026-10-23: 136 s wall on Valhalla with a light load, 527 s while Valhalla was busy with other work, 135 s on ANU. Spawn-area generation dominates; the pack test's cached world brings it to about 50 s. The JVM exits within a minute of `stop`.
+
+- **Smoke timeouts can be host CPU starvation, not the pack.** 2026-10-20 diagnosis: while the host was ~42% busy, Windows left the server JVM with threads Ready and none Running (~0.02 core); raising the JVM to High jumped it to ~5 cores and the boot finished (Done 36.5 s). No deadlock, no pack defect. The harness now boosts the JVM to AboveNormal, stops only when the log is silent and JVM CPU is flat, and labels low-CPU timeouts `HOST STARVED`. The two hangs below are probably this.
+
+- **Server smoke can time out before "Preparing spawn area", with a fixed seed.** 2026-10-20, seed 20261020, same checkout: one boot spent 15+ min with the main thread busy in ModernFix `PackResourcesCacheEngine` (data pack resource cache) and never got to spawn prep; the next sat 30 min with the main thread parked and the log silent after "Built tags for registry minecraft:block". Neither reached Done, so the "random seed stalls worldgen" theory is not the whole story. The smoke labels a stall `STALL` only when the log shows "Preparing spawn area" progress; earlier hangs stay `FAIL (timeout)` and the thread dump in `stall-threads.txt` in the run dir is the evidence. Open: dk-6dc6fb94.
 
 ## Pack test (`tools/testing/pack_test/`)
 
@@ -374,15 +476,6 @@
 - Move a linked worktree only with `git worktree move`. An Explorer move breaks the `.git` file link and the main repo's `worktrees/` record; `git worktree prune` would then delete the record.
 - Local instance pre-launch commands hold the worktree's path: after `git worktree move`, update the `PreLaunchCommand` in that instance's `instance.cfg` (MultiMC closed).
 
-## World server on ANU (`scripts/server/`)
-
-- **Singleplayer to dedicated: the host's data is in level.dat.** A singleplayer host is stored in `level.dat`'s `Player` tag; a dedicated server reads only `playerdata/<uuid>.dat`. 1.21.1 also writes the .dat when singleplayer saves, so a world left by a clean quit has both identical (checked 2026-11-07: all 53 Player keys equal, including Curios and backpack attachments). `player-data-check.cjs` compares them; if it reports MISSING or DIFFERENT, open the world once in singleplayer and quit to title, then copy again. Never write the .dat from level.dat by hand without a backup.
-- **A running world cannot be copied on Windows.** Java holds the region files open without sharing, so `tar`/`Copy-Item` fail with Permission denied (seen 2026-11-07). `anu-world-server.ps1 Backup` therefore stops the server, archives and restarts it.
-- **Copy the world only from a stopped game.** `CopyWorld` refuses while any Evil Eye / Minecraft java process runs on Valhalla; `session.lock` is excluded.
-- **The pack's "Can't keep up" stalls follow it to ANU.** The i7-4820K is slower than Valhalla; expect tick lag under load (many entities, Create contraptions, dragons). Tuning knobs are `view-distance`/`simulation-distance` in `server.properties` and the heap; `max-tick-time=-1` keeps the watchdog from killing a slow tick.
-- **Xaero waypoints carry over to the server; the explored map does not (2026-11-08).** Xaero data is client-side, keyed by save name (`xaero/world-map/New World/`, `xaero/minimap/New World/`) for singleplayer and by address (`Multiplayer_192.168.1.251/`) for a server. **Waypoints:** with the game closed (Xaero rewrites on exit), back up `xaero/`, then copy minimap `New World/dim%0` and `dim%-1` `waypoints.txt` into `Multiplayer_192.168.1.251/dim%0` / `dim%-1`; this works. **World map:** copying `New World/{null,DIM-1}` into `Multiplayer_192.168.1.251/<dim>/mw$<id>/` does NOT work (tried 2026-11-07, 277 files; the map stayed black). Xaero WM 1.47 finds regions only by `<x>_<z>.zip` (`region.xaero`) files at the `mw$<id>/` root (`caves/<n>/` for cave layers); a singleplayer world has none, because it renders from the save's `region/*.mca`, and its `cache_N/*.xwmc` files are only derived display caches. Without a zip a region is never detected, and where a zip exists the client checks the cache against the zip and, on mismatch, renames the cache to `.xwmc.outdated` and regenerates it from the zip (it did that to the overlap files on exit). So the old explored map cannot be moved by file copy; it is rebuilt by exploring on the server (high render distance and elytra flights cover ground fast). The copied `.xwmc` files in `mw$<id>/` are inert and can be deleted. Converting `.mca` to Xaero zips would need a purpose-built tool; none exists.
-- **Mod versions must match.** The server installs the pack's current `main`; a client on an older install (Stable updates only when launched) can be refused. Launch Stable once after each push.
-
 ## KubeJS 2001.6.5 / Rhino
 
 - `ForgeEvents` is startup-only. Client scripts register with `MinecraftForge.EVENT_BUS.addListener(...)`.
@@ -394,6 +487,8 @@
 - Every script in `client_scripts/` shares one scope. Top-level `const`s in different files collide, which is why each curation module is an IIFE that publishes onto `global.emiCuration`.
 - KubeJS's script class filter denies `java.io`, `java.nio`, most of `java.lang`, `java.net` and `net.minecraftforge.fml`. A denied `Java.loadClass` fails only at runtime (the old REI script's `java.io.StringWriter` stack-trace path never worked). `tools/analysis/emi_curation/tests/class_filter.test.cjs` checks every class the curation scripts load.
 - KubeJS wraps `CompoundTag` as a map view (`NativeJavaMap`) and NBT lists as list views. Key lookups return unwrapped values, and Java methods (`getId()`, `getAllKeys()`, `get(...)`) still resolve when no key of that name exists. `java_interop.toPlainNbt` relies on that.
+
+- **A KubeJS key mapping must be registered by a startup script, and `JsonIO.readString` returns `"null"` for a missing file.** Forge accepts key mappings only from `RegisterKeyMappingsEvent` on the mod bus during startup, so `startup_scripts/emi_curation_keys.js` uses `ForgeModEvents.onEvent` (checked with `javap` on `ForgeEventWrapper`: it resolves a class name string and warns outside the startup manager) and shares the `KeyMapping` through `global`; creating one from a client script would never reach the Controls screen, and a change needs a full restart. It uses `KeyConflictContext.GUI` so the default D never clashes with walking right (checked: no EMI, JEI or vanilla GUI binding uses a plain D). KubeJS 2001.6.5 `JsonIO.readString(String)` goes through `UtilsJS.getPath` (game dir only, `KubeJS.verifyFilePath`) and `readJson` returns null for a missing file, so the text is `"null"`, not an exception; `JsonIO.write(Path, JsonObject)` overwrites, does not create folders and *deletes* the file for a null object. Write via `JsonIO.parseRaw(text)`. The toast (`SystemToast.addOrUpdate`) and `getHoveredStack` paths have only run against the test fakes: the first in-game use is the real check.
 
 ## EMI internals (pinned 1.1.24+1.20.1+forge)
 
@@ -427,99 +522,8 @@
 - **Dank Recipe Transfer is pinned to mixin targets in JEI 15.62.0.219 and EMI 1.1.24.** Re-check it (and the pack-side smoke) after any JEI, EMI or Dank Storage update. It requires Dank Storage; JEI, EMI and Polymorph are optional.
 - **Every rebuild of Dank Recipe Transfer changes the jar hash.** After publishing a new release, update `url`, `filename` and `hash` in `mods/dank-recipe-transfer.pw.toml`, then rehash and verify. A stale hash makes the installer refuse the download.
 
-- **Smoke timeouts can be host CPU starvation, not the pack.** 2026-10-20 diagnosis: while the host was ~42% busy, Windows left the server JVM with threads Ready and none Running (~0.02 core); raising the JVM to High jumped it to ~5 cores and the boot finished (Done 36.5 s). No deadlock, no pack defect. The harness now boosts the JVM to AboveNormal, stops only when the log is silent and JVM CPU is flat, and labels low-CPU timeouts `HOST STARVED`. The two hangs below are probably this.
-- **Server smoke can time out before "Preparing spawn area", with a fixed seed.** 2026-10-20, seed 20261020, same checkout: one boot spent 15+ min with the main thread busy in ModernFix `PackResourcesCacheEngine` (data pack resource cache) and never got to spawn prep; the next sat 30 min with the main thread parked and the log silent after "Built tags for registry minecraft:block". Neither reached Done, so the "random seed stalls worldgen" theory is not the whole story. The smoke labels a stall `STALL` only when the log shows "Preparing spawn area" progress; earlier hangs stay `FAIL (timeout)` and the thread dump in `stall-threads.txt` in the run dir is the evidence. Open: dk-6dc6fb94.
-
-- **Cozy-mods trial pins (2026-10-20, branch `trial-cozy-mods`):** Cozy's Improved Cats 2.0.0 requires Forge 47.4.26+ (pack is 47.4.10), so 1.3.0 is pinned. Hexalia (which clashed with Thirst Was Taken's `FoodData` mixin) and Enchanted: Witchcraft, with its StateObserver and SmartBrainLib dependencies, were removed from the trial on 2026-10-21, so that pin is moot. Benign boot errors from the new mods: Thirst loot tables name Brewin' and Chewin' / Farmer's Respite items (not shipped), Cozy Cafe's `menu/vinery/kelp_cider.json` is malformed JSON, and AstikorCarts Redux's mixin config has no `minVersion`. Companion needs Kiwi; Handcrafted needs Resourceful Lib; Refurbished Furniture needs Framework (CurseForge).
-
-- **Cozy-mods trial UI (2026-10-20):** TipTheScales is removed on `trial-cozy-mods` only (Modern UI warns it duplicates its features; main keeps it). CozyUI+ is the `no-fonts` build so Modern UI's fonts show. CozyUI Ex 0.4 does not cover Cosmetic Armor Reworked or Curios (it covers Create, Cloth Config, Better Advancements, Chat Patches and others), so `resourcepacks/evil-eye-cozy-overrides/` (a folder pack, indexed file by file, listed after CozyUI+ in `options.txt` so it sits above it) re-themes `cosmeticarmorreworked:textures/gui/cosarmorinventory.png` (1024x1024, Cozy inventory plus a four-slot cosmetic row at the original slot positions, UVs stay 256-space) and recolors `curios:textures/gui/inventory.png` / `inventory_revamp.png` to the Cozy palette (256x256, geometry untouched, corners not rounded). New Hearts declares `pack_format 2`, which 1.20.1 lists as incompatible and drops from `options.txt`; 1.20.1 ignores `supported_formats`. Modern UI's own screens (Forge warning screen) draw CozyUI+ button textures stretched; unfixed.
-
-- **A KubeJS key mapping must be registered by a startup script, and `JsonIO.readString` returns `"null"` for a missing file.** Forge accepts key mappings only from `RegisterKeyMappingsEvent` on the mod bus during startup, so `startup_scripts/emi_curation_keys.js` uses `ForgeModEvents.onEvent` (checked with `javap` on `ForgeEventWrapper`: it resolves a class name string and warns outside the startup manager) and shares the `KeyMapping` through `global`; creating one from a client script would never reach the Controls screen, and a change needs a full restart. It uses `KeyConflictContext.GUI` so the default D never clashes with walking right (checked: no EMI, JEI or vanilla GUI binding uses a plain D). KubeJS 2001.6.5 `JsonIO.readString(String)` goes through `UtilsJS.getPath` (game dir only, `KubeJS.verifyFilePath`) and `readJson` returns null for a missing file, so the text is `"null"`, not an exception; `JsonIO.write(Path, JsonObject)` overwrites, does not create folders and *deletes* the file for a null object. Write via `JsonIO.parseRaw(text)`. The toast (`SystemToast.addOrUpdate`) and `getHoveredStack` paths have only run against the test fakes: the first in-game use is the real check.
-
-- **First-install key and resource-pack defaults only reach fresh instances.** Evil Eye Client (`options/defaults`, which replaced Default Options) sets a key from `config/defaultoptions/keybindings.txt` only where `options.txt` had no saved value for it at startup (the keymap still becomes the key's "Reset" default), and the `default_packs` of `config/evileye_client/resourcepacks.json` (which replaced Resource Pack Overrides) apply only when `options.txt` has no `resourcePacks`; `required` packs are added on every launch. Existing instances keep their old keys and packs until rebound by hand. Do not copy an old `options.txt` into a new instance if the new keymap is wanted. Keys not listed in `keybindings.txt` keep each mod's own default. Re-check the keymap for new collisions after adding a mod with keybinds (compare `key_` lines in a played instance's `options.txt`).
-
-- **Create: Dragons Plus 1.11.9 generates its sandpaper polishing recipes with a thread race, so the pack ships them as static data instead.** Its runtime pack (`AddPackFindersEvent`) runs a `RecipeProvider` whose `DataProvider.saveStable` writes happen on `Util.backgroundExecutor()` threads, and every write ends in `DynamicPack.put` on Create's plain, unsynchronised `HashMap`. Concurrent `put`s lose entries at random (and a resize race loses dozens at once), so each game or server start loaded 256-270 of the 269 `create_dragons_plus:sandpaper_polishing/*` recipes (one boot lost 85: total recipes 23064 instead of 23147). Players saw random missing waxed-to-unwaxed, oxidized-to-clean and `polished_X`-to-`X` sanding recipes. Nothing else varied across nine boots. Fix (2026-10-23): `config/create_dragons_plus-common.toml` turns off all three `recipe/sand_paper_polishing/*` generators and `kubejs/data/create_dragons_plus/recipes/sandpaper_polishing/**` holds the 269 recipes under the same ids. Consequence: a mod that adds waxed/oxidized/`polished_` blocks later gets no automatic sanding recipe; add its JSON beside the others (`machines.json` min 270 will flag a drop). To refresh, set the three keys back to `true` for a few boots and take the union of the loaded `create_dragons_plus:sandpaper_polishing/*` recipes from the pack-test `recipes.json` probe.
-
-- **Create: Storage Drawers Compat 1.1.0 needs an unsided drawer item handler.** Storage Drawers 12.15.0 returned null for the unsided Forge capability: placed sided access worked, but real bearing contraptions had no mounted storage. The pack pins 12.15.1, which fixes that interface. An isolated headless probe verified real assembly, automatic PSI docking, insertion/extraction and restoration for standard, two-slot and compacting drawers, including conversion. Client rendering and drill/harvester collection remain unverified.
-- **Create: Storage Drawers Compat 1.1.0 has a global client renderer mixin.** `BlockEntityDrawersRendererMixin` returns false for `playerBehindBlock` and zero for the player-distance check without testing whether the drawer is mounted. This restores contraption icons but also changes those checks for stationary drawers. Its author tested Storage Drawers 12.14.3; the pack uses 12.15.1 within the declared `[12.0.0,13.0.0)` range. Headless tests do not verify client rendering.
-
-- Brigadier rejects trailing text after a finished literal/word argument (`/evileye showcase x ` gave "Incorrect argument for command"), and a bare node without `.executes` says "Unknown or incomplete command". The showcase command therefore takes one greedy string and parses it in script.
-
-- **Private migration pins need an installer wrapper.** The cached packwiz installer rejects
-  `file:///` download URLs and does not recognize `metadata:local`; copying jars beside those
-  metafiles is insufficient. The owner Trial script instead indexes verified cached jars as
-  ordinary files in a temporary local pack, so packwiz copies and tracks them without a host.
-  Its prelaunch must keep using `scripts/migration/trial-walkthrough.ps1`; the raw checkout
-  metadata is not installer-compatible. Pack-test/server-smoke retain the loopback overlay.
-  Missing or changed cache bytes fail before installation.
-
-## Ice and Fire CE config format
-
-CE 2.1.4 uses Jupiter JSON (`config/iceandfire/iaf-common.json`, `iaf-client.json`), not
-the Forge `iceandfire-*.toml`. Restoring only the TOML silently leaves CE defaults active,
-including griefing. First boot logs missing-config errors before writing defaults; ship the
-reconciled JSON plus `config/jupiter.json`. Legacy biome JSON filters also have no CE reader;
-CE uses biome tags and structure sets. Do not convert an old 1/N per-chunk spawn rate into
-a CE per-structure-candidate probability without accounting for spacing (dk-e7b276f4).
-
-- **I&F dragon roosts/caves are gated by distance from world spawn, not by the legacy biome JSON.**
-  CE places roosts/caves via structure sets (`dragon_roost` spacing 15/sep 6, `dragon_cave` 18/12) and
-  biome tags `#iceandfire:structure_gen/*`; `DragonRoostStructure`/`DragonCaveStructure.findGenerationPoint`
-  also reject any point within `worldgen.dangerousDistanceLimit` blocks (horizontal) of world spawn
-  (pack value 800; CE default 1000), then roll `generate<Type>Chance`. Nothing within that radius ever generates.
-  The `config/iceandfire/*_biomes.json` files are not read by CE (provenance only), but their
-  `forge:` tags were rewritten to NeoForge `c:` names and are guarded by
-  `tools/testing/pack_test/tests/checks/iaf_biome_tags.test.cjs` (tag list: `pack_test/data/biome_tags.json`).
-  Renames: is_dense -> c:is_dense_vegetation, is_sparse -> c:is_sparse_vegetation, is_peak/is_slope ->
-  c:is_mountain/peak and /slope, is_water -> c:is_aquatic (closest). Other `forge:` tags remain in
-  `config/alexsmobs/*_spawns.json` (not audited).
-
-- **Planet terrain loaded does not mean entity sections are ready.** A height lookup can load
-  moon terrain while the asynchronous destination tracker is still catching up. The showcase
-  now waits on `ServerLevel.isPositionEntityTicking(BlockPos)` before teleporting (up to 200
-  ticks), then retains its exact arrival assertion. Integration evidence: the failed run saved
-  the traveller in the correct moon region at (8.5, 93, 8.5); the readiness run passes all 1279
-  assertions (`jobs/2026-10-30-iaf-integration/showcase-all-ready`).
-
-- **Resource-pack ids differ between Forge and NeoForge.** NeoForge names a mod's built-in pack
-  `mod/<namespace>:<path>` (Town Talk is `mod/towntalk:respack`, not Forge's `builtin/towntalk`), and a pack
-  file's id is its exact installed file name (`file/Eat Quiet 1.0.0_1.20-1.21.zip` on the migration branch). A
-  stale id is silently skipped; the pack contract test checks every id in `config/evileye_client/resourcepacks.json`.
-
 - **Ender IO machine screens + EMI (fixed in Evil Eye Client 0.3.6).** Ender Core's `EnderContainerScreen.renderLabels`
   leaks a z translation into `ContainerScreenEvent.Render.Foreground`, which put EMI's item list over EMI's own tooltip
   (drawn later in `ScreenEvent.Render.Post`); and EMI 1.1.24's JEI bridge (`dev.emi.emi.jemi.JemiRecipeHandler`) placed every
   transfer-highlight slot at 0,0 (identity `==` lookup), so JEI-provided recipes' (Ender IO machines) missing-ingredient
   highlights drew in the recipe's top-left corner. Both are patched in the Client jar; drop the mixin when EMI fixes the lookup.
-
-## IPN cutover (round 4)
-
-Client 0.5.1 and Tweaks 0.8.1 own sorting, safe physical-storage/Dank transfers and both-hand refill. IPN/libIPN and their shipped configs are removed; Kotlin remains. Pack-owned keys enable the three owned sections and never recreate or edit personal IPN data. The sort binding defaults to middle mouse; existing saved choices remain respected.
-
-- **Rail offsets are TOML integers.** Pack-owned numeric entries historically emitted floats. Declare `tomlType: "integer"` for actionRail offsets; otherwise sync writes `0.0` instead of the mod's integer `0`. Other numeric entries retain their previous formatting. The rail and inventory-effect side are pack-owned and reset at each sync, including after edits in the settings screen.
-
-## Zoom after Chloride removal
-
-Modern UI is enabled and defaults to Z. Saved `options.txt` bindings win over shipped defaults, so an existing C binding would clash with vanilla creative save-hotbar. The pack-owned-key installer therefore has an `options` format (`key:value` lines) and forces only `key_key.modernui.zoom:key.keyboard.z` at every Trial/Stable sync (a saved modifier suffix is dropped too). An absent `options.txt` is left alone (fresh instances get Z from defaultoptions); an absent key is appended; line endings and every other line are kept. A Z the owner rebinds in game is reset at the next sync, like the other forced keys. Stable's dry-run lists it as `Would force pack-owned key: options.txt key_key.modernui.zoom`.
-
-- **Files a mod rewrites on every launch must be preserved, with the needed settings as owned keys.** `config/modernui/client.toml` (Modern UI expands it to ~217 commented lines) and `config/terralith.json` used to ship strictly pack-owned, so the installed hash never matched and every Stable prelaunch showed `Would restore pack-owned file` (and the consecutive-run WARNING in `installed_files.cjs`). Both are now in `PRESERVE_PATHS` (`pack_index.cjs`, `preserve = true`): a fresh install still gets the shipped file, an existing one is never restored. The settings the pack needs are in `pack-owned-keys.json`: Modern UI `[general] zoom = true`; Terralith `modules.vanilla_stone_gen = true`, `recipe_changes = false`, `custom_structures`, `skylands`, `terrain_slabs = true` (`intro_message` is left to the player). The JSON setter leaves a file untouched when the value is already right, so a differently formatted rewrite is not a perpetual "force". Do the same for any other mod-rewritten config. Test: `tools/packwiz/tests/install/owned_keys/mod_rewritten_configs.test.cjs`.
-
-## Pro Placer replacement
-
-Client 0.7.0 adds placement defaults through config correction; a shipped preserved TOML does not replace saved preferences. The toggle state lasts for the application session, while the legacy binding is adopted through the two-load options path. Puzzles Lib remains required by Diagonal Fences. Quick Skin local appearance files are persistent and untouched.
-
-- **Client 0.7.1 alone did not enable Iron Chests sorting/transfers.** Companion support arrived with the paired Client 0.8.0 / Tweaks 0.10.0 release (negotiated sorting and transfers for ordinary and trapped Iron Chests); no config or owned-key change grants that capability.
-
-## Local mod releases and installer behaviour
-
-- **Local mod releases must update the migration source pin too.** Keep `dispositions.json` target filename, SHA-256 and size aligned with `target-lock.json` and the `.pw.toml` filename/hash; otherwise a later resolve can downgrade the release. `local_pin_consistency.test.cjs` guards every local mod across all three records.
-
-- **Game config re-saves can leave unchanged packwiz index entries dirty.** Stable/Trial prelaunch restores pack bytes for non-preserve, non-metafile files before strict verification, logs each restored path and retains the last five backup generations per instance under `.tmp/installer-drift/<canonical-instance-hash>/`. Consecutive repairs warn with each file path; review those game-written bytes before changing shipped configs. Dry runs list would-be repairs without writing. Legacy `.tmp/trial-install-*/drift-backup/` archives are not automatically removed. Tweaks common and Modern UI stay pack-owned; preserved preferences and jar verification are unchanged.
-
-- **FAUNA Engine (Book of Dragons' library) 1.0 and Interstellaris clash on `CraftingMenu.slotChangedCraftingGrid`.** Both `@Redirect` `ResultContainer.setRecipeUsed`; stock FAUNA kills the server at boot ("@Redirect conflict ... Critical injection failure"). The pack ships a private patched FAUNA (`-eepatch1`, mixin removed). A new FAUNA or Interstellaris build can change this: re-check before swapping either pin back to stock.
-
-- **Local's installer jar is shared.** `env.INSTALLER_JAR_SOURCES` lists Local's `.minecraft/packwiz-installer.jar` first and Stable's identical copy second (read only). Moving or rebuilding Local used to break Stable's prelaunch ("Cached installer/bootstrap missing"). Local's prelaunch script lives in the MAIN checkout: merge `scripts/instances/` there before launching Local.
-
-- **Terralith zeroes vanilla andesite/diorite/granite worldgen by default.** Its `vanilla_stone_gen` module (`config/terralith.json`, default `false`) leaves `minecraft:ore_{andesite,diorite,granite}_{upper,lower}` at `count: 0`; `true` enables an overlay restoring the vanilla blobs. The pack ships `vanilla_stone_gen: true`. Only chunks generated afterwards get the blobs; the server/instance needs the file and a restart (datapack reload condition).
-- **Stable can silently stop updating: its `PreLaunchCommand` went blank (2026-11-08).** Stable only picks up pushed pins because `PreLaunchCommand` runs `scripts/migration/stable-prelaunch.ps1`. MultiMC keeps instance settings in memory and rewrites `instance.cfg` from them, and by 23:06 on 2026-11-08 its in-memory value was empty (launches 3 and 4 of that MultiMC session logged no `PreLaunchCommand` task), so Stable stayed on Client 0.15.2 after 0.15.4 was pushed. No repo script writes an empty value. Check with `node tools/packwiz/install/checks/stable_prelaunch_check.cjs` (exit 1 on a blank/foreign command); repair with `--fix` **with MultiMC closed**, or MultiMC writes its old value back. Run the check after any session where Stable looks stale or after editing Stable's instance settings in MultiMC.
-- **A pinned jar missing from the Stable cache stops Stable launching (2026-11-05, Sophisticated Backpacks).** Stable prelaunch installs only from `jobs/2026-10-31-world-trial-final/cache` and refuses with `Missing pinned jar (no download attempted)`. `verify_hashes.cjs` now fails listing the missing jars (`install/checks/stable_cache_check.cjs`, `--stock` copies verified ones from `jobs/*/jars`). Never purge or rewrite that cache; only add jars. Evil Eye Local's mods folder is a different thing: the dedup/pack_test "Missing cached jar" failures read it.
