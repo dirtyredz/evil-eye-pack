@@ -28,7 +28,7 @@ function Invoke-CopyWorld {
   if ($DryRun) { Complete-OwnerRun 0 }
   Send-Ctl
   if (Test-ServerRunning) { Complete-OwnerRun 1 'The server is running; run Stop first.' }
-  $exists = (Invoke-NativeCapture { & ssh $AnuHost "Test-Path $AnuRoot\evil-eye-world" }).Output.Trim()
+  $exists = (Invoke-SshQuery "Test-Path $AnuRoot\evil-eye-world").Output.Trim()
   if ($exists -eq 'True') {
     if (-not $ReplaceWorld) { Complete-OwnerRun 1 'ANU already has evil-eye-world (the live world). Use -ReplaceWorld to move it aside and copy again.' }
     Invoke-Ssh "Rename-Item $AnuRoot\evil-eye-world evil-eye-world.replaced-$(Get-Date -Format 'yyyyMMdd-HHmmss')"
@@ -66,7 +66,7 @@ function Invoke-Backup {
 }
 
 function Invoke-Pull {
-  $newest = (Invoke-NativeCapture { & ssh $AnuHost "(Get-ChildItem $AnuBackup -Filter 'world-*.tar.gz' | Sort-Object Name | Select-Object -Last 1).Name" }).Output.Trim()
+  $newest = (Invoke-SshQuery "(Get-ChildItem $AnuBackup -Filter 'world-*.tar.gz' | Sort-Object Name | Select-Object -Last 1).Name").Output.Trim()
   if (-not $newest) { Complete-OwnerRun 1 'No backup on ANU yet; run Backup first.' }
   Write-Log "Newest ANU backup: $newest -> $OutDir"
   if ($DryRun) { Complete-OwnerRun 0 }

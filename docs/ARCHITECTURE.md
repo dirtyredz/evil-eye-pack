@@ -160,9 +160,13 @@ The world-server stager uses it after `ensureStage`; Deploy publishes the verifi
 and pins as `ctl/deployed-mods.json` only after successful extraction/configuration. The fast hash gate
 calls `world_server/check-parity.cjs`, a bounded read-only SSH comparison with that last deployment
 receipt (explicit skip when unavailable). It neither stages nor installs nor ships controller code.
-The controller detects elevated JVMs from a Limited token through both listeners on one Java PID,
+The controller dot-sources its shipped sibling `server-process.ps1` and dispatches Start/Stop/Status
+to callable functions returning exit codes; only the entry point exits PowerShell. OS cmdlets and RCON
+remain replaceable at that boundary. The process module detects elevated JVMs from a Limited token through both listeners on one Java PID,
 refuses ambiguous identities, and serializes starts with an exclusive file handle. Stop preserves
 PID/creation-time identity across listener shutdown; forced kills additionally require the marker.
+On Valhalla, `anu-transport-lib.ps1` owns SSH queries (stdout result and checked exit code), while
+`owner-run.ps1` owns both streamed and captured native execution and the PowerShell 5.1 stderr workaround.
 
 1. **Verify and stage on Valhalla.** Create an artifact run directory and record the
    checkout identity, pack/index hashes, seed, probe token and the runtime descriptor

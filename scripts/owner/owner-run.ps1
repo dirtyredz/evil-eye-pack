@@ -3,18 +3,18 @@
   Shared plumbing for owner-run PowerShell scripts (dot-source it; it defines functions only).
 
 .DESCRIPTION
-  Template version: 1.0.0 (bump on any API change; copies record the version they came from).
-  Canonical copy: ~/.claude/templates/scripts/owner-run.ps1. Copy verbatim into scripts/owner/ (or the
-  repo's declared scripts home); extend through your own scripts, not by editing the copy.
+  Based on template 1.0.0; local API version 1.1.0 adds Invoke-NativeCapture.
+  Upstream: ~/.claude/templates/scripts/owner-run.ps1. This repo carries the native-capture
+  extension requested for the ANU transport; preserve it when refreshing the upstream template.
 
   Responsibilities: repo root found from $PSScriptRoot (walks up to the nearest .git or package.json,
   never the caller's cwd), a timestamped log under <repo>\.tmp\owner-runs\, tool lookup, child-process
   capture, secret redaction, and the one final status line
   "OK (exit 0) log: <path>" / "FAILED (exit N) log: <path>".
 
-  Functions: Initialize-OwnerRun, Write-Log, Complete-OwnerRun, Find-Tool, Invoke-Native, Add-LogSecret.
+  Functions: Initialize-OwnerRun, Write-Log, Complete-OwnerRun, Find-Tool, Invoke-Native, Invoke-NativeCapture, Add-LogSecret.
 #>
-$script:OwnerRunVersion = '1.0.0'
+$script:OwnerRunVersion = '1.1.0'
 $script:Secrets = @()
 
 function Initialize-OwnerRun([string]$Name) {
@@ -75,4 +75,16 @@ function Invoke-Native([string]$Exe, [string[]]$Arguments, [string]$WorkingDirec
     Pop-Location
     $ErrorActionPreference = $prevEap
   }
+}
+
+# Runs a native command (scriptblock) capturing its text output; returns @{ Output; ExitCode }.
+# Windows PowerShell 5.1 turns native stderr into terminating errors under 'Stop' (e.g. OpenSSH's post-quantum
+# warning on every ssh), so EAP is 'Continue' around the call, as in Invoke-Native.
+function Invoke-NativeCapture([scriptblock]$Command) {
+  $prevEap = $ErrorActionPreference
+  $ErrorActionPreference = 'Continue'
+  try {
+    $out = (& $Command | ForEach-Object { [string]$_ } | Out-String)   # stringify so stderr records print as plain text
+    return @{ Output = $out; ExitCode = [int]$LASTEXITCODE }
+  } finally { $ErrorActionPreference = $prevEap }
 }
