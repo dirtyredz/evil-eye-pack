@@ -12,6 +12,7 @@ const {boot}=require('../server_smoke/process/boot.cjs');
 const {waitForServer}=require('../server_smoke/process/host_wait.cjs');
 const {localLock}=require('../pack_test/session/lock.cjs');
 const procs=require('../../runtime_env/procs.cjs');
+const {withStaged}=require('../../runtime_env/staged_dir.cjs');
 const {WORLD}=require('../pack_test/stage_runtime.cjs');
 // Compose a private offline cache. Neither shared caches nor instances receive stamps or writes.
 function stage({root,loader,jarDirs,job,name}) {
@@ -31,13 +32,30 @@ function stage({root,loader,jarDirs,job,name}) {
   }
   fs.writeFileSync(path.join(dest,'pins.json'),JSON.stringify(pins,null,2)+'\n');return dest;
 }
-async function trialBoot({root,cache,job,name,targets,restart=false,coverage=null,players=[]}) {
+// The private server copy (`<name>-server`, holds the world) is deleted on every exit unless keepStage; a
+// `boot` that a `restart` will continue from needs keepStage. Evidence (`<name>-<label>*`) always stays.
+function trialBoot(o) {
+  const server=path.join(o.job,o.name+'-server');
+  return withStaged({runDir:o.job,dirs:[server],keep:o.keepStage,log:console.log},()=>trialBootIn(o));
+}
+async function trialBootIn({root,cache,job,name,targets,restart=false,coverage=null,players=[]}) {
   if(!/^[a-z][a-z0-9-]*$/.test(name))throw new Error('Invalid run name');
   if(!Array.isArray(targets)||targets.length>20000||targets.some(t=>!Number.isInteger(t.x)||!Number.isInteger(t.z)||!/^[a-z][\w.-]*:[\w./-]+$/.test(t.dimension)))throw new Error('Invalid or unbounded targets');
   const server=path.join(job,name+'-server');output(server,job);
   const record=JSON.parse(fs.readFileSync(path.join(job,'source-manifest.json'),'utf8'));
   verify(record.source,record.files);verify(record.snapshot,record.files);
   const scope=procs.scope(),token=crypto.randomUUID(),label=restart?'restart':'conversion';let lock;
+  let saved=null;
+  const saveEvidence=(result)=>{
+    if(saved)return saved;
+    let evidence=path.join(job,name+'-'+label),attempt=1;
+    while(fs.existsSync(evidence))evidence=path.join(job,name+'-'+label+'-'+(++attempt));
+    output(evidence,job);fs.mkdirSync(evidence,{recursive:false});saved=evidence;
+    for(const rel of ['console.log','world-trial-registries.json','world-trial-complete.json','world-trial-players.json','world-trial-colony.json'])if(fs.existsSync(path.join(server,rel)))fs.copyFileSync(path.join(server,rel),path.join(evidence,rel));
+    for(const rel of ['logs','crash-reports'])if(fs.existsSync(path.join(server,rel)))copy(path.join(server,rel),path.join(evidence,rel),job);
+    fs.writeFileSync(path.join(evidence,'boot.json'),JSON.stringify({...result,token,targets:targets.length,coverage},null,2)+'\n');
+    return evidence;
+  };
   const stop=()=>scope.killAll();process.once('SIGINT',stop);process.once('SIGTERM',stop);
   try {
     lock=localLock(path.join(job,'server.lock'),{owner:name});
@@ -54,18 +72,17 @@ async function trialBoot({root,cache,job,name,targets,restart=false,coverage=nul
     const stopRequest=path.join(server,'world-trial-stop-request');
     if(fs.existsSync(stopRequest))throw new Error('Remove the previous stop request before a new boot');
     const result=await boot(server,{priority:'AboveNormal',sample:10,silent:180,timeout:3600,completeTimeout:3000,complete:()=>fs.existsSync(stopRequest)||(fs.existsSync(complete)&&JSON.parse(fs.readFileSync(complete,'utf8')).token===token)},console.log,{scope});
-    let evidence=path.join(job,name+'-'+label),attempt=1;
-    while(fs.existsSync(evidence))evidence=path.join(job,name+'-'+label+'-'+(++attempt));
-    output(evidence,job);fs.mkdirSync(evidence,{recursive:false});
-    for(const rel of ['console.log','world-trial-registries.json','world-trial-complete.json','world-trial-players.json','world-trial-colony.json'])if(fs.existsSync(path.join(server,rel)))fs.copyFileSync(path.join(server,rel),path.join(evidence,rel));
-    for(const rel of ['logs','crash-reports'])if(fs.existsSync(path.join(server,rel)))copy(path.join(server,rel),path.join(evidence,rel),job);
-    fs.writeFileSync(path.join(evidence,'boot.json'),JSON.stringify({...result,token,targets:targets.length,coverage},null,2)+'\n');
+    const evidence=saveEvidence(result);
     if(!result.completed||result.crashed||result.killed||result.wallSeconds===null)throw new Error('Boot failed: '+path.join(evidence,'boot.json'));
     if(fs.existsSync(stopRequest)||!fs.existsSync(complete))throw new Error('Trial stopped without complete probe: '+evidence);
     const probe=JSON.parse(fs.readFileSync(complete,'utf8'));if(probe.errors.length||probe.visited.length!==targets.length)throw new Error('Probe incomplete: '+complete);
     const playerResult=JSON.parse(fs.readFileSync(path.join(server,'world-trial-players.json'),'utf8'));
     if(playerResult.token!==token||playerResult.errors.length||playerResult.players.length!==players.length)throw new Error('Player round-trip incomplete: '+evidence);
     return {server,evidence,result};
+  }catch(e){
+    // The server copy is about to be deleted: keep its logs and crash reports even when the run died before the normal evidence step.
+    scope.killAll();if(!saved&&fs.existsSync(server))try{saveEvidence(null);}catch{}
+    throw e;
   }finally{scope.killAll();lock?.release();process.removeListener('SIGINT',stop);process.removeListener('SIGTERM',stop);verify(record.source,record.files);verify(record.snapshot,record.files);}
 }
 module.exports={stage,trialBoot};

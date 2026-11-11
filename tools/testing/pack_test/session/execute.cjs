@@ -9,6 +9,7 @@ const { manifestReady } = require('../verdict/protocol.cjs');
 const { makeRunServer, injectProbe } = require('./prepare.cjs');
 const { worldKey, restoreWorld, saveWorld } = require('./world_cache.cjs');
 const { WORLD } = require('../stage_runtime.cjs');
+const { withStaged } = require('../../../runtime_env/staged_dir.cjs');
 
 // The files analysis needs, copied out of the server dir (relative source -> relative destination).
 const EVIDENCE = [
@@ -37,10 +38,15 @@ function collectEvidence(serverDir, evidenceDir) {
 // o: { runtime, stageDir, runDir, worldCache, input, seed, port, heap, boot: {priority, sample, silent, timeout, probeTimeout},
 //      keepServer, java, jcmd, scope, bootImpl (tests) }. runtime is the pack's descriptor, carried explicitly
 //      (local run or ANU job) and verified against the server's runtime.json by boot(). Returns { boot, world: {key, reused, saved}, timings }.
+// The per-run server copy is deleted on every exit (success, error, signal) unless keepServer; evidence stays.
 async function execute(o, log) {
-  const serverDir = path.join(o.runDir, 'server');
-  const evidenceDir = path.join(o.runDir, 'evidence');
   if (!o.runtime) throw new Error('execute needs the run runtime descriptor');
+  const serverDir = path.join(o.runDir, 'server');
+  return withStaged({ runDir: o.runDir, dirs: [serverDir], keep: o.keepServer, log }, () => runOnServer(o, log, serverDir));
+}
+
+async function runOnServer(o, log, serverDir) {
+  const evidenceDir = path.join(o.runDir, 'evidence');
   const timings = {};
   let t = Date.now();
   makeRunServer(o.stageDir, serverDir, o);
@@ -63,7 +69,6 @@ async function execute(o, log) {
   if (result.completed && !reused) {
     try { saved = saveWorld(o.worldCache, key, serverDir); } catch (e) { log(`world cache not saved: ${e.message}`); }
   }
-  if (!o.keepServer) fs.rmSync(serverDir, { recursive: true, force: true, maxRetries: 5, retryDelay: 500 });
   return { boot: result, world: { key, reused, saved }, timings };
 }
 

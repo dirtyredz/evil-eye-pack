@@ -6,7 +6,7 @@
 //
 // Usage: node tools/testing/pack_test/run.cjs [--local] [--pack pack.toml] [--out <job dir>] [--seed 20261020]
 //        [--priority AboveNormal] [--timeout 1800] [--silent 180] [--sample 10] [--probe-timeout 300]
-//        [--heap 6G] [--port 25601] [--fresh-world] [--keep-server]
+//        [--heap 6G] [--port 25601] [--fresh-world] [--keep-server | --keep-stage]
 //        node tools/testing/pack_test/run.cjs --analyze <run dir>     re-analyse saved evidence, no boot
 // Target: ANU by default (see docs/development.md); --local runs on this machine. ANU is used alone, or
 // beside another project's running job when it has room (free RAM and CPU); an unreachable ANU, a held
@@ -41,7 +41,7 @@ function parseArgs(argv) {
     freshWorld: false, keepServer: false, instance: ''
   };
   for (let i = 0; i < argv.length; i++) {
-    const k = argv[i].replace(/^--/, '').replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    const k = argv[i].replace(/^--/, '').replace(/-([a-z])/g, (_, c) => c.toUpperCase()).replace(/^keepStage$/, 'keepServer');
     if (!(k in o)) throw new Error(`unknown option ${argv[i]}`);
     if (FLAGS.has(k)) o[k] = true;
     else o[k] = NUM.has(k) ? Number(argv[++i]) : argv[++i];
