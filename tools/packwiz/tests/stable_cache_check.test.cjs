@@ -71,6 +71,21 @@ for (const target of ['pack.toml', 'mods/srv.pw.toml']) {
   });
 }
 
+test('dev cache check reports a missing mods jar and --stock fills it from the Stable cache', (t) => {
+  const f = fixture(t);
+  const dev = path.join(path.dirname(f.cache), 'dev');
+  fs.mkdirSync(path.join(dev, 'mods'), { recursive: true });
+  fs.writeFileSync(path.join(f.cache, 'mods/a.jar'), JAR);
+  fs.writeFileSync(path.join(f.cache, 'mods/b.jar'), JAR);
+  const { checkDevCache } = require('../install/stable_cache_check.cjs');
+  const opts = { cache: dev, stable: f.cache, jobs: f.jobs };
+  assert.deepEqual(checkDevCache(f.root, opts).missing.map((m) => m.name), ['a.jar', 'b.jar']);
+  const r = checkDevCache(f.root, { ...opts, stock: true });
+  assert.deepEqual(r.stocked.sort(), ['a.jar', 'b.jar']);
+  assert.deepEqual(fs.readFileSync(path.join(dev, 'mods/a.jar')), JAR);
+  assert.equal(checkDevCache(f.root, opts).missing.length, 0);
+});
+
 test('Stable cache default comes from the fixed machine environment', () => {
   const env = require('../../runtime_env/env.cjs');
   assert.equal(require('../install/stable_cache_check.cjs').DEFAULT_CACHE, env.FIXED.STABLE_CACHE);
