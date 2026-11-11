@@ -2,8 +2,8 @@
 id: dk-15a0b9ef
 type: bug
 created: 2026-11-05
-status: todo
-since: 2026-11-05
+status: done
+since: 2026-11-10
 area:
 priority: P1
 rank: zzzzw
