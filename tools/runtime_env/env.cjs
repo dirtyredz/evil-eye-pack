@@ -1,5 +1,5 @@
 'use strict';
-// The machine environment for the server smoke. The only file that names machine paths (MultiMC root, instances, main checkout, JDKs, artifacts); each value
+// The shared machine environment for tooling and the install route. The only file that names machine paths (MultiMC root, instances, main checkout, JDKs, artifacts); each value
 // can be overridden by an environment variable (smoke and analysis tools). The install route and
 // cutover use `FIXED`, the same values built from an empty environment, so no SMOKE_* variable can redirect them. Loader and Minecraft versions are not here: they come
 // from the pack's pack.toml through runtime.cjs, which also picks the Java major from JAVAS.

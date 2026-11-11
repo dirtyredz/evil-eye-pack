@@ -301,9 +301,14 @@ every `SMOKE_*` override, and runs its processes in a `tools/runtime_env/procs.c
 The neutral route is `install/install_pack.cjs`: all hash-verified cached artifacts become
 ordinary index files in a temporary local pack. The cached installer copies and tracks them without
 any URL or server. Original metafile provenance stays attached to prepared entries. After packwiz,
-non-preserved plain files that differ are backed up under the run's `.tmp/trial-install-*/drift-backup/`
-and restored to pack bytes; backups survive overlay cleanup. Jar entries are never repaired by this
-step. Installed artifact hashes are checked before a target's prelaunch is updated.
+`installed_files.cjs` shares the strictly-pack-owned predicate between verification and repair.
+Non-preserved plain files that differ are restored to pack bytes; metadata-derived artifacts are
+verified but never repaired here. Dry runs list changed and missing plain files without writing.
+Backups live under `.tmp/installer-drift/<canonical-instance-hash>/`, retaining the last five backup
+generations per instance; a clean run clears the consecutive-restoration history. Repeated repairs
+warn with the file path so game-written bytes can be reviewed. Temporary overlays are always removed;
+legacy `trial-install-*/drift-backup/` archives remain untouched. Installed artifact hashes are checked
+before a target's prelaunch is updated.
 Three thin targets sit on it: `trial_target.cjs` (only Evil Eye NeoForge Trial),
 `stable_target.cjs` (the real Stable instance or a rehearsal copy; `--fresh` first removes every
 file the old install tracked) and `local_target.cjs` (Evil Eye Local only). Local creation
@@ -311,10 +316,14 @@ file the old install tracked) and `local_target.cjs` (Evil Eye Local only). Loca
 dropped, no saves; the default run installs the main checkout through the same neutral route and sets
 a prelaunch that calls `scripts/instances/local-instance.ps1`. Each target guards itself in
 `instance_targets.cjs` (`localTarget` accepts only the Local path). `pack_owned_keys.cjs` forces the keys
-in `pack-owned-keys.json` into installed configs after each sync, for all targets.
+in `pack-owned-keys.json` into installed configs after each sync, for all targets. A pack contract test
+requires these edits to leave non-preserved shipped bytes identical. Stable command generation and
+validation share `stable_target.cjs`; cfg reads/writes share `install_pack.cjs`. The checker repairs
+missing keys and points rehearsal cfg repairs at their own instance folder, using `FIXED.STABLE_CACHE`.
 
 **Guard authority.** `tools/packwiz/install/instance_targets.cjs` alone decides which MultiMC
-instance is which. `stableTarget` is an allowlist: the real Stable `.minecraft`, or a path outside
+instance is which, resolving real paths through the deepest existing ancestor (including junction
+and short-name aliases). `stableTarget` is an allowlist: the real Stable `.minecraft`, or a path outside
 `C:/Users/dirty/MultiMC/instances` (rehearsal copies); Local, Trial, copies of either, and every
 other MultiMC instance are refused. `trialTarget` accepts only the Trial path; `assertPinTarget`
 keeps private pins out of Stable and Local. PowerShell never re-implements the rules:

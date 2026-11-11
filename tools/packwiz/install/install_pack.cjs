@@ -10,6 +10,7 @@ const { verifyInstalledLocal } = require('./local_source.cjs');
 const { clientArtifacts } = require('./client_artifacts.cjs');
 const { noLinks } = require('../../data_io/path_guard.cjs');
 const { applyOwnedKeys } = require('./pack_owned_keys.cjs');
+const { verifyInstalledFiles, restorePackFiles, previewPackFiles } = require('./installed_files.cjs');
 const env = require('../../runtime_env/env.cjs').FIXED;
 const ROOT = path.resolve(__dirname, '../../..');
 
@@ -18,10 +19,18 @@ function instanceCfgValue(value) {
   return value.replaceAll('\\', '/');
 }
 
+function instanceCfgGet(text, key) {
+  if (!/^[A-Za-z][A-Za-z0-9]*$/.test(key)) throw Error('Unsafe instance.cfg key');
+  return (text.match(new RegExp('^' + key + '=([^\r\n]*)', 'm')) || [])[1];
+}
+
 function setInstanceCfgValue(text, key, value) {
   if (!/^[A-Za-z][A-Za-z0-9]*$/.test(key)) throw Error('Unsafe instance.cfg key');
   const line = new RegExp(`^${key}=[^\\r\\n]*$`, 'm');
-  if (!line.test(text)) throw Error(`Missing instance.cfg key ${key}`);
+  if (!line.test(text)) {
+    const eol = text.includes('\r\n') ? '\r\n' : '\n';
+    return text + (text && !text.endsWith('\n') ? eol : '') + key + '=' + instanceCfgValue(value) + eol;
+  }
   return text.replace(line, `${key}=${instanceCfgValue(value)}`);
 }
 
@@ -32,39 +41,6 @@ function prepareFiles(root, cache) {
     files.push({ file: artifact.installedFile, hash: sha256(bytes), bytes, preserve: artifact.preserve, sourceMetafile: artifact.sourceMetafile });
   }
   return files;
-}
-
-function verifyInstalledFiles(instance, files) {
-  for (const f of files) {
-    if (f.preserve) continue;
-    const installed = path.join(instance, f.file);
-    if (!fs.existsSync(installed) || sha256(fs.readFileSync(installed)) !== f.hash) {
-      throw Error('Installed artifact differs: ' + f.file);
-    }
-  }
-}
-
-// Keep original metadata provenance: converted jar entries must still fail strict verification.
-function restorePackFiles(instance, files, run, log = console.log) {
-  const restored = [];
-  for (const f of files) {
-    if (f.preserve || f.sourceMetafile) continue;
-    const installed = path.join(instance, f.file);
-    noLinks(installed);
-    const previous = fs.existsSync(installed) ? fs.readFileSync(installed) : null;
-    if (previous !== null && sha256(previous) === f.hash) continue;
-    if (previous !== null) {
-      const backup = path.join(run, 'drift-backup', f.file);
-      noLinks(backup);
-      fs.mkdirSync(path.dirname(backup), { recursive: true });
-      fs.writeFileSync(backup, previous, { flag: 'wx' });
-    }
-    fs.mkdirSync(path.dirname(installed), { recursive: true });
-    fs.writeFileSync(installed, f.bytes);
-    restored.push(f.file);
-    log('Restored pack-owned file: ' + f.file);
-  }
-  return restored;
 }
 
 function writePack(root, overlay, files) {
@@ -96,7 +72,7 @@ async function installPack({ instance, cache, dryRun, prelaunch, backupName, lab
   const files = prepareFiles(ROOT, cache);
   for (const f of files) noLinks(path.join(instance, f.file));
   console.log(`Verified ${files.length} local files; destination ${instance}; no host or downloads.`);
-  if (dryRun) { console.log(`Dry run: would install local files and set this ${label} prelaunch to the same command.`); return; }
+  if (dryRun) { previewPackFiles(instance, files); console.log(`Dry run: would install local files and set this ${label} prelaunch to the same command.`); return; }
   // This is the owner's client pre-launch path. It must not wait on unrelated JVMs.
   const scope = require('../../runtime_env/procs.cjs').scope();
   const stop = () => scope.killAll();
@@ -110,7 +86,7 @@ async function installPack({ instance, cache, dryRun, prelaunch, backupName, lab
     fs.writeFileSync(path.join(instance, 'packwiz-install.log'), result.out);
     console.log(result.out);
     if (result.code !== 0) throw Error('Headless installer exit ' + result.code);
-    restorePackFiles(instance, files, run);
+    restorePackFiles(instance, files, scratch);
     verifyInstalledLocal(ROOT, instance, 'client');
     verifyInstalledFiles(instance, files);
     for (const rel of applyOwnedKeys(instance)) console.log('Forced pack-owned keys into ' + rel);
@@ -123,10 +99,8 @@ async function installPack({ instance, cache, dryRun, prelaunch, backupName, lab
   } finally {
     scope.killAll(); process.removeListener('SIGINT', stop); process.removeListener('SIGTERM', stop);
     // run was made by mkdtemp directly under this worktree's .tmp, never user-provided.
-    fs.rmSync(path.join(run, 'pack'), { recursive: true, force: true });
-    if (!fs.existsSync(path.join(run, 'drift-backup'))) fs.rmdirSync(run);
-    else console.log('Retained config drift backups: ' + path.join(run, 'drift-backup'));
+    fs.rmSync(run, { recursive: true, force: true });
   }
 }
 
-module.exports = { installPack, instanceCfgValue, setInstanceCfgValue, prepareFiles, writePack, verifyInstalledFiles, restorePackFiles };
+module.exports = { installPack, instanceCfgGet, instanceCfgValue, setInstanceCfgValue, prepareFiles, writePack };
